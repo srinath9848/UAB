@@ -17,15 +17,21 @@ namespace UAB.Controllers
         {
             return View();
         }
+        public IActionResult GlobalAuditingSummary()
+        {
+            return View();
+        }
         public IActionResult GlobalAuditing()
         {
             return View();
         }
-
+        public IActionResult DomesticAuditingSummary()
+        {
+            return View();
+        }
         public IActionResult DomesticAuditing()
         {
             return View();
         }
-
     }
 }
