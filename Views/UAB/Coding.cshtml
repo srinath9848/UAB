@@ -7,7 +7,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Coding Details</h4>
+                    <h4 class="card-title">Chart Details</h4>
                 </div>
                 <div class="card-body">
                     <div class="row mb-3">
@@ -28,139 +28,162 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="form-group row" data-select2-id="12">
-                            <label class="col-md-3 m-t-15">Patient</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="Patient" disabled>
+                    <div class="row mb-3">
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label class="col-md-3 m-t-15">Patient</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="Patient" readonly>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group row" data-select2-id="12">
-                            <label class="col-md-3 m-t-15">DOS</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="DOS" disabled>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group row" data-select2-id="12">
-                            <label class="col-md-3 m-t-15">Registered</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="Registered" disabled>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group row" data-select2-id="12">
-                            <label class="col-md-3 m-t-15">Discharged DOS</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="Discharged DOS" disabled>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group row" data-select2-id="12">
-                            <label class="col-md-3 m-t-15">
-                                Date Assigned
-                            </label>
-                            <div class="col-md-9 input-group" data-select2-id="11">
-                                <input type="text" class="form-control" id="datepicker-autoclose" placeholder="mm/dd/yyyy">
-                                <div class="input-group-append">
-                                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label class="col-md-3 m-t-15">DOS</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="DOS" readonly>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="form-group row" data-select2-id="12">
-                            <label class="col-md-3 m-t-15">
-                                Payor
-                            </label>
-                            <div class="col-md-9" data-select2-id="11">
-                                <select class="select2 form-control custom-select select2-hidden-accessible" style="width: 100%; height:36px;" data-select2-id="1" tabindex="-1" aria-hidden="true">
-                                    <option data-select2-id="3">MCAL</option>
-                                    <option data-select2-id="3">Commercial</option>
-                                    <option data-select2-id="3">SP</option>
-                                </select>
+                    <div class="row mb-3">
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label class="col-md-3 m-t-15">Registered</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="Registered" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label class="col-md-3 m-t-15">Discharged DOS</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="Discharged DOS" readonly>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="form-group row">
-                            <label class="col-md-3 m-t-15">Note Title</label>
-                            <div class="col-sm-9">
-                                <textarea class="form-control"></textarea>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Coding Details</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label class="col-md-3 m-t-15">
+                                    Date Assigned
+                                </label>
+                                <div class="col-md-9 input-group" data-select2-id="11">
+                                    <input type="text" class="form-control" id="datepicker-autoclose" placeholder="mm/dd/yyyy">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label class="col-md-3 m-t-15">
+                                    Payor
+                                </label>
+                                <div class="col-md-9" data-select2-id="11">
+                                    <select class="select2 form-control custom-select select2-hidden-accessible" style="width: 100%; height:36px;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                                        <option data-select2-id="3">MCAL</option>
+                                        <option data-select2-id="3">Commercial</option>
+                                        <option data-select2-id="3">SP</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="form-group row" data-select2-id="12">
-                            <label class="col-md-3 m-t-15">
-                                Provider
-                            </label>
-                            <div class="col-md-9" data-select2-id="11">
-                                <select class="select2 form-control custom-select select2-hidden-accessible" style="width: 100%; height:36px;" data-select2-id="1" tabindex="-1" aria-hidden="true">
-                                    <option data-select2-id="3">Bush, Nathan, APP</option>
-                                    <option data-select2-id="3">Dillon, Kayce, APP</option>
-                                </select>
+                    <div class="row mb-3">
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label class="col-md-3 m-t-15">Note Title</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label class="col-md-3 m-t-15">
+                                    Provider
+                                </label>
+                                <div class="col-md-9">
+                                    <select class="form-control">
+                                        <option>Bush, Nathan, APP</option>
+                                        <option>Dillon, Kayce, APP</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="form-group row" data-select2-id="12">
-                            <label class="col-md-3 m-t-15">
-                                CPT
-                            </label>
-                            <div class="col-md-9" data-select2-id="11">
-                                <select class="select2 form-control custom-select select2-hidden-accessible" style="width: 100%; height:36px;" data-select2-id="1" tabindex="-1" aria-hidden="true">
-                                    <option data-select2-id="3">Question</option>
-                                    <option data-select2-id="3">Answered</option>
-                                </select>
+                    <div class="row mb-3">
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label class="col-md-3 m-t-15">
+                                    CPT
+                                </label>
+                                <div class="col-md-9" data-select2-id="11">
+                                    <select class="form-control">
+                                        <option>Question</option>
+                                        <option>Answered</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label class="col-md-3 m-t-15">Mod</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="Mod" placeholder="Mod">
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="form-group row" data-select2-id="12">
-                            <label class="col-md-3 m-t-15">Mod</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="Mod" placeholder="Mod">
+                    <div class="row mb-3">
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label class="col-md-3 m-t-15">Dx 1-4 (code followed by a comma and space)</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label class="col-md-3 m-t-15">
+                                    Feedback to Provider
+                                </label>
+                                <div class="col-md-9" data-select2-id="11">
+                                    <select class="select2 form-control custom-select select2-hidden-accessible" style="width: 100%; height:36px;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                                        <option data-select2-id="3">Education: CC doesn't support vital organ failure/life threatening deteriortation</option>
+                                        <option data-select2-id="3">Education: Consult not coded due to no requesting provider on file</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="form-group row">
-                            <label class="col-md-3 m-t-15">Dx 1-4 (code followed by a comma and space)</label>
-                            <div class="col-sm-9">
-                                <textarea class="form-control"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group row" data-select2-id="12">
-                            <label class="col-md-3 m-t-15">
-                                Feedback to Provider
-                            </label>
-                            <div class="col-md-9" data-select2-id="11">
-                                <select class="select2 form-control custom-select select2-hidden-accessible" style="width: 100%; height:36px;" data-select2-id="1" tabindex="-1" aria-hidden="true">
-                                    <option data-select2-id="3">Education: CC doesn't support vital organ failure/life threatening deteriortation</option>
-                                    <option data-select2-id="3">Education: Consult not coded due to no requesting provider on file</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group row">
-                            <label class="col-md-3 m-t-15">Coder Questions</label>
-                            <div class="col-sm-9">
-                                <textarea class="form-control"></textarea>
+                    <div class="row mb-3">
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label class="col-md-3 m-t-15">Coder Questions</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control"></textarea>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="border-top">
-                        <div class="card-body">
-                            <button type="submit" class="btn btn-success">Save</button>
+                        <div class="card-body" style="text-align:right">
+                            <button type="submit" class="btn btn-info">Save</button>
                         </div>
                     </div>
                 </div>
@@ -168,13 +191,12 @@
         </div>
     </div>
 </div>
-<script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
-<script src="~/dashboardassets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<script type="text/javascript">
-    /*datwpicker*/
-    jQuery('.mydatepicker').datepicker();
-    jQuery('#datepicker-autoclose').datepicker({
-        autoclose: true,
-        todayHighlight: true
-    });
-</script>
+    <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="~/dashboardassets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript">
+        /*datwpicker*/
+        jQuery('#datepicker-autoclose').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
+    </script>

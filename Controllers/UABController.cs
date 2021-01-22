@@ -17,6 +17,17 @@ namespace UAB.Controllers
         {
             return View();
         }
+
+        public IActionResult IncorrectCharts()
+        {
+            return View();
+        }
+
+        public IActionResult ApprovedCharts()
+        {
+            return View();
+        }
+
         public IActionResult GlobalAuditingSummary()
         {
             return View();
