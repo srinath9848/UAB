@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewData["Title"] = "CodingSummary";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-8">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Chart Summary</h4>
+                </div>
+                <table class="table table-striped table-bordered dataTable">
+                    <thead>
+
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="col">
+                                Available Charts
+                            </th>
+                            <th scope="col">10</th>
+                            <th scope="col">
+                                <a href="@Url.Action("Coding","UAB")" class="btn btn-info">Get Next</a>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th scope="col">
+                                Incorrect Charts
+                            </th>
+                            <th scope="col">2</th>
+                            <th scope="col">
+                                <a href="@Url.Action("Coding","UAB")" class="btn btn-info">Get Next</a>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th scope="col">
+                                Approved Charts
+                            </th>
+                            <th scope="col">5</th>
+                            <th scope="col">
+                                <a href="@Url.Action("Coding","UAB")" class="btn btn-info">Get Next</a>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

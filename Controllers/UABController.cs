@@ -8,6 +8,11 @@ namespace UAB.Controllers
 {
     public class UABController : Controller
     {
+        public IActionResult CodingSummary()
+        {
+            return View();
+        }
+
         public IActionResult Coding()
         {
             return View();
