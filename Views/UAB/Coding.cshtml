@@ -78,7 +78,7 @@
                                 <label class="col-md-3 m-t-15">
                                     Date Assigned
                                 </label>
-                                <div class="col-md-9 input-group" data-select2-id="11">
+                                <div class="col-md-9 input-group">
                                     <input type="text" class="form-control" id="datepicker-autoclose" placeholder="mm/dd/yyyy">
                                     <div class="input-group-append">
                                         <span class="input-group-text"><i class="fa fa-calendar"></i></span>
@@ -91,11 +91,11 @@
                                 <label class="col-md-3 m-t-15">
                                     Payor
                                 </label>
-                                <div class="col-md-9" data-select2-id="11">
-                                    <select class="select2 form-control custom-select select2-hidden-accessible" style="width: 100%; height:36px;" data-select2-id="1" tabindex="-1" aria-hidden="true">
-                                        <option data-select2-id="3">MCAL</option>
-                                        <option data-select2-id="3">Commercial</option>
-                                        <option data-select2-id="3">SP</option>
+                                <div class="col-md-9">
+                                    <select class="form-control">
+                                        <option>MCAL</option>
+                                        <option>Commercial</option>
+                                        <option>SP</option>
                                     </select>
                                 </div>
                             </div>
@@ -131,7 +131,7 @@
                                 <label class="col-md-3 m-t-15">
                                     CPT
                                 </label>
-                                <div class="col-md-9" data-select2-id="11">
+                                <div class="col-md-9">
                                     <select class="form-control">
                                         <option>Question</option>
                                         <option>Answered</option>
@@ -162,10 +162,10 @@
                                 <label class="col-md-3 m-t-15">
                                     Feedback to Provider
                                 </label>
-                                <div class="col-md-9" data-select2-id="11">
-                                    <select class="select2 form-control custom-select select2-hidden-accessible" style="width: 100%; height:36px;" data-select2-id="1" tabindex="-1" aria-hidden="true">
-                                        <option data-select2-id="3">Education: CC doesn't support vital organ failure/life threatening deteriortation</option>
-                                        <option data-select2-id="3">Education: Consult not coded due to no requesting provider on file</option>
+                                <div class="col-md-9">
+                                    <select class="form-control">
+                                        <option>Education: CC doesn't support vital organ failure/life threatening deteriortation</option>
+                                        <option>Education: Consult not coded due to no requesting provider on file</option>
                                     </select>
                                 </div>
                             </div>
@@ -191,12 +191,12 @@
         </div>
     </div>
 </div>
-    <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
-    <script src="~/dashboardassets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-    <script type="text/javascript">
-        /*datwpicker*/
-        jQuery('#datepicker-autoclose').datepicker({
-            autoclose: true,
-            todayHighlight: true
-        });
-    </script>
+<script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
+<script src="~/dashboardassets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript">
+    /*datwpicker*/
+    jQuery('#datepicker-autoclose').datepicker({
+        autoclose: true,
+        todayHighlight: true
+    });
+</script>
