@@ -1,0 +1,83 @@
+﻿<style type="text/css">
+    .col-md-3 {
+        margin-left: 10px !important;
+    }
+
+    .form-control {
+        padding: 0 !important;
+    }
+</style>
+<div class="col-12">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Global QA Details</h4>
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <div class="row mb-3">
+                    <div class="col-lg-6">
+                        <div class="form-group row">
+                            <label class="col-md-3 m-t-15">
+                                Incorrect / Correct
+                            </label>
+                            <div class="col-md-9">
+                                <select class="form-control" readonly>
+                                    <option>Correct</option>
+                                    <option>Incorrect</option>
+                                    <option>Educational</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group row">
+                            <label class="col-md-3 m-t-15">Corrections/Education</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" readonly></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-6">
+                        <div class="form-group row">
+                            <label class="col-md-3 m-t-15">
+                                Date Rvwd/ Corrected by Global QA/Coder
+                            </label>
+                            <div class="col-md-9 input-group">
+                                <input type="text" readonly class="form-control" id="datepicker-autoclose" placeholder="mm/dd/yyyy">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group row">
+                            <label class="col-md-3 m-t-15">Coder Rebuttal</label>
+                            <div class="col-sm-9">
+                                <input type="text" readonly class="form-control" id="Mod">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-6">
+                        <div class="form-group row">
+                            <label class="col-md-3 m-t-15">
+                                Error Type (mgt use only)
+                            </label>
+                            <div class="col-md-9">
+                                <select class="form-control" readonly>
+                                    <option>CC not Supported</option>
+                                    <option>Consult not Supported</option>
+                                    <option>Mod Error</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
