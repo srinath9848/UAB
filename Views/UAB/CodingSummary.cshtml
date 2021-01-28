@@ -2,9 +2,39 @@
 @{
     ViewData["Title"] = "CodingSummary";
 }
-
+<style type="text/css">
+    .highlight {
+        background-color: #a8cb17;
+    }
+</style>
+<script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
 <div class="container-fluid">
     <div class="row">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Work Contexts</h4>
+                </div>
+                <table class="table table-striped table-bordered dataTable">
+                    <thead>
+
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="col">
+                                SDI
+                            </th>
+                        </tr>
+                        <tr>
+                            <th scope="col">
+                                Quantum
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <div class="col-8">
             <div class="card">
                 <div class="card-body">
@@ -49,3 +79,11 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.dataTable tr').click(function () {
+            jQuery(".highlight").removeClass("highlight");
+            jQuery(this).addClass("highlight");
+        });
+    });
+</script>

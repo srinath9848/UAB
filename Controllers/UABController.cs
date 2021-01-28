@@ -28,19 +28,19 @@ namespace UAB.Controllers
             return View();
         }
 
-        public IActionResult GlobalAuditingSummary()
+        public IActionResult QASummary()
         {
             return View();
         }
-        public IActionResult GlobalAuditing()
+        public IActionResult QA()
         {
             return View();
         }
-        public IActionResult DomesticAuditingSummary()
+        public IActionResult ShadowQASummary()
         {
             return View();
         }
-        public IActionResult DomesticAuditing()
+        public IActionResult ShadowQA()
         {
             return View();
         }
