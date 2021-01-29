@@ -12,17 +12,6 @@
         <div class="card-body">
             <h4 class="card-title">Coding Details</h4>
         </div>
-        <div class="row mb-12">
-            <label>List Name</label>
-            <div class="col-md-6 input-group">
-
-
-                <input type="text" value="PK-Pulm MICU BLUE" class="form-control" readonly>
-            </div>
-            <div class="col-lg-6">
-                <label>MRN</label> <input type="text" value="12345" class="form-control" readonly>
-            </div>
-        </div>
         <div class="form-group row">
             <label class="col-md-3 m-t-15">Payor</label>
             <div class="col-md-5 input-group">
@@ -36,10 +25,9 @@
                         &nbsp;<i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
                         &nbsp;<i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                     </span>
-                </div> &nbsp; &nbsp;
-
+                </div>
             </div>
-            <div class="col-md-5 input-group">
+            <div class="col-md-4 input-group">
                 <select class="form-control QARevised" id="extraPayor" style="display:block;">
                     <option>MCAL</option>
                     <option>Commercial</option>
@@ -55,8 +43,20 @@
         </div>
         <div class="form-group row">
             <label class="col-md-3 m-t-15">Provider</label>
-            <div class="col-md-5">
+            <div class="col-md-5 input-group">
                 <select class="form-control">
+                    <option>Bush, Nathan, APP</option>
+                    <option>Dillon, Kayce, APP</option>
+                </select>
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                        &nbsp;<i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-4 input-group">
+                <select class="form-control QARevised" id="extraprovider" style="display:block;">
                     <option>Bush, Nathan, APP</option>
                     <option>Dillon, Kayce, APP</option>
                 </select>
@@ -75,7 +75,9 @@
                         &nbsp;<i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                     </span>
                 </div>
-                <select class="form-control QARevised" style="display:none;">
+            </div>
+            <div class="col-md-4 input-group">
+                <select class="form-control QARevised" style="display:block;">
                     <option>31640</option>
                     <option>31500</option>
                 </select>
@@ -89,18 +91,25 @@
                     &nbsp;<i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
                     &nbsp;<i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                 </span>
-                <input type="text" class="form-control QARevised" placeholder="Mod" style="display:none">
             </div>
-
+            <div class="col-md-4 input-group">
+                <input type="text" class="form-control QARevised" style="display:block">
+            </div>
         </div>
         <div class="form-group row">
-            <label class="col-md-8 m-t-15" style="margin-left:10px;">Dx 1-4 (code followed by a comma and space)</label>
-            <div class="col-md-5 input-group" style="margin-left: 191px;">
+            <label class="col-md-8 m-t-15" style="margin-left:10px">Dx 1-4 (code followed by a comma and space)</label>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 m-t-15"></label>
+            <div class="col-md-5 input-group">
                 <textarea class="form-control"></textarea>
                 <span class="input-group-text">
                     &nbsp;<i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
                     &nbsp;<i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                 </span>
+            </div>
+            <div class="col-md-4 input-group">
+                <textarea class="form-control QARevised" style="display:block"></textarea>
             </div>
         </div>
         <div class="form-group row">
@@ -116,7 +125,9 @@
                         &nbsp;<i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                     </span>
                 </div>
-                <select class="form-control QARevised" style="display:none;">
+            </div>
+            <div class="col-md-4 input-group">
+                <select class="form-control QARevised" style="display:block;">
                     <option>Education: CC doesn't support vital organ failure/life threatening deteriortation</option>
                     <option>Education: Consult not coded due to no requesting provider on file</option>
                 </select>
