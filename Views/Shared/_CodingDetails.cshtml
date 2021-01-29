@@ -15,20 +15,20 @@
         <div class="form-group row">
             <label class="col-md-3 m-t-15">Payor</label>
             <div class="col-md-5 input-group">
-                <select class="form-control">
+                <select class="form-control CodingDetails">
                     <option>MCAL</option>
                     <option>Commercial</option>
                     <option>SP</option>
                 </select>
                 <div class="input-group-append">
                     <span class="input-group-text">
-                        &nbsp;<i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                        &nbsp;<i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i id="extraPayor" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i id="extraPayor" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                     </span>
                 </div>
             </div>
             <div class="col-md-4 input-group">
-                <select class="form-control QARevised" id="extraPayor" style="display:block;">
+                <select class="form-control CodingDetails" id="extraPayor1" style="display:none;">
                     <option>MCAL</option>
                     <option>Commercial</option>
                     <option>SP</option>
@@ -38,25 +38,25 @@
         <div class="form-group row">
             <label class="col-md-3 m-t-15">Note Title</label>
             <div class="col-md-5">
-                <textarea class="form-control"></textarea>
+                <textarea class="form-control CodingDetails"></textarea>
             </div>
         </div>
         <div class="form-group row">
             <label class="col-md-3 m-t-15">Provider</label>
             <div class="col-md-5 input-group">
-                <select class="form-control">
+                <select class="form-control CodingDetails">
                     <option>Bush, Nathan, APP</option>
                     <option>Dillon, Kayce, APP</option>
                 </select>
                 <div class="input-group-append">
                     <span class="input-group-text">
-                        &nbsp;<i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                        &nbsp;<i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i id="Provider" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i id="Provider" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                     </span>
                 </div>
             </div>
             <div class="col-md-4 input-group">
-                <select class="form-control QARevised" id="extraprovider" style="display:block;">
+                <select class="form-control QARevised" id="Provider1" style="display:none;">
                     <option>Bush, Nathan, APP</option>
                     <option>Dillon, Kayce, APP</option>
                 </select>
@@ -65,19 +65,19 @@
         <div class="form-group row">
             <label class="col-md-3 m-t-15">CPT</label>
             <div class="col-md-5 input-group">
-                <select class="form-control">
+                <select class="form-control CodingDetails">
                     <option>31640</option>
                     <option>31500</option>
                 </select>
                 <div class="input-group-append">
                     <span class="input-group-text">
-                        &nbsp;<i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                        &nbsp;<i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i id="CPT" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i id="CPT" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                     </span>
                 </div>
             </div>
             <div class="col-md-4 input-group">
-                <select class="form-control QARevised" style="display:block;">
+                <select class="form-control" id="CPT1" style="display:none;">
                     <option>31640</option>
                     <option>31500</option>
                 </select>
@@ -86,14 +86,14 @@
         <div class="form-group row">
             <label class="col-md-3 m-t-15">Mod</label>
             <div class="col-md-5 input-group">
-                <input type="text" class="form-control" placeholder="Mod">
+                <input type="text" class="form-control CodingDetails" placeholder="Mod">
                 <span class="input-group-text">
-                    &nbsp;<i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                    &nbsp;<i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="Mod" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="Mod" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                 </span>
             </div>
             <div class="col-md-4 input-group">
-                <input type="text" class="form-control QARevised" style="display:block">
+                <input type="text" class="form-control" placeholder="Mod" id="Mod1" style="display:none">
             </div>
         </div>
         <div class="form-group row">
@@ -102,32 +102,32 @@
         <div class="form-group row">
             <label class="col-md-3 m-t-15"></label>
             <div class="col-md-5 input-group">
-                <textarea class="form-control"></textarea>
+                <textarea class="form-control CodingDetails"></textarea>
                 <span class="input-group-text">
-                    &nbsp;<i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                    &nbsp;<i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="Dx" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="Dx" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                 </span>
             </div>
             <div class="col-md-4 input-group">
-                <textarea class="form-control QARevised" style="display:block"></textarea>
+                <textarea class="form-control" id="Dx1" style="display:none"></textarea>
             </div>
         </div>
         <div class="form-group row">
             <label class="col-md-3 m-t-15"> Feedback to Provider</label>
             <div class="col-md-5 input-group">
-                <select class="form-control">
+                <select class="form-control CodingDetails">
                     <option>Education: CC doesn't support vital organ failure/life threatening deteriortation</option>
                     <option>Education: Consult not coded due to no requesting provider on file</option>
                 </select>
                 <div class="input-group-append" style="height: 38px;">
                     <span class="input-group-text">
-                        &nbsp;<i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                        &nbsp;<i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i id="Feedback" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i id="Feedback" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                     </span>
                 </div>
             </div>
             <div class="col-md-4 input-group">
-                <select class="form-control QARevised" style="display:block;">
+                <select class="form-control CodingDetails" id="Feedback1" style="display:none;">
                     <option>Education: CC doesn't support vital organ failure/life threatening deteriortation</option>
                     <option>Education: Consult not coded due to no requesting provider on file</option>
                 </select>
@@ -136,11 +136,11 @@
         <div class="form-group row">
             <label class="col-md-3 m-t-15">Coder Questions</label>
             <div class="col-md-5">
-                <textarea class="form-control"></textarea>
+                <textarea class="form-control CodingDetails"></textarea>
             </div>
         </div>
-        <div class="border-top">
-            <div class="card-body" style="text-align:left">
+        <div class="border-top" id="CodingDetails">
+            <div class="card-body" style="text-align:right">
                 <button type="submit" class="btn btn-success">Submit</button>
                 <button type="submit" class="btn btn-danger">Hold</button>
             </div>
@@ -152,15 +152,16 @@
     $(document).ready(function () {
 
         $('span i').click(function () {
-
+            var id = $(this).attr('id');
             if ($(this).hasClass('fa-check-circle')) {
                 $(this).toggleClass('accept');
                 $(this).siblings().removeClass('reject');
+                $("#" + id + "1").css("display", "none");
             }
             else if ($(this).hasClass('fa-times-circle')) {
                 $(this).toggleClass('reject');
                 $(this).siblings().removeClass('accept');
-                $(this).parentsUntil('.form-group row').children().find('.QARevised').css('display', 'block');
+                $("#" + id + "1").css("display", "block");
             }
         });
 

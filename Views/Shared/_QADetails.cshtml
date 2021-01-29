@@ -21,7 +21,7 @@
                                 Incorrect / Correct
                             </label>
                             <div class="col-md-9">
-                                <select class="form-control" readonly>
+                                <select class="form-control QADetails" readonly>
                                     <option>Correct</option>
                                     <option>Incorrect</option>
                                     <option>Educational</option>
@@ -33,7 +33,7 @@
                         <div class="form-group row">
                             <label class="col-md-3 m-t-15">Corrections/Education</label>
                             <div class="col-sm-9">
-                                <textarea class="form-control" readonly></textarea>
+                                <textarea class="form-control QADetails" readonly></textarea>
                             </div>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                                 Date Rvwd/ Corrected by Global QA/Coder
                             </label>
                             <div class="col-md-9 input-group">
-                                <input type="text" readonly class="form-control" id="datepicker-autoclose" placeholder="mm/dd/yyyy">
+                                <input type="text" readonly class="form-control QADetails" id="datepicker-autoclose" placeholder="mm/dd/yyyy">
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                 </div>
@@ -56,7 +56,7 @@
                         <div class="form-group row">
                             <label class="col-md-3 m-t-15">Coder Rebuttal</label>
                             <div class="col-sm-9">
-                                <input type="text" readonly class="form-control" id="Mod">
+                                <input type="text" readonly class="form-control QADetails" id="Mod">
                             </div>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                                 Error Type (mgt use only)
                             </label>
                             <div class="col-md-9">
-                                <select class="form-control" readonly>
+                                <select class="form-control QADetails" readonly>
                                     <option>CC not Supported</option>
                                     <option>Consult not Supported</option>
                                     <option>Mod Error</option>
@@ -77,6 +77,12 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="border-top" id="QADetails">
+            <div class="card-body" style="text-align:right">
+                <button type="submit" class="btn btn-success">Submit</button>
             </div>
         </div>
     </div>
