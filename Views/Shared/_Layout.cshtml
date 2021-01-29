@@ -24,10 +24,6 @@
             font-weight: bold;
         }
 
-        .disabled {
-            color: none;
-        }
-
         .reject {
             color: red;
         }
@@ -86,23 +82,22 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav" class="p-t-30">
-                        <li class="sidebar-item">
+                        <li id="dashBoard" class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" asp-area="" asp-controller="Home" asp-action="Index">
                                 <i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span>
                             </a>
                         </li>
-                        <li class="sidebar-item">
+                        <li id="coding" class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" asp-area="" asp-controller="UAB" asp-action="CodingSummary">
                                 <i class="mdi mdi-receipt"></i><span class="hide-menu">Coding</span>
                             </a>
                         </li>
-                        <li class="sidebar-item">
+                        <li id="qa" class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" asp-area="" asp-controller="UAB" asp-action="QASummary">
                                 <i class="mdi mdi-chart-bar"></i><span class="hide-menu">QA</span>
                             </a>
                         </li>
-
-                        <li class="sidebar-item">
+                        <li id="shadowQA" class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" asp-area="" asp-controller="UAB" asp-action="ShadowQASummary">
                                 <i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Shadow QA</span>
                             </a>
