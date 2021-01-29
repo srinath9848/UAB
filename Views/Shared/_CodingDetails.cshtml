@@ -7,10 +7,21 @@
         padding: 0 !important;
     }
 </style>
-<div class="col-md-8">
+<div class="col-md-12">
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Coding Details</h4>
+        </div>
+        <div class="row mb-12">
+            <label>List Name</label>
+            <div class="col-md-6 input-group">
+
+
+                <input type="text" value="PK-Pulm MICU BLUE" class="form-control" readonly>
+            </div>
+            <div class="col-lg-6">
+                <label>MRN</label> <input type="text" value="12345" class="form-control" readonly>
+            </div>
         </div>
         <div class="form-group row">
             <label class="col-md-3 m-t-15">Payor</label>
@@ -26,7 +37,10 @@
                         &nbsp;<i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                     </span>
                 </div> &nbsp; &nbsp;
-                <select class="form-control" id="extraPayor" style="display:none;">
+
+            </div>
+            <div class="col-md-5 input-group">
+                <select class="form-control QARevised" id="extraPayor" style="display:block;">
                     <option>MCAL</option>
                     <option>Commercial</option>
                     <option>SP</option>
@@ -55,14 +69,13 @@
                     <option>31640</option>
                     <option>31500</option>
                 </select>
-
                 <div class="input-group-append">
                     <span class="input-group-text">
                         &nbsp;<i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
                         &nbsp;<i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                     </span>
                 </div>
-                <select class="form-control" style="display:none;">
+                <select class="form-control QARevised" style="display:none;">
                     <option>31640</option>
                     <option>31500</option>
                 </select>
@@ -76,7 +89,7 @@
                     &nbsp;<i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
                     &nbsp;<i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                 </span>
-                <input type="text" class="form-control" placeholder="Mod" style="display:none;">
+                <input type="text" class="form-control QARevised" placeholder="Mod" style="display:none">
             </div>
 
         </div>
@@ -103,13 +116,12 @@
                         &nbsp;<i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                     </span>
                 </div>
-                <select class="form-control" style="display:none;">
+                <select class="form-control QARevised" style="display:none;">
                     <option>Education: CC doesn't support vital organ failure/life threatening deteriortation</option>
                     <option>Education: Consult not coded due to no requesting provider on file</option>
                 </select>
             </div>
         </div>
-
         <div class="form-group row">
             <label class="col-md-3 m-t-15">Coder Questions</label>
             <div class="col-md-5">
@@ -117,9 +129,9 @@
             </div>
         </div>
         <div class="border-top">
-            <div class="card-body" style="text-align:right">
-                <button type="submit" class="btn btn-info">Save</button>
-                <button type="submit" class="btn btn-info">Hold</button>
+            <div class="card-body" style="text-align:left">
+                <button type="submit" class="btn btn-success">Submit</button>
+                <button type="submit" class="btn btn-danger">Hold</button>
             </div>
         </div>
     </div>
@@ -129,11 +141,16 @@
     $(document).ready(function () {
 
         $('span i').click(function () {
-            if ($(this).hasClass('fa-check-circle'))
-                $(this).toggleClass('accept disabled');
-            else if ($(this).hasClass('fa-times-circle'))
-                $(this).toggleClass('reject disabled');
 
+            if ($(this).hasClass('fa-check-circle')) {
+                $(this).toggleClass('accept');
+                $(this).siblings().removeClass('reject');
+            }
+            else if ($(this).hasClass('fa-times-circle')) {
+                $(this).toggleClass('reject');
+                $(this).siblings().removeClass('accept');
+                $(this).parentsUntil('.form-group row').children().find('.QARevised').css('display', 'block');
+            }
         });
 
     });

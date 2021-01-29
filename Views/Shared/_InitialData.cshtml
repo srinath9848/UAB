@@ -1,41 +1,65 @@
 ﻿<style type="text/css">
     .col-md-3 {
         margin-left: 10px !important;
+        max-width: 20% !important;
+    }
+
+    .card .card-title {
+        margin-bottom: 0px !important;
     }
 
     .form-control {
         padding: 0 !important;
     }
 </style>
-<div class="col-md-4">
+<div class="col-md-12">
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Chart Details</h4>
         </div>
-        <div class="form-group row">
-            <label class="col-md-3 m-t-15">List Name</label>
-            <div class="col-md-5">
-                <input type="text" value="PK-Pulm MICU BLUE" class="form-control" id="ListName" readonly>
+        <div class="row mb-12">
+            <div class="col-md-3">
+                <label>List Name</label> <input type="text" value="PK-Pulm MICU BLUE" class="form-control" readonly>
+            </div>
+            <div class="col-lg-3">
+                <label>MRN</label> <input type="text" value="12345" class="form-control" readonly>
+            </div>
+            <div class="col-lg-3">
+                <label>Patient</label> <input type="text" value="ABC" class="form-control" readonly>
+            </div>
+            <div class="col-lg-3">
+                <label>DOS</label> <input type="text" value="1/2/2021" class="form-control" readonly>
             </div>
         </div>
-        <div class="form-group row">
-            <label class="col-md-3 m-t-15">MRN</label>
-            <div class="col-md-5">
-                <input type="text" value="12345" class="form-control" id="MRN" readonly>
-            </div>
+        <div class="card-body">
         </div>
-        <div class="form-group row">
-            <label class="col-md-3 m-t-15">Patient</label>
-            <div class="col-md-5">
-                <input type="text" value="ABC" class="form-control" id="Patient" readonly>
+        @*<div class="row mb-3">
+                <label class="col-md-3 m-t-15">List Name</label>
+                <div class="col-md-5">
+                    <input type="text" value="PK-Pulm MICU BLUE" class="form-control" id="ListName" readonly>
+                </div>
+                <div class="col-md-5">
+                    <input type="text" value="12345" class="form-control" id="MRN" readonly>
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-md-3 m-t-15">DOS</label>
-            <div class="col-md-5">
-                <input type="text" value="1/2/2021" class="form-control" id="DOS" readonly>
+            <div class="form-group row">
+                <label class="col-md-3 m-t-15">MRN</label>
+                <div class="col-md-5">
+                    <input type="text" value="12345" class="form-control" id="MRN" readonly>
+                </div>
             </div>
-        </div>
+            <div class="form-group row">
+                <label class="col-md-3 m-t-15">Patient</label>
+                <div class="col-md-5">
+                    <input type="text" value="ABC" class="form-control" id="Patient" readonly>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 m-t-15">DOS</label>
+                <div class="col-md-5">
+                    <input type="text" value="1/2/2021" class="form-control" id="DOS" readonly>
+                </div>
+            </div>*@
         @*<div class="row mb-3">
                 <div class="col-lg-6">
                     <div class="form-group row">
