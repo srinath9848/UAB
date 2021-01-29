@@ -13,22 +13,19 @@
             <h4 class="card-title">Coding Details</h4>
         </div>
         <div class="form-group row">
-            <label class="col-md-3 m-t-15">Date Assigned</label>
-            <div class="col-md-5 input-group">
-                <input type="text" class="form-control" id="datepicker-autoclose" placeholder="mm/dd/yyyy">
-                <div class="input-group-append">
-                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                </div>
-            </div>
-        </div>
-        <div class="form-group row">
             <label class="col-md-3 m-t-15">Payor</label>
-            <div class="col-md-5">
+            <div class="col-md-5 input-group">
                 <select class="form-control">
                     <option>MCAL</option>
                     <option>Commercial</option>
                     <option>SP</option>
                 </select>
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                        &nbsp;<i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                    </span>
+                </div>
             </div>
         </div>
         <div class="form-group row">
@@ -85,7 +82,23 @@
         <div class="border-top">
             <div class="card-body" style="text-align:right">
                 <button type="submit" class="btn btn-info">Save</button>
+                <button type="submit" class="btn btn-info">Hold</button>
             </div>
         </div>
     </div>
 </div>
+<script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('span i').click(function () {
+
+            if ($(this).hasClass('fa-check-circle'))
+                $(this).toggleClass('accept disabled');
+            else if ($(this).hasClass('fa-times-circle'))
+                $(this).toggleClass('reject disabled');
+
+        });
+
+    });
+</script>
