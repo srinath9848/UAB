@@ -25,7 +25,12 @@
                         &nbsp;<i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
                         &nbsp;<i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                     </span>
-                </div>
+                </div> &nbsp; &nbsp;
+                <select class="form-control" id="extraPayor" style="display:none;">
+                    <option>MCAL</option>
+                    <option>Commercial</option>
+                    <option>SP</option>
+                </select>
             </div>
         </div>
         <div class="form-group row">
@@ -45,8 +50,19 @@
         </div>
         <div class="form-group row">
             <label class="col-md-3 m-t-15">CPT</label>
-            <div class="col-md-5">
+            <div class="col-md-5 input-group">
                 <select class="form-control">
+                    <option>31640</option>
+                    <option>31500</option>
+                </select>
+
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                        &nbsp;<i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                    </span>
+                </div>
+                <select class="form-control" style="display:none;">
                     <option>31640</option>
                     <option>31500</option>
                 </select>
@@ -54,25 +70,46 @@
         </div>
         <div class="form-group row">
             <label class="col-md-3 m-t-15">Mod</label>
-            <div class="col-md-5">
-                <input type="text" class="form-control" id="Mod" placeholder="Mod">
+            <div class="col-md-5 input-group">
+                <input type="text" class="form-control" placeholder="Mod">
+                <span class="input-group-text">
+                    &nbsp;<i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                </span>
+                <input type="text" class="form-control" placeholder="Mod" style="display:none;">
             </div>
+
         </div>
         <div class="form-group row">
             <label class="col-md-8 m-t-15" style="margin-left:10px;">Dx 1-4 (code followed by a comma and space)</label>
-            <div class="col-md-5" style="margin-left: 190px;">
+            <div class="col-md-5 input-group" style="margin-left: 191px;">
                 <textarea class="form-control"></textarea>
+                <span class="input-group-text">
+                    &nbsp;<i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                </span>
             </div>
         </div>
         <div class="form-group row">
             <label class="col-md-3 m-t-15"> Feedback to Provider</label>
-            <div class="col-md-5">
+            <div class="col-md-5 input-group">
                 <select class="form-control">
+                    <option>Education: CC doesn't support vital organ failure/life threatening deteriortation</option>
+                    <option>Education: Consult not coded due to no requesting provider on file</option>
+                </select>
+                <div class="input-group-append" style="height: 38px;">
+                    <span class="input-group-text">
+                        &nbsp;<i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                    </span>
+                </div>
+                <select class="form-control" style="display:none;">
                     <option>Education: CC doesn't support vital organ failure/life threatening deteriortation</option>
                     <option>Education: Consult not coded due to no requesting provider on file</option>
                 </select>
             </div>
         </div>
+
         <div class="form-group row">
             <label class="col-md-3 m-t-15">Coder Questions</label>
             <div class="col-md-5">
@@ -92,7 +129,6 @@
     $(document).ready(function () {
 
         $('span i').click(function () {
-
             if ($(this).hasClass('fa-check-circle'))
                 $(this).toggleClass('accept disabled');
             else if ($(this).hasClass('fa-times-circle'))
