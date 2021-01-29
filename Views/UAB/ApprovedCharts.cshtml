@@ -8,6 +8,103 @@
         <partial name="_InitialData" />
         <partial name="_CodingDetails" />
         <partial name="_QADetails" />
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Shadow QA Details</h4>
+                </div>
+                <div class="card-body">
+                    <div class="col-12">
+                        <div class="row mb-3">
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-3 m-t-15">
+                                        Incorrect / Correct
+                                    </label>
+                                    <div class="col-md-9">
+                                        <select class="form-control">
+                                            <option>Correct</option>
+                                            <option>Incorrect</option>
+                                            <option>Educational</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-3 m-t-15">Corrections/Education</label>
+                                    <div class="col-sm-9">
+                                        <textarea class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-3 m-t-15">Coder/QA Rebuttals</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="Mod">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-3 m-t-15">
+                                        Date Rvwd/ Corrected by Global QA/Coder
+                                    </label>
+                                    <div class="col-md-9 input-group">
+                                        <input type="text" class="form-control" id="datepicker-autoclose" placeholder="mm/dd/yyyy">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-3 m-t-15">
+                                        Error Type (mgt use only)
+                                    </label>
+                                    <div class="col-md-9">
+                                        <select class="form-control">
+                                            <option>CC not Supported</option>
+                                            <option>Consult not Supported</option>
+                                            <option>Mod Error</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-3 m-t-15">Notes from Jen</label>
+                                    <div class="col-sm-9">
+                                        <textarea class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <div class="custom-control custom-checkbox mr-sm-2">
+                                        <input type="checkbox" class="custom-control-input" id="customControlAutosizing1">
+                                        <label class="custom-control-label" for="customControlAutosizing1">Okay to Post in PK?</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-top">
+                            <div class="card-body" style="text-align:right">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
