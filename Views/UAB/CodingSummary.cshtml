@@ -10,91 +10,116 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-4">
+        <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Projects</h4>
                 </div>
                 <table class="table table-striped table-bordered dataTable workcontexts">
                     <thead>
-
+                        <tr>
+                            <th scope="col">
+                                <b>Name</b>
+                            </th>
+                            <th scope="col">
+                                <b>Available Charts</b>
+                            </th>
+                            <th scope="col">
+                                <b>Incorrect Charts</b>
+                            </th>
+                            <th scope="col">
+                                <b>Approved Charts</b>
+                            </th>
+                        </tr>
                     </thead>
                     <tbody style="cursor:pointer;">
-                        <tr title="9,2,5" class="highlight">
-                            <th scope="col">
-                                UAB
-                            </th>
+                        <tr title="9,2,5">
+                            <td scope="col">
+                                Phase1 - Ambulatory
+                            </td>
+                            <td scope="col">
+                                9&nbsp;&nbsp;<a href="@Url.Action("Coding","UAB")" class="btn btn-info">Get Next</a>
+                            </td>
+                            <td scope="col">
+                                2&nbsp;&nbsp;<a href="@Url.Action("IncorrectCharts","UAB")" class="btn btn-info">Get Next</a>
+                            </td>
+                            <td scope="col">
+                                5&nbsp;&nbsp;<a href="@Url.Action("ApprovedCharts","UAB")" class="btn btn-info">Get Next</a>
+                            </td>
                         </tr>
                         <tr title="8,3,6">
                             <th scope="col">
-                                PULMONOLOGY
+                                Phase1 - IP
                             </th>
+                            <td scope="col">
+                                8&nbsp;&nbsp;<a href="@Url.Action("Coding","UAB")" class="btn btn-info">Get Next</a>
+                            </td>
+                            <td scope="col">
+                                3&nbsp;&nbsp;<a href="@Url.Action("IncorrectCharts","UAB")" class="btn btn-info">Get Next</a>
+                            </td>
+                            <td scope="col">
+                                6&nbsp;&nbsp;<a href="@Url.Action("ApprovedCharts","UAB")" class="btn btn-info">Get Next</a>
+                            </td>
                         </tr>
-                        <tr title="11,7,3">
+                        <tr title="5,7,3">
                             <th scope="col">
-                                AMB
+                                Phase2 - Pulmonology
                             </th>
+                            <td scope="col">
+                                5&nbsp;&nbsp;<a href="@Url.Action("Coding","UAB")" class="btn btn-info">Get Next</a>
+                            </td>
+                            <td scope="col">
+                                7&nbsp;&nbsp;<a href="@Url.Action("IncorrectCharts","UAB")" class="btn btn-info">Get Next</a>
+                            </td>
+                            <td scope="col">
+                                3&nbsp;&nbsp;<a href="@Url.Action("ApprovedCharts","UAB")" class="btn btn-info">Get Next</a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <div class="col-8">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Chart Summary</h4>
+        @*<div class="col-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Chart Summary</h4>
+                    </div>
+                    <table class="table table-striped table-bordered dataTable">
+                        <thead>
+
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="col">
+                                    Available Charts
+                                </th>
+                                <th scope="col" id="AvailableCharts">9</th>
+                                <th scope="col">
+                                    <a href="@Url.Action("Coding","UAB")" class="btn btn-info">Get Next</a>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th scope="col">
+                                    Incorrect Charts
+                                </th>
+                                <th scope="col" id="IncorrectCharts">2</th>
+                                <th scope="col">
+                                    <a href="@Url.Action("IncorrectCharts","UAB")" class="btn btn-info">Get Next</a>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th scope="col">
+                                    Approved Charts
+                                </th>
+                                <th scope="col" id="ApprovedCharts">5</th>
+                                <th scope="col">
+                                    <a href="@Url.Action("ApprovedCharts","UAB")" class="btn btn-info">Get Next</a>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <table class="table table-striped table-bordered dataTable">
-                    <thead>
-
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="col">
-                                Available Charts
-                            </th>
-                            <th scope="col" id="AvailableCharts">9</th>
-                            <th scope="col">
-                                <a href="@Url.Action("Coding","UAB")" class="btn btn-info">Get Next</a>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th scope="col">
-                                Incorrect Charts
-                            </th>
-                            <th scope="col" id="IncorrectCharts">2</th>
-                            <th scope="col">
-                                <a href="@Url.Action("IncorrectCharts","UAB")" class="btn btn-info">Get Next</a>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th scope="col">
-                                Approved Charts
-                            </th>
-                            <th scope="col" id="ApprovedCharts">5</th>
-                            <th scope="col">
-                                <a href="@Url.Action("ApprovedCharts","UAB")" class="btn btn-info">Get Next</a>
-                            </th>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+            </div>*@
     </div>
 </div>
-
-<script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('.workcontexts tr').click(function () {
-            $(".highlight").removeClass("highlight");
-            var title = $(this).attr('title');
-            var chartstitle = title.split(",");
-            $("#AvailableCharts").text(chartstitle[0]);
-            $("#IncorrectCharts").text(chartstitle[1]);
-            $("#ApprovedCharts").text(chartstitle[2]);
-            $(this).addClass("highlight");
-        });
-    });
-</script>

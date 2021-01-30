@@ -1,4 +1,5 @@
-﻿<style type="text/css">
+﻿@model UAB.Models.QADetails
+<style type="text/css">
     .col-md-3 {
         margin-left: 10px !important;
     }
@@ -11,6 +12,13 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Coding Details</h4>
+        </div>
+        <div class="form-group row" id="divChkAll">
+            <label class="col-md-7 m-t-15"></label>
+            <div class="custom-control custom-checkbox mr-sm-2">
+                <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll">
+                <label class="custom-control-label" for="chkAll">Select All</label>
+            </div>
         </div>
         <div class="form-group row">
             <label class="col-md-3 m-t-15">Payor</label>
@@ -150,6 +158,17 @@
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+
+
+        $('#chkAll').change(function () {
+            if ($(this).is(':checked')) {
+                $('.fa-check-circle').addClass('accept');
+                $('.fa-times-circle').removeClass('reject')
+            }
+            else {
+                $('.fa-check-circle').removeClass('accept');
+            }
+        });
 
         $('span i').click(function () {
             var id = $(this).attr('id');

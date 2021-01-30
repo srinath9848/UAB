@@ -6,8 +6,225 @@
 <div class="container-fluid">
     <div class="row">
         <partial name="_InitialData" />
-        <partial name="_CodingDetails" />
-        <partial name="_QADetails" />
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Coding Details</h4>
+                </div>
+                <div class="form-group row" id="divChkAll">
+                    <label class="col-md-7 m-t-15"></label>
+                    <div class="custom-control custom-checkbox mr-sm-2">
+                        <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll">
+                        <label class="custom-control-label" for="chkAll">Select All</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 m-t-15">Payor</label>
+                    <div class="col-md-3 input-group">
+                        <select class="form-control CodingDetails">
+                            <option selected>MCAL</option>
+                            <option>Commercial</option>
+                            <option>SP</option>
+                        </select>
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                &nbsp;<i id="extraPayor" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                &nbsp;<i id="extraPayor" class="fa fa-times-circle fa-lg reject" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 input-group">
+                        <select class="form-control CodingDetails" id="extraPayor1" style="display:block;">
+                            <option>MCAL</option>
+                            <option selected>Commercial</option>
+                            <option>SP</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 input-group">
+                        <input type="text" class="form-control CodingDetails" value="Need to put Commerical" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 m-t-15">Note Title</label>
+                    <div class="col-md-3">
+                        <textarea class="form-control CodingDetails"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 m-t-15">Provider</label>
+                    <div class="col-md-3 input-group">
+                        <select class="form-control CodingDetails">
+                            <option>Bush, Nathan, APP</option>
+                            <option>Dillon, Kayce, APP</option>
+                        </select>
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                &nbsp;<i id="Provider" class="fa fa-check-circle fa-lg accept" aria-hidden="true"></i>
+                                &nbsp;<i id="Provider" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 input-group">
+                        <select class="form-control QARevised" id="Provider1" style="display:none;">
+                            <option>Bush, Nathan, APP</option>
+                            <option>Dillon, Kayce, APP</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 m-t-15">CPT</label>
+                    <div class="col-md-3 input-group">
+                        <select class="form-control CodingDetails">
+                            <option selected>31640</option>
+                            <option>31500</option>
+                        </select>
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                &nbsp;<i id="CPT" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                &nbsp;<i id="CPT" class="fa fa-times-circle fa-lg reject" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 input-group">
+                        <select class="form-control" id="CPT1" style="display:block;">
+                            <option>31640</option>
+                            <option selected>31500</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 input-group">
+                        <input type="text" class="form-control CodingDetails" value="wrong value 31640 is given" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 m-t-15">Mod</label>
+                    <div class="col-md-3 input-group">
+                        <input type="text" class="form-control CodingDetails" placeholder="Mod">
+                        <span class="input-group-text">
+                            &nbsp;<i id="Mod" class="fa fa-check-circle fa-lg accept" aria-hidden="true"></i>
+                            &nbsp;<i id="Mod" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <div class="col-md-3 input-group">
+                        <input type="text" class="form-control" placeholder="Mod" id="Mod1" style="display:none">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-8 m-t-15" style="margin-left:10px">Dx 1-4 (code followed by a comma and space)</label>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 m-t-15"></label>
+                    <div class="col-md-3 input-group">
+                        <textarea class="form-control CodingDetails"></textarea>
+                        <span class="input-group-text">
+                            &nbsp;<i id="Dx" class="fa fa-check-circle fa-lg accept" aria-hidden="true"></i>
+                            &nbsp;<i id="Dx" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <div class="col-md-3 input-group">
+                        <textarea class="form-control" id="Dx1" style="display:none"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 m-t-15"> Feedback to Provider</label>
+                    <div class="col-md-3 input-group">
+                        <select class="form-control CodingDetails">
+                            <option>Education: CC doesn't support vital organ failure/life threatening deteriortation</option>
+                            <option>Education: Consult not coded due to no requesting provider on file</option>
+                        </select>
+                        <div class="input-group-append" style="height: 38px;">
+                            <span class="input-group-text">
+                                &nbsp;<i id="Feedback" class="fa fa-check-circle fa-lg accept" aria-hidden="true"></i>
+                                &nbsp;<i id="Feedback" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 input-group">
+                        <select class="form-control CodingDetails" id="Feedback1" style="display:none;">
+                            <option>Education: CC doesn't support vital organ failure/life threatening deteriortation</option>
+                            <option>Education: Consult not coded due to no requesting provider on file</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 m-t-15">Coder Questions</label>
+                    <div class="col-md-3">
+                        <textarea class="form-control CodingDetails"></textarea>
+                    </div>
+                </div>
+                <div class="border-top" id="CodingDetails">
+                    <div class="card-body" style="text-align:right">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="submit" class="btn btn-danger">Hold</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">QA Details</h4>
+                </div>
+                <div class="card-body">
+                    <div class="col-12">
+                        <div class="row mb-3">
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-3 m-t-15">
+                                        Incorrect / Correct
+                                    </label>
+                                    <div class="col-md-9">
+                                        <select class="form-control QADetails" readonly>
+                                            <option>Correct</option>
+                                            <option selected>Incorrect</option>
+                                            <option>Educational</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-3 m-t-15">Corrections/Education</label>
+                                    <div class="col-sm-9">
+                                        <textarea class="form-control QADetails" readonly>Wrong values coded</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-3 m-t-15">Coder Rebuttal</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" readonly class="form-control QADetails" id="Mod">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-3 m-t-15">
+                                        Error Type (mgt use only)
+                                    </label>
+                                    <div class="col-md-9">
+                                        <select class="form-control QADetails" readonly>
+                                            <option>CC not Supported</option>
+                                            <option>Consult not Supported</option>
+                                            <option selected>Mod Error</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-top" id="QADetails">
+                    <div class="card-body" style="text-align:right">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
@@ -22,6 +239,7 @@
     $("#QADetails").hide();
     $('span.input-group-text').css('pointer-events', 'none');
     $("#coding").addClass('selected');
+    $('#divChkAll').hide();
 </script>
 
 
