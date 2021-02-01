@@ -11,10 +11,10 @@
                     <h4 class="card-title">Coding Details</h4>
                 </div>
                 <div class="form-group row" id="divChkAll">
-                    <label class="col-md-7 m-t-15"></label>
+                    <label class="col-md-4 m-t-15"></label>
                     <div class="custom-control custom-checkbox mr-sm-2">
                         <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll">
-                        <label class="custom-control-label" for="chkAll">Select All</label>
+                        <label class="custom-control-label" for="chkAll">Accept All</label>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -32,14 +32,14 @@
                             </span>
                         </div>
                     </div>
-                    <div class="col-md-3 input-group">
-                        <select class="form-control CodingDetails" id="extraPayor1" style="display:block;">
+                    <div class="col-md-3 input-group QARevised" id="extraPayor1">
+                        <select class="form-control CodingDetails">
                             <option>MCAL</option>
                             <option selected>Commercial</option>
                             <option>SP</option>
                         </select>
                     </div>
-                    <div class="col-md-3 input-group">
+                    <div class="col-md-3 input-group QARevised" id="extraPayor2">
                         <input type="text" class="form-control CodingDetails" value="Need to put Commerical" />
                     </div>
                 </div>
@@ -63,11 +63,14 @@
                             </span>
                         </div>
                     </div>
-                    <div class="col-md-3 input-group">
-                        <select class="form-control QARevised" id="Provider1" style="display:none;">
+                    <div class="col-md-3 input-group QARevised" id="Provider1" style="display:none;">
+                        <select class="form-control">
                             <option>Bush, Nathan, APP</option>
                             <option>Dillon, Kayce, APP</option>
                         </select>
+                    </div>
+                    <div class="col-md-3 input-group QARevised" id="Provider2" style="display:none">
+                        <input type="text" class="form-control CodingDetails" />
                     </div>
                 </div>
                 <div class="form-group row">
@@ -84,13 +87,13 @@
                             </span>
                         </div>
                     </div>
-                    <div class="col-md-3 input-group">
-                        <select class="form-control" id="CPT1" style="display:block;">
+                    <div class="col-md-3 input-group QARevised" id="CPT1" style="display:block;">
+                        <select class="form-control">
                             <option>31640</option>
                             <option selected>31500</option>
                         </select>
                     </div>
-                    <div class="col-md-3 input-group">
+                    <div class="col-md-3 input-group QARevised" id="CPT2">
                         <input type="text" class="form-control CodingDetails" value="wrong value 31640 is given" />
                     </div>
                 </div>
@@ -103,8 +106,11 @@
                             &nbsp;<i id="Mod" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                         </span>
                     </div>
-                    <div class="col-md-3 input-group">
-                        <input type="text" class="form-control" placeholder="Mod" id="Mod1" style="display:none">
+                    <div class="col-md-3 input-group QARevised" id="Mod1" style="display:none">
+                        <input type="text" class="form-control" placeholder="Mod">
+                    </div>
+                    <div class="col-md-3 input-group QARevised" id="Mod2" style="display:none">
+                        <input type="text" class="form-control CodingDetails" />
                     </div>
                 </div>
                 <div class="form-group row">
@@ -119,26 +125,17 @@
                             &nbsp;<i id="Dx" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                         </span>
                     </div>
-                    <div class="col-md-3 input-group">
-                        <textarea class="form-control" id="Dx1" style="display:none"></textarea>
+                    <div class="col-md-3 input-group QARevised" id="Dx1" style="display:none">
+                        <textarea class="form-control"></textarea>
+                    </div>
+                    <div class="col-md-3 input-group QARevised" id="Dx2" style="display:none">
+                        <input type="text" class="form-control CodingDetails" />
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-md-3 m-t-15"> Feedback to Provider</label>
                     <div class="col-md-3 input-group">
                         <select class="form-control CodingDetails">
-                            <option>Education: CC doesn't support vital organ failure/life threatening deteriortation</option>
-                            <option>Education: Consult not coded due to no requesting provider on file</option>
-                        </select>
-                        <div class="input-group-append" style="height: 38px;">
-                            <span class="input-group-text">
-                                &nbsp;<i id="Feedback" class="fa fa-check-circle fa-lg accept" aria-hidden="true"></i>
-                                &nbsp;<i id="Feedback" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-3 input-group">
-                        <select class="form-control CodingDetails" id="Feedback1" style="display:none;">
                             <option>Education: CC doesn't support vital organ failure/life threatening deteriortation</option>
                             <option>Education: Consult not coded due to no requesting provider on file</option>
                         </select>
@@ -164,15 +161,15 @@
         autoclose: true,
         todayHighlight: true
     });
-    $(".CodingDetails").attr("readonly", true);
+    //$(".CodingDetails").attr("readonly", false);
     $(".QADetails").attr("readonly", false);
-    $("#CodingDetails").hide();
     $("#qa").addClass('selected');
 
     $('#chkAll').change(function () {
         if ($(this).is(':checked')) {
             $('.fa-check-circle').addClass('accept');
             $('.fa-times-circle').removeClass('reject')
+            $('.QARevised').css("display", "none");
         }
         else {
             $('.fa-check-circle').removeClass('accept');
@@ -185,11 +182,14 @@
             $(this).toggleClass('accept');
             $(this).siblings().removeClass('reject');
             $("#" + id + "1").css("display", "none");
+            $("#" + id + "2").css("display", "none");
         }
         else if ($(this).hasClass('fa-times-circle')) {
             $(this).toggleClass('reject');
             $(this).siblings().removeClass('accept');
-            $("#" + id + "1").css("display", "block");
+            $("#" + id + "1").css("display", "flex");
+            $("#" + id + "2").css("display", "flex");
+            $("#chkAll").prop('checked', false);
         }
     });
 </script>
