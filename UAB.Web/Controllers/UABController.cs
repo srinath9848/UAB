@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using UAB.Models;
 using Microsoft.EntityFrameworkCore;
+using UAB.DAL;
+using UAB.DTO;
 
 namespace UAB.Controllers
 {
@@ -13,11 +15,13 @@ namespace UAB.Controllers
         UAB.DAL.Models.UABContext _dbcontext = null;
         public IActionResult CodingSummary()
         {
-            List<UAB.Models.UABDashboardDetails> lstworkitem = new List<UAB.Models.UABDashboardDetails>();
+            List<DashboardDTO> lstDto = new List<DashboardDTO>();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            lstDto = clinicalcaseOperations.GetChartCountByStatus();
 
-            lstworkitem.Add(new UABDashboardDetails() { ProjectName = "Phase1 - Ambulatory", AvailableCount = 1, IncorrectCount = 0, ApprovedCount = 0 });
-            lstworkitem.Add(new UABDashboardDetails() { ProjectName = "Phase1 - IP", AvailableCount = 0, IncorrectCount = 0, ApprovedCount = 0 });
-            lstworkitem.Add(new UABDashboardDetails() { ProjectName = "Phase2 - Pulmonology", AvailableCount = 0, IncorrectCount = 0, ApprovedCount = 0 });
+            //lstworkitem.Add(new DashboardDTO() { ProjectName = "Phase1 - Ambulatory", AvailableCount = 1, IncorrectCount = 0, ApprovedCount = 0 });
+            //lstworkitem.Add(new DashboardDTO() { ProjectName = "Phase1 - IP", AvailableCount = 0, IncorrectCount = 0, ApprovedCount = 0 });
+            //lstworkitem.Add(new DashboardDTO() { ProjectName = "Phase2 - Pulmonology", AvailableCount = 0, IncorrectCount = 0, ApprovedCount = 0 });
 
 
 
@@ -50,7 +54,7 @@ namespace UAB.Controllers
             //           )).ToList();
 
             //}
-            return View(lstworkitem);
+            return View(lstDto);
         }
 
         private object UABDashboardDetails()

@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UAB.DAL\UAB.DAL.csproj" />
+    <ProjectReference Include="..\UAB.DTO\UAB.DTO.csproj" />
   </ItemGroup>
 
 </Project>

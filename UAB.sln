@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UAB", "UAB.Web\UAB.csproj",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UAB.DAL", "UAB.DAL\UAB.DAL.csproj", "{72F9EC25-2147-4B53-AE6C-2A1BA1B2A41F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UAB.DTO", "UAB.DTO\UAB.DTO.csproj", "{DCE47E68-5FE9-46BE-A1E3-4155DF479A97}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{72F9EC25-2147-4B53-AE6C-2A1BA1B2A41F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72F9EC25-2147-4B53-AE6C-2A1BA1B2A41F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72F9EC25-2147-4B53-AE6C-2A1BA1B2A41F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCE47E68-5FE9-46BE-A1E3-4155DF479A97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCE47E68-5FE9-46BE-A1E3-4155DF479A97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCE47E68-5FE9-46BE-A1E3-4155DF479A97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCE47E68-5FE9-46BE-A1E3-4155DF479A97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
