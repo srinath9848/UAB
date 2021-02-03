@@ -78,18 +78,18 @@
                                     @{
                                         int ApprovedCount = Model.Where(x => x.ProjectName == item.ProjectName && x.StatusID == 3).Select(x => x.Cnt).FirstOrDefault();
                                     }
-                                    @if (ApprovedCount == 0)
+                                    @*@if (ApprovedCount == 0)
                                     {
                                         @ApprovedCount
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("ApprovedCharts", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
-                                    {
+                                    {*@
                                         @ApprovedCount
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("ApprovedCharts", "UAB")" class="btn btn-info btn-sm">Get Next</a>
-                                    }
+                                    @*}*@
                                 </td>
                             </tr>
                         }

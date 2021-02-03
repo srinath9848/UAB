@@ -89,6 +89,12 @@ namespace UAB.Controllers
         {
             return View();
         }
+
+        public IActionResult RebuttalCharts()
+        {
+            return View();
+        }
+
         public IActionResult ShadowQASummary()
         {
             return View();
