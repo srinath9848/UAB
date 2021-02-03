@@ -21,4 +21,8 @@
     <ProjectReference Include="..\UAB.DTO\UAB.DTO.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Scripts\Stored Procedures\" />
+  </ItemGroup>
+
 </Project>
