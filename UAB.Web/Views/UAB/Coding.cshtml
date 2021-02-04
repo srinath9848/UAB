@@ -1,11 +1,11 @@
-﻿
+﻿@model UAB.DTO.CodingSubmitDTO
 @{
     ViewData["Title"] = "Coding";
 }
 <div class="container-fluid">
     <div class="row">
-        <partial name="_InitialData" />
-        <partial name="_CodingDetails" />
+        <partial name="_InitialData" model=Model />
+        <partial name="_CodingDetails" model=Model />
     </div>
 </div>
 <style>
@@ -23,4 +23,5 @@
     });
     $("#coding").addClass('selected');
     $('.Approved').hide();
+
 </script>

@@ -30,11 +30,13 @@
         }
         else {
             $('.fa-check-circle').removeClass('accept');
+            $(".CodingDetails").hide();
         }
     });
 
     $('span i').click(function () {
         var id = $(this).attr('id');
+        alert(id);
         if ($(this).hasClass('fa-check-circle')) {
             $(this).toggleClass('accept');
             $(this).siblings().removeClass('reject');

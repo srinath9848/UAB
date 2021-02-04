@@ -1,4 +1,5 @@
-﻿<style type="text/css">
+﻿@model UAB.DTO.CodingSubmitDTO
+<style type="text/css">
     .col-md-3 {
         margin-left: 10px !important;
     }
@@ -12,72 +13,73 @@
         <div class="card-body">
             <h4 class="card-title">Coding Details</h4>
         </div>
-        <div class="form-group row">
-            <label class="col-md-3 m-t-15">Payor</label>
-            <div class="col-md-3">
-                <select class="form-control">
-                    <option>MCAL</option>
-                    <option>Commercial</option>
-                    <option>SP</option>
-                </select>
+        <form asp-action="Submit" asp-controller="UAB" method="POST">
+            <div class="form-group row">
+                <label class="col-md-3 m-t-15">Payor</label>
+                <div class="col-md-3">
+                    @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @class = "form-control" })
+                </div>
+                <label class="col-md-3 m-t-15">Note Title</label>
+                <div class="col-md-3">
+                    @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.NoteTitle, null, new { @class = "text-danger" })
+
+                    @*<textarea class="form-control"></textarea>*@
+                </div>
             </div>
-            <label class="col-md-3 m-t-15">Note Title</label>
-            <div class="col-md-3">
-                <textarea class="form-control"></textarea>
+            <div class="form-group row">
+                <label class="col-md-3 m-t-15">Provider</label>
+                <div class="col-md-3">
+                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control" })
+                </div>
+                <label class="col-md-3 m-t-15">CPT</label>
+                <div class="col-md-3">
+                    <select class="form-control">
+                        <option>31640</option>
+                        <option>31500</option>
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-md-3 m-t-15">Provider</label>
-            <div class="col-md-3">
-                <select class="form-control">
-                    <option>Bush, Nathan, APP</option>
-                    <option>Dillon, Kayce, APP</option>
-                </select>
+            <div class="form-group row">
+                <label class="col-md-3 m-t-15">Mod</label>
+                <div class="col-md-3">
+                    @Html.TextAreaFor(model => model.Mod, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.Mod, null, new { @class = "text-danger" })
+                    @*<input type="text" class="form-control" placeholder="Mod">*@
+                </div>
+                <label class="col-md-3 m-t-15">Dx 1-4 (code followed by a comma and space)</label>
+                <div class="col-md-3">
+                    @Html.TextAreaFor(model => model.Dx, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.Dx, null, new { @class = "text-danger" })
+                    @*<textarea class="form-control"></textarea>*@
+                </div>
             </div>
-            <label class="col-md-3 m-t-15">CPT</label>
-            <div class="col-md-3">
-                <select class="form-control">
-                    <option>31640</option>
-                    <option>31500</option>
-                </select>
+            <div class="form-group row">
+                <label class="col-md-3 m-t-15"> Feedback to Provider</label>
+                <div class="col-md-3">
+                    @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control" })
+                </div>
+                <label class="col-md-3 m-t-15">Coder Questions</label>
+                <div class="col-md-3">
+                    <textarea class="form-control"></textarea>
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-md-3 m-t-15">Mod</label>
-            <div class="col-md-3">
-                <input type="text" class="form-control" placeholder="Mod">
+            <div class="border-top">
+                <div class="card-body" style="text-align:right">
+                    @*<input value="btnSubmit" type="submit" class="btn btn-success Available">Submit</input>*@
+                    <button name="codingSubmit" value="btnSubmit" type="submit" class="btn btn-success Available">Save</button>
+                    <button value="btnHold" type="submit" class="btn btn-success Available">Save And GetNext</button>
+                    <button value="btnPostedCompleted" type="submit" class="btn btn-success Approved">Posted Completed</button>
+                </div>
             </div>
-            <label class="col-md-3 m-t-15">Dx 1-4 (code followed by a comma and space)</label>
-            <div class="col-md-3">
-                <textarea class="form-control"></textarea>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-md-3 m-t-15"> Feedback to Provider</label>
-            <div class="col-md-3">
-                <select class="form-control">
-                    <option>Education: CC doesn't support vital organ failure/life threatening deteriortation</option>
-                    <option>Education: Consult not coded due to no requesting provider on file</option>
-                </select>
-            </div>
-            <label class="col-md-3 m-t-15">Coder Questions</label>
-            <div class="col-md-3">
-                <textarea class="form-control"></textarea>
-            </div>
-        </div>
-        <div class="border-top">
-            <div class="card-body" style="text-align:right">
-                <button type="submit" class="btn btn-success Available">Submit</button>
-                <button type="submit" class="btn btn-danger Available">Hold</button>
-                <button type="submit" class="btn btn-success Approved">Posted Completed</button>
-            </div>
-        </div>
+            @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
+        </form>
     </div>
 </div>
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
 
-        
+
     });
 </script>

@@ -1,4 +1,5 @@
-﻿<style type="text/css">
+﻿@model UAB.DTO.CodingSubmitDTO
+<style type="text/css">
     .col-md-3 {
         margin-left: 10px !important;
         max-width: 20% !important;
@@ -18,17 +19,17 @@
                 <h4 class="card-title">Chart Details</h4>
             </div>*@
         <div class="row mb-12">
+            @*<div class="col-md-3">
+                    <label>List Name</label> <input type="text" value="PK-Pulm MICU BLUE" class="form-control" readonly>
+                </div>*@
             <div class="col-md-3">
-                <label>List Name</label> <input type="text" value="PK-Pulm MICU BLUE" class="form-control" readonly>
+                <label>MRN</label> <input type="text" value=@Model.CodingDTO.PatientMRN class="form-control" readonly>
             </div>
             <div class="col-lg-3">
-                <label>MRN</label> <input type="text" value="12345" class="form-control" readonly>
+                <label>Patient</label> <input type="text" value=@Model.CodingDTO.Name class="form-control" readonly>
             </div>
             <div class="col-lg-3">
-                <label>Patient</label> <input type="text" value="ABC" class="form-control" readonly>
-            </div>
-            <div class="col-lg-3">
-                <label>DOS</label> <input type="text" value="1/2/2021" class="form-control" readonly>
+                <label>DOS</label> <input type="text" value=@Model.CodingDTO.DateOfService class="form-control" readonly>
             </div>
         </div>
         <div class="card">

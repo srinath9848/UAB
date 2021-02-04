@@ -4,16 +4,16 @@
             <h4 class="card-title">Coding Details</h4>
         </div>
         <div class="form-group row" id="divChkAll">
-            <label class="col-md-7 m-t-15"></label>
+            <label class="col-md-4 m-t-15"></label>
             <div class="custom-control custom-checkbox mr-sm-2">
                 <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll">
-                <label class="custom-control-label" for="chkAll">Select All</label>
+                <label class="custom-control-label" for="chkAll">Accept All</label>
             </div>
         </div>
         <div class="form-group row">
             <label class="col-md-3 m-t-15">Payor</label>
             <div class="col-md-3 input-group">
-                <select class="form-control CodingDetails">
+                <select class="form-control">
                     <option selected>MCAL</option>
                     <option>Commercial</option>
                     <option>SP</option>
@@ -39,7 +39,7 @@
         <div class="form-group row">
             <label class="col-md-3 m-t-15">Provider</label>
             <div class="col-md-3 input-group">
-                <select class="form-control CodingDetails">
+                <select class="form-control">
                     <option>Bush, Nathan, APP</option>
                     <option>Dillon, Kayce, APP</option>
                 </select>
@@ -50,8 +50,8 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-3 input-group">
-                <select class="form-control QARevised" id="Provider1" style="display:none;">
+            <div class="col-md-3 input-group CodingDetails">
+                <select class="form-control" id="Provider1" style="display:none;">
                     <option>Bush, Nathan, APP</option>
                     <option>Dillon, Kayce, APP</option>
                 </select>
@@ -60,7 +60,7 @@
         <div class="form-group row">
             <label class="col-md-3 m-t-15">CPT</label>
             <div class="col-md-3 input-group">
-                <select class="form-control CodingDetails">
+                <select class="form-control">
                     <option selected>31640</option>
                     <option>31500</option>
                 </select>
@@ -71,7 +71,7 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-3 input-group">
+            <div class="col-md-3 input-group CodingDetails">
                 <select class="form-control" id="CPT1" style="display:block;">
                     <option>31640</option>
                     <option selected>31500</option>
@@ -84,14 +84,14 @@
         <div class="form-group row">
             <label class="col-md-3 m-t-15">Mod</label>
             <div class="col-md-3 input-group">
-                <input type="text" class="form-control CodingDetails" value="26" placeholder="Mod">
+                <input type="text" class="form-control" value="26" placeholder="Mod">
                 <span class="input-group-text">
                     &nbsp;<i id="Mod" class="fa fa-check-circle fa-lg accept" aria-hidden="true"></i>
                     &nbsp;<i id="Mod" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                 </span>
             </div>
             <div class="col-md-3 input-group">
-                <input type="text" class="form-control" placeholder="Mod" id="Mod1" style="display:none">
+                <input type="text" class="form-control CodingDetails" placeholder="Mod" id="Mod1" style="display:none">
             </div>
         </div>
         <div class="form-group row">
@@ -100,20 +100,20 @@
         <div class="form-group row">
             <label class="col-md-3 m-t-15"></label>
             <div class="col-md-3 input-group">
-                <textarea class="form-control CodingDetails">R51,J98.4,R52</textarea>
+                <textarea class="form-control">R51,J98.4,R52</textarea>
                 <span class="input-group-text">
                     &nbsp;<i id="Dx" class="fa fa-check-circle fa-lg accept" aria-hidden="true"></i>
                     &nbsp;<i id="Dx" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                 </span>
             </div>
             <div class="col-md-3 input-group">
-                <textarea class="form-control" id="Dx1" style="display:none"></textarea>
+                <textarea class="form-control CodingDetails" id="Dx1" style="display:none"></textarea>
             </div>
         </div>
         <div class="form-group row">
             <label class="col-md-3 m-t-15"> Feedback to Provider</label>
             <div class="col-md-3 input-group">
-                <select class="form-control CodingDetails">
+                <select class="form-control">
                     <option>Education: CC doesn't support vital organ failure/life threatening deteriortation</option>
                     <option>Education: Consult not coded due to no requesting provider on file</option>
                 </select>
@@ -134,19 +134,41 @@
         <div class="form-group row">
             <label class="col-md-3 m-t-15">Coder Questions</label>
             <div class="col-md-3">
-                <textarea class="form-control CodingDetails"></textarea>
+                <textarea class="form-control"></textarea>
             </div>
 
             <label class="col-md-3 m-t-15">Note Title</label>
             <div class="col-md-3">
-                <textarea class="form-control CodingDetails">Some Text</textarea>
+                <textarea class="form-control">Some Text</textarea>
             </div>
         </div>
         @*<div class="border-top" id="CodingDetails">
-            <div class="card-body" style="text-align:right">
-                <button type="submit" class="btn btn-success">Submit</button>
-                <button type="submit" class="btn btn-danger">Hold</button>
-            </div>
-        </div>*@
+                <div class="card-body" style="text-align:right">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                    <button type="submit" class="btn btn-danger">Hold</button>
+                </div>
+            </div>*@
     </div>
 </div>
+<style>
+    #sortable-1 {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 25%;
+    }
+
+    /*     #sortable-1 li {
+            margin: 0 3px 3px 3px;
+            padding: 0.4em;
+            padding-left: 1.5em;
+            font-size: 17px;
+            height: 16px;
+        }*/
+
+    .default {
+        background: #cedc98;
+        border: 1px solid #DDDDDD;
+        color: #333333;
+    }
+</style>
