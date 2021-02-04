@@ -277,6 +277,29 @@ namespace UAB.DAL
             }
         }
 
+        public void AddProviderFeedback(ProviderFeedback providerFeedback)
+        {
+            using (var context = new UABContext())
+            {
+                using (var cnn = context.Database.GetDbConnection())
+                {
+                    //SqlCommand cmd = new SqlCommand("UspAddProvider");
+                    var cmm = cnn.CreateCommand();
+                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspAddProviderFeedback]";
+                    cmm.Connection = cnn;
+
+                    SqlParameter feedback = new SqlParameter();
+                    feedback.ParameterName = "@Feedback";
+                    feedback.Value = providerFeedback.Feedback;
+                    cmm.Parameters.Add(feedback);
+
+                    cnn.Open();
+                    cmm.ExecuteNonQuery();
+                }
+            }
+        }
+
         public List<Payor> GetPayors()
         {
             Payor payor = new Payor();

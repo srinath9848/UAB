@@ -12,7 +12,7 @@ namespace UAB.DAL.Models
         }
 
         public int ProviderFeedbackId { get; set; }
-        public int Feedback { get; set; }
+        public string Feedback { get; set; }
 
         public virtual ICollection<Chart> Chart { get; set; }
         public virtual ICollection<WorkItem> WorkItem { get; set; }

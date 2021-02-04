@@ -145,26 +145,28 @@ namespace UAB.Controllers
             ViewBag.lstPayor = lstPayor;
             return View();
         }
-        public IActionResult Provider()
-        {
-            using (_dbcontext = new DAL.Models.UABContext())
-            {
-                //Provider provider = new Provider();
-                //var providerList = _dbcontext.Provider.Select(x => x).ToList();
-                //return View(providerList);
-                return View();
-            }
-        }
 
-        public IActionResult Payor()
+        [HttpPost]
+        public IActionResult AddSettingsProviderFeedback(ProviderFeedback providerFeedback)
         {
-            using (_dbcontext = new DAL.Models.UABContext())
+            if (ModelState.IsValid)
             {
-                //Payor payor = new Payor();
-                //var payorList = _dbcontext.Payor.Select(x => x).ToList();
-                //return View(payorList);
-                return View();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                clinicalcaseOperations.AddProviderFeedback(providerFeedback);
+                List<BindDTO> lstProviderFeedback = new List<BindDTO>();
+                lstProviderFeedback = clinicalcaseOperations.GetProviderFeedbacksList();
+                ViewBag.lstProviderFeedback = lstProviderFeedback;
             }
+            return View("SettingsProviderFeedback");
+        }
+        [HttpGet]
+        public IActionResult SettingsProviderFeedback()
+        {
+            List<BindDTO> lstProviderFeedback = new List<BindDTO>();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            lstProviderFeedback = clinicalcaseOperations.GetProviderFeedbacksList();
+            ViewBag.lstProviderFeedback = lstProviderFeedback;
+            return View();
         }
     }
 }
