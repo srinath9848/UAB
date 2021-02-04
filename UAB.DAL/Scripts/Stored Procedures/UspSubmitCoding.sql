@@ -1,10 +1,14 @@
-create PROCEDURE UspSubmitCoding  --'26','some text',1,0,1,null
+alter PROCEDURE UspSubmitCoding  --1,'some text',1,'71045',26,'J98.4',1,1,1,null
+@PayorID INT,
+@NoteTitle VARCHAR(200) = NULL,
+@ProviderID INT,
+@CPTCode VARCHAR(5) = '71045',
 @Mod VARCHAR(25) = null,
-@NoteTitle VARCHAR(200),
+@Dx VARCHAR(MAX),
+@ProviderFeedbackID INT,
+@CoderQuestion VARCHAR(MAX) =NULL,
 @ClinicalcaseID INT,
-@AssignedTo INT,
-@ProviderFeedbackID INT = 1,
-@CPTCode VARCHAR(5) = 'J98.4'
+@AssignedTo INT
 AS
 BEGIN
 
@@ -61,6 +65,18 @@ SELECT @VersionID = SCOPE_IDENTITY()
 
 INSERT INTO CptCode(ClinicalCaseId,VersionId,CPTCode,Modifier)
 SELECT @ClinicalcaseID,@VersionID,@CPTCode,@Mod
+
+INSERT INTO DxCode(ClinicalCaseId,VersionId,DxCode)
+SELECT @ClinicalcaseID,@VersionID,value FROM dbo.fnSplit(NULLIF(@Dx, ''), ',')   
+
+INSERT INTO WorkitemProvider(ClinicalCaseId,VersionId,ProviderID,PayorID,ProviderFeedbackID)
+SELECT @ClinicalcaseID,@VersionID,@ProviderID,@PayorID,@ProviderFeedbackID
+
+IF @CoderQuestion IS NOT NULL
+begin
+INSERT INTO CoderQuestion(ClinicalCaseId,Question,QuestionBy,QuestionDate)
+SELECT @ClinicalcaseID,@CoderQuestion,0,GETDATE()
+end
 
 
  COMMIT TRANSACTION      

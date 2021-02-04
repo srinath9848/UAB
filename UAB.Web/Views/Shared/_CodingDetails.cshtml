@@ -31,6 +31,7 @@
                 <label class="col-md-3 m-t-15">Provider</label>
                 <div class="col-md-3">
                     @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ProviderID, null, new { @class = "text-danger" })
                 </div>
                 <label class="col-md-3 m-t-15">CPT</label>
                 <div class="col-md-3">
@@ -58,10 +59,12 @@
                 <label class="col-md-3 m-t-15"> Feedback to Provider</label>
                 <div class="col-md-3">
                     @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ProviderFeedbackID, null, new { @class = "text-danger" })
                 </div>
                 <label class="col-md-3 m-t-15">Coder Questions</label>
                 <div class="col-md-3">
-                    <textarea class="form-control"></textarea>
+                    @Html.TextAreaFor(model => model.CoderQuestion, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.NoteTitle, null, new { @class = "text-danger" })
                 </div>
             </div>
             <div class="border-top">

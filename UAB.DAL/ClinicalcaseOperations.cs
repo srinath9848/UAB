@@ -90,18 +90,52 @@ namespace UAB.DAL
             using (var context = new UABContext())
             {
                 var param = new SqlParameter[] {
+                     new SqlParameter() {
+                            ParameterName = "@PayorID",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = codingSubmitDTO.PayorID
+                        },
+                      new SqlParameter() {
+                            ParameterName = "@NoteTitle",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = codingSubmitDTO.NoteTitle
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@ProviderID",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = codingSubmitDTO.ProviderID
+                        },
+                         new SqlParameter() {
+                            ParameterName = "@CPTCode",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = codingSubmitDTO.CPTCode
+                        },
                         new SqlParameter() {
                             ParameterName = "@Mod",
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = codingSubmitDTO.Mod
                         }
-                        ,   new SqlParameter() {
-                            ParameterName = "@NoteTitle",
+                        ,  new SqlParameter() {
+                            ParameterName = "@Dx",
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = codingSubmitDTO.NoteTitle
-                        },   new SqlParameter() {
+                            Value = codingSubmitDTO.Dx
+                        } , new SqlParameter() {
+                            ParameterName = "@ProviderFeedbackID",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = codingSubmitDTO.ProviderFeedbackID
+                        }, new SqlParameter() {
+                            ParameterName = "@CoderQuestion",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = codingSubmitDTO.CoderQuestion
+                        } ,   new SqlParameter() {
                             ParameterName = "@ClinicalcaseID",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
@@ -111,17 +145,6 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = codingSubmitDTO.AssignedTo
-                        },   new SqlParameter() {
-                            ParameterName = "@ProviderFeedbackID",
-                            SqlDbType =  System.Data.SqlDbType.Int,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = codingSubmitDTO.ProviderFeedbackID
-                        }
-                        ,   new SqlParameter() {
-                            ParameterName = "@CPTCode",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = codingSubmitDTO.CPTCode
                         }
                 };
 
@@ -223,7 +246,7 @@ namespace UAB.DAL
                 }
             }
             return lstDto;
-        } 
+        }
         #endregion
 
         public List<Provider> GetProviders()
@@ -231,9 +254,9 @@ namespace UAB.DAL
             Provider provider = new Provider();
             List<Provider> lstProvider = new List<Provider>();
 
-            using(var context=new UABContext())
+            using (var context = new UABContext())
             {
-                using(var cnn = context.Database.GetDbConnection())
+                using (var cnn = context.Database.GetDbConnection())
                 {
                     var cmm = cnn.CreateCommand();
                     cmm.CommandType = System.Data.CommandType.StoredProcedure;

@@ -42,7 +42,7 @@ namespace UAB.Controllers
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
             ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
-            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList(); 
+            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             #endregion
 
             return View(codingSubmitDTO);
@@ -58,7 +58,6 @@ namespace UAB.Controllers
                 submitHold();
 
             List<DashboardDTO> lstDto = getCodingSummary();
-
             return View("CodingSummary", lstDto);
         }
         void submitHold() { }
