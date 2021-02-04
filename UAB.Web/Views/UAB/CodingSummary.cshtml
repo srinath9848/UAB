@@ -28,7 +28,7 @@
                                 <b>Incorrect Charts</b>
                             </th>
                             <th scope="col" style="text-align:center">
-                                <b>Approved Charts</b>
+                                <b>ReadyForPosting Charts</b>
                             </th>
                         </tr>
                     </thead>
@@ -54,12 +54,12 @@
                                     {
                                         @AvailableCount
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("Coding", "UAB")" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("Coding", "UAB",new { StatusID = 1,ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">
                                     @{
-                                        int IncorrectCount = Model.Where(x => x.ProjectName == item.ProjectName && x.StatusID == 2).Select(x => x.Cnt).FirstOrDefault();
+                                        int IncorrectCount = Model.Where(x => x.ProjectName == item.ProjectName && (x.StatusID == 9 || x.StatusID == 10)).Select(x => x.Cnt).FirstOrDefault();
                                     }
                                     @if (IncorrectCount == 0)
                                     {
@@ -71,25 +71,25 @@
                                     {
                                         @IncorrectCount
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("IncorrectCharts", "UAB")" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("IncorrectCharts", "UAB",new { StatusID = 9,ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">
                                     @{
                                         int ApprovedCount = Model.Where(x => x.ProjectName == item.ProjectName && x.StatusID == 3).Select(x => x.Cnt).FirstOrDefault();
                                     }
-                                    @*@if (ApprovedCount == 0)
+                                    @if (ApprovedCount == 0)
                                     {
                                         @ApprovedCount
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("ApprovedCharts", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
-                                    {*@
+                                    {
                                         @ApprovedCount
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("ApprovedCharts", "UAB")" class="btn btn-info btn-sm">Get Next</a>
-                                    @*}*@
+                                        <a href="@Url.Action("ApprovedCharts", "UAB",new { StatusID = 3,ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                    }
                                 </td>
                             </tr>
                         }
