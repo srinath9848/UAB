@@ -7,6 +7,7 @@ using UAB.Models;
 using Microsoft.EntityFrameworkCore;
 using UAB.DAL;
 using UAB.DTO;
+using UAB.DAL.Models;
 
 namespace UAB.Controllers
 {
@@ -102,6 +103,74 @@ namespace UAB.Controllers
         public IActionResult ShadowQA()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddSettingsProvider(Provider provider)
+        {
+            if (ModelState.IsValid)
+            {
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                clinicalcaseOperations.AddProvider(provider);
+                List<Provider> lstProvider = new List<Provider>();
+                lstProvider = clinicalcaseOperations.GetProviders();
+                ViewBag.lstProvider = lstProvider;
+            }
+            return View("SettingsProvider");
+        }
+
+        [HttpGet]
+        public IActionResult SettingsProvider()
+        {
+            List<Provider> lstProvider = new List<Provider>();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            lstProvider = clinicalcaseOperations.GetProviders();
+            ViewBag.lstProvider = lstProvider;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddSettingsPayor(Payor payor)
+        {
+            if (ModelState.IsValid)
+            {
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                clinicalcaseOperations.AddPayor(payor);
+                List<Payor> lstPayor = new List<Payor>();
+                lstPayor = clinicalcaseOperations.GetPayors();
+                ViewBag.lstPayor = lstPayor;
+            }
+            return View("SettingsPayor");
+        }
+        [HttpGet]
+        public IActionResult SettingsPayor()
+        {
+            List<Payor> lstPayor = new List<Payor>();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            lstPayor = clinicalcaseOperations.GetPayors();
+            ViewBag.lstPayor = lstPayor;
+            return View();
+        }
+        public IActionResult Provider()
+        {
+            using (_dbcontext = new DAL.Models.UABContext())
+            {
+                //Provider provider = new Provider();
+                //var providerList = _dbcontext.Provider.Select(x => x).ToList();
+                //return View(providerList);
+                return View();
+            }
+        }
+
+        public IActionResult Payor()
+        {
+            using (_dbcontext = new DAL.Models.UABContext())
+            {
+                //Payor payor = new Payor();
+                //var payorList = _dbcontext.Payor.Select(x => x).ToList();
+                //return View(payorList);
+                return View();
+            }
         }
     }
 }

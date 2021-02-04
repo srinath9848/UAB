@@ -27,6 +27,7 @@ namespace UAB.DAL.Models
         public virtual DbSet<List> List { get; set; }
         public virtual DbSet<Project> Project { get; set; }
         public virtual DbSet<Provider> Provider { get; set; }
+        public virtual DbSet<Payor> Payor { get; set; }
         public virtual DbSet<ProviderFeedback> ProviderFeedback { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<WorkItem> WorkItem { get; set; }

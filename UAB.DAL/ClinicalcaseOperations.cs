@@ -48,5 +48,106 @@ namespace UAB.DAL
             }
             return lstDto;
         }
+
+        public List<Provider> GetProviders()
+        {
+            Provider provider = new Provider();
+            List<Provider> lstProvider = new List<Provider>();
+
+            using(var context=new UABContext())
+            {
+                using(var cnn = context.Database.GetDbConnection())
+                {
+                    var cmm = cnn.CreateCommand();
+                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspGetProvider]";
+                    //cmm.Parameters.AddRange(param);
+                    cmm.Connection = cnn;
+                    cnn.Open();
+                    var reader = cmm.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        provider = new Provider();
+                        provider.Name = Convert.ToString(reader["Name"]);
+                        lstProvider.Add(provider);
+                    }
+                }
+            }
+            return lstProvider;
+        }
+
+        public void AddProvider(Provider provider)
+        {
+            using (var context = new UABContext())
+            {
+                using (var cnn = context.Database.GetDbConnection())
+                {
+                    //SqlCommand cmd = new SqlCommand("UspAddProvider");
+                    var cmm = cnn.CreateCommand();
+                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspAddProvider]";
+                    cmm.Connection = cnn;
+
+                    SqlParameter name = new SqlParameter();
+                    name.ParameterName = "@Name";
+                    name.Value = provider.Name;
+                    cmm.Parameters.Add(name);
+
+                    cnn.Open();
+                    cmm.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public List<Payor> GetPayors()
+        {
+            Payor payor = new Payor();
+            List<Payor> lstPayor = new List<Payor>();
+
+            using (var context = new UABContext())
+            {
+                using (var cnn = context.Database.GetDbConnection())
+                {
+                    var cmm = cnn.CreateCommand();
+                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspGetPayor]";
+                    //cmm.Parameters.AddRange(param);
+                    cmm.Connection = cnn;
+                    cnn.Open();
+                    var reader = cmm.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        payor = new Payor();
+                        payor.Name = Convert.ToString(reader["Name"]);
+                        lstPayor.Add(payor);
+                    }
+                }
+            }
+            return lstPayor;
+        }
+
+        public void AddPayor(Payor payor)
+        {
+            using (var context = new UABContext())
+            {
+                using (var cnn = context.Database.GetDbConnection())
+                {
+                    var cmm = cnn.CreateCommand();
+                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspAddPayor]";
+                    cmm.Connection = cnn;
+
+                    SqlParameter name = new SqlParameter();
+                    name.ParameterName = "@Name";
+                    name.Value = payor.Name;
+                    cmm.Parameters.Add(name);
+
+                    cnn.Open();
+                    cmm.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }

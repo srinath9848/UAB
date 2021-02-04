@@ -101,6 +101,27 @@
                                 <i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Shadow QA</span>
                             </a>
                         </li>
+                        <li id="settings" class="sidebar-item">
+                            <a class="sidebar-link has-arrow waves-effect waves-dark sidebar-link" href="/">
+                                <i class="mdi mdi-settings"></i><span class="hide-menu">Settings</span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse first-level">
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsProvider">
+                                        <i class="mdi mdi-note-outline"></i><span class="hide-menu">
+                                            Provider
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsPayor">
+                                        <i class="mdi mdi-note-plus"></i><span class="hide-menu">
+                                            Payor
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
