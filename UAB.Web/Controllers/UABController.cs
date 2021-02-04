@@ -38,6 +38,12 @@ namespace UAB.Controllers
             CodingSubmitDTO codingSubmitDTO = new CodingSubmitDTO();
             codingSubmitDTO.CodingDTO = clinicalcaseOperations.GetNext(StatusID, ProjectID);
 
+            #region binding data
+            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
+            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
+            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList(); 
+            #endregion
+
             return View(codingSubmitDTO);
         }
         [HttpPost]

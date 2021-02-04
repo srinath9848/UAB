@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 using UAB.DAL.Models;
 using UAB.DTO;
@@ -138,5 +139,91 @@ namespace UAB.DAL
             }
             return dto;
         }
+
+        #region binding data
+        public List<BindDTO> GetPayorsList()
+        {
+            List<BindDTO> lstDto = new List<BindDTO>();
+            using (var context = new UABContext())
+            {
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[uspgetpayor]";
+                    cmd.Connection = con;
+
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        BindDTO dto = new BindDTO()
+                        {
+                            ID = Convert.ToInt32(reader["PayorId"]),
+                            Name = Convert.ToString(reader["Name"])
+                        };
+                        lstDto.Add(dto);
+                    }
+                }
+            }
+            return lstDto;
+        }
+
+        public List<BindDTO> GetProvidersList()
+        {
+            List<BindDTO> lstDto = new List<BindDTO>();
+            using (var context = new UABContext())
+            {
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[uspgetprovider]";
+                    cmd.Connection = con;
+
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        BindDTO dto = new BindDTO()
+                        {
+                            ID = Convert.ToInt32(reader["ProviderID"]),
+                            Name = Convert.ToString(reader["Name"])
+                        };
+                        lstDto.Add(dto);
+                    }
+                }
+            }
+            return lstDto;
+        }
+
+        public List<BindDTO> GetProviderFeedbacksList()
+        {
+            List<BindDTO> lstDto = new List<BindDTO>();
+            using (var context = new UABContext())
+            {
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[UspGetProviderFeedback]";
+                    cmd.Connection = con;
+
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        BindDTO dto = new BindDTO()
+                        {
+                            ID = Convert.ToInt32(reader["ProviderFeedbackId"]),
+                            Name = Convert.ToString(reader["Feedback"])
+                        };
+                        lstDto.Add(dto);
+                    }
+                }
+            }
+            return lstDto;
+        } 
+        #endregion
     }
 }

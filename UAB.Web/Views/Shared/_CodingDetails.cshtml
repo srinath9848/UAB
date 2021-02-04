@@ -17,11 +17,7 @@
             <div class="form-group row">
                 <label class="col-md-3 m-t-15">Payor</label>
                 <div class="col-md-3">
-                    <select class="form-control">
-                        <option>MCAL</option>
-                        <option>Commercial</option>
-                        <option>SP</option>
-                    </select>
+                    @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @class = "form-control" })
                 </div>
                 <label class="col-md-3 m-t-15">Note Title</label>
                 <div class="col-md-3">
@@ -34,10 +30,7 @@
             <div class="form-group row">
                 <label class="col-md-3 m-t-15">Provider</label>
                 <div class="col-md-3">
-                    <select class="form-control">
-                        <option>Bush, Nathan, APP</option>
-                        <option>Dillon, Kayce, APP</option>
-                    </select>
+                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control" })
                 </div>
                 <label class="col-md-3 m-t-15">CPT</label>
                 <div class="col-md-3">
@@ -64,10 +57,7 @@
             <div class="form-group row">
                 <label class="col-md-3 m-t-15"> Feedback to Provider</label>
                 <div class="col-md-3">
-                    <select class="form-control">
-                        <option value="1">Education: CC doesn't support vital organ failure/life threatening deteriortation</option>
-                        <option value="2">Education: Consult not coded due to no requesting provider on file</option>
-                    </select>
+                    @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control" })
                 </div>
                 <label class="col-md-3 m-t-15">Coder Questions</label>
                 <div class="col-md-3">
