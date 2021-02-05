@@ -35,10 +35,8 @@
                 </div>
                 <label class="col-md-3 m-t-15">CPT</label>
                 <div class="col-md-3">
-                    <select class="form-control">
-                        <option>31640</option>
-                        <option>31500</option>
-                    </select>
+                    @Html.TextAreaFor(model => model.CPTCode, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.CPTCode, null, new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group row">
@@ -76,17 +74,4 @@
         </form>
     </div>
 </div>
-<script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
-<script src="~/dashboardassets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        //$("#codingSubmit").click(function () {
-        //    if ($("#PayorID option:selected").text() === "--Select--") {
-        //        event.preventdefault();
-        //        return false;
-        //    }
-        //});
 
-    });
-</script>

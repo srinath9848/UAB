@@ -105,12 +105,12 @@ namespace UAB.Controllers
             if (ModelState.IsValid)
             {
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-                clinicalcaseOperations.AddProvider(provider);
-                List<Provider> lstProvider = new List<Provider>();
-                lstProvider = clinicalcaseOperations.GetProviders();
-                ViewBag.lstProvider = lstProvider;
+                if (provider.ProviderId == null)
+                    clinicalcaseOperations.AddProvider(provider);
+                else
+                    clinicalcaseOperations.AddProvider(provider); // Update
             }
-            return View("SettingsProvider");
+            return RedirectToAction("SettingsProvider");
         }
 
         [HttpGet]
@@ -122,6 +122,53 @@ namespace UAB.Controllers
             ViewBag.lstProvider = lstProvider;
             return View();
         }
+
+        [HttpGet]
+        public ActionResult Add_EditProvider(int id = 0)
+        {
+            Provider obj = new Provider();
+            if (id != 0)
+            {
+                List<Provider> lstProvider = new List<Provider>();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                lstProvider = clinicalcaseOperations.GetProviders();
+                var res = lstProvider.Where(a => a.ProviderId == id).FirstOrDefault();
+                obj = res;
+            }
+            return PartialView("_AddEditProvider", obj);
+        }
+
+        [HttpGet]
+        public IActionResult DeleteProvider(int id)
+        {
+            Provider obj = new Provider();
+            if (id != 0)
+            {
+                List<Provider> lstProvider = new List<Provider>();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                lstProvider = clinicalcaseOperations.GetProviders();
+                var res = lstProvider.Where(a => a.ProviderId == id).FirstOrDefault();
+                obj = res;
+            }
+            return PartialView("_DeleteProvider", obj);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteProvider(Provider provider)
+        {
+            try
+            {
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                if (provider.ProviderId != 0)
+                    clinicalcaseOperations.AddProvider(provider); // Delete
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = ex.Message;
+            }
+            return RedirectToAction("SettingsProvider");
+        }
+
 
         [HttpPost]
         public IActionResult AddSettingsPayor(Payor payor)
