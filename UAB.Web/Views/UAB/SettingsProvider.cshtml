@@ -14,37 +14,32 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Provider</h4>
+                    <h5 class="card-title">Provider</h5>
+                    <br />
                     <div id="modalContent"></div>
+                    <div class="table-responsive">
+                        <table id="Provider" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in result)
+                                {
+                                    <tr>
+                                        <td>@item.Name</td>
+                                        <td>
+                                            <button type="button" style="cursor: pointer" class="btn btn-sm btn-info btn-fill" onclick="Edit('@item.ProviderId')"><i class="fa fa-edit"></i>Edit</button>
+                                            <button type="button" style="cursor: pointer" class="btn btn-sm btn-danger btn-fill" onclick="Delete('@item.ProviderId')"><i class="fa fa-times"></i>Delete</button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <table class="table table-striped table-bordered dataTable">
-                    <thead>
-                        <tr>
-                            <th scope="col">
-                                <b>Name</b>
-                            </th>
-                            <th scope="col" style="text-align:center">
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in result)
-                        {
-                            <tr>
-                                <td scope="col">
-                                    @item.Name
-                                </td>
-                                <td>
-                                    <button type="button" style="cursor: pointer" class="btn btn-info btn-fill" onclick="Edit('@item.ProviderId')"><i class="fa fa-edit"></i>Edit</button>
-                                    <button type="button" style="cursor: pointer" class="btn btn-danger btn-fill" onclick="Delete('@item.ProviderId')"><i class="fa fa-times"></i>Delete</button>
-
-                                </td>
-                                @*<th scope="col" style="text-align:center">5&nbsp;&nbsp;&nbsp;&nbsp; <a style="pointer-events: none" href="@Url.Action("ShadowQA","UAB")" class="btn btn-info btn-sm">Get Next</a></th>*@
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-
             </div>
         </div>
     </div>
@@ -52,8 +47,15 @@
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
 <script src="~/dashboardassets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
+<script src="~/dashboardassets/extra-libs/DataTables/datatables.js"></script>
 <script type="text/javascript">
+
+    $('#Provider').DataTable();
+    $("#Provider_length").html('');
+    $("#Provider_filter").html('');
+
     $(document).ready(function () {
+
     Add= function () {
         $.ajax({
             type: "GET",
