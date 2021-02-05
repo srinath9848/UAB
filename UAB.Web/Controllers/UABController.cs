@@ -58,6 +58,7 @@ namespace UAB.Controllers
                 submitHold();
 
             List<DashboardDTO> lstDto = getCodingSummary();
+            TempData["Success"] = "Chats Details submitted succesfully !";
             return View("CodingSummary", lstDto);
         }
         void submitHold() { }

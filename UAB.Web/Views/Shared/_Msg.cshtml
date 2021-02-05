@@ -1,0 +1,31 @@
+﻿<div id="Msg" class="autohide">
+    @{
+        if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissable">
+                <i class="fa fa-check"></i>
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                @Html.Raw(TempData["Success"].ToString())
+            </div>
+        }
+        else if (TempData["Warning"] != null)
+        {
+            <div class="alert alert-warning alert-dismissable">
+                <i class="fa fa-warning"></i>
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                @Html.Raw(TempData["Warning"].ToString())
+            </div>
+        }
+        else if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissable">
+                <i class="fa fa-danger"></i>
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                @Html.Raw(TempData["Error"].ToString())
+            </div>
+        }
+    }
+</div>
+
+
+
