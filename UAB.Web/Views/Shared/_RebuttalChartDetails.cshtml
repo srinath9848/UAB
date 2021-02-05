@@ -1,8 +1,10 @@
-﻿<div class="col-md-12">
+﻿@model UAB.DTO.CodingSubmitDTO
+<div class="col-md-12">
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Coding Details</h4>
         </div>
+        @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
         <div class="form-group row" id="divChkAll">
             <label class="col-md-4 m-t-15"></label>
             <div class="custom-control custom-checkbox mr-sm-2">
@@ -13,11 +15,7 @@
         <div class="form-group row">
             <label class="col-md-3 m-t-15">Payor</label>
             <div class="col-md-3 input-group">
-                <select class="form-control">
-                    <option selected>MCAL</option>
-                    <option>Commercial</option>
-                    <option>SP</option>
-                </select>
+                @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @class = "form-control" })
                 <div class="input-group-append">
                     <span class="input-group-text">
                         &nbsp;<i id="extraPayor" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
@@ -39,10 +37,7 @@
         <div class="form-group row">
             <label class="col-md-3 m-t-15">Provider</label>
             <div class="col-md-3 input-group">
-                <select class="form-control">
-                    <option>Bush, Nathan, APP</option>
-                    <option>Dillon, Kayce, APP</option>
-                </select>
+                @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @class = "form-control" })
                 <div class="input-group-append">
                     <span class="input-group-text">
                         &nbsp;<i id="Provider" class="fa fa-check-circle fa-lg accept" aria-hidden="true"></i>
@@ -60,10 +55,7 @@
         <div class="form-group row">
             <label class="col-md-3 m-t-15">CPT</label>
             <div class="col-md-3 input-group">
-                <select class="form-control">
-                    <option selected>31640</option>
-                    <option>31500</option>
-                </select>
+                @Html.TextAreaFor(model => model.CPTCode, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
                 <div class="input-group-append">
                     <span class="input-group-text">
                         &nbsp;<i id="CPT" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
@@ -84,7 +76,7 @@
         <div class="form-group row">
             <label class="col-md-3 m-t-15">Mod</label>
             <div class="col-md-3 input-group">
-                <input type="text" class="form-control" value="26" placeholder="Mod">
+                @Html.TextAreaFor(model => model.Mod, new { @class = "form-control", @value = "26" })
                 <span class="input-group-text">
                     &nbsp;<i id="Mod" class="fa fa-check-circle fa-lg accept" aria-hidden="true"></i>
                     &nbsp;<i id="Mod" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
@@ -100,7 +92,7 @@
         <div class="form-group row">
             <label class="col-md-3 m-t-15"></label>
             <div class="col-md-3 input-group">
-                <textarea class="form-control">R51,J98.4,R52</textarea>
+                @Html.TextAreaFor(model => model.Dx, new { @class = "form-control", @value = "R51,J98.4,R52" })
                 <span class="input-group-text">
                     &nbsp;<i id="Dx" class="fa fa-check-circle fa-lg accept" aria-hidden="true"></i>
                     &nbsp;<i id="Dx" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
@@ -113,10 +105,7 @@
         <div class="form-group row">
             <label class="col-md-3 m-t-15"> Feedback to Provider</label>
             <div class="col-md-3 input-group">
-                <select class="form-control">
-                    <option>Education: CC doesn't support vital organ failure/life threatening deteriortation</option>
-                    <option>Education: Consult not coded due to no requesting provider on file</option>
-                </select>
+                @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @class = "form-control" })
                 <div class="input-group-append" style="height: 38px;">
                     <span class="input-group-text">
                         &nbsp;<i id="Feedback" class="fa fa-check-circle fa-lg accept" aria-hidden="true"></i>
@@ -134,20 +123,20 @@
         <div class="form-group row">
             <label class="col-md-3 m-t-15">Coder Questions</label>
             <div class="col-md-3">
-                <textarea class="form-control"></textarea>
+                @Html.TextAreaFor(model => model.CoderQuestion, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
             </div>
 
             <label class="col-md-3 m-t-15">Note Title</label>
             <div class="col-md-3">
-                <textarea class="form-control">Some Text</textarea>
+                @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
             </div>
         </div>
         @*<div class="border-top" id="CodingDetails">
-                <div class="card-body" style="text-align:right">
-                    <button type="submit" class="btn btn-success">Submit</button>
-                    <button type="submit" class="btn btn-danger">Hold</button>
-                </div>
-            </div>*@
+            <div class="card-body" style="text-align:right">
+                <button type="submit" class="btn btn-success">Submit</button>
+                <button type="submit" class="btn btn-danger">Hold</button>
+            </div>
+        </div>*@
     </div>
 </div>
 <style>

@@ -1,11 +1,11 @@
-﻿@model UAB.DTO.CodingDTO
+﻿@model UAB.DTO.CodingSubmitDTO
 @{
     ViewData["Title"] = "QA";
 }
 <div class="container-fluid">
     <div class="row">
         <partial name="_InitialData" model=Model />
-        <partial name="_RebuttalChartDetails" />
+        <partial name="_RebuttalChartDetails" model=Model />
         <partial name="_QADetails" />
     </div>
 </div>
@@ -27,16 +27,15 @@
             $('.fa-check-circle').addClass('accept');
             $('.fa-times-circle').removeClass('reject')
             $('.QARevised').css("display", "none");
+            $(".CodingDetails").hide();
         }
         else {
             $('.fa-check-circle').removeClass('accept');
-            $(".CodingDetails").hide();
         }
     });
 
     $('span i').click(function () {
         var id = $(this).attr('id');
-        alert(id);
         if ($(this).hasClass('fa-check-circle')) {
             $(this).toggleClass('accept');
             $(this).siblings().removeClass('reject');

@@ -18,7 +18,7 @@
             <div class="form-group row">
                 <label class="col-md-3 m-t-15">Payor</label>
                 <div class="col-md-3">
-                    @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"),  new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.PayorID, null, new { @class = "text-danger" })
                 </div>
                 <label class="col-md-3 m-t-15">Note Title</label>
@@ -30,7 +30,7 @@
             <div class="form-group row">
                 <label class="col-md-3 m-t-15">Provider</label>
                 <div class="col-md-3">
-                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"),  new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.ProviderID, null, new { @class = "text-danger" })
                 </div>
                 <label class="col-md-3 m-t-15">CPT</label>
@@ -44,7 +44,6 @@
                 <div class="col-md-3">
                     @Html.TextAreaFor(model => model.Mod, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
                     @Html.ValidationMessageFor(model => model.Mod, null, new { @class = "text-danger" })
-                    @*<input type="text" class="form-control" placeholder="Mod">*@
                 </div>
                 <label class="col-md-3 m-t-15">Dx 1-4 (code followed by a comma and space)</label>
                 <div class="col-md-3">
@@ -55,7 +54,7 @@
             <div class="form-group row">
                 <label class="col-md-3 m-t-15"> Feedback to Provider</label>
                 <div class="col-md-3">
-                    @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"),  new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.ProviderFeedbackID, null, new { @class = "text-danger" })
                 </div>
                 <label class="col-md-3 m-t-15">Coder Questions</label>

@@ -31,11 +31,11 @@ namespace UAB.Controllers
             throw new NotImplementedException();
         }
 
-        public IActionResult Coding(int StatusID, int ProjectID)
+        public IActionResult Coding(string StatusIDs, int ProjectID)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
             CodingSubmitDTO codingSubmitDTO = new CodingSubmitDTO();
-            codingSubmitDTO.CodingDTO = clinicalcaseOperations.GetNext(StatusID, ProjectID);
+            codingSubmitDTO.CodingDTO = clinicalcaseOperations.GetNext(StatusIDs, ProjectID);
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -84,16 +84,20 @@ namespace UAB.Controllers
 
             return View(lstDto);
         }
-        public IActionResult QA(int StatusID, int ProjectID)
+        public IActionResult QA(string StatusIDs, int ProjectID)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
             CodingSubmitDTO codingSubmitDTO = new CodingSubmitDTO();
-            codingSubmitDTO.CodingDTO = clinicalcaseOperations.GetNext(StatusID, ProjectID);
-
-            return View();
+            codingSubmitDTO.CodingDTO = clinicalcaseOperations.GetNext(StatusIDs, ProjectID);
+            #region binding data
+            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
+            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
+            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            #endregion
+            return View(codingSubmitDTO);
         }
 
-        public IActionResult RebuttalCharts()
+        public IActionResult RebuttalCharts(string StatusIDs, int ProjectID)
         {
             return View();
         }

@@ -46,11 +46,12 @@
                                     {
                                         @AvailableCount
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("QA", "UAB",new { StatusID = 1,ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("QA", "UAB",new { StatusIDs = Convert.ToString((int)Statuses.CodingCompleted),ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">
                                     @{
+                                        List<int> lstStatus = new List<int> { (int)Statuses.CoderRejected, (int)Statuses.ShadowQARejected };
                                         int RebuttalChartsCount = Model.Where(x => x.ProjectName == item.ProjectName && (x.StatusID == (int)Statuses.ShadowQARejected || x.StatusID == (int)Statuses.CoderRejected)).Select(x => x.Cnt).FirstOrDefault();
                                     }
                                     @if (RebuttalChartsCount == 0)
@@ -63,7 +64,7 @@
                                     {
                                         @RebuttalChartsCount
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("RebuttalCharts", "UAB",new { StatusID = 1,ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("RebuttalCharts", "UAB",new { StatusIDs = string.Join(",", lstStatus),ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                             </tr>

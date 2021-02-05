@@ -50,7 +50,7 @@ namespace UAB.DAL
             }
             return lstDto;
         }
-        public CodingDTO GetNext(int statusID, int projectID)
+        public CodingDTO GetNext(string StatusIDs, int projectID)
         {
             CodingDTO dto = new CodingDTO();
 
@@ -58,10 +58,10 @@ namespace UAB.DAL
             {
                 var param = new SqlParameter[] {
                         new SqlParameter() {
-                            ParameterName = "@StatusID",
-                            SqlDbType =  System.Data.SqlDbType.Int,
+                            ParameterName = "@StatusIDs",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = statusID
+                            Value = StatusIDs
                         }
                         ,   new SqlParameter() {
                             ParameterName = "@ProjectID",

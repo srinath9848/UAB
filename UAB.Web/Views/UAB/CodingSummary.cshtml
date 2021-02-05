@@ -14,7 +14,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Projects</h4>
+                    <h4 class="card-title">Projects</h4><br />
                     @await Html.PartialAsync("_Msg")
                 </div>
                 <table class="table table-striped table-bordered dataTable workcontexts">
@@ -56,11 +56,13 @@
                                     {
                                         @AvailableCount
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("Coding", "UAB",new { StatusID = (int)Statuses.ReadyForCoding,ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("Coding", "UAB",new { StatusIDs = Convert.ToString((int)Statuses.ReadyForCoding),ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">
                                     @{
+                                        List<int> lstStatus = new List<int> { (int)Statuses.QARejected, (int)Statuses.ShadowQARejected };
+
                                         int IncorrectCount = Model.Where(x => x.ProjectName == item.ProjectName && (x.StatusID == (int)Statuses.QARejected || x.StatusID == (int)Statuses.ShadowQARejected)).Select(x => x.Cnt).FirstOrDefault();
                                     }
                                     @if (IncorrectCount == 0)
@@ -73,7 +75,7 @@
                                     {
                                         @IncorrectCount
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("IncorrectCharts", "UAB",new { StatusID = 9,ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("IncorrectCharts", "UAB",new { StatusIDs = string.Join(",", lstStatus),ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">
@@ -90,7 +92,7 @@
                                     {
                                         @ApprovedCount
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("ApprovedCharts", "UAB",new { StatusID = 3,ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("ApprovedCharts", "UAB",new { StatusIDs = Convert.ToString((int)Statuses.ReadyForPosting),ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                             </tr>
