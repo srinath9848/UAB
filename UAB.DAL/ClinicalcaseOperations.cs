@@ -278,6 +278,7 @@ namespace UAB.DAL
                     while (reader.Read())
                     {
                         provider = new Provider();
+                        provider.ProviderId = Convert.ToInt32(reader["ProviderID"]);
                         provider.Name = Convert.ToString(reader["Name"]);
                         lstProvider.Add(provider);
                     }
