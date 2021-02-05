@@ -1,4 +1,5 @@
-﻿
+﻿@using UAB.enums
+@model List<UAB.DTO.DashboardDTO>
 @{
     ViewData["Title"] = "QA Summary";
 }
@@ -24,37 +25,69 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td scope="col">
-                                Phase1 - Ambulatory
-                            </td>
-                            <th scope="col" style="text-align:center">10&nbsp;&nbsp;&nbsp;&nbsp; <a href="@Url.Action("QA","UAB")" class="btn btn-info btn-sm">Get Next</a></th>
-                            <th scope="col" style="text-align:center">
-                                8&nbsp;&nbsp;&nbsp;&nbsp;
-                                <a href="@Url.Action("RebuttalCharts","UAB")" class="btn btn-info btn-sm">Get Next</a>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th scope="col">
-                                Phase1 - IP
-                            </th>
-                            <th scope="col" style="text-align:center">5 &nbsp;&nbsp;&nbsp;&nbsp;<a href="@Url.Action("QA","UAB")" class="btn btn-info btn-sm">Get Next</a></th>
-                            <th scope="col" style="text-align:center">
-                                2&nbsp;&nbsp;&nbsp;&nbsp;
-                                <a href="@Url.Action("RebuttalCharts","UAB")" class="btn btn-info btn-sm">Get Next</a>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th scope="col">
-                                Phase2 - Pulmonology
-                            </th>
-                            <th scope="col" style="text-align:center">7&nbsp;&nbsp;&nbsp;&nbsp;<a href="@Url.Action("QA","UAB")" class="btn btn-info btn-sm">Get Next</a></th>
-                            <th scope="col" style="text-align:center">
-                                4&nbsp;&nbsp;&nbsp;&nbsp;
-                                <a href="@Url.Action("RebuttalCharts","UAB")" class="btn btn-info btn-sm">Get Next</a>
-                            </th>
-                        </tr>
+                    <tbody style="cursor:pointer;">
+                        @foreach (var item in Model.GroupBy(x => x.ProjectName).Select(x => x.FirstOrDefault()).ToList())
+                        {
+                            <tr>
+                                <td scope="col">
+                                    @item.ProjectName
+                                </td>
+                                <td scope="col" style="text-align:center">
+                                    @{
+                                        int AvailableCount = Model.Where(x => x.ProjectName == item.ProjectName && x.StatusID == (int)Statuses.CodingCompleted).Select(x => x.Cnt).FirstOrDefault();
+                                    }
+                                    @if (AvailableCount == 0)
+                                    {
+                                        @AvailableCount
+                                        <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
+                                        <a href="@Url.Action("QA", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
+                                    }
+                                    else
+                                    {
+                                        @AvailableCount
+                                        <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
+                                        <a href="@Url.Action("QA", "UAB",new { StatusID = 1,ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                    }
+                                </td>
+                                <td scope="col" style="text-align:center">
+                                    @{
+                                        int RebuttalChartsCount = Model.Where(x => x.ProjectName == item.ProjectName && (x.StatusID == (int)Statuses.ShadowQARejected || x.StatusID == (int)Statuses.CoderRejected)).Select(x => x.Cnt).FirstOrDefault();
+                                    }
+                                    @if (RebuttalChartsCount == 0)
+                                    {
+                                        @RebuttalChartsCount
+                                        <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
+                                        <a href="@Url.Action("RebuttalCharts", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
+                                    }
+                                    else
+                                    {
+                                        @RebuttalChartsCount
+                                        <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
+                                        <a href="@Url.Action("RebuttalCharts", "UAB",new { StatusID = 1,ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                        @*<tr>
+                                <th scope="col">
+                                    Phase1 - IP
+                                </th>
+                                <th scope="col" style="text-align:center">5 &nbsp;&nbsp;&nbsp;&nbsp;<a href="@Url.Action("QA","UAB")" class="btn btn-info btn-sm">Get Next</a></th>
+                                <th scope="col" style="text-align:center">
+                                    2&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href="@Url.Action("RebuttalCharts","UAB")" class="btn btn-info btn-sm">Get Next</a>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th scope="col">
+                                    Phase2 - Pulmonology
+                                </th>
+                                <th scope="col" style="text-align:center">7&nbsp;&nbsp;&nbsp;&nbsp;<a href="@Url.Action("QA","UAB")" class="btn btn-info btn-sm">Get Next</a></th>
+                                <th scope="col" style="text-align:center">
+                                    4&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href="@Url.Action("RebuttalCharts","UAB")" class="btn btn-info btn-sm">Get Next</a>
+                                </th>
+                            </tr>*@
                     </tbody>
                 </table>
             </div>

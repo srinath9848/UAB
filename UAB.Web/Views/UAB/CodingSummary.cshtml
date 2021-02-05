@@ -1,4 +1,5 @@
-﻿@model List<UAB.DTO.DashboardDTO>
+﻿@using UAB.enums
+@model List<UAB.DTO.DashboardDTO>
 @{
     ViewData["Title"] = "CodingSummary";
 }
@@ -43,7 +44,7 @@
                                 </td>
                                 <td scope="col" style="text-align:center">
                                     @{
-                                        int AvailableCount = Model.Where(x => x.ProjectName == item.ProjectName && x.StatusID == 1).Select(x => x.Cnt).FirstOrDefault();
+                                        int AvailableCount = Model.Where(x => x.ProjectName == item.ProjectName && x.StatusID == (int)Statuses.ReadyForCoding).Select(x => x.Cnt).FirstOrDefault();
                                     }
                                     @if (AvailableCount == 0)
                                     {
@@ -55,12 +56,12 @@
                                     {
                                         @AvailableCount
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("Coding", "UAB",new { StatusID = 1,ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("Coding", "UAB",new { StatusID = (int)Statuses.ReadyForCoding,ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">
                                     @{
-                                        int IncorrectCount = Model.Where(x => x.ProjectName == item.ProjectName && (x.StatusID == 9 || x.StatusID == 10)).Select(x => x.Cnt).FirstOrDefault();
+                                        int IncorrectCount = Model.Where(x => x.ProjectName == item.ProjectName && (x.StatusID == (int)Statuses.QARejected || x.StatusID == (int)Statuses.ShadowQARejected)).Select(x => x.Cnt).FirstOrDefault();
                                     }
                                     @if (IncorrectCount == 0)
                                     {

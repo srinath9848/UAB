@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using UAB.DAL;
 using UAB.DTO;
 using UAB.DAL.Models;
+using UAB.enums;
 
 namespace UAB.Controllers
 {
@@ -15,19 +16,16 @@ namespace UAB.Controllers
     {
         public IActionResult CodingSummary()
         {
-            List<DashboardDTO> lstDto = getCodingSummary();
+            List<DashboardDTO> lstDto = new List<DashboardDTO>();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+
+            List<int> lstStatus = new List<int> { (int)Statuses.ReadyForCoding, (int)Statuses.QARejected, (int)Statuses.ShadowQARejected,
+                (int)Statuses.PostingCompleted };
+
+            lstDto = clinicalcaseOperations.GetChartCountByStatus(string.Join(",", lstStatus));
 
             return View(lstDto);
         }
-        List<DashboardDTO> getCodingSummary()
-        {
-            List<DashboardDTO> lstDto = new List<DashboardDTO>();
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-            lstDto = clinicalcaseOperations.GetChartCountByStatus();
-
-            return lstDto;
-        }
-
         private object UABDashboardDetails()
         {
             throw new NotImplementedException();
@@ -57,7 +55,11 @@ namespace UAB.Controllers
             else if (!string.IsNullOrEmpty(hold))
                 submitHold();
 
-            List<DashboardDTO> lstDto = getCodingSummary();
+            List<int> lstStatus = new List<int> { (int)Statuses.ReadyForCoding, (int)Statuses.QARejected, (int)Statuses.ShadowQARejected,
+                (int)Statuses.PostingCompleted };
+
+            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByStatus(string.Join(",", lstStatus));
+
             TempData["Success"] = "Chats Details submitted succesfully !";
             return View("CodingSummary", lstDto);
         }
@@ -74,7 +76,13 @@ namespace UAB.Controllers
 
         public IActionResult QASummary()
         {
-            return View();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            List<int> lstStatus = new List<int> { (int)Statuses.CodingCompleted,(int)Statuses.ShadowQARejected,
+                (int)Statuses.CoderRejected };
+
+            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByStatus(string.Join(",", lstStatus));
+
+            return View(lstDto);
         }
         public IActionResult QA(int StatusID, int ProjectID)
         {

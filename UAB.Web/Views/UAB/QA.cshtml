@@ -1,10 +1,10 @@
-﻿
+﻿@model UAB.DTO.CodingDTO
 @{
     ViewData["Title"] = "QA";
 }
 <div class="container-fluid">
     <div class="row">
-        <partial name="_InitialData" />
+        <partial name="_InitialData" model=Model />
         <partial name="_RebuttalChartDetails" />
         <partial name="_QADetails" />
     </div>

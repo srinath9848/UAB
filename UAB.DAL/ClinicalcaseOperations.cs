@@ -11,18 +11,27 @@ namespace UAB.DAL
 {
     public class ClinicalcaseOperations
     {
-        public List<DashboardDTO> GetChartCountByStatus()
+        public List<DashboardDTO> GetChartCountByStatus(string StatusIDs)
         {
             DashboardDTO dto = new DashboardDTO();
             List<DashboardDTO> lstDto = new List<DashboardDTO>();
 
             using (var context = new UABContext())
             {
+                var param = new SqlParameter[] {
+                        new SqlParameter() {
+                            ParameterName = "@StatusIds",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = StatusIDs
+                        }};
+
                 using (var con = context.Database.GetDbConnection())
                 {
                     var cmd = con.CreateCommand();
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.CommandText = "[dbo].[UspGetChartCount]";
+                    cmd.CommandText = "[dbo].[UspGetChartCountByStatus]";
+                    cmd.Parameters.AddRange(param);
                     cmd.Connection = con;
                     con.Open();
                     var reader = cmd.ExecuteReader();
