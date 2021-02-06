@@ -20,10 +20,10 @@ namespace UAB.Controllers
             List<DashboardDTO> lstDto = new List<DashboardDTO>();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
 
-            List<int> lstStatus = new List<int> { (int)Statuses.ReadyForCoding, (int)Statuses.QARejected, (int)Statuses.ShadowQARejected,
-                (int)Statuses.PostingCompleted };
+            List<int> lstStatus = new List<int> { (int)StatusType.ReadyForCoding, (int)StatusType.QARejected, (int)StatusType.ShadowQARejected,
+                (int)StatusType.PostingCompleted };
 
-            lstDto = clinicalcaseOperations.GetChartCountByStatus(string.Join(",", lstStatus));
+            lstDto = clinicalcaseOperations.GetChartCountByRole(Role.Coder.ToString());
 
             return View(lstDto);
         }
@@ -35,8 +35,8 @@ namespace UAB.Controllers
         public IActionResult Coding(string StatusIDs, int ProjectID)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-            CodingSubmitDTO codingSubmitDTO = new CodingSubmitDTO();
-            codingSubmitDTO.CodingDTO = clinicalcaseOperations.GetNext(StatusIDs, ProjectID);
+            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
+            chartSummaryDTO = clinicalcaseOperations.GetNext(StatusIDs, ProjectID);
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -44,30 +44,37 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             #endregion
 
-            return View(codingSubmitDTO);
+            return View(chartSummaryDTO);
         }
         [HttpPost]
-        public IActionResult Submit(CodingSubmitDTO codingSubmitDTO, string codingSubmit, string hold)
+        public IActionResult Submit(ChartSummaryDTO chartSummaryDTO, string codingSubmit, string hold)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
 
             if (!string.IsNullOrEmpty(codingSubmit))
-                clinicalcaseOperations.SubmitCoding(codingSubmitDTO);
+                clinicalcaseOperations.SubmitCoding(chartSummaryDTO);
             else if (!string.IsNullOrEmpty(hold))
                 submitHold();
 
-            List<int> lstStatus = new List<int> { (int)Statuses.ReadyForCoding, (int)Statuses.QARejected, (int)Statuses.ShadowQARejected,
-                (int)Statuses.PostingCompleted };
-
-            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByStatus(string.Join(",", lstStatus));
+            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Role.Coder.ToString());
 
             TempData["Success"] = "Chats Details submitted succesfully !";
             return View("CodingSummary", lstDto);
         }
         void submitHold() { }
-        public IActionResult IncorrectCharts()
+        public IActionResult IncorrectCharts(string StatusIDs, int ProjectID)
         {
-            return View();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
+            chartSummaryDTO = clinicalcaseOperations.GetNext(StatusIDs, ProjectID);
+
+            #region binding data
+            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
+            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
+            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            #endregion
+
+            return View(chartSummaryDTO);
         }
 
         public IActionResult ApprovedCharts()
@@ -78,25 +85,24 @@ namespace UAB.Controllers
         public IActionResult QASummary()
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-            List<int> lstStatus = new List<int> { (int)Statuses.CodingCompleted,(int)Statuses.ShadowQARejected,
-                (int)Statuses.CoderRejected };
 
-            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByStatus(string.Join(",", lstStatus));
+            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Role.QA.ToString());
 
             return View(lstDto);
         }
         public IActionResult QA(string StatusIDs, int ProjectID)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-            CodingSubmitDTO codingSubmitDTO = new CodingSubmitDTO();
-            codingSubmitDTO.CodingDTO = clinicalcaseOperations.GetNext(StatusIDs, ProjectID);
+            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
+            chartSummaryDTO = clinicalcaseOperations.GetNext(StatusIDs, ProjectID);
+
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
             ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
-            return View(codingSubmitDTO);
+            return View(chartSummaryDTO);
         }
 
         public List<SelectListItem> BindErrorType()
@@ -119,7 +125,17 @@ namespace UAB.Controllers
 
         public IActionResult RebuttalCharts(string StatusIDs, int ProjectID)
         {
-            return View();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
+            chartSummaryDTO = clinicalcaseOperations.GetNext(StatusIDs, ProjectID);
+
+            #region binding data
+            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
+            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
+            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            ViewBag.ErrorTypes = BindErrorType();
+            #endregion
+            return View(chartSummaryDTO);
         }
 
         public IActionResult ShadowQASummary()

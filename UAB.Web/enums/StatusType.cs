@@ -5,11 +5,7 @@ using System.Threading.Tasks;
 
 namespace UAB.enums
 {
-    public static class Status1
-    {
-
-    }
-    public enum Statuses
+    public enum StatusType
     {
         ReadyForCoding = 1,
         CodingInProgress = 2,

@@ -8,8 +8,8 @@ namespace UAB.DTO
         public string ProjectName { get; set; }
         public int StatusID { get; set; }
         public int Cnt { get; set; }
-        //public int AvailableCount { get; set; }
-        //public int IncorrectCount { get; set; }
-        //public int ApprovedCount { get; set; }
+        public int AvailableCharts { get; set; }
+        public int RebuttalCharts { get; set; }
+        public int ReadyForPostingCharts { get; set; }
     }
 }

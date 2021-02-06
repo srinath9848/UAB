@@ -5,8 +5,13 @@ using System.Text;
 
 namespace UAB.DTO
 {
-    public class CodingSubmitDTO
+    public class ChartSummaryDTO
     {
+        public ChartSummaryDTO()
+        {
+            CodingDTO = new CodingDTO();
+            QADTO = new QADTO();
+        }
         [Required(ErrorMessage = "Feedback Provider is required.")]
         public int ProviderFeedbackID { get; set; }
         public int AssignedTo { get; set; }

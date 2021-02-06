@@ -35,7 +35,7 @@
                         </tr>
                     </thead>
                     <tbody style="cursor:pointer;">
-                        @foreach (var item in Model.GroupBy(x => x.ProjectName).Select(x => x.FirstOrDefault()).ToList())
+                        @foreach (var item in Model)
                         {
 
                             <tr>
@@ -43,56 +43,46 @@
                                     @item.ProjectName
                                 </td>
                                 <td scope="col" style="text-align:center">
-                                    @{
-                                        int AvailableCount = Model.Where(x => x.ProjectName == item.ProjectName && x.StatusID == (int)Statuses.ReadyForCoding).Select(x => x.Cnt).FirstOrDefault();
-                                    }
-                                    @if (AvailableCount == 0)
+                                    @if (item.AvailableCharts == 0)
                                     {
-                                        @AvailableCount
+                                        @item.AvailableCharts
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("Coding", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
-                                        @AvailableCount
+                                        @item.AvailableCharts
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("Coding", "UAB",new { StatusIDs = Convert.ToString((int)Statuses.ReadyForCoding),ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("Coding", "UAB",new { StatusIDs = Convert.ToString((int)StatusType.ReadyForCoding),ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">
-                                    @{
-                                        List<int> lstStatus = new List<int> { (int)Statuses.QARejected, (int)Statuses.ShadowQARejected };
-
-                                        int IncorrectCount = Model.Where(x => x.ProjectName == item.ProjectName && (x.StatusID == (int)Statuses.QARejected || x.StatusID == (int)Statuses.ShadowQARejected)).Select(x => x.Cnt).FirstOrDefault();
-                                    }
-                                    @if (IncorrectCount == 0)
+                                    @if (item.RebuttalCharts == 0)
                                     {
-                                        @IncorrectCount
+                                        @item.RebuttalCharts
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("IncorrectCharts", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
-                                        @IncorrectCount
+                                        List<int> lstStatus = new List<int> { (int)StatusType.QARejected, (int)StatusType.ShadowQARejected };
+                                        @item.RebuttalCharts
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("IncorrectCharts", "UAB",new { StatusIDs = string.Join(",", lstStatus),ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">
-                                    @{
-                                        int ApprovedCount = Model.Where(x => x.ProjectName == item.ProjectName && x.StatusID == 3).Select(x => x.Cnt).FirstOrDefault();
-                                    }
-                                    @if (ApprovedCount == 0)
+                                    @if (item.ReadyForPostingCharts == 0)
                                     {
-                                        @ApprovedCount
+                                        @item.ReadyForPostingCharts
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("ApprovedCharts", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
-                                        @ApprovedCount
+                                        @item.ReadyForPostingCharts
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("ApprovedCharts", "UAB",new { StatusIDs = Convert.ToString((int)Statuses.ReadyForPosting),ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("ApprovedCharts", "UAB",new { StatusIDs = Convert.ToString((int)StatusType.ReadyForPosting),ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                             </tr>

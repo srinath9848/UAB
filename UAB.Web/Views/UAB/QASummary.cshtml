@@ -27,69 +27,45 @@
                         </tr>
                     </thead>
                     <tbody style="cursor:pointer;">
-                        @foreach (var item in Model.GroupBy(x => x.ProjectName).Select(x => x.FirstOrDefault()).ToList())
+                        @foreach (var item in Model)
                         {
                             <tr>
                                 <td scope="col">
                                     @item.ProjectName
                                 </td>
                                 <td scope="col" style="text-align:center">
-                                    @{
-                                        int AvailableCount = Model.Where(x => x.ProjectName == item.ProjectName && x.StatusID == (int)Statuses.CodingCompleted).Select(x => x.Cnt).FirstOrDefault();
-                                    }
-                                    @if (AvailableCount == 0)
+                                    @if (item.AvailableCharts == 0)
                                     {
-                                        @AvailableCount
+                                        @item.AvailableCharts
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("QA", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
-                                        @AvailableCount
+                                        @item.AvailableCharts
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("QA", "UAB",new { StatusIDs = Convert.ToString((int)Statuses.CodingCompleted),ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("QA", "UAB",new { StatusIDs = Convert.ToString((int)StatusType.CodingCompleted),ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">
                                     @{
-                                        List<int> lstStatus = new List<int> { (int)Statuses.CoderRejected, (int)Statuses.ShadowQARejected };
-                                        int RebuttalChartsCount = Model.Where(x => x.ProjectName == item.ProjectName && (x.StatusID == (int)Statuses.ShadowQARejected || x.StatusID == (int)Statuses.CoderRejected)).Select(x => x.Cnt).FirstOrDefault();
+                                        List<int> lstStatus = new List<int> { (int)StatusType.CoderRejected, (int)StatusType.ShadowQARejected };
                                     }
-                                    @if (RebuttalChartsCount == 0)
+                                    @if (item.RebuttalCharts == 0)
                                     {
-                                        @RebuttalChartsCount
+                                        @item.RebuttalCharts
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("RebuttalCharts", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
-                                        @RebuttalChartsCount
+                                        @item.RebuttalCharts
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("RebuttalCharts", "UAB",new { StatusIDs = string.Join(",", lstStatus),ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                             </tr>
                         }
-                        @*<tr>
-                                <th scope="col">
-                                    Phase1 - IP
-                                </th>
-                                <th scope="col" style="text-align:center">5 &nbsp;&nbsp;&nbsp;&nbsp;<a href="@Url.Action("QA","UAB")" class="btn btn-info btn-sm">Get Next</a></th>
-                                <th scope="col" style="text-align:center">
-                                    2&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="@Url.Action("RebuttalCharts","UAB")" class="btn btn-info btn-sm">Get Next</a>
-                                </th>
-                            </tr>
-                            <tr>
-                                <th scope="col">
-                                    Phase2 - Pulmonology
-                                </th>
-                                <th scope="col" style="text-align:center">7&nbsp;&nbsp;&nbsp;&nbsp;<a href="@Url.Action("QA","UAB")" class="btn btn-info btn-sm">Get Next</a></th>
-                                <th scope="col" style="text-align:center">
-                                    4&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="@Url.Action("RebuttalCharts","UAB")" class="btn btn-info btn-sm">Get Next</a>
-                                </th>
-                            </tr>*@
                     </tbody>
                 </table>
             </div>

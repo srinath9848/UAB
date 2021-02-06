@@ -1,12 +1,11 @@
-﻿
+﻿@model UAB.DTO.ChartSummaryDTO
 @{
     ViewData["Title"] = "Rebuttal Charts";
 }
 <div class="container-fluid">
     <div class="row">
-        <partial name="_InitialData" />
+        <partial name="_InitialData" model=Model />
         <partial name="_RebuttalChartDetails" />
-        <partial name="_QADetails" />
     </div>
 </div>
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
