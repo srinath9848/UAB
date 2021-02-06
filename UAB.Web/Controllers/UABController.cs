@@ -9,6 +9,7 @@ using UAB.DAL;
 using UAB.DTO;
 using UAB.DAL.Models;
 using UAB.enums;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace UAB.Controllers
 {
@@ -93,8 +94,27 @@ namespace UAB.Controllers
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
             ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            ViewBag.ErrorTypes = BindErrorType();
             #endregion
             return View(codingSubmitDTO);
+        }
+
+        public List<SelectListItem> BindErrorType()
+        {
+            List<SelectListItem> lst = new List<SelectListItem>();
+            lst.Add(new SelectListItem()
+            {
+                Text = "CC not Supported",
+            });
+            lst.Add(new SelectListItem()
+            {
+                Text = "Consult not Supported",
+            });
+            lst.Add(new SelectListItem()
+            {
+                Text = "Mod Error",
+            });
+            return lst;
         }
 
         public IActionResult RebuttalCharts(string StatusIDs, int ProjectID)

@@ -23,5 +23,6 @@ namespace UAB.DTO
         public string Mod { get; set; }
         public string CoderQuestion { get; set; }
         public CodingDTO CodingDTO { get; set; }
+        public QADTO QADTO { get; set; }
     }
 }

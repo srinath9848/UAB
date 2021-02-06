@@ -1,5 +1,6 @@
 ﻿@model UAB.DTO.CodingSubmitDTO
 <div class="col-md-12">
+    <form asp-action="SubmitQA" asp-controller="UAB" method="POST">
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Coding Details</h4>
@@ -131,14 +132,50 @@
                 @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
             </div>
         </div>
-        @*<div class="border-top" id="CodingDetails">
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">QA Details</h4>
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <div class="row mb-3">
+                    <div class="col-lg-6">
+                        <div class="form-group row">
+                            <label class="col-md-3 m-t-15">Coder Rebuttal</label>
+                            <div class="col-sm-9">
+                                @Html.TextAreaFor(model => model.QADTO.CoderRebuttal, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group row">
+                            <label class="col-md-3 m-t-15">
+                                Error Type (mgt use only)
+                            </label>
+                            <div class="col-md-9">
+                                @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "Text", "Text"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.QADTO.ErrorType, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-top" id="QADetails">
             <div class="card-body" style="text-align:right">
                 <button type="submit" class="btn btn-success">Submit</button>
-                <button type="submit" class="btn btn-danger">Hold</button>
             </div>
-        </div>*@
+        </div>
     </div>
+    </form>
 </div>
+
+
 <style>
     #sortable-1 {
         list-style-type: none;
