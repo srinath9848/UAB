@@ -53,7 +53,7 @@
                                     {
                                         @item.AvailableCharts
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("Coding", "UAB",new { StatusIDs = Convert.ToString((int)StatusType.ReadyForCoding),ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("Coding", "UAB",new { Role=Role.Coder,ChartType="Available",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">
@@ -68,7 +68,7 @@
                                         List<int> lstStatus = new List<int> { (int)StatusType.QARejected, (int)StatusType.ShadowQARejected };
                                         @item.RebuttalCharts
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("IncorrectCharts", "UAB",new { StatusIDs = string.Join(",", lstStatus),ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("IncorrectCharts", "UAB",new { Role=Role.Coder,ChartType="Rebuttal",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">
@@ -82,7 +82,7 @@
                                     {
                                         @item.ReadyForPostingCharts
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("ApprovedCharts", "UAB",new { StatusIDs = Convert.ToString((int)StatusType.ReadyForPosting),ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("ApprovedCharts", "UAB",new { Role=Role.Coder,ChartType="ReadyForPosting",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                             </tr>

@@ -50,24 +50,30 @@ namespace UAB.DAL
             }
             return lstDto;
         }
-        public ChartSummaryDTO GetNext(string StatusIDs, int projectID)
+        public ChartSummaryDTO GetNext(string Role, string ChartType, int projectID)
         {
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
 
             using (var context = new UABContext())
             {
                 var param = new SqlParameter[] {
-                        new SqlParameter() {
-                            ParameterName = "@StatusIDs",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = StatusIDs
-                        }
-                        ,   new SqlParameter() {
+                     new SqlParameter() {
                             ParameterName = "@ProjectID",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = projectID
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@Role",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = Role
+                        }
+                        ,   new SqlParameter() {
+                            ParameterName = "@ChartType",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = ChartType
                         }};
 
                 using (var con = context.Database.GetDbConnection())

@@ -32,11 +32,11 @@ namespace UAB.Controllers
             throw new NotImplementedException();
         }
 
-        public IActionResult Coding(string StatusIDs, int ProjectID)
+        public IActionResult Coding(string Role, string ChartType, int ProjectID)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
-            chartSummaryDTO = clinicalcaseOperations.GetNext(StatusIDs, ProjectID);
+            chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -62,11 +62,11 @@ namespace UAB.Controllers
             return View("CodingSummary", lstDto);
         }
         void submitHold() { }
-        public IActionResult IncorrectCharts(string StatusIDs, int ProjectID)
+        public IActionResult IncorrectCharts(string Role, string ChartType, int ProjectID)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
-            chartSummaryDTO = clinicalcaseOperations.GetNext(StatusIDs, ProjectID);
+            chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -90,11 +90,11 @@ namespace UAB.Controllers
 
             return View(lstDto);
         }
-        public IActionResult QA(string StatusIDs, int ProjectID)
+        public IActionResult QA(string Role, string ChartType, int ProjectID)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
-            chartSummaryDTO = clinicalcaseOperations.GetNext(StatusIDs, ProjectID);
+            chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -123,11 +123,11 @@ namespace UAB.Controllers
             return lst;
         }
 
-        public IActionResult RebuttalCharts(string StatusIDs, int ProjectID)
+        public IActionResult RebuttalCharts(string Role, string ChartType, int ProjectID)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
-            chartSummaryDTO = clinicalcaseOperations.GetNext(StatusIDs, ProjectID);
+            chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
