@@ -5,8 +5,13 @@ using System.Text;
 
 namespace UAB.DTO
 {
-    public class CodingSubmitDTO
+    public class ChartSummaryDTO
     {
+        public ChartSummaryDTO()
+        {
+            CodingDTO = new CodingDTO();
+            QADTO = new QADTO();
+        }
         [Required(ErrorMessage = "Feedback Provider is required.")]
         public int ProviderFeedbackID { get; set; }
         public int AssignedTo { get; set; }
@@ -23,5 +28,6 @@ namespace UAB.DTO
         public string Mod { get; set; }
         public string CoderQuestion { get; set; }
         public CodingDTO CodingDTO { get; set; }
+        public QADTO QADTO { get; set; }
     }
 }

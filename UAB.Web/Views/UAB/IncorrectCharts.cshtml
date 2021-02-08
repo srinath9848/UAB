@@ -1,12 +1,12 @@
-﻿
+﻿@model UAB.DTO.ChartSummaryDTO
 @{
     ViewData["Title"] = "IncorrectCharts";
 }
 
 <div class="container-fluid">
     <div class="row">
-        <partial name="_InitialData" />
-        <partial name="_RebuttalChartDetails" />
+        <partial name="_InitialData" model=Model />
+        <partial name="_RebuttalChartDetails" model=Model />
         <div class="col-12">
             <div class="card">
                 <div class="card-body">

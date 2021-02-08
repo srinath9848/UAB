@@ -11,18 +11,27 @@ namespace UAB.DAL
 {
     public class ClinicalcaseOperations
     {
-        public List<DashboardDTO> GetChartCountByStatus()
+        public List<DashboardDTO> GetChartCountByRole(string Role)
         {
             DashboardDTO dto = new DashboardDTO();
             List<DashboardDTO> lstDto = new List<DashboardDTO>();
 
             using (var context = new UABContext())
             {
+                var param = new SqlParameter[] {
+                        new SqlParameter() {
+                            ParameterName = "@Role",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = Role
+                        }};
+
                 using (var con = context.Database.GetDbConnection())
                 {
                     var cmd = con.CreateCommand();
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.CommandText = "[dbo].[UspGetChartCount]";
+                    cmd.CommandText = "[dbo].[UspGetChartCountByRole]";
+                    cmd.Parameters.AddRange(param);
                     cmd.Connection = con;
                     con.Open();
                     var reader = cmd.ExecuteReader();
@@ -32,33 +41,39 @@ namespace UAB.DAL
                         dto = new DashboardDTO();
                         dto.ProjectID = Convert.ToInt32(reader["ProjectID"]);
                         dto.ProjectName = Convert.ToString(reader["Name"]);
-                        if (reader["StatusId"] != DBNull.Value)
-                            dto.StatusID = Convert.ToInt32(reader["StatusId"]);
-                        dto.Cnt = Convert.ToInt32(reader["Cnt"]);
+                        dto.AvailableCharts = Convert.ToInt32(reader["AvailableCharts"]);
+                        dto.RebuttalCharts = Convert.ToInt32(reader["RebuttalCharts"]);
+                        dto.ReadyForPostingCharts = Convert.ToInt32(reader["ReadyForPostingCharts"]);
                         lstDto.Add(dto);
                     }
                 }
             }
             return lstDto;
         }
-        public CodingDTO GetNext(int statusID, int projectID)
+        public ChartSummaryDTO GetNext(string Role, string ChartType, int projectID)
         {
-            CodingDTO dto = new CodingDTO();
+            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
 
             using (var context = new UABContext())
             {
                 var param = new SqlParameter[] {
-                        new SqlParameter() {
-                            ParameterName = "@StatusID",
-                            SqlDbType =  System.Data.SqlDbType.Int,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = statusID
-                        }
-                        ,   new SqlParameter() {
+                     new SqlParameter() {
                             ParameterName = "@ProjectID",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = projectID
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@Role",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = Role
+                        }
+                        ,   new SqlParameter() {
+                            ParameterName = "@ChartType",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = ChartType
                         }};
 
                 using (var con = context.Database.GetDbConnection())
@@ -73,17 +88,16 @@ namespace UAB.DAL
 
                     while (reader.Read())
                     {
-                        dto = new CodingDTO();
-                        dto.ClinicalCaseID = Convert.ToInt32(reader["ClinicalCaseID"]);
-                        dto.PatientMRN = Convert.ToString(reader["PatientMRN"]);
-                        dto.Name = Convert.ToString(reader["Name"]);
-                        dto.DateOfService = Convert.ToString(reader["DateOfService"]);
+                        chartSummaryDTO.CodingDTO.ClinicalCaseID = Convert.ToInt32(reader["ClinicalCaseID"]);
+                        chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
+                        chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
+                        chartSummaryDTO.CodingDTO.DateOfService = Convert.ToString(reader["DateOfService"]);
                     }
                 }
             }
-            return dto;
+            return chartSummaryDTO;
         }
-        public CodingDTO SubmitCoding(CodingSubmitDTO codingSubmitDTO)
+        public CodingDTO SubmitCoding(ChartSummaryDTO chartSummaryDTO)
         {
             CodingDTO dto = new CodingDTO();
 
@@ -94,57 +108,57 @@ namespace UAB.DAL
                             ParameterName = "@PayorID",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = codingSubmitDTO.PayorID
+                            Value = chartSummaryDTO.PayorID
                         },
                       new SqlParameter() {
                             ParameterName = "@NoteTitle",
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = codingSubmitDTO.NoteTitle
+                            Value = chartSummaryDTO.NoteTitle
                         },
                         new SqlParameter() {
                             ParameterName = "@ProviderID",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = codingSubmitDTO.ProviderID
+                            Value = chartSummaryDTO.ProviderID
                         },
                          new SqlParameter() {
                             ParameterName = "@CPTCode",
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = codingSubmitDTO.CPTCode
+                            Value = chartSummaryDTO.CPTCode
                         },
                         new SqlParameter() {
                             ParameterName = "@Mod",
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = codingSubmitDTO.Mod
+                            Value = chartSummaryDTO.Mod
                         }
                         ,  new SqlParameter() {
                             ParameterName = "@Dx",
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = codingSubmitDTO.Dx
+                            Value = chartSummaryDTO.Dx
                         } , new SqlParameter() {
                             ParameterName = "@ProviderFeedbackID",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = codingSubmitDTO.ProviderFeedbackID
+                            Value = chartSummaryDTO.ProviderFeedbackID
                         }, new SqlParameter() {
                             ParameterName = "@CoderQuestion",
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = codingSubmitDTO.CoderQuestion
+                            Value = chartSummaryDTO.CoderQuestion
                         } ,   new SqlParameter() {
                             ParameterName = "@ClinicalcaseID",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = codingSubmitDTO.CodingDTO.ClinicalCaseID
+                            Value = chartSummaryDTO.CodingDTO.ClinicalCaseID
                         },   new SqlParameter() {
                             ParameterName = "@AssignedTo",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = codingSubmitDTO.AssignedTo
+                            Value = chartSummaryDTO.AssignedTo
                         }
                 };
 

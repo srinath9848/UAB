@@ -1,4 +1,4 @@
-﻿@model UAB.DTO.CodingSubmitDTO
+﻿@model UAB.DTO.ChartSummaryDTO
 <style type="text/css">
     .col-md-3 {
         margin-left: 10px !important;
@@ -44,7 +44,6 @@
                 <div class="col-md-3">
                     @Html.TextAreaFor(model => model.Mod, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
                     @Html.ValidationMessageFor(model => model.Mod, null, new { @class = "text-danger" })
-                    @*<input type="text" class="form-control" placeholder="Mod">*@
                 </div>
                 <label class="col-md-3 m-t-15">Dx 1-4 (code followed by a comma and space)</label>
                 <div class="col-md-3">

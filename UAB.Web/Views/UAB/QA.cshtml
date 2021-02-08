@@ -1,15 +1,17 @@
-﻿
+﻿@model UAB.DTO.ChartSummaryDTO
 @{
     ViewData["Title"] = "QA";
 }
 <div class="container-fluid">
     <div class="row">
-        <partial name="_InitialData" />
-        <partial name="_RebuttalChartDetails" />
-        <partial name="_QADetails" />
+        <partial name="_InitialData" model=Model />
+        <partial name="_RebuttalChartDetails" model=Model />
+        @*<partial name="_QADetails" />*@
     </div>
 </div>
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
+<script src="~/dashboardassets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
 <script src="~/dashboardassets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 <script type="text/javascript">
     /*datwpicker*/
@@ -27,16 +29,15 @@
             $('.fa-check-circle').addClass('accept');
             $('.fa-times-circle').removeClass('reject')
             $('.QARevised').css("display", "none");
+            $(".CodingDetails").hide();
         }
         else {
             $('.fa-check-circle').removeClass('accept');
-            $(".CodingDetails").hide();
         }
     });
 
     $('span i').click(function () {
         var id = $(this).attr('id');
-        alert(id);
         if ($(this).hasClass('fa-check-circle')) {
             $(this).toggleClass('accept');
             $(this).siblings().removeClass('reject');
