@@ -301,6 +301,70 @@ namespace UAB.DAL
             }
         }
 
+        public void UpdateProvider(Provider provider)
+        {
+            using (var context = new UABContext())
+            {
+                using (var cnn = context.Database.GetDbConnection())
+                {
+                    //SqlCommand cmd = new SqlCommand("UspAddProvider");
+                    var cmm = cnn.CreateCommand();
+                    //SqlCommand cmd = new SqlCommand("[dbo].[UspUpdateProvider]", cnn);
+                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspUpdateProvider]";
+                    cmm.Connection = cnn;
+
+                    SqlParameter param1 = new SqlParameter();
+                    param1.ParameterName = "@Name";
+                    param1.Value = provider.Name;
+                    SqlParameter param2 = new SqlParameter();
+                    param2.ParameterName = "@ProviderID";
+                    param2.Value = provider.ProviderId;
+                    cmm.Parameters.Add(param1);
+                    cmm.Parameters.Add(param2);
+
+
+                    //SqlParameter name = new SqlParameter();
+                    //name.ParameterName = "@Name";
+                    //name.Value = provider.Name;
+                    //cmm.Parameters.Add(name);
+
+                    cnn.Open();
+                    cmm.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void DeleteProvider(Provider provider)
+        {
+            using (var context = new UABContext())
+            {
+                using (var cnn = context.Database.GetDbConnection())
+                {
+                    //SqlCommand cmd = new SqlCommand("UspAddProvider");
+                    var cmm = cnn.CreateCommand();
+                    //SqlCommand cmd = new SqlCommand("[dbo].[UspUpdateProvider]", cnn);
+                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspDeleteProvider]";
+                    cmm.Connection = cnn;
+
+                    SqlParameter param = new SqlParameter();
+                    param.ParameterName = "@ProviderID";
+                    param.Value = provider.ProviderId;
+                    cmm.Parameters.Add(param);
+
+
+                    //SqlParameter name = new SqlParameter();
+                    //name.ParameterName = "@Name";
+                    //name.Value = provider.Name;
+                    //cmm.Parameters.Add(name);
+
+                    cnn.Open();
+                    cmm.ExecuteNonQuery();
+                }
+            }
+        }
+
         public void AddProviderFeedback(ProviderFeedback providerFeedback)
         {
             using (var context = new UABContext())
@@ -344,6 +408,7 @@ namespace UAB.DAL
                     while (reader.Read())
                     {
                         payor = new Payor();
+                        payor.PayorId = Convert.ToInt32(reader["PayorID"]);
                         payor.Name = Convert.ToString(reader["Name"]);
                         lstPayor.Add(payor);
                     }
@@ -367,6 +432,70 @@ namespace UAB.DAL
                     name.ParameterName = "@Name";
                     name.Value = payor.Name;
                     cmm.Parameters.Add(name);
+
+                    cnn.Open();
+                    cmm.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void UpdatePayor(Payor payor)
+        {
+            using (var context = new UABContext())
+            {
+                using (var cnn = context.Database.GetDbConnection())
+                {
+                    //SqlCommand cmd = new SqlCommand("UspAddProvider");
+                    var cmm = cnn.CreateCommand();
+                    //SqlCommand cmd = new SqlCommand("[dbo].[UspUpdateProvider]", cnn);
+                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspUpdatePayor]";
+                    cmm.Connection = cnn;
+
+                    SqlParameter param1 = new SqlParameter();
+                    param1.ParameterName = "@Name";
+                    param1.Value = payor.Name;
+                    SqlParameter param2 = new SqlParameter();
+                    param2.ParameterName = "@PayorID";
+                    param2.Value = payor.PayorId;
+                    cmm.Parameters.Add(param1);
+                    cmm.Parameters.Add(param2);
+
+
+                    //SqlParameter name = new SqlParameter();
+                    //name.ParameterName = "@Name";
+                    //name.Value = provider.Name;
+                    //cmm.Parameters.Add(name);
+
+                    cnn.Open();
+                    cmm.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void DeletePayor(Payor payor)
+        {
+            using (var context = new UABContext())
+            {
+                using (var cnn = context.Database.GetDbConnection())
+                {
+                    //SqlCommand cmd = new SqlCommand("UspAddProvider");
+                    var cmm = cnn.CreateCommand();
+                    //SqlCommand cmd = new SqlCommand("[dbo].[UspUpdateProvider]", cnn);
+                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspDeletePayor]";
+                    cmm.Connection = cnn;
+
+                    SqlParameter param = new SqlParameter();
+                    param.ParameterName = "@PayorID";
+                    param.Value = payor.PayorId;
+                    cmm.Parameters.Add(param);
+
+
+                    //SqlParameter name = new SqlParameter();
+                    //name.ParameterName = "@Name";
+                    //name.Value = provider.Name;
+                    //cmm.Parameters.Add(name);
 
                     cnn.Open();
                     cmm.ExecuteNonQuery();

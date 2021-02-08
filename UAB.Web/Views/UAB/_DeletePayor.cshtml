@@ -1,0 +1,29 @@
+﻿@model UAB.DAL.Models.Payor
+
+<form asp-action="DeletePayor" asp-controller="UAB" method="POST">
+    @Html.HiddenFor(m => m.PayorId)
+    <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 500px;">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Payor Confirm ?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal" action="">
+                        <div class="col-sm-12 text-center">
+                            <section class="col-sm-10">
+                                Are you sure want to delete this Payor <strong>" @Model.Name "</strong> Permanently?
+                                <br />
+                                <b>If you delete this, then associated information will also get deleted.</b>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-sm btn-info btn-fill"> Delete</button>
+                    <button type="button" class="btn btn-sm btn-danger btn-fill" onclick="ModalClose1()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

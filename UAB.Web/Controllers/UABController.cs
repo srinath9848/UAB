@@ -105,10 +105,10 @@ namespace UAB.Controllers
             if (ModelState.IsValid)
             {
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-                if (provider.ProviderId == null)
+                if (provider.ProviderId == 0)
                     clinicalcaseOperations.AddProvider(provider);
                 else
-                    clinicalcaseOperations.AddProvider(provider); // Update
+                    clinicalcaseOperations.UpdateProvider(provider); // Update
             }
             return RedirectToAction("SettingsProvider");
         }
@@ -160,7 +160,7 @@ namespace UAB.Controllers
             {
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
                 if (provider.ProviderId != 0)
-                    clinicalcaseOperations.AddProvider(provider); // Delete
+                    clinicalcaseOperations.DeleteProvider(provider); // Delete
             }
             catch (Exception ex)
             {
@@ -176,13 +176,72 @@ namespace UAB.Controllers
             if (ModelState.IsValid)
             {
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-                clinicalcaseOperations.AddPayor(payor);
-                List<Payor> lstPayor = new List<Payor>();
-                lstPayor = clinicalcaseOperations.GetPayors();
-                ViewBag.lstPayor = lstPayor;
+                if (payor.PayorId == 0)
+                    clinicalcaseOperations.AddPayor(payor);
+                else
+                    clinicalcaseOperations.UpdatePayor(payor); // Update
             }
-            return View("SettingsPayor");
+            return RedirectToAction("SettingsPayor");
+
+
+            //if (ModelState.IsValid)
+            //{
+            //    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            //    clinicalcaseOperations.AddPayor(payor);
+            //    List<Payor> lstPayor = new List<Payor>();
+            //    lstPayor = clinicalcaseOperations.GetPayors();
+            //    ViewBag.lstPayor = lstPayor;
+            //}
+            //return View("SettingsPayor");
         }
+
+
+        [HttpGet]
+        public ActionResult Add_EditPayor(int id = 0)
+        {
+            Payor obj = new Payor();
+            if (id != 0)
+            {
+                List<Payor> lstPayor = new List<Payor>();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                lstPayor = clinicalcaseOperations.GetPayors();
+                var res = lstPayor.Where(a => a.PayorId == id).FirstOrDefault();
+                obj = res;
+            }
+            return PartialView("_AddEditPayor", obj);
+        }
+
+        [HttpGet]
+        public IActionResult DeletePayor(int id)
+        {
+            Payor obj = new Payor();
+            if (id != 0)
+            {
+                List<Payor> lstPayor = new List<Payor>();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                lstPayor = clinicalcaseOperations.GetPayors();
+                var res = lstPayor.Where(a => a.PayorId == id).FirstOrDefault();
+                obj = res;
+            }
+            return PartialView("_DeletePayor", obj);
+        }
+
+        [HttpPost]
+        public IActionResult DeletePayor(Payor payor)
+        {
+            try
+            {
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                if (payor.PayorId != 0)
+                    clinicalcaseOperations.DeletePayor(payor); // Delete
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = ex.Message;
+            }
+            return RedirectToAction("SettingsPayor");
+        }
+
         [HttpGet]
         public IActionResult SettingsPayor()
         {
