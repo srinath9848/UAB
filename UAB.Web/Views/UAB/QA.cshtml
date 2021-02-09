@@ -6,7 +6,6 @@
     <div class="row">
         <partial name="_InitialData" model=Model />
         <partial name="_RebuttalChartDetails" model=Model />
-        @*<partial name="_QADetails" />*@
     </div>
 </div>
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
@@ -43,6 +42,8 @@
             $(this).siblings().removeClass('reject');
             $("#" + id + "1").css("display", "none");
             $("#" + id + "2").css("display", "none");
+            $("#" + id + "1").val('');
+            $("#" + id + "2").val('');
         }
         else if ($(this).hasClass('fa-times-circle')) {
             $(this).toggleClass('reject');
@@ -50,6 +51,19 @@
             $("#" + id + "1").css("display", "flex");
             $("#" + id + "2").css("display", "flex");
             $("#chkAll").prop('checked', false);
+        }
+    });
+
+    $('#btnsubmit').click(function (e) {
+        $("#form1").valid();
+        var check = $(".fa-check-circle").length;
+        var reject = $(".reject").length;
+        var accept = $(".accept").length;
+        if (check == accept) {
+            $("#chkAll").prop('checked', true);
+        } else {
+            alert('please mark it accept');
+            e.preventDefault();
         }
     });
 </script>
