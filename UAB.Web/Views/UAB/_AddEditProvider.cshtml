@@ -1,5 +1,10 @@
 ﻿@model UAB.DAL.Models.Provider
 
+<style>
+    .modal-content{
+        margin-top:63px;
+    }
+</style>
 <form asp-action="AddSettingsProvider" asp-controller="UAB" method="POST">
     @Html.HiddenFor(model => model.ProviderId, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
     <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
@@ -11,17 +16,17 @@
                         <div class="col-md-4">
                             @if (Model.ProviderId != 0)
                             {
-                                <h5 class="card" style="width:600px">Edit a Provider</h5>
+                                <h5 class="card" style="width:300px">Edit Provider</h5>
                             }
                             else
                             {
 
-                                <h5 class="card" style="width:600px">Add a New Provider</h5>
+                                <h5 class="card" style="width:300px">Add New Provider</h5>
                             }
 
                         </div>
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter A Provider Name " })
+                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter Provider Name " })
                             @Html.ValidationMessageFor(model => model.Name, null, new { @class = "text-danger" })
                         </div>
                     </div>
