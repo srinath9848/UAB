@@ -8,9 +8,20 @@
                 <br />
                 <div class="col-md-12">
                     <div class="form-group">
-                        <div class="col-md-4">Name </div>
+                        <div class="col-md-4">
+                            @if (Model.ProviderId != 0)
+                            {
+                                <h5 class="card" style="width:600px">Edit a Provider</h5>
+                            }
+                            else
+                            {
+
+                                <h5 class="card" style="width:600px">Add a New Provider</h5>
+                            }
+
+                        </div>
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter Name " })
+                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter A Provider Name " })
                             @Html.ValidationMessageFor(model => model.Name, null, new { @class = "text-danger" })
                         </div>
                     </div>
