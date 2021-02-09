@@ -23,13 +23,16 @@
                     <label>List Name</label> <input type="text" value="PK-Pulm MICU BLUE" class="form-control" readonly>
                 </div>*@
             <div class="col-md-3">
-                <label>MRN</label> <input type="text" value=@Model.CodingDTO.PatientMRN class="form-control" readonly>
+                <label>MRN</label>
+                @Html.TextBoxFor(model => model.CodingDTO.PatientMRN, new { @class = "form-control", @readonly = "readonly" })
             </div>
             <div class="col-lg-3">
-                <label>Patient</label> <input type="text" value=@Model.CodingDTO.Name class="form-control" readonly>
+                <label>Patient</label>
+                @Html.TextBoxFor(model => model.CodingDTO.Name, new { @class = "form-control", @readonly = "readonly" })
             </div>
             <div class="col-lg-3">
-                <label>DOS</label> <input type="text" value=@Model.CodingDTO.DateOfService class="form-control" readonly>
+                <label>DOS</label>
+                @Html.TextBoxFor(model => model.CodingDTO.DateOfService, new { @class = "form-control", @readonly = "readonly" })
             </div>
         </div>
         <div class="card">
