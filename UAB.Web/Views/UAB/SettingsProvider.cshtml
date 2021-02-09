@@ -40,11 +40,11 @@
                                 @foreach (var item in result)
                                 {
                                 <tr>
-                                    <td style="width: 200px;">
+                                    <td>
                                         <button type="button" style="cursor: pointer" class="btn btn-sm btn-info btn-fill" onclick="Edit('@item.ProviderId')"><i class="fa fa-edit"></i>Edit</button>
                                         <button type="button" style="cursor: pointer" class="btn btn-sm btn-danger btn-fill" onclick="Delete('@item.ProviderId')"><i class="fa fa-times"></i>Delete</button>
                                     </td>
-                                    <td style="width: 400px;">@item.Name</td>
+                                    <td>@item.Name</td>
                                 </tr>
                                 }
                             </tbody>

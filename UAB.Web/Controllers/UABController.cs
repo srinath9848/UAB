@@ -61,6 +61,17 @@ namespace UAB.Controllers
             TempData["Success"] = "Chats Details submitted succesfully !";
             return View("CodingSummary", lstDto);
         }
+        public IActionResult SubmitQA(ChartSummaryDTO chartSummaryDTO)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+
+            clinicalcaseOperations.SubmitQA(chartSummaryDTO);
+
+            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Role.QA.ToString());
+
+            TempData["Success"] = "Chats Details submitted succesfully !";
+            return View("QASummary", lstDto);
+        }
         void submitHold() { }
         public IActionResult IncorrectCharts(string Role, string ChartType, int ProjectID)
         {
@@ -105,22 +116,25 @@ namespace UAB.Controllers
             return View(chartSummaryDTO);
         }
 
-        public List<SelectListItem> BindErrorType()
+        public List<BindDTO> BindErrorType()
         {
-            List<SelectListItem> lst = new List<SelectListItem>();
-            lst.Add(new SelectListItem()
+            List<BindDTO> lstDto = new List<BindDTO>();
+            lstDto.Add(new BindDTO()
             {
-                Text = "CC not Supported",
+                ID = 1,
+                Name = "CC not Supported"
             });
-            lst.Add(new SelectListItem()
+            lstDto.Add(new BindDTO()
             {
-                Text = "Consult not Supported",
+                ID = 2,
+                Name = "Consult not Supported",
             });
-            lst.Add(new SelectListItem()
+            lstDto.Add(new BindDTO()
             {
-                Text = "Mod Error",
+                ID = 3,
+                Name = "Mod Error",
             });
-            return lst;
+            return lstDto;
         }
 
         public IActionResult RebuttalCharts(string Role, string ChartType, int ProjectID)

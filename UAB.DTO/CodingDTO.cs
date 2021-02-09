@@ -17,6 +17,6 @@ namespace UAB.DTO
     {
         public string CoderRebuttal { get; set; }
         [Required(ErrorMessage = "Error Type is required.")]
-        public string ErrorType { get; set; }
+        public int ErrorType { get; set; }
     }
 }
