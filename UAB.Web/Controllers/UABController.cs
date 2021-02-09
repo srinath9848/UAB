@@ -301,17 +301,27 @@ namespace UAB.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddSettingsProviderFeedback(ProviderFeedback providerFeedback)
+        public IActionResult AddSettingsProviderFeedback(BindDTO providerFeedback)
         {
             if (ModelState.IsValid)
             {
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-                clinicalcaseOperations.AddProviderFeedback(providerFeedback);
-                List<BindDTO> lstProviderFeedback = new List<BindDTO>();
-                lstProviderFeedback = clinicalcaseOperations.GetProviderFeedbacksList();
-                ViewBag.lstProviderFeedback = lstProviderFeedback;
+                if (providerFeedback.ID == 0)
+                    clinicalcaseOperations.AddProviderFeedback(providerFeedback);
+                else
+                    clinicalcaseOperations.UpdateProviderFeedback(providerFeedback); // Update
             }
-            return View("SettingsProviderFeedback");
+            return RedirectToAction("SettingsProviderFeedback");
+
+            //if (ModelState.IsValid)
+            //{
+            //    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            //    clinicalcaseOperations.AddProviderFeedback(providerFeedback);
+            //    List<BindDTO> lstProviderFeedback = new List<BindDTO>();
+            //    lstProviderFeedback = clinicalcaseOperations.GetProviderFeedbacksList();
+            //    ViewBag.lstProviderFeedback = lstProviderFeedback;
+            //}
+            //return View("SettingsProviderFeedback");
         }
         [HttpGet]
         public IActionResult SettingsProviderFeedback()
@@ -321,6 +331,52 @@ namespace UAB.Controllers
             lstProviderFeedback = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.lstProviderFeedback = lstProviderFeedback;
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Add_EditProviderFeedback(int id = 0)
+        {
+            BindDTO obj = new BindDTO();
+            if (id != 0)
+            {
+                List<BindDTO> lstproviderFeedback = new List<BindDTO>();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                lstproviderFeedback = clinicalcaseOperations.GetProviderFeedbacksList();
+                var res = lstproviderFeedback.Where(a => a.ID == id).FirstOrDefault();
+                obj = res;
+            }
+            return PartialView("_AddEditProviderFeedback", obj);
+        }
+
+        [HttpGet]
+        public IActionResult DeleteProviderFeedback(int id)
+        {
+            BindDTO obj = new BindDTO();
+            if (id != 0)
+            {
+                List<BindDTO> lstproviderFeedback = new List<BindDTO>();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                lstproviderFeedback = clinicalcaseOperations.GetProviderFeedbacksList();
+                var res = lstproviderFeedback.Where(a => a.ID == id).FirstOrDefault();
+                obj = res;
+            }
+            return PartialView("_DeleteProviderFeedback", obj);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteProviderFeedback(BindDTO providerFeedback)
+        {
+            try
+            {
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                if (providerFeedback.ID != 0)
+                    clinicalcaseOperations.DeleteProviderFeedback(providerFeedback); // Delete
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = ex.Message;
+            }
+            return RedirectToAction("SettingsProviderFeedback");
         }
     }
 }
