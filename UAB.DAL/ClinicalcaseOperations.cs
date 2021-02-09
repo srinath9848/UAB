@@ -379,7 +379,7 @@ namespace UAB.DAL
             }
         }
 
-        public void AddProviderFeedback(ProviderFeedback providerFeedback)
+        public void AddProviderFeedback(BindDTO providerFeedback)
         {
             using (var context = new UABContext())
             {
@@ -393,8 +393,72 @@ namespace UAB.DAL
 
                     SqlParameter feedback = new SqlParameter();
                     feedback.ParameterName = "@Feedback";
-                    feedback.Value = providerFeedback.Feedback;
+                    feedback.Value = providerFeedback.Name;
                     cmm.Parameters.Add(feedback);
+
+                    cnn.Open();
+                    cmm.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void UpdateProviderFeedback(BindDTO providerFeedback)
+        {
+            using (var context = new UABContext())
+            {
+                using (var cnn = context.Database.GetDbConnection())
+                {
+                    //SqlCommand cmd = new SqlCommand("UspAddProvider");
+                    var cmm = cnn.CreateCommand();
+                    //SqlCommand cmd = new SqlCommand("[dbo].[UspUpdateProvider]", cnn);
+                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspUpdateProviderFeedback]";
+                    cmm.Connection = cnn;
+
+                    SqlParameter param1 = new SqlParameter();
+                    param1.ParameterName = "@Feedback";
+                    param1.Value = providerFeedback.Name;
+                    SqlParameter param2 = new SqlParameter();
+                    param2.ParameterName = "@ProviderFeedbackID";
+                    param2.Value = providerFeedback.ID;
+                    cmm.Parameters.Add(param1);
+                    cmm.Parameters.Add(param2);
+
+
+                    //SqlParameter name = new SqlParameter();
+                    //name.ParameterName = "@Name";
+                    //name.Value = provider.Name;
+                    //cmm.Parameters.Add(name);
+
+                    cnn.Open();
+                    cmm.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void DeleteProviderFeedback(BindDTO providerFeedback)
+        {
+            using (var context = new UABContext())
+            {
+                using (var cnn = context.Database.GetDbConnection())
+                {
+                    //SqlCommand cmd = new SqlCommand("UspAddProvider");
+                    var cmm = cnn.CreateCommand();
+                    //SqlCommand cmd = new SqlCommand("[dbo].[UspUpdateProvider]", cnn);
+                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspDeleteProviderFeedback]";
+                    cmm.Connection = cnn;
+
+                    SqlParameter param = new SqlParameter();
+                    param.ParameterName = "@ProviderFeedbackId";
+                    param.Value = providerFeedback.ID;
+                    cmm.Parameters.Add(param);
+
+
+                    //SqlParameter name = new SqlParameter();
+                    //name.ParameterName = "@Name";
+                    //name.Value = provider.Name;
+                    //cmm.Parameters.Add(name);
 
                     cnn.Open();
                     cmm.ExecuteNonQuery();
