@@ -66,6 +66,12 @@ namespace UAB.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult SubmitShadowQA(ChartSummaryDTO chartSummaryDTO)
+        {
+            return View();
+        }
+
         public IActionResult SubmitQA(ChartSummaryDTO chartSummaryDTO)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
