@@ -20,27 +20,26 @@
                 <table class="table table-striped table-bordered dataTable workcontexts">
                     <thead>
                         <tr>
-                            <th scope="col">
-                                <b>Name</b>
+                            <th scope="col" class="tblHeaderRow">
+                                Name
                             </th>
-                            <th scope="col" style="text-align:center">
-                                <b>Available Charts</b>
+                            <th scope="col" class="tblHeaderRow">
+                                Available Charts
                             </th>
-                            <th scope="col" style="text-align:center">
-                                <b>Incorrect Charts</b>
+                            <th scope="col" class="tblHeaderRow">
+                                Incorrect Charts
                             </th>
-                            <th scope="col" style="text-align:center">
-                                <b>ReadyForPosting Charts</b>
+                            <th scope="col" class="tblHeaderRow">
+                                ReadyForPosting Charts
                             </th>
                         </tr>
                     </thead>
                     <tbody style="cursor:pointer;">
                         @foreach (var item in Model)
                         {
-
                             <tr>
                                 <td scope="col">
-                                    @item.ProjectName
+                                    <b> @item.ProjectName</b>
                                 </td>
                                 <td scope="col" style="text-align:center">
                                     @if (item.AvailableCharts == 0)

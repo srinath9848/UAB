@@ -15,17 +15,17 @@
                 <table class="table table-striped table-bordered dataTable">
                     <thead>
                         <tr>
-                            <th scope="col">
-                                <b>Name</b>
+                            <th scope="col" class="tblHeaderRow">
+                                Name
                             </th>
-                            <th scope="col" style="text-align:center">
-                                <b>Available Charts</b>
+                            <th scope="col" class="tblHeaderRow">
+                                Available Charts
                             </th>
-                            <th scope="col" style="text-align:center">
-                                <b>Coder Rebuttal  Charts</b>
+                            <th scope="col" class="tblHeaderRow">
+                                Coder Rebuttal  Charts
                             </th>
-                            <th scope="col" style="text-align:center">
-                                <b>Shadow QA Rebuttal  Charts</b>
+                            <th scope="col" class="tblHeaderRow">
+                                Shadow QA Rejected Charts
                             </th>
                         </tr>
                     </thead>
@@ -34,7 +34,7 @@
                         {
                             <tr>
                                 <td scope="col">
-                                    @item.ProjectName
+                                    <b> @item.ProjectName</b>
                                 </td>
                                 <td scope="col" style="text-align:center">
                                     @if (item.AvailableCharts == 0)
