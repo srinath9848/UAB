@@ -2,12 +2,14 @@
 @{
     ViewData["Title"] = "Coding";
 }
-<div class="container-fluid">
-    <div class="row">
-        <partial name="_InitialData" model=Model />
-        <partial name="_CodingDetails" model=Model />
+<form asp-action="Submit" asp-controller="UAB" method="POST">
+    <div class="container-fluid">
+        <div class="row">
+            <partial name="_InitialData" model=Model />
+            <partial name="_CodingDetails" model=Model />
+        </div>
     </div>
-</div>
+</form>
 <style>
     .input-group-text {
         display: none;
