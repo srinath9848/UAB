@@ -37,11 +37,14 @@
         <div class="form-group row">
             <label class="col-md-3 m-t-15">Provider</label>
             <div class="col-md-3 input-group">
+                @{ Accepted = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                @{ Rejected = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+
                 @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @class = "form-control" })
                 <div class="input-group-append">
                     <span class="input-group-text">
-                        &nbsp;<i id="ProviderID" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                        &nbsp;<i id="ProviderID" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i id="ProviderID" class="@Accepted" aria-hidden="true"></i>
+                        &nbsp;<i id="ProviderID" class="@Rejected" aria-hidden="true"></i>
                     </span>
                 </div>
             </div>
@@ -56,11 +59,14 @@
         <div class="form-group row">
             <label class="col-md-3 m-t-15">CPT</label>
             <div class="col-md-3 input-group">
+                @{ Accepted = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                @{ Rejected = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+
                 @Html.TextAreaFor(model => model.CPTCode, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
                 <div class="input-group-append">
                     <span class="input-group-text">
-                        &nbsp;<i id="CPTCode" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                        &nbsp;<i id="CPTCode" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i id="CPTCode" class="@Accepted" aria-hidden="true"></i>
+                        &nbsp;<i id="CPTCode" class="@Rejected" aria-hidden="true"></i>
                     </span>
                 </div>
             </div>
@@ -74,10 +80,13 @@
         <div class="form-group row">
             <label class="col-md-3 m-t-15">Mod</label>
             <div class="col-md-3 input-group">
+                @{ Accepted = (string.IsNullOrEmpty(Model.QAModRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                @{ Rejected = (string.IsNullOrEmpty(Model.QAModRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+
                 @Html.TextAreaFor(model => model.Mod, new { @class = "form-control" })
                 <span class="input-group-text">
-                    &nbsp;<i id="Mod" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                    &nbsp;<i id="Mod" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="Mod" class="@Accepted" aria-hidden="true"></i>
+                    &nbsp;<i id="Mod" class="@Rejected" aria-hidden="true"></i>
                 </span>
             </div>
             <div class="col-md-3 input-group">
@@ -93,10 +102,13 @@
         <div class="form-group row">
             <label class="col-md-3 m-t-15"></label>
             <div class="col-md-3 input-group">
+                @{ Accepted = (string.IsNullOrEmpty(Model.QADxRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                @{ Rejected = (string.IsNullOrEmpty(Model.QADxRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+
                 @Html.TextAreaFor(model => model.Dx, new { @class = "form-control" })
                 <span class="input-group-text">
-                    &nbsp;<i id="Dx" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                    &nbsp;<i id="Dx" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="Dx" class="@Accepted" aria-hidden="true"></i>
+                    &nbsp;<i id="Dx" class="@Rejected" aria-hidden="true"></i>
                 </span>
             </div>
             <div class="col-md-3 input-group">
@@ -109,11 +121,14 @@
         <div class="form-group row">
             <label class="col-md-3 m-t-15"> Feedback to Provider</label>
             <div class="col-md-3 input-group">
+                @{ Accepted = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                @{ Rejected = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+
                 @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @class = "form-control" })
                 <div class="input-group-append" style="height: 38px;">
                     <span class="input-group-text">
-                        &nbsp;<i id="Feedback" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                        &nbsp;<i id="Feedback" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i id="Feedback" class="@Accepted" aria-hidden="true"></i>
+                        &nbsp;<i id="Feedback" class="@Rejected" aria-hidden="true"></i>
                     </span>
                 </div>
             </div>

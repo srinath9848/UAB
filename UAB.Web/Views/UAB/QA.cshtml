@@ -3,12 +3,12 @@
     ViewData["Title"] = "QA";
 }
 <form asp-action="SubmitQA" id="form1" asp-controller="UAB" method="POST">
-<div class="container-fluid">
-    <div class="row">
-        <partial name="_InitialData" model=Model />
-        <partial name="_RebuttalChartDetails" model=Model />
+    <div class="container-fluid">
+        <div class="row">
+            <partial name="_InitialData" model=Model />
+            <partial name="_RebuttalChartDetails" model=Model />
+        </div>
     </div>
-</div>
 </form>
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
 <script src="~/dashboardassets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
@@ -24,6 +24,7 @@
     //$(".CodingDetails").attr("readonly", false);
     $(".QADetails").attr("readonly", false);
     $("#qa").addClass('selected');
+    $(".accept").removeClass('accept');
 
     $('#chkAll').change(function () {
         if ($(this).is(':checked')) {
