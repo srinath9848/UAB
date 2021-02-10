@@ -344,6 +344,77 @@ namespace UAB.Controllers
         }
 
         [HttpPost]
+        public IActionResult AddSettingsErrorType(ErrorType errorType)
+        {
+            if (ModelState.IsValid)
+            {
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                if (errorType.ErrorTypeId == 0)
+                    clinicalcaseOperations.AddErrorType(errorType);
+                else
+                    clinicalcaseOperations.UpdateErrorType(errorType); // Update
+            }
+            return RedirectToAction("SettingsErrorType");
+        }
+
+
+        [HttpGet]
+        public ActionResult Add_EditErrorType(int id = 0)
+        {
+            ErrorType obj = new ErrorType();
+            if (id != 0)
+            {
+                List<ErrorType> lstErrorType = new List<ErrorType>();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                lstErrorType = clinicalcaseOperations.GetErrorTypes();
+                var res = lstErrorType.Where(a => a.ErrorTypeId == id).FirstOrDefault();
+                obj = res;
+            }
+            return PartialView("_AddEditErrorType", obj);
+        }
+
+        [HttpGet]
+        public IActionResult DeleteErrorType(int id)
+        {
+            ErrorType obj = new ErrorType();
+            if (id != 0)
+            {
+                List<ErrorType> lstErrorType = new List<ErrorType>();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                lstErrorType = clinicalcaseOperations.GetErrorTypes();
+                var res = lstErrorType.Where(a => a.ErrorTypeId == id).FirstOrDefault();
+                obj = res;
+            }
+            return PartialView("_DeleteErrorType", obj);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteErrorType(ErrorType errorType)
+        {
+            try
+            {
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                if (errorType.ErrorTypeId != 0)
+                    clinicalcaseOperations.DeleteErrorType(errorType); // Delete
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = ex.Message;
+            }
+            return RedirectToAction("SettingsErrorType");
+        }
+
+        [HttpGet]
+        public IActionResult SettingsErrorType()
+        {
+            List<ErrorType> lstErrorType = new List<ErrorType>();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            lstErrorType = clinicalcaseOperations.GetErrorTypes();
+            ViewBag.lstErrorType = lstErrorType;
+            return View();
+        }
+
+        [HttpPost]
         public IActionResult AddSettingsProviderFeedback(BindDTO providerFeedback)
         {
             if (ModelState.IsValid)
