@@ -2,13 +2,14 @@
 @{
     ViewData["Title"] = "QA";
 }
-<div class="container-fluid">
-    <div class="row">
-        <partial name="_InitialData" model=Model />
-        <partial name="_RebuttalChartDetails" model=Model />
-        @*<partial name="_QADetails" />*@
+<form asp-action="SubmitQA" id="form1" asp-controller="UAB" method="POST">
+    <div class="container-fluid">
+        <div class="row">
+            <partial name="_InitialData" model=Model />
+            <partial name="_RebuttalChartDetails" model=Model />
+        </div>
     </div>
-</div>
+</form>
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
 <script src="~/dashboardassets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
@@ -21,8 +22,10 @@
         todayHighlight: true
     });
     //$(".CodingDetails").attr("readonly", false);
+    $(".CoderDetails").attr("readonly", true);
     $(".QADetails").attr("readonly", false);
     $("#qa").addClass('selected');
+    $(".accept").removeClass('accept');
 
     $('#chkAll').change(function () {
         if ($(this).is(':checked')) {
@@ -43,6 +46,8 @@
             $(this).siblings().removeClass('reject');
             $("#" + id + "1").css("display", "none");
             $("#" + id + "2").css("display", "none");
+            $("#" + id + "1").val('');
+            $("#" + id + "2").val('');
         }
         else if ($(this).hasClass('fa-times-circle')) {
             $(this).toggleClass('reject');
@@ -50,6 +55,19 @@
             $("#" + id + "1").css("display", "flex");
             $("#" + id + "2").css("display", "flex");
             $("#chkAll").prop('checked', false);
+        }
+    });
+
+    $('#btnsubmit').click(function (e) {
+        $("#form1").valid();
+        var check = $(".fa-check-circle").length;
+        var reject = $(".reject").length;
+        var accept = $(".accept").length;
+        if (check == accept) {
+            $("#chkAll").prop('checked', true);
+        } else {
+            alert('please mark it accept');
+            e.preventDefault();
         }
     });
 </script>

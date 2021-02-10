@@ -61,6 +61,17 @@ namespace UAB.Controllers
             TempData["Success"] = "Chats Details submitted succesfully !";
             return View("CodingSummary", lstDto);
         }
+        public IActionResult CoderIncorrectChartSubmit(ChartSummaryDTO chartSummaryDTO)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult SubmitShadowQA(ChartSummaryDTO chartSummaryDTO)
+        {
+            return View();
+        }
+
         public IActionResult SubmitQA(ChartSummaryDTO chartSummaryDTO)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
@@ -83,6 +94,7 @@ namespace UAB.Controllers
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
             ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            ViewBag.ErrorTypes = BindErrorType();
             #endregion
 
             return View(chartSummaryDTO);
@@ -154,12 +166,29 @@ namespace UAB.Controllers
 
         public IActionResult ShadowQASummary()
         {
-            return View();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+
+            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Role.ShadowQA.ToString());
+
+            return View(lstDto);
         }
-        public IActionResult ShadowQA()
+
+
+        public IActionResult ShadowQA(string Role, string ChartType, int ProjectID)
         {
-            return View();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
+            chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
+
+            #region binding data
+            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
+            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
+            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            ViewBag.ErrorTypes = BindErrorType();
+            #endregion
+            return View(chartSummaryDTO);
         }
+
 
         [HttpPost]
         public IActionResult AddSettingsProvider(Provider provider)
