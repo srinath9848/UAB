@@ -61,6 +61,10 @@ namespace UAB.Controllers
             TempData["Success"] = "Chats Details submitted succesfully !";
             return View("CodingSummary", lstDto);
         }
+        public IActionResult CoderIncorrectChartSubmit(ChartSummaryDTO chartSummaryDTO)
+        {
+            return View();
+        }
 
         public IActionResult SubmitQA(ChartSummaryDTO chartSummaryDTO)
         {
@@ -84,6 +88,7 @@ namespace UAB.Controllers
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
             ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            ViewBag.ErrorTypes = BindErrorType();
             #endregion
 
             return View(chartSummaryDTO);

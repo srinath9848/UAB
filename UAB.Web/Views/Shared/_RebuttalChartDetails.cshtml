@@ -1,176 +1,179 @@
 ﻿@model UAB.DTO.ChartSummaryDTO
 <div class="col-md-12">
-    <form asp-action="SubmitQA" id="form1" asp-controller="UAB" method="POST">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Coding Details</h4>
-            </div>
-            @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
-            <div class="form-group row" id="divChkAll">
-                <label class="col-md-4 m-t-15"></label>
-                <div class="custom-control custom-checkbox mr-sm-2">
-                    <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll">
-                    <label class="custom-control-label" for="chkAll">Accept All</label>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-md-3 m-t-15">Payor</label>
-                <div class="col-md-3 input-group">
-                    @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @class = "form-control" })
-                    <div class="input-group-append">
-                        <span class="input-group-text">
-                            &nbsp;<i id="PayorID" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                            &nbsp;<i id="PayorID" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-md-3 input-group">
-                    @Html.DropDownListFor(model => model.QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = "PayorID1", @class = "form-control QARevised", style = "display:none" })
-                </div>
-                <div class="col-md-3 input-group">
-                    @Html.TextBoxFor(model => model.QAPayorRemarks, new { style = "display:none", @class = "form-control QARevised", @id = "PayorID2" })
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-md-3 m-t-15">Provider</label>
-                <div class="col-md-3 input-group">
-                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @class = "form-control" })
-                    <div class="input-group-append">
-                        <span class="input-group-text">
-                            &nbsp;<i id="ProviderID" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                            &nbsp;<i id="ProviderID" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-md-3 input-group">
-                    @Html.DropDownListFor(model => model.QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = "ProviderID1", @class = "form-control QARevised", style = "display:none" })
-                </div>
-                <div class="col-md-3 input-group">
-                    @Html.TextBoxFor(model => model.QAProviderRemarks, new { style = "display:none", @class = "form-control QARevised", @id = "ProviderID2" })
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-md-3 m-t-15">CPT</label>
-                <div class="col-md-3 input-group">
-                    @Html.TextAreaFor(model => model.CPTCode, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
-                    <div class="input-group-append">
-                        <span class="input-group-text">
-                            &nbsp;<i id="CPTCode" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                            &nbsp;<i id="CPTCode" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-md-3 input-group">
-                    @Html.TextAreaFor(model => model.QACPTCode, new { style = "display:none", @id = "CPTCode1", @class = "form-control QARevised", @autofocus = "autofocus", @autocomplete = "off" })
-                </div>
-                <div class="col-md-3 input-group">
-                    @Html.TextBoxFor(model => model.QACPTCodeRemarks, new { style = "display:none", @class = "form-control QARevised", @id = "CPTCode2" })
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-md-3 m-t-15">Mod</label>
-                <div class="col-md-3 input-group">
-                    @Html.TextAreaFor(model => model.Mod, new { @class = "form-control" })
-                    <span class="input-group-text">
-                        &nbsp;<i id="Mod" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                        &nbsp;<i id="Mod" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                    </span>
-                </div>
-                <div class="col-md-3 input-group">
-                    @Html.TextAreaFor(model => model.QAMod, new { style = "display:none", @class = "form-control QARevised", @id = "Mod1" })
-                </div>
-                <div class="col-md-3 input-group">
-                    @Html.TextBoxFor(model => model.QAModRemarks, new { style = "display:none", @class = "form-control QARevised", @id = "Mod2" })
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-md-8 m-t-15" style="margin-left:10px">Dx 1-4 (code followed by a comma and space)</label>
-            </div>
-            <div class="form-group row">
-                <label class="col-md-3 m-t-15"></label>
-                <div class="col-md-3 input-group">
-                    @Html.TextAreaFor(model => model.Dx, new { @class = "form-control" })
-                    <span class="input-group-text">
-                        &nbsp;<i id="Dx" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                        &nbsp;<i id="Dx" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                    </span>
-                </div>
-                <div class="col-md-3 input-group">
-                    @Html.TextAreaFor(model => model.QADx, new { style = "display:none", @id = "Dx1", @class = "form-control QARevised" })
-                </div>
-                <div class="col-md-3 input-group">
-                    @Html.TextBoxFor(model => model.QADxRemarks, new { style = "display:none", @class = "form-control QARevised", @id = "Dx2" })
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-md-3 m-t-15"> Feedback to Provider</label>
-                <div class="col-md-3 input-group">
-                    @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @class = "form-control" })
-                    <div class="input-group-append" style="height: 38px;">
-                        <span class="input-group-text">
-                            &nbsp;<i id="Feedback" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                            &nbsp;<i id="Feedback" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-md-3 input-group">
-                    @Html.DropDownListFor(model => model.QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { style = "display:none", @class = "form-control QARevised", @id = "Feedback1" })
-                </div>
-                <div class="col-md-3 input-group">
-                    @Html.TextBoxFor(model => model.QAProviderFeedbackRemarks, new { style = "display:none", @class = "form-control QARevised", @id = "Feedback2" })
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-md-3 m-t-15">Coder Questions</label>
-                <div class="col-md-3">
-                    @Html.TextAreaFor(model => model.CoderQuestion, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
-                </div>
 
-                <label class="col-md-3 m-t-15">Note Title</label>
-                <div class="col-md-3">
-                    @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
-                </div>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Coding Details</h4>
+        </div>
+        @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
+        <div class="form-group row" id="divChkAll">
+            <label class="col-md-4 m-t-15"></label>
+            <div class="custom-control custom-checkbox mr-sm-2">
+                <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll">
+                <label class="custom-control-label" for="chkAll">Accept All</label>
             </div>
         </div>
+        <div class="form-group row">
+            <label class="col-md-3 m-t-15">Payor</label>
+            <div class="col-md-3 input-group">
+                @{string Accepted = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                @{string Rejected = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-        <div class="clearfix"></div>
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">QA Details</h4>
+                @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @class = "form-control" })
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                        &nbsp;<i id="PayorID" class="@Accepted" aria-hidden="true"></i>
+                        &nbsp;<i id="PayorID" class="@Rejected" aria-hidden="true"></i>
+                    </span>
+                </div>
             </div>
-            <div class="card-body">
-                <div class="col-12">
-                    <div class="row mb-3">
-                        <div class="col-lg-6">
-                            <div class="form-group row">
-                                <label class="col-md-5 m-t-15">Coder Rebuttal</label>
-                                <div class="col-sm-7">
-                                    @Html.TextAreaFor(model => model.QADTO.CoderRebuttal, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
-                                </div>
-                            </div>
-                        </div>
+            <div class="col-md-3 input-group">
+                @Html.DropDownListFor(model => model.QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = "PayorID1", @class = "form-control QARevised", @style = (Model.QAPayorID == 0 ? "display:none" : "display:flex") })
+            </div>
+            <div class="col-md-3 input-group">
+                @Html.TextBoxFor(model => model.QAPayorRemarks, new { @style = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "display:none" : "display:flex"), @class = "form-control QARevised", @id = "PayorID2" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 m-t-15">Provider</label>
+            <div class="col-md-3 input-group">
+                @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @class = "form-control" })
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                        &nbsp;<i id="ProviderID" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i id="ProviderID" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3 input-group">
+                @Html.DropDownListFor(model => model.QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = "ProviderID1", @class = "form-control QARevised", @style = (Model.QAProviderID == 0 ? "display:none" : "display:flex") })
 
-                        <div class="col-lg-6">
-                            <div class="form-group row">
-                                <label class="col-md-5 m-t-15">
-                                    Error Type (mgt use only)
-                                </label>
-                                <div class="col-md-7">
-                                    @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.QADTO.ErrorType, null, new { @class = "text-danger" })
-                                </div>
+            </div>
+            <div class="col-md-3 input-group">
+                @Html.TextBoxFor(model => model.QAProviderRemarks, new { @style = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "display:none" : "display:flex"), @class = "form-control QARevised", @id = "ProviderID2" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 m-t-15">CPT</label>
+            <div class="col-md-3 input-group">
+                @Html.TextAreaFor(model => model.CPTCode, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                        &nbsp;<i id="CPTCode" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i id="CPTCode" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3 input-group">
+                @Html.TextAreaFor(model => model.QACPTCode, new { @style = (string.IsNullOrEmpty(Model.QACPTCode) ? "display:none" : "display:flex"), @id = "CPTCode1", @class = "form-control QARevised", @autofocus = "autofocus", @autocomplete = "off" })
+            </div>
+            <div class="col-md-3 input-group">
+                @Html.TextBoxFor(model => model.QACPTCodeRemarks, new { @style = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "display:none" : "display:flex"), @class = "form-control QARevised", @id = "CPTCode2" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 m-t-15">Mod</label>
+            <div class="col-md-3 input-group">
+                @Html.TextAreaFor(model => model.Mod, new { @class = "form-control" })
+                <span class="input-group-text">
+                    &nbsp;<i id="Mod" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="Mod" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                </span>
+            </div>
+            <div class="col-md-3 input-group">
+                @Html.TextAreaFor(model => model.QAMod, new { @style = (string.IsNullOrEmpty(Model.QAMod) ? "display:none" : "display:flex"), @class = "form-control QARevised", @id = "Mod1" })
+            </div>
+            <div class="col-md-3 input-group">
+                @Html.TextBoxFor(model => model.QAModRemarks, new { @style = (string.IsNullOrEmpty(Model.QAModRemarks) ? "display:none" : "display:flex"), @class = "form-control QARevised", @id = "Mod2" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-8 m-t-15" style="margin-left:10px">Dx 1-4 (code followed by a comma and space)</label>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 m-t-15"></label>
+            <div class="col-md-3 input-group">
+                @Html.TextAreaFor(model => model.Dx, new { @class = "form-control" })
+                <span class="input-group-text">
+                    &nbsp;<i id="Dx" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="Dx" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                </span>
+            </div>
+            <div class="col-md-3 input-group">
+                @Html.TextAreaFor(model => model.QADx, new { @style = (string.IsNullOrEmpty(Model.QADx) ? "display:none" : "display:flex"), @id = "Dx1", @class = "form-control QARevised" })
+            </div>
+            <div class="col-md-3 input-group">
+                @Html.TextBoxFor(model => model.QADxRemarks, new { @style = (string.IsNullOrEmpty(Model.QADxRemarks) ? "display:none" : "display:flex"), @class = "form-control QARevised", @id = "Dx2" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 m-t-15"> Feedback to Provider</label>
+            <div class="col-md-3 input-group">
+                @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @class = "form-control" })
+                <div class="input-group-append" style="height: 38px;">
+                    <span class="input-group-text">
+                        &nbsp;<i id="Feedback" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i id="Feedback" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3 input-group">
+                @Html.DropDownListFor(model => model.QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = (Model.QAProviderFeedbackID == 0 ? "display:none" : "display:flex"), @class = "form-control QARevised", @id = "Feedback1" })
+            </div>
+            <div class="col-md-3 input-group">
+                @Html.TextBoxFor(model => model.QAProviderFeedbackRemarks, new { @style = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "display:none" : "display:flex"), @class = "form-control QARevised", @id = "Feedback2" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 m-t-15">Coder Questions</label>
+            <div class="col-md-3">
+                @Html.TextAreaFor(model => model.CoderQuestion, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
+            </div>
+
+            <label class="col-md-3 m-t-15">Note Title</label>
+            <div class="col-md-3">
+                @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">QA Details</h4>
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <div class="row mb-3">
+                    <div class="col-lg-6">
+                        <div class="form-group row">
+                            <label class="col-md-5 m-t-15">Coder Rebuttal</label>
+                            <div class="col-sm-7">
+                                @Html.TextAreaFor(model => model.QADTO.CoderRebuttal, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="border-top" id="QADetails">
-                <div class="card-body" style="text-align:right">
-                    <button type="submit" id="btnsubmit" class="btn btn-success">Submit</button>
+
+                    <div class="col-lg-6">
+                        <div class="form-group row">
+                            <label class="col-md-3 m-t-15">
+                                Error Type (mgt use only)
+                            </label>
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.QADTO.ErrorType, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </form>
+        <div class="border-top">
+            <div class="card-body" style="text-align:right">
+                <button id="btnsubmit" type="submit" class="btn btn-success">Submit</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 
