@@ -1,39 +1,28 @@
-﻿@model UAB.DAL.Models.Provider
+﻿@model UAB.DAL.Models.ErrorType
 
-<style>
-    .modal-content{
-        margin-top:63px;
-    }
-</style>
-<form asp-action="AddSettingsProvider" asp-controller="UAB" method="POST">
-    @Html.HiddenFor(model => model.ProviderId, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
+    <style>
+        .modal-content {
+            margin-top: 63px;
+        }
+    </style>
+<form asp-action="AddSettingsErrorType" asp-controller="UAB" method="POST">
+    @Html.HiddenFor(model => model.ErrorTypeId, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
     <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
         <div class="modal-dialog">
             <div class="modal-content" style="width: 500px;">
                 <br />
                 <div class="col-md-12">
                     <div class="form-group">
-                        <div class="col-md-6">
-                            @if (Model.ProviderId != 0)
-                            {
-                                <h5 class="card" style="width:300px">Update Provider</h5>
-                            }
-                            else
-                            {
-
-                                <h5 class="card" style="width:300px">Add New Provider</h5>
-                            }
-
-                        </div>
+                        <div class="col-md-4">Add New Error Type </div>
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter Provider Name " })
+                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter Error Type " })
                             @Html.ValidationMessageFor(model => model.Name, null, new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="clearfix"></div>
                     <div class="col-md-12">
                         <div class="modal-footer">
-                            @if (Model.ProviderId != 0)
+                            @if (Model.ErrorTypeId != 0)
                             {
                                 <button type="submit" class="btn btn-sm btn-info btn-fill">Update</button>
                             }

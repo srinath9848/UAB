@@ -705,5 +705,103 @@ namespace UAB.DAL
                 }
             }
         }
+
+        public List<ErrorType> GetErrorTypes()
+        {
+            ErrorType errorType = new ErrorType();
+            List<ErrorType> lstErrorType = new List<ErrorType>();
+
+            using (var context = new UABContext())
+            {
+                using (var cnn = context.Database.GetDbConnection())
+                {
+                    var cmm = cnn.CreateCommand();
+                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspGetErrorType]";
+                    cmm.Connection = cnn;
+                    cnn.Open();
+                    var reader = cmm.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        errorType = new ErrorType();
+                        errorType.ErrorTypeId = Convert.ToInt32(reader["ErrorTypeID"]);
+                        errorType.Name = Convert.ToString(reader["Name"]);
+                        lstErrorType.Add(errorType);
+                    }
+                }
+            }
+            return lstErrorType;
+        }
+
+        public void AddErrorType(ErrorType errorType)
+        {
+            using (var context = new UABContext())
+            {
+                using (var cnn = context.Database.GetDbConnection())
+                {
+                    var cmm = cnn.CreateCommand();
+                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspAddErrorType]";
+                    cmm.Connection = cnn;
+
+                    SqlParameter name = new SqlParameter();
+                    name.ParameterName = "@Name";
+                    name.Value = errorType.Name;
+                    cmm.Parameters.Add(name);
+
+                    cnn.Open();
+                    cmm.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void UpdateErrorType(ErrorType errorType)
+        {
+            using (var context = new UABContext())
+            {
+                using (var cnn = context.Database.GetDbConnection())
+                {
+                    var cmm = cnn.CreateCommand();
+                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspUpdateErrorType]";
+                    cmm.Connection = cnn;
+
+                    SqlParameter param1 = new SqlParameter();
+                    param1.ParameterName = "@Name";
+                    param1.Value = errorType.Name;
+                    SqlParameter param2 = new SqlParameter();
+                    param2.ParameterName = "@ErrorTypeID";
+                    param2.Value = errorType.ErrorTypeId;
+                    cmm.Parameters.Add(param1);
+                    cmm.Parameters.Add(param2);
+
+                    cnn.Open();
+                    cmm.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void DeleteErrorType(ErrorType errorType)
+        {
+            using (var context = new UABContext())
+            {
+                using (var cnn = context.Database.GetDbConnection())
+                {
+                    var cmm = cnn.CreateCommand();
+                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspDeleteErrorType]";
+                    cmm.Connection = cnn;
+
+                    SqlParameter param = new SqlParameter();
+                    param.ParameterName = "@ErrorTypeID";
+                    param.Value = errorType.ErrorTypeId;
+                    cmm.Parameters.Add(param);
+
+                    cnn.Open();
+                    cmm.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }

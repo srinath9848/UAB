@@ -1,5 +1,10 @@
 ﻿@model UAB.DTO.BindDTO
 
+    <style>
+        .modal-content {
+            margin-top: 63px;
+        }
+    </style>
 <form asp-action="AddSettingsProviderFeedback" asp-controller="UAB" method="POST">
     @Html.HiddenFor(model => model.ID, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
     <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
@@ -8,9 +13,9 @@
                 <br />
                 <div class="col-md-12">
                     <div class="form-group">
-                        <div class="col-md-4">Name </div>
+                        <div class="col-md-4">Provider Feedback </div>
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter Name " })
+                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter Feedback " })
                             @Html.ValidationMessageFor(model => model.Name, null, new { @class = "text-danger" })
                         </div>
                     </div>
@@ -19,11 +24,11 @@
                         <div class="modal-footer">
                             @if (Model.ID != 0)
                             {
-                                <button type="submit" class="btn btn-sm btn-info btn-fill">Update</button>
+                                <button type="submit" class="btn btn-sm btn-info btn-fill">Update Feedback</button>
                             }
                             else
                             {
-                                <button type="submit" class="btn btn-sm btn-info btn-fill">Add</button>
+                                <button type="submit" class="btn btn-sm btn-info btn-fill">Add Feedback</button>
                             }
                             <button type="button" class="btn btn-sm btn-danger btn-fill" onclick="ModalClose1()">Close</button>
                         </div>
