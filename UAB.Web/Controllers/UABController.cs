@@ -176,7 +176,7 @@ namespace UAB.Controllers
             return lstDto;
         }
 
-        public IActionResult RebuttalCharts(string Role, string ChartType, int ProjectID)
+        public IActionResult CoderRebuttalCharts(string Role, string ChartType, int ProjectID)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();

@@ -57,18 +57,17 @@
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">
-                                    @if (item.RebuttalCharts == 0)
+                                    @if (item.QARebuttalCharts == 0)
                                     {
-                                        @item.RebuttalCharts
+                                        @item.QARebuttalCharts
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("IncorrectCharts", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
-                                        List<int> lstStatus = new List<int> { (int)StatusType.QARejected, (int)StatusType.ShadowQARejected };
-                                        @item.RebuttalCharts
+                                        @item.QARebuttalCharts
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("IncorrectCharts", "UAB",new { Role=Role.Coder,ChartType="Rebuttal",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("IncorrectCharts", "UAB",new { Role=Role.Coder,ChartType="Incorrect",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">

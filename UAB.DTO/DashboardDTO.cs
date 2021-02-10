@@ -9,7 +9,9 @@ namespace UAB.DTO
         public int StatusID { get; set; }
         public int Cnt { get; set; }
         public int AvailableCharts { get; set; }
-        public int RebuttalCharts { get; set; }
+        public int CoderRebuttalCharts { get; set; }
+        public int QARebuttalCharts { get; set; }
+        public int ShadowQARebuttalCharts { get; set; }
         public int ReadyForPostingCharts { get; set; }
     }
 }

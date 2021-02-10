@@ -42,7 +42,9 @@ namespace UAB.DAL
                         dto.ProjectID = Convert.ToInt32(reader["ProjectID"]);
                         dto.ProjectName = Convert.ToString(reader["Name"]);
                         dto.AvailableCharts = Convert.ToInt32(reader["AvailableCharts"]);
-                        dto.RebuttalCharts = Convert.ToInt32(reader["RebuttalCharts"]);
+                        dto.CoderRebuttalCharts = Convert.ToInt32(reader["CoderRebuttalCharts"]);
+                        dto.QARebuttalCharts = Convert.ToInt32(reader["QARebuttalCharts"]);
+                        dto.ShadowQARebuttalCharts = Convert.ToInt32(reader["ShadowQARebuttalCharts"]);
                         dto.ReadyForPostingCharts = Convert.ToInt32(reader["ReadyForPostingCharts"]);
                         lstDto.Add(dto);
                     }
@@ -102,7 +104,7 @@ namespace UAB.DAL
                             chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
                             chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
                         }
-                        else if (Role == "Coder" && ChartType == "Rebuttal")
+                        else if (Role == "Coder" && ChartType == "Incorrect")
                         {
                             chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                             if (reader["QAProviderID"] != DBNull.Value)
