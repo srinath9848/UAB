@@ -6,6 +6,13 @@
             <h4 class="card-title">Coding Details</h4>
         </div>
         @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
+        @Html.Hidden("hdnPayorID")
+        @Html.Hidden("hdnProviderID")
+        @Html.Hidden("hdnCpt")
+        @Html.Hidden("hdnMod")
+        @Html.Hidden("hdnDx")
+        @Html.Hidden("hdnProviderFeedbackID")
+
         <div class="form-group row" id="divChkAll">
             <label class="col-md-4 m-t-15"></label>
             <div class="custom-control custom-checkbox mr-sm-2">
@@ -19,6 +26,7 @@
                 @{string Accepted = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                 @{string Rejected = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
+
                 @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @class = "form-control CoderDetails" })
                 <div class="input-group-append QACorrections">
                     <span class="input-group-text">
@@ -28,6 +36,7 @@
                 </div>
             </div>
             <div class="col-md-3 lessWidth input-group">
+
                 @Html.DropDownListFor(model => model.QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = "PayorID1", @class = "form-control QARevised", @style = (Model.QAPayorID == 0 ? "display:none" : "display:flex") })
             </div>
             @{string Show = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "display:none" : "display:flex");}
@@ -36,7 +45,7 @@
             </div>
             <div class="input-group-append CoderCorrections" style="@Show">
                 <span class="input-group-text">
-                    &nbsp;<i id="Payor" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="Payor" title="PayorID1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
                     &nbsp;<i id="Payor" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                 </span>
             </div>
@@ -67,7 +76,7 @@
             </div>
             <div class="input-group-append CoderCorrections" style="@Show">
                 <span class="input-group-text">
-                    &nbsp;<i id="Provider" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="Provider" title="ProviderID1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
                     &nbsp;<i id="Provider" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                 </span>
             </div>
@@ -98,7 +107,7 @@
             </div>
             <div class="input-group-append CoderCorrections" style="@Show">
                 <span class="input-group-text">
-                    &nbsp;<i id="CPT" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="CPT" title="CPTCode1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
                     &nbsp;<i id="CPT" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                 </span>
             </div>
@@ -112,7 +121,7 @@
                 @{ Accepted = (string.IsNullOrEmpty(Model.QAModRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                 @{ Rejected = (string.IsNullOrEmpty(Model.QAModRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-                @Html.TextAreaFor(model => model.Mod, new { @class = "form-control CoderDetails" })
+                @Html.TextAreaFor(model => model.Mod, new { @class = "form-control CoderDetails"})
                 <span class="input-group-text QACorrections">
                     &nbsp;<i id="Mod" class="@Accepted" aria-hidden="true"></i>
                     &nbsp;<i id="Mod" class="@Rejected" aria-hidden="true"></i>
@@ -127,12 +136,12 @@
             </div>
             <div class="input-group-append CoderCorrections" style="@Show">
                 <span class="input-group-text">
-                    &nbsp;<i id="Mod" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="Mod" title="Mod1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
                     &nbsp;<i id="Mod" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                 </span>
             </div>
             <div class="col-md-3 input-group CoderCorrections" style="@Show">
-                @Html.TextBoxFor(model => model.RevisedModRemarks, new {  @class = "form-control", @id = "RevisedModRemarks" })
+                @Html.TextBoxFor(model => model.RevisedModRemarks, new { @class = "form-control", @id = "RevisedModRemarks" })
             </div>
         </div>
         <div class="form-group row">
@@ -156,12 +165,12 @@
             </div>
             <div class="input-group-append CoderCorrections" style="@Show">
                 <span class="input-group-text">
-                    &nbsp;<i id="DX" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="DX" title="Dx1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
                     &nbsp;<i id="DX" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                 </span>
             </div>
             <div class="col-md-3 input-group CoderCorrections" style="@Show">
-                @Html.TextBoxFor(model => model.RevisedDXRemarks, new {  @class = "form-control", @id = "RevisedDXRemarks" })
+                @Html.TextBoxFor(model => model.RevisedDXRemarks, new { @class = "form-control", @id = "RevisedDXRemarks" })
             </div>
         </div>
         <div class="form-group row">
@@ -187,7 +196,7 @@
             </div>
             <div class="input-group-append CoderCorrections" style="@Show">
                 <span class="input-group-text">
-                    &nbsp;<i id="ProviderFeedback" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="ProviderFeedback"  title="Feedback1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
                     &nbsp;<i id="ProviderFeedback" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                 </span>
             </div>

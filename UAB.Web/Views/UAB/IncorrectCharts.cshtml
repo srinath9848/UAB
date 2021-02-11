@@ -100,6 +100,24 @@
             $(this).siblings().removeClass('reject');
             $("#Revised" + id + "Remarks").css("display", "none");
             $("#Revised" + id + "Remarks").val('');
+            var title = $("#" + id).attr('title');
+            if (title =="PayorID1")
+                $("#hdnPayorID").val($("#" + title + " option:selected").val());
+
+            if (title == "ProviderID1")
+                $("#hdnProviderID").val($("#" + title + " option:selected").val());
+
+            if (title == "CPTCode1")
+                $("#hdnCpt").val($("#" + title).val());
+
+            if (id == "Mod")
+                $("#hdnMod").val($("#" + id +"1").val());
+
+            if (title == "Dx1")
+                $("#hdnDx").val($("#" + title).val());
+
+            if (title == "Feedback1")
+                $("#hdnProviderFeedbackID").val($("#" + title + " option:selected").val());
         }
         else if ($(this).hasClass('fa-times-circle')) {
             $(this).toggleClass('reject');
