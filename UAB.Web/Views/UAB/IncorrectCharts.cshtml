@@ -79,7 +79,6 @@
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
 <script src="~/dashboardassets/dist/js/jquery-ui.min.js"></script>
 <script src="~/dashboardassets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<script src="~/reorderable.js"></script>
 <script type="text/javascript">
     /*datwpicker*/
     jQuery('#datepicker-autoclose').datepicker({
@@ -89,39 +88,26 @@
 
     $(".QADetails").attr("readonly", true);
     $(".QARevised").attr("readonly", true);
-    $('span.input-group-text').css('pointer-events', 'none');
     $("#coding").addClass('selected');
     $('#divChkAll').hide();
+    $('.QACorrections').hide();
+ 
 
-    $('.example').reorderable([
-        {
-            label: "Lable 1",
-        },
-        {
-            label: "Lable 2",
-            backgroundColor: "#571845"
-        },
-        {
-            label: "Lable 3",
-            backgroundColor: "#900C3E"
-        },
-        {
-            label: "Lable 4",
-            backgroundColor: "#C70039"
-        },
-        {
-            label: "Lable 5",
-            backgroundColor: "#FF5733"
+    $('span i').click(function () {
+        var id = $(this).attr('id');
+        if ($(this).hasClass('fa-check-circle')) {
+            $(this).toggleClass('accept');
+            $(this).siblings().removeClass('reject');
+            $("#Revised" + id + "Remarks").css("display", "none");
+            $("#Revised" + id + "Remarks").val('');
         }
-    ]);
-
-    $("#Add").click(function () {
-        $(".example").append('<li class="default"/>Product 1</li>');
-        $(".example").append('<li class="default"/>Product 2</li>');
-        $(".example").append('<li class="default"/>Product 3</li>');
-
-        $("#sortable-1").sortable();
+        else if ($(this).hasClass('fa-times-circle')) {
+            $(this).toggleClass('reject');
+            $(this).siblings().removeClass('accept');
+            $("#Revised" + id + "Remarks").css("display", "flex");
+        }
     });
+
 </script>
 
 

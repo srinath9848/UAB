@@ -63,7 +63,14 @@ namespace UAB.Controllers
         }
         public IActionResult CoderIncorrectChartSubmit(ChartSummaryDTO chartSummaryDTO)
         {
-            return View();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+
+            clinicalcaseOperations.SubmitCoderIncorrectChart(chartSummaryDTO);
+
+            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Role.Coder.ToString());
+
+            TempData["Success"] = "Chart Details submitted succesfully !";
+            return View("CoderSummary", lstDto);
         }
 
         [HttpPost]
