@@ -742,6 +742,37 @@ namespace UAB.DAL
             return lstProvider;
         }
 
+        public List<string> GetProviderNames()
+        {
+            Provider provider = new Provider();
+            List<Provider> lstProvider = new List<Provider>();
+            List<string> providers = new List<string>();
+
+            using (var context = new UABContext())
+            {
+                using (var cnn = context.Database.GetDbConnection())
+                {
+                    var cmm = cnn.CreateCommand();
+                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspGetProvider]";
+                    //cmm.Parameters.AddRange(param);
+                    cmm.Connection = cnn;
+                    cnn.Open();
+                    var reader = cmm.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        provider = new Provider();
+                        provider.ProviderId = Convert.ToInt32(reader["ProviderID"]);
+                        provider.Name = Convert.ToString(reader["Name"]);
+                        lstProvider.Add(provider);
+                        providers.Add(provider.Name.ToLower());
+                    }
+                }
+            }
+            return providers;
+        }
+
         public void AddProvider(Provider provider)
         {
             using (var context = new UABContext())
@@ -827,6 +858,35 @@ namespace UAB.DAL
                     cmm.ExecuteNonQuery();
                 }
             }
+        }
+
+        public List<string> GetProviderFeedbackNames()
+        {
+            List<string> feedbacks = new List<string>();
+            List<BindDTO> lstDto = new List<BindDTO>();
+            using (var context = new UABContext())
+            {
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[UspGetProviderFeedback]";
+                    cmd.Connection = con;
+
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        BindDTO dto = new BindDTO()
+                        {
+                            ID = Convert.ToInt32(reader["ProviderFeedbackId"]),
+                            Name = Convert.ToString(reader["Feedback"])
+                        };
+                        feedbacks.Add(dto.Name.ToLower());
+                    }
+                }
+            }
+            return feedbacks;
         }
 
         public void AddProviderFeedback(BindDTO providerFeedback)
@@ -943,6 +1003,36 @@ namespace UAB.DAL
                 }
             }
             return lstPayor;
+        }
+
+        public List<string> GetPayorNames()
+        {
+            Payor payor = null;
+            List<Payor> lstPayor = new List<Payor>();
+            List<string> payors = new List<string>();
+
+            using (var context = new UABContext())
+            {
+                using (var cnn = context.Database.GetDbConnection())
+                {
+                    var cmm = cnn.CreateCommand();
+                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspGetPayor]";
+                    //cmm.Parameters.AddRange(param);
+                    cmm.Connection = cnn;
+                    cnn.Open();
+                    var reader = cmm.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        payor = new Payor();
+                        payor.PayorId = Convert.ToInt32(reader["PayorID"]);
+                        payor.Name = Convert.ToString(reader["Name"]);
+                        payors.Add(payor.Name.ToLower());
+                    }
+                }
+            }
+            return payors;
         }
 
         public void AddPayor(Payor payor)
