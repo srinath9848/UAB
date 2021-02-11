@@ -16,6 +16,14 @@
                 @Html.Raw(TempData["Warning"].ToString())
             </div>
         }
+        else if (TempData["LoginFailed"] != null)
+        {
+            <div class="alert alert-danger alert-dismissable">
+                <i class="fa fa-danger"></i>
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                @Html.Raw(TempData["LoginFailed"].ToString())
+            </div>
+        }
         else if (TempData["Error"] != null)
         {
             <div class="alert alert-danger alert-dismissable">
