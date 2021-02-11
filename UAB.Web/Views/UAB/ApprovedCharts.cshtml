@@ -1,14 +1,16 @@
-﻿
+﻿@model UAB.DTO.ChartSummaryDTO
 @{
     ViewData["Title"] = "ApprovedCharts";
 }
 
-<div class="container-fluid">
-    <div class="row">
-        <partial name="_InitialData" />
-        <partial name="_CodingDetails" />
+<form asp-action="SubmitApprovedChart" asp-controller="UAB" method="POST">
+    <div class="container-fluid">
+        <div class="row">
+            <partial name="_InitialData" model=Model />
+            <partial name="_CodingDetails" model=Model />
+        </div>
     </div>
-</div>
+</form>
 <style>
     .input-group-text {
         display: none;
@@ -24,4 +26,5 @@
     });
     $("#coding").addClass('selected');
     $('.Available').hide();
+    $(".CoderDetails").attr("disabled", true);
 </script>

@@ -19,7 +19,7 @@
                     @{string Accepted = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                     @{string Rejected = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-                    @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @class = "form-control CoderDetails" })
                     <div class="input-group-append">
                         <span class="input-group-text">
                             &nbsp;<i id="PayorID" class="@Accepted" aria-hidden="true"></i>
@@ -40,7 +40,7 @@
                     @{ Accepted = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                     @{ Rejected = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @class = "form-control CoderDetails" })
                     <div class="input-group-append">
                         <span class="input-group-text">
                             &nbsp;<i id="ProviderID" class="@Accepted" aria-hidden="true"></i>
@@ -62,7 +62,7 @@
                     @{ Accepted = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                     @{ Rejected = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-                    @Html.TextAreaFor(model => model.CPTCode, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
+                    @Html.TextAreaFor(model => model.CPTCode, new { @class = "form-control CoderDetails", @autofocus = "autofocus", @autocomplete = "off" })
                     <div class="input-group-append">
                         <span class="input-group-text">
                             &nbsp;<i id="CPTCode" class="@Accepted" aria-hidden="true"></i>
@@ -83,7 +83,7 @@
                     @{ Accepted = (string.IsNullOrEmpty(Model.QAModRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                     @{ Rejected = (string.IsNullOrEmpty(Model.QAModRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-                    @Html.TextAreaFor(model => model.Mod, new { @class = "form-control" })
+                    @Html.TextAreaFor(model => model.Mod, new { @class = "form-control CoderDetails" })
                     <span class="input-group-text">
                         &nbsp;<i id="Mod" class="@Accepted" aria-hidden="true"></i>
                         &nbsp;<i id="Mod" class="@Rejected" aria-hidden="true"></i>
@@ -105,7 +105,7 @@
                     @{ Accepted = (string.IsNullOrEmpty(Model.QADxRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                     @{ Rejected = (string.IsNullOrEmpty(Model.QADxRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-                    @Html.TextAreaFor(model => model.Dx, new { @class = "form-control" })
+                    @Html.TextAreaFor(model => model.Dx, new { @class = "form-control CoderDetails" })
                     <span class="input-group-text">
                         &nbsp;<i id="Dx" class="@Accepted" aria-hidden="true"></i>
                         &nbsp;<i id="Dx" class="@Rejected" aria-hidden="true"></i>
@@ -124,7 +124,7 @@
                     @{ Accepted = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                     @{ Rejected = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-                    @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @class = "form-control CoderDetails" })
                     <div class="input-group-append" style="height: 38px;">
                         <span class="input-group-text">
                             &nbsp;<i id="Feedback" class="@Accepted" aria-hidden="true"></i>
@@ -142,11 +142,11 @@
             <div class="form-group row">
                 <label class="col-md-3 m-t-15">Coder Questions</label>
                 <div class="col-md-3">
-                    @Html.TextAreaFor(model => model.CoderQuestion, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.TextAreaFor(model => model.CoderQuestion, new { @class = "form-control CoderDetails" })
                 </div>
                 <label class="col-md-3 m-t-15">Note Title</label>
                 <div class="col-md-3">
-                    @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails" })
                 </div>
             </div>
         </div>
@@ -161,7 +161,7 @@
                         <div class="col-lg-6">
                             <div class="form-group row">
                                 <label class="col-md-5 m-t-15">Coder Rebuttal</label>
-                                <div class="col-sm-7">
+                                <div class="col-md-7">
                                     @Html.TextAreaFor(model => model.QADTO.CoderRebuttal, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @readonly = "readonly" })
                                 </div>
                             </div>
@@ -192,7 +192,7 @@
                         <div class="col-lg-6">
                             <div class="form-group row">
                                 <label class="col-md-5 m-t-15">Coder/QA Rebuttals</label>
-                                <div class="col-sm-7">
+                                <div class="col-md-7">
                                     @Html.TextAreaFor(model => model.ShadowQADTO.CoderRebuttal, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
                                 </div>
                             </div>
@@ -212,20 +212,20 @@
                     <div class="row mb-3">
                         <div class="col-lg-6">
                             <div class="form-group row">
-                                <label class="col-md-4 m-t-15">Notes from Jen</label>
-                                <div class="col-sm-8">
+                                <label class="col-md-5 m-t-15">Notes from Jen</label>
+                                <div class="col-md-7">
                                     @Html.TextAreaFor(model => model.ShadowQADTO.NotesfromJen, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        @*<div class="col-lg-6">
                             <div class="form-group row">
                                 <div class="custom-control custom-checkbox mr-sm-2">
                                     @Html.CheckBoxFor(model => model.ShadowQADTO.OkaytoPost, new { @class = "custom-control-input ShadowQADetails", @id = "customControlAutosizing1" })
                                     <label class="custom-control-label" for="customControlAutosizing1">Okay to Post in PK?</label>
                                 </div>
                             </div>
-                        </div>
+                        </div>*@
                     </div>
                     <div class="border-top" id="ShadowQADetails">
                         <div class="card-body" style="text-align:right">

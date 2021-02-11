@@ -15,57 +15,57 @@
                 <table class="table table-striped table-bordered dataTable">
                     <thead>
                         <tr>
-                            <th scope="col">
-                                <b>Name</b>
+                            <th scope="col" class="tblHeaderRow">
+                                Name
                             </th>
-                            <th scope="col" style="text-align:center">
-                                <b>Available Charts</b>
+                            <th scope="col" class="tblHeaderRow">
+                                Available Charts
                             </th>
-                            <th scope="col" style="text-align:center">
-                                <b>Rebuttal  Charts</b>
+                            <th scope="col" class="tblHeaderRow">
+                                Rebuttal  Charts
                             </th>
                         </tr>
                     </thead>
                     <tbody style="cursor:pointer;">
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td scope="col">
-                                    @item.ProjectName
-                                </td>
-                                <td scope="col" style="text-align:center">
-                                    @if (item.AvailableCharts == 0)
+                        <tr>
+                            <td scope="col">
+                                <b>@item.ProjectName</b>
+                            </td>
+                            <td scope="col" style="text-align:center">
+                                @if (item.AvailableCharts == 0)
                                     {
-                                        @item.AvailableCharts
-                                        <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("ShadowQA", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
+                                @item.AvailableCharts
+                                <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
+                                <a href="@Url.Action("ShadowQA", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
-                                        @item.AvailableCharts
-                                        <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("ShadowQA", "UAB",new { Role=Role.ShadowQA,ChartType="Available",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                @item.AvailableCharts
+                                <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
+                                <a href="@Url.Action("ShadowQA", "UAB",new { Role=Role.ShadowQA,ChartType="Available",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
-                                </td>
-                                <td scope="col" style="text-align:center">
-                                    @*@{
-                                            List<int> lstStatus = new List<int> { (int)StatusType.CoderRejected, (int)StatusType.QARejected };
-                                        }
-                                        @if (item.RebuttalCharts == 0)
-                                        {
-                                            @item.RebuttalCharts*@
-                                    0
-                                    <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
-                                    <a href="@Url.Action("RebuttalCharts", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
-                                    @*}
-                                        else
-                                        {
-                                            @item.RebuttalCharts
-                                            <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                            <a href="@Url.Action("RebuttalCharts", "UAB",new { Role=Role.Coder,ChartType="Rebuttal",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
-                                        }*@
-                                </td>
-                            </tr>
+                            </td>
+                            <td scope="col" style="text-align:center">
+                                @*@{
+                                        List<int> lstStatus = new List<int> { (int)StatusType.CoderRejected, (int)StatusType.QARejected };
+                                    }
+                                    @if (item.RebuttalCharts == 0)
+                                    {
+                                        @item.RebuttalCharts*@
+                                0
+                                <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
+                                <a href="@Url.Action("RebuttalCharts", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
+                                @*}
+                                    else
+                                    {
+                                        @item.RebuttalCharts
+                                        <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
+                                        <a href="@Url.Action("RebuttalCharts", "UAB",new { Role=Role.Coder,ChartType="Rebuttal",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                    }*@
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>

@@ -20,27 +20,26 @@
                 <table class="table table-striped table-bordered dataTable workcontexts">
                     <thead>
                         <tr>
-                            <th scope="col">
-                                <b>Name</b>
+                            <th scope="col" class="tblHeaderRow">
+                                Name
                             </th>
-                            <th scope="col" style="text-align:center">
-                                <b>Available Charts</b>
+                            <th scope="col" class="tblHeaderRow">
+                                Available Charts
                             </th>
-                            <th scope="col" style="text-align:center">
-                                <b>Incorrect Charts</b>
+                            <th scope="col" class="tblHeaderRow">
+                                Incorrect Charts
                             </th>
-                            <th scope="col" style="text-align:center">
-                                <b>ReadyForPosting Charts</b>
+                            <th scope="col" class="tblHeaderRow">
+                                ReadyForPosting Charts
                             </th>
                         </tr>
                     </thead>
                     <tbody style="cursor:pointer;">
                         @foreach (var item in Model)
                         {
-
                             <tr>
                                 <td scope="col">
-                                    @item.ProjectName
+                                    <b> @item.ProjectName</b>
                                 </td>
                                 <td scope="col" style="text-align:center">
                                     @if (item.AvailableCharts == 0)
@@ -57,18 +56,17 @@
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">
-                                    @if (item.RebuttalCharts == 0)
+                                    @if (item.QARebuttalCharts == 0)
                                     {
-                                        @item.RebuttalCharts
+                                        @item.QARebuttalCharts
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("IncorrectCharts", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
-                                        List<int> lstStatus = new List<int> { (int)StatusType.QARejected, (int)StatusType.ShadowQARejected };
-                                        @item.RebuttalCharts
+                                        @item.QARebuttalCharts
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("IncorrectCharts", "UAB",new { Role=Role.Coder,ChartType="Rebuttal",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("IncorrectCharts", "UAB",new { Role=Role.Coder,ChartType="Incorrect",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">
