@@ -24,6 +24,9 @@
     .pagination {
         margin-left: 400px;
     }
+    .alert {
+        padding: 0.5rem 1.25rem;
+    }
 </style>
 <div class="container-fluid">
     <div class="row">
@@ -31,6 +34,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card">ProviderFeedback</h5>
+                    @await Html.PartialAsync("_Msg")
                     <h5><button type="button" style="cursor: pointer" class="btn btn-sm btn-info btn-fill" onclick="Add('')"><i class="fa fa-plus"></i>Add Provider Feedback</button></h5>
                     <br />
                     <div id="modalContent"></div>

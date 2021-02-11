@@ -190,16 +190,44 @@ namespace UAB.Controllers
         }
 
 
+        //[HttpPost]
+        //public IActionResult AddSettingsProvider(Provider provider)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+        //        if (provider.ProviderId == 0)
+        //            clinicalcaseOperations.AddProvider(provider);
+        //        else
+        //            clinicalcaseOperations.UpdateProvider(provider); // Update
+        //    }
+        //    return RedirectToAction("SettingsProvider");
+        //}
+
         [HttpPost]
         public IActionResult AddSettingsProvider(Provider provider)
         {
             if (ModelState.IsValid)
             {
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-                if (provider.ProviderId == 0)
-                    clinicalcaseOperations.AddProvider(provider);
+                List<string> lstProvider = clinicalcaseOperations.GetProviderNames();
+                if (!lstProvider.Contains(provider.Name.ToLower()))
+                {
+                    if (provider.ProviderId == 0)
+                    {
+                        clinicalcaseOperations.AddProvider(provider);
+                        TempData["Success"] = "Provider \"" + provider.Name + "\" Added Successfully!";
+                    }
+                    else
+                    {
+                        clinicalcaseOperations.UpdateProvider(provider); // Update
+                        TempData["Success"] = "Provider \"" + provider.Name + "\" Updated Successfully!";
+                    }
+                }
                 else
-                    clinicalcaseOperations.UpdateProvider(provider); // Update
+                {
+                    TempData["Error"] = "The Provider \"" + provider.Name +"\" is already present in our Provider list!";
+                }
             }
             return RedirectToAction("SettingsProvider");
         }
@@ -264,13 +292,24 @@ namespace UAB.Controllers
         [HttpPost]
         public IActionResult AddSettingsPayor(Payor payor)
         {
-            if (ModelState.IsValid)
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            List<string> lstPayor = clinicalcaseOperations.GetPayorNames();
+            if (!lstPayor.Contains(payor.Name.ToLower()))
             {
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
                 if (payor.PayorId == 0)
+                {
                     clinicalcaseOperations.AddPayor(payor);
+                    TempData["Success"] = "Payor \""+payor.Name+"\" Added Successfully!";
+                }
                 else
+                {
                     clinicalcaseOperations.UpdatePayor(payor); // Update
+                    TempData["Success"] = "Payor \""+payor.Name+"\" Updated Successfully!";
+                }
+            }
+            else
+            {
+                TempData["Error"] = "The Payor \"" + payor.Name + "\" is already present in our Payor list!";
             }
             return RedirectToAction("SettingsPayor");
 
@@ -417,25 +456,21 @@ namespace UAB.Controllers
         [HttpPost]
         public IActionResult AddSettingsProviderFeedback(BindDTO providerFeedback)
         {
-            if (ModelState.IsValid)
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            List<string> lstFeedback = clinicalcaseOperations.GetProviderFeedbackNames();
+            if (!lstFeedback.Contains(providerFeedback.Name.ToLower()))
             {
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
                 if (providerFeedback.ID == 0)
+                {
                     clinicalcaseOperations.AddProviderFeedback(providerFeedback);
+                    //TempData["Success"]=
+                }
                 else
+                {
                     clinicalcaseOperations.UpdateProviderFeedback(providerFeedback); // Update
+                }
             }
             return RedirectToAction("SettingsProviderFeedback");
-
-            //if (ModelState.IsValid)
-            //{
-            //    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-            //    clinicalcaseOperations.AddProviderFeedback(providerFeedback);
-            //    List<BindDTO> lstProviderFeedback = new List<BindDTO>();
-            //    lstProviderFeedback = clinicalcaseOperations.GetProviderFeedbacksList();
-            //    ViewBag.lstProviderFeedback = lstProviderFeedback;
-            //}
-            //return View("SettingsProviderFeedback");
         }
         [HttpGet]
         public IActionResult SettingsProviderFeedback()
