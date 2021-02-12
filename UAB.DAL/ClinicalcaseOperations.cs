@@ -353,7 +353,123 @@ namespace UAB.DAL
             }
             return dto;
         }
+        public CodingDTO SubmitCoderIncorrectChart(ChartSummaryDTO chartSummaryDTO)
+        {
+            CodingDTO dto = new CodingDTO();
 
+            using (var context = new UABContext())
+            {
+                var param = new SqlParameter[] {
+                     new SqlParameter() {
+                            ParameterName = "@PayorID",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.QAPayorID
+                        },
+                       new SqlParameter() {
+                            ParameterName = "@PayorRemarks",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.QAPayorRemarks
+                        },
+                      new SqlParameter() {
+                            ParameterName = "@NoteTitle",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.NoteTitle
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@ProviderID",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.QAProviderID
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@ProviderRemarks",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.QAProviderRemarks
+                        },
+                         new SqlParameter() {
+                            ParameterName = "@CPTCode",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.QACPTCode
+                        },
+                         new SqlParameter() {
+                            ParameterName = "@CPTCodeRemarks",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.QACPTCodeRemarks
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@Mod",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.QAMod
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@ModRemarks",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.QAModRemarks
+                        },  new SqlParameter() {
+                            ParameterName = "@Dx",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.QADx
+                        },  new SqlParameter() {
+                            ParameterName = "@DxRemarks",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.QADxRemarks
+                        } , new SqlParameter() {
+                            ParameterName = "@ProviderFeedbackID",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.QAProviderFeedbackID
+                        }, new SqlParameter() {
+                            ParameterName = "@ProviderFeedbackRemarks",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.QAProviderFeedbackRemarks
+                        }, new SqlParameter() {
+                            ParameterName = "@CoderQuestion",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.CoderQuestion
+                        } ,   new SqlParameter() {
+                            ParameterName = "@ClinicalcaseID",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.CodingDTO.ClinicalCaseID
+                        },   new SqlParameter() {
+                            ParameterName = "@AssignedTo",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.AssignedTo
+                        },   new SqlParameter() {
+                            ParameterName = "@ErrorTypeID",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.QADTO.ErrorType
+                        }
+                };
+
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[UspSubmitQA]";
+                    cmd.Parameters.AddRange(param);
+                    cmd.Connection = con;
+                    con.Open();
+
+                    int res = cmd.ExecuteNonQuery();
+                }
+            }
+            return dto;
+        }
         public CodingDTO SubmitApprovedChart(ChartSummaryDTO chartSummaryDTO)
         {
             CodingDTO dto = new CodingDTO();
