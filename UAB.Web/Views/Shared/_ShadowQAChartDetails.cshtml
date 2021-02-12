@@ -5,7 +5,7 @@
             <div class="card-body">
                 <h4 class="card-title">Coding Details</h4>
             </div>
-            @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
+            @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { @class = "form-control" })
             @*<div class="form-group row" id="divChkAll">
                     <label class="col-md-4 m-t-15"></label>
                     <div class="custom-control custom-checkbox mr-sm-2">
@@ -62,7 +62,7 @@
                     @{ Accepted = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                     @{ Rejected = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-                    @Html.TextAreaFor(model => model.CPTCode, new { @class = "form-control CoderDetails", @autofocus = "autofocus", @autocomplete = "off" })
+                    @Html.TextAreaFor(model => model.CPTCode, new { @class = "form-control CoderDetails" })
                     <div class="input-group-append">
                         <span class="input-group-text">
                             &nbsp;<i id="CPTCode" class="@Accepted" aria-hidden="true"></i>
@@ -71,7 +71,7 @@
                     </div>
                 </div>
                 <div class="col-md-3 input-group">
-                    @Html.TextAreaFor(model => model.QACPTCode, new { @style = (string.IsNullOrEmpty(Model.QACPTCode) ? "display:none" : "display:flex"), @id = "CPTCode1", @class = "form-control QARevised", @autofocus = "autofocus", @autocomplete = "off" })
+                    @Html.TextAreaFor(model => model.QACPTCode, new { @style = (string.IsNullOrEmpty(Model.QACPTCode) ? "display:none" : "display:flex"), @id = "CPTCode1", @class = "form-control QARevised" })
                 </div>
                 <div class="col-md-3 input-group">
                     @Html.TextBoxFor(model => model.QACPTCodeRemarks, new { @style = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "display:none" : "display:flex"), @class = "form-control QARevised", @id = "CPTCode2" })
@@ -97,10 +97,7 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-md-8 m-t-15" style="margin-left:10px">Dx</label>
-            </div>
-            <div class="form-group row">
-                <label class="col-md-3 m-t-15"></label>
+                <label class="col-md-3 m-t-15" style="margin-left:10px">Dx</label>
                 <div class="col-md-3 input-group">
                     @{ Accepted = (string.IsNullOrEmpty(Model.QADxRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                     @{ Rejected = (string.IsNullOrEmpty(Model.QADxRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
@@ -162,7 +159,7 @@
                             <div class="form-group row">
                                 <label class="col-md-5 m-t-15">Coder Rebuttal</label>
                                 <div class="col-md-7">
-                                    @Html.TextAreaFor(model => model.QADTO.CoderRebuttal, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @readonly = "readonly" })
+                                    @Html.TextAreaFor(model => model.QADTO.CoderRebuttal, new { @class = "form-control", @readonly = "readonly" })
                                 </div>
                             </div>
                         </div>
@@ -193,7 +190,7 @@
                             <div class="form-group row">
                                 <label class="col-md-5 m-t-15">Coder/QA Rebuttals</label>
                                 <div class="col-md-7">
-                                    @Html.TextAreaFor(model => model.ShadowQADTO.CoderRebuttal, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
+                                    @Html.TextAreaFor(model => model.ShadowQADTO.CoderRebuttal, new { @class = "form-control" })
                                 </div>
                             </div>
                         </div>
@@ -214,18 +211,18 @@
                             <div class="form-group row">
                                 <label class="col-md-5 m-t-15">Notes from Jen</label>
                                 <div class="col-md-7">
-                                    @Html.TextAreaFor(model => model.ShadowQADTO.NotesfromJen, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
+                                    @Html.TextAreaFor(model => model.ShadowQADTO.NotesfromJen, new { @class = "form-control" })
                                 </div>
                             </div>
                         </div>
                         @*<div class="col-lg-6">
-                            <div class="form-group row">
-                                <div class="custom-control custom-checkbox mr-sm-2">
-                                    @Html.CheckBoxFor(model => model.ShadowQADTO.OkaytoPost, new { @class = "custom-control-input ShadowQADetails", @id = "customControlAutosizing1" })
-                                    <label class="custom-control-label" for="customControlAutosizing1">Okay to Post in PK?</label>
+                                <div class="form-group row">
+                                    <div class="custom-control custom-checkbox mr-sm-2">
+                                        @Html.CheckBoxFor(model => model.ShadowQADTO.OkaytoPost, new { @class = "custom-control-input ShadowQADetails", @id = "customControlAutosizing1" })
+                                        <label class="custom-control-label" for="customControlAutosizing1">Okay to Post in PK?</label>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>*@
+                            </div>*@
                     </div>
                     <div class="border-top" id="ShadowQADetails">
                         <div class="card-body" style="text-align:right">

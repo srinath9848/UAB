@@ -17,14 +17,10 @@
     }
 </style>
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
-<script src="~/dashboardassets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 <script type="text/javascript">
-    /*datwpicker*/
-    jQuery('#datepicker-autoclose').datepicker({
-        autoclose: true,
-        todayHighlight: true
-    });
+  
     $("#coding").addClass('selected');
     $('.Available').hide();
-    $(".CoderDetails").attr("disabled", true);
+    $(".CoderDetails").css("pointer-events", "none");
+    $(".CoderDetails").css("background-color", "#e9ecef");
 </script>

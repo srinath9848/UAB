@@ -5,7 +5,7 @@
         <div class="card-body">
             <h4 class="card-title">Coding Details</h4>
         </div>
-        @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
+        @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { @class = "form-control" })
         @Html.Hidden("hdnPayorID")
         @Html.Hidden("hdnProviderID")
         @Html.Hidden("hdnCpt")
@@ -14,7 +14,7 @@
         @Html.Hidden("hdnProviderFeedbackID")
 
         <div class="form-group row" id="divChkAll">
-            <label class="col-md-4 m-t-15"></label>
+            <label class="col-md-3 m-t-15"></label>
             <div class="custom-control custom-checkbox mr-sm-2">
                 <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll">
                 <label class="custom-control-label" for="chkAll">Accept All</label>
@@ -90,7 +90,7 @@
                 @{ Accepted = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                 @{ Rejected = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-                @Html.TextAreaFor(model => model.CPTCode, new { @class = "form-control CoderDetails", @autofocus = "autofocus", @autocomplete = "off" })
+                @Html.TextAreaFor(model => model.CPTCode, new { @class = "form-control CoderDetails"  })
                 <div class="input-group-append QACorrections">
                     <span class="input-group-text">
                         &nbsp;<i id="CPTCode" class="@Accepted" aria-hidden="true"></i>
@@ -100,7 +100,7 @@
             </div>
             @{Show = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "display:none" : "display:flex");}
             <div class="col-md-3 lessWidth input-group">
-                @Html.TextAreaFor(model => model.QACPTCode, new { @style = Show, @id = "CPTCode1", @class = "form-control QARevised", @autofocus = "autofocus", @autocomplete = "off" })
+                @Html.TextAreaFor(model => model.QACPTCode, new { @style = Show, @id = "CPTCode1", @class = "form-control QARevised" })
             </div>
             <div class="col-md-3 lessWidth input-group">
                 @Html.TextBoxFor(model => model.QACPTCodeRemarks, new { @style = Show, @class = "form-control QARevised", @id = "CPTCode2" })
@@ -121,7 +121,7 @@
                 @{ Accepted = (string.IsNullOrEmpty(Model.QAModRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                 @{ Rejected = (string.IsNullOrEmpty(Model.QAModRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-                @Html.TextAreaFor(model => model.Mod, new { @class = "form-control CoderDetails"})
+                @Html.TextAreaFor(model => model.Mod, new { @class = "form-control CoderDetails" })
                 <span class="input-group-text QACorrections">
                     &nbsp;<i id="Mod" class="@Accepted" aria-hidden="true"></i>
                     &nbsp;<i id="Mod" class="@Rejected" aria-hidden="true"></i>
@@ -196,7 +196,7 @@
             </div>
             <div class="input-group-append CoderCorrections" style="@Show">
                 <span class="input-group-text">
-                    &nbsp;<i id="ProviderFeedback"  title="Feedback1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="ProviderFeedback" title="Feedback1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
                     &nbsp;<i id="ProviderFeedback" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                 </span>
             </div>
@@ -207,11 +207,11 @@
         <div class="form-group row">
             <label class="col-md-3 lessWidth m-t-15">Coder Questions</label>
             <div class="col-md-3 lessWidth">
-                @Html.TextAreaFor(model => model.CoderQuestion, new { @class = "form-control CoderDetails", @autofocus = "autofocus", @autocomplete = "off" })
+                @Html.TextAreaFor(model => model.CoderQuestion, new { @class = "form-control CoderDetails" })
             </div>
             <label class="col-md-3 lessWidth m-t-15">Note Title</label>
             <div class="col-md-3 lessWidth">
-                @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails", @autofocus = "autofocus", @autocomplete = "off" })
+                @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails" })
             </div>
         </div>
     </div>
@@ -228,7 +228,7 @@
                         <div class="form-group row">
                             <label class="col-md-5 m-t-15">Coder Rebuttal</label>
                             <div class="col-sm-7">
-                                @Html.TextAreaFor(model => model.QADTO.CoderRebuttal, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
+                                @Html.TextAreaFor(model => model.QADTO.CoderRebuttal, new { @class = "form-control" })
                             </div>
                         </div>
                     </div>

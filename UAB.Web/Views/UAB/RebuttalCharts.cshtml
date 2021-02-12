@@ -2,22 +2,20 @@
 @{
     ViewData["Title"] = "Rebuttal Charts";
 }
-<div class="container-fluid">
-    <div class="row">
-        <partial name="_InitialData" model=Model />
-        <partial name="_RebuttalChartDetails" />
+<form asp-action="SubmitQA" id="form1" asp-controller="UAB" method="POST">
+    <div class="container-fluid">
+        <div class="row">
+            <partial name="_InitialData" model=Model />
+            <partial name="_RebuttalChartDetails" model=Model />
+        </div>
     </div>
-</div>
+</form>
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
-<script src="~/dashboardassets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 <script type="text/javascript">
-    /*datwpicker*/
-    jQuery('.mydatepicker').datepicker();
-    jQuery('#datepicker-autoclose').datepicker({
-        autoclose: true,
-        todayHighlight: true
-    });
-    //$(".CodingDetails").attr("readonly", false);
+   
+    $(".CoderDetails").css("pointer-events", "none");
+    $(".CoderDetails").css("background-color", "#e9ecef");
+
     $(".QADetails").attr("readonly", false);
     $("#qa").addClass('selected');
 
