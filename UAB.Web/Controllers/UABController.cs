@@ -70,6 +70,23 @@ namespace UAB.Controllers
             var hdnDx = Request.Form["hdnDx"].ToString();
             var hdnProviderFeedbackID = Request.Form["hdnProviderFeedbackID"].ToString();
 
+            if (!string.IsNullOrEmpty(hdnPayorID))
+                chartSummaryDTO.PayorID = Convert.ToInt32(hdnPayorID);
+
+            if (!string.IsNullOrEmpty(hdnProviderID))
+                chartSummaryDTO.ProviderID = Convert.ToInt32(hdnProviderID);
+
+            if (!string.IsNullOrEmpty(hdnCpt))
+                chartSummaryDTO.CPTCode = hdnCpt;
+
+            if (!string.IsNullOrEmpty(hdnMod))
+                chartSummaryDTO.Mod = hdnMod;
+
+            if (!string.IsNullOrEmpty(hdnDx))
+                chartSummaryDTO.Dx = hdnDx;
+
+            if (!string.IsNullOrEmpty(hdnProviderFeedbackID))
+                chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(hdnProviderFeedbackID);
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
 
@@ -78,7 +95,7 @@ namespace UAB.Controllers
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Role.Coder.ToString());
 
             TempData["Success"] = "Chart Details submitted succesfully !";
-            return View("CoderSummary", lstDto);
+            return View("CodingSummary", lstDto);
         }
 
         [HttpPost]
