@@ -63,7 +63,22 @@ namespace UAB.Controllers
         }
         public IActionResult CoderIncorrectChartSubmit(ChartSummaryDTO chartSummaryDTO)
         {
-            return View();
+            var hdnPayorID = Request.Form["hdnPayorID"].ToString();
+            var hdnProviderID = Request.Form["hdnProviderID"].ToString();
+            var hdnCpt = Request.Form["hdnCpt"].ToString();
+            var hdnMod = Request.Form["hdnMod"].ToString();
+            var hdnDx = Request.Form["hdnDx"].ToString();
+            var hdnProviderFeedbackID = Request.Form["hdnProviderFeedbackID"].ToString();
+
+
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+
+            clinicalcaseOperations.SubmitCoderIncorrectChart(chartSummaryDTO);
+
+            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Role.Coder.ToString());
+
+            TempData["Success"] = "Chart Details submitted succesfully !";
+            return View("CoderSummary", lstDto);
         }
 
         [HttpPost]
@@ -253,7 +268,7 @@ namespace UAB.Controllers
                 }
                 else
                 {
-                    TempData["Error"] = "The Provider \"" + provider.Name +"\" is already present in our Provider list!";
+                    TempData["Error"] = "The Provider \"" + provider.Name + "\" is already present in our Provider list!";
                 }
             }
             return RedirectToAction("SettingsProvider");
@@ -326,12 +341,12 @@ namespace UAB.Controllers
                 if (payor.PayorId == 0)
                 {
                     clinicalcaseOperations.AddPayor(payor);
-                    TempData["Success"] = "Payor \""+payor.Name+"\" Added Successfully!";
+                    TempData["Success"] = "Payor \"" + payor.Name + "\" Added Successfully!";
                 }
                 else
                 {
                     clinicalcaseOperations.UpdatePayor(payor); // Update
-                    TempData["Success"] = "Payor \""+payor.Name+"\" Updated Successfully!";
+                    TempData["Success"] = "Payor \"" + payor.Name + "\" Updated Successfully!";
                 }
             }
             else
@@ -500,7 +515,7 @@ namespace UAB.Controllers
             }
             else
             {
-                TempData["Error"] = "The Provider Feedback \"" + providerFeedback.Name + "\" is already present in our Payor list!";
+                TempData["Error"] = "The Provider Feedback \"" + providerFeedback.Name + "\" is already present in our Provider feedback list!";
             }
             return RedirectToAction("SettingsProviderFeedback");
         }

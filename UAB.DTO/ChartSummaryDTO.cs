@@ -55,10 +55,10 @@ namespace UAB.DTO
 
 
         public int ShadowQAPayorID { get; set; }
-        
+
         public string ShadowQAPayorRemarks { get; set; }
         public int ShadowQAProviderID { get; set; }
-        
+
         public string ShadowQAProviderRemarks { get; set; }
         public string ShadowQAMod { get; set; }
         public string ShadowQAModRemarks { get; set; }
@@ -66,7 +66,15 @@ namespace UAB.DTO
         public string ShadowQADxRemarks { get; set; }
         public string ShadowQACPTCode { get; set; }
         public string ShadowQACPTCodeRemarks { get; set; }
-        public int ShadowQAProviderFeedbackID { get; set; }       
+        public int ShadowQAProviderFeedbackID { get; set; }
         public string ShadowQAProviderFeedbackRemarks { get; set; }
+
+
+        public string RevisedPayorRemarks { get; set; }
+        public string RevisedProviderRemarks { get; set; }
+        public string RevisedCPTRemarks { get; set; }
+        public string RevisedModRemarks { get; set; }
+        public string RevisedDXRemarks { get; set; }
+        public string RevisedProviderFeedbackRemarks { get; set; }
     }
 }
