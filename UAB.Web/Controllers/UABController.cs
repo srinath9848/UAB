@@ -339,17 +339,6 @@ namespace UAB.Controllers
                 TempData["Error"] = "The Payor \"" + payor.Name + "\" is already present in our Payor list!";
             }
             return RedirectToAction("SettingsPayor");
-
-
-            //if (ModelState.IsValid)
-            //{
-            //    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-            //    clinicalcaseOperations.AddPayor(payor);
-            //    List<Payor> lstPayor = new List<Payor>();
-            //    lstPayor = clinicalcaseOperations.GetPayors();
-            //    ViewBag.lstPayor = lstPayor;
-            //}
-            //return View("SettingsPayor");
         }
 
 
@@ -412,13 +401,24 @@ namespace UAB.Controllers
         [HttpPost]
         public IActionResult AddSettingsErrorType(ErrorType errorType)
         {
-            if (ModelState.IsValid)
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            List<string> lstErrorType = clinicalcaseOperations.GetErrorTypeNames();
+            if (!lstErrorType.Contains(errorType.Name.ToLower()))
             {
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
                 if (errorType.ErrorTypeId == 0)
+                {
                     clinicalcaseOperations.AddErrorType(errorType);
+                    TempData["Success"] = "Error Type \"" + errorType.Name + "\" Added Successfully!";
+                }
                 else
+                {
                     clinicalcaseOperations.UpdateErrorType(errorType); // Update
+                    TempData["Success"] = "Error Type \"" + errorType.Name + "\" Updated Successfully!";
+                }
+            }
+            else
+            {
+                TempData["Error"] = "The Error Type \"" + errorType.Name + "\" is already present in our Error Type list!";
             }
             return RedirectToAction("SettingsErrorType");
         }
@@ -490,12 +490,17 @@ namespace UAB.Controllers
                 if (providerFeedback.ID == 0)
                 {
                     clinicalcaseOperations.AddProviderFeedback(providerFeedback);
-                    //TempData["Success"]=
+                    TempData["Success"] = "Provider Feedback \"" + providerFeedback.Name + "\" Added Successfully!";
                 }
                 else
                 {
                     clinicalcaseOperations.UpdateProviderFeedback(providerFeedback); // Update
+                    TempData["Success"] = "Provider Feedback \"" + providerFeedback.Name + "\" Updated Successfully!";
                 }
+            }
+            else
+            {
+                TempData["Error"] = "The Provider Feedback \"" + providerFeedback.Name + "\" is already present in our Payor list!";
             }
             return RedirectToAction("SettingsProviderFeedback");
         }

@@ -1033,6 +1033,37 @@ namespace UAB.DAL
             return lstErrorType;
         }
 
+        public List<string> GetErrorTypeNames()
+        {
+            ErrorType errorType = new ErrorType();
+            List<ErrorType> lstErrorType = new List<ErrorType>();
+            List<string> errorTypes = new List<string>();
+
+            using (var context = new UABContext())
+            {
+                using (var cnn = context.Database.GetDbConnection())
+                {
+                    var cmm = cnn.CreateCommand();
+                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspGetErrorType]";
+                    //cmm.Parameters.AddRange(param);
+                    cmm.Connection = cnn;
+                    cnn.Open();
+                    var reader = cmm.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        errorType = new ErrorType();
+                        errorType.ErrorTypeId = Convert.ToInt32(reader["ErrorTypeID"]);
+                        errorType.Name = Convert.ToString(reader["Name"]);
+                        lstErrorType.Add(errorType);
+                        errorTypes.Add(errorType.Name.ToLower());
+                    }
+                }
+            }
+            return errorTypes;
+        }
+
         public void AddErrorType(ErrorType errorType)
         {
             using (var context = new UABContext())
