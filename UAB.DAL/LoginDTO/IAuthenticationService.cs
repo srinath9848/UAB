@@ -13,7 +13,8 @@ namespace UAB.DAL.LoginDTO
 		/// <param name="password">Password to check for authenticity.</param>
 		/// <returns>The <see cref="SignInResult"/> that contains an enum that indicates success/failure/other cases and the <see cref="StrikeCollection" /> containing failed attempt information</returns>
 		SignInResult SignIn(string email, string password);
-		
+        AuthenticationService.UserInfo GetUserInfoByEmail(string Email);
+
 		/// <summary>
 		/// Attempts to change the password of the user identified by the given email.  Authentication will NOT be performed before changing password.
 		/// </summary>

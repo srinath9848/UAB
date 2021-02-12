@@ -47,9 +47,18 @@ namespace UAB.Controllers
             }
             else
             {
-                Auth.isAuth = true;
-                Auth.CurrentUserName = Email;
-                return RedirectToAction("Index", "Home");
+                var userInfo = _mAuthenticationService.GetUserInfoByEmail(Email);
+                if (userInfo.IsActiveUser) {
+                    Auth.isAuth = true;
+                    Auth.CurrentUserName = Email;
+                    Auth.CurrentRole = userInfo.RoleName;
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    TempData["Error"] = "Invalid sign-in.You are not a UAB user.";
+                    return View();
+                }
             }
         }
 

@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using Microsoft.Data.SqlClient;
 using System.Linq;
 using System.Text.RegularExpressions;
-
-
+using UAB.DAL.Models;
+using System.Data;
 
 namespace UAB.DAL.LoginDTO
 {
@@ -15,8 +16,8 @@ namespace UAB.DAL.LoginDTO
         private readonly IPasswordAlgorithmFactory mPasswordAlgorithmFactory;
         private readonly IClock mClock;
 
-       
-        public AuthenticationService(IPasswordAlgorithmFactory passwordAlgorithmFactory,IClock clock )                                    
+
+        public AuthenticationService(IPasswordAlgorithmFactory passwordAlgorithmFactory,IClock clock )
         {
             mPasswordAlgorithmFactory = passwordAlgorithmFactory;
             mClock = clock;
@@ -38,9 +39,9 @@ namespace UAB.DAL.LoginDTO
                 var signInResult = Authenticate(user, email, password, "Sign-In");
 
                 return signInResult;
-                
+
             }
-           
+
         }
         private SignInResult Authenticate(UAB.DAL.LoginDTO.Users user, string email, string password, string action)
         {
@@ -162,6 +163,57 @@ namespace UAB.DAL.LoginDTO
         public UAB.DAL.LoginDTO.Users FindByEmail(string email, UAB.DAL.LoginDTO.IdentityServerContext context)
         {
             return context.Users.Where(a => a.Email == email).FirstOrDefault();
+        }
+        public class UserInfo
+        {
+            public int UserId { get; set; }
+            public string Email { get; set; } 
+            public bool IsActiveUser  { get; set; }
+            public int RoleId  { get; set; }
+            public string RoleName  { get; set; }
+            public int ProjectId { get; set; }
+            public bool IsActiveInProject  { get; set; }
+        }
+
+        public UserInfo GetUserInfoByEmail  (string Email)
+        {
+            UserInfo userInfo = new UserInfo();  
+
+            using (var context = new UABContext())
+            {
+                using (var cnn = context.Database.GetDbConnection())
+                {
+                    
+
+                    var cmm = cnn.CreateCommand();
+                    cmm.CommandType =CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspGetUserInfo]";
+                    cmm.Connection = cnn;
+                    cnn.Open();
+
+                    SqlParameter param = new SqlParameter();
+                    param.ParameterName = "@Email";
+                    param.Value = Email;
+                    cmm.Parameters.Add(param);
+
+
+                    var reader = cmm.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        userInfo = new UserInfo();
+                        userInfo.UserId = Convert.ToInt32(reader["UserId"]);
+                        userInfo.Email = reader["Email"].ToString();
+                        userInfo.IsActiveUser = Convert.ToBoolean(reader["IsActive"]);
+                        userInfo.RoleId = Convert.ToInt32(reader["RoleId"]);
+                        userInfo.RoleName = reader["Name"].ToString();
+                        userInfo.ProjectId = Convert.ToInt32(reader["ProjectId"]);
+                        userInfo.IsActiveInProject = Convert.ToBoolean(reader["IsActive"]);
+
+                    }
+                }
+            }
+            return userInfo;
         }
 
         public bool HasMetRequirements(string password)
