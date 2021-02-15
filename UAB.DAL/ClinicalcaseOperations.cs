@@ -104,7 +104,7 @@ namespace UAB.DAL
                             chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
                             chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
                         }
-                        else if (Role == "Coder" && ChartType == "Incorrect")
+                        else if ((Role == "Coder" && ChartType == "Incorrect") || (Role == "QA" && ChartType == "RebuttalOfShadowQA"))
                         {
                             chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                             if (reader["QAProviderID"] != DBNull.Value)

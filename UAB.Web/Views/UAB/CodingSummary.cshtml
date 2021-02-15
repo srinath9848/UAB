@@ -94,43 +94,10 @@
 <div>
 
 </div>
-<table>
-    <tbody id="tableid" style="display:none">
-        <tr id="tr0">
-            <td><input type="text" id="txt0" /></td>
-            <td><input type="button" id="btn_0" value="delete" /></td>
-        </tr>
-        @*<tr id="tr1" style="display:none">
-                <td><input type="text" id="txt1" /></td>
-                <td><input type="button" id="btn1" value="delete" /></td>
-            </tr>
-            <tr id="tr2" style="display:none">
-                <td><input type="text" id="txt2" /></td>
-                <td><input type="button" id="btn2" value="delete" /></td>
-            </tr>*@
-    </tbody>
-</table>
-
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-
         $("#coding").addClass('selected');
-
-        $(document).on("keyup", "input", function () {
-            var keycode = (window.event) ? event.keyCode : e.keyCode;
-            if (keycode == 9) {
-                var id = $(this).attr('id').split("_")[1] + 1;
-                $("#tableid").append('<tr id="tr' + id + '"> <td> <input type="text" id="txt' + id + '" /></td><td><input type="button" id="btn_' + id + '" value="delete" /></td></tr >');
-                //alert('tab key pressed');
-            }
-        });
-
-        $(document).on("change", "input", function () {
-            var id = $(this).attr('id').split("btn_")[1] + 1;
-            $("#tableid").append('<tr id="tr' + id + '"> <td> <input type="text" id="txt' + id + '" /></td><td><input type="button" id="btn_' + id + '" value="delete" /></td></tr >');
-            //alert('tab key pressed');
-        });
     });
 </script>
 

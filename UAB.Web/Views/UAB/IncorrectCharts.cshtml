@@ -7,84 +7,12 @@
         <div class="row">
             <partial name="_InitialData" model=Model />
             <partial name="_RebuttalChartDetails" model=Model />
-            @*<div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">QA Details</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="col-12">
-                                <div class="row mb-3">
-                                    <div class="col-lg-6">
-                                        <div class="form-group row">
-                                            <label class="col-md-3 m-t-15">
-                                                Incorrect / Correct
-                                            </label>
-                                            <div class="col-md-9">
-                                                <select class="form-control QADetails" readonly>
-                                                    <option>Correct</option>
-                                                    <option selected>Incorrect</option>
-                                                    <option>Educational</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group row">
-                                            <label class="col-md-3 m-t-15">Corrections/Education</label>
-                                            <div class="col-sm-9">
-                                                <textarea class="form-control QADetails" readonly>Wrong values coded</textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-lg-6">
-                                        <div class="form-group row">
-                                            <label class="col-md-3 m-t-15">Coder Rebuttal</label>
-                                            <div class="col-sm-9">
-                                                <textarea class="form-control QADetails" readonly></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="form-group row">
-                                            <label class="col-md-3 m-t-15">
-                                                Error Type (mgt use only)
-                                            </label>
-                                            <div class="col-md-9">
-                                                <select class="form-control QADetails" readonly>
-                                                    <option>CC not Supported</option>
-                                                    <option>Consult not Supported</option>
-                                                    <option selected>Mod Error</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="border-top" id="QADetails">
-                            <div class="card-body" style="text-align:right">
-                                <button type="submit" class="btn btn-success">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>*@
         </div>
     </div>
 </form>
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
 <script src="~/dashboardassets/dist/js/jquery-ui.min.js"></script>
-<script src="~/dashboardassets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 <script type="text/javascript">
-    /*datwpicker*/
-    jQuery('#datepicker-autoclose').datepicker({
-        autoclose: true,
-        todayHighlight: true
-    });
 
     $(".QADetails").attr("readonly", true);
     $(".QARevised").attr("readonly", true);
