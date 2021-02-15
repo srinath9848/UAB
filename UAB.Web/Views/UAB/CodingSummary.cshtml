@@ -114,6 +114,9 @@
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+
+        $("#coding").addClass('selected');
+
         $(document).on("keyup", "input", function () {
             var keycode = (window.event) ? event.keyCode : e.keyCode;
             if (keycode == 9) {
