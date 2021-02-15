@@ -123,6 +123,24 @@
             $(this).toggleClass('reject');
             $(this).siblings().removeClass('accept');
             $("#Revised" + id + "Remarks").css("display", "flex");
+            var title = $("#" + id).attr('title');
+            if (title == "PayorID1")
+                $("#hdnPayorID").val('');
+
+            if (title == "ProviderID1")
+                $("#hdnProviderID").val('');
+
+            if (title == "CPTCode1")
+                $("#hdnCpt").val('');
+
+            if (id == "Mod")
+                $("#hdnMod").val('');
+
+            if (title == "Dx1")
+                $("#hdnDx").val('');
+
+            if (title == "Feedback1")
+                $("#hdnProviderFeedbackID").val('');
         }
     });
 

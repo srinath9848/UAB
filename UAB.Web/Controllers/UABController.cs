@@ -260,7 +260,57 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
-            return View("RebuttalCharts", chartSummaryDTO);
+            return View("QARebuttalChartsOfCoder", chartSummaryDTO);
+        }
+
+        
+        public IActionResult SubmitQARebuttalChartsOfCoder(ChartSummaryDTO chartSummaryDTO)
+        {
+            var hdnPayorID = Request.Form["hdnPayorID"].ToString();
+            var hdnProviderID = Request.Form["hdnProviderID"].ToString();
+            var hdnCpt = Request.Form["hdnCpt"].ToString();
+            var hdnMod = Request.Form["hdnMod"].ToString();
+            var hdnDx = Request.Form["hdnDx"].ToString();
+            var hdnProviderFeedbackID = Request.Form["hdnProviderFeedbackID"].ToString();
+
+            if (!string.IsNullOrEmpty(hdnPayorID))
+                chartSummaryDTO.PayorID = Convert.ToInt32(hdnPayorID);
+            else
+                chartSummaryDTO.PayorID = 0;
+
+            if (!string.IsNullOrEmpty(hdnProviderID))
+                chartSummaryDTO.ProviderID = Convert.ToInt32(hdnProviderID);
+            else
+                chartSummaryDTO.ProviderID = 0;
+
+            if (!string.IsNullOrEmpty(hdnCpt))
+                chartSummaryDTO.CPTCode = hdnCpt;
+            else
+                chartSummaryDTO.CPTCode = "";
+
+            if (!string.IsNullOrEmpty(hdnMod))
+                chartSummaryDTO.Mod = hdnMod;
+            else
+                chartSummaryDTO.Mod = "";
+
+            if (!string.IsNullOrEmpty(hdnDx))
+                chartSummaryDTO.Dx = hdnDx;
+            else
+                chartSummaryDTO.Dx = "";
+
+            if (!string.IsNullOrEmpty(hdnProviderFeedbackID))
+                chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(hdnProviderFeedbackID);
+            else
+                chartSummaryDTO.ProviderFeedbackID = 0;
+
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+
+            clinicalcaseOperations.SubmitQARebuttalChartsOfCoder(chartSummaryDTO);
+
+            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Role.QA.ToString());
+
+            TempData["Success"] = "Chart Details submitted successfully !";
+            return View("QASummary", lstDto);
         }
 
         public IActionResult GetQARebuttalChartsOfShadowQA(string Role, string ChartType, int ProjectID)
