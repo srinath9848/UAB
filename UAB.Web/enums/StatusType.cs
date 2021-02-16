@@ -17,6 +17,7 @@ namespace UAB.enums
         PostingCompleted = 8,
         QARejected = 9,
         ShadowQARejected = 10,
-        CoderRejected = 11
+        CoderRejected = 11,
+        QARebutted = 12
     }
 }

@@ -22,7 +22,7 @@
                                 Available Charts
                             </th>
                             <th scope="col" class="tblHeaderRow">
-                                Rebuttal  Charts
+                                Rebuttal Charts
                             </th>
                         </tr>
                     </thead>
@@ -48,22 +48,19 @@
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">
-                                    @*@{
-                                            List<int> lstStatus = new List<int> { (int)StatusType.CoderRejected, (int)StatusType.QARejected };
-                                        }
-                                        @if (item.RebuttalCharts == 0)
-                                        {
-                                            @item.RebuttalCharts*@
-                                    0
-                                    <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
-                                    <a href="@Url.Action("RebuttalCharts", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
-                                    @*}
-                                        else
-                                        {
-                                            @item.RebuttalCharts
-                                            <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                            <a href="@Url.Action("RebuttalCharts", "UAB",new { Role=Role.Coder,ChartType="Rebuttal",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
-                                        }*@
+                                    @if (item.QARebuttalCharts == 0)
+                                    {
+                                        @item.QARebuttalCharts
+
+                                        <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
+                                        <a href="@Url.Action("GetShadowQARebuttalChartsOfQA", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
+                                    }
+                                    else
+                                    {
+                                        @item.QARebuttalCharts
+                                        <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
+                                        <a href="@Url.Action("GetShadowQARebuttalChartsOfQA", "UAB",new { Role=Role.ShadowQA,ChartType="RebuttalOfQA",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                    }
                                 </td>
                             </tr>
                         }

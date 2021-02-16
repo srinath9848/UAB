@@ -232,7 +232,6 @@ namespace UAB.Controllers
             return View(lstDto);
         }
 
-
         public IActionResult ShadowQA(string Role, string ChartType, int ProjectID)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
@@ -263,7 +262,7 @@ namespace UAB.Controllers
             return View("QARebuttalChartsOfCoder", chartSummaryDTO);
         }
 
-        public IActionResult GetQARebuttalChartsOfShadowQA(string Role, string ChartType, int ProjectID)
+        public IActionResult GetQARejectedChartsOfShadowQA(string Role, string ChartType, int ProjectID)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
@@ -275,9 +274,8 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
-            return View("QARebuttalChartsOfCoder", chartSummaryDTO);
+            return View("QARejectedChartsOfShadowQA", chartSummaryDTO);
         }
-
 
         public IActionResult SubmitQARebuttalChartsOfCoder(ChartSummaryDTO chartSummaryDTO)
         {
@@ -328,7 +326,7 @@ namespace UAB.Controllers
             return View("QASummary", lstDto);
         }
 
-        public IActionResult SubmitQARebuttalChartsOfShadowQA(ChartSummaryDTO chartSummaryDTO)
+        public IActionResult SubmitQARejectedChartsOfShadowQA(ChartSummaryDTO chartSummaryDTO)
         {
             var hdnPayorID = Request.Form["hdnPayorID"].ToString();
             var hdnProviderID = Request.Form["hdnProviderID"].ToString();
@@ -337,39 +335,34 @@ namespace UAB.Controllers
             var hdnDx = Request.Form["hdnDx"].ToString();
             var hdnProviderFeedbackID = Request.Form["hdnProviderFeedbackID"].ToString();
 
+            var hdnPayorIDReject = Request.Form["hdnPayorIDReject"].ToString();
+            var hdnProviderIDReject = Request.Form["hdnProviderIDReject"].ToString();
+            var hdnCptReject = Request.Form["hdnCptReject"].ToString();
+            var hdnModReject = Request.Form["hdnModReject"].ToString();
+            var hdnDxReject = Request.Form["hdnDxReject"].ToString();
+            var hdnProviderFeedbackIDReject = Request.Form["hdnProviderFeedbackIDReject"].ToString();
+
             if (!string.IsNullOrEmpty(hdnPayorID))
                 chartSummaryDTO.PayorID = Convert.ToInt32(hdnPayorID);
-            else
-                chartSummaryDTO.PayorID = 0;
 
             if (!string.IsNullOrEmpty(hdnProviderID))
                 chartSummaryDTO.ProviderID = Convert.ToInt32(hdnProviderID);
-            else
-                chartSummaryDTO.ProviderID = 0;
 
             if (!string.IsNullOrEmpty(hdnCpt))
                 chartSummaryDTO.CPTCode = hdnCpt;
-            else
-                chartSummaryDTO.CPTCode = "";
 
             if (!string.IsNullOrEmpty(hdnMod))
                 chartSummaryDTO.Mod = hdnMod;
-            else
-                chartSummaryDTO.Mod = "";
 
             if (!string.IsNullOrEmpty(hdnDx))
                 chartSummaryDTO.Dx = hdnDx;
-            else
-                chartSummaryDTO.Dx = "";
 
             if (!string.IsNullOrEmpty(hdnProviderFeedbackID))
                 chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(hdnProviderFeedbackID);
-            else
-                chartSummaryDTO.ProviderFeedbackID = 0;
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
 
-            clinicalcaseOperations.SubmitQARebuttalChartsOfCoder(chartSummaryDTO);
+            clinicalcaseOperations.SubmitQARejectedChartsOfShadowQA(chartSummaryDTO, hdnPayorIDReject, hdnProviderIDReject, hdnCptReject, hdnModReject, hdnDxReject, hdnProviderFeedbackIDReject);
 
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Role.QA.ToString());
 
@@ -377,11 +370,20 @@ namespace UAB.Controllers
             return View("QASummary", lstDto);
         }
 
+        public IActionResult GetShadowQARebuttalChartsOfQA(string Role, string ChartType, int ProjectID)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
+            chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
 
-
-
-
-
+            #region binding data
+            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
+            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
+            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            ViewBag.ErrorTypes = BindErrorType();
+            #endregion
+            return View("ShadowQARebuttalChartsOfQA", chartSummaryDTO);
+        }
 
         //[HttpPost]
         //public IActionResult AddSettingsProvider(Provider provider)

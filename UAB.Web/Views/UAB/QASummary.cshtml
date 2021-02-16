@@ -69,13 +69,13 @@
                                     {
                                         @item.ShadowQARebuttalCharts
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("GetQARebuttalChartsOfShadowQA", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("GetQARejectedChartsOfShadowQA", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
                                         @item.ShadowQARebuttalCharts
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("GetQARebuttalChartsOfShadowQA", "UAB",new { Role=Role.QA,ChartType="ShadowQARejected",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("GetQARejectedChartsOfShadowQA", "UAB",new { Role=Role.QA,ChartType="ShadowQARejected",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                             </tr>

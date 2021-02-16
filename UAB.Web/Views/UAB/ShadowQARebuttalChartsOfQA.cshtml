@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Rebuttal Charts";
 }
-<form asp-action="SubmitQARebuttalChartsOfShadowQA" id="form1" asp-controller="UAB" method="POST">
+<form asp-action="SubmitQARebuttalChartsOfCoder" id="form1" asp-controller="UAB" method="POST">
     <div class="container-fluid">
         <div class="row">
             <partial name="_InitialData" model=Model />
@@ -17,7 +17,7 @@
     $(".CoderDetails").css("background-color", "#e9ecef");
 
     $(".QADetails").attr("readonly", false);
-    $("#qa").addClass('selected');
+    $("#shadowQA").addClass('selected');
     $(".QACorrections").hide();
     $(".CoderCorrections input[type='text']").css("pointer-events", "none");
     $(".CoderCorrections input[type='text']").css("background-color", "#e9ecef");
