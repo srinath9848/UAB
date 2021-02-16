@@ -6,7 +6,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-8">
+        <div class="col-10">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Projects</h4>
@@ -55,13 +55,13 @@
                                     {
                                         @item.CoderRebuttalCharts
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("CoderRebuttalCharts", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("GetQARebuttalChartsOfCoder", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
                                         @item.CoderRebuttalCharts
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("CoderRebuttalCharts", "UAB",new { Role=Role.QA,ChartType="CoderRebuttal",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("GetQARebuttalChartsOfCoder", "UAB",new { Role=Role.QA,ChartType="RebuttalOfCoder",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">
@@ -69,13 +69,13 @@
                                     {
                                         @item.ShadowQARebuttalCharts
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("ShadowQARebuttalCharts", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("GetQARebuttalChartsOfShadowQA", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
                                         @item.ShadowQARebuttalCharts
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("ShadowQARebuttalCharts", "UAB",new { Role=Role.QA,ChartType="ShadowQARebuttal",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("GetQARebuttalChartsOfShadowQA", "UAB",new { Role=Role.QA,ChartType="RebuttalOfShadowQA",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                             </tr>
@@ -86,4 +86,13 @@
         </div>
     </div>
 </div>
+<script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#qa").addClass('selected');
+       
+    });
+</script>
+
 

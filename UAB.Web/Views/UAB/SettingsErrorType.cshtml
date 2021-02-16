@@ -32,6 +32,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card">Error Type</h5>
+                    @await Html.PartialAsync("_Msg")
                     <h5><button type="button" style="cursor: pointer" class="btn btn-sm btn-info btn-fill" onclick="Add('')"><i class="fa fa-plus"></i>Add Error Type</button></h5>
                     <br />
                     <div id="modalContent"></div>
@@ -46,13 +47,13 @@
                             <tbody>
                                 @foreach (var item in result)
                                 {
-                                <tr>
-                                    <td>
-                                        <button type="button" style="cursor: pointer" class="btn btn-sm btn-info btn-fill" onclick="Edit('@item.ErrorTypeId')"><i class="fa fa-edit"></i>Edit</button>
-                                        <button type="button" style="cursor: pointer" class="btn btn-sm btn-danger btn-fill" onclick="Delete('@item.ErrorTypeId')"><i class="fa fa-times"></i>Delete</button>
-                                    </td>
-                                    <td>@item.Name</td>
-                                </tr>
+                                    <tr>
+                                        <td>
+                                            <button type="button" style="cursor: pointer" class="btn btn-sm btn-info btn-fill" onclick="Edit('@item.ErrorTypeId')"><i class="fa fa-edit"></i>Edit</button>
+                                            <button type="button" style="cursor: pointer" class="btn btn-sm btn-danger btn-fill" onclick="Delete('@item.ErrorTypeId')"><i class="fa fa-times"></i>Delete</button>
+                                        </td>
+                                        <td>@item.Name</td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>

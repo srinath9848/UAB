@@ -1,0 +1,77 @@
+﻿@model UAB.DTO.ChartSummaryDTO
+@{
+    ViewData["Title"] = "Rebuttal Charts";
+}
+<form asp-action="SubmitQARebuttalChartsOfShadowQA" id="form1" asp-controller="UAB" method="POST">
+    <div class="container-fluid">
+        <div class="row">
+            <partial name="_InitialData" model=Model />
+            <partial name="_RebuttalChartDetails" model=Model />
+        </div>
+    </div>
+</form>
+<script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $(".CoderDetails").css("pointer-events", "none");
+    $(".CoderDetails").css("background-color", "#e9ecef");
+
+    $(".QADetails").attr("readonly", false);
+    $("#qa").addClass('selected');
+    $(".QACorrections").hide();
+    $(".CoderCorrections input[type='text']").css("pointer-events", "none");
+    $(".CoderCorrections input[type='text']").css("background-color", "#e9ecef");
+    $("#divChkAll").hide();
+
+    $('span i').click(function () {
+        var id = $(this).attr('id');
+        if ($(this).hasClass('fa-check-circle')) {
+            $(this).toggleClass('accept');
+            $(this).siblings().removeClass('reject');
+            //$("#" + id + "1").css("display", "none");
+            //$("#" + id + "2").css("display", "none");
+            var title = $("#" + id).attr('title');
+            if (title == "PayorID1")
+                $("#hdnPayorID").val('');
+
+            if (title == "ProviderID1")
+                $("#hdnProviderID").val('');
+
+            if (title == "CPTCode1")
+                $("#hdnCpt").val('');
+
+            if (id == "Mod")
+                $("#hdnMod").val('');
+
+            if (title == "Dx1")
+                $("#hdnDx").val('');
+
+            if (title == "Feedback1")
+                $("#hdnProviderFeedbackID").val('');
+        }
+        else if ($(this).hasClass('fa-times-circle')) {
+            $(this).toggleClass('reject');
+            $(this).siblings().removeClass('accept');
+            //$("#" + id + "1").css("display", "flex");
+            //$("#" + id + "2").css("display", "flex");
+            var title = $("#" + id).attr('title');
+            if (title == "PayorID1")
+                $("#hdnPayorID").val($("#" + title + " option:selected").val());
+
+            if (title == "ProviderID1")
+                $("#hdnProviderID").val($("#" + title + " option:selected").val());
+
+            if (title == "CPTCode1")
+                $("#hdnCpt").val($("#" + title).val());
+
+            if (id == "Mod")
+                $("#hdnMod").val($("#" + id + "1").val());
+
+            if (title == "Dx1")
+                $("#hdnDx").val($("#" + title).val());
+
+            if (title == "Feedback1")
+                $("#hdnProviderFeedbackID").val($("#" + title + " option:selected").val());
+        }
+    });
+</script>

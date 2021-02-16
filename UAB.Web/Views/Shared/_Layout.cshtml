@@ -38,11 +38,13 @@
             font-size: 16px;
             font-weight: bold !important;
         }
+
         div.lessWidth {
-            max-width: 10% !important;
+            max-width: 15% !important;
         }
+
         label.lessWidth {
-            max-width: 10% !important;
+            max-width: 15% !important;
         }
     </style>
 </head>
@@ -103,7 +105,7 @@
                 <div class="scroll-sidebar">
                     <!-- Sidebar navigation-->
                     <nav class="sidebar-nav">
-                        
+
                         <ul id="sidebarnav" class="p-t-30">
                             <li id="dashBoard" class="sidebar-item">
                                 <a class="sidebar-link waves-effect waves-dark sidebar-link" asp-area="" asp-controller="Home" asp-action="Index">
@@ -125,8 +127,8 @@
                                     <i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Shadow QA</span>
                                 </a>
                             </li>
-                            @if (UAB.DAL.LoginDTO.Auth.CurrentRole == "Coder")
-                            {
+                            @*@if (UAB.DAL.LoginDTO.Auth.CurrentRole == "Coder")
+                            {*@
                                 <li id="settings" class="sidebar-item">
                                     <a class="sidebar-link has-arrow waves-effect waves-dark" href="/">
                                         <i class="mdi mdi-settings"></i><span class="hide-menu">Settings</span>
@@ -153,9 +155,16 @@
                                                 </span>
                                             </a>
                                         </li>
+                                        <li class="sidebar-item">
+                                            <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsErrorType">
+                                                <i class="mdi mdi-note-plus"></i><span class="hide-menu">
+                                                    Error Type
+                                                </span>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </li>
-                            }
+                            @*}*@
                         </ul>
                     </nav>
                     <!-- End Sidebar navigation -->
@@ -189,23 +198,6 @@
     <script src="~/dashboardassets/dist/js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
     <script src="~/dashboardassets/dist/js/custom.min.js"></script>
-    <!--This page JavaScript -->
-    <!-- <script src="~/dashboardassets/dist/js/pages/dashboards/dashboard1.js"></script> -->
-    <!-- Charts js Files -->
-    <script src="~/dashboardassets/libs/flot/excanvas.js"></script>
-    <script src="~/dashboardassets/libs/flot/jquery.flot.js"></script>
-    <script src="~/dashboardassets/libs/flot/jquery.flot.pie.js"></script>
-    <script src="~/dashboardassets/libs/flot/jquery.flot.time.js"></script>
-    <script src="~/dashboardassets/libs/flot/jquery.flot.stack.js"></script>
-    <script src="~/dashboardassets/libs/flot/jquery.flot.crosshair.js"></script>
-    <script src="~/dashboardassets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
-    <script src="~/dashboardassets/dist/js/pages/chart/chart-page-init.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
-<script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#settings").removeClass('selected');
-    })
-</script>
