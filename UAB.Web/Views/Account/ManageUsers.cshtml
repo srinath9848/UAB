@@ -39,10 +39,10 @@
                 <div class="card-body">
                     <h5 class="card">Manage Users</h5>
                     @await Html.PartialAsync("_Msg")
-                    <h5><button type="button" style="cursor: pointer" class="btn btn-sm btn-info btn-fill" onclick="Add('')"><i class="fa fa-plus"></i>Add User</button></h5>
+                    <h5><button type="button" id="Addbtn" style="cursor: pointer" class="btn btn-sm btn-info btn-fill" onclick="Add('')"><i class="fa fa-plus"></i>Add User</button></h5>
                     <br />
                     <div id="modalContent"></div>
-                    <div class="table-responsive col-8">
+                    <div class="table-responsive col-12">
                         <table id="Users" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
@@ -94,6 +94,8 @@
             url: "@Url.Action("Add_EditUser", "Account")",
             success: function (response) {
                 $("#modalContent").html(response);
+                $("#Users_wrapper").html('');
+                $("#Addbtn").hide();
             },
             failure: function (response) {
                 alert(response);
@@ -108,6 +110,8 @@
             data: { "UserId": UserId},
             success: function (response) {
                 $("#modalContent").html(response);
+                $("#Users_wrapper").html('');
+                $("#Addbtn").hide();
             },
             failure: function (response) {
                 alert(response);
@@ -121,6 +125,8 @@
             data: { "UserId": UserId },
             success: function (response) {
                 $("#modalContent").html(response);
+                $("#Users_wrapper").html('');
+                $("#Addbtn").hide();
             },
             failure: function (response) {
                 alert(response);

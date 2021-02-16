@@ -44,7 +44,8 @@ namespace UAB.Controllers
             else
             {
                 var userInfo = _mAuthenticationService.GetUserInfoByEmail(Email);
-                if (userInfo.IsActiveUser) {
+                if (userInfo.IsActiveUser)
+                {
                     Auth.isAuth = true;
                     Auth.CurrentUserName = Email;
                     Auth.CurrentRole = userInfo.RoleName;
@@ -57,19 +58,19 @@ namespace UAB.Controllers
                 }
             }
         }
-       
+
         public IActionResult ManageUsers()
         {
-            List<ApplicationUser> users  = new List<ApplicationUser>();
+            List<ApplicationUser> users = new List<ApplicationUser>();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
 
-            users = clinicalcaseOperations.GetUsers(); 
+            users = clinicalcaseOperations.GetUsers();
             ViewBag.users = users;
 
             return View();
         }
         [HttpGet]
-        public ActionResult Add_EditUser (int UserId  = 0)
+        public ActionResult Add_EditUser(int UserId = 0)
         {
             ApplicationUser obj = new ApplicationUser();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
@@ -84,15 +85,30 @@ namespace UAB.Controllers
             }
             return PartialView("_AddEditUser", obj);
         }
+
+        [HttpPost]
+        public ActionResult Add_EditUser(ApplicationUser model, string ProjectAndRole = null)
+        {
+            if (!string.IsNullOrEmpty(ProjectAndRole))
+            {
+                foreach (string item in ProjectAndRole.Split(','))
+                {
+                    model.ProjectName = item.Split('^')[0];
+                    model.RoleName = item.Split('^')[1];
+
+                }
+            }
+            return RedirectToAction("ManageUsers");
+        }
         [HttpGet]
-        public IActionResult DeleteUser (int UserId)
+        public IActionResult DeleteUser(int UserId)
         {
             ApplicationUser obj = new ApplicationUser();
             if (UserId != 0)
             {
                 List<ApplicationUser> users = new List<ApplicationUser>();
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-                users = clinicalcaseOperations.GetUsers();             
+                users = clinicalcaseOperations.GetUsers();
                 var res = users.Find(a => a.UserId == UserId);
                 obj = res;
             }
@@ -100,7 +116,7 @@ namespace UAB.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteUser (ApplicationUser applicationUser )
+        public IActionResult DeleteUser(ApplicationUser applicationUser)
         {
             try
             {
