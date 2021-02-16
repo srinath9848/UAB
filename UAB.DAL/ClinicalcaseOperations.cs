@@ -6,6 +6,7 @@ using System.Data;
 using System.Text;
 using UAB.DAL.Models;
 using UAB.DTO;
+using UAB.DAL.LoginDTO;
 
 namespace UAB.DAL
 {
@@ -683,6 +684,60 @@ namespace UAB.DAL
             }
             return lstDto;
         }
+        public List<BindDTO> GetRolesList() 
+        {
+            List<BindDTO> lstDto = new List<BindDTO>();
+            using (var context = new UABContext())
+            {
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[UspGetRoles]";
+                    cmd.Connection = con;
+
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        BindDTO dto = new BindDTO()
+                        {
+                            ID = Convert.ToInt32(reader["RoleId"]),
+                            Name = Convert.ToString(reader["RoleName"])
+                        };
+                        lstDto.Add(dto);
+                    }
+                }
+            }
+            return lstDto;
+        }
+        public List<BindDTO> GetProjectsList() 
+        {
+            List<BindDTO> lstDto = new List<BindDTO>();
+            using (var context = new UABContext())
+            {
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[UspGetProjects]";
+                    cmd.Connection = con;
+
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        BindDTO dto = new BindDTO()
+                        {
+                            ID = Convert.ToInt32(reader["ProjectId"]),
+                            Name = Convert.ToString(reader["ProjectName"])
+                        };
+                        lstDto.Add(dto);
+                    }
+                }
+            }
+            return lstDto;
+        }
 
         public List<BindDTO> GetProviderFeedbacksList()
         {
@@ -740,6 +795,38 @@ namespace UAB.DAL
                 }
             }
             return lstProvider;
+        }
+        public List<ApplicationUser> GetUsers()
+        {
+            ApplicationUser applicationUser = new ApplicationUser();
+            List<ApplicationUser> lstApplicationUser = new List<ApplicationUser>();
+
+            using (var context = new UABContext())
+            {
+                using (var cnn = context.Database.GetDbConnection())
+                {
+                    var cmm = cnn.CreateCommand();
+                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspGetUsers]";
+                    cmm.Connection = cnn;
+                    cnn.Open();
+                    var reader = cmm.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        applicationUser = new ApplicationUser();
+                        applicationUser.UserId= Convert.ToInt32(reader["UserId"]);
+                        applicationUser.Email = Convert.ToString(reader["Email"]);
+                        applicationUser.IsActive = Convert.ToBoolean(reader["IsActive"]);
+                        applicationUser.RoleId = Convert.ToInt32(reader["RoleId"]);
+                        applicationUser.RoleName = Convert.ToString(reader["RoleName"]);
+                        applicationUser.ProjectId = Convert.ToInt32(reader["ProjectId"]);
+                        applicationUser.ProjectName = Convert.ToString(reader["ProjectName"]);
+                        lstApplicationUser.Add(applicationUser);
+                    }
+                }
+            }
+            return lstApplicationUser;
         }
 
         public List<string> GetProviderNames()
@@ -854,6 +941,27 @@ namespace UAB.DAL
                     //name.Value = provider.Name;
                     //cmm.Parameters.Add(name);
 
+                    cnn.Open();
+                    cmm.ExecuteNonQuery();
+                }
+            }
+        }
+        public void DeleteUser (ApplicationUser applicationUser)
+        {
+            using (var context = new UABContext())
+            {
+                using (var cnn = context.Database.GetDbConnection())
+                {
+                    
+                    var cmm = cnn.CreateCommand();
+                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspDeleteUser]";
+                    cmm.Connection = cnn;
+
+                    SqlParameter param = new SqlParameter();
+                    param.ParameterName = "@UserId";
+                    param.Value = applicationUser.UserId;
+                    cmm.Parameters.Add(param);
                     cnn.Open();
                     cmm.ExecuteNonQuery();
                 }
