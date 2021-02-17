@@ -214,7 +214,7 @@ namespace UAB.DAL
             }
             return chartSummaryDTO;
         }
-        public CodingDTO SubmitCoding(ChartSummaryDTO chartSummaryDTO)
+        public CodingDTO SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO)
         {
             CodingDTO dto = new CodingDTO();
 
@@ -293,7 +293,7 @@ namespace UAB.DAL
             }
             return dto;
         }
-        public CodingDTO SubmitQA(ChartSummaryDTO chartSummaryDTO)
+        public CodingDTO SubmitQAAvailableChart(ChartSummaryDTO chartSummaryDTO)
         {
             CodingDTO dto = new CodingDTO();
 
@@ -410,7 +410,7 @@ namespace UAB.DAL
             }
             return dto;
         }
-        public CodingDTO SubmitCoderIncorrectChart(ChartSummaryDTO chartSummaryDTO)
+        public CodingDTO SubmitCodingIncorrectChart(ChartSummaryDTO chartSummaryDTO)
         {
             CodingDTO dto = new CodingDTO();
 
@@ -527,7 +527,7 @@ namespace UAB.DAL
             }
             return dto;
         }
-        public CodingDTO SubmitApprovedChart(ChartSummaryDTO chartSummaryDTO)
+        public CodingDTO SubmitCodingReadyForPostingChart(ChartSummaryDTO chartSummaryDTO)
         {
             CodingDTO dto = new CodingDTO();
 
@@ -977,7 +977,7 @@ namespace UAB.DAL
         }
 
 
-        public CodingDTO SubmitShadowQA(ChartSummaryDTO chartSummaryDTO)
+        public CodingDTO SubmitShadowQAAvailableChart(ChartSummaryDTO chartSummaryDTO)
         {
             CodingDTO dto = new CodingDTO();
 
