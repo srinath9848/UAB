@@ -24,7 +24,7 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            if (Auth.isAuth)
+            if (Auth.IsAuth)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -138,7 +138,7 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult Logout()
         {
-            Auth.isAuth = false;
+            Auth.IsAuth = false;
             return RedirectToAction("Login", "Account");
         }
     }
