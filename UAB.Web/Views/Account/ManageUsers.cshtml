@@ -58,8 +58,8 @@
                                 {
                                     <tr>
                                         <td>
-                                            <button type="button" style="cursor: pointer" class="btn btn-sm btn-info btn-fill" onclick="Edit('@item.UserId')"><i class="fa fa-edit"></i>Edit</button>
-                                            <button type="button" style="cursor: pointer" class="btn btn-sm btn-danger btn-fill" onclick="Delete('@item.UserId')"><i class="fa fa-times"></i>Delete</button>
+                                            <button type="button" style="cursor: pointer" class="btn btn-sm btn-info btn-fill" onclick="Edit('@item.ProjectUserId')"><i class="fa fa-edit"></i>Edit</button>
+                                            <button type="button" style="cursor: pointer" class="btn btn-sm btn-danger btn-fill" onclick="Delete('@item.ProjectUserId')"><i class="fa fa-times"></i>Delete</button>
                                         </td>
                                         <td>@item.Email</td>
                                         <td>@item.RoleName</td>
@@ -103,11 +103,11 @@
         });
     };
 
-        Edit = function (UserId) {
+        Edit = function (ProjectUserId) {
         $.ajax({
             type: "GET",
             url: "@Url.Action("Add_EditUser", "Account")",
-            data: { "UserId": UserId},
+            data: { "ProjectUserId": ProjectUserId},
             success: function (response) {
                 $("#modalContent").html(response);
                 $("#Users_wrapper").html('');
@@ -118,11 +118,11 @@
             }
         });
     }
-        Delete = function (UserId) {
+        Delete = function (ProjectUserId) {
         $.ajax({
             type: "GET",
             url: "@Url.Action("DeleteUser", "Account")",
-            data: { "UserId": UserId },
+            data: { "ProjectUserId": ProjectUserId },
             success: function (response) {
                 $("#modalContent").html(response);
                 $("#Users_wrapper").html('');

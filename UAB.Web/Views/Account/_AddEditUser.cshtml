@@ -14,8 +14,9 @@
             <div class="card-body">
                 <input type="hidden" name="ProjectAndRole" id="hdnProjectAndRole" />
                 @Html.HiddenFor(model => model.UserId, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
+                @Html.HiddenFor(model => model.ProjectUserId, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
 
-                @if (Model.UserId != 0)
+                @if (Model.ProjectUserId != 0)
                 {
                     <h5 class="card" style="width:300px">Update User</h5>
                 }
@@ -27,8 +28,8 @@
 
                 <div class="form-group row">
                     <label class="col-md-1">Email</label>
-                    <div class="col-md-3">
-                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter Email " })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.Email, new SelectList(@ViewBag.Identityusers, "Email"),"--Select a Email--", new { @id = "emaildd", @class = "form-control CoderDetails" })
                         @Html.ValidationMessageFor(model => model.Email, null, new { @class = "text-danger" })
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     </div>
@@ -72,7 +73,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    @if (Model.UserId != 0)
+                    @if (Model.ProjectUserId != 0)
                     {
                         <button type="submit" class="btn btn-sm btn-info btn-fill">Update</button>
                     }
@@ -80,8 +81,7 @@
                     {
                         <button type="submit" class="btn btn-sm btn-info btn-fill">Save</button>
                     }
-                    <a href="@Url.Action("ManageUsers","Account")" class="btn btn-sm btn-danger btn-fill" >Cancel</a>
-                    
+                    <a href="@Url.Action("ManageUsers","Account")" class="btn btn-sm btn-danger btn-fill">Cancel</a>
                 </div>
             </div>
         </div>
@@ -97,9 +97,10 @@
         $(document).on('click', '#AddRoleandProject', function () {
             if (iCnt <= 100) {
                 iCnt = iCnt + 1;
+                var Email = $("#emaildd option:selected").text();
                 var ProjectId = $("#projectdd option:selected").text();
                 var RoleId = $("#roledd option:selected").text();
-                if (ProjectId !== "--Select a Project--" && RoleId !== "--Select a Role--") {
+                if (Email !== "--Select a Email--" &&ProjectId !== "--Select a Project--" && RoleId !== "--Select a Role--") {
                     $("#tableid").append('<tr id="tr' + iCnt + '"><td id="txtproject' + iCnt + '">' + ProjectId + '</td><td id="txtrole' + iCnt + '">' + RoleId + '</td><td><button type="button" id="btndelete" title="btn_' + iCnt + '"  style="cursor: pointer" class="btn btn-sm btn-danger btn-fill"><i class="fa fa-times"></i>Delete</button></td></td></tr >');
                     var ProjectAndRolevalue = ProjectId + "^" + RoleId;
                     ProjectAndRole.push(ProjectAndRolevalue);
@@ -107,7 +108,7 @@
                     $("#tbleProjectwithRoles").show();
                 }
                 else {
-                    alert('please select project and role');
+                    alert('Please Select Email,Project and Role');
                 }
             }
         });
