@@ -33,17 +33,19 @@
         var keycode = (window.event) ? event.keyCode : e.keyCode;
         if (keycode == 9) {
             var id = parseInt($(this).attr('title').split("_")[1]) + parseInt(1);
-            var id1 = parseInt(id) - parseInt(1);
-            var val = $("#txt" + id1).val();
-            if (val !== "" && val !== null) {
-                dxArray.push(val);
-                $("#Dx").val(dxArray);
-                //alert(dxArray);
-                $("#tableid").append('<tr id="tr' + id + '"> <td> <input type="text" title="txt' + id + '" id="txt' + id + '" /></td><td><input type="button" id="btnDelete" class="btn btn-info btn-sm" title="btn_' + id + '" value="Delete" /></td></tr >');
-                $("#txt" + id).focus();
-            } else {
-                alert('please enter value here');
-                $("#txt" + id).focus();
+            if ($(this).attr('title').split("_")[1] !== undefined) {
+                var id1 = parseInt(id) - parseInt(1);
+                var val = $("#txt" + id1).val();
+                if (val !== "" && val !== null) {
+                    dxArray.push(val);
+                    $("#Dx").val(dxArray);
+                    //alert(dxArray);
+                    $("#tableid").append('<tr id="tr' + id + '"> <td> <input type="text" title="txt' + id + '" id="txt' + id + '" /></td><td><input type="button" id="btnDelete" class="btn btn-info btn-sm" title="btn_' + id + '" value="Delete" /></td></tr >');
+                    $("#txt" + id).focus();
+                } else {
+                    alert('please enter value here');
+                    $("#txt" + id).focus();
+                }
             }
         }
     });
@@ -52,7 +54,6 @@
         var id = $(this).attr('title').split("btn_")[1];
         var val = $("#txt" + id).val();
         if (val !== "" && val !== null) {
-            alert(val);
             dxArray.splice($.inArray(val, dxArray), 1);
             $("#Dx").val(dxArray);
             //alert(dxArray);
