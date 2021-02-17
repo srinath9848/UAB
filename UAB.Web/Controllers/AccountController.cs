@@ -24,7 +24,7 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            if (Auth.isAuth)
+            if (Auth.IsAuth)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -37,7 +37,7 @@ namespace UAB.Controllers
             var signInResult = _mAuthenticationService.SignIn(Email, Password);
             if (signInResult.Result != 0)
             {
-                Auth.isAuth = false;
+                Auth.IsAuth = false;
                 TempData["Error"] = "Invalid sign-in. Please try again.";
                 return View();
             }
@@ -46,9 +46,10 @@ namespace UAB.Controllers
                 var userInfo = _mAuthenticationService.GetUserInfoByEmail(Email);
                 if (userInfo.IsActiveUser)
                 {
-                    Auth.isAuth = true;
-                    Auth.CurrentUserName = Email;
+                    Auth.IsAuth = true;
+                    Auth.EmailId = Email;
                     Auth.CurrentRole = userInfo.RoleName;
+                    Auth.UserId = userInfo.UserId;
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -165,7 +166,7 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult Logout()
         {
-            Auth.isAuth = false;
+            Auth.IsAuth = false;
             return RedirectToAction("Login", "Account");
         }
     }

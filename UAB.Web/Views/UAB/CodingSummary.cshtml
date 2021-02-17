@@ -46,13 +46,13 @@
                                     {
                                         @item.AvailableCharts
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("Coding", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("GetCodingAvailableChart", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
                                         @item.AvailableCharts
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("Coding", "UAB",new { Role=Roles.Coder,ChartType="Available",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("GetCodingAvailableChart", "UAB",new { Role=Roles.Coder,ChartType="Available",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">
@@ -60,13 +60,13 @@
                                     {
                                         @item.QARebuttalCharts
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("IncorrectCharts", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("GetCodingIncorrectChart", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
                                         @item.QARebuttalCharts
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("IncorrectCharts", "UAB",new { Role=Roles.Coder,ChartType="Incorrect",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("GetCodingIncorrectChart", "UAB",new { Role=Roles.Coder,ChartType="Incorrect",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">
@@ -74,13 +74,13 @@
                                     {
                                         @item.ReadyForPostingCharts
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("ApprovedCharts", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("GetCodingReadyForPostingChart", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
                                         @item.ReadyForPostingCharts
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("ApprovedCharts", "UAB",new { Role=Roles.Coder,ChartType="ReadyForPosting",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("GetCodingReadyForPostingChart", "UAB",new { Role=Roles.Coder,ChartType="ReadyForPosting",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                             </tr>
