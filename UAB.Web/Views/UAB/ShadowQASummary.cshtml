@@ -4,6 +4,11 @@
     ViewData["Title"] = "Shadow QA Summary";
 }
 
+<style>
+    .availableCharts, .qaRebuttalCharts {
+        width: 60px;
+    }
+</style>
 <div class="container-fluid">
     <div class="row">
         <div class="col-8">
@@ -36,13 +41,13 @@
                                 <td scope="col" style="text-align:center">
                                     @if (item.AvailableCharts == 0)
                                     {
-                                        @item.AvailableCharts
+                                    <label class="availableCharts">@item.AvailableCharts</label>
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("ShadowQA", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
-                                        @item.AvailableCharts
+                                <label class="availableCharts">@item.AvailableCharts</label>
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("ShadowQA", "UAB",new { Role=Role.ShadowQA,ChartType="Available",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
@@ -50,14 +55,14 @@
                                 <td scope="col" style="text-align:center">
                                     @if (item.QARebuttalCharts == 0)
                                     {
-                                        @item.QARebuttalCharts
-
+                                        
+                                    <label class="qaRebuttalCharts">@item.QARebuttalCharts</label>
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("GetShadowQARebuttalChartsOfQA", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
-                                        @item.QARebuttalCharts
+                                <label class="qaRebuttalCharts">@item.QARebuttalCharts</label>
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("GetShadowQARebuttalChartsOfQA", "UAB",new { Role=Role.ShadowQA,ChartType="RebuttalOfQA",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }

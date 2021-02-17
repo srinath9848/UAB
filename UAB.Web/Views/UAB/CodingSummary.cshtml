@@ -7,6 +7,9 @@
     .highlight {
         background-color: #a8cb17 !important;
     }
+    .availableCharts, .qaRebuttalCharts, .readyForPostingCharts{
+        width:60px;
+    }
 </style>
 
 <div class="container-fluid">
@@ -44,13 +47,13 @@
                                 <td scope="col" style="text-align:center">
                                     @if (item.AvailableCharts == 0)
                                     {
-                                        @item.AvailableCharts
+                                        <label class="availableCharts">@item.AvailableCharts</label>
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("Coding", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
-                                        @item.AvailableCharts
+                                        <label class="availableCharts">@item.AvailableCharts</label>
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("Coding", "UAB",new { Role=Role.Coder,ChartType="Available",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
@@ -58,13 +61,13 @@
                                 <td scope="col" style="text-align:center">
                                     @if (item.QARebuttalCharts == 0)
                                     {
-                                        @item.QARebuttalCharts
+                                    <label class="qaRebuttalCharts">@item.QARebuttalCharts</label>
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("IncorrectCharts", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
-                                        @item.QARebuttalCharts
+                                <label class="qaRebuttalCharts">@item.QARebuttalCharts</label>
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("IncorrectCharts", "UAB",new { Role=Role.Coder,ChartType="Incorrect",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
@@ -72,13 +75,13 @@
                                 <td scope="col" style="text-align:center">
                                     @if (item.ReadyForPostingCharts == 0)
                                     {
-                                        @item.ReadyForPostingCharts
+                                        <label class="readyForPostingCharts">@item.ReadyForPostingCharts</label>
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("ApprovedCharts", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
-                                        @item.ReadyForPostingCharts
+                                        <label class="readyForPostingCharts">@item.ReadyForPostingCharts</label>
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("ApprovedCharts", "UAB",new { Role=Role.Coder,ChartType="ReadyForPosting",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }

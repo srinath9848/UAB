@@ -4,9 +4,14 @@
     ViewData["Title"] = "QA Summary";
 }
 
+<style>
+    .availableCharts, .coderRebuttalCharts, .shadowQaRebuttalCharts {
+        width: 60px;
+    }
+</style>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-10">
+        <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Projects</h4>
@@ -39,13 +44,13 @@
                                 <td scope="col" style="text-align:center">
                                     @if (item.AvailableCharts == 0)
                                     {
-                                        @item.AvailableCharts
+                                    <label class="availableCharts">@item.AvailableCharts</label>
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("QA", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
-                                        @item.AvailableCharts
+                                <label class="availableCharts">@item.AvailableCharts</label>
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("QA", "UAB",new { Role=Role.QA,ChartType="Available",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
@@ -53,13 +58,13 @@
                                 <td scope="col" style="text-align:center">
                                     @if (item.CoderRebuttalCharts == 0)
                                     {
-                                        @item.CoderRebuttalCharts
+                                    <label class="coderRebuttalCharts">@item.CoderRebuttalCharts</label>
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("GetQARebuttalChartsOfCoder", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
-                                        @item.CoderRebuttalCharts
+                                <label class="coderRebuttalCharts">@item.CoderRebuttalCharts</label>
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("GetQARebuttalChartsOfCoder", "UAB",new { Role=Role.QA,ChartType="RebuttalOfCoder",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
@@ -67,13 +72,13 @@
                                 <td scope="col" style="text-align:center">
                                     @if (item.ShadowQARebuttalCharts == 0)
                                     {
-                                        @item.ShadowQARebuttalCharts
+                                    <label class="shadowQaRebuttalCharts">@item.ShadowQARebuttalCharts</label>
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("GetQARejectedChartsOfShadowQA", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
-                                        @item.ShadowQARebuttalCharts
+                                <label class="shadowQaRebuttalCharts">@item.ShadowQARebuttalCharts</label>
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("GetQARejectedChartsOfShadowQA", "UAB",new { Role=Role.QA,ChartType="ShadowQARejected",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
