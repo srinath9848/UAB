@@ -128,49 +128,49 @@
                                 </a>
                             </li>
                             @*@if (UAB.DAL.LoginDTO.Auth.CurrentRole == "Coder")
-                            {*@
-                                <li id="settings" class="sidebar-item">
-                                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="/">
-                                        <i class="mdi mdi-settings"></i><span class="hide-menu">Settings</span>
-                                    </a>
-                                    <ul aria-expanded="false" class="collapse first-level">
-                                        <li class="sidebar-item">
-                                            <a class="sidebar-link" asp-area="" asp-controller="Account" asp-action="ManageUsers">
-                                                <i class="mdi mdi-note-outline"></i><span class="hide-menu">
-                                                    Manage Users
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="sidebar-item">
-                                            <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsProvider">
-                                                <i class="mdi mdi-note-outline"></i><span class="hide-menu">
-                                                    Provider
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="sidebar-item">
-                                            <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsPayor">
-                                                <i class="mdi mdi-note-plus"></i><span class="hide-menu">
-                                                    Payor
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="sidebar-item">
-                                            <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsProviderFeedback">
-                                                <i class="mdi mdi-note-plus"></i><span class="hide-menu">
-                                                    Provider Feedback
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="sidebar-item">
-                                            <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsErrorType">
-                                                <i class="mdi mdi-note-plus"></i><span class="hide-menu">
-                                                    Error Type
-                                                </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
+                                {*@
+                            <li id="settings" class="sidebar-item">
+                                <a class="sidebar-link has-arrow waves-effect waves-dark" href="/">
+                                    <i class="mdi mdi-settings"></i><span class="hide-menu">Settings</span>
+                                </a>
+                                <ul aria-expanded="false" class="collapse first-level">
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="Account" asp-action="ManageUsers">
+                                            <i class="mdi mdi-note-outline"></i><span class="hide-menu">
+                                                Manage Users
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsProvider">
+                                            <i class="mdi mdi-note-outline"></i><span class="hide-menu">
+                                                Provider
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsPayor">
+                                            <i class="mdi mdi-note-plus"></i><span class="hide-menu">
+                                                Payor
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsProviderFeedback">
+                                            <i class="mdi mdi-note-plus"></i><span class="hide-menu">
+                                                Provider Feedback
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsErrorType">
+                                            <i class="mdi mdi-note-plus"></i><span class="hide-menu">
+                                                Error Type
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                             @*}*@
                         </ul>
                     </nav>
@@ -189,22 +189,41 @@
             </script>
             UAB
         </footer>
-    </div>
 
-    <!-- All Jquery -->
-    <!-- ============================================================== -->
-    <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap tether Core JavaScript -->
-    <script src="~/dashboardassets/libs/popper.js/dist/umd/popper.min.js"></script>
-    <script src="~/dashboardassets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="~/dashboardassets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-    <script src="~/dashboardassets/extra-libs/sparkline/sparkline.js"></script>
-    <!--Wave Effects -->
-    <script src="~/dashboardassets/dist/js/waves.js"></script>
-    <!--Menu sidebar -->
-    <script src="~/dashboardassets/dist/js/sidebarmenu.js"></script>
-    <!--Custom JavaScript -->
-    <script src="~/dashboardassets/dist/js/custom.min.js"></script>
-    @RenderSection("Scripts", required: false)
+        <div class="modal fade modal-mini modal-primary show" id="validationPopUp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content" style="width: 500px;">
+                    <br />
+                    <div class="modal-header">
+                        <h4 class="modal-title"><strong>Error</strong></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="control-label">Please review</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal" onclick="validationPopUp()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- All Jquery -->
+        <!-- ============================================================== -->
+        <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
+        <!-- Bootstrap tether Core JavaScript -->
+        <script src="~/dashboardassets/libs/popper.js/dist/umd/popper.min.js"></script>
+        <script src="~/dashboardassets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="~/dashboardassets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+        <script src="~/dashboardassets/extra-libs/sparkline/sparkline.js"></script>
+        <!--Wave Effects -->
+        <script src="~/dashboardassets/dist/js/waves.js"></script>
+        <!--Menu sidebar -->
+        <script src="~/dashboardassets/dist/js/sidebarmenu.js"></script>
+        <!--Custom JavaScript -->
+        <script src="~/dashboardassets/dist/js/custom.min.js"></script>
+        @RenderSection("Scripts", required: false)
 </body>
 </html>
