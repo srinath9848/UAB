@@ -15,22 +15,26 @@ namespace UAB.DAL.Models
         {
         }
 
-        public virtual DbSet<Chart> Chart { get; set; }
-        public virtual DbSet<ChartCptCode> ChartCptCode { get; set; }
-        public virtual DbSet<ChartDxCode> ChartDxCode { get; set; }
-        public virtual DbSet<ChartQueue> ChartQueue { get; set; }
-        public virtual DbSet<ChartVersion> ChartVersion { get; set; }
         public virtual DbSet<Client> Client { get; set; }
         public virtual DbSet<ClinicalCase> ClinicalCase { get; set; }
         public virtual DbSet<CoderQuestion> CoderQuestion { get; set; }
+        public virtual DbSet<CptCode> CptCode { get; set; }
         public virtual DbSet<CustomField> CustomField { get; set; }
+        public virtual DbSet<DxCode> DxCode { get; set; }
+        public virtual DbSet<ErrorType> ErrorType { get; set; }
         public virtual DbSet<List> List { get; set; }
-        public virtual DbSet<Project> Project { get; set; }
-        public virtual DbSet<Provider> Provider { get; set; }
         public virtual DbSet<Payor> Payor { get; set; }
+        public virtual DbSet<Project> Project { get; set; }
+        public virtual DbSet<ProjectUser> ProjectUser { get; set; }
+        public virtual DbSet<Provider> Provider { get; set; }
         public virtual DbSet<ProviderFeedback> ProviderFeedback { get; set; }
+        public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<Status> Status { get; set; }
+        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Version> Version { get; set; }
         public virtual DbSet<WorkItem> WorkItem { get; set; }
+        public virtual DbSet<WorkItemAudit> WorkItemAudit { get; set; }
+        public virtual DbSet<WorkItemProvider> WorkItemProvider { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -43,111 +47,6 @@ namespace UAB.DAL.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Chart>(entity =>
-            {
-                entity.Property(e => e.DateOfService).HasColumnType("date");
-
-                entity.Property(e => e.EncounterNumber)
-                    .IsRequired()
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.PatientFirstName)
-                    .IsRequired()
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.PatientLastName)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.PatientMrn)
-                    .IsRequired()
-                    .HasColumnName("PatientMRN")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.Project)
-                    .WithMany(p => p.Chart)
-                    .HasForeignKey(d => d.ProjectId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FKChart282609");
-
-                entity.HasOne(d => d.ProviderFeedback)
-                    .WithMany(p => p.Chart)
-                    .HasForeignKey(d => d.ProviderFeedbackId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FKChart202355");
-
-                entity.HasOne(d => d.Status)
-                    .WithMany(p => p.Chart)
-                    .HasForeignKey(d => d.StatusId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FKChart129961");
-            });
-
-            modelBuilder.Entity<ChartCptCode>(entity =>
-            {
-                entity.HasKey(e => e.ChartDataId)
-                    .HasName("PK__ChartCpt__21E9F5BBAE9F7595");
-
-                entity.Property(e => e.Cptcode)
-                    .IsRequired()
-                    .HasColumnName("CPTCode")
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Modifier)
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.ClinicalCase)
-                    .WithMany(p => p.ChartCptCode)
-                    .HasForeignKey(d => d.ClinicalCaseId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FKChartCptCo152070");
-            });
-
-            modelBuilder.Entity<ChartDxCode>(entity =>
-            {
-                entity.Property(e => e.DxCode)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.ClinicalCase)
-                    .WithMany(p => p.ChartDxCode)
-                    .HasForeignKey(d => d.ClinicalCaseId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FKChartDxCod9138");
-            });
-
-            modelBuilder.Entity<ChartQueue>(entity =>
-            {
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<ChartVersion>(entity =>
-            {
-                entity.Property(e => e.VersionDate).HasColumnType("date");
-
-                entity.HasOne(d => d.ChartQueue)
-                    .WithMany(p => p.ChartVersion)
-                    .HasForeignKey(d => d.ChartQueueId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FKChartVersi409235");
-
-                entity.HasOne(d => d.ClinicalCase)
-                    .WithMany(p => p.ChartVersion)
-                    .HasForeignKey(d => d.ClinicalCaseId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FKChartVersi509041");
-            });
-
             modelBuilder.Entity<Client>(entity =>
             {
                 entity.Property(e => e.IsActive)
@@ -190,7 +89,6 @@ namespace UAB.DAL.Models
                 entity.HasOne(d => d.List)
                     .WithMany(p => p.ClinicalCase)
                     .HasForeignKey(d => d.ListId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FKClinicalCa234939");
 
                 entity.HasOne(d => d.Project)
@@ -222,6 +120,19 @@ namespace UAB.DAL.Models
                     .HasConstraintName("FKCoderQuest192420");
             });
 
+            modelBuilder.Entity<CptCode>(entity =>
+            {
+                entity.Property(e => e.Cptcode1)
+                    .IsRequired()
+                    .HasColumnName("CPTCode")
+                    .HasMaxLength(5)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Modifier)
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<CustomField>(entity =>
             {
                 entity.Property(e => e.Name)
@@ -241,11 +152,35 @@ namespace UAB.DAL.Models
                     .HasConstraintName("FKCustomFiel283120");
             });
 
+            modelBuilder.Entity<DxCode>(entity =>
+            {
+                entity.Property(e => e.DxCode1)
+                    .IsRequired()
+                    .HasColumnName("DxCode")
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<ErrorType>(entity =>
+            {
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<List>(entity =>
             {
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(255)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Payor>(entity =>
+            {
+                entity.Property(e => e.Name)
+                    .HasMaxLength(50)
                     .IsUnicode(false);
             });
 
@@ -267,12 +202,35 @@ namespace UAB.DAL.Models
                     .HasConstraintName("FKProject603379");
             });
 
+            modelBuilder.Entity<ProjectUser>(entity =>
+            {
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasDefaultValueSql("('1')");
+            });
+
             modelBuilder.Entity<Provider>(entity =>
             {
                 entity.Property(e => e.ProviderId).HasColumnName("ProviderID");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(100)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<ProviderFeedback>(entity =>
+            {
+                entity.Property(e => e.Feedback)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(25)
                     .IsUnicode(false);
             });
 
@@ -289,27 +247,43 @@ namespace UAB.DAL.Models
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasDefaultValueSql("('1')");
+            });
+
             modelBuilder.Entity<WorkItem>(entity =>
             {
-                entity.Property(e => e.AssignedDate).HasColumnType("date");
+                entity.Property(e => e.AssignedDate).HasColumnType("datetime");
 
-                entity.HasOne(d => d.ClinicalCase)
-                    .WithMany(p => p.WorkItem)
-                    .HasForeignKey(d => d.ClinicalCaseId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FKWorkItem32013");
+                entity.Property(e => e.NoteTitle)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+            });
 
-                entity.HasOne(d => d.ProviderFeedback)
-                    .WithMany(p => p.WorkItem)
-                    .HasForeignKey(d => d.ProviderFeedbackId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FKWorkItem106667");
+            modelBuilder.Entity<WorkItemAudit>(entity =>
+            {
+                entity.Property(e => e.FieldName)
+                    .IsRequired()
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
 
-                entity.HasOne(d => d.Status)
-                    .WithMany(p => p.WorkItem)
-                    .HasForeignKey(d => d.StatusId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FKWorkItem225649");
+                entity.Property(e => e.FieldValue)
+                    .IsRequired()
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Remark)
+                    .IsRequired()
+                    .HasMaxLength(2000)
+                    .IsUnicode(false);
             });
 
             OnModelCreatingPartial(modelBuilder);

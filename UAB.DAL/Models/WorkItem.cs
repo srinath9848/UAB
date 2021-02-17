@@ -11,11 +11,6 @@ namespace UAB.DAL.Models
         public DateTime? AssignedDate { get; set; }
         public int? AssignedTo { get; set; }
         public int? AssignedBy { get; set; }
-        public int ProviderFeedbackId { get; set; }
-        public int? NoteTitle { get; set; }
-
-        public virtual ClinicalCase ClinicalCase { get; set; }
-        public virtual ProviderFeedback ProviderFeedback { get; set; }
-        public virtual Status Status { get; set; }
+        public string NoteTitle { get; set; }
     }
 }

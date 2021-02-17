@@ -24,7 +24,7 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            if (Auth.isAuth)
+            if (Auth.IsAuth)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -37,7 +37,7 @@ namespace UAB.Controllers
             var signInResult = _mAuthenticationService.SignIn(Email, Password);
             if (signInResult.Result != 0)
             {
-                Auth.isAuth = false;
+                Auth.IsAuth = false;
                 TempData["Error"] = "Invalid sign-in. Please try again.";
                 return View();
             }
@@ -46,9 +46,10 @@ namespace UAB.Controllers
                 var userInfo = _mAuthenticationService.GetUserInfoByEmail(Email);
                 if (userInfo.IsActiveUser)
                 {
-                    Auth.isAuth = true;
-                    Auth.CurrentUserName = Email;
+                    Auth.IsAuth = true;
+                    Auth.EmailId = Email;
                     Auth.CurrentRole = userInfo.RoleName;
+                    Auth.UserId = userInfo.UserId;
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -70,18 +71,18 @@ namespace UAB.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult Add_EditUser(int UserId = 0)
+        public ActionResult Add_EditUser(int ProjectuserId = 0)
         {
             ApplicationUser obj = new ApplicationUser();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ViewBag.Identityusers = clinicalcaseOperations.GetIdentityUsersList();
             ViewBag.Roles = clinicalcaseOperations.GetRolesList();
             ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
-            if (UserId != 0)
+            if (ProjectuserId != 0)
             {
                 List<ApplicationUser> users = new List<ApplicationUser>();
                 users = clinicalcaseOperations.GetUsers();
-                var res = users.Find(a => a.UserId == UserId);
-                obj = res;
+                obj = users.Find(a => a.ProjectUserId == ProjectuserId);
             }
             return PartialView("_AddEditUser", obj);
         }
@@ -89,27 +90,65 @@ namespace UAB.Controllers
         [HttpPost]
         public ActionResult Add_EditUser(ApplicationUser model, string ProjectAndRole = null)
         {
-            if (!string.IsNullOrEmpty(ProjectAndRole))
+            if (model.Email != null)
             {
-                foreach (string item in ProjectAndRole.Split(','))
-                {
-                    model.ProjectName = item.Split('^')[0];
-                    model.RoleName = item.Split('^')[1];
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                ApplicationUser applicationUser = new ApplicationUser();
 
+                if (model.UserId==0)
+                {
+                    int UserId = clinicalcaseOperations.AddUser(model);//adding user to user table
+                    if (!string.IsNullOrEmpty(ProjectAndRole))
+                    {
+                        foreach (string item in ProjectAndRole.Split(','))
+                        {
+                            model.ProjectName = item.Split('^')[0];
+                            model.RoleName = item.Split('^')[1];
+
+                            model.UserId = UserId;
+
+                            clinicalcaseOperations.AddProjectUser(model); //adding user and projects,roles to projectuser table
+                        }
+                        TempData["Success"] = "Successfully Added User";
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        if (!string.IsNullOrEmpty(ProjectAndRole))
+                        {
+                            foreach (string item in ProjectAndRole.Split(','))
+                            {
+                                model.ProjectName = item.Split('^')[0];
+                                model.RoleName = item.Split('^')[1];
+                                model.UserId = model.UserId;
+
+                                clinicalcaseOperations.UpdateProjectUser(model);
+                            }
+                            TempData["Success"] = "Successfully Updated User";
+                        }
+                        else
+                        {
+                            TempData["Warning"] ="Unable To Update :You Havent Changed the User Information";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        TempData["error"] = ex.Message;
+                    }
                 }
             }
             return RedirectToAction("ManageUsers");
         }
         [HttpGet]
-        public IActionResult DeleteUser(int UserId)
+        public IActionResult DeleteUser(int ProjectUserId)
         {
             ApplicationUser obj = new ApplicationUser();
-            if (UserId != 0)
+            if (ProjectUserId != 0)
             {
-                List<ApplicationUser> users = new List<ApplicationUser>();
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-                users = clinicalcaseOperations.GetUsers();
-                var res = users.Find(a => a.UserId == UserId);
+                var res = clinicalcaseOperations.Getuser(ProjectUserId);
                 obj = res;
             }
             return PartialView("_DeleteUser", obj);
@@ -118,23 +157,16 @@ namespace UAB.Controllers
         [HttpPost]
         public IActionResult DeleteUser(ApplicationUser applicationUser)
         {
-            try
-            {
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-                if (applicationUser.UserId != 0)
-                    clinicalcaseOperations.DeleteUser(applicationUser);
-            }
-            catch (Exception ex)
-            {
-                TempData["error"] = ex.Message;
-            }
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            clinicalcaseOperations.DeleteProjectUser(applicationUser);
+
             return RedirectToAction("ManageUsers");
         }
 
         [HttpGet]
         public IActionResult Logout()
         {
-            Auth.isAuth = false;
+            Auth.IsAuth = false;
             return RedirectToAction("Login", "Account");
         }
     }

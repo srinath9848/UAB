@@ -49,13 +49,13 @@
                                     {
                                         <label class="availableCharts">@item.AvailableCharts</label>
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("Coding", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("GetCodingAvailableChart", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
                                         <label class="availableCharts">@item.AvailableCharts</label>
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("Coding", "UAB",new { Role=Role.Coder,ChartType="Available",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("GetCodingAvailableChart", "UAB",new { Role=Roles.Coder,ChartType="Available",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">
@@ -63,13 +63,13 @@
                                     {
                                     <label class="qaRebuttalCharts">@item.QARebuttalCharts</label>
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("IncorrectCharts", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("GetCodingIncorrectChart", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
                                 <label class="qaRebuttalCharts">@item.QARebuttalCharts</label>
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("IncorrectCharts", "UAB",new { Role=Role.Coder,ChartType="Incorrect",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("GetCodingIncorrectChart", "UAB",new { Role=Roles.Coder,ChartType="Incorrect",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">
@@ -77,13 +77,13 @@
                                     {
                                         <label class="readyForPostingCharts">@item.ReadyForPostingCharts</label>
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("ApprovedCharts", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("GetCodingReadyForPostingChart", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
                                         <label class="readyForPostingCharts">@item.ReadyForPostingCharts</label>
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("ApprovedCharts", "UAB",new { Role=Role.Coder,ChartType="ReadyForPosting",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("GetCodingReadyForPostingChart", "UAB",new { Role=Roles.Coder,ChartType="ReadyForPosting",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                             </tr>

@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Rebuttal Charts";
 }
-<form asp-action="SubmitQARebuttalChartsOfCoder" id="form1" asp-controller="UAB" method="POST">
+<form asp-action="SubmitShadowQARebuttalChartsOfQA" id="form1" asp-controller="UAB" method="POST">
     <div class="container-fluid">
         <div class="row">
             <partial name="_InitialData" model=Model />
@@ -31,23 +31,30 @@
             //$("#" + id + "1").css("display", "none");
             //$("#" + id + "2").css("display", "none");
             var title = $("#" + id).attr('title');
-            if (title == "PayorID1")
-                $("#hdnPayorID").val('');
-
-            if (title == "ProviderID1")
-                $("#hdnProviderID").val('');
-
-            if (title == "CPTCode1")
-                $("#hdnCpt").val('');
-
-            if (id == "Mod")
-                $("#hdnMod").val('');
-
-            if (title == "Dx1")
-                $("#hdnDx").val('');
-
-            if (title == "Feedback1")
-                $("#hdnProviderFeedbackID").val('');
+            if (title == "PayorID1") {
+                $("#hdnPayorID").val($("#" + title + " option:selected").val());
+                $("#hdnPayorIDReject").val('');
+            }
+            if (title == "ProviderID1") {
+                $("#hdnProviderID").val($("#" + title + " option:selected").val());
+                $("#hdnProviderIDReject").val('');
+            }
+            if (title == "CPTCode1") {
+                $("#hdnCpt").val($("#" + title).val());
+                $("#hdnCptReject").val('');
+            }
+            if (id == "Mod") {
+                $("#hdnMod").val($("#" + id + "1").val());
+                $("#hdnModReject").val('');
+            }
+            if (title == "Dx1") {
+                $("#hdnDx").val($("#" + title).val());
+                $("#hdnDxReject").val('');
+            }
+            if (title == "Feedback1") {
+                $("#hdnProviderFeedbackID").val($("#" + title + " option:selected").val());
+                $("#hdnProviderFeedbackIDReject").val('');
+            }
         }
         else if ($(this).hasClass('fa-times-circle')) {
             $(this).toggleClass('reject');
@@ -55,23 +62,30 @@
             //$("#" + id + "1").css("display", "flex");
             //$("#" + id + "2").css("display", "flex");
             var title = $("#" + id).attr('title');
-            if (title == "PayorID1")
-                $("#hdnPayorID").val($("#" + title + " option:selected").val());
-
-            if (title == "ProviderID1")
-                $("#hdnProviderID").val($("#" + title + " option:selected").val());
-
-            if (title == "CPTCode1")
-                $("#hdnCpt").val($("#" + title).val());
-
-            if (id == "Mod")
-                $("#hdnMod").val($("#" + id + "1").val());
-
-            if (title == "Dx1")
-                $("#hdnDx").val($("#" + title).val());
-
-            if (title == "Feedback1")
-                $("#hdnProviderFeedbackID").val($("#" + title + " option:selected").val());
+            if (title == "PayorID1") {
+                $("#hdnPayorID").val('');
+                $("#hdnPayorIDReject").val('1');
+            }
+            if (title == "ProviderID1") {
+                $("#hdnProviderID").val('');
+                $("#hdnProviderIDReject").val('1');
+            }
+            if (title == "CPTCode1") {
+                $("#hdnCpt").val('');
+                $("#hdnCptReject").val('1');
+            }
+            if (id == "Mod") {
+                $("#hdnMod").val('');
+                $("#hdnModReject").val('1');
+            }
+            if (title == "Dx1") {
+                $("#hdnDx").val('');
+                $("#hdnDxReject").val('1');
+            }
+            if (title == "Feedback1") {
+                $("#hdnProviderFeedbackID").val('');
+                $("#hdnProviderFeedbackIDReject").val('1');
+            }
         }
     });
 </script>

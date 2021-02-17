@@ -15,7 +15,7 @@
         </div>
         @Html.HiddenFor(model => model.Dx)
 
-        @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
+        @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { @class = "form-control",  @autocomplete = "off" })
         <div class="form-group row">
             <label class="col-md-3 m-t-15">Payor</label>
             <div class="col-md-3">
@@ -24,7 +24,7 @@
             </div>
             <label class="col-md-3 m-t-15">Note Title</label>
             <div class="col-md-3">
-                @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails", @autofocus = "autofocus", @autocomplete = "off" })
+                @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails",  @autocomplete = "off" })
                 @Html.ValidationMessageFor(model => model.NoteTitle, null, new { @class = "text-danger" })
             </div>
         </div>
@@ -36,25 +36,25 @@
             </div>
             <label class="col-md-3 m-t-15">CPT</label>
             <div class="col-md-3">
-                @Html.TextAreaFor(model => model.CPTCode, new { @class = "form-control CoderDetails", @autofocus = "autofocus", @autocomplete = "off" })
+                @Html.TextAreaFor(model => model.CPTCode, new { @class = "form-control CoderDetails",  @autocomplete = "off" })
                 @Html.ValidationMessageFor(model => model.CPTCode, null, new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group row">
             <label class="col-md-3 m-t-15">Mod</label>
             <div class="col-md-3">
-                @Html.TextAreaFor(model => model.Mod, new { @class = "form-control CoderDetails", @autofocus = "autofocus", @autocomplete = "off" })
+                @Html.TextAreaFor(model => model.Mod, new { @class = "form-control CoderDetails",  @autocomplete = "off" })
                 @Html.ValidationMessageFor(model => model.Mod, null, new { @class = "text-danger" })
             </div>
             <label class="col-md-3 m-t-15">Dx</label>
             <div class="col-md-3">
-                @*@Html.TextAreaFor(model => model.Dx, new { @class = "form-control CoderDetails", @autofocus = "autofocus", @autocomplete = "off" })
+                @*@Html.TextAreaFor(model => model.Dx, new { @class = "form-control CoderDetails",  @autocomplete = "off" })
                     @Html.ValidationMessageFor(model => model.Dx, null, new { @class = "text-danger" })*@
                 <table>
                     <tbody id="tableid" style="display:block">
                         <tr id="tr0">
                             <td>
-                                @Html.TextBoxFor(model => model.Dx, new { @class = "form-control CoderDetails", @autofocus = "autofocus", @autocomplete = "off", @id = "txt0", @title = "txt0" })
+                                @Html.TextBoxFor(model => model.Dx, new { @class = "form-control CoderDetails",  @autocomplete = "off", @id = "txt0", @title = "txt0" })
                                 @Html.ValidationMessageFor(model => model.Dx, null, new { @class = "text-danger" })
                             </td>
                             <td>
@@ -73,7 +73,7 @@
             </div>
             <label class="col-md-3 m-t-15">Coder Questions</label>
             <div class="col-md-3">
-                @Html.TextAreaFor(model => model.CoderQuestion, new { @class = "form-control CoderDetails", @autofocus = "autofocus", @autocomplete = "off" })
+                @Html.TextAreaFor(model => model.CoderQuestion, new { @class = "form-control CoderDetails",  @autocomplete = "off" })
                 @Html.ValidationMessageFor(model => model.NoteTitle, null, new { @class = "text-danger" })
             </div>
         </div>
