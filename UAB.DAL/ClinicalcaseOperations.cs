@@ -78,7 +78,13 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = ChartType
-                        }};
+                        }
+                         ,   new SqlParameter() {
+                            ParameterName = "@EmailId",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = Auth.CurrentUserName
+                         }};
 
                 using (var con = context.Database.GetDbConnection())
                 {
@@ -685,7 +691,7 @@ namespace UAB.DAL
                             ParameterName = "@PayorRemarks",
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.QAPayorRemarks
+                            Value = chartSummaryDTO.RevisedPayorRemarks
                         },
                         new SqlParameter() {
                             ParameterName = "@ProviderID",
@@ -697,7 +703,7 @@ namespace UAB.DAL
                             ParameterName = "@ProviderRemarks",
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.QAProviderRemarks
+                            Value = chartSummaryDTO.RevisedProviderRemarks
                         },
                          new SqlParameter() {
                             ParameterName = "@CPTCode",
@@ -709,7 +715,7 @@ namespace UAB.DAL
                             ParameterName = "@CPTCodeRemarks",
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.QACPTCodeRemarks
+                            Value = chartSummaryDTO.RevisedCPTRemarks
                         },
                         new SqlParameter() {
                             ParameterName = "@Mod",
@@ -721,7 +727,7 @@ namespace UAB.DAL
                             ParameterName = "@ModRemarks",
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.QAModRemarks
+                            Value = chartSummaryDTO.RevisedModRemarks
                         },  new SqlParameter() {
                             ParameterName = "@Dx",
                             SqlDbType =  System.Data.SqlDbType.VarChar,
@@ -731,7 +737,7 @@ namespace UAB.DAL
                             ParameterName = "@DxRemarks",
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.QADxRemarks
+                            Value = chartSummaryDTO.RevisedDXRemarks
                         } , new SqlParameter() {
                             ParameterName = "@ProviderFeedbackID",
                             SqlDbType =  System.Data.SqlDbType.Int,
@@ -741,7 +747,7 @@ namespace UAB.DAL
                             ParameterName = "@ProviderFeedbackRemarks",
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.QAProviderFeedbackRemarks
+                            Value = chartSummaryDTO.RevisedProviderFeedbackRemarks
                         }, new SqlParameter() {
                             ParameterName = "@CoderQuestion",
                             SqlDbType =  System.Data.SqlDbType.VarChar,
@@ -1149,7 +1155,7 @@ namespace UAB.DAL
             }
             return lstDto;
         }
-       
+
         public List<Project> GetProjectsList()
         {
             using (var context = new UABContext())
@@ -1157,7 +1163,7 @@ namespace UAB.DAL
                 return context.Project.ToList();
             }
         }
-        public List<Role> GetRolesList() 
+        public List<Role> GetRolesList()
         {
             using (var context = new UABContext())
             {
@@ -1241,7 +1247,7 @@ namespace UAB.DAL
                     while (reader.Read())
                     {
                         applicationUser = new ApplicationUser();
-                        applicationUser.UserId= Convert.ToInt32(reader["UserId"]);
+                        applicationUser.UserId = Convert.ToInt32(reader["UserId"]);
                         applicationUser.Email = Convert.ToString(reader["Email"]);
                         applicationUser.IsActive = Convert.ToBoolean(reader["IsActive"]);
                         applicationUser.RoleId = Convert.ToInt32(reader["RoleId"]);
@@ -1414,13 +1420,13 @@ namespace UAB.DAL
                 }
             }
         }
-        public void DeleteUser (ApplicationUser applicationUser)
+        public void DeleteUser(ApplicationUser applicationUser)
         {
             using (var context = new UABContext())
             {
                 using (var cnn = context.Database.GetDbConnection())
                 {
-                    
+
                     var cmm = cnn.CreateCommand();
                     cmm.CommandType = System.Data.CommandType.StoredProcedure;
                     cmm.CommandText = "[dbo].[UspDeleteUser]";
