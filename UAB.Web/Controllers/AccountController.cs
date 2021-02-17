@@ -37,7 +37,7 @@ namespace UAB.Controllers
             var signInResult = _mAuthenticationService.SignIn(Email, Password);
             if (signInResult.Result != 0)
             {
-                Auth.isAuth = false;
+                Auth.IsAuth = false;
                 TempData["Error"] = "Invalid sign-in. Please try again.";
                 return View();
             }
@@ -46,9 +46,10 @@ namespace UAB.Controllers
                 var userInfo = _mAuthenticationService.GetUserInfoByEmail(Email);
                 if (userInfo.IsActiveUser)
                 {
-                    Auth.isAuth = true;
-                    Auth.CurrentUserName = Email;
+                    Auth.IsAuth = true;
+                    Auth.EmailId = Email;
                     Auth.CurrentRole = userInfo.RoleName;
+                    Auth.UserId = userInfo.UserId;
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -90,8 +91,9 @@ namespace UAB.Controllers
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
             ApplicationUser applicationUser = new ApplicationUser();
-            
-            if (model.UserId==0) {
+
+            if (model.UserId == 0)
+            {
                 int UserId = clinicalcaseOperations.AddUser(model);//adding user to user table
                 if (!string.IsNullOrEmpty(ProjectAndRole))
                 {
@@ -101,14 +103,14 @@ namespace UAB.Controllers
                         model.RoleName = item.Split('^')[1];
 
                         model.UserId = UserId;
-                       
+
                         clinicalcaseOperations.AddProjectUser(model); //adding user and projects,roles to projectuser table
                     }
                 }
             }
             else
             {
-                
+
             }
 
             return RedirectToAction("ManageUsers");
@@ -120,7 +122,7 @@ namespace UAB.Controllers
             if (UserId != 0)
             {
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-                var res  = clinicalcaseOperations.Getuser(UserId);
+                var res = clinicalcaseOperations.Getuser(UserId);
                 obj = res;
             }
             return PartialView("_DeleteUser", obj);
@@ -129,7 +131,7 @@ namespace UAB.Controllers
         [HttpPost]
         public IActionResult DeleteUser(ApplicationUser applicationUser)
         {
-            
+
             return RedirectToAction("ManageUsers");
         }
 

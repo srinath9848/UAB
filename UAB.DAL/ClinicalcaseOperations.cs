@@ -80,10 +80,10 @@ namespace UAB.DAL
                             Value = ChartType
                         }
                          ,   new SqlParameter() {
-                            ParameterName = "@EmailId",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            ParameterName = "@UserId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = Auth.CurrentUserName
+                            Value = Auth.UserId
                          }};
 
                 using (var con = context.Database.GetDbConnection())
@@ -271,12 +271,13 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = chartSummaryDTO.CodingDTO.ClinicalCaseID
-                        },   new SqlParameter() {
-                            ParameterName = "@AssignedTo",
+                        }
+                       ,   new SqlParameter() {
+                            ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.AssignedTo
-                        }
+                            Value = Auth.UserId
+                         }
                 };
 
                 using (var con = context.Database.GetDbConnection())
