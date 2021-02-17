@@ -1,17 +1,6 @@
 ﻿@model UAB.DAL.LoginDTO.ApplicationUser
 @using UAB.DAL.LoginDTO
 
-@{
-    var result = new List<ApplicationUser>()
-{
-            new ApplicationUser{ ProjectName =Model.ProjectName ,RoleName=Model.RoleName},
-           new ApplicationUser{ ProjectName =Model.ProjectName ,RoleName=Model.RoleName},
-           new ApplicationUser{ ProjectName =Model.ProjectName ,RoleName=Model.RoleName}
-        };
-
-
-
-}
 
 <style>
     .modal-content {
@@ -53,13 +42,13 @@
                 <div class="form-group row">
                     <label class="col-md-1">Projects</label>
                     <div class="col-md-3">
-                        @Html.DropDownListFor(model => model.ProjectId, new SelectList(@ViewBag.Projects, "ID", "Name"), "--Select a Project--", new { @id = "projectdd", @class = "form-control CoderDetails" })
+                        @Html.DropDownListFor(model => model.ProjectId, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select a Project--", new { @id = "projectdd", @class = "form-control CoderDetails" })
                         @Html.ValidationMessageFor(model => model.ProjectId, null, new { @class = "text-danger" })
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     </div>
                     <label class="col-md-1">Roles</label>
                     <div class="col-md-3">
-                        @Html.DropDownListFor(model => model.RoleId, new SelectList(@ViewBag.Roles, "ID", "Name"), "--Select a Role--", new { @id = "roledd", @class = "form-control CoderDetails" })
+                        @Html.DropDownListFor(model => model.RoleId, new SelectList(@ViewBag.Roles, "RoleId", "Name"), "--Select a Role--", new { @id = "roledd", @class = "form-control CoderDetails" })
                         @Html.ValidationMessageFor(model => model.RoleId, null, new { @class = "text-danger" })
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     </div>
@@ -91,7 +80,8 @@
                     {
                         <button type="submit" class="btn btn-sm btn-info btn-fill">Save</button>
                     }
-                    <button type="button" class="btn btn-sm btn-danger btn-fill" onclick="ModalClose1()">Cancel</button>
+                    <a href="@Url.Action("ManageUsers","Account")" class="btn btn-sm btn-danger btn-fill" >Cancel</a>
+                    
                 </div>
             </div>
         </div>

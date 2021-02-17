@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace UAB.DAL.Models
 {
-    public partial class ErrorType
+    public partial class Role
     {
-        public int ErrorTypeId { get; set; }
+        public int RoleId { get; set; }
         public string Name { get; set; }
     }
 }

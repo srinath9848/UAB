@@ -80,8 +80,7 @@ namespace UAB.Controllers
             {
                 List<ApplicationUser> users = new List<ApplicationUser>();
                 users = clinicalcaseOperations.GetUsers();
-                var res = users.Find(a => a.UserId == UserId);
-                obj = res;
+                obj = users.Find(a => a.UserId == UserId);
             }
             return PartialView("_AddEditUser", obj);
         }
@@ -89,15 +88,29 @@ namespace UAB.Controllers
         [HttpPost]
         public ActionResult Add_EditUser(ApplicationUser model, string ProjectAndRole = null)
         {
-            if (!string.IsNullOrEmpty(ProjectAndRole))
-            {
-                foreach (string item in ProjectAndRole.Split(','))
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ApplicationUser applicationUser = new ApplicationUser();
+            
+            if (model.UserId==0) {
+                int UserId = clinicalcaseOperations.AddUser(model);//adding user to user table
+                if (!string.IsNullOrEmpty(ProjectAndRole))
                 {
-                    model.ProjectName = item.Split('^')[0];
-                    model.RoleName = item.Split('^')[1];
+                    foreach (string item in ProjectAndRole.Split(','))
+                    {
+                        model.ProjectName = item.Split('^')[0];
+                        model.RoleName = item.Split('^')[1];
 
+                        model.UserId = UserId;
+                       
+                        clinicalcaseOperations.AddProjectUser(model); //adding user and projects,roles to projectuser table
+                    }
                 }
             }
+            else
+            {
+                
+            }
+
             return RedirectToAction("ManageUsers");
         }
         [HttpGet]
@@ -106,10 +119,8 @@ namespace UAB.Controllers
             ApplicationUser obj = new ApplicationUser();
             if (UserId != 0)
             {
-                List<ApplicationUser> users = new List<ApplicationUser>();
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-                users = clinicalcaseOperations.GetUsers();
-                var res = users.Find(a => a.UserId == UserId);
+                var res  = clinicalcaseOperations.Getuser(UserId);
                 obj = res;
             }
             return PartialView("_DeleteUser", obj);
@@ -118,16 +129,7 @@ namespace UAB.Controllers
         [HttpPost]
         public IActionResult DeleteUser(ApplicationUser applicationUser)
         {
-            try
-            {
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-                if (applicationUser.UserId != 0)
-                    clinicalcaseOperations.DeleteUser(applicationUser);
-            }
-            catch (Exception ex)
-            {
-                TempData["error"] = ex.Message;
-            }
+            
             return RedirectToAction("ManageUsers");
         }
 

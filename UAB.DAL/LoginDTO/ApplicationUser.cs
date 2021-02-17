@@ -13,5 +13,6 @@ namespace UAB.DAL.LoginDTO
         public string RoleName  { get; set; }
         public int ProjectId { get; set; } 
         public string ProjectName  { get; set; }
+        public int ProjectUserId { get; set; } 
     }
 }

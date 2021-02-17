@@ -7,7 +7,6 @@ namespace UAB.DAL.Models
     {
         public Project()
         {
-            Chart = new HashSet<Chart>();
             ClinicalCase = new HashSet<ClinicalCase>();
         }
 
@@ -17,7 +16,6 @@ namespace UAB.DAL.Models
         public bool? IsActive { get; set; }
 
         public virtual Client Client { get; set; }
-        public virtual ICollection<Chart> Chart { get; set; }
         public virtual ICollection<ClinicalCase> ClinicalCase { get; set; }
     }
 }

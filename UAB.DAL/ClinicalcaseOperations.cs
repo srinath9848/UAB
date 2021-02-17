@@ -7,6 +7,7 @@ using System.Text;
 using UAB.DAL.Models;
 using UAB.DTO;
 using UAB.DAL.LoginDTO;
+using System.Linq;
 
 namespace UAB.DAL
 {
@@ -1148,59 +1149,20 @@ namespace UAB.DAL
             }
             return lstDto;
         }
-        public List<BindDTO> GetRolesList() 
+       
+        public List<Project> GetProjectsList()
         {
-            List<BindDTO> lstDto = new List<BindDTO>();
             using (var context = new UABContext())
             {
-                using (var con = context.Database.GetDbConnection())
-                {
-                    var cmd = con.CreateCommand();
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.CommandText = "[dbo].[UspGetRoles]";
-                    cmd.Connection = con;
-
-                    con.Open();
-                    var reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        BindDTO dto = new BindDTO()
-                        {
-                            ID = Convert.ToInt32(reader["RoleId"]),
-                            Name = Convert.ToString(reader["RoleName"])
-                        };
-                        lstDto.Add(dto);
-                    }
-                }
+                return context.Project.ToList();
             }
-            return lstDto;
         }
-        public List<BindDTO> GetProjectsList() 
+        public List<Role> GetRolesList() 
         {
-            List<BindDTO> lstDto = new List<BindDTO>();
             using (var context = new UABContext())
             {
-                using (var con = context.Database.GetDbConnection())
-                {
-                    var cmd = con.CreateCommand();
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.CommandText = "[dbo].[UspGetProjects]";
-                    cmd.Connection = con;
-
-                    con.Open();
-                    var reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        BindDTO dto = new BindDTO()
-                        {
-                            ID = Convert.ToInt32(reader["ProjectId"]),
-                            Name = Convert.ToString(reader["ProjectName"])
-                        };
-                        lstDto.Add(dto);
-                    }
-                }
+                return context.Role.ToList();
             }
-            return lstDto;
         }
 
         public List<BindDTO> GetProviderFeedbacksList()
@@ -1291,6 +1253,48 @@ namespace UAB.DAL
                 }
             }
             return lstApplicationUser;
+        }
+
+        public ApplicationUser Getuser(int userId)
+        {
+            using (var context = new UABContext())
+            {
+                var user = context.User.Where(a => a.UserId == userId).FirstOrDefault();
+                ApplicationUser mdl = new ApplicationUser()
+                {
+                    Email = user.Email
+                };
+                return mdl;
+            }
+        }
+
+        public int AddUser(ApplicationUser user)
+        {
+            using (var context = new UABContext())
+            {
+                UAB.DAL.Models.User mdl = new User();
+                mdl.Email = user.Email;
+                mdl.IsActive = user.IsActive;
+
+                context.User.Add(mdl);
+                context.SaveChanges();
+
+                return mdl.UserId;
+            }
+        }
+        public void AddProjectUser(ApplicationUser user)
+        {
+            using (var context = new UABContext())
+            {
+
+                UAB.DAL.Models.ProjectUser mdl = new ProjectUser();
+                mdl.UserId = user.UserId;
+                mdl.ProjectId = context.Project.Where(a => a.Name == user.ProjectName).Select(a => a.ProjectId).FirstOrDefault();
+                mdl.RoleId = context.Role.Where(a => a.Name == user.RoleName).Select(a => a.RoleId).FirstOrDefault();
+
+                context.ProjectUser.Add(mdl);
+                context.SaveChanges();
+            }
         }
 
         public List<string> GetProviderNames()
