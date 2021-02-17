@@ -23,7 +23,7 @@ namespace UAB.Controllers
             List<int> lstStatus = new List<int> { (int)StatusType.ReadyForCoding, (int)StatusType.QARejected, (int)StatusType.ShadowQARejected,
                 (int)StatusType.PostingCompleted };
 
-            lstDto = clinicalcaseOperations.GetChartCountByRole(Role.Coder.ToString());
+            lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
 
             return View(lstDto);
         }
@@ -56,7 +56,7 @@ namespace UAB.Controllers
             else if (!string.IsNullOrEmpty(hold))
                 submitHold();
 
-            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Role.Coder.ToString());
+            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
 
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("CodingSummary", lstDto);
@@ -92,7 +92,7 @@ namespace UAB.Controllers
 
             clinicalcaseOperations.SubmitCoderIncorrectChart(chartSummaryDTO);
 
-            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Role.Coder.ToString());
+            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
 
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("CodingSummary", lstDto);
@@ -105,7 +105,7 @@ namespace UAB.Controllers
 
             clinicalcaseOperations.SubmitShadowQA(chartSummaryDTO);
 
-            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Role.ShadowQA.ToString());
+            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.ShadowQA.ToString());
 
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("ShadowQASummary", lstDto);
@@ -117,7 +117,7 @@ namespace UAB.Controllers
 
             clinicalcaseOperations.SubmitQA(chartSummaryDTO);
 
-            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Role.QA.ToString());
+            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.QA.ToString());
 
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("QASummary", lstDto);
@@ -158,7 +158,7 @@ namespace UAB.Controllers
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
 
-            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Role.QA.ToString());
+            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.QA.ToString());
 
             return View(lstDto);
         }
@@ -181,7 +181,7 @@ namespace UAB.Controllers
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
             clinicalcaseOperations.SubmitApprovedChart(chartSummaryDTO);
-            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Role.Coder.ToString());
+            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
 
             TempData["Success"] = "Chart Details posted successfully !";
             return View("CodingSummary", lstDto);
@@ -227,7 +227,7 @@ namespace UAB.Controllers
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
 
-            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Role.ShadowQA.ToString());
+            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.ShadowQA.ToString());
 
             return View(lstDto);
         }
@@ -320,7 +320,7 @@ namespace UAB.Controllers
 
             clinicalcaseOperations.SubmitQARebuttalChartsOfCoder(chartSummaryDTO);
 
-            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Role.QA.ToString());
+            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.QA.ToString());
 
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("QASummary", lstDto);
@@ -364,7 +364,7 @@ namespace UAB.Controllers
 
             clinicalcaseOperations.SubmitQARejectedChartsOfShadowQA(chartSummaryDTO, hdnPayorIDReject, hdnProviderIDReject, hdnCptReject, hdnModReject, hdnDxReject, hdnProviderFeedbackIDReject);
 
-            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Role.QA.ToString());
+            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.QA.ToString());
 
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("QASummary", lstDto);
@@ -383,6 +383,50 @@ namespace UAB.Controllers
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
             return View("ShadowQARebuttalChartsOfQA", chartSummaryDTO);
+        }
+
+        public IActionResult SubmitShadowQARebuttalChartsOfQA(ChartSummaryDTO chartSummaryDTO)
+        {
+            var hdnPayorID = Request.Form["hdnPayorID"].ToString();
+            var hdnProviderID = Request.Form["hdnProviderID"].ToString();
+            var hdnCpt = Request.Form["hdnCpt"].ToString();
+            var hdnMod = Request.Form["hdnMod"].ToString();
+            var hdnDx = Request.Form["hdnDx"].ToString();
+            var hdnProviderFeedbackID = Request.Form["hdnProviderFeedbackID"].ToString();
+
+            var hdnPayorIDReject = Request.Form["hdnPayorIDReject"].ToString();
+            var hdnProviderIDReject = Request.Form["hdnProviderIDReject"].ToString();
+            var hdnCptReject = Request.Form["hdnCptReject"].ToString();
+            var hdnModReject = Request.Form["hdnModReject"].ToString();
+            var hdnDxReject = Request.Form["hdnDxReject"].ToString();
+            var hdnProviderFeedbackIDReject = Request.Form["hdnProviderFeedbackIDReject"].ToString();
+
+            if (!string.IsNullOrEmpty(hdnPayorID))
+                chartSummaryDTO.PayorID = Convert.ToInt32(hdnPayorID);
+
+            if (!string.IsNullOrEmpty(hdnProviderID))
+                chartSummaryDTO.ProviderID = Convert.ToInt32(hdnProviderID);
+
+            if (!string.IsNullOrEmpty(hdnCpt))
+                chartSummaryDTO.CPTCode = hdnCpt;
+
+            if (!string.IsNullOrEmpty(hdnMod))
+                chartSummaryDTO.Mod = hdnMod;
+
+            if (!string.IsNullOrEmpty(hdnDx))
+                chartSummaryDTO.Dx = hdnDx;
+
+            if (!string.IsNullOrEmpty(hdnProviderFeedbackID))
+                chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(hdnProviderFeedbackID);
+
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+
+            clinicalcaseOperations.SubmitShadowQARebuttalChartsOfQA(chartSummaryDTO, hdnPayorIDReject, hdnProviderIDReject, hdnCptReject, hdnModReject, hdnDxReject, hdnProviderFeedbackIDReject);
+
+            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.QA.ToString());
+
+            TempData["Success"] = "Chart Details submitted successfully !";
+            return View("ShadowQASummary", lstDto);
         }
 
         //[HttpPost]

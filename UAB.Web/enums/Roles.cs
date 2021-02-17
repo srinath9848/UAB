@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace UAB.enums
 {
-    public enum Role
+    public enum Roles
     {
         Coder,
         QA,

@@ -37,13 +37,15 @@
                 var id1 = parseInt(id) - parseInt(1);
                 var val = $("#txt" + id1).val();
                 if (val !== "" && val !== null) {
-                    dxArray.push(val);
-                    $("#Dx").val(dxArray);
-                    //alert(dxArray);
+                    if ($.inArray(val, dxArray) == -1) {
+                        dxArray.push(val);
+                        $("#Dx").val(dxArray);
+                        //alert(dxArray);
+                    }
                     $("#tableid").append('<tr id="tr' + id + '"> <td> <input type="text" title="txt' + id + '" id="txt' + id + '" /></td><td><input type="button" id="btnDelete" class="btn btn-info btn-sm" title="btn_' + id + '" value="Delete" /></td></tr >');
                     $("#txt" + id).focus();
                 } else {
-                    alert('please enter value here');
+                    //alert('please enter value here');
                     $("#txt" + id).focus();
                 }
             }
@@ -54,9 +56,10 @@
         var id = $(this).attr('title').split("btn_")[1];
         var val = $("#txt" + id).val();
         if (val !== "" && val !== null) {
-            dxArray.splice($.inArray(val, dxArray), 1);
-            $("#Dx").val(dxArray);
-            //alert(dxArray);
+            if ($(this).attr('title') != "btn_0") {
+                dxArray.splice($.inArray(val, dxArray), 1);
+                $("#Dx").val(dxArray);
+            }
         }
         if (id !== "0") {
             $('#tr' + id).remove();

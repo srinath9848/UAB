@@ -47,7 +47,7 @@
                                     {
                                         @item.AvailableCharts
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("QA", "UAB",new { Role=Role.QA,ChartType="Available",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("QA", "UAB",new { Role=Roles.QA,ChartType="Available",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">
@@ -61,7 +61,7 @@
                                     {
                                         @item.CoderRebuttalCharts
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("GetQARebuttalChartsOfCoder", "UAB",new { Role=Role.QA,ChartType="RebuttalOfCoder",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("GetQARebuttalChartsOfCoder", "UAB",new { Role=Roles.QA,ChartType="RebuttalOfCoder",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">
@@ -75,7 +75,7 @@
                                     {
                                         @item.ShadowQARebuttalCharts
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("GetQARejectedChartsOfShadowQA", "UAB",new { Role=Role.QA,ChartType="ShadowQARejected",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
+                                        <a href="@Url.Action("GetQARejectedChartsOfShadowQA", "UAB",new { Role=Roles.QA,ChartType="ShadowQARejected",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                             </tr>
