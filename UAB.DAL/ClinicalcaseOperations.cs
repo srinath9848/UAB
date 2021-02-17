@@ -385,10 +385,10 @@ namespace UAB.DAL
                             Direction = System.Data.ParameterDirection.Input,
                             Value = chartSummaryDTO.CodingDTO.ClinicalCaseID
                         },   new SqlParameter() {
-                            ParameterName = "@AssignedTo",
+                            ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.AssignedTo
+                            Value = Auth.UserId
                         },   new SqlParameter() {
                             ParameterName = "@ErrorTypeID",
                             SqlDbType =  System.Data.SqlDbType.Int,
@@ -502,10 +502,10 @@ namespace UAB.DAL
                             Direction = System.Data.ParameterDirection.Input,
                             Value = chartSummaryDTO.CodingDTO.ClinicalCaseID
                         },   new SqlParameter() {
-                            ParameterName = "@AssignedTo",
+                            ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.AssignedTo
+                            Value = Auth.UserId
                         },   new SqlParameter() {
                             ParameterName = "@ErrorTypeID",
                             SqlDbType =  System.Data.SqlDbType.Int,
@@ -648,10 +648,10 @@ namespace UAB.DAL
                             Direction = System.Data.ParameterDirection.Input,
                             Value = chartSummaryDTO.CodingDTO.ClinicalCaseID
                         },   new SqlParameter() {
-                            ParameterName = "@AssignedTo",
+                            ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.AssignedTo
+                            Value = Auth.UserId
                         },   new SqlParameter() {
                             ParameterName = "@ErrorTypeID",
                             SqlDbType =  System.Data.SqlDbType.Int,
@@ -760,10 +760,10 @@ namespace UAB.DAL
                             Direction = System.Data.ParameterDirection.Input,
                             Value = chartSummaryDTO.CodingDTO.ClinicalCaseID
                         },   new SqlParameter() {
-                            ParameterName = "@AssignedTo",
+                            ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.AssignedTo
+                            Value = Auth.UserId
                         },   new SqlParameter() {
                             ParameterName = "@ErrorTypeID",
                             SqlDbType =  System.Data.SqlDbType.Int,
@@ -911,11 +911,11 @@ namespace UAB.DAL
                             Direction = System.Data.ParameterDirection.Input,
                             Value = chartSummaryDTO.CodingDTO.ClinicalCaseID
                         },   new SqlParameter() {
-                            ParameterName = "@AssignedTo",
+                            ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.AssignedTo
-                        },   new SqlParameter() {
+                            Value = Auth.UserId
+                         },   new SqlParameter() {
                             ParameterName = "@ErrorTypeID",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
@@ -1069,11 +1069,11 @@ namespace UAB.DAL
                             Direction = System.Data.ParameterDirection.Input,
                             Value = chartSummaryDTO.CodingDTO.ClinicalCaseID
                         },   new SqlParameter() {
-                            ParameterName = "@AssignedTo",
+                            ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.AssignedTo
-                        },   new SqlParameter() {
+                            Value = Auth.UserId
+                         },   new SqlParameter() {
                             ParameterName = "@ErrorTypeID",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
