@@ -1,6 +1,6 @@
 ﻿@{
     string title = ViewBag.title;
-    bool isAuthenticated = UAB.DAL.LoginDTO.Auth.isAuth;
+    bool isAuthenticated = UAB.DAL.LoginDTO.Auth.IsAuth;
 
 }
 <!DOCTYPE html>
@@ -83,7 +83,7 @@
                         <ul class="navbar-nav float-right">
                             <li class="nav-item dropdown"></li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@UAB.DAL.LoginDTO.Auth.CurrentUserName &nbsp;&nbsp;<img src="~/dashboardassets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
+                                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@UAB.DAL.LoginDTO.Auth.EmailId &nbsp;&nbsp;<img src="~/dashboardassets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
                                 <div class="dropdown-menu dropdown-menu-right user-dd animated">
                                     <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
                                     <div class="dropdown-divider"></div>
@@ -128,49 +128,49 @@
                                 </a>
                             </li>
                             @*@if (UAB.DAL.LoginDTO.Auth.CurrentRole == "Coder")
-                            {*@
-                                <li id="settings" class="sidebar-item">
-                                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="/">
-                                        <i class="mdi mdi-settings"></i><span class="hide-menu">Settings</span>
-                                    </a>
-                                    <ul aria-expanded="false" class="collapse first-level">
-                                        <li class="sidebar-item">
-                                            <a class="sidebar-link" asp-area="" asp-controller="Account" asp-action="ManageUsers">
-                                                <i class="mdi mdi-note-outline"></i><span class="hide-menu">
-                                                    Manage Users
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="sidebar-item">
-                                            <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsProvider">
-                                                <i class="mdi mdi-note-outline"></i><span class="hide-menu">
-                                                    Provider
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="sidebar-item">
-                                            <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsPayor">
-                                                <i class="mdi mdi-note-plus"></i><span class="hide-menu">
-                                                    Payor
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="sidebar-item">
-                                            <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsProviderFeedback">
-                                                <i class="mdi mdi-note-plus"></i><span class="hide-menu">
-                                                    Provider Feedback
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="sidebar-item">
-                                            <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsErrorType">
-                                                <i class="mdi mdi-note-plus"></i><span class="hide-menu">
-                                                    Error Type
-                                                </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
+                                {*@
+                            <li id="settings" class="sidebar-item">
+                                <a class="sidebar-link has-arrow waves-effect waves-dark" href="/">
+                                    <i class="mdi mdi-settings"></i><span class="hide-menu">Settings</span>
+                                </a>
+                                <ul aria-expanded="false" class="collapse first-level">
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="Account" asp-action="ManageUsers">
+                                            <i class="mdi mdi-note-outline"></i><span class="hide-menu">
+                                                Manage Users
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsProvider">
+                                            <i class="mdi mdi-note-outline"></i><span class="hide-menu">
+                                                Provider
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsPayor">
+                                            <i class="mdi mdi-note-plus"></i><span class="hide-menu">
+                                                Payor
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsProviderFeedback">
+                                            <i class="mdi mdi-note-plus"></i><span class="hide-menu">
+                                                Provider Feedback
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsErrorType">
+                                            <i class="mdi mdi-note-plus"></i><span class="hide-menu">
+                                                Error Type
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                             @*}*@
                         </ul>
                     </nav>
