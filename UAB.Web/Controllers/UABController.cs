@@ -192,7 +192,20 @@ namespace UAB.Controllers
             #endregion
             return View("QARejectedChartsOfShadowQA", chartSummaryDTO);
         }
+        public IActionResult GetQAOnHoldChart(string Role, string ChartType, int ProjectID)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
+            chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
 
+            #region binding data
+            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
+            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
+            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            #endregion
+
+            return View("OnHold", chartSummaryDTO);
+        }
         public IActionResult SubmitQAAvailableChart(ChartSummaryDTO chartSummaryDTO)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
@@ -204,7 +217,6 @@ namespace UAB.Controllers
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("QASummary", lstDto);
         }
-
         public IActionResult SubmitQARebuttalChartsOfCoder(ChartSummaryDTO chartSummaryDTO)
         {
             var hdnPayorID = Request.Form["hdnPayorID"].ToString();
@@ -253,7 +265,6 @@ namespace UAB.Controllers
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("QASummary", lstDto);
         }
-
         public IActionResult SubmitQARejectedChartsOfShadowQA(ChartSummaryDTO chartSummaryDTO)
         {
             var hdnPayorID = Request.Form["hdnPayorID"].ToString();
@@ -297,6 +308,19 @@ namespace UAB.Controllers
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("QASummary", lstDto);
         }
+
+        public IActionResult SubmitQAOnHoldChart(ChartSummaryDTO chartSummaryDTO)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+
+            clinicalcaseOperations.SubmitQAOnHoldChart(chartSummaryDTO);
+
+            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.QA.ToString());
+
+            TempData["Success"] = "Chart Details submitted successfully !";
+            return View("QASummary", lstDto);
+        }
+
         #endregion
 
         #region Shadow QA

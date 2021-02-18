@@ -34,6 +34,8 @@ namespace UAB.DTO
         [Required(ErrorMessage = "Modifiers is required.")]
         public string Mod { get; set; }
         public string CoderQuestion { get; set; }
+        [Required(ErrorMessage = "Answer is required.")]
+        public string Answer { get; set; }
         public CodingDTO CodingDTO { get; set; }
         public QADTO QADTO { get; set; }
         public ShadowQADTO ShadowQADTO { get; set; }
