@@ -53,7 +53,7 @@ namespace UAB.DTO
         public string QAProviderFeedbackText { get; set; }
         public string QAProviderFeedbackRemarks { get; set; }
 
-
+        public int ProjectID { get; set; }
         public int ShadowQAPayorID { get; set; }
 
         public string ShadowQAPayorRemarks { get; set; }

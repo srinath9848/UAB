@@ -44,6 +44,7 @@ namespace UAB.Controllers
             return View("Coding", chartSummaryDTO);
         }
 
+
         public IActionResult GetCodingIncorrectChart(string Role, string ChartType, int ProjectID)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
@@ -76,15 +77,18 @@ namespace UAB.Controllers
         }
 
         [HttpPost]
-        public IActionResult SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO, string codingSubmit, string hold)
+        public IActionResult SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO, string codingSubmitAndGetNext)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
 
-            if (!string.IsNullOrEmpty(codingSubmit))
+            if (string.IsNullOrEmpty(codingSubmitAndGetNext))
                 clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDTO);
-
+            else
+            {
+                clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDTO);
+                return RedirectToAction("GetCodingAvailableChart", new { Role = Roles.Coder.ToString(), ChartType = "Available", ProjectID = chartSummaryDTO.ProjectID });
+            }
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
-
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("CodingSummary", lstDto);
         }
@@ -742,7 +746,7 @@ namespace UAB.Controllers
                 TempData["error"] = ex.Message;
             }
             return RedirectToAction("SettingsProviderFeedback");
-        } 
+        }
         #endregion
     }
 }
