@@ -96,9 +96,7 @@
             url: "@Url.Action("AddUser", "Account")",
             success: function (response) {
                 $("#modalContent").html(response);
-                $("#Users_wrapper").html('');
                 $("#Addbtn").hide();
-                $("#manageusertitle").hide();
             },
             failure: function (response) {
                 alert(response);
