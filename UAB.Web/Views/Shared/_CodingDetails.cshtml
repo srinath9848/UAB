@@ -78,10 +78,17 @@
                 @Html.ValidationMessageFor(model => model.NoteTitle, null, new { @class = "text-danger" })
             </div>
         </div>
+        <div class="form-group row" id="divAnswer">
+            <label class="col-md-3 m-t-15"> Answer</label>
+            <div class="col-md-3">
+                @Html.TextAreaFor(model => model.Answer, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Answer, null, new { @class = "text-danger", @id = "validationAnswer" })
+            </div>
+        </div>
         <div class="border-top">
             <div class="card-body" style="text-align:right">
-                <button name="codingSubmit" id="codingSubmit" type="submit" class="btn btn-success Available">Save</button>
-                <button value="codingSubmitAndGetNext" name="codingSubmitAndGetNext" type="submit" class="btn btn-success Available">Save And GetNext</button>
+                <button id="codingSubmit" name="codingSubmit" type="button" class="btn btn-success Available">Save</button>
+                <button id="codingSubmitAndGetNext" name="codingSubmitAndGetNext" type="submit" value="codingSubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
                 <button type="submit" class="btn btn-success Approved">Posted Completed</button>
             </div>
         </div>

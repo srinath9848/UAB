@@ -48,6 +48,7 @@ namespace UAB.DAL
                         dto.QARebuttalCharts = Convert.ToInt32(reader["QARebuttalCharts"]);
                         dto.ShadowQARebuttalCharts = Convert.ToInt32(reader["ShadowQARebuttalCharts"]);
                         dto.ReadyForPostingCharts = Convert.ToInt32(reader["ReadyForPostingCharts"]);
+                        dto.OnHoldCharts = Convert.ToInt32(reader["OnHoldCharts"]);
                         lstDto.Add(dto);
                     }
                 }
@@ -103,17 +104,26 @@ namespace UAB.DAL
                         chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
                         chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
                         chartSummaryDTO.CodingDTO.DateOfService = Convert.ToString(reader["DateOfService"]);
-                        if ((Role == "QA" && ChartType == "Available") || (Role == "Coder" && ChartType == "ReadyForPosting") || (Role == "ShadowQA" && ChartType == "Available"))
+
+                        if ((Role == "QA" && ChartType == "Available") ||
+                            (Role == "Coder" && ChartType == "ReadyForPosting") ||
+                            (Role == "ShadowQA" && ChartType == "Available") ||
+                            (Role == "QA" && ChartType == "OnHold"))
                         {
-                            chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
-                            chartSummaryDTO.PayorID = Convert.ToInt32(reader["PayorId"]);
+                            if (reader["ProviderId"] != DBNull.Value)
+                                chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
+                            if (reader["PayorId"] != DBNull.Value)
+                                chartSummaryDTO.PayorID = Convert.ToInt32(reader["PayorId"]);
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
                             chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
                             chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
-                            chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
+                            if (reader["ProviderFeedbackId"] != DBNull.Value)
+                                chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
+                            chartSummaryDTO.CoderQuestion = Convert.ToString(reader["Question"]);
                         }
-                        else if ((Role == "Coder" && ChartType == "Incorrect") || (Role == "ShadowQA" && ChartType == "RebuttalOfQA"))
+                        else if ((Role == "Coder" && ChartType == "Incorrect") ||
+                            (Role == "ShadowQA" && ChartType == "RebuttalOfQA"))
                         {
                             chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                             if (reader["QAProviderID"] != DBNull.Value)
@@ -824,6 +834,44 @@ namespace UAB.DAL
             return dto;
         }
 
+        public void SubmitQAOnHoldChart(ChartSummaryDTO chartSummaryDTO)
+        {
+            using (var context = new UABContext())
+            {
+                var param = new SqlParameter[] {
+                     new SqlParameter() {
+                            ParameterName = "@ClinicalCaseId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.CodingDTO.ClinicalCaseID
+                        },
+                       new SqlParameter() {
+                            ParameterName = "@Answer",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.Answer
+                        },
+                         new SqlParameter() {
+                            ParameterName = "@UserId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = Auth.UserId
+                        }
+                };
+
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[UspSubmitQAOnHoldChart]";
+                    cmd.Parameters.AddRange(param);
+                    cmd.Connection = con;
+                    con.Open();
+
+                    int res = cmd.ExecuteNonQuery();
+                }
+            }
+        }
         public CodingDTO SubmitShadowQARebuttalChartsOfQA(ChartSummaryDTO chartSummaryDTO, string hdnPayorIDReject, string hdnProviderIDReject, string hdnCptReject, string hdnModReject, string hdnDxReject, string hdnProviderFeedbackIDReject)
         {
             CodingDTO dto = new CodingDTO();
