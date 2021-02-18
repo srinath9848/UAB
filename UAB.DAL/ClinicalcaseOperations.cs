@@ -57,6 +57,7 @@ namespace UAB.DAL
         public ChartSummaryDTO GetNext(string Role, string ChartType, int projectID)
         {
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
+            chartSummaryDTO.ProjectID = projectID;
 
             using (var context = new UABContext())
             {
@@ -214,10 +215,8 @@ namespace UAB.DAL
             }
             return chartSummaryDTO;
         }
-        public CodingDTO SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO)
+        public void SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO)
         {
-            CodingDTO dto = new CodingDTO();
-
             using (var context = new UABContext())
             {
                 var param = new SqlParameter[] {
@@ -292,7 +291,6 @@ namespace UAB.DAL
                     int res = cmd.ExecuteNonQuery();
                 }
             }
-            return dto;
         }
         public CodingDTO SubmitQAAvailableChart(ChartSummaryDTO chartSummaryDTO)
         {
@@ -1178,7 +1176,7 @@ namespace UAB.DAL
                 return context.Users.Select(a => a.Email).ToList();
             }
         }
-        
+
         public List<BindDTO> GetProviderFeedbacksList()
         {
             List<BindDTO> lstDto = new List<BindDTO>();
@@ -1237,7 +1235,7 @@ namespace UAB.DAL
             return lstProvider;
         }
         public List<ApplicationUser> GetUsers()
-        { 
+        {
             ApplicationUser applicationUser = new ApplicationUser();
             List<ApplicationUser> lstApplicationUser = new List<ApplicationUser>();
 
@@ -1270,13 +1268,13 @@ namespace UAB.DAL
             return lstApplicationUser;
         }
 
-        public ApplicationUser Getuser(int ProjectUserId )
+        public ApplicationUser Getuser(int ProjectUserId)
         {
             using (var context = new UABContext())
             {
-                var projectuser  = context.ProjectUser.Where(a => a.ProjectUserId == ProjectUserId).FirstOrDefault();
+                var projectuser = context.ProjectUser.Where(a => a.ProjectUserId == ProjectUserId).FirstOrDefault();
                 var user = context.User.Where(a => a.UserId == projectuser.UserId).FirstOrDefault();
-                var ProjctName  = context.Project.Where(a => a.ProjectId == projectuser.ProjectId).FirstOrDefault();
+                var ProjctName = context.Project.Where(a => a.ProjectId == projectuser.ProjectId).FirstOrDefault();
                 var RoleName = context.Role.Where(a => a.RoleId == projectuser.RoleId).FirstOrDefault();
                 ApplicationUser mdl = new ApplicationUser()
                 {
@@ -1287,7 +1285,7 @@ namespace UAB.DAL
                 return mdl;
             }
         }
-        
+
         public int AddUser(ApplicationUser user)
         {
             using (var context = new UABContext())
@@ -1315,7 +1313,7 @@ namespace UAB.DAL
                 context.SaveChanges();
             }
         }
-        public void UpdateProjectUser(ApplicationUser user) 
+        public void UpdateProjectUser(ApplicationUser user)
         {
             using (var context = new UABContext())
             {
@@ -1339,15 +1337,15 @@ namespace UAB.DAL
                 {
                     throw new Exception("Unable To Update User : User Already there");
                 }
-                
+
             }
         }
-        public void DeleteProjectUser (int ProjectUserId )
+        public void DeleteProjectUser(int ProjectUserId)
         {
             using (var context = new UABContext())
             {
-                var exsitingProjectuser =context.ProjectUser.First(a => a.ProjectUserId ==ProjectUserId);
-                if (exsitingProjectuser!=null)
+                var exsitingProjectuser = context.ProjectUser.First(a => a.ProjectUserId == ProjectUserId);
+                if (exsitingProjectuser != null)
                 {
                     context.ProjectUser.Remove(exsitingProjectuser);
                     context.SaveChanges();
@@ -1356,7 +1354,7 @@ namespace UAB.DAL
                 {
                     throw new Exception("Unable To Delete User : User Not there in UAB");
                 }
-                
+
             }
         }
 
