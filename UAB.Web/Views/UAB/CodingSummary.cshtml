@@ -7,9 +7,6 @@
     .highlight {
         background-color: #a8cb17 !important;
     }
-    .availableCharts, .qaRebuttalCharts, .readyForPostingCharts{
-        width:60px;
-    }
 </style>
 
 <div class="container-fluid">
@@ -47,13 +44,13 @@
                                 <td scope="col" style="text-align:center">
                                     @if (item.AvailableCharts == 0)
                                     {
-                                        <label class="availableCharts">@item.AvailableCharts</label>
+                                        <label class="lblCharts">@item.AvailableCharts</label>
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("GetCodingAvailableChart", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
-                                        <label class="availableCharts">@item.AvailableCharts</label>
+                                        <label class="lblCharts">@item.AvailableCharts</label>
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("GetCodingAvailableChart", "UAB",new { Role=Roles.Coder,ChartType="Available",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
@@ -61,13 +58,13 @@
                                 <td scope="col" style="text-align:center">
                                     @if (item.QARebuttalCharts == 0)
                                     {
-                                    <label class="qaRebuttalCharts">@item.QARebuttalCharts</label>
+                                    <label class="lblCharts">@item.QARebuttalCharts</label>
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("GetCodingIncorrectChart", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
-                                <label class="qaRebuttalCharts">@item.QARebuttalCharts</label>
+                                <label class="lblCharts">@item.QARebuttalCharts</label>
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("GetCodingIncorrectChart", "UAB",new { Role=Roles.Coder,ChartType="Incorrect",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
@@ -75,13 +72,13 @@
                                 <td scope="col" style="text-align:center">
                                     @if (item.ReadyForPostingCharts == 0)
                                     {
-                                        <label class="readyForPostingCharts">@item.ReadyForPostingCharts</label>
+                                        <label class="lblCharts">@item.ReadyForPostingCharts</label>
                                         <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("GetCodingReadyForPostingChart", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
-                                        <label class="readyForPostingCharts">@item.ReadyForPostingCharts</label>
+                                        <label class="lblCharts">@item.ReadyForPostingCharts</label>
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("GetCodingReadyForPostingChart", "UAB",new { Role=Roles.Coder,ChartType="ReadyForPosting",ProjectID = item.ProjectID})" class="btn btn-info btn-sm">Get Next</a>
                                     }
