@@ -57,7 +57,7 @@ namespace UAB
             {
                 endpoints.MapControllerRoute(
                     name: "login",
-                    pattern: "{controller=Account}/{action=ManageUsers}");
+                    pattern: "{controller=Account}/{action=Login}");
             });
             app.UseEndpoints(endpoints =>
             {
