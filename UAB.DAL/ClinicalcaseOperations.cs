@@ -1175,10 +1175,10 @@ namespace UAB.DAL
         {
             using (UAB.DAL.LoginDTO.IdentityServerContext context = new IdentityServerContext())
             {
-                return  context.Users.Select(a => a.Email).ToList();
+                return context.Users.Select(a => a.Email).ToList();
             }
         }
-
+        
         public List<BindDTO> GetProviderFeedbacksList()
         {
             List<BindDTO> lstDto = new List<BindDTO>();
@@ -1237,7 +1237,7 @@ namespace UAB.DAL
             return lstProvider;
         }
         public List<ApplicationUser> GetUsers()
-        {
+        { 
             ApplicationUser applicationUser = new ApplicationUser();
             List<ApplicationUser> lstApplicationUser = new List<ApplicationUser>();
 
@@ -1276,9 +1276,13 @@ namespace UAB.DAL
             {
                 var projectuser  = context.ProjectUser.Where(a => a.ProjectUserId == ProjectUserId).FirstOrDefault();
                 var user = context.User.Where(a => a.UserId == projectuser.UserId).FirstOrDefault();
+                var ProjctName  = context.Project.Where(a => a.ProjectId == projectuser.ProjectId).FirstOrDefault();
+                var RoleName = context.Role.Where(a => a.RoleId == projectuser.RoleId).FirstOrDefault();
                 ApplicationUser mdl = new ApplicationUser()
                 {
-                    Email = user.Email
+                    Email = user.Email,
+                    ProjectName = ProjctName.Name,
+                    RoleName = RoleName.Name
                 };
                 return mdl;
             }
@@ -1302,7 +1306,6 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-
                 UAB.DAL.Models.ProjectUser mdl = new ProjectUser();
                 mdl.UserId = user.UserId;
                 mdl.ProjectId = context.Project.Where(a => a.Name == user.ProjectName).Select(a => a.ProjectId).FirstOrDefault();
@@ -1339,14 +1342,21 @@ namespace UAB.DAL
                 
             }
         }
-        public void DeleteProjectUser (ApplicationUser user)
+        public void DeleteProjectUser (int ProjectUserId )
         {
             using (var context = new UABContext())
             {
-
-                var exsitingProjectuser =context.ProjectUser.First(a => a.ProjectUserId == user.ProjectUserId);
-                context.ProjectUser.Remove(exsitingProjectuser);
-                context.SaveChanges();
+                var exsitingProjectuser =context.ProjectUser.First(a => a.ProjectUserId ==ProjectUserId);
+                if (exsitingProjectuser!=null)
+                {
+                    context.ProjectUser.Remove(exsitingProjectuser);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable To Delete User : User Not there in UAB");
+                }
+                
             }
         }
 

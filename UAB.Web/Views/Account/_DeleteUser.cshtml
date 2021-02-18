@@ -11,12 +11,16 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-horizontal" action="">
-                        <div class="col-sm-12 text-center">
-                            <section class="col-sm-10">
-                                Are you sure want to delete this User <strong>" @Model.Email "</strong> Permanently?
-                                <br />
-                                <b>If you delete this, then associated information will also get deleted.</b>
-                            </section>
+                        <div class="col-sm-12">
+
+                            <strong>Email</strong>&nbsp;&nbsp;<label>@Model.Email</label>
+                            <br />
+                            <strong>Project</strong>&nbsp;&nbsp;<label>@Model.ProjectName</label>
+                            <br />
+                            <strong>Role</strong>&nbsp;&nbsp;<label>@Model.RoleName</label>
+                            <br />
+                            <b>If you delete this, then associated information will also get deleted.</b>
+
                         </div>
                     </div>
                 </div>
