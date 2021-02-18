@@ -39,20 +39,29 @@ namespace UAB.DTO
         public CodingDTO CodingDTO { get; set; }
         public QADTO QADTO { get; set; }
         public ShadowQADTO ShadowQADTO { get; set; }
+        [Required(ErrorMessage = "*")]
         public int QAPayorID { get; set; }
+        [Required(ErrorMessage = "*")]
         public string QAPayorRemarks { get; set; }
+        [Required(ErrorMessage = "*")]
         public int QAProviderID { get; set; }
-        public string QAProviderText { get; set; }
-        public string QAPayorText { get; set; }
+        [Required(ErrorMessage = "*")]
         public string QAProviderRemarks { get; set; }
+        [Required(ErrorMessage = "*")]
         public string QAMod { get; set; }
+        [Required(ErrorMessage = "*")]
         public string QAModRemarks { get; set; }
+        [Required(ErrorMessage = "*")]
         public string QADx { get; set; }
+        [Required(ErrorMessage = "*")]
         public string QADxRemarks { get; set; }
+        [Required(ErrorMessage = "*")]
         public string QACPTCode { get; set; }
+        [Required(ErrorMessage = "*")]
         public string QACPTCodeRemarks { get; set; }
+        [Required(ErrorMessage = "*")]
         public int QAProviderFeedbackID { get; set; }
-        public string QAProviderFeedbackText { get; set; }
+        [Required(ErrorMessage = "*")]
         public string QAProviderFeedbackRemarks { get; set; }
 
         public int ProjectID { get; set; }
