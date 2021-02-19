@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using UAB.DAL;
 using UAB.DAL.LoginDTO;
+using UAB.DAL.Models;
 
 namespace UAB.Controllers
 {
@@ -63,10 +64,9 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult ManageUsers()
         {
-            //List<ApplicationUser> users = new List<ApplicationUser>();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
 
-            var users = clinicalcaseOperations.GetUsers();
+            var users = clinicalcaseOperations.GetManageUsers();
             ViewBag.users = users;
 
             return View();
@@ -127,50 +127,51 @@ namespace UAB.Controllers
         }
 
         [HttpGet]
-        public ActionResult UpdateUser(int ProjectUserId)
+        public ActionResult UpdateUser(int userId) 
         {
-            ApplicationUser obj = new ApplicationUser();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
 
             ViewBag.Identityusers = clinicalcaseOperations.GetIdentityUsersList();
             ViewBag.Roles = clinicalcaseOperations.GetRolesList();
             ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
 
-            //List<ApplicationUser> users = new List<ApplicationUser>();
+            var users = clinicalcaseOperations.GetUsers(userId);
 
-            var users = clinicalcaseOperations.GetUsers();
+            
             if (users != null)
             {
-                obj = users.Find(a => a.ProjectUserId == ProjectUserId);
-                if (obj != null)
-                {
-                    return PartialView("_UpdateUser", obj);
-                }
-                return RedirectToAction("ManageUsers");
+
+                    return PartialView("_UpdateUser", users);
+               
             }
             else
             {
                 TempData["Error"] = "Unable to get user ";
                 return RedirectToAction("ManageUsers");
             }
-
+            
         }
         [HttpPost]
         public ActionResult UpdateUser(ApplicationUser model, string ProjectAndRole = null)
         {
             try
             {
+                List<ApplicationUser> applicationUsersist = new List<ApplicationUser>();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                var users = clinicalcaseOperations.GetUsers(model.UserId);
+
                 if (model.Email != null && !string.IsNullOrEmpty(ProjectAndRole))
                 {
-                    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                    
                     foreach (string item in ProjectAndRole.Split(','))
                     {
                         model.ProjectName = item.Split('^')[0];
                         model.RoleName = item.Split('^')[1];
                         model.UserId = model.UserId;
+                        applicationUsersist.Add(model);
 
-                        clinicalcaseOperations.UpdateProjectUser(model);
                     }
+                    clinicalcaseOperations.UpdateProjectUser(model);
                     TempData["Success"] = "Successfully Updated User";
                 }
                 else
@@ -186,18 +187,16 @@ namespace UAB.Controllers
         }
 
         [HttpGet]
-        public IActionResult DeleteUser(int ProjectUserId)
+        public IActionResult DeleteUser(int userId)
         {
-            ApplicationUser obj = new ApplicationUser();
-            if (ProjectUserId != 0)
+            
+            if (userId != 0)
             {
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-                 obj = clinicalcaseOperations.Getuser(ProjectUserId);
-                //obj = res;
-                if(obj!=null)
+                 var user  = clinicalcaseOperations.Getuser(userId);
+                if(user != null)
                 {
-                    return PartialView("_DeleteUser", obj);
-
+                    return PartialView("_DeleteUser", user);
                 }
                 else
                 {
@@ -208,14 +207,15 @@ namespace UAB.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteUser(ApplicationUser applicationUser)
+        public IActionResult DeleteUser(User user)
         {
             try
             {
-                if (applicationUser.ProjectUserId!=0)
+                if (user.UserId!=0)
                 {
                     ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-                    clinicalcaseOperations.DeleteProjectUser(applicationUser.ProjectUserId);
+                    clinicalcaseOperations.DeletetUser(user.UserId);
+                    TempData["Success"] = "Successfully Deleted User";
                     return RedirectToAction("ManageUsers");
                 }
 

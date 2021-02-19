@@ -1282,7 +1282,14 @@ namespace UAB.DAL
             }
             return lstProvider;
         }
-        public List<ApplicationUser> GetUsers()
+        public List<User> GetManageUsers()
+        {
+            using (var context = new UABContext())
+            {
+                return context.User.ToList();
+            }
+        }
+        public List<ApplicationUser> GetUsers(int userId)
         {
             ApplicationUser applicationUser = new ApplicationUser();
             List<ApplicationUser> lstApplicationUser = new List<ApplicationUser>();
@@ -1313,22 +1320,26 @@ namespace UAB.DAL
                     }
                 }
             }
-            return lstApplicationUser;
+            var res = lstApplicationUser.Where(a => a.UserId == userId).ToList();
+            string initial = null;
+                foreach (var item in res)
+                {
+                    initial += item.ProjectId + "^" + item.RoleId + "^";
+                }
+            applicationUser = res.FirstOrDefault();
+            applicationUser.hdnProjectAndRole = initial;
+            res.Insert(0, applicationUser);
+            return res;
         }
 
-        public ApplicationUser Getuser(int ProjectUserId)
+        public User Getuser(int UserId)
         {
             using (var context = new UABContext())
             {
-                var projectuser = context.ProjectUser.Where(a => a.ProjectUserId == ProjectUserId).FirstOrDefault();
-                var user = context.User.Where(a => a.UserId == projectuser.UserId).FirstOrDefault();
-                var ProjctName = context.Project.Where(a => a.ProjectId == projectuser.ProjectId).FirstOrDefault();
-                var RoleName = context.Role.Where(a => a.RoleId == projectuser.RoleId).FirstOrDefault();
-                ApplicationUser mdl = new ApplicationUser()
+                var user = context.User.Where(a => a.UserId == UserId).FirstOrDefault();
+                User mdl = new User()
                 {
                     Email = user.Email,
-                    ProjectName = ProjctName.Name,
-                    RoleName = RoleName.Name
                 };
                 return mdl;
             }
@@ -1388,14 +1399,21 @@ namespace UAB.DAL
 
             }
         }
-        public void DeleteProjectUser(int ProjectUserId)
+        public void DeletetUser(int UserId)
         {
             using (var context = new UABContext())
             {
-                var exsitingProjectuser = context.ProjectUser.First(a => a.ProjectUserId == ProjectUserId);
+                var exsitinguser = context.User.Where(a => a.UserId == UserId).FirstOrDefault();
+                var exsitingProjectuser = context.ProjectUser.Where(a => a.UserId == UserId).FirstOrDefault();
+
                 if (exsitingProjectuser != null)
                 {
                     context.ProjectUser.Remove(exsitingProjectuser);
+                    context.SaveChanges();
+                }
+                if (exsitinguser != null)
+                {
+                    context.User.Remove(exsitinguser);
                     context.SaveChanges();
                 }
                 else

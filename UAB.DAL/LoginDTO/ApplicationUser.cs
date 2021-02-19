@@ -18,6 +18,8 @@ namespace UAB.DAL.LoginDTO
         [Required(ErrorMessage = "Project is required.")]
         public int ProjectId { get; set; } 
         public string ProjectName  { get; set; }
-        public int ProjectUserId { get; set; } 
+        public int ProjectUserId { get; set; }
+
+        public string hdnProjectAndRole { get; set; } 
     }
 }
