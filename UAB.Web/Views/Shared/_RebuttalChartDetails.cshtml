@@ -43,12 +43,13 @@
                 </div>
             </div>
             <div class="col-md-3 lessWidth input-group">
-
                 @Html.DropDownListFor(model => model.QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = "PayorID1", @class = "form-control QARevised", @style = (Model.QAPayorID == 0 ? "display:none" : "display:flex") })
+                @Html.ValidationMessageFor(model => model.QAPayorID, null, new { @class = "text-danger errMsg" })
             </div>
             @{string Show = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "display:none" : "display:flex");}
             <div class="col-md-3 lessWidth input-group">
                 @Html.TextBoxFor(model => model.QAPayorRemarks, new { @title = Model.QAPayorRemarks, @style = Show, @class = "form-control QARevised", @id = "PayorID2" })
+                @Html.ValidationMessageFor(model => model.QAPayorRemarks, null, new { @class = "text-danger errMsg" })
             </div>
             <div class="input-group-append CoderCorrections" style="@Show">
                 <span class="input-group-text">
@@ -76,10 +77,12 @@
             </div>
             <div class="col-md-3 lessWidth input-group">
                 @Html.DropDownListFor(model => model.QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = "ProviderID1", @class = "form-control QARevised", @style = (Model.QAProviderID == 0 ? "display:none" : "display:flex") })
+                @Html.ValidationMessageFor(model => model.QAProviderID, null, new { @class = "text-danger errMsg" })
             </div>
             @{Show = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "display:none" : "display:flex");}
             <div class="col-md-3 lessWidth input-group">
                 @Html.TextBoxFor(model => model.QAProviderRemarks, new { @title = Model.QAProviderRemarks, @style = Show, @class = "form-control QARevised", @id = "ProviderID2" })
+                @Html.ValidationMessageFor(model => model.QAProviderRemarks, null, new { @class = "text-danger errMsg" })
             </div>
             <div class="input-group-append CoderCorrections" style="@Show">
                 <span class="input-group-text">
@@ -108,9 +111,11 @@
             @{Show = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "display:none" : "display:flex");}
             <div class="col-md-3 lessWidth input-group">
                 @Html.TextAreaFor(model => model.QACPTCode, new { @title = Model.QACPTCode, @style = Show, @id = "CPTCode1", @class = "form-control QARevised" })
+                @Html.ValidationMessageFor(model => model.QACPTCode, null, new { @class = "text-danger errMsg" })
             </div>
             <div class="col-md-3 lessWidth input-group">
                 @Html.TextBoxFor(model => model.QACPTCodeRemarks, new { @title = Model.QACPTCodeRemarks, @style = Show, @class = "form-control QARevised", @id = "CPTCode2" })
+                @Html.ValidationMessageFor(model => model.QACPTCodeRemarks, null, new { @class = "text-danger errMsg" })
             </div>
             <div class="input-group-append CoderCorrections" style="@Show">
                 <span class="input-group-text">
@@ -137,14 +142,16 @@
             @{Show = (string.IsNullOrEmpty(Model.QAModRemarks) ? "display:none" : "display:flex");}
             <div class="col-md-3 lessWidth input-group">
                 @Html.TextAreaFor(model => model.QAMod, new { @title = Model.QAMod, @style = Show, @class = "form-control QARevised", @id = "Mod1" })
+                @Html.ValidationMessageFor(model => model.QAMod, null, new { @class = "text-danger errMsg" })
             </div>
             <div class="col-md-3 lessWidth input-group">
                 @Html.TextBoxFor(model => model.QAModRemarks, new { @title = Model.QAModRemarks, @style = Show, @class = "form-control QARevised", @id = "Mod2" })
+                @Html.ValidationMessageFor(model => model.QAModRemarks, null, new { @class = "text-danger errMsg" })
             </div>
             <div class="input-group-append CoderCorrections" style="@Show">
                 <span class="input-group-text">
                     &nbsp;<i id="Mod" title="Mod1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                    &nbsp;<i id="Mod" title="Mod1"  class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="Mod" title="Mod1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                 </span>
             </div>
             <div class="col-md-3 input-group CoderCorrections" style="@Show">
@@ -166,9 +173,11 @@
             @{Show = (string.IsNullOrEmpty(Model.QADxRemarks) ? "display:none" : "display:flex");}
             <div class="col-md-3 lessWidth input-group">
                 @Html.TextAreaFor(model => model.QADx, new { @title = Model.QADx, @style = Show, @id = "Dx1", @class = "form-control QARevised" })
+                @Html.ValidationMessageFor(model => model.QADx, null, new { @class = "text-danger errMsg" })
             </div>
             <div class="col-md-3 lessWidth input-group">
                 @Html.TextBoxFor(model => model.QADxRemarks, new { @title = Model.QADxRemarks, @style = Show, @class = "form-control QARevised", @id = "Dx2" })
+                @Html.ValidationMessageFor(model => model.QADxRemarks, null, new { @class = "text-danger errMsg" })
             </div>
             <div class="input-group-append CoderCorrections" style="@Show">
                 <span class="input-group-text">
@@ -197,9 +206,11 @@
             @{Show = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "display:none" : "display:flex");}
             <div class="col-md-3 lessWidth input-group">
                 @Html.DropDownListFor(model => model.QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = Show, @class = "form-control QARevised", @id = "Feedback1" })
+                @Html.ValidationMessageFor(model => model.QAProviderFeedbackID, null, new { @class = "text-danger errMsg" })
             </div>
             <div class="col-md-3 lessWidth input-group">
                 @Html.TextBoxFor(model => model.QAProviderFeedbackRemarks, new { @title = Model.QAProviderFeedbackRemarks, @style = Show, @class = "form-control QARevised", @id = "Feedback2" })
+                @Html.ValidationMessageFor(model => model.QAProviderFeedbackRemarks, null, new { @class = "text-danger errMsg" })
             </div>
             <div class="input-group-append CoderCorrections" style="@Show">
                 <span class="input-group-text">
@@ -264,6 +275,11 @@
 
 
 <style>
+    .errMsg {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
     #sortable-1 {
         list-style-type: none;
         margin: 0;
