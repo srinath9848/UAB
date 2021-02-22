@@ -54,15 +54,15 @@
     });
 
     $('#btnsubmit').click(function (e) {
-        var check = $(".fa-check-circle").length;
-        var reject = $(".reject").length;
-        var accept = $(".accept").length;
-        if (check == accept) {
-            $("#chkAll").prop('checked', true);
-        } else {
+        var total = $(".lessWidth").find(".fa-check-circle").length;
+        var reject = $(".lessWidth").find(".reject").length;
+        var accept = $(".lessWidth").find(".accept").length;
+
+        if (total != accept + reject) {
             $("#validationPopUp").show();
             e.preventDefault();
         }
+
     });
 
     validationPopUp = function () {

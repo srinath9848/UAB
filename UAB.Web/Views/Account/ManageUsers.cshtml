@@ -1,7 +1,7 @@
 ﻿@model UAB.DAL.LoginDTO.ApplicationUser
 @{
     ViewData["Title"] = "Manage Users";
-    var result = (List<UAB.DAL.LoginDTO.ApplicationUser >)ViewBag.users;
+    var result = (List<UAB.DAL.Models.User >)ViewBag.users;
 }
 
 <style>
@@ -50,24 +50,20 @@
                                 <tr>
                                     <th style="width: 250px; font-weight:900;">Action</th>
                                     <th style="width: 250px; font-weight:900;">Email</th>
-                                    <th style="width: 250px; font-weight:900;">Role</th>
                                     <th style="width: 250px; font-weight:900;">Status</th>
-                                    <th style="width: 250px; font-weight:900;">Project</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in result)
                                 {
-                                    <tr>
-                                        <td>
-                                            <button type="button" style="cursor: pointer" class="btn btn-sm btn-info btn-fill" onclick="Edit('@item.ProjectUserId')"><i class="fa fa-edit"></i>Edit</button>
-                                            <button type="button" style="cursor: pointer" class="btn btn-sm btn-danger btn-fill" onclick="Delete('@item.ProjectUserId')"><i class="fa fa-times"></i>Delete</button>
-                                        </td>
-                                        <td>@item.Email</td>
-                                        <td>@item.RoleName</td>
-                                        <td>@item.IsActive</td>
-                                        <td>@item.ProjectName</td>
-                                    </tr>
+                                <tr>
+                                    <td>
+                                        <button type="button" style="cursor: pointer" class="btn btn-sm btn-info btn-fill" onclick="Edit('@item.UserId')"><i class="fa fa-edit"></i>Edit</button>
+                                        <button type="button" style="cursor: pointer" class="btn btn-sm btn-danger btn-fill" onclick="Delete('@item.UserId')"><i class="fa fa-times"></i>Delete</button>
+                                    </td>
+                                    <td>@item.Email</td>
+                                    <td>@item.IsActive</td>
+                                </tr>
                                 }
                             </tbody>
                         </table>
@@ -96,7 +92,6 @@
             url: "@Url.Action("AddUser", "Account")",
             success: function (response) {
                 $("#modalContent").html(response);
-                $("#Addbtn").hide();
             },
             failure: function (response) {
                 alert(response);
@@ -104,32 +99,26 @@
         });
     };
 
-        Edit = function (ProjectUserId) {
+        Edit = function (UserId) {
         $.ajax({
             type: "GET",
             url: "@Url.Action("UpdateUser", "Account")",
-            data: { "ProjectUserId": ProjectUserId},
+            data: { "UserId": UserId},
             success: function (response) {
                 $("#modalContent").html(response);
-                $("#Users_wrapper").html('');
-                $("#Addbtn").hide();
-                $("#manageusertitle").hide();
             },
             failure: function (response) {
                 alert(response);
             }
         });
     }
-        Delete = function (ProjectUserId) {
+        Delete = function (UserId) {
         $.ajax({
             type: "GET",
             url: "@Url.Action("DeleteUser", "Account")",
-            data: { "ProjectUserId": ProjectUserId },
+            data: { "UserId": UserId },
             success: function (response) {
                 $("#modalContent").html(response);
-                $("#Users_wrapper").html('');
-                $("#Addbtn").hide();
-                $("#manageusertitle").hide();
             },
             failure: function (response) {
                 alert(response);

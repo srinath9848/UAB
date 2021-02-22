@@ -21,6 +21,12 @@ namespace UAB.DAL
             using (var context = new UABContext())
             {
                 var param = new SqlParameter[] {
+                     new SqlParameter() {
+                            ParameterName = "@UserId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = Auth.UserId
+                         },
                         new SqlParameter() {
                             ParameterName = "@Role",
                             SqlDbType =  System.Data.SqlDbType.VarChar,
@@ -120,10 +126,11 @@ namespace UAB.DAL
                             chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
                             if (reader["ProviderFeedbackId"] != DBNull.Value)
                                 chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
-                            chartSummaryDTO.CoderQuestion = Convert.ToString(reader["Question"]);
+                            if (Role == "QA" && ChartType == "OnHold")
+                                chartSummaryDTO.CoderQuestion = Convert.ToString(reader["Question"]);
                         }
                         else if ((Role == "Coder" && ChartType == "Incorrect") ||
-                            (Role == "ShadowQA" && ChartType == "RebuttalOfQA"))
+                            (Role == "ShadowQA" && ChartType == "RebuttalOfQA") || (Role == "QA" && ChartType == "ShadowQARejected"))
                         {
                             chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                             if (reader["QAProviderID"] != DBNull.Value)
@@ -1282,7 +1289,14 @@ namespace UAB.DAL
             }
             return lstProvider;
         }
-        public List<ApplicationUser> GetUsers()
+        public List<User> GetManageUsers()
+        {
+            using (var context = new UABContext())
+            {
+                return context.User.ToList();
+            }
+        }
+        public List<ApplicationUser> GetUsers(int userId)
         {
             ApplicationUser applicationUser = new ApplicationUser();
             List<ApplicationUser> lstApplicationUser = new List<ApplicationUser>();
@@ -1313,22 +1327,29 @@ namespace UAB.DAL
                     }
                 }
             }
-            return lstApplicationUser;
+            var res = lstApplicationUser.Where(a => a.UserId == userId).ToList();
+            string temp = null;
+
+            foreach (var item in res)
+            {
+                temp = temp + item.ProjectName + "^" + item.RoleName + ",";
+            }
+            var length = temp.Length;
+            string initial = temp.Substring(0, length - 1);
+            applicationUser = res.FirstOrDefault();
+            applicationUser.hdnProjectAndRole = initial;
+            res[0] = applicationUser;
+            return res;
         }
 
-        public ApplicationUser Getuser(int ProjectUserId)
+        public User Getuser(int UserId)
         {
             using (var context = new UABContext())
             {
-                var projectuser = context.ProjectUser.Where(a => a.ProjectUserId == ProjectUserId).FirstOrDefault();
-                var user = context.User.Where(a => a.UserId == projectuser.UserId).FirstOrDefault();
-                var ProjctName = context.Project.Where(a => a.ProjectId == projectuser.ProjectId).FirstOrDefault();
-                var RoleName = context.Role.Where(a => a.RoleId == projectuser.RoleId).FirstOrDefault();
-                ApplicationUser mdl = new ApplicationUser()
+                var user = context.User.Where(a => a.UserId == UserId).FirstOrDefault();
+                User mdl = new User()
                 {
                     Email = user.Email,
-                    ProjectName = ProjctName.Name,
-                    RoleName = RoleName.Name
                 };
                 return mdl;
             }
@@ -1361,41 +1382,50 @@ namespace UAB.DAL
                 context.SaveChanges();
             }
         }
-        public void UpdateProjectUser(ApplicationUser user)
+        public void UpdateProjectUser(List<ApplicationUser> userslist)
         {
             using (var context = new UABContext())
             {
 
-                UAB.DAL.Models.ProjectUser mdl = new ProjectUser();
-                mdl.UserId = user.UserId;
-                mdl.ProjectId = context.Project.Where(a => a.Name == user.ProjectName).Select(a => a.ProjectId).FirstOrDefault();
-                mdl.RoleId = context.Role.Where(a => a.Name == user.RoleName).Select(a => a.RoleId).FirstOrDefault();
 
-                var existingprojectuser = context.ProjectUser.First(a => a.ProjectUserId == user.ProjectUserId);
-                if (existingprojectuser.ProjectId != mdl.ProjectId || existingprojectuser.RoleId != mdl.RoleId)
+
+                //delete projectuser
+                var exsitingProjectuserlist = context.ProjectUser.Where(a => a.UserId == userslist.First().UserId).ToList();
+                context.ProjectUser.RemoveRange(exsitingProjectuserlist);
+                context.SaveChanges();
+
+
+                //add project user
+                var Projectslist = context.Project.ToList();
+                var Rolesslist = context.Role.ToList();
+                foreach (var item in userslist)
                 {
-                    existingprojectuser.ProjectId = mdl.ProjectId;
-                    existingprojectuser.RoleId = mdl.RoleId;
+                    UAB.DAL.Models.ProjectUser mdl = new ProjectUser();
+                    mdl.UserId = item.UserId;
+                    mdl.ProjectId = Projectslist.Where(a => a.Name == item.ProjectName).First().ProjectId;
+                    mdl.RoleId = Rolesslist.Where(a => a.Name == item.RoleName).First().RoleId;
 
-
-                    context.Entry(existingprojectuser).State = EntityState.Modified;
+                    context.ProjectUser.Add(mdl);
                     context.SaveChanges();
-                }
-                else
-                {
-                    throw new Exception("Unable To Update User : User Already there");
                 }
 
             }
         }
-        public void DeleteProjectUser(int ProjectUserId)
+        public void DeletetUser(int UserId)
         {
             using (var context = new UABContext())
             {
-                var exsitingProjectuser = context.ProjectUser.First(a => a.ProjectUserId == ProjectUserId);
+                var exsitinguser = context.User.Where(a => a.UserId == UserId).FirstOrDefault();
+                var exsitingProjectuser = context.ProjectUser.Where(a => a.UserId == UserId).FirstOrDefault();
+
                 if (exsitingProjectuser != null)
                 {
                     context.ProjectUser.Remove(exsitingProjectuser);
+                    context.SaveChanges();
+                }
+                if (exsitinguser != null)
+                {
+                    context.User.Remove(exsitinguser);
                     context.SaveChanges();
                 }
                 else

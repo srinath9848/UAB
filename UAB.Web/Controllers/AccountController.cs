@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using UAB.DAL;
 using UAB.DAL.LoginDTO;
+using UAB.DAL.Models;
 
 namespace UAB.Controllers
 {
@@ -44,7 +45,7 @@ namespace UAB.Controllers
             else
             {
                 var userInfo = _mAuthenticationService.GetUserInfoByEmail(Email);
-                if (userInfo.IsActiveUser)
+                if (userInfo.Email != null)
                 {
                     Auth.IsAuth = true;
                     Auth.EmailId = Email;
@@ -63,10 +64,9 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult ManageUsers()
         {
-            //List<ApplicationUser> users = new List<ApplicationUser>();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
 
-            var users = clinicalcaseOperations.GetUsers();
+            var users = clinicalcaseOperations.GetManageUsers();
             ViewBag.users = users;
 
             return View();
@@ -91,27 +91,27 @@ namespace UAB.Controllers
                 {
                     ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
 
-                   
-                        int UserId = clinicalcaseOperations.AddUser(model); //adding user to user table
 
-                        if (UserId != 0)
+                    int UserId = clinicalcaseOperations.AddUser(model); //adding user to user table
+
+                    if (UserId != 0)
+                    {
+                        foreach (string item in ProjectAndRole.Split(','))
                         {
-                            foreach (string item in ProjectAndRole.Split(','))
-                            {
-                                model.ProjectName = item.Split('^')[0];
-                                model.RoleName = item.Split('^')[1];
+                            model.ProjectName = item.Split('^')[0];
+                            model.RoleName = item.Split('^')[1];
 
-                                model.UserId = UserId;
+                            model.UserId = UserId;
 
-                                clinicalcaseOperations.AddProjectUser(model); //adding user to projectuser table
-                            }
-                            TempData["Success"] = "Successfully Added User";
+                            clinicalcaseOperations.AddProjectUser(model); //adding user to projectuser table
                         }
-                        else
-                        {
-                            TempData["Warning"] = "Unable to add user to projects :User not there in UAB";
-                        }
-                    
+                        TempData["Success"] = "Successfully Added User";
+                    }
+                    else
+                    {
+                        TempData["Warning"] = "Unable to add user to projects :User not there in UAB";
+                    }
+
                 }
                 else
                 {
@@ -127,26 +127,22 @@ namespace UAB.Controllers
         }
 
         [HttpGet]
-        public ActionResult UpdateUser(int ProjectUserId)
+        public ActionResult UpdateUser(int userId)
         {
-            ApplicationUser obj = new ApplicationUser();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
 
             ViewBag.Identityusers = clinicalcaseOperations.GetIdentityUsersList();
             ViewBag.Roles = clinicalcaseOperations.GetRolesList();
             ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
 
-            //List<ApplicationUser> users = new List<ApplicationUser>();
+            var users = clinicalcaseOperations.GetUsers(userId);
 
-            var users = clinicalcaseOperations.GetUsers();
+
             if (users != null)
             {
-                obj = users.Find(a => a.ProjectUserId == ProjectUserId);
-                if (obj != null)
-                {
-                    return PartialView("_UpdateUser", obj);
-                }
-                return RedirectToAction("ManageUsers");
+
+                return PartialView("_UpdateUser", users);
+
             }
             else
             {
@@ -160,22 +156,27 @@ namespace UAB.Controllers
         {
             try
             {
+                ProjectAndRole = model.hdnProjectAndRole;
                 if (model.Email != null && !string.IsNullOrEmpty(ProjectAndRole))
                 {
+                    List<ApplicationUser> list = new List<ApplicationUser>();
                     ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+
                     foreach (string item in ProjectAndRole.Split(','))
                     {
-                        model.ProjectName = item.Split('^')[0];
-                        model.RoleName = item.Split('^')[1];
-                        model.UserId = model.UserId;
+                        ApplicationUser applicationUser = new ApplicationUser();
 
-                        clinicalcaseOperations.UpdateProjectUser(model);
+                        applicationUser.ProjectName = item.Split('^')[0];
+                        applicationUser.RoleName = item.Split('^')[1];
+                        applicationUser.UserId = model.UserId;
+
+                        list.Add(applicationUser);
                     }
-                    TempData["Success"] = "Successfully Updated User";
-                }
-                else
-                {
-                    TempData["Error"] = "Unable to Update user ";
+                    if (list != null)
+                    {
+                        clinicalcaseOperations.UpdateProjectUser(list);
+                        TempData["Success"] = "Successfully Updated  User";
+                    }
                 }
             }
             catch (Exception ex)
@@ -186,18 +187,16 @@ namespace UAB.Controllers
         }
 
         [HttpGet]
-        public IActionResult DeleteUser(int ProjectUserId)
+        public IActionResult DeleteUser(int userId)
         {
-            ApplicationUser obj = new ApplicationUser();
-            if (ProjectUserId != 0)
+
+            if (userId != 0)
             {
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-                 obj = clinicalcaseOperations.Getuser(ProjectUserId);
-                //obj = res;
-                if(obj!=null)
+                var user = clinicalcaseOperations.Getuser(userId);
+                if (user != null)
                 {
-                    return PartialView("_DeleteUser", obj);
-
+                    return PartialView("_DeleteUser", user);
                 }
                 else
                 {
@@ -208,14 +207,15 @@ namespace UAB.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteUser(ApplicationUser applicationUser)
+        public IActionResult DeleteUser(User user)
         {
             try
             {
-                if (applicationUser.ProjectUserId!=0)
+                if (user.UserId != 0)
                 {
                     ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-                    clinicalcaseOperations.DeleteProjectUser(applicationUser.ProjectUserId);
+                    clinicalcaseOperations.DeletetUser(user.UserId);
+                    TempData["Success"] = "Successfully Deleted User";
                     return RedirectToAction("ManageUsers");
                 }
 

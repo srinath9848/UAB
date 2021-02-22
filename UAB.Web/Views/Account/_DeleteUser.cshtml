@@ -1,8 +1,7 @@
-﻿@model UAB.DAL.LoginDTO.ApplicationUser
+﻿@model UAB.DAL.Models.User
 
 <form asp-action="DeleteUser" asp-controller="Account" method="POST">
     @Html.HiddenFor(m => m.UserId)
-    @Html.HiddenFor(m => m.ProjectUserId)
     <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
         <div class="modal-dialog">
             <div class="modal-content" style="width: 500px;">
@@ -14,10 +13,6 @@
                         <div class="col-sm-12">
 
                             <strong>Email</strong>&nbsp;&nbsp;<label>@Model.Email</label>
-                            <br />
-                            <strong>Project</strong>&nbsp;&nbsp;<label>@Model.ProjectName</label>
-                            <br />
-                            <strong>Role</strong>&nbsp;&nbsp;<label>@Model.RoleName</label>
                             <br />
                             <b>If you delete this, then associated information will also get deleted.</b>
 
