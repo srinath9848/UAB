@@ -1322,14 +1322,17 @@ namespace UAB.DAL
                 }
             }
             var res = lstApplicationUser.Where(a => a.UserId == userId).ToList();
-            string initial = null;
-                foreach (var item in res)
-                {
-                    initial += item.ProjectId + "^" + item.RoleId + "^";
-                }
+            string temp = null;
+
+            foreach (var item in res)
+            {
+                temp = temp + item.ProjectName + "^" + item.RoleName + ",";
+            }
+            var length = temp.Length;
+            string initial = temp.Substring(0, length - 1);
             applicationUser = res.FirstOrDefault();
             applicationUser.hdnProjectAndRole = initial;
-            res.Insert(0, applicationUser);
+            res[0] = applicationUser;
             return res;
         }
 
@@ -1373,29 +1376,31 @@ namespace UAB.DAL
                 context.SaveChanges();
             }
         }
-        public void UpdateProjectUser(ApplicationUser user)
+        public void UpdateProjectUser(List<ApplicationUser> userslist)
         {
             using (var context = new UABContext())
             {
 
-                UAB.DAL.Models.ProjectUser mdl = new ProjectUser();
-                mdl.UserId = user.UserId;
-                mdl.ProjectId = context.Project.Where(a => a.Name == user.ProjectName).Select(a => a.ProjectId).FirstOrDefault();
-                mdl.RoleId = context.Role.Where(a => a.Name == user.RoleName).Select(a => a.RoleId).FirstOrDefault();
 
-                var existingprojectuser = context.ProjectUser.First(a => a.ProjectUserId == user.ProjectUserId);
-                if (existingprojectuser.ProjectId != mdl.ProjectId || existingprojectuser.RoleId != mdl.RoleId)
+
+                //delete projectuser
+                var exsitingProjectuserlist = context.ProjectUser.Where(a => a.UserId == userslist.First().UserId).ToList();
+                context.ProjectUser.RemoveRange(exsitingProjectuserlist);
+                context.SaveChanges();
+
+
+                //add project user
+                var Projectslist = context.Project.ToList();
+                var Rolesslist = context.Role.ToList();
+                foreach (var item in userslist)
                 {
-                    existingprojectuser.ProjectId = mdl.ProjectId;
-                    existingprojectuser.RoleId = mdl.RoleId;
+                    UAB.DAL.Models.ProjectUser mdl = new ProjectUser();
+                    mdl.UserId = item.UserId;
+                    mdl.ProjectId = Projectslist.Where(a => a.Name == item.ProjectName).First().ProjectId;
+                    mdl.RoleId = Rolesslist.Where(a => a.Name == item.RoleName).First().RoleId;
 
-
-                    context.Entry(existingprojectuser).State = EntityState.Modified;
+                    context.ProjectUser.Add(mdl);
                     context.SaveChanges();
-                }
-                else
-                {
-                    throw new Exception("Unable To Update User : User Already there");
                 }
 
             }

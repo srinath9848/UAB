@@ -156,27 +156,27 @@ namespace UAB.Controllers
         {
             try
             {
-                List<ApplicationUser> applicationUsersist = new List<ApplicationUser>();
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-                var users = clinicalcaseOperations.GetUsers(model.UserId);
-
+                ProjectAndRole = model.hdnProjectAndRole;
                 if (model.Email != null && !string.IsNullOrEmpty(ProjectAndRole))
                 {
-                    
+                    List<ApplicationUser> list = new List<ApplicationUser>();
+                    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+
                     foreach (string item in ProjectAndRole.Split(','))
                     {
-                        model.ProjectName = item.Split('^')[0];
-                        model.RoleName = item.Split('^')[1];
-                        model.UserId = model.UserId;
-                        applicationUsersist.Add(model);
+                        ApplicationUser applicationUser = new ApplicationUser();
 
+                        applicationUser.ProjectName = item.Split('^')[0];
+                        applicationUser.RoleName = item.Split('^')[1];
+                        applicationUser.UserId = model.UserId;
+
+                        list.Add(applicationUser);
                     }
-                    clinicalcaseOperations.UpdateProjectUser(model);
-                    TempData["Success"] = "Successfully Updated User";
-                }
-                else
-                {
-                    TempData["Error"] = "Unable to Update user ";
+                    if (list != null)
+                    {
+                        clinicalcaseOperations.UpdateProjectUser(list);
+                        TempData["Success"] = "Successfully Updated  User";
+                    }
                 }
             }
             catch (Exception ex)

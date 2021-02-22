@@ -1,7 +1,7 @@
 ﻿@model List<UAB.DAL.LoginDTO.ApplicationUser>
 @using UAB.DAL.LoginDTO
 
-@{ 
+@{
     int i = 0;
 }
 
@@ -40,7 +40,8 @@
                             <h5 class="card" style="width:300px">Update User</h5>
                         </div>
                         <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.First().Email, new SelectList(@ViewBag.Identityusers, "Email"), "--Select a Email--", new { @id = "emaildd", @class = "form-control CoderDetails" })
+                            @Html.TextBoxFor(model => model.First().Email, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @readonly = "readonly" })
+                            @*@Html.DropDownListFor(model => model.First().Email, new SelectList(@ViewBag.Identityusers, "Email"), "--Select a Email--", new { @id = "emaildd", @class = "form-control CoderDetails" })*@
                             @Html.ValidationMessageFor(model => model.First().Email, null, new { @class = "text-danger" })
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         </div>
