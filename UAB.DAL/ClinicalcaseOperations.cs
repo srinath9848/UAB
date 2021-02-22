@@ -21,6 +21,12 @@ namespace UAB.DAL
             using (var context = new UABContext())
             {
                 var param = new SqlParameter[] {
+                     new SqlParameter() {
+                            ParameterName = "@UserId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = Auth.UserId
+                         },
                         new SqlParameter() {
                             ParameterName = "@Role",
                             SqlDbType =  System.Data.SqlDbType.VarChar,
