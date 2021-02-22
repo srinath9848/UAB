@@ -1,6 +1,8 @@
-﻿@{
+﻿@using UAB.enums
+@{
     string title = ViewBag.title;
     bool isAuthenticated = UAB.DAL.LoginDTO.Auth.IsAuth;
+    string roles = UAB.DAL.LoginDTO.Auth.CurrentRole;
 
 }
 <!DOCTYPE html>
@@ -60,79 +62,83 @@
         </div>
     </div>
     <div id="main-wrapper">
-        @if (isAuthenticated)
-        {
-            <header class="topbar" data-navbarbg="skin5">
-                <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-                    <div class="navbar-header" data-logobg="skin5">
-                        <!-- This is for the sidebar toggle which is visible on mobile only -->
-                        <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
-                        <!-- ============================================================== -->
-                        <!-- Logo -->
-                        <!-- ============================================================== -->
-                        <a class="navbar-brand" href="index.html">
-                            <!-- Logo icon -->
-                            <b class="logo-icon p-l-10">
-                                <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                                <!-- Dark Logo icon -->
-                                <img src="~/dashboardassets/images/sitelogo.png" alt="homepage" class="light-logo" style="height:40px; width:236px;" />
-                            </b>
-                        </a>
-                        <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i class="ti-more"></i></a>
-                    </div>
-                    <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
-                        <ul class="navbar-nav float-left mr-auto">
-                            <li class="nav-item d-none d-md-block"><a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)" data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a></li>
-                        </ul>
-                        <ul class="navbar-nav float-right">
-                            <li class="nav-item dropdown"></li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@UAB.DAL.LoginDTO.Auth.EmailId &nbsp;&nbsp;<img src="~/dashboardassets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
-                                <div class="dropdown-menu dropdown-menu-right user-dd animated">
-                                    <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" asp-action="Logout" asp-controller="Account"> Log Out </a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" asp-action="Changepassword" asp-controller="Account">Change Password </a>
-                                    <div class="dropdown-divider"></div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </header>
-        }
-        @if (isAuthenticated)
-        {
-            <aside class="left-sidebar" data-sidebarbg="skin5">
-                <!-- Sidebar scroll-->
-                <div class="scroll-sidebar">
-                    <!-- Sidebar navigation-->
-                    <nav class="sidebar-nav">
+        <header class="topbar" data-navbarbg="skin5">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <div class="navbar-header" data-logobg="skin5">
+                    <!-- This is for the sidebar toggle which is visible on mobile only -->
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+                    <!-- ============================================================== -->
+                    <!-- Logo -->
+                    <!-- ============================================================== -->
+                    <a class="navbar-brand" href="index.html">
+                        <!-- Logo icon -->
+                        <b class="logo-icon p-l-10">
+                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                            <!-- Dark Logo icon -->
+                            <img src="~/dashboardassets/images/sitelogo.png" alt="homepage" class="light-logo" style="height:40px; width:236px;" />
+                        </b>
+                    </a>
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i class="ti-more"></i></a>
+                </div>
+                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+                    <ul class="navbar-nav float-left mr-auto">
+                        <li class="nav-item d-none d-md-block"><a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)" data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a></li>
+                    </ul>
+                    <ul class="navbar-nav float-right">
+                        <li class="nav-item dropdown"></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@UAB.DAL.LoginDTO.Auth.EmailId &nbsp;&nbsp;<img src="~/dashboardassets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
+                            <div class="dropdown-menu dropdown-menu-right user-dd animated">
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-action="Logout" asp-controller="Account"> Log Out </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-action="Changepassword" asp-controller="Account">Change Password </a>
+                                <div class="dropdown-divider"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <aside class="left-sidebar" data-sidebarbg="skin5">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
 
-                        <ul id="sidebarnav" class="p-t-30">
-                            <li id="dashBoard" class="sidebar-item">
-                                <a class="sidebar-link waves-effect waves-dark sidebar-link" asp-area="" asp-controller="Home" asp-action="Index">
-                                    <i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span>
-                                </a>
-                            </li>
+                    <ul id="sidebarnav" class="p-t-30">
+                        <li id="dashBoard" class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span>
+                            </a>
+                        </li>
+                        @if (roles.Split(',').ToList().Contains(Roles.Coder.ToString()))
+                        {
                             <li id="coding" class="sidebar-item">
                                 <a class="sidebar-link waves-effect waves-dark sidebar-link" asp-area="" asp-controller="UAB" asp-action="CodingSummary">
                                     <i class="mdi mdi-receipt"></i><span class="hide-menu">Coding</span>
                                 </a>
                             </li>
+                        }
+                        @if (roles.Split(',').ToList().Contains(Roles.QA.ToString()))
+                        {
                             <li id="qa" class="sidebar-item">
                                 <a class="sidebar-link waves-effect waves-dark sidebar-link" asp-area="" asp-controller="UAB" asp-action="QASummary">
                                     <i class="mdi mdi-chart-bar"></i><span class="hide-menu">QA</span>
                                 </a>
                             </li>
+                        }
+                        @if (roles.Split(',').ToList().Contains(Roles.ShadowQA.ToString()))
+                        {
                             <li id="shadowQA" class="sidebar-item">
                                 <a class="sidebar-link waves-effect waves-dark sidebar-link" asp-area="" asp-controller="UAB" asp-action="ShadowQASummary">
                                     <i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Shadow QA</span>
                                 </a>
                             </li>
-                            @*@if (UAB.DAL.LoginDTO.Auth.CurrentRole == "Coder")
-                                {*@
+                        }
+                        @if (roles.Split(',').ToList().Contains(Roles.Manager.ToString()))
+                        {
                             <li id="settings" class="sidebar-item">
                                 <a class="sidebar-link has-arrow waves-effect waves-dark" href="/">
                                     <i class="mdi mdi-settings"></i><span class="hide-menu">Settings</span>
@@ -175,14 +181,13 @@
                                     </li>
                                 </ul>
                             </li>
-                            @*}*@
-                        </ul>
-                    </nav>
-                    <!-- End Sidebar navigation -->
-                </div>
-                <!-- End Sidebar scroll-->
-            </aside>
-        }
+                        }
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
         <div class="page-wrapper">
             @RenderBody()
         </div>
@@ -231,3 +236,10 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ("@isAuthenticated" === "False") {
+            window.location.href = "../Home/AuthenticationError";
+        }
+    });
+</script>

@@ -45,7 +45,7 @@ namespace UAB.Controllers
             else
             {
                 var userInfo = _mAuthenticationService.GetUserInfoByEmail(Email);
-                if (userInfo.IsActiveUser)
+                if (userInfo.Email != null)
                 {
                     Auth.IsAuth = true;
                     Auth.EmailId = Email;
@@ -91,27 +91,27 @@ namespace UAB.Controllers
                 {
                     ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
 
-                   
-                        int UserId = clinicalcaseOperations.AddUser(model); //adding user to user table
 
-                        if (UserId != 0)
+                    int UserId = clinicalcaseOperations.AddUser(model); //adding user to user table
+
+                    if (UserId != 0)
+                    {
+                        foreach (string item in ProjectAndRole.Split(','))
                         {
-                            foreach (string item in ProjectAndRole.Split(','))
-                            {
-                                model.ProjectName = item.Split('^')[0];
-                                model.RoleName = item.Split('^')[1];
+                            model.ProjectName = item.Split('^')[0];
+                            model.RoleName = item.Split('^')[1];
 
-                                model.UserId = UserId;
+                            model.UserId = UserId;
 
-                                clinicalcaseOperations.AddProjectUser(model); //adding user to projectuser table
-                            }
-                            TempData["Success"] = "Successfully Added User";
+                            clinicalcaseOperations.AddProjectUser(model); //adding user to projectuser table
                         }
-                        else
-                        {
-                            TempData["Warning"] = "Unable to add user to projects :User not there in UAB";
-                        }
-                    
+                        TempData["Success"] = "Successfully Added User";
+                    }
+                    else
+                    {
+                        TempData["Warning"] = "Unable to add user to projects :User not there in UAB";
+                    }
+
                 }
                 else
                 {
@@ -127,7 +127,7 @@ namespace UAB.Controllers
         }
 
         [HttpGet]
-        public ActionResult UpdateUser(int userId) 
+        public ActionResult UpdateUser(int userId)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
 
@@ -137,19 +137,19 @@ namespace UAB.Controllers
 
             var users = clinicalcaseOperations.GetUsers(userId);
 
-            
+
             if (users != null)
             {
 
-                    return PartialView("_UpdateUser", users);
-               
+                return PartialView("_UpdateUser", users);
+
             }
             else
             {
                 TempData["Error"] = "Unable to get user ";
                 return RedirectToAction("ManageUsers");
             }
-            
+
         }
         [HttpPost]
         public ActionResult UpdateUser(ApplicationUser model, string ProjectAndRole = null)
@@ -189,12 +189,12 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult DeleteUser(int userId)
         {
-            
+
             if (userId != 0)
             {
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-                 var user  = clinicalcaseOperations.Getuser(userId);
-                if(user != null)
+                var user = clinicalcaseOperations.Getuser(userId);
+                if (user != null)
                 {
                     return PartialView("_DeleteUser", user);
                 }
@@ -211,7 +211,7 @@ namespace UAB.Controllers
         {
             try
             {
-                if (user.UserId!=0)
+                if (user.UserId != 0)
                 {
                     ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
                     clinicalcaseOperations.DeletetUser(user.UserId);

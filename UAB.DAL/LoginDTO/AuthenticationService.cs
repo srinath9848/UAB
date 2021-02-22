@@ -11,13 +11,13 @@ namespace UAB.DAL.LoginDTO
     /// <summary>
     /// The standard implementation of <see cref="IAuthenticationService"/>.
     /// </summary>
-    public class AuthenticationService: IAuthenticationService
+    public class AuthenticationService : IAuthenticationService
     {
         private readonly IPasswordAlgorithmFactory mPasswordAlgorithmFactory;
         private readonly IClock mClock;
 
 
-        public AuthenticationService(IPasswordAlgorithmFactory passwordAlgorithmFactory,IClock clock )
+        public AuthenticationService(IPasswordAlgorithmFactory passwordAlgorithmFactory, IClock clock)
         {
             mPasswordAlgorithmFactory = passwordAlgorithmFactory;
             mClock = clock;
@@ -167,26 +167,24 @@ namespace UAB.DAL.LoginDTO
         public class UserInfo
         {
             public int UserId { get; set; }
-            public string Email { get; set; } 
-            public bool IsActiveUser  { get; set; }
-            public int RoleId  { get; set; }
-            public string RoleName  { get; set; }
+            public string Email { get; set; }
+            public bool IsActiveUser { get; set; }
+            public int RoleId { get; set; }
+            public string RoleName { get; set; }
             public int ProjectId { get; set; }
-            public bool IsActiveInProject  { get; set; }
+            public bool IsActiveInProject { get; set; }
         }
 
-        public UserInfo GetUserInfoByEmail  (string Email)
+        public UserInfo GetUserInfoByEmail(string Email)
         {
-            UserInfo userInfo = new UserInfo();  
+            UserInfo userInfo = new UserInfo();
 
             using (var context = new UABContext())
             {
                 using (var cnn = context.Database.GetDbConnection())
                 {
-                    
-
                     var cmm = cnn.CreateCommand();
-                    cmm.CommandType =CommandType.StoredProcedure;
+                    cmm.CommandType = CommandType.StoredProcedure;
                     cmm.CommandText = "[dbo].[UspGetUserInfo]";
                     cmm.Connection = cnn;
                     cnn.Open();
@@ -204,11 +202,11 @@ namespace UAB.DAL.LoginDTO
                         userInfo = new UserInfo();
                         userInfo.UserId = Convert.ToInt32(reader["UserId"]);
                         userInfo.Email = reader["Email"].ToString();
-                        userInfo.IsActiveUser = Convert.ToBoolean(reader["IsActive"]);
-                        userInfo.RoleId = Convert.ToInt32(reader["RoleId"]);
-                        userInfo.RoleName = reader["Name"].ToString();
-                        userInfo.ProjectId = Convert.ToInt32(reader["ProjectId"]);
-                        userInfo.IsActiveInProject = Convert.ToBoolean(reader["IsActive"]);
+                        //userInfo.IsActiveUser = Convert.ToBoolean(reader["IsActive"]);
+                        //userInfo.RoleId = Convert.ToInt32(reader["RoleId"]);
+                        userInfo.RoleName = reader["RoleName"].ToString();
+                        //userInfo.ProjectId = Convert.ToInt32(reader["ProjectId"]);
+                        // userInfo.IsActiveInProject = Convert.ToBoolean(reader["IsActive"]);
 
                     }
                 }

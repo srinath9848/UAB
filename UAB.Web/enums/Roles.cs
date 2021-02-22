@@ -9,6 +9,7 @@ namespace UAB.enums
     {
         Coder,
         QA,
-        ShadowQA
+        ShadowQA,
+        Manager
     }
 }
