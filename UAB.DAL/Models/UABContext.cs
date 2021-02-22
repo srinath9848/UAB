@@ -16,6 +16,7 @@ namespace UAB.DAL.Models
         }
 
         public virtual DbSet<Client> Client { get; set; }
+        public virtual DbSet<ProjectType> ProjectType { get; set; }
         public virtual DbSet<ClinicalCase> ClinicalCase { get; set; }
         public virtual DbSet<CoderQuestion> CoderQuestion { get; set; }
         public virtual DbSet<CptCode> CptCode { get; set; }

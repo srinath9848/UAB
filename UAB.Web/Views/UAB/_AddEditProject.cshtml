@@ -1,0 +1,109 @@
+﻿@model UAB.DAL.Models.ApplicationProject
+
+<style>
+    .modal-content {
+        margin-top: 63px;
+    }
+    .custom-control-label:after {
+        position: static;
+    }
+    .custom-control-label:before {
+        position: static;
+    }
+</style>
+<form asp-action="AddSettingsProject" asp-controller="UAB" method="POST">
+    @Html.HiddenFor(model => model.ProjectId, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
+    <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 500px;">
+                <br />
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            @if (Model.ProjectId != 0)
+                            {
+                                <h5 class="card" style="width:300px">Update Project</h5>
+                            }
+                            else
+                            {
+
+                                <h5 class="card" style="width:300px">Add New Project</h5>
+                            }
+
+                        </div>
+                        <div class="col-md-10">
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter Project Name " })
+                                @Html.ValidationMessageFor(model => model.Name, null, new { @class = "text-danger" })
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.TextBoxFor(model => model.CreatedDate, new { @class = "form-control", @hidden = "true", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter Project Name " })
+                            </div>
+                            <br />
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(model => model.ClientId, new SelectList(@ViewBag.Clients, "ClientId", "Name"), "--Select a Client--", new { @id = "clientid", @class = "form-control CoderDetails" })
+                                @Html.ValidationMessageFor(model => model.Name, null, new { @class = "text-danger" })
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            </div>
+                            <br />
+                            <div class="col-md-10">
+                                @Html.CheckBoxFor(model => model.IsActive, new { @id = "customControlAutosizing1" })
+                                <label for="customControlAutosizing1">Is Active</label>
+                            </div>
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.InputFileLocation, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter File Location " })
+                                @Html.ValidationMessageFor(model => model.InputFileLocation, null, new { @class = "text-danger" })
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            </div>
+                            <br />
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.InputFileFormat, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "File Format must be less than 5 character" })
+                                @Html.ValidationMessageFor(model => model.InputFileFormat, null, new { @class = "text-danger" })
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            </div>
+                            <br />
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(model => model.ProjectTypeId, new SelectList(@ViewBag.ProjectTypes, "ProjectTypeId", "ProjectTypeName"), "--Select a Project Type--", new { @id = "clientid", @class = "form-control CoderDetails" })
+                                @Html.ValidationMessageFor(model => model.Name, null, new { @class = "text-danger" })
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-12">
+                        <div class="modal-footer">
+                            @if (Model.ProjectId != 0)
+                            {
+                                <button type="submit" class="btn btn-sm btn-info btn-fill">Update</button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn-sm btn-info btn-fill">Add</button>
+                            }
+                            <button type="button" class="btn btn-sm btn-danger btn-fill" onclick="ModalClose1()">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
+<script src="~/dashboardassets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#projectdd").change(function () {
+            var projectdd = $("#projectdd option:selected").text();
+            if (projectdd !== "--Select a Project--")
+                $("#validproject").html('');
+
+        });
+
+        $("#roledd").change(function () {
+            var roledd = $("#roledd option:selected").text();
+            if (roledd !== "--Select a Role--")
+                $("#validrole").html('');
+
+        });
+    });
+</script>

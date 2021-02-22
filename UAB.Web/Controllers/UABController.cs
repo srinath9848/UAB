@@ -771,6 +771,112 @@ namespace UAB.Controllers
             }
             return RedirectToAction("SettingsProviderFeedback");
         }
+
+        [HttpGet]
+        public IActionResult SettingsProject()
+        {
+            List<ApplicationProject> lstProject = new List<ApplicationProject>();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            lstProject = clinicalcaseOperations.GetProjects();
+            ViewBag.lstProject = lstProject;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddSettingsProject(ApplicationProject project)
+        {
+            if (ModelState.IsValid)
+            {
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                List<string> lstProvider = clinicalcaseOperations.GetProjectNames();
+
+                if(project.ProjectId == 0)
+                {
+                    if (!lstProvider.Contains(project.Name.ToLower()))
+                    {
+                        clinicalcaseOperations.AddProject(project);
+                        TempData["Success"] = "Provider \"" + project.Name + "\" Added Successfully!";
+                    }
+                    else
+                    {
+                        TempData["Error"] = "The Provider \"" + project.Name + "\" is already present in our Provider list!";
+                    }
+                }
+                else
+                {
+                    clinicalcaseOperations.UpdateProject(project); // Update
+                    TempData["Success"] = "Provider \"" + project.Name + "\" Updated Successfully!";
+                }
+                //if (!lstProvider.Contains(project.Name.ToLower()))
+                //{
+                //    if (project.ProjectId == 0)
+                //    {
+                //        clinicalcaseOperations.AddProject(project);
+                //        TempData["Success"] = "Provider \"" + project.Name + "\" Added Successfully!";
+                //    }
+                //    else
+                //    {
+                //        //clinicalcaseOperations.UpdateProvider(provider); // Update
+                //        TempData["Success"] = "Provider \"" + project.Name + "\" Updated Successfully!";
+                //    }
+                //}
+                //else
+                //{
+                //    TempData["Error"] = "The Provider \"" + project.Name + "\" is already present in our Provider list!";
+                //}
+            }
+            return RedirectToAction("SettingsProject");
+        }
+
+        [HttpGet]
+        public ActionResult Add_EditProject(int id = 0)
+        {
+            ApplicationProject obj = new ApplicationProject();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ViewBag.Clients = clinicalcaseOperations.GetClientList();
+            ViewBag.ProjectTypes = clinicalcaseOperations.GetProjectTypeList();
+            if (id != 0)
+            {
+                List<ApplicationProject> lstProject = new List<ApplicationProject>();
+                lstProject = clinicalcaseOperations.GetProjects();
+                var res = lstProject.Where(a => a.ProjectId == id).FirstOrDefault();
+                obj = res;
+                return PartialView("_AddEditProject", obj);
+            }
+            return PartialView("_AddEditProject", obj);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteProject(ApplicationProject project)
+        {
+            try
+            {
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                if (project.ProjectId != 0)
+                    clinicalcaseOperations.DeleteProject(project); // Delete
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = ex.Message;
+            }
+            return RedirectToAction("SettingsProject");
+        }
+
+        [HttpGet]
+        public IActionResult DeleteProject(int id)
+        {
+            ApplicationProject obj = new ApplicationProject();
+            if (id != 0)
+            {
+                List<ApplicationProject> lstProject = new List<ApplicationProject>();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                lstProject = clinicalcaseOperations.GetProjects();
+                var res = lstProject.Where(a => a.ProjectId == id).FirstOrDefault();
+                obj = res;
+            }
+            return PartialView("_DeleteProject", obj);
+        }
+
         #endregion
     }
 }

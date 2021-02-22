@@ -1203,11 +1203,11 @@ namespace UAB.DAL
             return lstDto;
         }
 
-        public List<Project> GetProjectsList()
+        public List<ApplicationProject> GetProjectsList()
         {
             using (var context = new UABContext())
             {
-                return context.Project.ToList();
+                return GetProjects();
             }
         }
         public List<Role> GetRolesList()
@@ -1933,6 +1933,201 @@ namespace UAB.DAL
                     cmm.ExecuteNonQuery();
                 }
             }
+        }
+
+        public List<ApplicationProject> GetProjects()
+        {
+            ApplicationProject project = new ApplicationProject();
+            List<ApplicationProject> lstProject = new List<ApplicationProject>();
+
+            using (var context = new UABContext())
+            {
+                using (var cnn = context.Database.GetDbConnection())
+                {
+                    var cmm = cnn.CreateCommand();
+                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspGetProject]";
+                    //cmm.Parameters.AddRange(param);
+                    cmm.Connection = cnn;
+                    cnn.Open();
+                    var reader = cmm.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        project = new ApplicationProject();
+                        project.ProjectId = Convert.ToInt32(reader["ProjectId"]);
+                        project.Name = Convert.ToString(reader["ProjectName"]);
+                        project.IsActive = Convert.ToBoolean(reader["ActiveProject"]);
+                        project.CreatedDate = Convert.ToString(reader["CreatedDate"]);
+                        project.InputFileLocation = Convert.ToString(reader["InputFileLocation"]);
+                        project.InputFileFormat = Convert.ToString(reader["InputFileFormat"]);
+                        project.ClientId = Convert.ToInt32(reader["ClientId"]);
+                        project.ClientName = Convert.ToString(reader["ClientName"]);
+                        project.ProjectTypeId = Convert.ToInt32(reader["ProjectTypeId"]);
+                        project.ProjectTypeName = Convert.ToString(reader["ProjectTypeName"]);
+
+                        lstProject.Add(project);
+                    }
+                }
+            }
+            return lstProject;
+        }
+
+        //public void AddProject(Project project)
+        //{
+        //    using (var context = new UABContext())
+        //    {
+        //        using (var cnn = context.Database.GetDbConnection())
+        //        {
+        //            //SqlCommand cmd = new SqlCommand("UspAddProvider");
+        //            var cmm = cnn.CreateCommand();
+        //            cmm.CommandType = System.Data.CommandType.StoredProcedure;
+        //            cmm.CommandText = "[dbo].[UspAddProject]";
+        //            cmm.Connection = cnn;
+
+        //            SqlParameter name = new SqlParameter();
+        //            name.ParameterName = "@Name";
+        //            name.Value = provider.Name;
+        //            cmm.Parameters.Add(name);
+
+        //            cnn.Open();
+        //            cmm.ExecuteNonQuery();
+        //        }
+        //    }
+        //}
+
+        public void AddProject(ApplicationProject project)
+        {
+            using (var context = new UABContext())
+            {
+                UAB.DAL.Models.Project mdl = new Project();
+                mdl.ClientId = project.ClientId;
+                mdl.Name = project.Name;
+                mdl.IsActive = project.IsActive;
+                mdl.CreatedDate = DateTime.Now.ToString();
+                mdl.InputFileLocation = project.InputFileLocation;
+                mdl.InputFileFormat = project.InputFileFormat;
+                mdl.ProjectTypeId = project.ProjectTypeId;
+                //mdl.ProjectId = context.Project.Where(a => a.Name == user.ProjectName).Select(a => a.ProjectId).FirstOrDefault();
+                //mdl.RoleId = context.Role.Where(a => a.Name == user.RoleName).Select(a => a.RoleId).FirstOrDefault();
+
+                context.Project.Add(mdl);
+                context.SaveChanges();
+            }
+        }
+
+        public void UpdateProject(ApplicationProject project)
+        {
+            using (var context = new UABContext())
+            {
+
+                UAB.DAL.Models.Project mdl = new Project();
+                //mdl.UserId = user.UserId;
+                //mdl.ProjectId = context.Project.Where(a => a.Name == user.ProjectName).Select(a => a.ProjectId).FirstOrDefault();
+                //mdl.RoleId = context.Role.Where(a => a.Name == user.RoleName).Select(a => a.RoleId).FirstOrDefault();
+
+                mdl.ProjectId = project.ProjectId;
+                mdl.ClientId = project.ClientId;
+                mdl.Name = project.Name;
+                mdl.IsActive = project.IsActive;
+                mdl.InputFileLocation = project.InputFileLocation;
+                mdl.InputFileFormat = project.InputFileFormat;
+                mdl.ProjectTypeId = project.ProjectTypeId;
+                mdl.CreatedDate = project.CreatedDate;
+
+                //var existingprojectuser = context.ProjectUser.First(a => a.ProjectUserId == user.ProjectUserId);
+                //if (existingprojectuser.ProjectId != mdl.ProjectId || existingprojectuser.RoleId != mdl.RoleId)
+                //{
+                //    existingprojectuser.ProjectId = mdl.ProjectId;
+                //    existingprojectuser.RoleId = mdl.RoleId;
+
+
+                    context.Entry(mdl).State = EntityState.Modified;
+                    context.SaveChanges();
+                //}
+                //else
+                //{
+                //    throw new Exception("Unable To Update User : User Already there");
+                //}
+
+            }
+        }
+
+        public void DeleteProject(ApplicationProject project)
+        {
+            using (var context = new UABContext())
+            {
+                using (var cnn = context.Database.GetDbConnection())
+                {
+                    //SqlCommand cmd = new SqlCommand("UspAddProvider");
+                    var cmm = cnn.CreateCommand();
+                    //SqlCommand cmd = new SqlCommand("[dbo].[UspUpdateProvider]", cnn);
+                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspDeleteProject]";
+                    cmm.Connection = cnn;
+
+                    SqlParameter param = new SqlParameter();
+                    param.ParameterName = "@ProjectId";
+                    param.Value = project.ProjectId;
+                    cmm.Parameters.Add(param);
+
+
+                    //SqlParameter name = new SqlParameter();
+                    //name.ParameterName = "@Name";
+                    //name.Value = provider.Name;
+                    //cmm.Parameters.Add(name);
+
+                    cnn.Open();
+                    cmm.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public List<Client> GetClientList()
+        {
+            using (UAB.DAL.Models.UABContext context = new UABContext())
+            {
+                return context.Client.ToList();
+            }
+        }
+
+        public List<ProjectType> GetProjectTypeList()
+        {
+            using (UAB.DAL.Models.UABContext context = new UABContext())
+            {
+                return context.ProjectType.ToList();
+            }
+        }
+
+        public List<string> GetProjectNames()
+        {
+            Project project = new Project();
+            List<Project> lstProject = new List<Project>();
+            List<string> providers = new List<string>();
+
+            using (var context = new UABContext())
+            {
+                using (var cnn = context.Database.GetDbConnection())
+                {
+                    var cmm = cnn.CreateCommand();
+                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspGetProject]";
+                    //cmm.Parameters.AddRange(param);
+                    cmm.Connection = cnn;
+                    cnn.Open();
+                    var reader = cmm.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        project = new Project();
+                        project.ProjectId = Convert.ToInt32(reader["ProjectID"]);
+                        project.Name = Convert.ToString(reader["ProjectName"]);
+                        lstProject.Add(project);
+                        providers.Add(project.Name.ToLower());
+                    }
+                }
+            }
+            return providers;
         }
     }
 }
