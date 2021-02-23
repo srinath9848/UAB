@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace UAB.DAL.Models
 {
@@ -11,6 +12,7 @@ namespace UAB.DAL.Models
         }
 
         public int ProjectId { get; set; }
+        [Required(ErrorMessage = "Client is required.")]
         public int ClientId { get; set; }
         public string Name { get; set; }
         public bool IsActive { get; set; }

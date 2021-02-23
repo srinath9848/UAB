@@ -41,7 +41,7 @@
                             <br />
                             <div class="col-md-10">
                                 @Html.DropDownListFor(model => model.ClientId, new SelectList(@ViewBag.Clients, "ClientId", "Name"), "--Select a Client--", new { @id = "clientid", @class = "form-control CoderDetails" })
-                                @Html.ValidationMessageFor(model => model.Name, null, new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(model => model.ClientId, null, new { @class = "text-danger" })
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             </div>
                             <br />
@@ -63,7 +63,7 @@
                             <br />
                             <div class="col-md-10">
                                 @Html.DropDownListFor(model => model.ProjectTypeId, new SelectList(@ViewBag.ProjectTypes, "ProjectTypeId", "ProjectTypeName"), "--Select a Project Type--", new { @id = "clientid", @class = "form-control CoderDetails" })
-                                @Html.ValidationMessageFor(model => model.Name, null, new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(model => model.ProjectTypeId, null, new { @class = "text-danger" })
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             </div>
                         </div>

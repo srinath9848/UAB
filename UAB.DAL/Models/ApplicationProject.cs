@@ -8,8 +8,11 @@ namespace UAB.DAL.Models
     public class ApplicationProject
     {
         public int ProjectId { get; set; }
+        [Required(ErrorMessage = "Client is required.")]
         public int ClientId { get; set; }
+        [Required(ErrorMessage = "Project Type is required.")]
         public int ProjectTypeId { get; set; }
+        [Required(ErrorMessage = "Project is required.")]
         public string Name { get; set; }
         public bool IsActive { get; set; }
         public string CreatedDate { get; set; }

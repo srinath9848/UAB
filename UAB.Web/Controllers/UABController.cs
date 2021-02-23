@@ -807,23 +807,6 @@ namespace UAB.Controllers
                     clinicalcaseOperations.UpdateProject(project); // Update
                     TempData["Success"] = "Provider \"" + project.Name + "\" Updated Successfully!";
                 }
-                //if (!lstProvider.Contains(project.Name.ToLower()))
-                //{
-                //    if (project.ProjectId == 0)
-                //    {
-                //        clinicalcaseOperations.AddProject(project);
-                //        TempData["Success"] = "Provider \"" + project.Name + "\" Added Successfully!";
-                //    }
-                //    else
-                //    {
-                //        //clinicalcaseOperations.UpdateProvider(provider); // Update
-                //        TempData["Success"] = "Provider \"" + project.Name + "\" Updated Successfully!";
-                //    }
-                //}
-                //else
-                //{
-                //    TempData["Error"] = "The Provider \"" + project.Name + "\" is already present in our Provider list!";
-                //}
             }
             return RedirectToAction("SettingsProject");
         }
@@ -853,7 +836,7 @@ namespace UAB.Controllers
             {
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
                 if (project.ProjectId != 0)
-                    clinicalcaseOperations.DeleteProject(project); // Delete
+                    clinicalcaseOperations.DeleteProject(project);
             }
             catch (Exception ex)
             {

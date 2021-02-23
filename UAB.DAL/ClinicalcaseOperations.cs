@@ -2003,29 +2003,6 @@ namespace UAB.DAL
             return lstProject;
         }
 
-        //public void AddProject(Project project)
-        //{
-        //    using (var context = new UABContext())
-        //    {
-        //        using (var cnn = context.Database.GetDbConnection())
-        //        {
-        //            //SqlCommand cmd = new SqlCommand("UspAddProvider");
-        //            var cmm = cnn.CreateCommand();
-        //            cmm.CommandType = System.Data.CommandType.StoredProcedure;
-        //            cmm.CommandText = "[dbo].[UspAddProject]";
-        //            cmm.Connection = cnn;
-
-        //            SqlParameter name = new SqlParameter();
-        //            name.ParameterName = "@Name";
-        //            name.Value = provider.Name;
-        //            cmm.Parameters.Add(name);
-
-        //            cnn.Open();
-        //            cmm.ExecuteNonQuery();
-        //        }
-        //    }
-        //}
-
         public void AddProject(ApplicationProject project)
         {
             using (var context = new UABContext())
@@ -2038,8 +2015,6 @@ namespace UAB.DAL
                 mdl.InputFileLocation = project.InputFileLocation;
                 mdl.InputFileFormat = project.InputFileFormat;
                 mdl.ProjectTypeId = project.ProjectTypeId;
-                //mdl.ProjectId = context.Project.Where(a => a.Name == user.ProjectName).Select(a => a.ProjectId).FirstOrDefault();
-                //mdl.RoleId = context.Role.Where(a => a.Name == user.RoleName).Select(a => a.RoleId).FirstOrDefault();
 
                 context.Project.Add(mdl);
                 context.SaveChanges();
@@ -2052,9 +2027,6 @@ namespace UAB.DAL
             {
 
                 UAB.DAL.Models.Project mdl = new Project();
-                //mdl.UserId = user.UserId;
-                //mdl.ProjectId = context.Project.Where(a => a.Name == user.ProjectName).Select(a => a.ProjectId).FirstOrDefault();
-                //mdl.RoleId = context.Role.Where(a => a.Name == user.RoleName).Select(a => a.RoleId).FirstOrDefault();
 
                 mdl.ProjectId = project.ProjectId;
                 mdl.ClientId = project.ClientId;
@@ -2065,21 +2037,8 @@ namespace UAB.DAL
                 mdl.ProjectTypeId = project.ProjectTypeId;
                 mdl.CreatedDate = project.CreatedDate;
 
-                //var existingprojectuser = context.ProjectUser.First(a => a.ProjectUserId == user.ProjectUserId);
-                //if (existingprojectuser.ProjectId != mdl.ProjectId || existingprojectuser.RoleId != mdl.RoleId)
-                //{
-                //    existingprojectuser.ProjectId = mdl.ProjectId;
-                //    existingprojectuser.RoleId = mdl.RoleId;
-
-
-                    context.Entry(mdl).State = EntityState.Modified;
-                    context.SaveChanges();
-                //}
-                //else
-                //{
-                //    throw new Exception("Unable To Update User : User Already there");
-                //}
-
+                context.Entry(mdl).State = EntityState.Modified;
+                context.SaveChanges();
             }
         }
 
@@ -2089,9 +2048,7 @@ namespace UAB.DAL
             {
                 using (var cnn = context.Database.GetDbConnection())
                 {
-                    //SqlCommand cmd = new SqlCommand("UspAddProvider");
                     var cmm = cnn.CreateCommand();
-                    //SqlCommand cmd = new SqlCommand("[dbo].[UspUpdateProvider]", cnn);
                     cmm.CommandType = System.Data.CommandType.StoredProcedure;
                     cmm.CommandText = "[dbo].[UspDeleteProject]";
                     cmm.Connection = cnn;
@@ -2100,12 +2057,6 @@ namespace UAB.DAL
                     param.ParameterName = "@ProjectId";
                     param.Value = project.ProjectId;
                     cmm.Parameters.Add(param);
-
-
-                    //SqlParameter name = new SqlParameter();
-                    //name.ParameterName = "@Name";
-                    //name.Value = provider.Name;
-                    //cmm.Parameters.Add(name);
 
                     cnn.Open();
                     cmm.ExecuteNonQuery();
@@ -2142,7 +2093,6 @@ namespace UAB.DAL
                     var cmm = cnn.CreateCommand();
                     cmm.CommandType = System.Data.CommandType.StoredProcedure;
                     cmm.CommandText = "[dbo].[UspGetProject]";
-                    //cmm.Parameters.AddRange(param);
                     cmm.Connection = cnn;
                     cnn.Open();
                     var reader = cmm.ExecuteReader();
