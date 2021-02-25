@@ -8,6 +8,8 @@ using UAB.DAL.Models;
 using UAB.DTO;
 using UAB.DAL.LoginDTO;
 using System.Linq;
+using System.IO;
+using ExcelDataReader;
 
 namespace UAB.DAL
 {
@@ -2108,6 +2110,50 @@ namespace UAB.DAL
                 }
             }
             return providers;
+        }
+
+        public void UploadAndSave(FileStream stream, int projectId)
+        {
+            DataTable dtClinicalCase = new DataTable();
+            dtClinicalCase.Columns.Add("ID", typeof(int));
+            dtClinicalCase.Columns.Add("PatientMRN", typeof(string));
+            dtClinicalCase.Columns.Add("PatientLastName", typeof(string));
+            dtClinicalCase.Columns.Add("PatientFirstName", typeof(string));
+            dtClinicalCase.Columns.Add("DateOfService", typeof(string));
+            dtClinicalCase.Columns.Add("EncounterNumber", typeof(string));
+
+            using (var reader = ExcelReaderFactory.CreateReader(stream))
+            {
+                int i = 1;
+                while (reader.Read())
+                {
+                    dtClinicalCase.Rows.Add(i, reader.GetValue(0).ToString(), reader.GetValue(5).ToString(), reader.GetValue(7).ToString(), DateTime.Parse(reader.GetValue(10).ToString()), reader.GetValue(1).ToString());
+                    i += 1;
+                }
+            }
+
+            using (UABContext dbContext = new UABContext())
+            {
+                using (var connection = dbContext.Database.GetDbConnection())
+                {
+                    connection.Open();
+
+                    var cmd = connection.CreateCommand();
+                    cmd.CommandText = "[dbo].[USPLoadData]";
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    SqlParameter param1 = new SqlParameter("@utInputData", SqlDbType.Structured);
+                    param1.Value = dtClinicalCase;
+                    param1.TypeName = "dbo.utInputData";
+                    cmd.Parameters.Add(param1);
+
+                    SqlParameter param2 = new SqlParameter("@ProjectId", SqlDbType.Int);
+                    param2.Value = projectId;
+                    cmd.Parameters.Add(param2);
+
+                    cmd.ExecuteReader();
+                }
+            }
         }
     }
 }

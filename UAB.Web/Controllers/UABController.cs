@@ -10,6 +10,10 @@ using UAB.DTO;
 using UAB.DAL.Models;
 using UAB.enums;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.IO;
+using Microsoft.AspNetCore.Http;
+using ExcelDataReader;
+using System.Data;
 
 namespace UAB.Controllers
 {
@@ -858,6 +862,42 @@ namespace UAB.Controllers
                 obj = res;
             }
             return PartialView("_DeleteProject", obj);
+        }
+
+        [HttpGet]
+        public IActionResult SettingsFileUpload()
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+
+            ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult SettingsFileUpload(IFormFile files, int projectid)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            try
+            {
+                string uploadedFile = Path.Combine(@"D:\\");
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + files.FileName;
+                string filePath = Path.Combine(uploadedFile, uniqueFileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    files.CopyTo(stream);
+                    clinicalcaseOperations.UploadAndSave(stream, projectid);
+                }
+                TempData["Success"] = "Data uploaded Successfully!";
+                ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
+                return View();
+            }
+            catch(Exception ex)
+            {
+                ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
+                TempData["error"] = ex.Message;
+                return View();
+            }
         }
 
         #endregion
