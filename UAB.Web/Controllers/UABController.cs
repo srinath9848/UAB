@@ -367,8 +367,9 @@ namespace UAB.Controllers
         public IActionResult SubmitShadowQAAvailableChart(ChartSummaryDTO chartSummaryDTO)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            string statusId = Request.Form["hdnStatus"].ToString();
 
-            clinicalcaseOperations.SubmitShadowQAAvailableChart(chartSummaryDTO);
+            clinicalcaseOperations.SubmitShadowQAAvailableChart(chartSummaryDTO, Convert.ToInt32(statusId));
 
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.ShadowQA.ToString());
 
@@ -790,7 +791,7 @@ namespace UAB.Controllers
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
                 List<string> lstProvider = clinicalcaseOperations.GetProjectNames();
 
-                if(project.ProjectId == 0)
+                if (project.ProjectId == 0)
                 {
                     if (!lstProvider.Contains(project.Name.ToLower()))
                     {

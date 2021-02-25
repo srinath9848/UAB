@@ -6,6 +6,13 @@
                 <h4 class="card-title">Coding Details</h4>
             </div>
             @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { @class = "form-control" })
+
+            @{string status = "7"; }
+            @if (Model.QAPayorText == "" && Model.QAProviderText == "" && Model.QACPTCode == ""
+&& Model.QAMod == "" && Model.QADx == "" && Model.QAProviderFeedbackText == "")
+                status = "7";
+            <input type="hidden" value="@status" name="hdnStatus" />
+
             @*<div class="form-group row" id="divChkAll">
                     <label class="col-md-4 m-t-15"></label>
                     <div class="custom-control custom-checkbox mr-sm-2">
@@ -17,10 +24,10 @@
                 <label class="col-md-3 m-t-15">Payor</label>
                 <div class="col-md-3 input-group">
                     @*@{string Accepted = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                    @{string Rejected = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}*@
+                        @{string Rejected = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}*@
                     @{string PayorText = (!string.IsNullOrEmpty(Model.QAPayorText) ? Model.PayorText + "/" + Model.QAPayorText : Model.PayorText);}
 
-                    <input type="text" name ="PayorText" class="form-control CoderDetails" value="@PayorText" />
+                    <input type="text" name="PayorText" class="form-control CoderDetails" value="@PayorText" />
                     @*@Html.TextBox("PayorText", new { @class = "form-control CoderDetails", @Value = PayorText })*@
                     <div class="input-group-append">
                         <span class="input-group-text">
@@ -30,7 +37,7 @@
                     </div>
                 </div>
                 <div class="col-md-3 input-group">
-                    @Html.DropDownListFor(model => model.ShadowQAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = "PayorID1", @class = "form-control QARevised", @style = "display:none"  })
+                    @Html.DropDownListFor(model => model.ShadowQAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = "PayorID1", @class = "form-control QARevised", @style = "display:none" })
                 </div>
                 <div class="col-md-3 input-group">
                     @Html.TextBoxFor(model => model.ShadowQAPayorRemarks, new { @style = "display:none", @class = "form-control QARevised", @id = "PayorID2" })
@@ -40,7 +47,7 @@
                 <label class="col-md-3 m-t-15">Provider</label>
                 <div class="col-md-3 input-group">
                     @*@{ Accepted = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                    @{ Rejected = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}*@
+                        @{ Rejected = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}*@
                     @{string ProviderText = (!string.IsNullOrEmpty(Model.QAProviderText) ? Model.ProviderText + "/" + Model.QAProviderText : Model.ProviderText);}
 
                     <input type="text" name="ProviderText" class="form-control CoderDetails" value="@ProviderText" />
@@ -53,18 +60,18 @@
                     </div>
                 </div>
                 <div class="col-md-3 input-group">
-                    @Html.DropDownListFor(model => model.ShadowQAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = "ProviderID1", @class = "form-control QARevised", @style =  "display:none"  })
+                    @Html.DropDownListFor(model => model.ShadowQAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = "ProviderID1", @class = "form-control QARevised", @style = "display:none" })
 
                 </div>
                 <div class="col-md-3 input-group">
-                    @Html.TextBoxFor(model => model.ShadowQAProviderRemarks, new { @style = "display:none" , @class = "form-control QARevised", @id = "ProviderID2" })
+                    @Html.TextBoxFor(model => model.ShadowQAProviderRemarks, new { @style = "display:none", @class = "form-control QARevised", @id = "ProviderID2" })
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-md-3 m-t-15">CPT</label>
                 <div class="col-md-3 input-group">
                     @*@{ Accepted = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                    @{ Rejected = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}*@
+                        @{ Rejected = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}*@
                     @{string CPTCode = (!string.IsNullOrEmpty(Model.QACPTCode) ? Model.CPTCode + "/" + Model.QACPTCode : Model.CPTCode);}
 
                     <input type="text" name="CPTCode" class="form-control CoderDetails" value="@CPTCode" />
@@ -78,17 +85,17 @@
                     </div>
                 </div>
                 <div class="col-md-3 input-group">
-                    @Html.TextAreaFor(model => model.ShadowQACPTCode, new { @style ="display:none" , @id = "CPTCode1", @class = "form-control QARevised" })
+                    @Html.TextAreaFor(model => model.ShadowQACPTCode, new { @style = "display:none", @id = "CPTCode1", @class = "form-control QARevised" })
                 </div>
                 <div class="col-md-3 input-group">
-                    @Html.TextBoxFor(model => model.ShadowQACPTCodeRemarks, new { @style =  "display:none" , @class = "form-control QARevised", @id = "CPTCode2" })
+                    @Html.TextBoxFor(model => model.ShadowQACPTCodeRemarks, new { @style = "display:none", @class = "form-control QARevised", @id = "CPTCode2" })
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-md-3 m-t-15">Mod</label>
                 <div class="col-md-3 input-group">
                     @*@{ Accepted = (string.IsNullOrEmpty(Model.QAModRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                    @{ Rejected = (string.IsNullOrEmpty(Model.QAModRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}*@
+                        @{ Rejected = (string.IsNullOrEmpty(Model.QAModRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}*@
                     @{string Mod = (!string.IsNullOrEmpty(Model.QAMod) ? Model.Mod + "/" + Model.QAMod : Model.Mod);}
 
                     <input type="text" name="Mod" class="form-control CoderDetails" value="@Mod" />
@@ -100,17 +107,17 @@
                     </span>
                 </div>
                 <div class="col-md-3 input-group">
-                    @Html.TextAreaFor(model => model.ShadowQAMod, new { @style = "display:none" , @class = "form-control QARevised", @id = "Mod1" })
+                    @Html.TextAreaFor(model => model.ShadowQAMod, new { @style = "display:none", @class = "form-control QARevised", @id = "Mod1" })
                 </div>
                 <div class="col-md-3 input-group">
-                    @Html.TextBoxFor(model => model.ShadowQAModRemarks, new { @style =  "display:none" , @class = "form-control QARevised", @id = "Mod2" })
+                    @Html.TextBoxFor(model => model.ShadowQAModRemarks, new { @style = "display:none", @class = "form-control QARevised", @id = "Mod2" })
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-md-3 m-t-15" style="margin-left:10px">Dx</label>
                 <div class="col-md-3 input-group">
                     @*@{ Accepted = (string.IsNullOrEmpty(Model.QADxRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                    @{ Rejected = (string.IsNullOrEmpty(Model.QADxRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}*@
+                        @{ Rejected = (string.IsNullOrEmpty(Model.QADxRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}*@
                     @{string Dx = (!string.IsNullOrEmpty(Model.QADx) ? Model.Dx + "/" + Model.QADx : Model.Dx);}
 
                     <input type="text" name="Dx" class="form-control CoderDetails" value="@Dx" />
@@ -122,7 +129,7 @@
                     </span>
                 </div>
                 <div class="col-md-3 input-group">
-                    @Html.TextAreaFor(model => model.ShadowQADx, new { @style = "display:none" , @id = "Dx1", @class = "form-control QARevised" })
+                    @Html.TextAreaFor(model => model.ShadowQADx, new { @style = "display:none", @id = "Dx1", @class = "form-control QARevised" })
                 </div>
                 <div class="col-md-3 input-group">
                     @Html.TextBoxFor(model => model.ShadowQADxRemarks, new { @style = "display:none", @class = "form-control QARevised", @id = "Dx2" })
@@ -132,7 +139,7 @@
                 <label class="col-md-3 m-t-15"> Feedback to Provider</label>
                 <div class="col-md-3 input-group">
                     @*@{ Accepted = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                    @{ Rejected = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}*@
+                        @{ Rejected = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}*@
                     @{string ProviderFeedbackText = (!string.IsNullOrEmpty(Model.QAProviderFeedbackText) ? Model.ProviderFeedbackText + "/" + Model.QAProviderFeedbackText : Model.ProviderFeedbackText);}
 
                     <input type="text" name="ProviderFeedbackText" class="form-control CoderDetails" value="@ProviderFeedbackText" />
