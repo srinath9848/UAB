@@ -1,0 +1,32 @@
+﻿@model UAB.DAL.LoginDTO.ApplicationUser
+
+<form asp-action="DeleteProjectUser" asp-controller="Account" method="POST">
+    @Html.HiddenFor(m => m.ProjectUserId)
+    <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 500px;">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Project User Confirm ?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal" action="">
+                        <div class="col-sm-12">
+
+                            <strong>Project</strong>&nbsp;&nbsp;<label>@Model.ProjectName</label>
+                            <br />
+                            <strong>Role</strong>&nbsp;&nbsp;<label>@Model.RoleName</label>
+                            <br />
+                            <b>If you delete this, then associated information will also get deleted.</b>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-sm btn-info btn-fill"> Delete</button>
+                    <a href="@Url.Action("ManageUsers","Account")" class="btn btn-sm btn-danger btn-fill">Cancel</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1217,6 +1217,13 @@ namespace UAB.DAL
                 return GetProjects();
             }
         }
+        public List<Status> GetStatusList() 
+        {
+            using (var context = new UABContext())
+            {
+                return context.Status.ToList();
+            }
+        }
         public List<Role> GetRolesList()
         {
             using (var context = new UABContext())
@@ -1296,6 +1303,27 @@ namespace UAB.DAL
                 return context.User.ToList();
             }
         }
+        public ApplicationUser GetProjectUser (int projectuserid)
+        {
+            using (var context = new UABContext())
+            {
+                var res= context.ProjectUser.Where(a=>a.ProjectUserId==projectuserid).FirstOrDefault();
+
+                var project  = context.Project.Where(a=>a.ProjectId==res.ProjectId).FirstOrDefault();
+                var roles = context.Role.Where(a => a.RoleId == res.RoleId).FirstOrDefault();
+                var useremail = context.User.Where(a => a.UserId == res.UserId).FirstOrDefault().Email;
+                ApplicationUser applicationUser = new ApplicationUser();
+                applicationUser.UserId = res.UserId;
+                applicationUser.Email = useremail;
+                applicationUser.ProjectId = res.ProjectId;
+                applicationUser.ProjectName = project.Name;
+                applicationUser.RoleId = res.RoleId;
+                applicationUser.RoleName = roles.Name;
+                applicationUser.SamplePercentage = res.SamplePercentage.ToString();
+                return applicationUser;
+            }
+            
+        }
         public List<ApplicationUser> GetUsers(int userId)
         {
             ApplicationUser applicationUser = new ApplicationUser();
@@ -1307,8 +1335,14 @@ namespace UAB.DAL
                 {
                     var cmm = cnn.CreateCommand();
                     cmm.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmm.CommandText = "[dbo].[UspGetUsers]";
+                    cmm.CommandText = "[dbo].[UspGetUser]";
                     cmm.Connection = cnn;
+
+                    SqlParameter param = new SqlParameter();
+                    param.ParameterName = "@userId";
+                    param.Value = userId;
+                    cmm.Parameters.Add(param);
+                     
                     cnn.Open();
                     var reader = cmm.ExecuteReader();
 
@@ -1323,23 +1357,12 @@ namespace UAB.DAL
                         applicationUser.ProjectId = Convert.ToInt32(reader["ProjectId"]);
                         applicationUser.ProjectName = Convert.ToString(reader["ProjectName"]);
                         applicationUser.ProjectUserId = Convert.ToInt32(reader["ProjectUserId"]);
+                        applicationUser.SamplePercentage = Convert.ToString(reader["SamplePercentage"]);
                         lstApplicationUser.Add(applicationUser);
                     }
                 }
             }
-            var res = lstApplicationUser.Where(a => a.UserId == userId).ToList();
-            string temp = null;
-
-            foreach (var item in res)
-            {
-                temp = temp + item.ProjectName + "^" + item.RoleName + ",";
-            }
-            var length = temp.Length;
-            string initial = temp.Substring(0, length - 1);
-            applicationUser = res.FirstOrDefault();
-            applicationUser.hdnProjectAndRole = initial;
-            res[0] = applicationUser;
-            return res;
+            return lstApplicationUser;
         }
 
         public User Getuser(int UserId)
@@ -1359,14 +1382,17 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                UAB.DAL.Models.User mdl = new User();
-                mdl.Email = user.Email;
-                mdl.IsActive = user.IsActive;
+                var existing = context.User.Where(a => a.Email == user.Email).FirstOrDefault();
+                if (existing==null) {
+                    UAB.DAL.Models.User mdl = new User();
+                    mdl.Email = user.Email;
+                    mdl.IsActive = user.IsActive;
 
-                context.User.Add(mdl);
-                context.SaveChanges();
-
-                return mdl.UserId;
+                    context.User.Add(mdl);
+                    context.SaveChanges();
+                    return mdl.UserId;
+                }
+                return existing.UserId;
             }
         }
         public void AddProjectUser(ApplicationUser user)
@@ -1377,36 +1403,53 @@ namespace UAB.DAL
                 mdl.UserId = user.UserId;
                 mdl.ProjectId = context.Project.Where(a => a.Name == user.ProjectName).Select(a => a.ProjectId).FirstOrDefault();
                 mdl.RoleId = context.Role.Where(a => a.Name == user.RoleName).Select(a => a.RoleId).FirstOrDefault();
-
+                mdl.SamplePercentage = Convert.ToInt32(user.SamplePercentage);
+                
                 context.ProjectUser.Add(mdl);
                 context.SaveChanges();
             }
         }
-        public void UpdateProjectUser(List<ApplicationUser> userslist)
+        public void UpdateProjectUser  (ApplicationUser projectuser )
         {
             using (var context = new UABContext())
             {
-
-
-
-                //delete projectuser
-                var exsitingProjectuserlist = context.ProjectUser.Where(a => a.UserId == userslist.First().UserId).ToList();
-                context.ProjectUser.RemoveRange(exsitingProjectuserlist);
-                context.SaveChanges();
-
-
-                //add project user
-                var Projectslist = context.Project.ToList();
-                var Rolesslist = context.Role.ToList();
-                foreach (var item in userslist)
+                var existingprojectuser = context.ProjectUser.First(a => a.ProjectUserId == projectuser.ProjectUserId);
+                if (existingprojectuser.RoleId != projectuser.RoleId && existingprojectuser.SamplePercentage==Convert.ToInt32(projectuser.SamplePercentage))
                 {
-                    UAB.DAL.Models.ProjectUser mdl = new ProjectUser();
-                    mdl.UserId = item.UserId;
-                    mdl.ProjectId = Projectslist.Where(a => a.Name == item.ProjectName).First().ProjectId;
-                    mdl.RoleId = Rolesslist.Where(a => a.Name == item.RoleName).First().RoleId;
-
-                    context.ProjectUser.Add(mdl);
+                    existingprojectuser.RoleId = projectuser.RoleId;
+                    context.Entry(existingprojectuser).State = EntityState.Modified;
                     context.SaveChanges();
+                }
+                if (existingprojectuser.RoleId == projectuser.RoleId && existingprojectuser.SamplePercentage != Convert.ToInt32(projectuser.SamplePercentage))
+                {
+                    existingprojectuser.SamplePercentage = Convert.ToInt32(projectuser.SamplePercentage);
+                    context.Entry(existingprojectuser).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
+                if (existingprojectuser.RoleId != projectuser.RoleId && existingprojectuser.SamplePercentage != Convert.ToInt32(projectuser.SamplePercentage))
+                {
+                    existingprojectuser.RoleId = projectuser.RoleId;
+                    existingprojectuser.SamplePercentage = Convert.ToInt32(projectuser.SamplePercentage);
+                    context.Entry(existingprojectuser).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
+            }
+        }
+        
+        public void DeletetProjectUser (int ProjectUserId) 
+        {
+            using (var context = new UABContext())
+            {
+                var exsitingProjectuser = context.ProjectUser.Where(a => a.ProjectUserId == ProjectUserId).FirstOrDefault();
+
+                if (exsitingProjectuser != null)
+                {
+                    context.ProjectUser.Remove(exsitingProjectuser);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable To Delete User : User Not there in UAB");
                 }
 
             }

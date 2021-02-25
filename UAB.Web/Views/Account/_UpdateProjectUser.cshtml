@@ -1,0 +1,50 @@
+﻿@model UAB.DAL.LoginDTO.ApplicationUser
+
+<form asp-action="UpdateProjectUser" asp-controller="Account" method="POST">
+    @Html.HiddenFor(m => m.UserId)
+    @Html.HiddenFor(m => m.ProjectUserId)
+    <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 500px;">
+                <div class="modal-header">
+                    <h4 class="modal-title">Update Project User </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal" action="">
+                        <div class="col-sm-12">
+                            <label class="lblUsers">Email:</label>
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @readonly = "readonly" })
+                        </div>
+                        <br />
+                        <div class="col-sm-12">
+                            <label class="lblUsers">Project:</label>
+                            @Html.TextBoxFor(model => model.ProjectName, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @readonly = "readonly" })
+                        </div>
+                        <br />
+                        <div class="col-sm-12">
+                            <label class="lblUsers">Role:</label>
+                            @Html.DropDownListFor(model => model.RoleId, new SelectList(@ViewBag.Roles, "RoleId", "Name"), "--Select a Role--", new { @id = "roledd", @class = "form-control CoderDetails" })
+                            @Html.ValidationMessageFor(model => model.RoleId, null, new { @class = "text-danger" })
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        </div>
+                        <br />
+                        <div class="col-sm-12">
+                            <label class="lblUsers">Sample%:</label>
+                            @Html.TextBoxFor(model => model.SamplePercentage, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @id = "samplepercentage", @placeholder = "Enter Sample Percentage" })
+                            @Html.ValidationMessageFor(model => model.RoleId, null, new { @class = "text-danger" })
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-sm btn-info btn-fill">Update</button>
+                    <a href="@Url.Action("ManageUsers","Account")" class="btn btn-sm btn-danger btn-fill">Cancel</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+

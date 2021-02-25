@@ -19,7 +19,7 @@ namespace UAB.DAL.LoginDTO
         public int ProjectId { get; set; } 
         public string ProjectName  { get; set; }
         public int ProjectUserId { get; set; }
-
+        public string SamplePercentage  { get; set; }
         public string hdnProjectAndRole { get; set; } 
     }
 }

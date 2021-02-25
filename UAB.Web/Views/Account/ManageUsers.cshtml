@@ -56,14 +56,14 @@
                             <tbody>
                                 @foreach (var item in result)
                                 {
-                                <tr>
-                                    <td>
-                                        <button type="button" style="cursor: pointer" class="btn btn-sm btn-info btn-fill" onclick="Edit('@item.UserId')"><i class="fa fa-edit"></i>Edit</button>
-                                        <button type="button" style="cursor: pointer" class="btn btn-sm btn-danger btn-fill" onclick="Delete('@item.UserId')"><i class="fa fa-times"></i>Delete</button>
-                                    </td>
-                                    <td>@item.Email</td>
-                                    <td>@item.IsActive</td>
-                                </tr>
+                                    <tr>
+                                        <td>
+                                            <button type="button" style="cursor: pointer" class="btn btn-sm btn-info btn-fill" onclick="Edit('@item.UserId')"><i class="fa fa-edit"></i>Details</button>
+                                            <button type="button" style="cursor: pointer" class="btn btn-sm btn-danger btn-fill" onclick="Delete('@item.UserId')"><i class="fa fa-times"></i>Delete</button>
+                                        </td>
+                                        <td>@item.Email</td>
+                                        <td>@item.IsActive</td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>

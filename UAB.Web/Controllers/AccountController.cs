@@ -100,6 +100,7 @@ namespace UAB.Controllers
                         {
                             model.ProjectName = item.Split('^')[0];
                             model.RoleName = item.Split('^')[1];
+                            model.SamplePercentage = item.Split('^')[2];
 
                             model.UserId = UserId;
 
@@ -130,62 +131,11 @@ namespace UAB.Controllers
         public ActionResult UpdateUser(int userId)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-
-            ViewBag.Identityusers = clinicalcaseOperations.GetIdentityUsersList();
-            ViewBag.Roles = clinicalcaseOperations.GetRolesList();
-            ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
-
             var users = clinicalcaseOperations.GetUsers(userId);
+            ViewBag.users = users;
 
-
-            if (users != null)
-            {
-
-                return PartialView("_UpdateUser", users);
-
-            }
-            else
-            {
-                TempData["Error"] = "Unable to get user ";
-                return RedirectToAction("ManageUsers");
-            }
-
+            return PartialView("_UpdateUser", users);
         }
-        [HttpPost]
-        public ActionResult UpdateUser(ApplicationUser model, string ProjectAndRole = null)
-        {
-            try
-            {
-                ProjectAndRole = model.hdnProjectAndRole;
-                if (model.Email != null && !string.IsNullOrEmpty(ProjectAndRole))
-                {
-                    List<ApplicationUser> list = new List<ApplicationUser>();
-                    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-
-                    foreach (string item in ProjectAndRole.Split(','))
-                    {
-                        ApplicationUser applicationUser = new ApplicationUser();
-
-                        applicationUser.ProjectName = item.Split('^')[0];
-                        applicationUser.RoleName = item.Split('^')[1];
-                        applicationUser.UserId = model.UserId;
-
-                        list.Add(applicationUser);
-                    }
-                    if (list != null)
-                    {
-                        clinicalcaseOperations.UpdateProjectUser(list);
-                        TempData["Success"] = "Successfully Updated  User";
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                TempData["error"] = ex.Message;
-            }
-            return RedirectToAction("ManageUsers");
-        }
-
         [HttpGet]
         public IActionResult DeleteUser(int userId)
         {
@@ -216,6 +166,115 @@ namespace UAB.Controllers
                     ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
                     clinicalcaseOperations.DeletetUser(user.UserId);
                     TempData["Success"] = "Successfully Deleted User";
+                    return RedirectToAction("ManageUsers");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+            return RedirectToAction("ManageUsers");
+        }
+
+        [HttpGet]
+        public ActionResult AddProjectUser(int userId)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+
+            ViewBag.Roles = clinicalcaseOperations.GetRolesList();
+            ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
+
+            ApplicationUser appuser = new ApplicationUser();
+            var user= clinicalcaseOperations.Getuser(userId);
+            appuser.Email = user.Email;
+            return PartialView("_AddProjectUser", appuser);
+        }
+        [HttpPost]
+        public ActionResult AddProjectUser(ApplicationUser model, string ProjectAndRole = null)
+        {
+            try
+            {
+                if (model.Email != null && !string.IsNullOrEmpty(ProjectAndRole))
+                {
+                    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                    int UserId = clinicalcaseOperations.AddUser(model); //adding user to user table ,if user alredy exist then it will just bring that userid
+
+                    if (UserId != 0)
+                    {
+                        foreach (string item in ProjectAndRole.Split(','))
+                        {
+                            model.ProjectName = item.Split('^')[0];
+                            model.RoleName = item.Split('^')[1];
+                            model.SamplePercentage = item.Split('^')[2];
+
+                            model.UserId = UserId;
+
+                            clinicalcaseOperations.AddProjectUser(model); //adding user to projectuser table
+                        }
+                        TempData["Success"] = "Successfully Project Added User";
+                    }
+                    else
+                    {
+                        TempData["Warning"] = "Unable to add user to projects :User not there in UAB";
+                    }
+
+                }
+                else
+                {
+                    TempData["Error"] = "Unable to add user : Select Email or Project or Role";
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+
+            return RedirectToAction("ManageUsers");
+        }
+        [HttpGet]
+        public IActionResult UpdateProjectUser(int projectuserid)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            var projectuser = clinicalcaseOperations.GetProjectUser(projectuserid);
+            ViewBag.Roles = clinicalcaseOperations.GetRolesList();
+
+            return PartialView("_UpdateProjectUser", projectuser);
+        }
+        [HttpPost]
+        public IActionResult UpdateProjectUser(ApplicationUser model, string user  = null)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            clinicalcaseOperations.UpdateProjectUser(model);
+
+            TempData["Success"] = "Successfully Project User Updated";
+
+            //return RedirectToAction("UpdateUser", new { model.UserId });
+
+            return RedirectToAction("ManageUsers");
+            
+        }
+        [HttpGet]
+        public IActionResult DeleteProjectUser(int projectuserid)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            var projectuser = clinicalcaseOperations.GetProjectUser(projectuserid);
+            ViewBag.Roles = clinicalcaseOperations.GetRolesList();
+
+
+            return PartialView("_DeleteProjectUser", projectuser);
+        }
+        [HttpPost]
+        public IActionResult DeleteProjectUser(ApplicationUser model, string user  = null)
+        {
+
+            try
+            {
+                if (model.ProjectUserId != 0)
+                {
+                    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                    clinicalcaseOperations.DeletetProjectUser(model.ProjectUserId);
+                    TempData["Success"] = "Successfully Project User Deleted";
                     return RedirectToAction("ManageUsers");
                 }
 
