@@ -1,0 +1,88 @@
+﻿@model UAB.DAL.Models.ApplicationProject
+@{
+    ViewData["Title"] = "File Upload";
+}
+
+<form method="post" enctype="multipart/form-data" asp-controller="UAB" asp-action="SettingsFileUpload">
+    <div class="col-12 card">
+        <div class="form-group card-body">
+            <div class="col-md-6">
+                <h5 class="card" style="width:300px">Upload File</h5>
+                @await Html.PartialAsync("_Msg")
+            </div>
+            <div style="width:286px" class="col-md-10">
+                @Html.DropDownListFor(model => model.ProjectId, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select a Project--", new { @id = "projectid", @class = "form-control CoderDetails" })
+                @Html.ValidationMessageFor(model => model.ProjectId, null, new { @class = "text-danger" })
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            </div>
+            <br />
+            <div class="col-md-10">
+                <input class="btn btn-sm btn-info btn-fill" type="file" name="files" multiple />
+            </div>
+            <br />
+            <div class="col-md-10">
+                <button class="btn btn-sm btn-info btn-fill" type="submit" value="Upload">Upload</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<form asp-action="Upload" asp-controller="UAB" method="POST">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card">File Upload</h5>
+                            @await Html.PartialAsync("_Msg")
+
+                            <div id="modalContent"></div>
+                            <div class="table-responsive col-8">
+
+
+                                <div class="col-md-10">
+                                    @using (Html.BeginForm("Upload",
+                             "UAB",
+                             FormMethod.Post,
+                             new { enctype = "multipart/form-data" }))
+                                    {
+                                        <div class="col-md-10">
+                                            @Html.DropDownListFor(model => model.ProjectId, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select a Project--", new { @id = "projectid", @class = "form-control CoderDetails" })
+                                            @Html.ValidationMessageFor(model => model.ProjectId, null, new { @class = "text-danger" })
+                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        </div>
+                                        <br />
+                                        <label for="file">Upload File:</label>
+                                        <input type="file" name="file" id="file" /><br><br>
+                                        <button type="submit" value="Upload" >Upload</button>
+                                        <br><br>
+                                        @ViewBag.Message
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>*@
