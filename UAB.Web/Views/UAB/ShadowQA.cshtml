@@ -26,6 +26,8 @@
             $('.fa-times-circle').removeClass('reject')
             $('.QARevised').css("display", "none");
             $(".CodingDetails").hide();
+            $(".QARevised").val('');
+            $(".errMsg").text('');
         }
         else {
             $('.fa-check-circle').removeClass('accept');
@@ -50,4 +52,19 @@
             $("#chkAll").prop('checked', false);
         }
     });
+
+    $('#btnsubmit').click(function (e) {
+        var total = $(".fa-check-circle").length;
+        var reject = $(".reject").length;
+        var accept = $(".accept").length;
+        if (total != accept + reject) {
+            $("#validationPopUp").show();
+            e.preventDefault();
+        }
+
+    });
+
+    validationPopUp = function () {
+        $("#validationPopUp").hide();
+    };
 </script>

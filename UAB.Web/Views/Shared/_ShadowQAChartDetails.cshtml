@@ -3,23 +3,23 @@
     <form asp-action="SubmitShadowQA" asp-controller="UAB" method="POST">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Coding Details</h4>
+                <h4 class="card-title">Coder/QA Details</h4>
             </div>
             @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { @class = "form-control" })
 
-            @{string status = "7"; }
+            @{string status = "10"; }
             @if (Model.QAPayorText == "" && Model.QAProviderText == "" && Model.QACPTCode == ""
 && Model.QAMod == "" && Model.QADx == "" && Model.QAProviderFeedbackText == "")
                 status = "7";
             <input type="hidden" value="@status" name="hdnStatus" />
 
-            @*<div class="form-group row" id="divChkAll">
-                    <label class="col-md-4 m-t-15"></label>
-                    <div class="custom-control custom-checkbox mr-sm-2">
-                        <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll">
-                        <label class="custom-control-label" for="chkAll">Accept All</label>
-                    </div>
-                </div>*@
+            <div class="form-group row" id="divChkAll">
+                <label class="col-md-4 m-t-15"></label>
+                <div class="custom-control custom-checkbox mr-sm-2">
+                    <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll">
+                    <label class="custom-control-label" for="chkAll">Accept All</label>
+                </div>
+            </div>
             <div class="form-group row">
                 <label class="col-md-3 m-t-15">Payor</label>
                 <div class="col-md-3 input-group">
@@ -38,9 +38,11 @@
                 </div>
                 <div class="col-md-3 input-group">
                     @Html.DropDownListFor(model => model.ShadowQAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = "PayorID1", @class = "form-control QARevised", @style = "display:none" })
+                    @Html.ValidationMessageFor(model => model.ShadowQAPayorID, null, new { @class = "text-danger errMsg" })
                 </div>
                 <div class="col-md-3 input-group">
                     @Html.TextBoxFor(model => model.ShadowQAPayorRemarks, new { @style = "display:none", @class = "form-control QARevised", @id = "PayorID2" })
+                    @Html.ValidationMessageFor(model => model.ShadowQAPayorRemarks, null, new { @class = "text-danger errMsg" })
                 </div>
             </div>
             <div class="form-group row">
@@ -61,10 +63,11 @@
                 </div>
                 <div class="col-md-3 input-group">
                     @Html.DropDownListFor(model => model.ShadowQAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = "ProviderID1", @class = "form-control QARevised", @style = "display:none" })
-
+                    @Html.ValidationMessageFor(model => model.ShadowQAProviderID, null, new { @class = "text-danger errMsg" })
                 </div>
                 <div class="col-md-3 input-group">
                     @Html.TextBoxFor(model => model.ShadowQAProviderRemarks, new { @style = "display:none", @class = "form-control QARevised", @id = "ProviderID2" })
+                    @Html.ValidationMessageFor(model => model.ShadowQAProviderRemarks, null, new { @class = "text-danger errMsg" })
                 </div>
             </div>
             <div class="form-group row">
@@ -86,9 +89,11 @@
                 </div>
                 <div class="col-md-3 input-group">
                     @Html.TextAreaFor(model => model.ShadowQACPTCode, new { @style = "display:none", @id = "CPTCode1", @class = "form-control QARevised" })
+                    @Html.ValidationMessageFor(model => model.ShadowQACPTCode, null, new { @class = "text-danger errMsg" })
                 </div>
                 <div class="col-md-3 input-group">
                     @Html.TextBoxFor(model => model.ShadowQACPTCodeRemarks, new { @style = "display:none", @class = "form-control QARevised", @id = "CPTCode2" })
+                    @Html.ValidationMessageFor(model => model.ShadowQACPTCodeRemarks, null, new { @class = "text-danger errMsg" })
                 </div>
             </div>
             <div class="form-group row">
@@ -108,9 +113,13 @@
                 </div>
                 <div class="col-md-3 input-group">
                     @Html.TextAreaFor(model => model.ShadowQAMod, new { @style = "display:none", @class = "form-control QARevised", @id = "Mod1" })
+                    @Html.ValidationMessageFor(model => model.ShadowQAMod, null, new { @class = "text-danger errMsg" })
+
                 </div>
                 <div class="col-md-3 input-group">
                     @Html.TextBoxFor(model => model.ShadowQAModRemarks, new { @style = "display:none", @class = "form-control QARevised", @id = "Mod2" })
+                    @Html.ValidationMessageFor(model => model.ShadowQAModRemarks, null, new { @class = "text-danger errMsg" })
+
                 </div>
             </div>
             <div class="form-group row">
@@ -130,9 +139,11 @@
                 </div>
                 <div class="col-md-3 input-group">
                     @Html.TextAreaFor(model => model.ShadowQADx, new { @style = "display:none", @id = "Dx1", @class = "form-control QARevised" })
+                    @Html.ValidationMessageFor(model => model.ShadowQADx, null, new { @class = "text-danger errMsg" })
                 </div>
                 <div class="col-md-3 input-group">
                     @Html.TextBoxFor(model => model.ShadowQADxRemarks, new { @style = "display:none", @class = "form-control QARevised", @id = "Dx2" })
+                    @Html.ValidationMessageFor(model => model.ShadowQADxRemarks, null, new { @class = "text-danger errMsg" })
                 </div>
             </div>
             <div class="form-group row">
@@ -154,9 +165,13 @@
                 </div>
                 <div class="col-md-3 input-group">
                     @Html.DropDownListFor(model => model.ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = "display:none", @class = "form-control QARevised", @id = "Feedback1" })
+                    @Html.ValidationMessageFor(model => model.ShadowQAProviderFeedbackID, null, new { @class = "text-danger errMsg" })
+
                 </div>
                 <div class="col-md-3 input-group">
                     @Html.TextBoxFor(model => model.ShadowQAProviderFeedbackRemarks, new { @style = "display:none", @class = "form-control QARevised", @id = "Feedback2" })
+                    @Html.ValidationMessageFor(model => model.ShadowQAProviderFeedbackRemarks, null, new { @class = "text-danger errMsg" })
+
                 </div>
             </div>
             <div class="form-group row">
@@ -249,7 +264,7 @@
                     </div>
                     <div class="border-top" id="ShadowQADetails">
                         <div class="card-body" style="text-align:right">
-                            <button type="submit" class="btn btn-success">Submit</button>
+                            <button type="submit" id="btnsubmit" class="btn btn-success">Submit</button>
                         </div>
                     </div>
                 </div>
@@ -260,6 +275,10 @@
 
 
 <style>
+    .errMsg {
+        font-weight: bold;
+        font-size: 20px;
+    }
     #sortable-1 {
         list-style-type: none;
         margin: 0;

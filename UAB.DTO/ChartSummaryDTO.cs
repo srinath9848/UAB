@@ -68,19 +68,29 @@ namespace UAB.DTO
         public string QAProviderFeedbackRemarks { get; set; }
 
         public int ProjectID { get; set; }
+        [Required(ErrorMessage = "*")]
         public int ShadowQAPayorID { get; set; }
-
+        [Required(ErrorMessage = "*")]
         public string ShadowQAPayorRemarks { get; set; }
+        [Required(ErrorMessage = "*")]
         public int ShadowQAProviderID { get; set; }
-
+        [Required(ErrorMessage = "*")]
         public string ShadowQAProviderRemarks { get; set; }
+        [Required(ErrorMessage = "*")]
         public string ShadowQAMod { get; set; }
+        [Required(ErrorMessage = "*")]
         public string ShadowQAModRemarks { get; set; }
+        [Required(ErrorMessage = "*")]
         public string ShadowQADx { get; set; }
+        [Required(ErrorMessage = "*")]
         public string ShadowQADxRemarks { get; set; }
+        [Required(ErrorMessage = "*")]
         public string ShadowQACPTCode { get; set; }
+        [Required(ErrorMessage = "*")]
         public string ShadowQACPTCodeRemarks { get; set; }
+        [Required(ErrorMessage = "*")]
         public int ShadowQAProviderFeedbackID { get; set; }
+        [Required(ErrorMessage = "*")]
         public string ShadowQAProviderFeedbackRemarks { get; set; }
 
 
