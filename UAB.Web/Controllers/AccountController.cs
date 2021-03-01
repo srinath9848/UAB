@@ -128,13 +128,19 @@ namespace UAB.Controllers
         }
 
         [HttpGet]
-        public ActionResult UpdateUser(int userId)
+        [Route("Account/UserDetails")]
+        [Route("UserDetails/{userId}")]
+        public ActionResult UserDetails(int userId)
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-            var users = clinicalcaseOperations.GetUsers(userId);
-            ViewBag.users = users;
-
-            return PartialView("_UpdateUser", users);
+            if (userId!=0)
+            {
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                var UserProjects = clinicalcaseOperations.GetUserProjects(userId);
+                ViewBag.UserProjects = UserProjects;
+                return View("UserDetails", UserProjects);
+            }
+            return RedirectToAction("ManageUsers");
+            
         }
         [HttpGet]
         public IActionResult DeleteUser(int userId)
@@ -188,50 +194,31 @@ namespace UAB.Controllers
             ApplicationUser appuser = new ApplicationUser();
             var user= clinicalcaseOperations.Getuser(userId);
             appuser.Email = user.Email;
+            appuser.UserId = user.UserId;
             return PartialView("_AddProjectUser", appuser);
         }
         [HttpPost]
         public ActionResult AddProjectUser(ApplicationUser model, string ProjectAndRole = null)
         {
-            try
-            {
-                if (model.Email != null && !string.IsNullOrEmpty(ProjectAndRole))
+            
+                if (model.UserId != 0 && !string.IsNullOrEmpty(ProjectAndRole))
                 {
                     ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-                    int UserId = clinicalcaseOperations.AddUser(model); //adding user to user table ,if user alredy exist then it will just bring that userid
-
-                    if (UserId != 0)
-                    {
+                   
                         foreach (string item in ProjectAndRole.Split(','))
                         {
                             model.ProjectName = item.Split('^')[0];
                             model.RoleName = item.Split('^')[1];
                             model.SamplePercentage = item.Split('^')[2];
 
-                            model.UserId = UserId;
-
-                            clinicalcaseOperations.AddProjectUser(model); //adding user to projectuser table
+                            clinicalcaseOperations.AddProjectUser(model);
                         }
                         TempData["Success"] = "Successfully Project Added User";
-                    }
-                    else
-                    {
-                        TempData["Warning"] = "Unable to add user to projects :User not there in UAB";
-                    }
-
+                    return RedirectToAction("UserDetails", new { UserId = model.UserId });
                 }
-                else
-                {
-                    TempData["Error"] = "Unable to add user : Select Email or Project or Role";
-                }
-            }
-            catch (Exception ex)
-            {
-                TempData["Error"] = ex.Message;
-            }
-
-            return RedirectToAction("ManageUsers");
+                return RedirectToAction("ManageUsers");
         }
+
         [HttpGet]
         public IActionResult UpdateProjectUser(int projectuserid)
         {
@@ -245,14 +232,19 @@ namespace UAB.Controllers
         public IActionResult UpdateProjectUser(ApplicationUser model, string user  = null)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-            clinicalcaseOperations.UpdateProjectUser(model);
+            int i =clinicalcaseOperations.UpdateProjectUser(model);
+            if (i==1)
+            {
+                TempData["Success"] = "Successfully Project User Updated";
+                return RedirectToAction("UserDetails", new { UserId = model.UserId });
+            }
+            else
+            {
+                TempData["Warning"] = "Unable to  update  project user :no change is there";
+                return RedirectToAction("UserDetails", new { UserId = model.UserId });
+            }
+           
 
-            TempData["Success"] = "Successfully Project User Updated";
-
-            //return RedirectToAction("UpdateUser", new { model.UserId });
-
-            return RedirectToAction("ManageUsers");
-            
         }
         [HttpGet]
         public IActionResult DeleteProjectUser(int projectuserid)
@@ -275,7 +267,7 @@ namespace UAB.Controllers
                     ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
                     clinicalcaseOperations.DeletetProjectUser(model.ProjectUserId);
                     TempData["Success"] = "Successfully Project User Deleted";
-                    return RedirectToAction("ManageUsers");
+                    return RedirectToAction("UserDetails", new { UserId  = model.UserId });
                 }
 
             }

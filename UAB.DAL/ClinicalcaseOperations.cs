@@ -1386,7 +1386,7 @@ namespace UAB.DAL
             }
             
         }
-        public List<ApplicationUser> GetUsers(int userId)
+        public List<ApplicationUser> GetUserProjects (int userId)
         {
             ApplicationUser applicationUser = new ApplicationUser();
             List<ApplicationUser> lstApplicationUser = new List<ApplicationUser>();
@@ -1424,6 +1424,21 @@ namespace UAB.DAL
                     }
                 }
             }
+            if (lstApplicationUser.Count == 0)
+            {
+                using (var context = new UABContext())
+                {
+                    var user = context.User.Where(a => a.UserId == userId).FirstOrDefault();
+                    applicationUser = new ApplicationUser();
+                    applicationUser.Email = user.Email;
+                    applicationUser.UserId = user.UserId;
+                    applicationUser.RoleId = 0;
+                    applicationUser.ProjectId = 0;
+                    applicationUser.RoleName = "";
+                    applicationUser.ProjectName = "";
+                    lstApplicationUser.Add(applicationUser);
+                }
+            }
             return lstApplicationUser;
         }
 
@@ -1435,6 +1450,8 @@ namespace UAB.DAL
                 User mdl = new User()
                 {
                     Email = user.Email,
+                    UserId=UserId,
+                    IsActive=user.IsActive
                 };
                 return mdl;
             }
@@ -1466,35 +1483,49 @@ namespace UAB.DAL
                 mdl.ProjectId = context.Project.Where(a => a.Name == user.ProjectName).Select(a => a.ProjectId).FirstOrDefault();
                 mdl.RoleId = context.Role.Where(a => a.Name == user.RoleName).Select(a => a.RoleId).FirstOrDefault();
                 mdl.SamplePercentage = Convert.ToInt32(user.SamplePercentage);
-                
-                context.ProjectUser.Add(mdl);
-                context.SaveChanges();
+
+                var exsitingprojectuser = context.ProjectUser.Where(a => a.UserId == user.UserId).FirstOrDefault();
+                if (exsitingprojectuser.RoleId!=mdl.RoleId && exsitingprojectuser.ProjectId!=mdl.ProjectId)
+                {
+                    context.ProjectUser.Add(mdl);
+                    context.SaveChanges();
+                }
             }
         }
-        public void UpdateProjectUser  (ApplicationUser projectuser )
+
+        public int UpdateProjectUser  (ApplicationUser projectuser )
         {
             using (var context = new UABContext())
             {
                 var existingprojectuser = context.ProjectUser.First(a => a.ProjectUserId == projectuser.ProjectUserId);
-                if (existingprojectuser.RoleId != projectuser.RoleId && existingprojectuser.SamplePercentage==Convert.ToInt32(projectuser.SamplePercentage))
+                //there is no updation
+                if (existingprojectuser.RoleId == projectuser.RoleId && existingprojectuser.SamplePercentage == Convert.ToInt32(projectuser.SamplePercentage))
+                {
+                    return 0;
+                }
+                //updating role 
+                else if (existingprojectuser.RoleId != projectuser.RoleId && existingprojectuser.SamplePercentage==Convert.ToInt32(projectuser.SamplePercentage))
                 {
                     existingprojectuser.RoleId = projectuser.RoleId;
                     context.Entry(existingprojectuser).State = EntityState.Modified;
                     context.SaveChanges();
                 }
-                if (existingprojectuser.RoleId == projectuser.RoleId && existingprojectuser.SamplePercentage != Convert.ToInt32(projectuser.SamplePercentage))
+                //updating sample %
+                else if (existingprojectuser.RoleId == projectuser.RoleId && existingprojectuser.SamplePercentage != Convert.ToInt32(projectuser.SamplePercentage))
                 {
                     existingprojectuser.SamplePercentage = Convert.ToInt32(projectuser.SamplePercentage);
                     context.Entry(existingprojectuser).State = EntityState.Modified;
                     context.SaveChanges();
                 }
-                if (existingprojectuser.RoleId != projectuser.RoleId && existingprojectuser.SamplePercentage != Convert.ToInt32(projectuser.SamplePercentage))
+                //updating role and sample %
+               else  if (existingprojectuser.RoleId != projectuser.RoleId && existingprojectuser.SamplePercentage != Convert.ToInt32(projectuser.SamplePercentage))
                 {
                     existingprojectuser.RoleId = projectuser.RoleId;
                     existingprojectuser.SamplePercentage = Convert.ToInt32(projectuser.SamplePercentage);
                     context.Entry(existingprojectuser).State = EntityState.Modified;
                     context.SaveChanges();
                 }
+                return 1;
             }
         }
         

@@ -34,23 +34,47 @@
                         <div class="col-md-6">
                             <h5 class="card" style="width:300px">Add New User</h5>
                         </div>
-                        <div class="col-md-10">
-                            <label class="lblUsers">Email:</label>
-                            @Html.DropDownListFor(model => model.Email, new SelectList(@ViewBag.Identityusers, "Email"), "--Select a Email--", new { @id = "emaildd", @class = "form-control CoderDetails" })
+                        @*<div class="col-md-10">
+            <label class="lblUsers">Email:</label>
+            @Html.DropDownListFor(model => model.Email, new SelectList(@ViewBag.Identityusers, "Email"), "--Select a Email--", new { @id = "emaildd", @class = "form-control CoderDetails" })
+            @Html.ValidationMessageFor(model => model.Email, null, new { @class = "text-danger" })
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        </div>*@
+                        <div class="form-group" style="font-size: 15px">
+                            <label style="width:80px;"><bold>Email :</bold></label>
+                            <span>
+                                @Html.DropDownListFor(model => model.Email, new SelectList(@ViewBag.Identityusers, "Email"), "--Select a Email--", new { @id = "emaildd"})
+                            </span>
                             @Html.ValidationMessageFor(model => model.Email, null, new { @class = "text-danger" })
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         </div>
                         <br />
-                        <div class="col-md-10">
-                            <label class="lblUsers">Project:</label>
-                            @Html.DropDownListFor(model => model.ProjectId, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select a Project--", new { @id = "projectdd", @class = "form-control CoderDetails" })
+                        @*<div class="col-md-10">
+            <label class="lblUsers">Project:</label>
+            @Html.DropDownListFor(model => model.ProjectId, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select a Project--", new { @id = "projectdd", @class = "form-control CoderDetails" })
+            @Html.ValidationMessageFor(model => model.ProjectId, null, new { @class = "text-danger" })
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        </div>*@
+                        <div class="form-group" style="font-size: 15px">
+                            <label style="width:80px;"><bold>Project :</bold></label>
+                            <span>
+                                @Html.DropDownListFor(model => model.ProjectId, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select a Project--", new { @id = "projectdd" })
+                            </span>
                             @Html.ValidationMessageFor(model => model.ProjectId, null, new { @class = "text-danger" })
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         </div>
                         <br />
-                        <div class="col-md-10">
-                            <label class="lblUsers">Role:</label>
-                            @Html.DropDownListFor(model => model.RoleId, new SelectList(@ViewBag.Roles, "RoleId", "Name"), "--Select a Role--", new { @id = "roledd", @class = "form-control CoderDetails roledddwith" })
+                        @*<div class="col-md-10">
+            <label class="lblUsers">Role:</label>
+            @Html.DropDownListFor(model => model.RoleId, new SelectList(@ViewBag.Roles, "RoleId", "Name"), "--Select a Role--", new { @id = "roledd", @class = "form-control CoderDetails roledddwith" })
+            @Html.ValidationMessageFor(model => model.RoleId, null, new { @class = "text-danger" })
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        </div>*@
+                        <div class="form-group" style="font-size: 15px">
+                            <label style="width:80px;"><bold>Role :</bold></label>
+                            <span>
+                                @Html.DropDownListFor(model => model.RoleId, new SelectList(@ViewBag.Roles, "RoleId", "Name"), "--Select a Role--", new { @id = "roledd" })
+                            </span>
                             @Html.ValidationMessageFor(model => model.RoleId, null, new { @class = "text-danger" })
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         </div>
@@ -60,9 +84,17 @@
                             <label class="custom-control-label" for="customControlAutosizing1">Is Active</label>
                         </div>
                         <br />
-                        <div class="col-md-10">
-                            <label class="lblUsers">Sample % :</label>
-                            @Html.TextBoxFor(model => model.SamplePercentage, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @id = "samplepercentage", @placeholder = "Enter Sample Percentage" })
+                        @*<div class="col-md-10">
+            <label class="lblUsers">Sample % :</label>
+            @Html.TextBoxFor(model => model.SamplePercentage, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @id = "samplepercentage", @placeholder = "Enter Sample Percentage" })
+            @Html.ValidationMessageFor(model => model.SamplePercentage, null, new { @class = "text-danger" })
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        </div>*@
+                        <div class="form-group" style="font-size: 15px">
+                            <label style="width:80px;"><bold>Sample % :</bold></label>
+                            <span>
+                                @Html.TextBoxFor(model => model.SamplePercentage, new { @class = "", style = "width:136px", @autofocus = "autofocus", @autocomplete = "off", @id = "samplepercentage", @placeholder = "Enter Sample %" })
+                            </span>
                             @Html.ValidationMessageFor(model => model.SamplePercentage, null, new { @class = "text-danger" })
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         </div>
