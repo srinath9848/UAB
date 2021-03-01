@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,11 +26,17 @@ namespace UAB
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddSingleton<IAuthenticationService, AuthenticationService>();
+            services.AddSingleton<IAuthenticationService1, AuthenticationService>();
             services.AddSingleton<IPasswordAlgorithmFactory, PasswordAlgorithmFactory>();
             services.AddSingleton<IClock, Clock>();
             services.AddSingleton<IPasswordAlgorithm, PasswordAlgorithm>();
             services.AddMvc();
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+
+    });
 
         }
 
@@ -52,6 +59,13 @@ namespace UAB
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapRazorPages();
+            });
+
 
             app.UseEndpoints(endpoints =>
             {

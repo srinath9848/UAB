@@ -14,9 +14,11 @@ using System.IO;
 using Microsoft.AspNetCore.Http;
 using ExcelDataReader;
 using System.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UAB.Controllers
 {
+    [Authorize]
     public class UABController : Controller
     {
         #region Coding

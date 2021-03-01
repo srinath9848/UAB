@@ -53,7 +53,7 @@ namespace UAB.DAL
                         dto.ProjectName = Convert.ToString(reader["Name"]);
                         dto.AvailableCharts = Convert.ToInt32(reader["AvailableCharts"]);
                         dto.CoderRebuttalCharts = Convert.ToInt32(reader["CoderRebuttalCharts"]);
-                        dto.QARebuttalCharts = Convert.ToInt32(reader["QARebuttalCharts"]);
+                        dto.QARebuttalCharts = Convert.ToInt32(reader["IncorrectCharts"]);
                         dto.ShadowQARebuttalCharts = Convert.ToInt32(reader["ShadowQARebuttalCharts"]);
                         dto.ReadyForPostingCharts = Convert.ToInt32(reader["ReadyForPostingCharts"]);
                         dto.OnHoldCharts = Convert.ToInt32(reader["OnHoldCharts"]);
