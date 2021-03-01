@@ -11,35 +11,38 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-horizontal" action="">
-                        <div class="col-sm-12">
-                            <label class="lblUsers">Email:</label>
-                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @readonly = "readonly" })
+                        <div class="form-group" style="font-size: 15px">
+                            <label style="width:80px;"><bold>Email :</bold></label>
+                            <span>@Model.Email</span>
                         </div>
                         <br />
-                        <div class="col-sm-12">
-                            <label class="lblUsers">Project:</label>
-                            @Html.TextBoxFor(model => model.ProjectName, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @readonly = "readonly" })
+                        <div class="form-group" style="font-size: 15px">
+                            <label style="width:80px;"><bold>Project :</bold></label>
+                            <span>@Model.ProjectName</span>
                         </div>
                         <br />
-                        <div class="col-sm-12">
-                            <label class="lblUsers">Role:</label>
-                            @Html.DropDownListFor(model => model.RoleId, new SelectList(@ViewBag.Roles, "RoleId", "Name"), "--Select a Role--", new { @id = "roledd", @class = "form-control CoderDetails" })
+                        <div class="form-group" style="font-size: 15px">
+                            <label style="width:80px;"><bold>Role :</bold></label>
+                            <span>
+                                @Html.DropDownListFor(model => model.RoleId, new SelectList(@ViewBag.Roles, "RoleId", "Name"), "--Select a Role--", new { @id = "roledd" })
+                            </span>
                             @Html.ValidationMessageFor(model => model.RoleId, null, new { @class = "text-danger" })
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         </div>
                         <br />
-                        <div class="col-sm-12">
-                            <label class="lblUsers">Sample%:</label>
-                            @Html.TextBoxFor(model => model.SamplePercentage, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @id = "samplepercentage", @placeholder = "Enter Sample Percentage" })
-                            @Html.ValidationMessageFor(model => model.RoleId, null, new { @class = "text-danger" })
+                        <div class="form-group" style="font-size: 15px">
+                            <label style="width:80px;"><bold>Sample % :</bold></label>
+                            <span>
+                                @Html.TextBoxFor(model => model.SamplePercentage, new { @class = "", style = "width:136px", @autofocus = "autofocus", @autocomplete = "off", @id = "samplepercentage", @placeholder = "Enter Sample Percentage" })
+                            </span>
+                            @Html.ValidationMessageFor(model => model.SamplePercentage, null, new { @class = "text-danger" })
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-sm btn-info btn-fill">Update</button>
-                    <a href="@Url.Action("ManageUsers","Account")" class="btn btn-sm btn-danger btn-fill">Cancel</a>
-
+                    <button type="button" class="btn btn-sm btn-danger btn-fill" onclick="ModalClose1()">Close</button>
                 </div>
             </div>
         </div>

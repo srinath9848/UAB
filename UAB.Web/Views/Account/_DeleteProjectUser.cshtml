@@ -2,6 +2,7 @@
 
 <form asp-action="DeleteProjectUser" asp-controller="Account" method="POST">
     @Html.HiddenFor(m => m.ProjectUserId)
+    @Html.HiddenFor(m => m.UserId)
     <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
         <div class="modal-dialog">
             <div class="modal-content" style="width: 500px;">
@@ -23,7 +24,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-sm btn-info btn-fill"> Delete</button>
-                    <a href="@Url.Action("ManageUsers","Account")" class="btn btn-sm btn-danger btn-fill">Cancel</a>
+                    <button type="button" class="btn btn-sm btn-danger btn-fill" onclick="ModalClose1()">Close</button>
 
                 </div>
             </div>

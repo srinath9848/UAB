@@ -29,11 +29,17 @@
 
                 <div title="@title" class="col-md-3 input-group">
                     <div name="PayorText" class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
-                        <span style="color:green;white-space:nowrap">@PayorText</span>
-                        @if (!string.IsNullOrEmpty(Model.QAPayorText))
-                        {
+                        <span style="white-space:nowrap">
+                            <label style="color: green;">@PayorText</label>
+                            @if (!string.IsNullOrEmpty(Model.QAPayorText))
+                            {
+                                <label style="color:red">@QAPayorText</label>
+                            }
+                        </span>
+                        @*@if (!string.IsNullOrEmpty(Model.QAPayorText))
+                            {
                             <span style="color:red;white-space:nowrap;font-weight:bold">@QAPayorText </span>
-                        }
+                            }*@
                     </div>
                     @*<input type="text" name="PayorText" class="form-control CoderDetails" value="@PayorText" />*@
                     @*@Html.TextBox("PayorText", new { @class = "form-control CoderDetails", @Value = PayorText })*@
@@ -62,11 +68,13 @@
 
                 <div title="@title" class="col-md-3 input-group">
                     <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
-                        <span style="color:green;white-space:nowrap">@ProviderText</span>
-                        @if (!string.IsNullOrEmpty(Model.QAProviderText))
-                        {
-                            <span style="color:red;white-space:nowrap;font-weight:bold">@QAProviderText </span>
-                        }
+                        <span style="white-space:nowrap">
+                            <label style="color: green;">@ProviderText</label>
+                            @if (!string.IsNullOrEmpty(Model.QAProviderText))
+                            {
+                                <label style="color:red">@QAProviderText</label>
+                            }
+                        </span>
                     </div>
                     @*<input type="text" name="ProviderText" class="form-control CoderDetails" value="@ProviderText" />*@
                     @*@Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @class = "form-control CoderDetails" })*@
@@ -95,11 +103,13 @@
 
                 <div title="@title" class="col-md-3 input-group">
                     <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
-                        <span style="color:green;white-space:nowrap">@CPTCode</span>
-                        @if (!string.IsNullOrEmpty(Model.QACPTCode))
-                        {
-                            <span style="color:red;white-space:nowrap;font-weight:bold">@QACPTCode </span>
-                        }
+                        <span style="white-space:nowrap">
+                            <label style="color: green;">@CPTCode</label>
+                            @if (!string.IsNullOrEmpty(Model.QACPTCode))
+                            {
+                                <label style="color:red">@QACPTCode</label>
+                            }
+                        </span>
                     </div>
 
                     @*<input type="text" name="CPTCode" class="form-control CoderDetails" value="@CPTCode" />*@
@@ -129,11 +139,13 @@
 
                 <div title="@title" class="col-md-3 input-group">
                     <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
-                        <span style="color:green;white-space:nowrap">@Mod</span>
-                        @if (!string.IsNullOrEmpty(Model.QAMod))
-                        {
-                            <span style="color:red;white-space:nowrap;font-weight:bold">@QAMod </span>
-                        }
+                        <span style="white-space:nowrap">
+                            <label style="color: green;">@Mod</label>
+                            @if (!string.IsNullOrEmpty(Model.QAMod))
+                            {
+                                <label style="color:red">@QAMod</label>
+                            }
+                        </span>
                     </div>
                     @*<input type="text" name="Mod" class="form-control CoderDetails" value="@Mod" />*@
                     @*@Html.TextAreaFor(model => model.Mod, new { @class = "form-control CoderDetails" })*@
@@ -162,11 +174,13 @@
 
                 <div title="@title" class="col-md-3 input-group">
                     <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
-                        <span style="color:green;white-space:nowrap">@Dx</span>
-                        @if (!string.IsNullOrEmpty(Model.QADx))
-                        {
-                            <span style="color:red;white-space:nowrap;font-weight:bold">@QADx </span>
-                        }
+                        <span style="white-space:nowrap">
+                            <label style="color: green;">@Dx</label>
+                            @if (!string.IsNullOrEmpty(Model.QADx))
+                            {
+                                <label style="color:red">@QADx</label>
+                            }
+                        </span>
                     </div>
                     @*<input type="text" name="Dx" class="form-control CoderDetails" value="@Dx" />*@
                     @*@Html.TextAreaFor(model => model.Dx, new { @class = "form-control CoderDetails" })*@
@@ -193,11 +207,13 @@
 
                 <div title="@title" class="col-md-3 input-group">
                     <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
-                        <span style="color:green;white-space:nowrap">@ProviderFeedbackText</span>
-                        @if (!string.IsNullOrEmpty(Model.QAProviderFeedbackText))
-                        {
-                            <span style="color:red;white-space:nowrap;font-weight:bold">@QAProviderFeedbackText </span>
-                        }
+                        <span style="white-space:nowrap">
+                            <label style="color: green;">@ProviderFeedbackText</label>
+                            @if (!string.IsNullOrEmpty(Model.QAProviderFeedbackText))
+                            {
+                                <label style="color:red">@QAProviderFeedbackText</label>
+                            }
+                        </span>
                     </div>
 
                     @*<input type="text" name="ProviderFeedbackText" class="form-control CoderDetails" value="@ProviderFeedbackText" />*@
