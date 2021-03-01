@@ -1058,7 +1058,7 @@ namespace UAB.DAL
         }
 
 
-        public CodingDTO SubmitShadowQAAvailableChart(ChartSummaryDTO chartSummaryDTO, int statusId)
+        public CodingDTO SubmitShadowQAAvailableChart(ChartSummaryDTO chartSummaryDTO, bool isQAAgreed)
         {
             CodingDTO dto = new CodingDTO();
 
@@ -1154,10 +1154,10 @@ namespace UAB.DAL
                             Value = chartSummaryDTO.ShadowQADTO.NotesfromJen
                         },
                          new SqlParameter() {
-                            ParameterName = "@StatusID",
-                            SqlDbType =  System.Data.SqlDbType.Int,
+                            ParameterName = "@isQAAgreed",
+                            SqlDbType =  System.Data.SqlDbType.Bit,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = statusId
+                            Value = isQAAgreed
                         }
                         //,
                         // new SqlParameter() {
@@ -1279,7 +1279,7 @@ namespace UAB.DAL
                 return GetProjects();
             }
         }
-        public List<Status> GetStatusList() 
+        public List<Status> GetStatusList()
         {
             using (var context = new UABContext())
             {
@@ -1365,13 +1365,13 @@ namespace UAB.DAL
                 return context.User.ToList();
             }
         }
-        public ApplicationUser GetProjectUser (int projectuserid)
+        public ApplicationUser GetProjectUser(int projectuserid)
         {
             using (var context = new UABContext())
             {
-                var res= context.ProjectUser.Where(a=>a.ProjectUserId==projectuserid).FirstOrDefault();
+                var res = context.ProjectUser.Where(a => a.ProjectUserId == projectuserid).FirstOrDefault();
 
-                var project  = context.Project.Where(a=>a.ProjectId==res.ProjectId).FirstOrDefault();
+                var project = context.Project.Where(a => a.ProjectId == res.ProjectId).FirstOrDefault();
                 var roles = context.Role.Where(a => a.RoleId == res.RoleId).FirstOrDefault();
                 var useremail = context.User.Where(a => a.UserId == res.UserId).FirstOrDefault().Email;
                 ApplicationUser applicationUser = new ApplicationUser();
@@ -1384,7 +1384,7 @@ namespace UAB.DAL
                 applicationUser.SamplePercentage = res.SamplePercentage.ToString();
                 return applicationUser;
             }
-            
+
         }
         public List<ApplicationUser> GetUsers(int userId)
         {
@@ -1404,7 +1404,7 @@ namespace UAB.DAL
                     param.ParameterName = "@userId";
                     param.Value = userId;
                     cmm.Parameters.Add(param);
-                     
+
                     cnn.Open();
                     var reader = cmm.ExecuteReader();
 
@@ -1445,7 +1445,8 @@ namespace UAB.DAL
             using (var context = new UABContext())
             {
                 var existing = context.User.Where(a => a.Email == user.Email).FirstOrDefault();
-                if (existing==null) {
+                if (existing == null)
+                {
                     UAB.DAL.Models.User mdl = new User();
                     mdl.Email = user.Email;
                     mdl.IsActive = user.IsActive;
@@ -1466,17 +1467,17 @@ namespace UAB.DAL
                 mdl.ProjectId = context.Project.Where(a => a.Name == user.ProjectName).Select(a => a.ProjectId).FirstOrDefault();
                 mdl.RoleId = context.Role.Where(a => a.Name == user.RoleName).Select(a => a.RoleId).FirstOrDefault();
                 mdl.SamplePercentage = Convert.ToInt32(user.SamplePercentage);
-                
+
                 context.ProjectUser.Add(mdl);
                 context.SaveChanges();
             }
         }
-        public void UpdateProjectUser  (ApplicationUser projectuser )
+        public void UpdateProjectUser(ApplicationUser projectuser)
         {
             using (var context = new UABContext())
             {
                 var existingprojectuser = context.ProjectUser.First(a => a.ProjectUserId == projectuser.ProjectUserId);
-                if (existingprojectuser.RoleId != projectuser.RoleId && existingprojectuser.SamplePercentage==Convert.ToInt32(projectuser.SamplePercentage))
+                if (existingprojectuser.RoleId != projectuser.RoleId && existingprojectuser.SamplePercentage == Convert.ToInt32(projectuser.SamplePercentage))
                 {
                     existingprojectuser.RoleId = projectuser.RoleId;
                     context.Entry(existingprojectuser).State = EntityState.Modified;
@@ -1497,8 +1498,8 @@ namespace UAB.DAL
                 }
             }
         }
-        
-        public void DeletetProjectUser (int ProjectUserId) 
+
+        public void DeletetProjectUser(int ProjectUserId)
         {
             using (var context = new UABContext())
             {

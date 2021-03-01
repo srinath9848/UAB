@@ -368,12 +368,12 @@ namespace UAB.Controllers
         }
 
         [HttpPost]
-        public IActionResult SubmitShadowQAAvailableChart(ChartSummaryDTO chartSummaryDTO)
+        public IActionResult SubmitShadowQAAvailableChart(ChartSummaryDTO chartSummaryDTO, bool hdnIsQAAgreed)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-            string statusId = Request.Form["hdnStatus"].ToString();
+            bool isQAAgreed = hdnIsQAAgreed;// Convert.ToBoolean(Request.Form["hdnIsQAAgreed"]);
 
-            clinicalcaseOperations.SubmitShadowQAAvailableChart(chartSummaryDTO, Convert.ToInt32(statusId));
+            clinicalcaseOperations.SubmitShadowQAAvailableChart(chartSummaryDTO, isQAAgreed);
 
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.ShadowQA.ToString());
 
@@ -893,7 +893,7 @@ namespace UAB.Controllers
                 ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
                 return View();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
                 TempData["error"] = ex.Message;
