@@ -4,7 +4,7 @@ using System.Text;
 
 namespace UAB.DAL.LoginDTO
 {
-	public interface IAuthenticationService
+	public interface IAuthenticationService1
 	{
 		/// <summary>
 		/// Verifies whether or not the given password is valid for the user identified by the given email.

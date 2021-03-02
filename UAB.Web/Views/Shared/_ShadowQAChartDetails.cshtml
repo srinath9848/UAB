@@ -7,12 +7,17 @@
             </div>
             @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { @class = "form-control" })
 
-            @{string status = "10"; }
-            @if (Model.QAPayorText == "" && Model.QAProviderText == "" && Model.QACPTCode == ""
-&& Model.QAMod == "" && Model.QADx == "" && Model.QAProviderFeedbackText == "")
-                status = "7";
-            <input type="hidden" value="@status" name="hdnStatus" />
+            @{
+                bool isQAAgreed = false;
 
+                if (string.IsNullOrEmpty(Model.QAPayorText) && string.IsNullOrEmpty(Model.QAProviderText)
+                && string.IsNullOrEmpty(Model.QACPTCode)
+&& string.IsNullOrEmpty(Model.QAMod) && string.IsNullOrEmpty(Model.QADx) &&
+string.IsNullOrEmpty(Model.QAProviderFeedbackText))
+                    isQAAgreed = true;
+
+            }
+            @Html.Hidden("hdnIsQAAgreed", isQAAgreed)
             <div class="form-group row" id="divChkAll">
                 <label class="col-md-4 m-t-15"></label>
                 <div class="custom-control custom-checkbox mr-sm-2">

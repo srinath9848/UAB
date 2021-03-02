@@ -14,9 +14,11 @@ using System.IO;
 using Microsoft.AspNetCore.Http;
 using ExcelDataReader;
 using System.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UAB.Controllers
 {
+    [Authorize]
     public class UABController : Controller
     {
         #region Coding
@@ -368,12 +370,12 @@ namespace UAB.Controllers
         }
 
         [HttpPost]
-        public IActionResult SubmitShadowQAAvailableChart(ChartSummaryDTO chartSummaryDTO)
+        public IActionResult SubmitShadowQAAvailableChart(ChartSummaryDTO chartSummaryDTO, bool hdnIsQAAgreed)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-            string statusId = Request.Form["hdnStatus"].ToString();
+            bool isQAAgreed = hdnIsQAAgreed;// Convert.ToBoolean(Request.Form["hdnIsQAAgreed"]);
 
-            clinicalcaseOperations.SubmitShadowQAAvailableChart(chartSummaryDTO, Convert.ToInt32(statusId));
+            clinicalcaseOperations.SubmitShadowQAAvailableChart(chartSummaryDTO, isQAAgreed);
 
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.ShadowQA.ToString());
 

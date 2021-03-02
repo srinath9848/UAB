@@ -53,7 +53,7 @@ namespace UAB.DAL
                         dto.ProjectName = Convert.ToString(reader["Name"]);
                         dto.AvailableCharts = Convert.ToInt32(reader["AvailableCharts"]);
                         dto.CoderRebuttalCharts = Convert.ToInt32(reader["CoderRebuttalCharts"]);
-                        dto.QARebuttalCharts = Convert.ToInt32(reader["QARebuttalCharts"]);
+                        dto.QARebuttalCharts = Convert.ToInt32(reader["IncorrectCharts"]);
                         dto.ShadowQARebuttalCharts = Convert.ToInt32(reader["ShadowQARebuttalCharts"]);
                         dto.ReadyForPostingCharts = Convert.ToInt32(reader["ReadyForPostingCharts"]);
                         dto.OnHoldCharts = Convert.ToInt32(reader["OnHoldCharts"]);
@@ -1121,7 +1121,7 @@ namespace UAB.DAL
         }
 
 
-        public CodingDTO SubmitShadowQAAvailableChart(ChartSummaryDTO chartSummaryDTO, int statusId)
+        public CodingDTO SubmitShadowQAAvailableChart(ChartSummaryDTO chartSummaryDTO, bool isQAAgreed)
         {
             CodingDTO dto = new CodingDTO();
 
@@ -1217,10 +1217,10 @@ namespace UAB.DAL
                             Value = chartSummaryDTO.ShadowQADTO.NotesfromJen
                         },
                          new SqlParameter() {
-                            ParameterName = "@StatusID",
-                            SqlDbType =  System.Data.SqlDbType.Int,
+                            ParameterName = "@isQAAgreed",
+                            SqlDbType =  System.Data.SqlDbType.Bit,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = statusId
+                            Value = isQAAgreed
                         }
                         //,
                         // new SqlParameter() {
@@ -1261,7 +1261,7 @@ namespace UAB.DAL
                         //    Direction = System.Data.ParameterDirection.Input,
                         //    Value = chartSummaryDTO.QAProviderFeedbackID
                         //}
-
+ 
                 };
 
                 using (var con = context.Database.GetDbConnection())
@@ -1432,7 +1432,7 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                var res= context.ProjectUser.Where(a=>a.ProjectUserId==projectuserid).FirstOrDefault();
+                var res = context.ProjectUser.Where(a => a.ProjectUserId == projectuserid).FirstOrDefault();
 
                 var project= context.Project.Where(a=>a.ProjectId==res.ProjectId).FirstOrDefault();
                 var roles = context.Role.Where(a => a.RoleId == res.RoleId).FirstOrDefault();
