@@ -15,6 +15,11 @@ namespace UAB.DAL
 {
     public class ClinicalcaseOperations
     {
+        int mUserId;
+        public ClinicalcaseOperations(int UserId)
+        {
+            mUserId = UserId;
+        }
         public List<DashboardDTO> GetChartCountByRole(string Role)
         {
             DashboardDTO dto = new DashboardDTO();
@@ -27,7 +32,7 @@ namespace UAB.DAL
                             ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = Auth.UserId
+                            Value = mUserId
                          },
                         new SqlParameter() {
                             ParameterName = "@Role",
@@ -93,7 +98,7 @@ namespace UAB.DAL
                             ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = Auth.UserId
+                            Value = mUserId
                          }};
 
                 using (var con = context.Database.GetDbConnection())
@@ -319,7 +324,7 @@ namespace UAB.DAL
                             ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = Auth.UserId
+                            Value = mUserId
                          }
                 };
 
@@ -430,7 +435,7 @@ namespace UAB.DAL
                             ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = Auth.UserId
+                            Value = mUserId
                         },   new SqlParameter() {
                             ParameterName = "@ErrorTypeID",
                             SqlDbType =  System.Data.SqlDbType.Int,
@@ -547,7 +552,7 @@ namespace UAB.DAL
                             ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = Auth.UserId
+                            Value = mUserId
                         },   new SqlParameter() {
                             ParameterName = "@ErrorTypeID",
                             SqlDbType =  System.Data.SqlDbType.Int,
@@ -693,7 +698,7 @@ namespace UAB.DAL
                             ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = Auth.UserId
+                            Value = mUserId
                         },   new SqlParameter() {
                             ParameterName = "@ErrorTypeID",
                             SqlDbType =  System.Data.SqlDbType.Int,
@@ -870,7 +875,7 @@ namespace UAB.DAL
                             ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = Auth.UserId
+                            Value = mUserId
                         },   new SqlParameter() {
                             ParameterName = "@ErrorTypeID",
                             SqlDbType =  System.Data.SqlDbType.Int,
@@ -954,7 +959,7 @@ namespace UAB.DAL
                             ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = Auth.UserId
+                            Value = mUserId
                         }
                 };
 
@@ -1059,7 +1064,7 @@ namespace UAB.DAL
                             ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = Auth.UserId
+                            Value = mUserId
                          },   new SqlParameter() {
                             ParameterName = "@ErrorTypeID",
                             SqlDbType =  System.Data.SqlDbType.Int,
@@ -1206,7 +1211,7 @@ namespace UAB.DAL
                             ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = Auth.UserId
+                            Value = mUserId
                          },   new SqlParameter() {
                             ParameterName = "@ErrorTypeID",
                             SqlDbType =  System.Data.SqlDbType.Int,
