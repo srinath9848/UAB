@@ -37,8 +37,12 @@
                 <div class="card-body">
                     @await Html.PartialAsync("_Msg")
                     <div id="modalContent"></div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Filter.." name="search">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </div>
                     <br />
-                    <div class="table-responsive col-8">
+                    <div class="table-responsive col-8" style="max-height:600px;max-width: 900px;">
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>
@@ -46,29 +50,29 @@
                                     <th style="width: 100px; font-weight:900;">ClinicalCaseID</th>
                                     <th style="width: 100px; font-weight:900;">MRN</th>
                                     <th style="width: 100px; font-weight:900;">First Name</th>
-                                    <th style="width: 100px; font-weight:900;">Provider Name</th>
                                     <th style="width: 100px; font-weight:900;">Last Name</th>
+                                    <th style="width: 200px; font-weight:900;">Provider Name</th>
                                     <th style="width: 100px; font-weight:900;">DOS</th>
-                                    <th style="width: 100px; font-weight:900;">Project Name</th>
-                                    <th style="width: 100px; font-weight:900;">Status</th>
+                                    <th style="width: 200px; font-weight:900;">Project Name</th>
+                                    <th style="width: 200px; font-weight:900;">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                <tr>
-                                    <td>
-                                        <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit" onclick="Assign('@item.ClinicalCaseId')">Assign</button>
-                                    </td>
-                                    <td>@item.ClinicalCaseId</td>
-                                    <td>@item.MRN</td>
-                                    <td>@item.FirstName</td>
-                                    <td>@item.LastName</td>
-                                    <td>@item.ProviderName</td>
-                                    <td>@item.DoS</td>
-                                    <td>@item.ProjectName</td>
-                                    <td>@item.Status</td>
-                                </tr>
+                                    <tr>
+                                        <td>
+                                            <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit" onclick="Assign('@item.ClinicalCaseId')">Assign</button>
+                                        </td>
+                                        <td>@item.ClinicalCaseId</td>
+                                        <td>@item.MRN</td>
+                                        <td>@item.FirstName</td>
+                                        <td>@item.LastName</td>
+                                        <td>@item.ProviderName</td>
+                                        <td>@item.DoS</td>
+                                        <td>@item.ProjectName</td>
+                                        <td>@item.Status</td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
