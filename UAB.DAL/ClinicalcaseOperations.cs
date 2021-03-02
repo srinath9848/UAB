@@ -762,17 +762,19 @@ namespace UAB.DAL
                     lstDto = lstDto.Where(s => s.LastName == searchParametersDTO.LastName).ToList();
                 if (!string.IsNullOrWhiteSpace(searchParametersDTO.MRN))
                     lstDto = lstDto.Where(a => a.MRN == searchParametersDTO.MRN).ToList();
-                if (searchParametersDTO.Status.StatusId != 0)
+                if (!string.IsNullOrWhiteSpace(searchParametersDTO.StatusId))
                 {
-                    var statulst  = GetStatusList();
-                    var statusname = statulst.Where(a => a.StatusId == searchParametersDTO.Status.StatusId).FirstOrDefault().Name;
+                    int sid = Convert.ToInt32(searchParametersDTO.StatusId);
+                    var statulst = GetStatusList();
+                    var statusname = statulst.Where(a => a.StatusId == sid).FirstOrDefault().Name;
 
                     lstDto = lstDto.Where(a => a.Status == statusname).ToList();
                 }
-                if (searchParametersDTO.Project.ProjectId != 0)
+                if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProjectId))
                 {
-                    var projectlst  = GetProjects();
-                    var projectname = projectlst.Where(a => a.ProjectId == searchParametersDTO.Project.ProjectId).FirstOrDefault().Name;
+                    int pid = Convert.ToInt32(searchParametersDTO.ProjectId);
+                    var projectlst = GetProjects();
+                    var projectname = projectlst.Where(a => a.ProjectId == pid).FirstOrDefault().Name;
 
                     lstDto = lstDto.Where(a => a.ProjectName == projectname).ToList();
                 }

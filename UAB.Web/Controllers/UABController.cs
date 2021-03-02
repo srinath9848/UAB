@@ -469,8 +469,18 @@ namespace UAB.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult SettingsSearch(SearchParametersDTO searchParametersDTO)
+        public IActionResult SettingsSearch(string ccid,string fname, string lname, string mrn, string sid, string pid)
         {
+
+            SearchParametersDTO searchParametersDTO = new SearchParametersDTO()
+            {
+                 ClinicalCaseId= ccid,
+                  FirstName=fname,
+                  LastName=lname,
+                  MRN=mrn,
+                  StatusId=sid,
+                  ProjectId=pid
+            };
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
             var searchData = clinicalcaseOperations.GetSearchData(searchParametersDTO);
             return PartialView("_SettingsSearchResults", searchData);

@@ -10,11 +10,16 @@ namespace UAB.DTO
         public string  FirstName   { get; set; }
         public string LastName { get; set; }
         public string MRN { get; set; }
+        
+
         //public string ProviderId { get; set; }
         public string DoS { get; set; }
-        public ProjectDTO Project { get; set; }
 
-        public StatusDTO Status { get; set; }
+        //public ProjectDTO Project { get; set; }
+        public string ProjectId  { get; set; }
+
+        //public StatusDTO Status { get; set; }
+        public string StatusId  { get; set; }
 
 
     }
