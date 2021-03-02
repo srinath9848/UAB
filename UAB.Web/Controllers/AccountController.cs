@@ -1,4 +1,4 @@
-﻿using cc = Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,31 +8,28 @@ using UAB.DAL;
 using UAB.DAL.LoginDTO;
 using UAB.DAL.Models;
 using Microsoft.AspNetCore.Authentication;
-using System.Threading;
-using Microsoft.AspNet.Identity;
+using System.Linq;
+using System.Security.Principal;
 
 namespace UAB.Controllers
 {
     public class AccountController : Controller
     {
-
+        int mUserId;
         private readonly IAuthenticationService1 _mAuthenticationService;
-        public AccountController(IAuthenticationService1 mAuthenticationService
-            )
+        public AccountController(IAuthenticationService1 mAuthenticationService)
         {
             _mAuthenticationService = mAuthenticationService;
+
         }
         public IActionResult Index()
         {
+
             return View();
         }
         [HttpGet]
         public IActionResult Login()
         {
-            if (Auth.IsAuth)
-            {
-                return RedirectToAction("Index", "Home");
-            }
             return View();
         }
 
@@ -42,7 +39,6 @@ namespace UAB.Controllers
             var signInResult = _mAuthenticationService.SignIn(Email, Password);
             if (signInResult.Result != 0)
             {
-                Auth.IsAuth = false;
                 TempData["Error"] = "Invalid sign-in. Please try again.";
                 return View();
             }
@@ -51,11 +47,7 @@ namespace UAB.Controllers
                 var userInfo = _mAuthenticationService.GetUserInfoByEmail(Email);
                 if (userInfo.Email != null)
                 {
-                    Auth.IsAuth = true;
-                    Auth.EmailId = Email;
-                    Auth.CurrentRole = userInfo.RoleName;
-                    Auth.UserId = userInfo.UserId;
-
+                    mUserId = userInfo.UserId;
                     var claims = new List<Claim>
                         {
                             new Claim(ClaimTypes.Sid, userInfo.UserId.ToString()),
@@ -65,12 +57,16 @@ namespace UAB.Controllers
 
                     var claimsIdentity = new ClaimsIdentity(
                         claims,
-                        cc.CookieAuthenticationDefaults.AuthenticationScheme);
+                        CookieAuthenticationDefaults.AuthenticationScheme);
 
                     await HttpContext.SignInAsync(
-                        cc.CookieAuthenticationDefaults.AuthenticationScheme,
-                        new ClaimsPrincipal(claimsIdentity));
-
+                        CookieAuthenticationDefaults.AuthenticationScheme,
+                        new ClaimsPrincipal(claimsIdentity),
+                        new AuthenticationProperties
+                        {
+                            IsPersistent = true,
+                            ExpiresUtc = DateTime.UtcNow.AddMinutes(20)
+                        });
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -84,7 +80,7 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult ManageUsers()
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             var users = clinicalcaseOperations.GetManageUsers();
             ViewBag.users = users;
@@ -94,7 +90,7 @@ namespace UAB.Controllers
         [HttpGet]
         public ActionResult AddUser()
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             ViewBag.Identityusers = clinicalcaseOperations.GetIdentityUsersList();
             ViewBag.Roles = clinicalcaseOperations.GetRolesList();
@@ -109,7 +105,7 @@ namespace UAB.Controllers
             {
                 if (model.Email != null && !string.IsNullOrEmpty(ProjectAndRole))
                 {
-                    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
 
                     int UserId = clinicalcaseOperations.AddUser(model); //adding user to user table
@@ -154,7 +150,7 @@ namespace UAB.Controllers
         {
             if (userId != 0)
             {
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 var UserProjects = clinicalcaseOperations.GetUserProjects(userId);
                 ViewBag.UserProjects = UserProjects;
                 return View("UserDetails", UserProjects);
@@ -168,7 +164,7 @@ namespace UAB.Controllers
 
             if (userId != 0)
             {
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 var user = clinicalcaseOperations.Getuser(userId);
                 if (user != null)
                 {
@@ -189,7 +185,7 @@ namespace UAB.Controllers
             {
                 if (user.UserId != 0)
                 {
-                    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                     clinicalcaseOperations.DeletetUser(user.UserId);
                     TempData["Success"] = "Successfully Deleted User";
                     return RedirectToAction("ManageUsers");
@@ -206,7 +202,7 @@ namespace UAB.Controllers
         [HttpGet]
         public ActionResult AddProjectUser(int userId)
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             ViewBag.Roles = clinicalcaseOperations.GetRolesList();
             ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
@@ -223,7 +219,7 @@ namespace UAB.Controllers
 
             if (model.UserId != 0 && !string.IsNullOrEmpty(ProjectAndRole))
             {
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
                 foreach (string item in ProjectAndRole.Split(','))
                 {
@@ -242,7 +238,7 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult UpdateProjectUser(int projectuserid)
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var projectuser = clinicalcaseOperations.GetProjectUser(projectuserid);
             ViewBag.Roles = clinicalcaseOperations.GetRolesList();
 
@@ -251,7 +247,7 @@ namespace UAB.Controllers
         [HttpPost]
         public IActionResult UpdateProjectUser(ApplicationUser model, string user = null)
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             int i = clinicalcaseOperations.UpdateProjectUser(model);
             if (i == 1)
             {
@@ -269,7 +265,7 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult DeleteProjectUser(int projectuserid)
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var projectuser = clinicalcaseOperations.GetProjectUser(projectuserid);
             ViewBag.Roles = clinicalcaseOperations.GetRolesList();
 
@@ -284,7 +280,7 @@ namespace UAB.Controllers
             {
                 if (model.ProjectUserId != 0)
                 {
-                    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                     clinicalcaseOperations.DeletetProjectUser(model.ProjectUserId);
                     TempData["Success"] = "Successfully Project User Deleted";
                     return RedirectToAction("UserDetails", new { UserId = model.UserId });
@@ -299,9 +295,12 @@ namespace UAB.Controllers
         }
 
         [HttpGet]
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            Auth.IsAuth = false;
+            await HttpContext.SignOutAsync(
+                        CookieAuthenticationDefaults.AuthenticationScheme);
+
+            HttpContext.User = new GenericPrincipal(new GenericIdentity(string.Empty), null);
             return RedirectToAction("Login", "Account");
         }
     }

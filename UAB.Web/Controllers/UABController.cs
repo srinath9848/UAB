@@ -15,17 +15,22 @@ using Microsoft.AspNetCore.Http;
 using ExcelDataReader;
 using System.Data;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace UAB.Controllers
 {
     [Authorize]
     public class UABController : Controller
     {
+        private static int mUserId;
         #region Coding
         public IActionResult CodingSummary()
         {
+            var identity = (ClaimsIdentity)User.Identity;
+            mUserId = Convert.ToInt32(identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value);
+
             List<DashboardDTO> lstDto = new List<DashboardDTO>();
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             List<int> lstStatus = new List<int> { (int)StatusType.ReadyForCoding, (int)StatusType.QARejected, (int)StatusType.ShadowQARejected,
                 (int)StatusType.PostingCompleted };
@@ -37,7 +42,7 @@ namespace UAB.Controllers
 
         public IActionResult GetCodingAvailableChart(string Role, string ChartType, int ProjectID)
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
 
@@ -53,7 +58,7 @@ namespace UAB.Controllers
 
         public IActionResult GetCodingIncorrectChart(string Role, string ChartType, int ProjectID)
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
 
@@ -69,7 +74,7 @@ namespace UAB.Controllers
 
         public IActionResult GetCodingReadyForPostingChart(string Role, string ChartType, int ProjectID)
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
 
@@ -85,7 +90,7 @@ namespace UAB.Controllers
         [HttpPost]
         public IActionResult SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO, string codingSubmitAndGetNext)
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             if (string.IsNullOrEmpty(codingSubmitAndGetNext))
                 clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDTO);
@@ -125,7 +130,7 @@ namespace UAB.Controllers
             if (!string.IsNullOrEmpty(hdnProviderFeedbackID))
                 chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(hdnProviderFeedbackID);
 
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             clinicalcaseOperations.SubmitCodingIncorrectChart(chartSummaryDTO);
 
@@ -136,7 +141,7 @@ namespace UAB.Controllers
         }
         public IActionResult SubmitCodingReadyForPostingChart(ChartSummaryDTO chartSummaryDTO)
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             clinicalcaseOperations.SubmitCodingReadyForPostingChart(chartSummaryDTO);
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
 
@@ -148,7 +153,10 @@ namespace UAB.Controllers
         #region QA
         public IActionResult QASummary()
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            var identity = (ClaimsIdentity)User.Identity;
+            mUserId = Convert.ToInt32(identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value);
+
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.QA.ToString());
 
@@ -156,7 +164,7 @@ namespace UAB.Controllers
         }
         public IActionResult GetQAAvailableChart(string Role, string ChartType, int ProjectID)
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
 
@@ -171,7 +179,7 @@ namespace UAB.Controllers
 
         public IActionResult GetQARebuttalChartsOfCoder(string Role, string ChartType, int ProjectID)
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
 
@@ -186,7 +194,7 @@ namespace UAB.Controllers
 
         public IActionResult GetQARejectedChartsOfShadowQA(string Role, string ChartType, int ProjectID)
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
 
@@ -200,7 +208,7 @@ namespace UAB.Controllers
         }
         public IActionResult GetQAOnHoldChart(string Role, string ChartType, int ProjectID)
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
 
@@ -214,7 +222,7 @@ namespace UAB.Controllers
         }
         public IActionResult SubmitQAAvailableChart(ChartSummaryDTO chartSummaryDTO)
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             clinicalcaseOperations.SubmitQAAvailableChart(chartSummaryDTO);
 
@@ -262,7 +270,7 @@ namespace UAB.Controllers
             else
                 chartSummaryDTO.ProviderFeedbackID = 0;
 
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             clinicalcaseOperations.SubmitQARebuttalChartsOfCoder(chartSummaryDTO);
 
@@ -305,7 +313,7 @@ namespace UAB.Controllers
             if (!string.IsNullOrEmpty(hdnProviderFeedbackID))
                 chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(hdnProviderFeedbackID);
 
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             clinicalcaseOperations.SubmitQARejectedChartsOfShadowQA(chartSummaryDTO, hdnPayorIDReject, hdnProviderIDReject, hdnCptReject, hdnModReject, hdnDxReject, hdnProviderFeedbackIDReject);
 
@@ -317,7 +325,7 @@ namespace UAB.Controllers
 
         public IActionResult SubmitQAOnHoldChart(ChartSummaryDTO chartSummaryDTO)
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             clinicalcaseOperations.SubmitQAOnHoldChart(chartSummaryDTO);
 
@@ -332,7 +340,10 @@ namespace UAB.Controllers
         #region Shadow QA
         public IActionResult ShadowQASummary()
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            var identity = (ClaimsIdentity)User.Identity;
+            mUserId = Convert.ToInt32(identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value);
+
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.ShadowQA.ToString());
 
@@ -341,7 +352,7 @@ namespace UAB.Controllers
 
         public IActionResult GetShadowQAAvailableChart(string Role, string ChartType, int ProjectID)
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
 
@@ -356,7 +367,7 @@ namespace UAB.Controllers
 
         public IActionResult GetShadowQARebuttalChartsOfQA(string Role, string ChartType, int ProjectID)
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
 
@@ -372,7 +383,7 @@ namespace UAB.Controllers
         [HttpPost]
         public IActionResult SubmitShadowQAAvailableChart(ChartSummaryDTO chartSummaryDTO, bool hdnIsQAAgreed)
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             bool isQAAgreed = hdnIsQAAgreed;// Convert.ToBoolean(Request.Form["hdnIsQAAgreed"]);
 
             clinicalcaseOperations.SubmitShadowQAAvailableChart(chartSummaryDTO, isQAAgreed);
@@ -417,7 +428,7 @@ namespace UAB.Controllers
             if (!string.IsNullOrEmpty(hdnProviderFeedbackID))
                 chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(hdnProviderFeedbackID);
 
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             clinicalcaseOperations.SubmitShadowQARebuttalChartsOfQA(chartSummaryDTO, hdnPayorIDReject, hdnProviderIDReject, hdnCptReject, hdnModReject, hdnDxReject, hdnProviderFeedbackIDReject);
 
@@ -453,7 +464,7 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult AssignClinicalCaseToUser(string ccid)
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ViewBag.users = clinicalcaseOperations.GetManageUsers();
 
             return PartialView("_AssignClinicalCaseToUser");
@@ -462,7 +473,7 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult SettingsSearch()
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
             ViewBag.Status = clinicalcaseOperations.GetStatusList();
 
@@ -493,7 +504,7 @@ namespace UAB.Controllers
         {
             if (ModelState.IsValid)
             {
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 List<string> lstProvider = clinicalcaseOperations.GetProviderNames();
                 if (!lstProvider.Contains(provider.Name.ToLower()))
                 {
@@ -520,7 +531,7 @@ namespace UAB.Controllers
         public IActionResult SettingsProvider()
         {
             List<Provider> lstProvider = new List<Provider>();
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             lstProvider = clinicalcaseOperations.GetProviders();
             ViewBag.lstProvider = lstProvider;
             return View();
@@ -533,7 +544,7 @@ namespace UAB.Controllers
             if (id != 0)
             {
                 List<Provider> lstProvider = new List<Provider>();
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 lstProvider = clinicalcaseOperations.GetProviders();
                 var res = lstProvider.Where(a => a.ProviderId == id).FirstOrDefault();
                 obj = res;
@@ -548,7 +559,7 @@ namespace UAB.Controllers
             if (id != 0)
             {
                 List<Provider> lstProvider = new List<Provider>();
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 lstProvider = clinicalcaseOperations.GetProviders();
                 var res = lstProvider.Where(a => a.ProviderId == id).FirstOrDefault();
                 obj = res;
@@ -561,7 +572,7 @@ namespace UAB.Controllers
         {
             try
             {
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 if (provider.ProviderId != 0)
                     clinicalcaseOperations.DeleteProvider(provider); // Delete
             }
@@ -576,7 +587,7 @@ namespace UAB.Controllers
         [HttpPost]
         public IActionResult AddSettingsPayor(Payor payor)
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<string> lstPayor = clinicalcaseOperations.GetPayorNames();
             if (!lstPayor.Contains(payor.Name.ToLower()))
             {
@@ -606,7 +617,7 @@ namespace UAB.Controllers
             if (id != 0)
             {
                 List<Payor> lstPayor = new List<Payor>();
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 lstPayor = clinicalcaseOperations.GetPayors();
                 var res = lstPayor.Where(a => a.PayorId == id).FirstOrDefault();
                 obj = res;
@@ -621,7 +632,7 @@ namespace UAB.Controllers
             if (id != 0)
             {
                 List<Payor> lstPayor = new List<Payor>();
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 lstPayor = clinicalcaseOperations.GetPayors();
                 var res = lstPayor.Where(a => a.PayorId == id).FirstOrDefault();
                 obj = res;
@@ -634,7 +645,7 @@ namespace UAB.Controllers
         {
             try
             {
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 if (payor.PayorId != 0)
                     clinicalcaseOperations.DeletePayor(payor); // Delete
             }
@@ -649,7 +660,7 @@ namespace UAB.Controllers
         public IActionResult SettingsPayor()
         {
             List<Payor> lstPayor = new List<Payor>();
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             lstPayor = clinicalcaseOperations.GetPayors();
             ViewBag.lstPayor = lstPayor;
             return View();
@@ -658,7 +669,7 @@ namespace UAB.Controllers
         [HttpPost]
         public IActionResult AddSettingsErrorType(ErrorType errorType)
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<string> lstErrorType = clinicalcaseOperations.GetErrorTypeNames();
             if (!lstErrorType.Contains(errorType.Name.ToLower()))
             {
@@ -688,7 +699,7 @@ namespace UAB.Controllers
             if (id != 0)
             {
                 List<ErrorType> lstErrorType = new List<ErrorType>();
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 lstErrorType = clinicalcaseOperations.GetErrorTypes();
                 var res = lstErrorType.Where(a => a.ErrorTypeId == id).FirstOrDefault();
                 obj = res;
@@ -703,7 +714,7 @@ namespace UAB.Controllers
             if (id != 0)
             {
                 List<ErrorType> lstErrorType = new List<ErrorType>();
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 lstErrorType = clinicalcaseOperations.GetErrorTypes();
                 var res = lstErrorType.Where(a => a.ErrorTypeId == id).FirstOrDefault();
                 obj = res;
@@ -716,7 +727,7 @@ namespace UAB.Controllers
         {
             try
             {
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 if (errorType.ErrorTypeId != 0)
                     clinicalcaseOperations.DeleteErrorType(errorType); // Delete
             }
@@ -731,7 +742,7 @@ namespace UAB.Controllers
         public IActionResult SettingsErrorType()
         {
             List<ErrorType> lstErrorType = new List<ErrorType>();
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             lstErrorType = clinicalcaseOperations.GetErrorTypes();
             ViewBag.lstErrorType = lstErrorType;
             return View();
@@ -740,7 +751,7 @@ namespace UAB.Controllers
         [HttpPost]
         public IActionResult AddSettingsProviderFeedback(BindDTO providerFeedback)
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<string> lstFeedback = clinicalcaseOperations.GetProviderFeedbackNames();
             if (!lstFeedback.Contains(providerFeedback.Name.ToLower()))
             {
@@ -765,7 +776,7 @@ namespace UAB.Controllers
         public IActionResult SettingsProviderFeedback()
         {
             List<BindDTO> lstProviderFeedback = new List<BindDTO>();
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             lstProviderFeedback = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.lstProviderFeedback = lstProviderFeedback;
             return View();
@@ -778,7 +789,7 @@ namespace UAB.Controllers
             if (id != 0)
             {
                 List<BindDTO> lstproviderFeedback = new List<BindDTO>();
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 lstproviderFeedback = clinicalcaseOperations.GetProviderFeedbacksList();
                 var res = lstproviderFeedback.Where(a => a.ID == id).FirstOrDefault();
                 obj = res;
@@ -793,7 +804,7 @@ namespace UAB.Controllers
             if (id != 0)
             {
                 List<BindDTO> lstproviderFeedback = new List<BindDTO>();
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 lstproviderFeedback = clinicalcaseOperations.GetProviderFeedbacksList();
                 var res = lstproviderFeedback.Where(a => a.ID == id).FirstOrDefault();
                 obj = res;
@@ -806,7 +817,7 @@ namespace UAB.Controllers
         {
             try
             {
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 if (providerFeedback.ID != 0)
                     clinicalcaseOperations.DeleteProviderFeedback(providerFeedback); // Delete
             }
@@ -821,7 +832,7 @@ namespace UAB.Controllers
         public IActionResult SettingsProject()
         {
             List<ApplicationProject> lstProject = new List<ApplicationProject>();
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             lstProject = clinicalcaseOperations.GetProjects();
             ViewBag.lstProject = lstProject;
             return View();
@@ -832,7 +843,7 @@ namespace UAB.Controllers
         {
             if (ModelState.IsValid)
             {
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 List<string> lstProvider = clinicalcaseOperations.GetProjectNames();
 
                 if (project.ProjectId == 0)
@@ -860,7 +871,7 @@ namespace UAB.Controllers
         public ActionResult Add_EditProject(int id = 0)
         {
             ApplicationProject obj = new ApplicationProject();
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ViewBag.Clients = clinicalcaseOperations.GetClientList();
             ViewBag.ProjectTypes = clinicalcaseOperations.GetProjectTypeList();
             if (id != 0)
@@ -879,7 +890,7 @@ namespace UAB.Controllers
         {
             try
             {
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 if (project.ProjectId != 0)
                     clinicalcaseOperations.DeleteProject(project);
             }
@@ -897,7 +908,7 @@ namespace UAB.Controllers
             if (id != 0)
             {
                 List<ApplicationProject> lstProject = new List<ApplicationProject>();
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 lstProject = clinicalcaseOperations.GetProjects();
                 var res = lstProject.Where(a => a.ProjectId == id).FirstOrDefault();
                 obj = res;
@@ -908,7 +919,7 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult SettingsFileUpload()
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
             return View();
@@ -917,7 +928,7 @@ namespace UAB.Controllers
         [HttpPost]
         public IActionResult SettingsFileUpload(IFormFile files, int projectid)
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             try
             {
                 string uploadedFile = Path.Combine(@"D:\\");
