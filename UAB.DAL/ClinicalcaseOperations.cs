@@ -717,6 +717,69 @@ namespace UAB.DAL
             return dto;
         }
 
+        public List<SearchResultDTO> GetSearchData(SearchParametersDTO searchParametersDTO)
+        {
+            List<SearchResultDTO> lstDto = new List<SearchResultDTO>();
+            StringBuilder parameterBuilder = new StringBuilder();
+            using (var context = new UABContext())
+            {
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[USPGetSearchData]";
+                    cmd.Connection = con;
+
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        SearchResultDTO dto = new SearchResultDTO()
+                        {
+                            ClinicalCaseId = Convert.ToString(reader["ClinicalCaseID"]),
+                            FirstName = Convert.ToString(reader["FirstName"]),
+                            LastName = Convert.ToString(reader["LastName"]),
+                            MRN = Convert.ToString(reader["PatientMRN"]),
+                            //ProviderId = Convert.ToString(reader["ProviderId"]),
+                            DoS = Convert.ToString(reader["DateOfService"]),
+                            ProjectName = Convert.ToString(reader["ProjectName"]),
+                            Status = Convert.ToString(reader["Status"])
+                        };
+                        lstDto.Add(dto);
+                    }
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchParametersDTO.ClinicalCaseId))
+            {
+                lstDto = lstDto.Where(s => s.ClinicalCaseId == searchParametersDTO.ClinicalCaseId).ToList();
+            }
+            else
+            {
+                if (!string.IsNullOrWhiteSpace(searchParametersDTO.FirstName))
+                    lstDto = lstDto.Where(s => s.FirstName == searchParametersDTO.FirstName).ToList();
+                if (!string.IsNullOrWhiteSpace(searchParametersDTO.LastName))
+                    lstDto = lstDto.Where(s => s.LastName == searchParametersDTO.LastName).ToList();
+                if (!string.IsNullOrWhiteSpace(searchParametersDTO.MRN))
+                    lstDto = lstDto.Where(a => a.MRN == searchParametersDTO.MRN).ToList();
+                if (searchParametersDTO.Status.StatusId != 0)
+                {
+                    var statulst  = GetStatusList();
+                    var statusname = statulst.Where(a => a.StatusId == searchParametersDTO.Status.StatusId).FirstOrDefault().Name;
+
+                    lstDto = lstDto.Where(a => a.Status == statusname).ToList();
+                }
+                if (searchParametersDTO.Project.ProjectId != 0)
+                {
+                    var projectlst  = GetProjects();
+                    var projectname = projectlst.Where(a => a.ProjectId == searchParametersDTO.Project.ProjectId).FirstOrDefault().Name;
+
+                    lstDto = lstDto.Where(a => a.ProjectName == projectname).ToList();
+                }
+            }
+            return lstDto;
+        }
+
         public CodingDTO SubmitQARejectedChartsOfShadowQA(ChartSummaryDTO chartSummaryDTO, string hdnPayorIDReject, string hdnProviderIDReject, string hdnCptReject, string hdnModReject, string hdnDxReject, string hdnProviderFeedbackIDReject)
         {
             CodingDTO dto = new CodingDTO();
@@ -1279,7 +1342,7 @@ namespace UAB.DAL
                 return GetProjects();
             }
         }
-        public List<Status> GetStatusList() 
+        public List<Status> GetStatusList()
         {
             using (var context = new UABContext())
             {
@@ -1365,13 +1428,13 @@ namespace UAB.DAL
                 return context.User.ToList();
             }
         }
-        public ApplicationUser GetProjectUser (int projectuserid)
+        public ApplicationUser GetProjectUser(int projectuserid)
         {
             using (var context = new UABContext())
             {
                 var res= context.ProjectUser.Where(a=>a.ProjectUserId==projectuserid).FirstOrDefault();
 
-                var project  = context.Project.Where(a=>a.ProjectId==res.ProjectId).FirstOrDefault();
+                var project= context.Project.Where(a=>a.ProjectId==res.ProjectId).FirstOrDefault();
                 var roles = context.Role.Where(a => a.RoleId == res.RoleId).FirstOrDefault();
                 var useremail = context.User.Where(a => a.UserId == res.UserId).FirstOrDefault().Email;
                 ApplicationUser applicationUser = new ApplicationUser();
@@ -1384,9 +1447,9 @@ namespace UAB.DAL
                 applicationUser.SamplePercentage = res.SamplePercentage.ToString();
                 return applicationUser;
             }
-            
+
         }
-        public List<ApplicationUser> GetUserProjects (int userId)
+        public List<ApplicationUser> GetUserProjects(int userId)
         {
             ApplicationUser applicationUser = new ApplicationUser();
             List<ApplicationUser> lstApplicationUser = new List<ApplicationUser>();
@@ -1404,7 +1467,7 @@ namespace UAB.DAL
                     param.ParameterName = "@userId";
                     param.Value = userId;
                     cmm.Parameters.Add(param);
-                     
+
                     cnn.Open();
                     var reader = cmm.ExecuteReader();
 
@@ -1450,8 +1513,8 @@ namespace UAB.DAL
                 User mdl = new User()
                 {
                     Email = user.Email,
-                    UserId=UserId,
-                    IsActive=user.IsActive
+                    UserId = UserId,
+                    IsActive = user.IsActive
                 };
                 return mdl;
             }
@@ -1462,7 +1525,8 @@ namespace UAB.DAL
             using (var context = new UABContext())
             {
                 var existing = context.User.Where(a => a.Email == user.Email).FirstOrDefault();
-                if (existing==null) {
+                if (existing == null)
+                {
                     UAB.DAL.Models.User mdl = new User();
                     mdl.Email = user.Email;
                     mdl.IsActive = user.IsActive;
@@ -1485,7 +1549,7 @@ namespace UAB.DAL
                 mdl.SamplePercentage = Convert.ToInt32(user.SamplePercentage);
 
                 var exsitingprojectuser = context.ProjectUser.Where(a => a.UserId == user.UserId).FirstOrDefault();
-                if (exsitingprojectuser.RoleId!=mdl.RoleId && exsitingprojectuser.ProjectId!=mdl.ProjectId)
+                if (exsitingprojectuser.RoleId!=mdl.RoleId && exsitingprojectuser.ProjectId != mdl.ProjectId)
                 {
                     context.ProjectUser.Add(mdl);
                     context.SaveChanges();
@@ -1493,7 +1557,7 @@ namespace UAB.DAL
             }
         }
 
-        public int UpdateProjectUser  (ApplicationUser projectuser )
+        public int UpdateProjectUser(ApplicationUser projectuser)
         {
             using (var context = new UABContext())
             {
@@ -1504,7 +1568,7 @@ namespace UAB.DAL
                     return 0;
                 }
                 //updating role 
-                else if (existingprojectuser.RoleId != projectuser.RoleId && existingprojectuser.SamplePercentage==Convert.ToInt32(projectuser.SamplePercentage))
+                else if (existingprojectuser.RoleId != projectuser.RoleId && existingprojectuser.SamplePercentage == Convert.ToInt32(projectuser.SamplePercentage))
                 {
                     existingprojectuser.RoleId = projectuser.RoleId;
                     context.Entry(existingprojectuser).State = EntityState.Modified;
@@ -1518,7 +1582,7 @@ namespace UAB.DAL
                     context.SaveChanges();
                 }
                 //updating role and sample %
-               else  if (existingprojectuser.RoleId != projectuser.RoleId && existingprojectuser.SamplePercentage != Convert.ToInt32(projectuser.SamplePercentage))
+                else if (existingprojectuser.RoleId != projectuser.RoleId && existingprojectuser.SamplePercentage != Convert.ToInt32(projectuser.SamplePercentage))
                 {
                     existingprojectuser.RoleId = projectuser.RoleId;
                     existingprojectuser.SamplePercentage = Convert.ToInt32(projectuser.SamplePercentage);
@@ -1528,8 +1592,8 @@ namespace UAB.DAL
                 return 1;
             }
         }
-        
-        public void DeletetProjectUser (int ProjectUserId) 
+
+        public void DeletetProjectUser(int ProjectUserId)
         {
             using (var context = new UABContext())
             {

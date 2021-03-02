@@ -1,0 +1,102 @@
+﻿@model List<UAB.DTO.SearchResultDTO>
+
+<style>
+    .table td, .table th {
+        padding: 10px !important;
+        vertical-align: top;
+        border-top: 1px solid #dee2e6;
+    }
+
+    .btn-danger {
+        color: #fff;
+        margin-left: 20px;
+        background-color: #da542e;
+        border-color: #da542e;
+    }
+
+    th.sorting_asc {
+        width: 160px !important;
+    }
+
+    .pagination {
+        margin-left: 200px;
+    }
+
+    .alert {
+        padding: 0.5rem 1.25rem;
+    }
+
+    .tableresponsiveforroles {
+        max-height: 400px;
+    }
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    @await Html.PartialAsync("_Msg")
+                    <div id="modalContent"></div>
+                    <br />
+                    <div class="table-responsive col-8">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width: 100px; font-weight:900;">Action</th>
+                                    <th style="width: 100px; font-weight:900;">ClinicalCaseID</th>
+                                    <th style="width: 100px; font-weight:900;">MRN</th>
+                                    <th style="width: 100px; font-weight:900;">First Name</th>
+                                    <th style="width: 100px; font-weight:900;">Last Name</th>
+                                    <th style="width: 100px; font-weight:900;">DOS</th>
+                                    <th style="width: 100px; font-weight:900;">Project Name</th>
+                                    <th style="width: 100px; font-weight:900;">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td>
+                                        <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit" onclick="Assign()">Assign</button>
+                                    </td>
+                                    <td>@item.ClinicalCaseId</td>
+                                    <td>@item.MRN</td>
+                                    <td>@item.FirstName</td>
+                                    <td>@item.LastName</td>
+                                    <td>@item.DoS</td>
+                                    <td>@item.ProjectName</td>
+                                    <td>@item.Status</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
+<script src="~/dashboardassets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
+<script src="~/dashboardassets/extra-libs/DataTables/datatables.js"></script>
+<script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        Assign = function () {
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("AssignClinicalCaseToUser", "UAB")",
+            success: function (response) {
+                $("#modalContent").html(response);
+            },
+            failure: function (response) {
+                alert(response);
+            }
+        });
+    };
+});
+
+</script>

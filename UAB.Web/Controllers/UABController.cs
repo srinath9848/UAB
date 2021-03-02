@@ -448,6 +448,31 @@ namespace UAB.Controllers
             return lstDto;
         }
 
+        [HttpGet]
+        public IActionResult AssignClinicalCaseToUser()
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ViewBag.users = clinicalcaseOperations.GetManageUsers();
+
+            return PartialView("_AssignClinicalCaseToUser");
+
+        }
+        [HttpGet]
+        public IActionResult SettingsSearch()
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
+            ViewBag.Status = clinicalcaseOperations.GetStatusList();
+
+            return View();
+        }
+        [HttpPost]
+        public IActionResult SettingsSearch(SearchParametersDTO searchParametersDTO)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            var searchData = clinicalcaseOperations.GetSearchData(searchParametersDTO);
+            return PartialView("_SettingsSearchResults", searchData);
+        }
         [HttpPost]
         public IActionResult AddSettingsProvider(Provider provider)
         {
@@ -893,7 +918,7 @@ namespace UAB.Controllers
                 ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
                 return View();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
                 TempData["error"] = ex.Message;
