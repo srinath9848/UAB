@@ -57,7 +57,7 @@
                                 {
                                 <tr>
                                     <td>
-                                        <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit" onclick="Assign()">Assign</button>
+                                        <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit" onclick="Assign('@item.ClinicalCaseId')">Assign</button>
                                     </td>
                                     <td>@item.ClinicalCaseId</td>
                                     <td>@item.MRN</td>
@@ -85,10 +85,13 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        Assign = function () {
+        Assign = function (ClinicalCaseId) {
         $.ajax({
             type: "GET",
             url: "@Url.Action("AssignClinicalCaseToUser", "UAB")",
+            data: {
+                "Ccid": ClinicalCaseId
+            },
             success: function (response) {
                 $("#modalContent").html(response);
             },

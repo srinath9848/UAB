@@ -757,9 +757,9 @@ namespace UAB.DAL
             else
             {
                 if (!string.IsNullOrWhiteSpace(searchParametersDTO.FirstName))
-                    lstDto = lstDto.Where(s => s.FirstName == searchParametersDTO.FirstName).ToList();
+                    lstDto = lstDto.Where(s => s.FirstName.Contains(searchParametersDTO.FirstName.ToUpper())).ToList();
                 if (!string.IsNullOrWhiteSpace(searchParametersDTO.LastName))
-                    lstDto = lstDto.Where(s => s.LastName == searchParametersDTO.LastName).ToList();
+                    lstDto = lstDto.Where(s => s.LastName.Contains(searchParametersDTO.LastName.ToUpper())).ToList();
                 if (!string.IsNullOrWhiteSpace(searchParametersDTO.MRN))
                     lstDto = lstDto.Where(a => a.MRN == searchParametersDTO.MRN).ToList();
                 if (!string.IsNullOrWhiteSpace(searchParametersDTO.StatusId))

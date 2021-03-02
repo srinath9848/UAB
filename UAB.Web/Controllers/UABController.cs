@@ -451,7 +451,7 @@ namespace UAB.Controllers
         }
 
         [HttpGet]
-        public IActionResult AssignClinicalCaseToUser()
+        public IActionResult AssignClinicalCaseToUser(string ccid)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
             ViewBag.users = clinicalcaseOperations.GetManageUsers();
