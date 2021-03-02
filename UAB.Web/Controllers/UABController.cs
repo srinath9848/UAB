@@ -469,21 +469,24 @@ namespace UAB.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult SettingsSearch(string ccid,string fname, string lname, string mrn, string sid, string pid)
+        public IActionResult SettingsSearch(string ccid,string fname, string lname, string mrn,DateTime dosfrom,DateTime dosto, string statusname , string projectname, string providername )
         {
-
-            SearchParametersDTO searchParametersDTO = new SearchParametersDTO()
-            {
-                 ClinicalCaseId= ccid,
-                  FirstName=fname,
-                  LastName=lname,
-                  MRN=mrn,
-                  StatusId=sid,
-                  ProjectId=pid
-            };
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
-            var searchData = clinicalcaseOperations.GetSearchData(searchParametersDTO);
-            return PartialView("_SettingsSearchResults", searchData);
+           
+                SearchParametersDTO searchParametersDTO = new SearchParametersDTO()
+                {
+                    ClinicalCaseId = ccid,
+                    FirstName = fname,
+                    LastName = lname,
+                    MRN = mrn,
+                    DoSFrom = dosfrom,
+                    DoSTo = dosto,
+                    StatusName = statusname,
+                    ProjectName = projectname,
+                    ProviderName = providername
+                };
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                var searchData = clinicalcaseOperations.GetSearchData(searchParametersDTO);
+                return PartialView("_SettingsSearchResults", searchData);
         }
         [HttpPost]
         public IActionResult AddSettingsProvider(Provider provider)

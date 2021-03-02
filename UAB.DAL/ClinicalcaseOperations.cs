@@ -740,8 +740,8 @@ namespace UAB.DAL
                             FirstName = Convert.ToString(reader["FirstName"]),
                             LastName = Convert.ToString(reader["LastName"]),
                             MRN = Convert.ToString(reader["PatientMRN"]),
-                            //ProviderId = Convert.ToString(reader["ProviderId"]),
-                            DoS = Convert.ToString(reader["DateOfService"]),
+                            ProviderName = Convert.ToString(reader["Provider"]),
+                            DoS = Convert.ToDateTime(reader["DateOfService"]),
                             ProjectName = Convert.ToString(reader["ProjectName"]),
                             Status = Convert.ToString(reader["Status"])
                         };
@@ -762,22 +762,18 @@ namespace UAB.DAL
                     lstDto = lstDto.Where(s => s.LastName.Contains(searchParametersDTO.LastName.ToUpper())).ToList();
                 if (!string.IsNullOrWhiteSpace(searchParametersDTO.MRN))
                     lstDto = lstDto.Where(a => a.MRN == searchParametersDTO.MRN).ToList();
-                if (!string.IsNullOrWhiteSpace(searchParametersDTO.StatusId))
+                if (searchParametersDTO.DoSFrom != default(DateTime) && searchParametersDTO.DoSTo != default(DateTime))
                 {
-                    int sid = Convert.ToInt32(searchParametersDTO.StatusId);
-                    var statulst = GetStatusList();
-                    var statusname = statulst.Where(a => a.StatusId == sid).FirstOrDefault().Name;
-
-                    lstDto = lstDto.Where(a => a.Status == statusname).ToList();
+                    var DoSFrom = searchParametersDTO.DoSFrom.Value;
+                    var DoSTo = searchParametersDTO.DoSTo.Value;
+                    lstDto = lstDto.Where(s => s.DoS >= DoSFrom && s.DoS <= DoSTo).ToList();
                 }
-                if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProjectId))
-                {
-                    int pid = Convert.ToInt32(searchParametersDTO.ProjectId);
-                    var projectlst = GetProjects();
-                    var projectname = projectlst.Where(a => a.ProjectId == pid).FirstOrDefault().Name;
-
-                    lstDto = lstDto.Where(a => a.ProjectName == projectname).ToList();
-                }
+                if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProviderName))
+                    lstDto = lstDto.Where(a => a.ProviderName == searchParametersDTO.ProviderName).ToList();
+                if (!string.IsNullOrWhiteSpace(searchParametersDTO.StatusName)&& searchParametersDTO.StatusName!= "--Select a Status--")
+                    lstDto = lstDto.Where(a => a.Status == searchParametersDTO.StatusName).ToList();
+                if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProjectName) && searchParametersDTO.ProjectName !="--Select a Project--")
+                    lstDto = lstDto.Where(a => a.ProjectName == searchParametersDTO.ProjectName).ToList();
             }
             return lstDto;
         }
