@@ -495,7 +495,7 @@ namespace UAB.Controllers
                     ProjectName = projectname,
                     ProviderName = providername
                 };
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 var searchData = clinicalcaseOperations.GetSearchData(searchParametersDTO);
                 return PartialView("_SettingsSearchResults", searchData);
         }
