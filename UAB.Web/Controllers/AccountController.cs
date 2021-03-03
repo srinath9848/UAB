@@ -255,21 +255,29 @@ namespace UAB.Controllers
         [HttpPost]
         public IActionResult UpdateProjectUser(ApplicationUser model, string user = null)
         {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            int i = clinicalcaseOperations.UpdateProjectUser(model);
-            if (i == 1)
+            if (model.RoleId !=0 &&!string.IsNullOrWhiteSpace(model.SamplePercentage)
+                && model.ProjectUserId!=0 && model.UserId!=0)
             {
-                TempData["Success"] = "Successfully Project User Updated";
-                return RedirectToAction("UserDetails", new { UserId = model.UserId });
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                int i = clinicalcaseOperations.UpdateProjectUser(model);
+                if (i == 1)
+                {
+                    TempData["Success"] = "Successfully Project User Updated";
+                    return RedirectToAction("UserDetails", new { UserId = model.UserId });
+                }
+                else
+                {
+                    TempData["Warning"] = "Unable to  update  project user :no change is there";
+                    return RedirectToAction("UserDetails", new { UserId = model.UserId });
+                }
             }
             else
             {
-                TempData["Warning"] = "Unable to  update  project user :no change is there";
+                TempData["Warning"] = "Unable to  update  project user :you havent seleted anything";
                 return RedirectToAction("UserDetails", new { UserId = model.UserId });
             }
-
-
         }
+
         [HttpGet]
         public IActionResult DeleteProjectUser(int projectuserid)
         {
