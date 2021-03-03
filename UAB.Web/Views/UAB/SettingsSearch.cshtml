@@ -9,8 +9,9 @@
         width: 100px;
         margin-left: 15px;
     }
-    .txtwidth{
-        width:210px;
+
+    .txtwidth {
+        width: 210px;
     }
 </style>
 
@@ -22,7 +23,7 @@
     <div class="col-md-3" style="min-height:690px">
         <div class="form-group">
             <label class="lblSearch">Clinical case Id</label>
-            @Html.TextBoxFor(model => model.ClinicalCaseId, new {  @class="txtwidth",@autofocus = "autofocus", @id = "txtClinicalCaseId", @autocomplete = "off" })
+            @Html.TextBoxFor(model => model.ClinicalCaseId, new { @class = "txtwidth", @autofocus = "autofocus", @id = "txtClinicalCaseId", @autocomplete = "off" })
             @Html.ValidationMessageFor(model => model.ClinicalCaseId, null, new { @class = "text-danger" })
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         </div>
@@ -56,39 +57,42 @@
         <br />
         <div class="form-group">
             <label class="lblSearch">DOS From</label>
-            @Html.TextBoxFor(model => model.DoSFrom, new { @class = "txtwidth", @type = "date",  @autofocus = "autofocus", @id = "txtDoSFrom", @autocomplete = "off" })
+            @Html.TextBoxFor(model => model.DoSFrom, new { @class = "txtwidth", @type = "date", @autofocus = "autofocus", @id = "txtDoSFrom", @autocomplete = "off" })
             @Html.ValidationMessageFor(model => model.DoSFrom, null, new { @class = "text-danger" })
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         </div>
         <br />
         <div class="form-group">
             <label class="lblSearch">DOS To</label>
-            @Html.TextBoxFor(model => model.DoSTo, new { @class = "txtwidth", @type = "date",  @autofocus = "autofocus", @id = "txtDoSTo", @autocomplete = "off" })
+            @Html.TextBoxFor(model => model.DoSTo, new { @class = "txtwidth", @type = "date", @autofocus = "autofocus", @id = "txtDoSTo", @autocomplete = "off" })
             @Html.ValidationMessageFor(model => model.DoSTo, null, new { @class = "text-danger" })
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         </div>
         <br />
         <div class="form-group">
             <label class="lblSearch">Status</label>
-            @Html.DropDownListFor(model => model.StatusName, new SelectList(@ViewBag.Status, "StatusId", "Name"), "--Select a Status--", new { @class = "txtwidth", @id = "statusdd"})
+            @Html.DropDownListFor(model => model.StatusName, new SelectList(@ViewBag.Status, "StatusId", "Name"), "--Select a Status--", new { @class = "txtwidth", @id = "statusdd" })
             @Html.ValidationMessageFor(model => model.StatusName, null, new { @class = "text-danger" })
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         </div>
         <br />
         <div class="form-group">
             <label class="lblSearch">Project</label>
-            @Html.DropDownListFor(model => model.ProjectName, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select a Project--", new { @class = "txtwidth", @id = "projectdd"})
+            @Html.DropDownListFor(model => model.ProjectName, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select a Project--", new { @class = "txtwidth", @id = "projectdd" })
             @Html.ValidationMessageFor(model => model.ProjectName, null, new { @class = "text-danger" })
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         </div>
         <br />
         <div style="margin-left:102px;">
             <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit" onclick="Search()">Search</button>
-            <a href="@Url.Action("SettingsSearch","UAB")"class="btn btn-sm btn-danger btn-fill">Cancel</a>
+            @*<a href="@Url.Action("SettingsSearch","UAB")" class="btn btn-sm btn-danger btn-fill">Cancel</a>*@
+            <button type="submit" class="btn btn-sm btn-danger btn-fill" id="btnclear" onclick="clearFields()">Clear</button>
         </div>
+        
     </div>
 
     <div class="col-md-9">
+        <div id="error" style="color:red;max-height:20px;"></div>
         <div id="modalContent"></div>
     </div>
 </div>
@@ -99,7 +103,33 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+
+        clearFields = function () {
+            $("#txtClinicalCaseId").val('');
+            $("#txtFirstName").val('');
+            $("#txtLastName").val('');
+            $("#txtMRN").val('');
+            $("#txtDoSFrom").val('');
+            $("#txtDoSTo").val('');
+            $("#statusdd").find('option:selected').text("--Select a Status--");
+            $("#projectdd").find('option:selected').text("--Select a Project--");
+            $("#txtProvidername").val('');
+        }
+
         Search = function () {
+
+            var ccid = $("#txtClinicalCaseId").val();
+            var fname = $("#txtFirstName").val();
+            var lname = $("#txtLastName").val();
+            var mrn = $("#txtMRN").val();
+            var dosfrom = $("#txtDoSFrom").val();
+            var dosto = $("#txtDoSTo").val();
+            var statusname = $("#statusdd").find('option:selected').text();
+            var projectname = $("#projectdd").find('option:selected').text();
+            var providername = $("#txtProvidername").val();
+            if (ccid !== "" || fname !=="" || lname !=="" || mrn !=="" || dosfrom !=="" || dosto !=="" || providername !=="" ||
+                projectname !== "--Select a Project--" || statusname !== "--Select a Status--") {
+                $("#error").hide();
                 $.ajax({
                     type: "POST",
                     url: "@Url.Action("SettingsSearch", "UAB")",
@@ -121,6 +151,11 @@
                         alert(response);
                     }
                 });
-            };
-    });
+            }
+            else {
+                $("#error").html("Plese enter search parameters");
+                $("#error").fadeOut(10000);
+            }
+        }
+});
 </script>
