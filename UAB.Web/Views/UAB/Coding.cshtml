@@ -24,9 +24,10 @@
     $("#coding").addClass('selected');
     $('.Approved').hide();
     $('#divAnswer').hide();
+    $("#ProviderID").css("pointer-events", "none");
+    $("#ProviderID").css("background-color", "#e9ecef");
 
     $('#codingSubmit').click(function () {
-
         if ($("#CoderQuestion").val() !== "") {
             $("#codingSubmit").prop("type", "button");
             $(".text-danger").html("");
