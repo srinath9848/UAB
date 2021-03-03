@@ -13,32 +13,32 @@
         <div class="card-body">
             <h4 class="card-title">Coding Details</h4>
         </div>
-        @Html.HiddenFor(model => model.Dx)
+        @*@Html.HiddenFor(model => model.Dx)*@
 
         @Html.HiddenFor(model => model.ProjectID)
         @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID)
         <div class="form-group row">
+            <label class="col-md-3 m-t-15">Provider</label>
+            <div class="col-md-3">
+                @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @class = "form-control CoderDetails" })
+                @Html.ValidationMessageFor(model => model.ProviderID, null, new { @class = "text-danger" })
+            </div>
             <label class="col-md-3 m-t-15">Payor</label>
             <div class="col-md-3">
                 @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails" })
                 @Html.ValidationMessageFor(model => model.PayorID, null, new { @class = "text-danger" })
             </div>
-            <label class="col-md-3 m-t-15">Note Title</label>
-            <div class="col-md-3">
-                @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails", @autocomplete = "off" })
-                @Html.ValidationMessageFor(model => model.NoteTitle, null, new { @class = "text-danger" })
-            </div>
         </div>
         <div class="form-group row">
-            <label class="col-md-3 m-t-15">Provider</label>
-            <div class="col-md-3">
-                @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails" })
-                @Html.ValidationMessageFor(model => model.ProviderID, null, new { @class = "text-danger" })
-            </div>
             <label class="col-md-3 m-t-15">CPT</label>
             <div class="col-md-3">
                 @Html.TextAreaFor(model => model.CPTCode, new { @class = "form-control CoderDetails", @autocomplete = "off" })
                 @Html.ValidationMessageFor(model => model.CPTCode, null, new { @class = "text-danger" })
+            </div>
+            <label class="col-md-3 m-t-15">Note Title</label>
+            <div class="col-md-3">
+                @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.NoteTitle, null, new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group row">
@@ -49,21 +49,21 @@
             </div>
             <label class="col-md-3 m-t-15">Dx</label>
             <div class="col-md-3">
-                @*@Html.TextAreaFor(model => model.Dx, new { @class = "form-control CoderDetails",  @autocomplete = "off" })
-                    @Html.ValidationMessageFor(model => model.Dx, null, new { @class = "text-danger" })*@
-                <table>
-                    <tbody id="tableid" style="display:block">
-                        <tr id="tr0">
-                            <td>
-                                @Html.TextBoxFor(model => model.Dx, new { @class = "form-control CoderDetails", @autocomplete = "off", @id = "txt0", @title = "txt0" })
-                                @Html.ValidationMessageFor(model => model.Dx, null, new { @class = "text-danger" })
-                            </td>
-                            <td>
-                                <input type="button" title="btn_0" id="btnDelete" class="btn btn-info btn-sm" value="Delete" />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                @Html.TextAreaFor(model => model.Dx, new { @class = "form-control CoderDetails", @autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.Dx, null, new { @class = "text-danger" })
+                @*<table>
+                        <tbody id="tableid" style="display:block">
+                            <tr id="tr0">
+                                <td>
+                                    @Html.TextBoxFor(model => model.Dx, new { @class = "form-control CoderDetails", @autocomplete = "off", @id = "txt0", @title = "txt0" })
+                                    @Html.ValidationMessageFor(model => model.Dx, null, new { @class = "text-danger" })
+                                </td>
+                                <td>
+                                    <input type="button" title="btn_0" id="btnDelete" class="btn btn-info btn-sm" value="Delete" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>*@
             </div>
         </div>
         <div class="form-group row">

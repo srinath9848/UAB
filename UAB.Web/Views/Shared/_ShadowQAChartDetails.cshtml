@@ -275,7 +275,7 @@ string.IsNullOrEmpty(Model.QAProviderFeedbackText))
                                     Error Type
                                 </label>
                                 <div class="col-md-7">
-                                    @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), new { @class = "form-control", @readonly = "readonly" })
+                                    @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), new { @class = "form-control", @readonly = "readonly", @style = "pointer-events: none;" })
                                 </div>
                             </div>
                         </div>
@@ -306,7 +306,7 @@ string.IsNullOrEmpty(Model.QAProviderFeedbackText))
                                 </label>
                                 <div class="col-md-7">
                                     @Html.DropDownListFor(model => model.ShadowQADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.ShadowQADTO.ErrorType, null, new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(model => model.ShadowQADTO.ErrorType, null, new { @class = "text-danger ErrorType" })
                                 </div>
                             </div>
                         </div>

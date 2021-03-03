@@ -1212,7 +1212,7 @@ namespace UAB.DAL
                             ParameterName = "@ErrorTypeID",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.QADTO.ErrorType
+                            Value = chartSummaryDTO.ShadowQADTO.ErrorType
                         } ,   new SqlParameter() {
                             ParameterName = "@NotesfromJen",
                             SqlDbType =  System.Data.SqlDbType.VarChar,
