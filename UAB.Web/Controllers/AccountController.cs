@@ -221,15 +221,23 @@ namespace UAB.Controllers
             {
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
-                foreach (string item in ProjectAndRole.Split(','))
+                try
                 {
-                    model.ProjectName = item.Split('^')[0];
-                    model.RoleName = item.Split('^')[1];
-                    model.SamplePercentage = item.Split('^')[2];
+                    foreach (string item in ProjectAndRole.Split(','))
+                    {
+                        model.ProjectName = item.Split('^')[0];
+                        model.RoleName = item.Split('^')[1];
+                        model.SamplePercentage = item.Split('^')[2];
 
-                    clinicalcaseOperations.AddProjectUser(model);
+                        clinicalcaseOperations.AddProjectUser(model);
+                    }
+                    TempData["Success"] = "Successfully Project Added User";
+                    return RedirectToAction("UserDetails", new { UserId = model.UserId });
                 }
-                TempData["Success"] = "Successfully Project Added User";
+                catch (Exception ex)
+                {
+                    TempData["Error"] = ex.Message;
+                }
                 return RedirectToAction("UserDetails", new { UserId = model.UserId });
             }
             return RedirectToAction("ManageUsers");
