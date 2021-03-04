@@ -207,10 +207,14 @@ namespace UAB.Controllers
             ViewBag.Roles = clinicalcaseOperations.GetRolesList();
             ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
 
+            var UserProjects = clinicalcaseOperations.GetUserProjects(userId);
+
+            string hdnroleproject = UserProjects.FirstOrDefault().hdnProjectAndRole.ToString();
             ApplicationUser appuser = new ApplicationUser();
             var user = clinicalcaseOperations.Getuser(userId);
             appuser.Email = user.Email;
             appuser.UserId = user.UserId;
+            appuser.hdnProjectAndRole = hdnroleproject;
             return PartialView("_AddProjectUser", appuser);
         }
         [HttpPost]

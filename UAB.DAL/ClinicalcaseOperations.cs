@@ -1488,6 +1488,20 @@ namespace UAB.DAL
                         applicationUser.SamplePercentage = Convert.ToString(reader["SamplePercentage"]);
                         lstApplicationUser.Add(applicationUser);
                     }
+
+                    if (lstApplicationUser.Count != 0)
+                    {
+                        string temp = null;
+                        foreach (var item in lstApplicationUser)
+                        {
+                            temp = temp + item.ProjectName + "^" + item.RoleName +"^"+item.SamplePercentage+",";
+                        }
+                        var length = temp.Length;
+                        string initial = temp.Substring(0, length - 1);
+                        applicationUser = lstApplicationUser.FirstOrDefault();
+                        applicationUser.hdnProjectAndRole = initial;
+                        lstApplicationUser[0] = applicationUser;
+                    }
                 }
             }
             if (lstApplicationUser.Count == 0)
@@ -1569,7 +1583,7 @@ namespace UAB.DAL
                     context.ProjectUser.Add(mdl);
                     context.SaveChanges();
                 }
-                
+
             }
         }
 
