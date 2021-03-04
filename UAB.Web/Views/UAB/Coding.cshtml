@@ -28,14 +28,19 @@
     $("#ProviderID").css("background-color", "#e9ecef");
 
     $('#codingSubmit').click(function () {
-        if ($("#CoderQuestion").val() !== "") {
-            $("#codingSubmit").prop("type", "button");
-            $(".text-danger").html("");
-            $("#frmSubmitCodingAvailableChart").submit();
+        if ($("#Dx").val() != "") {
+            if ($("#CoderQuestion").val() !== "") {
+                $("#codingSubmit").prop("type", "button");
+                $(".text-danger").html("");
+                $("#frmSubmitCodingAvailableChart").submit();
+            } else {
+                $("#codingSubmit").prop("type", "submit");
+                $("#frmSubmitCodingAvailableChart").valid();
+                $("#frmSubmitCodingAvailableChart").submit();
+            }
         } else {
-            $("#codingSubmit").prop("type", "submit");
-            $("#frmSubmitCodingAvailableChart").valid();
-            $("#frmSubmitCodingAvailableChart").submit();
+            $(".Dxerror").html('<span id="projectdd-error" class="">Dx Code is required.</span>');
+            e.preventDefault();
         }
 
     });

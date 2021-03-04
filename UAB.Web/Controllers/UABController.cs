@@ -40,11 +40,12 @@ namespace UAB.Controllers
             return View(lstDto);
         }
 
-        public IActionResult GetCodingAvailableChart(string Role, string ChartType, int ProjectID)
+        public IActionResult GetCodingAvailableChart(string Role, string ChartType, int ProjectID, string ProjectName)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
+            chartSummaryDTO.ProjectName = ProjectName;
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -56,11 +57,12 @@ namespace UAB.Controllers
         }
 
 
-        public IActionResult GetCodingIncorrectChart(string Role, string ChartType, int ProjectID)
+        public IActionResult GetCodingIncorrectChart(string Role, string ChartType, int ProjectID, string ProjectName)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
+            chartSummaryDTO.ProjectName = ProjectName;
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -72,11 +74,12 @@ namespace UAB.Controllers
             return View("IncorrectCharts", chartSummaryDTO);
         }
 
-        public IActionResult GetCodingReadyForPostingChart(string Role, string ChartType, int ProjectID)
+        public IActionResult GetCodingReadyForPostingChart(string Role, string ChartType, int ProjectID, string ProjectName)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
+            chartSummaryDTO.ProjectName = ProjectName;
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -162,11 +165,12 @@ namespace UAB.Controllers
 
             return View(lstDto);
         }
-        public IActionResult GetQAAvailableChart(string Role, string ChartType, int ProjectID)
+        public IActionResult GetQAAvailableChart(string Role, string ChartType, int ProjectID, string ProjectName)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
+            chartSummaryDTO.ProjectName = ProjectName;
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -177,11 +181,12 @@ namespace UAB.Controllers
             return View("QA", chartSummaryDTO);
         }
 
-        public IActionResult GetQARebuttalChartsOfCoder(string Role, string ChartType, int ProjectID)
+        public IActionResult GetQARebuttalChartsOfCoder(string Role, string ChartType, int ProjectID, string ProjectName)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
+            chartSummaryDTO.ProjectName = ProjectName;
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -192,11 +197,12 @@ namespace UAB.Controllers
             return View("QARebuttalChartsOfCoder", chartSummaryDTO);
         }
 
-        public IActionResult GetQARejectedChartsOfShadowQA(string Role, string ChartType, int ProjectID)
+        public IActionResult GetQARejectedChartsOfShadowQA(string Role, string ChartType, int ProjectID, string ProjectName)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
+            chartSummaryDTO.ProjectName = ProjectName;
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -206,11 +212,12 @@ namespace UAB.Controllers
             #endregion
             return View("QARejectedChartsOfShadowQA", chartSummaryDTO);
         }
-        public IActionResult GetQAOnHoldChart(string Role, string ChartType, int ProjectID)
+        public IActionResult GetQAOnHoldChart(string Role, string ChartType, int ProjectID, string ProjectName)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
+            chartSummaryDTO.ProjectName = ProjectName;
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -350,11 +357,12 @@ namespace UAB.Controllers
             return View(lstDto);
         }
 
-        public IActionResult GetShadowQAAvailableChart(string Role, string ChartType, int ProjectID)
+        public IActionResult GetShadowQAAvailableChart(string Role, string ChartType, int ProjectID, string ProjectName)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
+            chartSummaryDTO.ProjectName = ProjectName;
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -365,11 +373,12 @@ namespace UAB.Controllers
             return View("ShadowQA", chartSummaryDTO);
         }
 
-        public IActionResult GetShadowQARebuttalChartsOfQA(string Role, string ChartType, int ProjectID)
+        public IActionResult GetShadowQARebuttalChartsOfQA(string Role, string ChartType, int ProjectID, string ProjectName)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
+            chartSummaryDTO.ProjectName = ProjectName;
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -480,24 +489,24 @@ namespace UAB.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult SettingsSearch(string ccid,string fname, string lname, string mrn,DateTime dosfrom,DateTime dosto, string statusname , string projectname, string providername )
+        public IActionResult SettingsSearch(string ccid, string fname, string lname, string mrn, DateTime dosfrom, DateTime dosto, string statusname, string projectname, string providername)
         {
-           
-                SearchParametersDTO searchParametersDTO = new SearchParametersDTO()
-                {
-                    ClinicalCaseId = ccid,
-                    FirstName = fname,
-                    LastName = lname,
-                    MRN = mrn,
-                    DoSFrom = dosfrom,
-                    DoSTo = dosto,
-                    StatusName = statusname,
-                    ProjectName = projectname,
-                    ProviderName = providername
-                };
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-                var searchData = clinicalcaseOperations.GetSearchData(searchParametersDTO);
-                return PartialView("_SettingsSearchResults", searchData);
+
+            SearchParametersDTO searchParametersDTO = new SearchParametersDTO()
+            {
+                ClinicalCaseId = ccid,
+                FirstName = fname,
+                LastName = lname,
+                MRN = mrn,
+                DoSFrom = dosfrom,
+                DoSTo = dosto,
+                StatusName = statusname,
+                ProjectName = projectname,
+                ProviderName = providername
+            };
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var searchData = clinicalcaseOperations.GetSearchData(searchParametersDTO);
+            return PartialView("_SettingsSearchResults", searchData);
         }
         [HttpPost]
         public IActionResult AddSettingsProvider(Provider provider)

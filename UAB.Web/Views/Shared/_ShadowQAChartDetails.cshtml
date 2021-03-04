@@ -1,6 +1,7 @@
 ﻿@model UAB.DTO.ChartSummaryDTO
-<div class="col-md-12">
-    <form asp-action="SubmitShadowQA" asp-controller="UAB" method="POST">
+
+<form asp-action="SubmitShadowQA" asp-controller="UAB" method="POST">
+    <div class="col-md-12">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Coder/QA Details</h4>
@@ -252,7 +253,9 @@ string.IsNullOrEmpty(Model.QAProviderFeedbackText))
                 </div>
             </div>
         </div>
-        <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-md-6">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">QA Details</h4>
@@ -260,14 +263,14 @@ string.IsNullOrEmpty(Model.QAProviderFeedbackText))
             <div class="card-body">
                 <div class="col-12">
                     <div class="row mb-3">
-                        <div class="col-lg-6">
-                            <div class="form-group row">
-                                <label class="col-md-5 m-t-15">Coder Rebuttal</label>
-                                <div class="col-md-7">
-                                    @Html.TextAreaFor(model => model.QADTO.CoderRebuttal, new { @class = "form-control", @readonly = "readonly" })
+                        @*<div class="col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-5 m-t-15">Coder Rebuttal</label>
+                                    <div class="col-md-7">
+                                        @Html.TextAreaFor(model => model.QADTO.CoderRebuttal, new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </div>*@
 
                         <div class="col-lg-6">
                             <div class="form-group row">
@@ -283,7 +286,8 @@ string.IsNullOrEmpty(Model.QAProviderFeedbackText))
                 </div>
             </div>
         </div>
-        <div class="clearfix"></div>
+    </div>
+    <div class="col-md-6">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Shadow QA Details</h4>
@@ -291,14 +295,6 @@ string.IsNullOrEmpty(Model.QAProviderFeedbackText))
             <div class="card-body">
                 <div class="col-12">
                     <div class="row mb-3">
-                        <div class="col-lg-6">
-                            <div class="form-group row">
-                                <label class="col-md-5 m-t-15">Coder/QA Rebuttals</label>
-                                <div class="col-md-7">
-                                    @Html.TextAreaFor(model => model.ShadowQADTO.CoderRebuttal, new { @class = "form-control" })
-                                </div>
-                            </div>
-                        </div>
                         <div class="col-lg-6">
                             <div class="form-group row">
                                 <label class="col-md-5 m-t-15">
@@ -310,36 +306,20 @@ string.IsNullOrEmpty(Model.QAProviderFeedbackText))
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mb-3">
                         <div class="col-lg-6">
                             <div class="form-group row">
-                                <label class="col-md-5 m-t-15">Notes from Jen</label>
+                                <label class="col-md-5 m-t-15"></label>
                                 <div class="col-md-7">
-                                    @Html.TextAreaFor(model => model.ShadowQADTO.NotesfromJen, new { @class = "form-control" })
+                                    <button type="submit" id="btnsubmit" class="btn btn-success">Submit</button>
                                 </div>
                             </div>
-                        </div>
-                        @*<div class="col-lg-6">
-                                <div class="form-group row">
-                                    <div class="custom-control custom-checkbox mr-sm-2">
-                                        @Html.CheckBoxFor(model => model.ShadowQADTO.OkaytoPost, new { @class = "custom-control-input ShadowQADetails", @id = "customControlAutosizing1" })
-                                        <label class="custom-control-label" for="customControlAutosizing1">Okay to Post in PK?</label>
-                                    </div>
-                                </div>
-                            </div>*@
-                    </div>
-                    <div class="border-top" id="ShadowQADetails">
-                        <div class="card-body" style="text-align:right">
-                            <button type="submit" id="btnsubmit" class="btn btn-success">Submit</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
-</div>
-
+    </div>
+</form>
 
 <style>
     .errMsg {

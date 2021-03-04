@@ -244,15 +244,6 @@
                 <div class="row mb-3">
                     <div class="col-lg-6">
                         <div class="form-group row">
-                            <label class="col-md-5 m-t-15">Coder Rebuttal</label>
-                            <div class="col-sm-7">
-                                @Html.TextAreaFor(model => model.QADTO.CoderRebuttal, new { @class = "form-control" })
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="form-group row">
                             <label class="col-md-3 m-t-15">
                                 Error Type
                             </label>
@@ -262,12 +253,15 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-6">
+                        <div class="form-group row">
+                            <label class="col-md-5 m-t-15"></label>
+                            <div class="col-md-7">
+                                <button id="btnsubmit" type="submit" class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="border-top">
-            <div class="card-body" style="text-align:right">
-                <button id="btnsubmit" type="submit" class="btn btn-success">Submit</button>
             </div>
         </div>
     </div>
