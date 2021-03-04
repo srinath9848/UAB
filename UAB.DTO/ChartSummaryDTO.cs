@@ -68,6 +68,7 @@ namespace UAB.DTO
         public string QAProviderFeedbackRemarks { get; set; }
 
         public int ProjectID { get; set; }
+        public string ProjectName { get; set; }
         [Required(ErrorMessage = "*")]
         public int ShadowQAPayorID { get; set; }
         [Required(ErrorMessage = "*")]
