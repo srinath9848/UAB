@@ -1565,25 +1565,16 @@ namespace UAB.DAL
                 mdl.RoleId = context.Role.Where(a => a.Name == user.RoleName).Select(a => a.RoleId).FirstOrDefault();
                 mdl.SamplePercentage = Convert.ToInt32(user.SamplePercentage);
 
-                var exsitingprojectuser = context.ProjectUser.Where(a => a.UserId == user.UserId).FirstOrDefault();
-                if (exsitingprojectuser!=null)
-                {
-                    if (exsitingprojectuser.RoleId != mdl.RoleId && exsitingprojectuser.ProjectId != mdl.ProjectId)
-                    {
-                        context.ProjectUser.Add(mdl);
-                        context.SaveChanges();
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Unable to Add project User:trying to add existing project to this user");
-                    }
-                }
-                else
+                var exsitingprojectuser = context.ProjectUser.Where(a => a.UserId == user.UserId&&a.RoleId==mdl.RoleId&&a.ProjectId==mdl.ProjectId).FirstOrDefault();
+                if (exsitingprojectuser==null)
                 {
                     context.ProjectUser.Add(mdl);
                     context.SaveChanges();
                 }
-
+                else
+                {
+                    throw new ArgumentException("Unable to Add project User:trying to add existing project to this user");
+                }
             }
         }
 
