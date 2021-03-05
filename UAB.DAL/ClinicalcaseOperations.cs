@@ -1359,11 +1359,22 @@ namespace UAB.DAL
                 return context.Role.ToList();
             }
         }
+        public List<string> GetUabuserEmails ()
+        {
+            using (var context = new UABContext())
+            {
+                return context.User.Select(a=>a.Email).ToList();
+            }
+        }
         public List<string> GetIdentityUsersList()
         {
             using (UAB.DAL.LoginDTO.IdentityServerContext context = new IdentityServerContext())
             {
-                return context.Users.Select(a => a.Email).ToList();
+                List<string> iduseremail = context.Users.Select(a => a.Email).ToList();
+
+                List<string> uabuseremail = GetUabuserEmails();
+
+                return iduseremail.Except(uabuseremail).ToList();
             }
         }
 
@@ -1494,7 +1505,7 @@ namespace UAB.DAL
                         string temp = null;
                         foreach (var item in lstApplicationUser)
                         {
-                            temp = temp + item.ProjectName + "^" + item.RoleName +"^"+item.SamplePercentage+",";
+                            temp = temp + item.ProjectName + "^" + item.RoleName +",";
                         }
                         var length = temp.Length;
                         string initial = temp.Substring(0, length - 1);
