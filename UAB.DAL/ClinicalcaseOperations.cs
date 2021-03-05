@@ -1511,6 +1511,62 @@ namespace UAB.DAL
             return providers;
         }
 
+        public Provider GetProviderByName(string providerName)
+        {
+            using(var context=new UABContext())
+            {
+                return context.Provider.Where(p => p.Name == providerName).Select(p => p).FirstOrDefault();
+            };
+        }
+
+        public Payor GetPayorByName(string payorName)
+        {
+            using (var context = new UABContext())
+            {
+                return context.Payor.Where(p => p.Name == payorName).Select(p => p).FirstOrDefault();
+            };
+        }
+
+        public ProviderFeedback GetProviderFeedbackByName(string providerFeedbackName)
+        {
+            using (var context = new UABContext())
+            {
+                return context.ProviderFeedback.Where(p => p.Feedback == providerFeedbackName).Select(p => p).FirstOrDefault();
+            };
+        }
+
+        public ErrorType GetErrorTypeByName(string errorTypeName)
+        {
+            using (var context = new UABContext())
+            {
+                return context.ErrorType.Where(p => p.Name == errorTypeName).Select(p => p).FirstOrDefault();
+            };
+        }
+
+        public Project GetProjectByName(string projectName)
+        {
+            using (var context = new UABContext())
+            {
+                return context.Project.Where(p => p.Name == projectName).Select(p => p).FirstOrDefault();
+            };
+        }
+
+        public int GetFirstClintId()
+        {
+            using (var context = new UABContext())
+            {
+                return context.Project.Select(p => p.ClientId).FirstOrDefault();
+            };
+        }
+
+        public int GetFirstProjectTypeId()
+        {
+            using (var context = new UABContext())
+            {
+                return context.Project.Select(p => p.ProjectTypeId).FirstOrDefault();
+            };
+        }
+
         public void AddProvider(Provider provider)
         {
             using (var context = new UABContext())
