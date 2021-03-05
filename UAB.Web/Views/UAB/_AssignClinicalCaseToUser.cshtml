@@ -1,0 +1,59 @@
+﻿@model UAB.DTO.SearchResultDTO
+
+    <style>
+        .modal-content {
+            margin-top: 90px;
+        }
+
+        .errorTxt {
+            color: red;
+            min-height: 20px;
+        }
+
+        .tableresponsiveforroles {
+            max-height: 200px;
+        }
+
+        .roledddwith {
+            width: 215px;
+        }
+    </style>
+
+    <form asp-action="UpdateUser" asp-controller="Account" method="POST">
+        @Html.HiddenFor(model => model.ClinicalCaseId)
+        <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
+            <div class="modal-dialog">
+                <div class="modal-content" style="width: 500px;">
+                    <br />
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <h5 class="card" style="width:300px">Assign Clinical Case To User</h5>
+                            </div>
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(model => model.AssignUserEmail, new SelectList(@ViewBag.users, "Email"), "--Select a User Email--", new { @id = "emailddfrom", @class = "form-control CoderDetails" })
+                                @Html.ValidationMessageFor(model => model.AssignUserEmail, null, new { @class = "text-danger" })
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            </div>
+                            <br />
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(model => model.AssignUserEmail, new SelectList(@ViewBag.users, "Email"), "--Select a User Email--", new { @id = "emailddto", @class = "form-control CoderDetails" })
+                                @Html.ValidationMessageFor(model => model.AssignUserEmail, null, new { @class = "text-danger" })
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit">Assin</button>
+                                <a href="@Url.Action("SettingsSearch","UAB")" class="btn btn-sm btn-danger btn-fill">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="~/dashboardassets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
+

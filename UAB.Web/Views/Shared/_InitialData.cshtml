@@ -25,17 +25,16 @@
 <div class="col-md-12 form-horizontal">
     <div class="card">
         <div class="card-body">
+            <h4 class="card-title">@Model.ProjectName</h4><br />
             <div class="form-group row">
                 <label for="fname" class="col-sm-2">MRN</label>
                 <div class="col-sm-3">
                     @Html.TextBoxFor(model => model.CodingDTO.PatientMRN, new { @class = "form-control", @readonly = "readonly" })
                 </div>
-
                 <label for="fname" class="col-sm-2">Patient</label>
                 <div class="col-sm-3">
                     @Html.TextBoxFor(model => model.CodingDTO.Name, new { @class = "form-control", @readonly = "readonly" })
                 </div>
-
                 <label for="fname" class="col-sm-2">DOS</label>
                 <div class="col-sm-3">
                     @Html.TextBoxFor(model => model.CodingDTO.DateOfService, new { @class = "form-control", @readonly = "readonly" })
@@ -44,3 +43,4 @@
         </div>
     </div>
 </div>
+

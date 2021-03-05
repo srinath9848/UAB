@@ -10,5 +10,6 @@ namespace UAB.DAL.Models
         public int ProjectId { get; set; }
         public int RoleId { get; set; }
         public bool? IsActive { get; set; }
+        public int SamplePercentage { get; set; }
     }
 }

@@ -19,6 +19,8 @@
 
     $(".QADetails").attr("readonly", false);
     $("#shadowQA").addClass('selected');
+    $("#ShadowQADTO_CoderRebuttal").css("pointer-events", "none");
+    $("#ShadowQADTO_CoderRebuttal").css("background-color", "#e9ecef");
 
     $('#chkAll').change(function () {
         if ($(this).is(':checked')) {
@@ -26,9 +28,14 @@
             $('.fa-times-circle').removeClass('reject')
             $('.QARevised').css("display", "none");
             $(".CodingDetails").hide();
+            $(".QARevised").val('');
+            $(".errMsg").text('');
+            $("#ShadowQADTO_ErrorType").css("pointer-events", "none");
+            $(".ErrorType").text('');
         }
         else {
             $('.fa-check-circle').removeClass('accept');
+            $("#ShadowQADTO_ErrorType").css("pointer-events", "auto");
         }
     });
 
@@ -41,6 +48,15 @@
             $("#" + id + "2").css("display", "none");
             $("#" + id + "1").val('');
             $("#" + id + "2").val('');
+            var total = $(".lessWidth").find(".fa-check-circle").length;
+            var accept = $(".lessWidth").find(".accept").length;
+            if (total == accept) {
+                $("#chkAll").prop('checked', true);
+                $("#ShadowQADTO_ErrorType").val('');
+                $("#ShadowQADTO_ErrorType").css("pointer-events", "none");
+                $(".ErrorType").text('');
+                $(".errMsg").text('');
+            }
         }
         else if ($(this).hasClass('fa-times-circle')) {
             $(this).toggleClass('reject');
@@ -48,6 +64,33 @@
             $("#" + id + "1").css("display", "flex");
             $("#" + id + "2").css("display", "flex");
             $("#chkAll").prop('checked', false);
+            $("#ShadowQADTO_ErrorType").css("pointer-events", "auto");
         }
     });
+
+
+    $("#ShadowQADTO_ErrorType").change(function () {
+        if ($(this).val() != "") {
+            $(".ErrorType").text('');
+        }
+    });
+
+    $('#btnsubmit').click(function (e) {
+        var total = $(".fa-check-circle").length;
+        var reject = $(".reject").length;
+        var accept = $(".accept").length;
+        if (total != accept && $("#ShadowQADTO_ErrorType").val() == "") {
+            $(".ErrorType").html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+            e.preventDefault();
+        }
+        if (total != accept + reject) {
+            $("#validationPopUp").show();
+            e.preventDefault();
+        }
+
+    });
+
+    validationPopUp = function () {
+        $("#validationPopUp").hide();
+    };
 </script>

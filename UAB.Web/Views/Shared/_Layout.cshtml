@@ -1,8 +1,11 @@
 ﻿@using UAB.enums
+@using System.Security.Claims;
 @{
     string title = ViewBag.title;
-    bool isAuthenticated = UAB.DAL.LoginDTO.Auth.IsAuth;
-    string roles = UAB.DAL.LoginDTO.Auth.CurrentRole;
+
+    var identity = (ClaimsIdentity)User.Identity;
+    string roles = identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+    string email = identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 
 }
 <!DOCTYPE html>
@@ -52,6 +55,10 @@
         .lblCharts {
             width: 60px;
         }
+
+        .lblUsers {
+            width: 80px;
+        }
     </style>
 </head>
 <body>
@@ -87,7 +94,7 @@
                     <ul class="navbar-nav float-right">
                         <li class="nav-item dropdown"></li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@UAB.DAL.LoginDTO.Auth.EmailId &nbsp;&nbsp;<img src="~/dashboardassets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@email &nbsp;&nbsp;<img src="~/dashboardassets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated">
                                 <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
                                 <div class="dropdown-divider"></div>
@@ -148,6 +155,13 @@
                                         <a class="sidebar-link" asp-area="" asp-controller="Account" asp-action="ManageUsers">
                                             <i class="mdi mdi-note-outline"></i><span class="hide-menu">
                                                 Manage Users
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsSearch">
+                                            <i class="mdi mdi-note-outline"></i><span class="hide-menu">
+                                                Search
                                             </span>
                                         </a>
                                     </li>
@@ -250,10 +264,4 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
-<script type="text/javascript">
-    $(document).ready(function () {
-        if ("@isAuthenticated" === "False") {
-            window.location.href = "../Home/AuthenticationError";
-        }
-    });
-</script>
+

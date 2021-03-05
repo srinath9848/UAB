@@ -1,7 +1,7 @@
 ﻿@model UAB.DAL.LoginDTO.ApplicationUser
 @{
     ViewData["Title"] = "Manage Users";
-    var result = (List<UAB.DAL.Models.User >)ViewBag.users;
+    var result = (List<UAB.DAL.Models.User>)ViewBag.users;
 }
 
 <style>
@@ -56,14 +56,18 @@
                             <tbody>
                                 @foreach (var item in result)
                                 {
-                                <tr>
-                                    <td>
-                                        <button type="button" style="cursor: pointer" class="btn btn-sm btn-info btn-fill" onclick="Edit('@item.UserId')"><i class="fa fa-edit"></i>Edit</button>
-                                        <button type="button" style="cursor: pointer" class="btn btn-sm btn-danger btn-fill" onclick="Delete('@item.UserId')"><i class="fa fa-times"></i>Delete</button>
-                                    </td>
-                                    <td>@item.Email</td>
-                                    <td>@item.IsActive</td>
-                                </tr>
+                                    <tr>
+                                        <td>
+                                            <a asp-action="UserDetails"
+                                               asp-controller="Account" class="btn btn-sm btn-info btn-fill"
+                                               asp-route-userId="@item.UserId">
+                                                <i class="fa fa-edit">Details</i>
+                                            </a>
+                                            <button type="button" style="cursor: pointer" class="btn btn-sm btn-danger btn-fill" onclick="Delete('@item.UserId')"><i class="fa fa-times"></i>Delete</button>
+                                        </td>
+                                        <td>@item.Email</td>
+                                        <td>@item.IsActive</td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
@@ -86,45 +90,31 @@
 
     $(document).ready(function () {
 
-    Add= function () {
-        $.ajax({
-            type: "GET",
-            url: "@Url.Action("AddUser", "Account")",
-            success: function (response) {
-                $("#modalContent").html(response);
-            },
-            failure: function (response) {
-                alert(response);
-            }
-        });
-    };
-
-        Edit = function (UserId) {
-        $.ajax({
-            type: "GET",
-            url: "@Url.Action("UpdateUser", "Account")",
-            data: { "UserId": UserId},
-            success: function (response) {
-                $("#modalContent").html(response);
-            },
-            failure: function (response) {
-                alert(response);
-            }
-        });
-    }
+        Add= function () {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("AddUser", "Account")",
+                success: function (response) {
+                    $("#modalContent").html(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        };
         Delete = function (UserId) {
-        $.ajax({
-            type: "GET",
-            url: "@Url.Action("DeleteUser", "Account")",
-            data: { "UserId": UserId },
-            success: function (response) {
-                $("#modalContent").html(response);
-            },
-            failure: function (response) {
-                alert(response);
-            }
-        });
-    }
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("DeleteUser", "Account")",
+                data: { "UserId": UserId },
+                success: function (response) {
+                    $("#modalContent").html(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        };
     ModalClose1 = function () {
         $("#modalContent").html('');
         }

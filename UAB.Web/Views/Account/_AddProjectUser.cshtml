@@ -20,41 +20,24 @@
     }
 </style>
 
-<form asp-action="AddUser" asp-controller="Account" method="POST">
-    <input type="hidden" name="ProjectAndRole" id="hdnProjectAndRole" />
-    @Html.HiddenFor(model => model.UserId, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
-    @Html.HiddenFor(model => model.ProjectUserId, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
 
+<form asp-action="AddProjectUser" asp-controller="Account" method="POST">
+    <input type="hidden" name="ProjectAndRole" id="hdnProjectAndRole" />
+    @Html.HiddenFor(model => model.UserId)
+    @Html.HiddenFor(model => model.hdnProjectAndRole ,new { @id="hdnProjectAndRoleid"})
     <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
         <div class="modal-dialog">
-            <div class="modal-content" style="width:600px;">
-                <br />
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <div class="col-md-6">
-                            <h5 class="card" style="width:300px">Add New User</h5>
-                        </div>
-                        @*<div class="col-md-10">
-            <label class="lblUsers">Email:</label>
-            @Html.DropDownListFor(model => model.Email, new SelectList(@ViewBag.Identityusers, "Email"), "--Select a Email--", new { @id = "emaildd", @class = "form-control CoderDetails" })
-            @Html.ValidationMessageFor(model => model.Email, null, new { @class = "text-danger" })
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        </div>*@
+            <div class="modal-content" style="width: 500px;">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Project User</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal" style="width: 500px;">
                         <div class="form-group" style="font-size: 15px">
                             <label style="width:80px;"><bold>Email :</bold></label>
-                            <span>
-                                @Html.DropDownListFor(model => model.Email, new SelectList(@ViewBag.Identityusers, "Email"), "--Select a Email--", new { @id = "emaildd"})
-                            </span>
-                            @Html.ValidationMessageFor(model => model.Email, null, new { @class = "text-danger" })
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <span>@Model.Email</span>
                         </div>
                         <br />
-                        @*<div class="col-md-10">
-            <label class="lblUsers">Project:</label>
-            @Html.DropDownListFor(model => model.ProjectId, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select a Project--", new { @id = "projectdd", @class = "form-control CoderDetails" })
-            @Html.ValidationMessageFor(model => model.ProjectId, null, new { @class = "text-danger" })
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        </div>*@
                         <div class="form-group" style="font-size: 15px">
                             <label style="width:80px;"><bold>Project :</bold></label>
                             <span>
@@ -64,12 +47,6 @@
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         </div>
                         <br />
-                        @*<div class="col-md-10">
-            <label class="lblUsers">Role:</label>
-            @Html.DropDownListFor(model => model.RoleId, new SelectList(@ViewBag.Roles, "RoleId", "Name"), "--Select a Role--", new { @id = "roledd", @class = "form-control CoderDetails roledddwith" })
-            @Html.ValidationMessageFor(model => model.RoleId, null, new { @class = "text-danger" })
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        </div>*@
                         <div class="form-group" style="font-size: 15px">
                             <label style="width:80px;"><bold>Role :</bold></label>
                             <span>
@@ -79,53 +56,40 @@
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         </div>
                         <br />
-                        <div class="col-md-3 custom-control custom-checkbox mr-sm-2">
-                            @Html.CheckBoxFor(model => model.IsActive, new { @class = "custom-control-input ShadowQADetails", @id = "customControlAutosizing1" })
-                            <label class="custom-control-label" for="customControlAutosizing1">Is Active</label>
-                        </div>
-                        <br />
-                        @*<div class="col-md-10">
-            <label class="lblUsers">Sample % :</label>
-            @Html.TextBoxFor(model => model.SamplePercentage, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @id = "samplepercentage", @placeholder = "Enter Sample Percentage" })
-            @Html.ValidationMessageFor(model => model.SamplePercentage, null, new { @class = "text-danger" })
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        </div>*@
                         <div class="form-group" style="font-size: 15px">
                             <label style="width:80px;"><bold>Sample % :</bold></label>
                             <span>
-                                @Html.TextBoxFor(model => model.SamplePercentage, new {@type="number", @class = "", style = "width:136px", @autofocus = "autofocus", @autocomplete = "off", @id = "samplepercentage", @placeholder = "Enter Sample % " })
+                                @Html.TextBoxFor(model => model.SamplePercentage, new { @type = "number", @class = "", style = "width:136px", @autofocus = "autofocus", @autocomplete = "off", @id = "samplepercentage", @placeholder = "Enter Sample %" })
                             </span>
                             <label id="sampleerror" style="color:red"></label>
                             @Html.ValidationMessageFor(model => model.SamplePercentage, null, new { @class = "text-danger" })
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         </div>
-                        <br />
                         <div class="col-md-10">
                             <button type="button" class="btn btn-sm btn-info btn-fill" id="AddRoleandProject">Add</button>
                         </div>
-                    </div>
-                    <div class="form-group row" id="tbleProjectwithRoles" style="display:none;">
-                        <div class="table-responsive tableresponsiveforroles col-md-10">
-                            <table class="table table-striped table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 250px; font-weight:900;">Project</th>
-                                        <th style="width: 250px; font-weight:900;">Role</th>
-                                        <th style="width: 250px; font-weight:900;">Sample %</th>
-                                        <th style="width: 250px; font-weight:900;">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tableid">
-                                </tbody>
-                            </table>
+                        <br />
+                        <div class="form-group row" id="tbleProjectwithRoles" style="display:none;">
+                            <div class="table-responsive tableresponsiveforroles col-md-10">
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 250px; font-weight:900;">Project</th>
+                                            <th style="width: 250px; font-weight:900;">Role</th>
+                                            <th style="width: 250px; font-weight:900;">SamplePercentage</th>
+                                            <th style="width: 250px; font-weight:900;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableid">
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit">Save</button>
-                            <button type="button" class="btn btn-sm btn-danger btn-fill" onclick="ModalClose1()">Close</button>
-                        </div>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit">Save</button>
+                    <button type="button" class="btn btn-sm btn-danger btn-fill" onclick="ModalClose1()">Close</button>
                 </div>
             </div>
         </div>
@@ -137,7 +101,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-
         $('#samplepercentage').on('keyup keypress change', function (e) {
             this.value = this.value.replace(/[^0-9\.]/g, '');
             if ($('#samplepercentage').val() != '') {
@@ -148,6 +111,8 @@
         });
 
 
+        var hdnProjectAndRole = [];
+        hdnProjectAndRole.push($("#hdnProjectAndRoleid").val());
         var ProjectAndRole = [];
         var iCnt = 0;
         $(document).on('click', '#AddRoleandProject', function () {
@@ -157,7 +122,7 @@
                 var ProjectId = $("#projectdd option:selected").text();
                 var RoleId = $("#roledd option:selected").text();
                 var SamplePercentage = $("#samplepercentage").val();
-                if (ProjectId !== "--Select a Project--" && RoleId !== "--Select a Role--" && SamplePercentage !== "") {
+                if (ProjectId !== "--Select a Project--" && RoleId !== "--Select a Role--" && SamplePercentage!=="") {
                     var ProjectAndRolevalue = ProjectId + "^" + RoleId + "^" + SamplePercentage;
                         if ($.inArray(ProjectAndRolevalue, ProjectAndRole) == -1) {
                             $("#tableid").append('<tr id="tr' + iCnt + '"><td id="txtproject' + iCnt + '">' + ProjectId + '</td><td id="txtrole' + iCnt + '">' + RoleId + '</td><td id="txtsample' + iCnt + '">' + SamplePercentage + '</td><td><button type="button" id="btndelete" title="btn_' + iCnt + '"  style="cursor: pointer" class="btn btn-sm btn-danger btn-fill"><i class="fa fa-times"></i>Delete</button></td></td></tr >');
@@ -177,7 +142,7 @@
                     else
                         $("#validrole").html('');
                     if (SamplePercentage === "") {
-                        $("#sampleerror").html("SamplePercentage is required :");
+                        $("#sampleerror").html("SamplePercentage is required.");
                     }
                     else
                         $("#sampleerror").html('');
@@ -214,12 +179,13 @@
                     $("#validrole").html('<span id="roledd-error" class="">Role is required.</span>');
                 else
                     $("#validrole").html('');
-                if (SamplePercentage === "") 
+                if (SamplePercentage === "")
                     $("#sampleerror").html("SamplePercentage is required :");
                 else
                     $("#sampleerror").html('');
-                if (Email !== "--Select a Email--" && ProjectId !== "--Select a Project--" && RoleId !== "--Select a Role--") 
+                if (Email !== "--Select a Email--" && ProjectId !== "--Select a Project--" && RoleId !== "--Select a Role--") {
                     $("#ErrorMessage").text('Please click on the add button, before save');
+                }
                 e.preventDefault();
             }
         });

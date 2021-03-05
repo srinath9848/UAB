@@ -9,9 +9,9 @@ using System.Data;
 namespace UAB.DAL.LoginDTO
 {
     /// <summary>
-    /// The standard implementation of <see cref="IAuthenticationService"/>.
+    /// The standard implementation of <see cref="IAuthenticationService1"/>.
     /// </summary>
-    public class AuthenticationService : IAuthenticationService
+    public class AuthenticationService : IAuthenticationService1
     {
         private readonly IPasswordAlgorithmFactory mPasswordAlgorithmFactory;
         private readonly IClock mClock;

@@ -15,6 +15,11 @@ namespace UAB.DAL
 {
     public class ClinicalcaseOperations
     {
+        int mUserId;
+        public ClinicalcaseOperations(int UserId)
+        {
+            mUserId = UserId;
+        }
         public List<DashboardDTO> GetChartCountByRole(string Role)
         {
             DashboardDTO dto = new DashboardDTO();
@@ -27,7 +32,7 @@ namespace UAB.DAL
                             ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = Auth.UserId
+                            Value = mUserId
                          },
                         new SqlParameter() {
                             ParameterName = "@Role",
@@ -53,7 +58,7 @@ namespace UAB.DAL
                         dto.ProjectName = Convert.ToString(reader["Name"]);
                         dto.AvailableCharts = Convert.ToInt32(reader["AvailableCharts"]);
                         dto.CoderRebuttalCharts = Convert.ToInt32(reader["CoderRebuttalCharts"]);
-                        dto.QARebuttalCharts = Convert.ToInt32(reader["QARebuttalCharts"]);
+                        dto.QARebuttalCharts = Convert.ToInt32(reader["IncorrectCharts"]);
                         dto.ShadowQARebuttalCharts = Convert.ToInt32(reader["ShadowQARebuttalCharts"]);
                         dto.ReadyForPostingCharts = Convert.ToInt32(reader["ReadyForPostingCharts"]);
                         dto.OnHoldCharts = Convert.ToInt32(reader["OnHoldCharts"]);
@@ -93,7 +98,7 @@ namespace UAB.DAL
                             ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = Auth.UserId
+                            Value = mUserId
                          }};
 
                 using (var con = context.Database.GetDbConnection())
@@ -115,22 +120,8 @@ namespace UAB.DAL
 
                         if ((Role == "QA" && ChartType == "Available") ||
                             (Role == "Coder" && ChartType == "ReadyForPosting") ||
-                            (Role == "ShadowQA" && ChartType == "Available") ||
                             (Role == "QA" && ChartType == "OnHold"))
                         {
-                            chartSummaryDTO.PayorText = "Payor1";
-                            chartSummaryDTO.QAPayorText = "Payor2";
-
-                            chartSummaryDTO.ProviderText = "Provider1";
-                            chartSummaryDTO.QAProviderText = "Provider2";
-
-                            chartSummaryDTO.QACPTCode = "CPTCode";
-                            chartSummaryDTO.QAMod = "Mod";
-                            chartSummaryDTO.QADx = "Dx";
-
-                            chartSummaryDTO.ProviderFeedbackText = "ProviderFeedback1";
-                            chartSummaryDTO.QAProviderFeedbackText = "";
-
                             if (reader["ProviderId"] != DBNull.Value)
                                 chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                             if (reader["PayorId"] != DBNull.Value)
@@ -143,6 +134,32 @@ namespace UAB.DAL
                                 chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
                             if (Role == "QA" && ChartType == "OnHold")
                                 chartSummaryDTO.CoderQuestion = Convert.ToString(reader["Question"]);
+                        }
+                        else if (Role == "ShadowQA" && ChartType == "Available")
+                        {
+                            chartSummaryDTO.PayorText = Convert.ToString(reader["PayorText"]);
+                            chartSummaryDTO.QAPayorText = Convert.ToString(reader["QAPayorText"]);
+
+                            chartSummaryDTO.ProviderText = Convert.ToString(reader["ProviderText"]);
+                            chartSummaryDTO.QAProviderText = Convert.ToString(reader["QAProviderText"]);
+
+                            chartSummaryDTO.QACPTCode = Convert.ToString(reader["QACPTCode"]);
+                            chartSummaryDTO.QAMod = Convert.ToString(reader["QAMod"]);
+                            chartSummaryDTO.QADx = Convert.ToString(reader["QADx"]);
+
+                            chartSummaryDTO.ProviderFeedbackText = Convert.ToString(reader["ProviderFeedbackText"]);
+                            chartSummaryDTO.QAProviderFeedbackText = Convert.ToString(reader["QAProviderFeedbackText"]);
+
+                            //if (reader["ProviderId"] != DBNull.Value)
+                            //    chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
+                            //if (reader["PayorId"] != DBNull.Value)
+                            //    chartSummaryDTO.PayorID = Convert.ToInt32(reader["PayorId"]);
+                            chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
+                            chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
+                            chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
+                            chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
+                            //if (reader["ProviderFeedbackId"] != DBNull.Value)
+                            //    chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
                         }
                         else if ((Role == "Coder" && ChartType == "Incorrect") ||
                             (Role == "ShadowQA" && ChartType == "RebuttalOfQA") || (Role == "QA" && ChartType == "ShadowQARejected"))
@@ -307,7 +324,7 @@ namespace UAB.DAL
                             ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = Auth.UserId
+                            Value = mUserId
                          }
                 };
 
@@ -418,7 +435,7 @@ namespace UAB.DAL
                             ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = Auth.UserId
+                            Value = mUserId
                         },   new SqlParameter() {
                             ParameterName = "@ErrorTypeID",
                             SqlDbType =  System.Data.SqlDbType.Int,
@@ -535,7 +552,7 @@ namespace UAB.DAL
                             ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = Auth.UserId
+                            Value = mUserId
                         },   new SqlParameter() {
                             ParameterName = "@ErrorTypeID",
                             SqlDbType =  System.Data.SqlDbType.Int,
@@ -681,7 +698,7 @@ namespace UAB.DAL
                             ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = Auth.UserId
+                            Value = mUserId
                         },   new SqlParameter() {
                             ParameterName = "@ErrorTypeID",
                             SqlDbType =  System.Data.SqlDbType.Int,
@@ -703,6 +720,67 @@ namespace UAB.DAL
                 }
             }
             return dto;
+        }
+
+        public List<SearchResultDTO> GetSearchData(SearchParametersDTO searchParametersDTO)
+        {
+            List<SearchResultDTO> lstDto = new List<SearchResultDTO>();
+            StringBuilder parameterBuilder = new StringBuilder();
+            using (var context = new UABContext())
+            {
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[USPGetSearchData]";
+                    cmd.Connection = con;
+
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        SearchResultDTO dto = new SearchResultDTO()
+                        {
+                            ClinicalCaseId = Convert.ToString(reader["ClinicalCaseID"]),
+                            FirstName = Convert.ToString(reader["FirstName"]),
+                            LastName = Convert.ToString(reader["LastName"]),
+                            MRN = Convert.ToString(reader["PatientMRN"]),
+                            ProviderName = Convert.ToString(reader["Provider"]),
+                            DoS = Convert.ToDateTime(reader["DateOfService"]),
+                            ProjectName = Convert.ToString(reader["ProjectName"]),
+                            Status = Convert.ToString(reader["Status"])
+                        };
+                        lstDto.Add(dto);
+                    }
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchParametersDTO.ClinicalCaseId))
+            {
+                lstDto = lstDto.Where(s => s.ClinicalCaseId == searchParametersDTO.ClinicalCaseId).ToList();
+            }
+            else
+            {
+                if (!string.IsNullOrWhiteSpace(searchParametersDTO.FirstName))
+                    lstDto = lstDto.Where(s => s.FirstName.Contains(searchParametersDTO.FirstName.ToUpper())).ToList();
+                if (!string.IsNullOrWhiteSpace(searchParametersDTO.LastName))
+                    lstDto = lstDto.Where(s => s.LastName.Contains(searchParametersDTO.LastName.ToUpper())).ToList();
+                if (!string.IsNullOrWhiteSpace(searchParametersDTO.MRN))
+                    lstDto = lstDto.Where(a => a.MRN == searchParametersDTO.MRN).ToList();
+                if (searchParametersDTO.DoSFrom != default(DateTime) && searchParametersDTO.DoSTo != default(DateTime))
+                {
+                    var DoSFrom = searchParametersDTO.DoSFrom.Value;
+                    var DoSTo = searchParametersDTO.DoSTo.Value;
+                    lstDto = lstDto.Where(s => s.DoS >= DoSFrom && s.DoS <= DoSTo).ToList();
+                }
+                if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProviderName))
+                    lstDto = lstDto.Where(a => a.ProviderName == searchParametersDTO.ProviderName).ToList();
+                if (!string.IsNullOrWhiteSpace(searchParametersDTO.StatusName)&& searchParametersDTO.StatusName!= "--Select a Status--")
+                    lstDto = lstDto.Where(a => a.Status == searchParametersDTO.StatusName).ToList();
+                if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProjectName) && searchParametersDTO.ProjectName !="--Select a Project--")
+                    lstDto = lstDto.Where(a => a.ProjectName == searchParametersDTO.ProjectName).ToList();
+            }
+            return lstDto;
         }
 
         public CodingDTO SubmitQARejectedChartsOfShadowQA(ChartSummaryDTO chartSummaryDTO, string hdnPayorIDReject, string hdnProviderIDReject, string hdnCptReject, string hdnModReject, string hdnDxReject, string hdnProviderFeedbackIDReject)
@@ -793,7 +871,7 @@ namespace UAB.DAL
                             ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = Auth.UserId
+                            Value = mUserId
                         },   new SqlParameter() {
                             ParameterName = "@ErrorTypeID",
                             SqlDbType =  System.Data.SqlDbType.Int,
@@ -877,7 +955,7 @@ namespace UAB.DAL
                             ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = Auth.UserId
+                            Value = mUserId
                         }
                 };
 
@@ -982,7 +1060,7 @@ namespace UAB.DAL
                             ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = Auth.UserId
+                            Value = mUserId
                          },   new SqlParameter() {
                             ParameterName = "@ErrorTypeID",
                             SqlDbType =  System.Data.SqlDbType.Int,
@@ -1046,7 +1124,7 @@ namespace UAB.DAL
         }
 
 
-        public CodingDTO SubmitShadowQAAvailableChart(ChartSummaryDTO chartSummaryDTO)
+        public CodingDTO SubmitShadowQAAvailableChart(ChartSummaryDTO chartSummaryDTO, bool isQAAgreed)
         {
             CodingDTO dto = new CodingDTO();
 
@@ -1129,58 +1207,64 @@ namespace UAB.DAL
                             ParameterName = "@UserId",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = Auth.UserId
+                            Value = mUserId
                          },   new SqlParameter() {
                             ParameterName = "@ErrorTypeID",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.QADTO.ErrorType
+                            Value = chartSummaryDTO.ShadowQADTO.ErrorType
                         } ,   new SqlParameter() {
                             ParameterName = "@NotesfromJen",
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = chartSummaryDTO.ShadowQADTO.NotesfromJen
-                        }
-                        ,
+                        },
                          new SqlParameter() {
-                            ParameterName = "@QAPayorID",
-                            SqlDbType =  System.Data.SqlDbType.Int,
+                            ParameterName = "@isQAAgreed",
+                            SqlDbType =  System.Data.SqlDbType.Bit,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.QAPayorID
+                            Value = isQAAgreed
                         }
-                           ,
-                         new SqlParameter() {
-                            ParameterName = "@QAProviderID",
-                            SqlDbType =  System.Data.SqlDbType.Int,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.QAProviderID
-                        }
-                         ,   new SqlParameter() {
-                            ParameterName = "@QACPTCode",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.QACPTCode
-                        }
-                        ,   new SqlParameter() {
-                            ParameterName = "@QAMod",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.@QAMod
-                        }
-                        ,   new SqlParameter() {
-                            ParameterName = "@QADx",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.QADx
-                        }
-                          ,
-                         new SqlParameter() {
-                            ParameterName = "@QAProviderFeedbackID",
-                            SqlDbType =  System.Data.SqlDbType.Int,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.QAProviderFeedbackID
-                        }
-
+                        //,
+                        // new SqlParameter() {
+                        //    ParameterName = "@QAPayorID",
+                        //    SqlDbType =  System.Data.SqlDbType.Int,
+                        //    Direction = System.Data.ParameterDirection.Input,
+                        //    Value = chartSummaryDTO.QAPayorID
+                        //}
+                        //   ,
+                        // new SqlParameter() {
+                        //    ParameterName = "@QAProviderID",
+                        //    SqlDbType =  System.Data.SqlDbType.Int,
+                        //    Direction = System.Data.ParameterDirection.Input,
+                        //    Value = chartSummaryDTO.QAProviderID
+                        //}
+                        // ,   new SqlParameter() {
+                        //    ParameterName = "@QACPTCode",
+                        //    SqlDbType =  System.Data.SqlDbType.VarChar,
+                        //    Direction = System.Data.ParameterDirection.Input,
+                        //    Value = chartSummaryDTO.QACPTCode
+                        //}
+                        //,   new SqlParameter() {
+                        //    ParameterName = "@QAMod",
+                        //    SqlDbType =  System.Data.SqlDbType.VarChar,
+                        //    Direction = System.Data.ParameterDirection.Input,
+                        //    Value = chartSummaryDTO.@QAMod
+                        //}
+                        //,   new SqlParameter() {
+                        //    ParameterName = "@QADx",
+                        //    SqlDbType =  System.Data.SqlDbType.VarChar,
+                        //    Direction = System.Data.ParameterDirection.Input,
+                        //    Value = chartSummaryDTO.QADx
+                        //}
+                        //  ,
+                        // new SqlParameter() {
+                        //    ParameterName = "@QAProviderFeedbackID",
+                        //    SqlDbType =  System.Data.SqlDbType.Int,
+                        //    Direction = System.Data.ParameterDirection.Input,
+                        //    Value = chartSummaryDTO.QAProviderFeedbackID
+                        //}
+ 
                 };
 
                 using (var con = context.Database.GetDbConnection())
@@ -1259,6 +1343,13 @@ namespace UAB.DAL
             using (var context = new UABContext())
             {
                 return GetProjects();
+            }
+        }
+        public List<Status> GetStatusList()
+        {
+            using (var context = new UABContext())
+            {
+                return context.Status.ToList();
             }
         }
         public List<Role> GetRolesList()
@@ -1340,7 +1431,28 @@ namespace UAB.DAL
                 return context.User.ToList();
             }
         }
-        public List<ApplicationUser> GetUsers(int userId)
+        public ApplicationUser GetProjectUser(int projectuserid)
+        {
+            using (var context = new UABContext())
+            {
+                var res = context.ProjectUser.Where(a => a.ProjectUserId == projectuserid).FirstOrDefault();
+
+                var project= context.Project.Where(a=>a.ProjectId==res.ProjectId).FirstOrDefault();
+                var roles = context.Role.Where(a => a.RoleId == res.RoleId).FirstOrDefault();
+                var useremail = context.User.Where(a => a.UserId == res.UserId).FirstOrDefault().Email;
+                ApplicationUser applicationUser = new ApplicationUser();
+                applicationUser.UserId = res.UserId;
+                applicationUser.Email = useremail;
+                applicationUser.ProjectId = res.ProjectId;
+                applicationUser.ProjectName = project.Name;
+                applicationUser.RoleId = res.RoleId;
+                applicationUser.RoleName = roles.Name;
+                applicationUser.SamplePercentage = res.SamplePercentage.ToString();
+                return applicationUser;
+            }
+
+        }
+        public List<ApplicationUser> GetUserProjects(int userId)
         {
             ApplicationUser applicationUser = new ApplicationUser();
             List<ApplicationUser> lstApplicationUser = new List<ApplicationUser>();
@@ -1351,8 +1463,14 @@ namespace UAB.DAL
                 {
                     var cmm = cnn.CreateCommand();
                     cmm.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmm.CommandText = "[dbo].[UspGetUsers]";
+                    cmm.CommandText = "[dbo].[UspGetUser]";
                     cmm.Connection = cnn;
+
+                    SqlParameter param = new SqlParameter();
+                    param.ParameterName = "@userId";
+                    param.Value = userId;
+                    cmm.Parameters.Add(param);
+
                     cnn.Open();
                     var reader = cmm.ExecuteReader();
 
@@ -1367,23 +1485,41 @@ namespace UAB.DAL
                         applicationUser.ProjectId = Convert.ToInt32(reader["ProjectId"]);
                         applicationUser.ProjectName = Convert.ToString(reader["ProjectName"]);
                         applicationUser.ProjectUserId = Convert.ToInt32(reader["ProjectUserId"]);
+                        applicationUser.SamplePercentage = Convert.ToString(reader["SamplePercentage"]);
                         lstApplicationUser.Add(applicationUser);
+                    }
+
+                    if (lstApplicationUser.Count != 0)
+                    {
+                        string temp = null;
+                        foreach (var item in lstApplicationUser)
+                        {
+                            temp = temp + item.ProjectName + "^" + item.RoleName +"^"+item.SamplePercentage+",";
+                        }
+                        var length = temp.Length;
+                        string initial = temp.Substring(0, length - 1);
+                        applicationUser = lstApplicationUser.FirstOrDefault();
+                        applicationUser.hdnProjectAndRole = initial;
+                        lstApplicationUser[0] = applicationUser;
                     }
                 }
             }
-            var res = lstApplicationUser.Where(a => a.UserId == userId).ToList();
-            string temp = null;
-
-            foreach (var item in res)
+            if (lstApplicationUser.Count == 0)
             {
-                temp = temp + item.ProjectName + "^" + item.RoleName + ",";
+                using (var context = new UABContext())
+                {
+                    var user = context.User.Where(a => a.UserId == userId).FirstOrDefault();
+                    applicationUser = new ApplicationUser();
+                    applicationUser.Email = user.Email;
+                    applicationUser.UserId = user.UserId;
+                    applicationUser.RoleId = 0;
+                    applicationUser.ProjectId = 0;
+                    applicationUser.RoleName = "";
+                    applicationUser.ProjectName = "";
+                    lstApplicationUser.Add(applicationUser);
+                }
             }
-            var length = temp.Length;
-            string initial = temp.Substring(0, length - 1);
-            applicationUser = res.FirstOrDefault();
-            applicationUser.hdnProjectAndRole = initial;
-            res[0] = applicationUser;
-            return res;
+            return lstApplicationUser;
         }
 
         public User Getuser(int UserId)
@@ -1394,6 +1530,8 @@ namespace UAB.DAL
                 User mdl = new User()
                 {
                     Email = user.Email,
+                    UserId = UserId,
+                    IsActive = user.IsActive
                 };
                 return mdl;
             }
@@ -1403,14 +1541,18 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                UAB.DAL.Models.User mdl = new User();
-                mdl.Email = user.Email;
-                mdl.IsActive = user.IsActive;
+                var existing = context.User.Where(a => a.Email == user.Email).FirstOrDefault();
+                if (existing == null)
+                {
+                    UAB.DAL.Models.User mdl = new User();
+                    mdl.Email = user.Email;
+                    mdl.IsActive = user.IsActive;
 
-                context.User.Add(mdl);
-                context.SaveChanges();
-
-                return mdl.UserId;
+                    context.User.Add(mdl);
+                    context.SaveChanges();
+                    return mdl.UserId;
+                }
+                return existing.UserId;
             }
         }
         public void AddProjectUser(ApplicationUser user)
@@ -1421,36 +1563,71 @@ namespace UAB.DAL
                 mdl.UserId = user.UserId;
                 mdl.ProjectId = context.Project.Where(a => a.Name == user.ProjectName).Select(a => a.ProjectId).FirstOrDefault();
                 mdl.RoleId = context.Role.Where(a => a.Name == user.RoleName).Select(a => a.RoleId).FirstOrDefault();
+                mdl.SamplePercentage = Convert.ToInt32(user.SamplePercentage);
 
-                context.ProjectUser.Add(mdl);
-                context.SaveChanges();
+                var exsitingprojectuser = context.ProjectUser.Where(a => a.UserId == user.UserId&&a.RoleId==mdl.RoleId&&a.ProjectId==mdl.ProjectId).FirstOrDefault();
+                if (exsitingprojectuser==null)
+                {
+                    context.ProjectUser.Add(mdl);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new ArgumentException("Unable to Add project User:trying to add existing project to this user");
+                }
             }
         }
-        public void UpdateProjectUser(List<ApplicationUser> userslist)
+
+        public int UpdateProjectUser(ApplicationUser projectuser)
         {
             using (var context = new UABContext())
             {
-
-
-
-                //delete projectuser
-                var exsitingProjectuserlist = context.ProjectUser.Where(a => a.UserId == userslist.First().UserId).ToList();
-                context.ProjectUser.RemoveRange(exsitingProjectuserlist);
-                context.SaveChanges();
-
-
-                //add project user
-                var Projectslist = context.Project.ToList();
-                var Rolesslist = context.Role.ToList();
-                foreach (var item in userslist)
+                var existingprojectuser = context.ProjectUser.First(a => a.ProjectUserId == projectuser.ProjectUserId);
+                //there is no updation
+                if (existingprojectuser.RoleId == projectuser.RoleId && existingprojectuser.SamplePercentage == Convert.ToInt32(projectuser.SamplePercentage))
                 {
-                    UAB.DAL.Models.ProjectUser mdl = new ProjectUser();
-                    mdl.UserId = item.UserId;
-                    mdl.ProjectId = Projectslist.Where(a => a.Name == item.ProjectName).First().ProjectId;
-                    mdl.RoleId = Rolesslist.Where(a => a.Name == item.RoleName).First().RoleId;
-
-                    context.ProjectUser.Add(mdl);
+                    return 0;
+                }
+                //updating role 
+                else if (existingprojectuser.RoleId != projectuser.RoleId && existingprojectuser.SamplePercentage == Convert.ToInt32(projectuser.SamplePercentage))
+                {
+                    existingprojectuser.RoleId = projectuser.RoleId;
+                    context.Entry(existingprojectuser).State = EntityState.Modified;
                     context.SaveChanges();
+                }
+                //updating sample %
+                else if (existingprojectuser.RoleId == projectuser.RoleId && existingprojectuser.SamplePercentage != Convert.ToInt32(projectuser.SamplePercentage))
+                {
+                    existingprojectuser.SamplePercentage = Convert.ToInt32(projectuser.SamplePercentage);
+                    context.Entry(existingprojectuser).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
+                //updating role and sample %
+                else if (existingprojectuser.RoleId != projectuser.RoleId && existingprojectuser.SamplePercentage != Convert.ToInt32(projectuser.SamplePercentage))
+                {
+                    existingprojectuser.RoleId = projectuser.RoleId;
+                    existingprojectuser.SamplePercentage = Convert.ToInt32(projectuser.SamplePercentage);
+                    context.Entry(existingprojectuser).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
+                return 1;
+            }
+        }
+
+        public void DeletetProjectUser(int ProjectUserId)
+        {
+            using (var context = new UABContext())
+            {
+                var exsitingProjectuser = context.ProjectUser.Where(a => a.ProjectUserId == ProjectUserId).FirstOrDefault();
+
+                if (exsitingProjectuser != null)
+                {
+                    context.ProjectUser.Remove(exsitingProjectuser);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable To Delete User : User Not there in UAB");
                 }
 
             }
