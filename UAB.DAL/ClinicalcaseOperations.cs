@@ -67,6 +67,7 @@ namespace UAB.DAL
                         dto.ShadowQARebuttalCharts = Convert.ToInt32(reader["ShadowQARebuttalCharts"]);
                         dto.ReadyForPostingCharts = Convert.ToInt32(reader["ReadyForPostingCharts"]);
                         dto.OnHoldCharts = Convert.ToInt32(reader["OnHoldCharts"]);
+                        dto.OnHoldChartsOfCoder = Convert.ToInt32(reader["OnHoldChartsOfCoder"]);
                         lstDto.Add(dto);
                     }
                 }
@@ -797,9 +798,9 @@ namespace UAB.DAL
                 }
                 if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProviderName))
                     lstDto = lstDto.Where(a => a.ProviderName == searchParametersDTO.ProviderName).ToList();
-                if (!string.IsNullOrWhiteSpace(searchParametersDTO.StatusName)&& searchParametersDTO.StatusName!= "--Select a Status--")
+                if (!string.IsNullOrWhiteSpace(searchParametersDTO.StatusName) && searchParametersDTO.StatusName != "--Select a Status--")
                     lstDto = lstDto.Where(a => a.Status == searchParametersDTO.StatusName).ToList();
-                if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProjectName) && searchParametersDTO.ProjectName !="--Select a Project--")
+                if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProjectName) && searchParametersDTO.ProjectName != "--Select a Project--")
                     lstDto = lstDto.Where(a => a.ProjectName == searchParametersDTO.ProjectName).ToList();
             }
             return lstDto;
@@ -1381,11 +1382,11 @@ namespace UAB.DAL
                 return context.Role.ToList();
             }
         }
-        public List<string> GetUabuserEmails ()
+        public List<string> GetUabuserEmails()
         {
             using (var context = new UABContext())
             {
-                return context.User.Select(a=>a.Email).ToList();
+                return context.User.Select(a => a.Email).ToList();
             }
         }
         public List<string> GetIdentityUsersList()
@@ -1470,7 +1471,7 @@ namespace UAB.DAL
             {
                 var res = context.ProjectUser.Where(a => a.ProjectUserId == projectuserid).FirstOrDefault();
 
-                var project= context.Project.Where(a=>a.ProjectId==res.ProjectId).FirstOrDefault();
+                var project = context.Project.Where(a => a.ProjectId == res.ProjectId).FirstOrDefault();
                 var roles = context.Role.Where(a => a.RoleId == res.RoleId).FirstOrDefault();
                 var useremail = context.User.Where(a => a.UserId == res.UserId).FirstOrDefault().Email;
                 ApplicationUser applicationUser = new ApplicationUser();
@@ -1527,7 +1528,7 @@ namespace UAB.DAL
                         string temp = null;
                         foreach (var item in lstApplicationUser)
                         {
-                            temp = temp + item.ProjectName + "^" + item.RoleName +",";
+                            temp = temp + item.ProjectName + "^" + item.RoleName + ",";
                         }
                         var length = temp.Length;
                         string initial = temp.Substring(0, length - 1);
@@ -1598,8 +1599,8 @@ namespace UAB.DAL
                 mdl.RoleId = context.Role.Where(a => a.Name == user.RoleName).Select(a => a.RoleId).FirstOrDefault();
                 mdl.SamplePercentage = Convert.ToInt32(user.SamplePercentage);
 
-                var exsitingprojectuser = context.ProjectUser.Where(a => a.UserId == user.UserId&&a.RoleId==mdl.RoleId&&a.ProjectId==mdl.ProjectId).FirstOrDefault();
-                if (exsitingprojectuser==null)
+                var exsitingprojectuser = context.ProjectUser.Where(a => a.UserId == user.UserId && a.RoleId == mdl.RoleId && a.ProjectId == mdl.ProjectId).FirstOrDefault();
+                if (exsitingprojectuser == null)
                 {
                     context.ProjectUser.Add(mdl);
                     context.SaveChanges();
@@ -1723,7 +1724,7 @@ namespace UAB.DAL
 
         public Provider GetProviderByName(string providerName)
         {
-            using(var context=new UABContext())
+            using (var context = new UABContext())
             {
                 return context.Provider.Where(p => p.Name == providerName).Select(p => p).FirstOrDefault();
             };
