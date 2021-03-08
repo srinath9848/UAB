@@ -20,22 +20,22 @@ string.IsNullOrEmpty(Model.QAProviderFeedbackText))
             @Html.Hidden("hdnIsQAAgreed", isQAAgreed)
             @{string Show = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "visibility:hidden" : "display:flex");}
 
-        <div class="form-group row">
-            <label class="col-md-3 m-t-15"></label>
-            <div class="custom-control custom-checkbox col-md-2 input-group" id="divChkAll">
-                <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll">
-                <label class="custom-control-label" for="chkAll">Accept All</label>
+            <div class="form-group row">
+                <label class="col-md-3 m-t-15"></label>
+                <div class="custom-control custom-checkbox col-md-2 input-group" id="divChkAll">
+                    <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll">
+                    <label class="custom-control-label" for="chkAll">Accept All</label>
+                </div>
+                <div class="custom-control col-md-2 input-group QAComments" style="@Show">
+                    <label class="">QA Comments</label>
+                </div>
+                <div class="custom-control col-md-3 input-group ShadowQACorrectionsComments" style="display:none;">
+                    <label class="">ShadowQA Corrections</label>
+                </div>
+                <div class="custom-control col-md-2 input-group ShadowQACorrectionsComments" style="display:none;">
+                    <label class="">ShadowQA Comments</label>
+                </div>
             </div>
-            <div class="custom-control col-md-2 input-group QAComments" style="@Show">
-                <label class="">QA Comments</label>
-            </div>
-            <div class="custom-control col-md-3 input-group ShadowQACorrectionsComments" style="display:none;">
-                <label class="">ShadowQA Corrections</label>
-            </div>
-            <div class="custom-control col-md-2 input-group ShadowQACorrectionsComments" style="display:none;">
-                <label class="">ShadowQA Comments</label>
-            </div>
-        </div>
             <div class="form-group row">
                 <label class="col-md-3 m-t-15">Payor</label>
                 @{int len = (!string.IsNullOrEmpty(Model.QAPayorText) ? 10 : 20); }
@@ -61,7 +61,7 @@ string.IsNullOrEmpty(Model.QAProviderFeedbackText))
                     </div>
                 </div>
                 <div title="@Model.QAPayorRemarks" class="col-md-2 input-group" style="@Show">
-                    @Html.TextBoxFor(model => model.QAPayorRemarks, new { @class = "form-control QARemarks" })
+                    <input type="text" class="form-control QARemarks" value="@Model.QAPayorRemarks" />
                 </div>
                 <div class="col-md-3 input-group">
                     @Html.DropDownListFor(model => model.ShadowQAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = "PayorID1", @class = "form-control QARevised", @style = "display:none" })
@@ -98,7 +98,7 @@ string.IsNullOrEmpty(Model.QAProviderFeedbackText))
                 </div>
                 @{Show = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "visibility:hidden" : "display:flex");}
                 <div title="@Model.QAProviderRemarks" class="col-md-2 input-group" style="@Show">
-                    @Html.TextBoxFor(model => model.QAProviderRemarks, new { @class = "form-control QARemarks" })
+                    <input type="text" class="form-control QARemarks" value="@Model.QAProviderRemarks" />
                 </div>
 
                 <div class="col-md-3 input-group">
@@ -136,7 +136,7 @@ string.IsNullOrEmpty(Model.QAProviderFeedbackText))
                 </div>
                 @{Show = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "visibility:hidden" : "display:flex");}
                 <div title="@Model.QACPTCodeRemarks" class="col-md-2 input-group" style="@Show">
-                    @Html.TextBoxFor(model => model.QACPTCodeRemarks, new { @class = "form-control QARemarks" })
+                    <input type="text" class="form-control QARemarks" value="@Model.QACPTCodeRemarks" />
                 </div>
                 <div class="col-md-3 input-group">
                     @Html.TextAreaFor(model => model.ShadowQACPTCode, new { @style = "display:none", @id = "CPTCode1", @class = "form-control QARevised" })
@@ -171,7 +171,7 @@ string.IsNullOrEmpty(Model.QAProviderFeedbackText))
                 </div>
                 @{Show = (string.IsNullOrEmpty(Model.QAModRemarks) ? "visibility:hidden" : "display:flex");}
                 <div title="@Model.QAModRemarks" class="col-md-2 input-group" style="@Show">
-                    @Html.TextBoxFor(model => model.QAModRemarks, new { @class = "form-control QARemarks" })
+                    <input type="text" class="form-control QARemarks" value="@Model.QAModRemarks" />
                 </div>
                 <div class="col-md-3 input-group">
                     @Html.TextAreaFor(model => model.ShadowQAMod, new { @style = "display:none", @class = "form-control QARevised", @id = "Mod1" })
@@ -208,7 +208,7 @@ string.IsNullOrEmpty(Model.QAProviderFeedbackText))
                 </div>
                 @{Show = (string.IsNullOrEmpty(Model.QADxRemarks) ? "visibility:hidden" : "display:flex");}
                 <div title="@Model.QADxRemarks" class="col-md-2 input-group" style="@Show">
-                    @Html.TextBoxFor(model => model.QADxRemarks, new { @class = "form-control QARemarks" })
+                    <input type="text" class="form-control QARemarks" value="@Model.QADxRemarks" />
                 </div>
                 <div class="col-md-3 input-group">
                     @Html.TextAreaFor(model => model.ShadowQADx, new { @style = "display:none", @id = "Dx1", @class = "form-control QARevised" })
@@ -245,7 +245,7 @@ string.IsNullOrEmpty(Model.QAProviderFeedbackText))
                 </div>
                 @{Show = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "visibility:hidden" : "display:flex");}
                 <div title="@Model.QAProviderFeedbackRemarks" class="col-md-2 input-group" style="@Show">
-                    @Html.TextBoxFor(model => model.QAProviderFeedbackRemarks, new { @class = "form-control QARemarks" })
+                    <input type="text" class="form-control QARemarks" value="@Model.QAProviderFeedbackRemarks" />
                 </div>
                 <div class="col-md-3 input-group">
                     @Html.DropDownListFor(model => model.ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = "display:none", @class = "form-control QARevised", @id = "Feedback1" })
