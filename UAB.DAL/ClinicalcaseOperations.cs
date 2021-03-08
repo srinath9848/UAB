@@ -1375,11 +1375,22 @@ namespace UAB.DAL
                 return context.Role.ToList();
             }
         }
+        public List<string> GetUabuserEmails ()
+        {
+            using (var context = new UABContext())
+            {
+                return context.User.Select(a=>a.Email).ToList();
+            }
+        }
         public List<string> GetIdentityUsersList()
         {
             using (UAB.DAL.LoginDTO.IdentityServerContext context = new IdentityServerContext())
             {
-                return context.Users.Select(a => a.Email).ToList();
+                List<string> iduseremail = context.Users.Select(a => a.Email).ToList();
+
+                List<string> uabuseremail = GetUabuserEmails();
+
+                return iduseremail.Except(uabuseremail).ToList();
             }
         }
 
@@ -1510,7 +1521,7 @@ namespace UAB.DAL
                         string temp = null;
                         foreach (var item in lstApplicationUser)
                         {
-                            temp = temp + item.ProjectName + "^" + item.RoleName +"^"+item.SamplePercentage+",";
+                            temp = temp + item.ProjectName + "^" + item.RoleName +",";
                         }
                         var length = temp.Length;
                         string initial = temp.Substring(0, length - 1);
@@ -1581,25 +1592,16 @@ namespace UAB.DAL
                 mdl.RoleId = context.Role.Where(a => a.Name == user.RoleName).Select(a => a.RoleId).FirstOrDefault();
                 mdl.SamplePercentage = Convert.ToInt32(user.SamplePercentage);
 
-                var exsitingprojectuser = context.ProjectUser.Where(a => a.UserId == user.UserId).FirstOrDefault();
-                if (exsitingprojectuser!=null)
-                {
-                    if (exsitingprojectuser.RoleId != mdl.RoleId && exsitingprojectuser.ProjectId != mdl.ProjectId)
-                    {
-                        context.ProjectUser.Add(mdl);
-                        context.SaveChanges();
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Unable to Add project User:trying to add existing project to this user");
-                    }
-                }
-                else
+                var exsitingprojectuser = context.ProjectUser.Where(a => a.UserId == user.UserId&&a.RoleId==mdl.RoleId&&a.ProjectId==mdl.ProjectId).FirstOrDefault();
+                if (exsitingprojectuser==null)
                 {
                     context.ProjectUser.Add(mdl);
                     context.SaveChanges();
                 }
-
+                else
+                {
+                    throw new ArgumentException("Unable to Add project User:trying to add existing project to this user");
+                }
             }
         }
 
@@ -1711,6 +1713,62 @@ namespace UAB.DAL
                 }
             }
             return providers;
+        }
+
+        public Provider GetProviderByName(string providerName)
+        {
+            using(var context=new UABContext())
+            {
+                return context.Provider.Where(p => p.Name == providerName).Select(p => p).FirstOrDefault();
+            };
+        }
+
+        public Payor GetPayorByName(string payorName)
+        {
+            using (var context = new UABContext())
+            {
+                return context.Payor.Where(p => p.Name == payorName).Select(p => p).FirstOrDefault();
+            };
+        }
+
+        public ProviderFeedback GetProviderFeedbackByName(string providerFeedbackName)
+        {
+            using (var context = new UABContext())
+            {
+                return context.ProviderFeedback.Where(p => p.Feedback == providerFeedbackName).Select(p => p).FirstOrDefault();
+            };
+        }
+
+        public ErrorType GetErrorTypeByName(string errorTypeName)
+        {
+            using (var context = new UABContext())
+            {
+                return context.ErrorType.Where(p => p.Name == errorTypeName).Select(p => p).FirstOrDefault();
+            };
+        }
+
+        public Project GetProjectByName(string projectName)
+        {
+            using (var context = new UABContext())
+            {
+                return context.Project.Where(p => p.Name == projectName).Select(p => p).FirstOrDefault();
+            };
+        }
+
+        public int GetFirstClintId()
+        {
+            using (var context = new UABContext())
+            {
+                return context.Project.Select(p => p.ClientId).FirstOrDefault();
+            };
+        }
+
+        public int GetFirstProjectTypeId()
+        {
+            using (var context = new UABContext())
+            {
+                return context.Project.Select(p => p.ProjectTypeId).FirstOrDefault();
+            };
         }
 
         public void AddProvider(Provider provider)

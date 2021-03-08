@@ -24,7 +24,7 @@
 <form asp-action="AddProjectUser" asp-controller="Account" method="POST">
     <input type="hidden" name="ProjectAndRole" id="hdnProjectAndRole" />
     @Html.HiddenFor(model => model.UserId)
-    @Html.HiddenFor(model => model.hdnProjectAndRole ,new { @id="hdnProjectAndRoleid"})
+    @Html.HiddenFor(model => model.hdnProjectAndRole, new { @id = "hdnProjectAndRoleid" })
     <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
         <div class="modal-dialog">
             <div class="modal-content" style="width: 500px;">
@@ -59,12 +59,15 @@
                         <div class="form-group" style="font-size: 15px">
                             <label style="width:80px;"><bold>Sample % :</bold></label>
                             <span>
-                                @Html.TextBoxFor(model => model.SamplePercentage, new { @class = "", style = "width:136px", @autofocus = "autofocus", @autocomplete = "off", @id = "samplepercentage", @placeholder = "Enter Sample %" })
+                                @Html.TextBoxFor(model => model.SamplePercentage, new { @type = "number", @class = "", style = "width:136px", @autofocus = "autofocus", @autocomplete = "off", @id = "samplepercentage", @placeholder = "Enter Sample %" })
                             </span>
                             <label id="sampleerror" style="color:red"></label>
                             @Html.ValidationMessageFor(model => model.SamplePercentage, null, new { @class = "text-danger" })
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         </div>
+                        <br />
+                        <div id="addbtnerror" style="color:red"></div>
+                        <br />
                         <div class="col-md-10">
                             <button type="button" class="btn btn-sm btn-info btn-fill" id="AddRoleandProject">Add</button>
                         </div>
@@ -101,7 +104,8 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        $('#samplepercentage').on('keyup keypress change', function () {
+        $('#samplepercentage').on('keyup keypress change', function (e) {
+            this.value = this.value.replace(/[^0-9\.]/g, '');
             if ($('#samplepercentage').val() != '') {
                 $('#sampleerror').hide();
             } else {
@@ -109,26 +113,36 @@
             }
         });
 
+        var existingrolesandprojects = ($("#hdnProjectAndRoleid").val()).split(',');
 
-        var hdnProjectAndRole = [];
-        hdnProjectAndRole.push($("#hdnProjectAndRoleid").val());
         var ProjectAndRole = [];
         var iCnt = 0;
         $(document).on('click', '#AddRoleandProject', function () {
+            debugger;
             $("#ErrorMessage").text('');
             if (iCnt <= 100) {
                 iCnt = iCnt + 1;
                 var ProjectId = $("#projectdd option:selected").text();
                 var RoleId = $("#roledd option:selected").text();
                 var SamplePercentage = $("#samplepercentage").val();
-                if (ProjectId !== "--Select a Project--" && RoleId !== "--Select a Role--" && SamplePercentage!=="") {
-                    var ProjectAndRolevalue = ProjectId + "^" + RoleId + "^" + SamplePercentage;
+                if (ProjectId !== "--Select a Project--" && RoleId !== "--Select a Role--" && SamplePercentage !== "") {
+                    var newprojectandrole = ProjectId + "^" + RoleId;
+                    if ($.inArray(newprojectandrole, existingrolesandprojects) == -1) {
+                        var ProjectAndRolevalue = ProjectId + "^" + RoleId + "^" + SamplePercentage;
                         if ($.inArray(ProjectAndRolevalue, ProjectAndRole) == -1) {
                             $("#tableid").append('<tr id="tr' + iCnt + '"><td id="txtproject' + iCnt + '">' + ProjectId + '</td><td id="txtrole' + iCnt + '">' + RoleId + '</td><td id="txtsample' + iCnt + '">' + SamplePercentage + '</td><td><button type="button" id="btndelete" title="btn_' + iCnt + '"  style="cursor: pointer" class="btn btn-sm btn-danger btn-fill"><i class="fa fa-times"></i>Delete</button></td></td></tr >');
                             ProjectAndRole.push(ProjectAndRolevalue);
                             $("#hdnProjectAndRole").val(ProjectAndRole);
                             $("#tbleProjectwithRoles").show();
                         }
+                        else {
+                            $("#addbtnerror").html("Already You added this role to this project");
+                            $("#addbtnerror").fadeOut(10000);
+                        }
+                    } else {
+                        $("#addbtnerror").html("This user already have this role in this project");
+                        $("#addbtnerror").fadeOut(10000);
+                    }
                 }
                 else {
                     if (ProjectId === "--Select a Project--")
@@ -163,6 +177,7 @@
             var Email = $("#emaildd option:selected").text();
             var ProjectId = $("#projectdd option:selected").text();
             var RoleId = $("#roledd option:selected").text();
+            var SamplePercentage = $("#samplepercentage").val();
             if (Email === "--Select a Email--" && ProjectId === "--Select a Project--" && RoleId === "--Select a Role--") {
                 $("#AddUserForm").valid();
                 e.preventDefault();
@@ -177,6 +192,10 @@
                     $("#validrole").html('<span id="roledd-error" class="">Role is required.</span>');
                 else
                     $("#validrole").html('');
+                if (SamplePercentage === "")
+                    $("#sampleerror").html("SamplePercentage is required :");
+                else
+                    $("#sampleerror").html('');
                 if (Email !== "--Select a Email--" && ProjectId !== "--Select a Project--" && RoleId !== "--Select a Role--") {
                     $("#ErrorMessage").text('Please click on the add button, before save');
                 }

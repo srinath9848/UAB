@@ -105,7 +105,7 @@ namespace UAB.Controllers
             ViewBag.Identityusers = clinicalcaseOperations.GetIdentityUsersList();
             ViewBag.Roles = clinicalcaseOperations.GetRolesList();
             ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
-
+            
             return PartialView("_AddUser");
         }
         [HttpPost]
