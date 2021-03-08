@@ -20,6 +20,11 @@ namespace UAB.DAL
         {
             mUserId = UserId;
         }
+
+        public ClinicalcaseOperations()
+        {
+
+        }
         public List<DashboardDTO> GetChartCountByRole(string Role)
         {
             DashboardDTO dto = new DashboardDTO();
