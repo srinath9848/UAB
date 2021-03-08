@@ -21,6 +21,8 @@
     $("#shadowQA").addClass('selected');
     $("#ShadowQADTO_CoderRebuttal").css("pointer-events", "none");
     $("#ShadowQADTO_CoderRebuttal").css("background-color", "#e9ecef");
+    $(".QARemarks").css("pointer-events", "none");
+    $(".QARemarks").css("background-color", "#e9ecef");
 
     $('#chkAll').change(function () {
         if ($(this).is(':checked')) {
@@ -32,10 +34,12 @@
             $(".errMsg").text('');
             $("#ShadowQADTO_ErrorType").css("pointer-events", "none");
             $(".ErrorType").text('');
+            $(".ShadowQACorrectionsComments").hide();
         }
         else {
             $('.fa-check-circle').removeClass('accept');
             $("#ShadowQADTO_ErrorType").css("pointer-events", "auto");
+            $(".ShadowQACorrectionsComments").show();
         }
     });
 
@@ -56,6 +60,7 @@
                 $("#ShadowQADTO_ErrorType").css("pointer-events", "none");
                 $(".ErrorType").text('');
                 $(".errMsg").text('');
+                $(".ShadowQACorrectionsComments").hide();
             }
         }
         else if ($(this).hasClass('fa-times-circle')) {
@@ -65,6 +70,7 @@
             $("#" + id + "2").css("display", "flex");
             $("#chkAll").prop('checked', false);
             $("#ShadowQADTO_ErrorType").css("pointer-events", "auto");
+            $(".ShadowQACorrectionsComments").show();
         }
     });
 
