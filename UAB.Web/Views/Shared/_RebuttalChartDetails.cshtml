@@ -3,6 +3,7 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">
+                <span>Chart ID : <label style="color: black;">@Model.CodingDTO.ClinicalCaseID</label></span>
                 @if (Model.CodedBy != null)
                 {
                     <span>Coded by : <label style="color: black;">@Model.CodedBy</label></span>
@@ -23,6 +24,8 @@
             </h4>
         </div>
         @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { @class = "form-control" })
+        @Html.HiddenFor(model => model.ProjectID)
+        @Html.HiddenFor(model => model.ProjectName)
         @Html.Hidden("hdnPayorID")
         @Html.Hidden("hdnProviderID")
         @Html.Hidden("hdnCpt")
@@ -37,25 +40,25 @@
         @Html.Hidden("hdnDxReject")
         @Html.Hidden("hdnProviderFeedbackIDReject")
 
-    <div class="form-group row">
-        <label class="col-md-3 m-t-15"></label>
-        <div class="custom-control custom-checkbox mr-sm-2" id="divChkAll">
-            <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll">
-            <label class="custom-control-label" for="chkAll">Accept All</label>
+        <div class="form-group row">
+            <label class="col-md-3 m-t-15"></label>
+            <div class="custom-control custom-checkbox mr-sm-2" id="divChkAll">
+                <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll">
+                <label class="custom-control-label" for="chkAll">Accept All</label>
+            </div>
+            @*<label class="col-md-1 m-t-15"></label>
+            <div class="custom-control mr-sm-2 ShadowQACorrectionsComments">
+                <label class="">ShadowQA Corrections</label>
+            </div>
+            <label class="col-md-1 m-t-15"></label>
+            <div class="custom-control mr-sm-2 ShadowQACorrectionsComments">
+                <label class="">ShadowQA Comments</label>
+            </div>
+            <label class="col-md-1 m-t-15"></label>
+            <div class="custom-control mr-sm-2 QAComments">
+                <label class="">QA Comments</label>
+            </div>*@
         </div>
-        @*<label class="col-md-1 m-t-15"></label>
-        <div class="custom-control mr-sm-2 ShadowQACorrectionsComments">
-            <label class="">ShadowQA Corrections</label>
-        </div>
-        <label class="col-md-1 m-t-15"></label>
-        <div class="custom-control mr-sm-2 ShadowQACorrectionsComments">
-            <label class="">ShadowQA Comments</label>
-        </div>
-        <label class="col-md-1 m-t-15"></label>
-        <div class="custom-control mr-sm-2 QAComments">
-            <label class="">QA Comments</label>
-        </div>*@
-    </div>
         <div class="form-group row">
             <label class="col-md-3 lessWidth m-t-15">Payor</label>
             <div class="col-md-3 lessWidth input-group">
@@ -286,7 +289,8 @@
                         <div class="form-group row">
                             <label class="col-md-5 m-t-15"></label>
                             <div class="col-md-7">
-                                <button id="btnsubmit" type="submit" class="btn btn-success">Submit</button>
+                                <button id="btnsubmit" type="submit" class="btn btn-success">Save</button>
+                                <button id="SubmitAndGetNext" name="SubmitAndGetNext" type="submit" value="SubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
                             </div>
                         </div>
                     </div>

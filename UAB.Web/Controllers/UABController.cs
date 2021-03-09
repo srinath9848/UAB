@@ -100,7 +100,7 @@ namespace UAB.Controllers
             else
             {
                 clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDTO);
-                return RedirectToAction("GetCodingAvailableChart", new { Role = Roles.Coder.ToString(), ChartType = "Available", ProjectID = chartSummaryDTO.ProjectID });
+                return RedirectToAction("GetCodingAvailableChart", new { Role = Roles.Coder.ToString(), ChartType = "Available", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName });
             }
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
             TempData["Success"] = "Chart Details submitted successfully !";
@@ -235,18 +235,23 @@ namespace UAB.Controllers
 
             return View("OnHold", chartSummaryDTO);
         }
-        public IActionResult SubmitQAAvailableChart(ChartSummaryDTO chartSummaryDTO)
+        public IActionResult SubmitQAAvailableChart(ChartSummaryDTO chartSummaryDTO, string SubmitAndGetNext)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
-            clinicalcaseOperations.SubmitQAAvailableChart(chartSummaryDTO);
-
+            if (string.IsNullOrEmpty(SubmitAndGetNext))
+                clinicalcaseOperations.SubmitQAAvailableChart(chartSummaryDTO);
+            else
+            {
+                clinicalcaseOperations.SubmitQAAvailableChart(chartSummaryDTO);
+                return RedirectToAction("GetQAAvailableChart", new { Role = Roles.QA.ToString(), ChartType = "Available", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName });
+            }
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.QA.ToString());
 
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("QASummary", lstDto);
         }
-        public IActionResult SubmitQARebuttalChartsOfCoder(ChartSummaryDTO chartSummaryDTO)
+        public IActionResult SubmitQARebuttalChartsOfCoder(ChartSummaryDTO chartSummaryDTO, string SubmitAndGetNext)
         {
             var hdnPayorID = Request.Form["hdnPayorID"].ToString();
             var hdnProviderID = Request.Form["hdnProviderID"].ToString();
@@ -287,7 +292,13 @@ namespace UAB.Controllers
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
-            clinicalcaseOperations.SubmitQARebuttalChartsOfCoder(chartSummaryDTO);
+            if (string.IsNullOrEmpty(SubmitAndGetNext))
+                clinicalcaseOperations.SubmitQARebuttalChartsOfCoder(chartSummaryDTO);
+            else
+            {
+                clinicalcaseOperations.SubmitQARebuttalChartsOfCoder(chartSummaryDTO);
+                return RedirectToAction("GetQARebuttalChartsOfCoder", new { Role = Roles.QA.ToString(), ChartType = "RebuttalOfCoder", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName });
+            }
 
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.QA.ToString());
 
@@ -398,13 +409,18 @@ namespace UAB.Controllers
         }
 
         [HttpPost]
-        public IActionResult SubmitShadowQAAvailableChart(ChartSummaryDTO chartSummaryDTO, bool hdnIsQAAgreed)
+        public IActionResult SubmitShadowQAAvailableChart(ChartSummaryDTO chartSummaryDTO, bool hdnIsQAAgreed, string SubmitAndGetNext)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             bool isQAAgreed = hdnIsQAAgreed;// Convert.ToBoolean(Request.Form["hdnIsQAAgreed"]);
 
-            clinicalcaseOperations.SubmitShadowQAAvailableChart(chartSummaryDTO, isQAAgreed);
-
+            if (string.IsNullOrEmpty(SubmitAndGetNext))
+                clinicalcaseOperations.SubmitShadowQAAvailableChart(chartSummaryDTO, isQAAgreed);
+            else
+            {
+                clinicalcaseOperations.SubmitShadowQAAvailableChart(chartSummaryDTO, isQAAgreed);
+                return RedirectToAction("GetShadowQAAvailableChart", new { Role = Roles.ShadowQA.ToString(), ChartType = "Available", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName });
+            }
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.ShadowQA.ToString());
 
             TempData["Success"] = "Chart Details submitted successfully !";
