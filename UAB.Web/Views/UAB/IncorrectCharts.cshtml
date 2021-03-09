@@ -28,10 +28,10 @@
     $('span i').click(function () {
         var id = $(this).attr('id');
         if ($(this).hasClass('fa-check-circle')) {
-            $(".CoderComments").hide();
+            //$(".CoderComments").hide();
             $(this).toggleClass('accept');
             $(this).siblings().removeClass('reject');
-            $("#Revised" + id + "Remarks").css("display", "none");
+            //$("#Revised" + id + "Remarks").css("display", "none");
             $("#Revised" + id + "Remarks").val('');
             var title = $("#" + id).attr('title');
             if (title =="PayorID1")

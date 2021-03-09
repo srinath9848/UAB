@@ -114,6 +114,14 @@ namespace UAB.Controllers
             var hdnMod = Request.Form["hdnMod"].ToString();
             var hdnDx = Request.Form["hdnDx"].ToString();
             var hdnProviderFeedbackID = Request.Form["hdnProviderFeedbackID"].ToString();
+            int statusId = 0;
+
+            if (!string.IsNullOrEmpty(hdnPayorID) || !string.IsNullOrEmpty(hdnProviderID)
+                || !string.IsNullOrEmpty(hdnCpt) || !string.IsNullOrEmpty(hdnMod)
+                || !string.IsNullOrEmpty(hdnDx) || !string.IsNullOrEmpty(hdnProviderFeedbackID))
+                statusId = 15;
+            else
+                statusId = 12;
 
             if (!string.IsNullOrEmpty(hdnPayorID))
                 chartSummaryDTO.PayorID = Convert.ToInt32(hdnPayorID);
@@ -135,7 +143,7 @@ namespace UAB.Controllers
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
-            clinicalcaseOperations.SubmitCodingIncorrectChart(chartSummaryDTO);
+            clinicalcaseOperations.SubmitCodingIncorrectChart(chartSummaryDTO, statusId);
 
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
 
@@ -487,7 +495,7 @@ namespace UAB.Controllers
 
         }
         [HttpPost]
-        public IActionResult AssignClinicalCaseToUser(string ccid,string  AssignedTo, string IsPriority )
+        public IActionResult AssignClinicalCaseToUser(string ccid, string AssignedTo, string IsPriority)
         {
             SearchResultDTO SearchResultDTO = new SearchResultDTO();
             SearchResultDTO.ClinicalCaseId = ccid;
@@ -500,7 +508,7 @@ namespace UAB.Controllers
 
             TempData["Success"] = "Clinical case AssignedSuccessfully";
 
-            return RedirectToAction("SettingsSearch","UAB");
+            return RedirectToAction("SettingsSearch", "UAB");
 
         }
         [HttpGet]
