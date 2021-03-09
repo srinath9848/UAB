@@ -20,8 +20,10 @@ namespace UAB.DAL
         {
             mUserId = UserId;
         }
+
         public ClinicalcaseOperations()
         {
+
         }
         public List<DashboardDTO> GetChartCountByRole(string Role)
         {
@@ -65,6 +67,7 @@ namespace UAB.DAL
                         dto.ShadowQARebuttalCharts = Convert.ToInt32(reader["ShadowQARebuttalCharts"]);
                         dto.ReadyForPostingCharts = Convert.ToInt32(reader["ReadyForPostingCharts"]);
                         dto.OnHoldCharts = Convert.ToInt32(reader["OnHoldCharts"]);
+                        dto.OnHoldChartsOfCoder = Convert.ToInt32(reader["OnHoldChartsOfCoder"]);
                         lstDto.Add(dto);
                     }
                 }
@@ -125,6 +128,8 @@ namespace UAB.DAL
                             (Role == "Coder" && ChartType == "ReadyForPosting") ||
                             (Role == "QA" && ChartType == "OnHold"))
                         {
+                            chartSummaryDTO.CodedBy = "Coder";
+
                             if (reader["ProviderId"] != DBNull.Value)
                                 chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                             if (reader["PayorId"] != DBNull.Value)
@@ -140,18 +145,29 @@ namespace UAB.DAL
                         }
                         else if (Role == "ShadowQA" && ChartType == "Available")
                         {
+                            chartSummaryDTO.CodedBy = "Coder";
+                            chartSummaryDTO.QABy = "QA";
+
                             chartSummaryDTO.PayorText = Convert.ToString(reader["PayorText"]);
                             chartSummaryDTO.QAPayorText = Convert.ToString(reader["QAPayorText"]);
+                            chartSummaryDTO.QAPayorRemarks = Convert.ToString(reader["QAPayorIdRemark"]);
 
                             chartSummaryDTO.ProviderText = Convert.ToString(reader["ProviderText"]);
                             chartSummaryDTO.QAProviderText = Convert.ToString(reader["QAProviderText"]);
+                            chartSummaryDTO.QAProviderRemarks = Convert.ToString(reader["QAProviderIDRemark"]);
 
                             chartSummaryDTO.QACPTCode = Convert.ToString(reader["QACPTCode"]);
+                            chartSummaryDTO.QACPTCodeRemarks = Convert.ToString(reader["QACPTCodeRemark"]);
+
                             chartSummaryDTO.QAMod = Convert.ToString(reader["QAMod"]);
+                            chartSummaryDTO.QAModRemarks = Convert.ToString(reader["QAModRemark"]);
+
                             chartSummaryDTO.QADx = Convert.ToString(reader["QADx"]);
+                            chartSummaryDTO.QADxRemarks = Convert.ToString(reader["QADxRemark"]);
 
                             chartSummaryDTO.ProviderFeedbackText = Convert.ToString(reader["ProviderFeedbackText"]);
                             chartSummaryDTO.QAProviderFeedbackText = Convert.ToString(reader["QAProviderFeedbackText"]);
+                            chartSummaryDTO.QAProviderFeedbackRemarks = Convert.ToString(reader["QAProviderFeedbackIDRemark"]);
 
                             //if (reader["ProviderId"] != DBNull.Value)
                             //    chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
@@ -167,6 +183,19 @@ namespace UAB.DAL
                         else if ((Role == "Coder" && ChartType == "Incorrect") ||
                             (Role == "ShadowQA" && ChartType == "RebuttalOfQA") || (Role == "QA" && ChartType == "ShadowQARejected"))
                         {
+                            chartSummaryDTO.CodedBy = "Coder";
+                            chartSummaryDTO.QABy = "QA";
+                            chartSummaryDTO.ShadowQABy = "ShadowQA";
+
+                            chartSummaryDTO.PayorText = "PayorText"; //Convert.ToString(reader["PayorText"]);
+                            chartSummaryDTO.QAPayorText = "QAPayorText"; //Convert.ToString(reader["QAPayorText"]);
+
+                            chartSummaryDTO.ProviderText = "ProviderText";//Convert.ToString(reader["ProviderText"]);
+                            chartSummaryDTO.QAProviderText = "QAProviderText";//Convert.ToString(reader["QAProviderText"]);
+
+                            chartSummaryDTO.ProviderFeedbackText = "FeedbackText"; //Convert.ToString(reader["ProviderFeedbackText"]);
+                            chartSummaryDTO.QAProviderFeedbackText = "QAFeedbackText"; //Convert.ToString(reader["QAProviderFeedbackText"]);
+
                             chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                             if (reader["QAProviderID"] != DBNull.Value)
                                 chartSummaryDTO.QAProviderID = Convert.ToInt32(reader["QAProviderID"]);
@@ -184,11 +213,33 @@ namespace UAB.DAL
                             chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
                             chartSummaryDTO.QAMod = Convert.ToString(reader["QAMod"]);
                             chartSummaryDTO.QAModRemarks = Convert.ToString(reader["QAModRemark"]);
-                            chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackID"]);
+                            if (reader["ProviderFeedbackID"] != DBNull.Value)
+                                chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackID"]);
                             if (reader["QAProviderFeedbackID"] != DBNull.Value)
                                 chartSummaryDTO.QAProviderFeedbackID = Convert.ToInt32(reader["QAProviderFeedbackID"]);
                             chartSummaryDTO.QAProviderFeedbackRemarks = Convert.ToString(reader["QAProviderFeedbackIDRemark"]);
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
+
+                            if (reader["RebuttedPayorId"] != DBNull.Value)
+                                chartSummaryDTO.ShadowQAPayorID = Convert.ToInt32(reader["RebuttedPayorId"]);
+                            chartSummaryDTO.ShadowQAPayorRemarks = Convert.ToString(reader["RebuttedPayorIdRemark"]);
+
+                            if (reader["RebuttedProviderID"] != DBNull.Value)
+                                chartSummaryDTO.ShadowQAProviderID = Convert.ToInt32(reader["RebuttedProviderID"]);
+                            chartSummaryDTO.ShadowQAProviderRemarks = Convert.ToString(reader["RebuttedProviderIDRemark"]);
+
+                            chartSummaryDTO.ShadowQADx = Convert.ToString(reader["RebuttedDx"]);
+                            chartSummaryDTO.ShadowQADxRemarks = Convert.ToString(reader["RebuttedDxRemark"]);
+
+                            chartSummaryDTO.ShadowQAMod = Convert.ToString(reader["RebuttedMod"]);
+                            chartSummaryDTO.ShadowQAModRemarks = Convert.ToString(reader["RebuttedModRemark"]);
+
+                            chartSummaryDTO.ShadowQACPTCode = Convert.ToString(reader["RebuttedCPTCode"]);
+                            chartSummaryDTO.ShadowQACPTCodeRemarks = Convert.ToString(reader["RebuttedCPTCodeRemark"]);
+
+                            if (reader["RebuttedProviderFeedbackID"] != DBNull.Value)
+                                chartSummaryDTO.ShadowQAProviderFeedbackID = Convert.ToInt32(reader["RebuttedProviderFeedbackID"]);
+                            chartSummaryDTO.ShadowQAProviderFeedbackRemarks = Convert.ToString(reader["RebuttedProviderFeedbackIDRemark"]);
 
                             chartSummaryDTO.RevisedPayorRemarks = Convert.ToString(reader["RebuttedPayorIdRemark"]);
                             chartSummaryDTO.RevisedProviderRemarks = Convert.ToString(reader["RebuttedProviderIDRemark"]);
@@ -217,7 +268,8 @@ namespace UAB.DAL
                             chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
                             chartSummaryDTO.QAMod = Convert.ToString(reader["QAMod"]);
                             chartSummaryDTO.QAModRemarks = Convert.ToString(reader["QAModRemark"]);
-                            chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackID"]);
+                            if (reader["ProviderFeedbackID"] != DBNull.Value)
+                                chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackID"]);
                             if (reader["QAProviderFeedbackID"] != DBNull.Value)
                                 chartSummaryDTO.QAProviderFeedbackID = Convert.ToInt32(reader["QAProviderFeedbackID"]);
                             chartSummaryDTO.QAProviderFeedbackRemarks = Convert.ToString(reader["QAProviderFeedbackIDRemark"]);
@@ -778,9 +830,9 @@ namespace UAB.DAL
                 }
                 if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProviderName))
                     lstDto = lstDto.Where(a => a.ProviderName == searchParametersDTO.ProviderName).ToList();
-                if (!string.IsNullOrWhiteSpace(searchParametersDTO.StatusName)&& searchParametersDTO.StatusName!= "--Select a Status--")
+                if (!string.IsNullOrWhiteSpace(searchParametersDTO.StatusName) && searchParametersDTO.StatusName != "--Select a Status--")
                     lstDto = lstDto.Where(a => a.Status == searchParametersDTO.StatusName).ToList();
-                if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProjectName) && searchParametersDTO.ProjectName !="--Select a Project--")
+                if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProjectName) && searchParametersDTO.ProjectName != "--Select a Project--")
                     lstDto = lstDto.Where(a => a.ProjectName == searchParametersDTO.ProjectName).ToList();
             }
             return lstDto;
@@ -1382,11 +1434,11 @@ namespace UAB.DAL
                 return context.Role.ToList();
             }
         }
-        public List<string> GetUabuserEmails ()
+        public List<string> GetUabuserEmails()
         {
             using (var context = new UABContext())
             {
-                return context.User.Select(a=>a.Email).ToList();
+                return context.User.Select(a => a.Email).ToList();
             }
         }
         public List<string> GetIdentityUsersList()
@@ -1478,7 +1530,7 @@ namespace UAB.DAL
             {
                 var res = context.ProjectUser.Where(a => a.ProjectUserId == projectuserid).FirstOrDefault();
 
-                var project= context.Project.Where(a=>a.ProjectId==res.ProjectId).FirstOrDefault();
+                var project = context.Project.Where(a => a.ProjectId == res.ProjectId).FirstOrDefault();
                 var roles = context.Role.Where(a => a.RoleId == res.RoleId).FirstOrDefault();
                 var useremail = context.User.Where(a => a.UserId == res.UserId).FirstOrDefault().Email;
                 ApplicationUser applicationUser = new ApplicationUser();
@@ -1535,7 +1587,7 @@ namespace UAB.DAL
                         string temp = null;
                         foreach (var item in lstApplicationUser)
                         {
-                            temp = temp + item.ProjectName + "^" + item.RoleName +",";
+                            temp = temp + item.ProjectName + "^" + item.RoleName + ",";
                         }
                         var length = temp.Length;
                         string initial = temp.Substring(0, length - 1);
@@ -1606,8 +1658,8 @@ namespace UAB.DAL
                 mdl.RoleId = context.Role.Where(a => a.Name == user.RoleName).Select(a => a.RoleId).FirstOrDefault();
                 mdl.SamplePercentage = Convert.ToInt32(user.SamplePercentage);
 
-                var exsitingprojectuser = context.ProjectUser.Where(a => a.UserId == user.UserId&&a.RoleId==mdl.RoleId&&a.ProjectId==mdl.ProjectId).FirstOrDefault();
-                if (exsitingprojectuser==null)
+                var exsitingprojectuser = context.ProjectUser.Where(a => a.UserId == user.UserId && a.RoleId == mdl.RoleId && a.ProjectId == mdl.ProjectId).FirstOrDefault();
+                if (exsitingprojectuser == null)
                 {
                     context.ProjectUser.Add(mdl);
                     context.SaveChanges();
@@ -1731,7 +1783,7 @@ namespace UAB.DAL
 
         public Provider GetProviderByName(string providerName)
         {
-            using(var context=new UABContext())
+            using (var context = new UABContext())
             {
                 return context.Provider.Where(p => p.Name == providerName).Select(p => p).FirstOrDefault();
             };

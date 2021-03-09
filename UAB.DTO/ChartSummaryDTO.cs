@@ -13,8 +13,8 @@ namespace UAB.DTO
             QADTO = new QADTO();
             ShadowQADTO = new ShadowQADTO();
         }
-        [Required(ErrorMessage = "Feedback Provider is required.")]
-        public int ProviderFeedbackID { get; set; }
+        //[Required(ErrorMessage = "Feedback Provider is required.")]
+        public int? ProviderFeedbackID { get; set; }
         public string ProviderFeedbackText { get; set; }
         public int AssignedTo { get; set; }
         [Required(ErrorMessage = "Payor is required.")]
@@ -93,7 +93,9 @@ namespace UAB.DTO
         public int ShadowQAProviderFeedbackID { get; set; }
         [Required(ErrorMessage = "*")]
         public string ShadowQAProviderFeedbackRemarks { get; set; }
-
+        public string CodedBy { get; set; }
+        public string QABy { get; set; }
+        public string ShadowQABy { get; set; }
 
         public string RevisedPayorRemarks { get; set; }
         public string RevisedProviderRemarks { get; set; }
