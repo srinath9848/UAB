@@ -11,6 +11,8 @@ namespace UAB.DAL.LoginDTO
 
         [Required(ErrorMessage = "Email is required.")]
         public string Email { get; set; }
+        public string FirstName  { get; set; }
+        public string LastName  { get; set; }
         public bool IsActive { get; set; }
         [Required(ErrorMessage = "Role is required.")]
         public int RoleId { get; set; } 

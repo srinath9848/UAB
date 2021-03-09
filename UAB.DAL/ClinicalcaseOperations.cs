@@ -1634,11 +1634,17 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
+                UAB.DAL.LoginDTO.IdentityServerContext Icontext = new IdentityServerContext();
+
+                var iuser  = Icontext.Users.Where(a => a.Email == user.Email).FirstOrDefault();
                 var existing = context.User.Where(a => a.Email == user.Email).FirstOrDefault();
+
                 if (existing == null)
                 {
                     UAB.DAL.Models.User mdl = new User();
                     mdl.Email = user.Email;
+                    mdl.FirstName = iuser.FirstName;
+                    mdl.LastName = iuser.LastName;
                     mdl.IsActive = user.IsActive;
 
                     context.User.Add(mdl);
