@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace UAB.DTO
@@ -44,6 +45,11 @@ namespace UAB.DTO
         public DateTime DoS { get; set; }
         public string Status { get; set; }
         public string ProjectName { get; set; }
-        public string AssignUserEmail  { get; set; }
+        [Required(ErrorMessage = "Assign From User Email is required.")]
+        public string AssignFromUserEmail  { get; set; }
+        
+        [Required(ErrorMessage = "Assign To User Email is required.")]
+        public string AssignToUserEmail { get; set; } 
+        public bool IsPriority  { get; set; }
     }
 }

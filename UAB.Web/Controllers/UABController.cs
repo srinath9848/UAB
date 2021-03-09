@@ -474,9 +474,33 @@ namespace UAB.Controllers
         public IActionResult AssignClinicalCaseToUser(string ccid)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            ViewBag.users = clinicalcaseOperations.GetManageUsers();
+            var assignusers = clinicalcaseOperations.GetManageUsers();
+            var workitem = clinicalcaseOperations.GetWorkItem(ccid);
 
-            return PartialView("_AssignClinicalCaseToUser");
+
+            ViewBag.assignusers = assignusers;
+            ViewBag.ccid = ccid;
+            SearchResultDTO SearchResultDTO = new SearchResultDTO();
+            SearchResultDTO.ClinicalCaseId = ccid;
+            SearchResultDTO.AssignFromUserEmail = workitem.AssignedTo.ToString();
+            return PartialView("_AssignClinicalCaseToUser", SearchResultDTO);
+
+        }
+        [HttpPost]
+        public IActionResult AssignClinicalCaseToUser(string ccid,string  AssignedTo, string IsPriority )
+        {
+            SearchResultDTO SearchResultDTO = new SearchResultDTO();
+            SearchResultDTO.ClinicalCaseId = ccid;
+            SearchResultDTO.AssignToUserEmail = AssignedTo;
+            SearchResultDTO.IsPriority = Convert.ToBoolean(IsPriority);
+
+
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            clinicalcaseOperations.AssignClinicalcase(SearchResultDTO);
+
+            TempData["Success"] = "Clinical case AssignedSuccessfully";
+
+            return RedirectToAction("SettingsSearch","UAB");
 
         }
         [HttpGet]

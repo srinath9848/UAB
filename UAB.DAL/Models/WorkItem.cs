@@ -12,5 +12,6 @@ namespace UAB.DAL.Models
         public int? AssignedTo { get; set; }
         public int? AssignedBy { get; set; }
         public string NoteTitle { get; set; }
+        public int IsPriority  { get; set; }
     }
 }

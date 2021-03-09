@@ -20,6 +20,9 @@ namespace UAB.DAL
         {
             mUserId = UserId;
         }
+        public ClinicalcaseOperations()
+        {
+        }
         public List<DashboardDTO> GetChartCountByRole(string Role)
         {
             DashboardDTO dto = new DashboardDTO();
@@ -1338,6 +1341,26 @@ namespace UAB.DAL
             return lstDto;
         }
 
+        public void AssignClinicalcase(SearchResultDTO searchResultDTO)
+        {
+            int ccid = Convert.ToInt32(searchResultDTO.ClinicalCaseId);
+            int AssignedTouserid  = Convert.ToInt32(searchResultDTO.AssignToUserEmail);
+
+            using (var context = new UABContext())
+            {
+                var existingcc  = context.WorkItem.Where(c => c.ClinicalCaseId == ccid).FirstOrDefault();
+                if (existingcc != null)
+                {
+                    existingcc.AssignedTo = AssignedTouserid;
+                    existingcc.AssignedBy = mUserId;
+                    existingcc.AssignedDate = DateTime.Now;
+                    existingcc.IsPriority = searchResultDTO.IsPriority ? 1 : 0;
+                    context.Entry(existingcc).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
+            }
+        }
+
         public List<ApplicationProject> GetProjectsList()
         {
             using (var context = new UABContext())
@@ -1440,6 +1463,13 @@ namespace UAB.DAL
             using (var context = new UABContext())
             {
                 return context.User.ToList();
+            }
+        }
+        public WorkItem GetWorkItem(string ccid)
+        {
+            using (var context = new UABContext())
+            {
+                 return  context.WorkItem.Where(a => a.ClinicalCaseId == Convert.ToInt32(ccid)).FirstOrDefault();
             }
         }
         public ApplicationUser GetProjectUser(int projectuserid)

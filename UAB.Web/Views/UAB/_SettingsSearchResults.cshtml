@@ -36,9 +36,8 @@
             <div class="card">
                 <div class="card-body">
                     @await Html.PartialAsync("_Msg")
-                    <div id="modalContent"></div>
-                    
-                    <div class="table-responsive col-8" style="max-height:600px;max-width: 900px;">
+                    <div id="modalContent1"></div>
+                    <div class="table-responsive col-8" style="max-height:600px;max-width:1020px; overflow-x:hidden">
                         <table id="searchresults" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
@@ -84,14 +83,11 @@
 <script src="~/dashboardassets/extra-libs/DataTables/datatables.js"></script>
 <script type="text/javascript">
 
-    $("#settings").addClass('selected');
-
     $('#searchresults').DataTable();
-    $("#Provider_length").html('');
-    $("#Provider_filter").html('');
-
-
+    $("#searchresults_length").html('')
+    //$("#searchresults_filter").html('')
     $(document).ready(function () {
+        
         Assign = function (ClinicalCaseId) {
         $.ajax({
             type: "GET",
@@ -100,7 +96,7 @@
                 "Ccid": ClinicalCaseId
             },
             success: function (response) {
-                $("#modalContent").html(response);
+                $("#modalContent1").html(response);
             },
             failure: function (response) {
                 alert(response);
