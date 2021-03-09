@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="row">
             <partial name="_InitialData" model=Model />
-            <partial name="_RebuttalChartDetails" model=Model />
+            <partial name="_ShadowQARejectedCharts" model=Model />
         </div>
     </div>
 </form>
@@ -15,6 +15,9 @@
 
     $(".CoderDetails").css("pointer-events", "none");
     $(".CoderDetails").css("background-color", "#e9ecef");
+
+    $(".QARemarks").css("pointer-events", "none");
+    $(".QARemarks").css("background-color", "#e9ecef");
 
     $(".QADetails").attr("readonly", false);
     $("#qa").addClass('selected');

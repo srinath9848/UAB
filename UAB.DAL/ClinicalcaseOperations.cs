@@ -186,6 +186,16 @@ namespace UAB.DAL
                             chartSummaryDTO.CodedBy = "Coder";
                             chartSummaryDTO.QABy = "QA";
                             chartSummaryDTO.ShadowQABy = "ShadowQA";
+
+                            chartSummaryDTO.PayorText = "PayorText"; //Convert.ToString(reader["PayorText"]);
+                            chartSummaryDTO.QAPayorText = "QAPayorText"; //Convert.ToString(reader["QAPayorText"]);
+
+                            chartSummaryDTO.ProviderText = "ProviderText";//Convert.ToString(reader["ProviderText"]);
+                            chartSummaryDTO.QAProviderText = "QAProviderText";//Convert.ToString(reader["QAProviderText"]);
+
+                            chartSummaryDTO.ProviderFeedbackText = "FeedbackText"; //Convert.ToString(reader["ProviderFeedbackText"]);
+                            chartSummaryDTO.QAProviderFeedbackText = "QAFeedbackText"; //Convert.ToString(reader["QAProviderFeedbackText"]);
+
                             chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                             if (reader["QAProviderID"] != DBNull.Value)
                                 chartSummaryDTO.QAProviderID = Convert.ToInt32(reader["QAProviderID"]);
@@ -209,6 +219,27 @@ namespace UAB.DAL
                                 chartSummaryDTO.QAProviderFeedbackID = Convert.ToInt32(reader["QAProviderFeedbackID"]);
                             chartSummaryDTO.QAProviderFeedbackRemarks = Convert.ToString(reader["QAProviderFeedbackIDRemark"]);
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
+
+                            if (reader["RebuttedPayorId"] != DBNull.Value)
+                                chartSummaryDTO.ShadowQAPayorID = Convert.ToInt32(reader["RebuttedPayorId"]);
+                            chartSummaryDTO.ShadowQAPayorRemarks = Convert.ToString(reader["RebuttedPayorIdRemark"]);
+
+                            if (reader["RebuttedProviderID"] != DBNull.Value)
+                                chartSummaryDTO.ShadowQAProviderID = Convert.ToInt32(reader["RebuttedProviderID"]);
+                            chartSummaryDTO.ShadowQAProviderRemarks = Convert.ToString(reader["RebuttedProviderIDRemark"]);
+
+                            chartSummaryDTO.ShadowQADx = Convert.ToString(reader["RebuttedDx"]);
+                            chartSummaryDTO.ShadowQADxRemarks = Convert.ToString(reader["RebuttedDxRemark"]);
+
+                            chartSummaryDTO.ShadowQAMod = Convert.ToString(reader["RebuttedMod"]);
+                            chartSummaryDTO.ShadowQAModRemarks = Convert.ToString(reader["RebuttedModRemark"]);
+
+                            chartSummaryDTO.ShadowQACPTCode = Convert.ToString(reader["RebuttedCPTCode"]);
+                            chartSummaryDTO.ShadowQACPTCodeRemarks = Convert.ToString(reader["RebuttedCPTCodeRemark"]);
+
+                            if (reader["RebuttedProviderFeedbackID"] != DBNull.Value)
+                                chartSummaryDTO.ShadowQAProviderFeedbackID = Convert.ToInt32(reader["RebuttedProviderFeedbackID"]);
+                            chartSummaryDTO.ShadowQAProviderFeedbackRemarks = Convert.ToString(reader["RebuttedProviderFeedbackIDRemark"]);
 
                             chartSummaryDTO.RevisedPayorRemarks = Convert.ToString(reader["RebuttedPayorIdRemark"]);
                             chartSummaryDTO.RevisedProviderRemarks = Convert.ToString(reader["RebuttedProviderIDRemark"]);
@@ -237,7 +268,8 @@ namespace UAB.DAL
                             chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
                             chartSummaryDTO.QAMod = Convert.ToString(reader["QAMod"]);
                             chartSummaryDTO.QAModRemarks = Convert.ToString(reader["QAModRemark"]);
-                            chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackID"]);
+                            if (reader["ProviderFeedbackID"] != DBNull.Value)
+                                chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackID"]);
                             if (reader["QAProviderFeedbackID"] != DBNull.Value)
                                 chartSummaryDTO.QAProviderFeedbackID = Convert.ToInt32(reader["QAProviderFeedbackID"]);
                             chartSummaryDTO.QAProviderFeedbackRemarks = Convert.ToString(reader["QAProviderFeedbackIDRemark"]);

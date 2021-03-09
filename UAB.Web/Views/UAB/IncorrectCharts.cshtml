@@ -6,13 +6,18 @@
     <div class="container-fluid">
         <div class="row">
             <partial name="_InitialData" model=Model />
-            <partial name="_RebuttalChartDetails" model=Model />
+            <partial name="_IncorrectCharts" model=Model />
         </div>
     </div>
 </form>
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
 <script src="~/dashboardassets/dist/js/jquery-ui.min.js"></script>
 <script type="text/javascript">
+    $(".CoderDetails").css("pointer-events", "none");
+    $(".CoderDetails").css("background-color", "#e9ecef");
+
+    $(".QARemarks").css("pointer-events", "none");
+    $(".QARemarks").css("background-color", "#e9ecef");
 
     $(".QADetails").attr("readonly", true);
     $(".QARevised").attr("readonly", true);
@@ -23,6 +28,7 @@
     $('span i').click(function () {
         var id = $(this).attr('id');
         if ($(this).hasClass('fa-check-circle')) {
+            $(".CoderComments").hide();
             $(this).toggleClass('accept');
             $(this).siblings().removeClass('reject');
             $("#Revised" + id + "Remarks").css("display", "none");
@@ -47,6 +53,7 @@
                 $("#hdnProviderFeedbackID").val($("#" + title + " option:selected").val());
         }
         else if ($(this).hasClass('fa-times-circle')) {
+            $(".CoderComments").show();
             $(this).toggleClass('reject');
             $(this).siblings().removeClass('accept');
             $("#Revised" + id + "Remarks").css("display", "flex");
