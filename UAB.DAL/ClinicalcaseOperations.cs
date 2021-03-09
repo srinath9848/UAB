@@ -220,26 +220,26 @@ namespace UAB.DAL
                             chartSummaryDTO.QAProviderFeedbackRemarks = Convert.ToString(reader["QAProviderFeedbackIDRemark"]);
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
 
-                            if (reader["RebuttedPayorId"] != DBNull.Value)
-                                chartSummaryDTO.ShadowQAPayorID = Convert.ToInt32(reader["RebuttedPayorId"]);
-                            chartSummaryDTO.ShadowQAPayorRemarks = Convert.ToString(reader["RebuttedPayorIdRemark"]);
+                            if (reader["ShadowQAPayorID"] != DBNull.Value)
+                                chartSummaryDTO.ShadowQAPayorID = Convert.ToInt32(reader["ShadowQAPayorID"]);
+                            chartSummaryDTO.ShadowQAPayorRemarks = Convert.ToString(reader["ShadowQAPayorIdRemark"]);
 
-                            if (reader["RebuttedProviderID"] != DBNull.Value)
-                                chartSummaryDTO.ShadowQAProviderID = Convert.ToInt32(reader["RebuttedProviderID"]);
-                            chartSummaryDTO.ShadowQAProviderRemarks = Convert.ToString(reader["RebuttedProviderIDRemark"]);
+                            if (reader["ShadowQAProviderID"] != DBNull.Value)
+                                chartSummaryDTO.ShadowQAProviderID = Convert.ToInt32(reader["ShadowQAProviderID"]);
+                            chartSummaryDTO.ShadowQAProviderRemarks = Convert.ToString(reader["ShadowQAProviderIDRemark"]);
 
-                            chartSummaryDTO.ShadowQADx = Convert.ToString(reader["RebuttedDx"]);
-                            chartSummaryDTO.ShadowQADxRemarks = Convert.ToString(reader["RebuttedDxRemark"]);
+                            chartSummaryDTO.ShadowQADx = Convert.ToString(reader["ShadowQADx"]);
+                            chartSummaryDTO.ShadowQADxRemarks = Convert.ToString(reader["ShadowQADxRemark"]);
 
-                            chartSummaryDTO.ShadowQAMod = Convert.ToString(reader["RebuttedMod"]);
-                            chartSummaryDTO.ShadowQAModRemarks = Convert.ToString(reader["RebuttedModRemark"]);
+                            chartSummaryDTO.ShadowQAMod = Convert.ToString(reader["ShadowQAMod"]);
+                            chartSummaryDTO.ShadowQAModRemarks = Convert.ToString(reader["ShadowQAModRemark"]);
 
-                            chartSummaryDTO.ShadowQACPTCode = Convert.ToString(reader["RebuttedCPTCode"]);
-                            chartSummaryDTO.ShadowQACPTCodeRemarks = Convert.ToString(reader["RebuttedCPTCodeRemark"]);
+                            chartSummaryDTO.ShadowQACPTCode = Convert.ToString(reader["ShadowQACPTCode"]);
+                            chartSummaryDTO.ShadowQACPTCodeRemarks = Convert.ToString(reader["ShadowQACPTCodeRemark"]);
 
-                            if (reader["RebuttedProviderFeedbackID"] != DBNull.Value)
-                                chartSummaryDTO.ShadowQAProviderFeedbackID = Convert.ToInt32(reader["RebuttedProviderFeedbackID"]);
-                            chartSummaryDTO.ShadowQAProviderFeedbackRemarks = Convert.ToString(reader["RebuttedProviderFeedbackIDRemark"]);
+                            if (reader["ShadowQAProviderFeedbackID"] != DBNull.Value)
+                                chartSummaryDTO.ShadowQAProviderFeedbackID = Convert.ToInt32(reader["ShadowQAProviderFeedbackID"]);
+                            chartSummaryDTO.ShadowQAProviderFeedbackRemarks = Convert.ToString(reader["ShadowQAProviderFeedbackIDRemark"]);
 
                             chartSummaryDTO.RevisedPayorRemarks = Convert.ToString(reader["RebuttedPayorIdRemark"]);
                             chartSummaryDTO.RevisedProviderRemarks = Convert.ToString(reader["RebuttedProviderIDRemark"]);
@@ -1396,11 +1396,11 @@ namespace UAB.DAL
         public void AssignClinicalcase(SearchResultDTO searchResultDTO)
         {
             int ccid = Convert.ToInt32(searchResultDTO.ClinicalCaseId);
-            int AssignedTouserid  = Convert.ToInt32(searchResultDTO.AssignToUserEmail);
+            int AssignedTouserid = Convert.ToInt32(searchResultDTO.AssignToUserEmail);
 
             using (var context = new UABContext())
             {
-                var existingcc  = context.WorkItem.Where(c => c.ClinicalCaseId == ccid).FirstOrDefault();
+                var existingcc = context.WorkItem.Where(c => c.ClinicalCaseId == ccid).FirstOrDefault();
                 if (existingcc != null)
                 {
                     existingcc.AssignedTo = AssignedTouserid;
@@ -1521,7 +1521,7 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                 return  context.WorkItem.Where(a => a.ClinicalCaseId == Convert.ToInt32(ccid)).FirstOrDefault();
+                return context.WorkItem.Where(a => a.ClinicalCaseId == Convert.ToInt32(ccid)).FirstOrDefault();
             }
         }
         public ApplicationUser GetProjectUser(int projectuserid)
@@ -1636,7 +1636,7 @@ namespace UAB.DAL
             {
                 UAB.DAL.LoginDTO.IdentityServerContext Icontext = new IdentityServerContext();
 
-                var iuser  = Icontext.Users.Where(a => a.Email == user.Email).FirstOrDefault();
+                var iuser = Icontext.Users.Where(a => a.Email == user.Email).FirstOrDefault();
                 var existing = context.User.Where(a => a.Email == user.Email).FirstOrDefault();
 
                 if (existing == null)
