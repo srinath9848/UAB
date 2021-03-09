@@ -5,18 +5,18 @@
             <h4 class="card-title">
                 @if (Model.CodedBy != null)
                 {
-                    <span>Coded by : <label style="color: green;">@Model.CodedBy</label></span>
+                    <span>Coded by : <label style="color:black;">@Model.CodedBy</label></span>
                 }
                 @if (Model.QABy != null)
                 {
                     <span>
-                        & QA by : <label style="color:red"> @Model.QABy </label>
+                        & QA by : <label style="color:black;"> @Model.QABy </label>
                     </span>
                 }
                 @if (Model.ShadowQABy != null)
                 {
                     <span>
-                        & ShadowQA by : <label style="color:red"> @Model.ShadowQABy </label>
+                        & ShadowQA by : <label style="color:black;"> @Model.ShadowQABy </label>
                     </span>
                 }
 
@@ -169,6 +169,7 @@
                     </span>
                 </div>
             </div>
+            @{Show = (string.IsNullOrEmpty(Model.QAModRemarks) ? "visibility:hidden" : "display:flex");}
             <div title="@Model.QAModRemarks" class="col-md-2 input-group" style="@Show">
                 <input type="text" class="form-control QARemarks" value="@Model.QAModRemarks" />
             </div>

@@ -5,18 +5,18 @@
             <h4 class="card-title">
                 @if (Model.CodedBy != null)
                 {
-                    <span>Coded by : <label style="color: green;">@Model.CodedBy</label></span>
+                    <span>Coded by : <label style="color:black;">@Model.CodedBy</label></span>
                 }
                 @if (Model.QABy != null)
                 {
                     <span>
-                        & QA by : <label style="color:red"> @Model.QABy </label>
+                        & QA by : <label style="color:black;"> @Model.QABy </label>
                     </span>
                 }
                 @if (Model.ShadowQABy != null)
                 {
                     <span>
-                        & ShadowQA by : <label style="color:red"> @Model.ShadowQABy </label>
+                        & ShadowQA by : <label style="color:black;"> @Model.ShadowQABy </label>
                     </span>
                 }
 
@@ -36,25 +36,25 @@
         @Html.Hidden("hdnModReject")
         @Html.Hidden("hdnDxReject")
         @Html.Hidden("hdnProviderFeedbackIDReject")
-    <div class="form-group row">
-        <label class="col-md-2 m-t-15"></label>
-        <div class="custom-control custom-checkbox col-md-2 input-group" id="divChkAll">
-            <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll">
-            <label class="custom-control-label" for="chkAll">Accept All</label>
+        <div class="form-group row">
+            <label class="col-md-2 m-t-15"></label>
+            <div class="custom-control custom-checkbox col-md-2 input-group" id="divChkAll">
+                <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll">
+                <label class="custom-control-label" for="chkAll">Accept All</label>
+            </div>
+            <div class="custom-control col-md-2 input-group QAComments">
+                <label class="">Coder/QA</label>
+            </div>
+            <div class="custom-control col-md-3 input-group QAComments">
+                <label class="">ShadowQA Corrections</label>
+            </div>
+            <div class="custom-control col-md-2 input-group QAComments">
+                <label class="">ShadowQA Comments</label>
+            </div>
+            <div class="custom-control col-md-2 input-group CoderComments">
+                <label class="">QA Comments</label>
+            </div>
         </div>
-        <div class="custom-control col-md-2 input-group QAComments">
-            <label class="">Coder/QA</label>
-        </div>
-        <div class="custom-control col-md-3 input-group QAComments">
-            <label class="">ShadowQA Corrections</label>
-        </div>
-        <div class="custom-control col-md-2 input-group QAComments">
-            <label class="">ShadowQA Comments</label>
-        </div>
-        <div class="custom-control col-md-2 input-group CoderComments">
-            <label class="">QA Comments</label>
-        </div>
-    </div>
         <div class="form-group row">
             <label class="col-md-3 lessWidth m-t-15">Payor</label>
             @{int len = (!string.IsNullOrEmpty(Model.QAPayorText) ? 10 : 20); }
