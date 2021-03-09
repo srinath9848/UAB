@@ -513,7 +513,7 @@ namespace UAB.DAL
             }
             return dto;
         }
-        public CodingDTO SubmitCodingIncorrectChart(ChartSummaryDTO chartSummaryDTO)
+        public CodingDTO SubmitCodingIncorrectChart(ChartSummaryDTO chartSummaryDTO, int statusId)
         {
             CodingDTO dto = new CodingDTO();
 
@@ -613,6 +613,12 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = chartSummaryDTO.QADTO.ErrorType
+                        }
+                        ,   new SqlParameter() {
+                            ParameterName = "@StatusId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = statusId
                         }
                 };
 
