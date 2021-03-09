@@ -20,7 +20,7 @@ string.IsNullOrEmpty(Model.QAProviderFeedbackText))
 
             if (!string.IsNullOrEmpty(Model.QAPayorText) || !string.IsNullOrEmpty(Model.QAProviderText)
            || !string.IsNullOrEmpty(Model.QACPTCode)
-&& !string.IsNullOrEmpty(Model.QAMod) || !string.IsNullOrEmpty(Model.QADx) ||
+|| !string.IsNullOrEmpty(Model.QAMod) || !string.IsNullOrEmpty(Model.QADx) ||
 !string.IsNullOrEmpty(Model.QAProviderFeedbackText))
                 Show = "display:flex";
 
@@ -268,9 +268,9 @@ string.IsNullOrEmpty(Model.QAProviderFeedbackText))
         </div>
         <div class="form-group row">
             @*<label class="col-md-3 lessWidth m-t-15">Coder Questions</label>
-            <div class="col-md-3">
-                @Html.TextAreaFor(model => model.CoderQuestion, new { @class = "form-control CoderDetails" })
-            </div>*@
+                <div class="col-md-3">
+                    @Html.TextAreaFor(model => model.CoderQuestion, new { @class = "form-control CoderDetails" })
+                </div>*@
             <label class="col-md-3 lessWidth m-t-15">Note Title</label>
             <div class="col-md-3">
                 @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails" })
@@ -346,20 +346,20 @@ string.IsNullOrEmpty(Model.QAProviderFeedbackText))
 </div>
 
 
-    <style>
-        .errMsg {
-            font-weight: bold;
-            font-size: 20px;
-        }
+<style>
+    .errMsg {
+        font-weight: bold;
+        font-size: 20px;
+    }
 
-        #sortable-1 {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            width: 25%;
-        }
+    #sortable-1 {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 25%;
+    }
 
-        /*     #sortable-1 li {
+    /*     #sortable-1 li {
             margin: 0 3px 3px 3px;
             padding: 0.4em;
             padding-left: 1.5em;
@@ -367,23 +367,25 @@ string.IsNullOrEmpty(Model.QAProviderFeedbackText))
             height: 16px;
         }*/
 
-        .default {
-            background: #cedc98;
-            border: 1px solid #DDDDDD;
-            color: #333333;
-        }
-        .custom-control-label:before {
-            left: -35px;
-        }
+    .default {
+        background: #cedc98;
+        border: 1px solid #DDDDDD;
+        color: #333333;
+    }
 
-        .custom-control-label:after {
-            left: -35px;
-        }
+    .custom-control-label:before {
+        left: -35px;
+    }
 
-        .custom-control {
-            padding-left: 0rem;
-        }
-        .CoderDetails{
-            width : 146px;
-        }
-    </style>
+    .custom-control-label:after {
+        left: -35px;
+    }
+
+    .custom-control {
+        padding-left: 0rem;
+    }
+
+    .CoderDetails {
+        width: 146px;
+    }
+</style>
