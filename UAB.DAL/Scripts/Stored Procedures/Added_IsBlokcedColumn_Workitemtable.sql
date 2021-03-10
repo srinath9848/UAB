@@ -1,0 +1,2 @@
+ALTER TABLE Workitem
+ADD IsBlocked int NOT NULL DEFAULT(0)

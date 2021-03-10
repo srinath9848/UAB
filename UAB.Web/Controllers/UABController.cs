@@ -55,7 +55,24 @@ namespace UAB.Controllers
 
             return View("Coding", chartSummaryDTO);
         }
-
+        [HttpGet]
+        public IActionResult BlockClinicalcase(string ccid )
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            ViewBag.BlockCategories = clinicalcaseOperations.GetBlockCategories();
+            ViewBag.ccid = Convert.ToInt32(ccid);
+            return PartialView("_BlockCategory");
+        }
+        [HttpPost]
+        public IActionResult BlockClinicalcase(string ccid,string bid,string remarks)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            if (ccid!=null&&bid!=null&&remarks!=null)
+            {
+                clinicalcaseOperations.BlockClinicalcase(ccid, bid, remarks);
+            }
+            return RedirectToAction("CodingSummary");
+        }
 
         public IActionResult GetCodingIncorrectChart(string Role, string ChartType, int ProjectID, string ProjectName)
         {
@@ -449,6 +466,7 @@ namespace UAB.Controllers
         #endregion
 
         #region Settings
+       
         public List<BindDTO> BindErrorType()
         {
             List<BindDTO> lstDto = new List<BindDTO>();
@@ -500,7 +518,7 @@ namespace UAB.Controllers
 
             TempData["Success"] = "Clinical case AssignedSuccessfully";
 
-            return RedirectToAction("SettingsSearch","UAB");
+            return RedirectToAction("SettingsSearch");
 
         }
         [HttpGet]

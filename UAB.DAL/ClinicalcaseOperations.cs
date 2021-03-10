@@ -1392,15 +1392,44 @@ namespace UAB.DAL
             }
             return lstDto;
         }
+        public List<BlockCategory> GetBlockCategories()
+        {
+            using (var context = new UABContext())
+            {
+                return context.BlockCategory.ToList();
+            }
+        }
+        public void BlockClinicalcase(string ccid, string bid, string remarks)
+        {
+            using (var context = new UABContext())
+            {
+                BlockHistory mdl = new BlockHistory()
+                {
+                    BlockCategoryId =Convert.ToInt32(bid),
+                    BlockedByUserId = mUserId,
+                    Remarks =remarks,
+                    CreateDate = DateTime.Now
+                };
+                context.BlockHistory.Add(mdl);//adding to blockhistory table
 
+                var existingworkitem =context.WorkItem.Where(a => a.ClinicalCaseId == Convert.ToInt32(ccid)).FirstOrDefault();
+
+                if (existingworkitem!=null)
+                {
+                    existingworkitem.IsBlocked = 1;   //making Isblocked to 1 in workitem table
+                    context.Entry(existingworkitem).State = EntityState.Modified;
+                }
+                context.SaveChanges();
+            }
+        }
         public void AssignClinicalcase(SearchResultDTO searchResultDTO)
         {
             int ccid = Convert.ToInt32(searchResultDTO.ClinicalCaseId);
-            int AssignedTouserid  = Convert.ToInt32(searchResultDTO.AssignToUserEmail);
+            int AssignedTouserid = Convert.ToInt32(searchResultDTO.AssignToUserEmail);
 
             using (var context = new UABContext())
             {
-                var existingcc  = context.WorkItem.Where(c => c.ClinicalCaseId == ccid).FirstOrDefault();
+                var existingcc = context.WorkItem.Where(c => c.ClinicalCaseId == ccid).FirstOrDefault();
                 if (existingcc != null)
                 {
                     existingcc.AssignedTo = AssignedTouserid;
@@ -1521,7 +1550,7 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                 return  context.WorkItem.Where(a => a.ClinicalCaseId == Convert.ToInt32(ccid)).FirstOrDefault();
+                return context.WorkItem.Where(a => a.ClinicalCaseId == Convert.ToInt32(ccid)).FirstOrDefault();
             }
         }
         public ApplicationUser GetProjectUser(int projectuserid)
@@ -1636,7 +1665,7 @@ namespace UAB.DAL
             {
                 UAB.DAL.LoginDTO.IdentityServerContext Icontext = new IdentityServerContext();
 
-                var iuser  = Icontext.Users.Where(a => a.Email == user.Email).FirstOrDefault();
+                var iuser = Icontext.Users.Where(a => a.Email == user.Email).FirstOrDefault();
                 var existing = context.User.Where(a => a.Email == user.Email).FirstOrDefault();
 
                 if (existing == null)
