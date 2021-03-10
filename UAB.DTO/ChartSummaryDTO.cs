@@ -31,7 +31,7 @@ namespace UAB.DTO
         [Required(ErrorMessage = "Dx Code is required.")]
         public string Dx { get; set; }
 
-        [Required(ErrorMessage = "Modifiers is required.")]
+        //[Required(ErrorMessage = "Modifiers is required.")]
         public string Mod { get; set; }
         public string CoderQuestion { get; set; }
         [Required(ErrorMessage = "Answer is required.")]

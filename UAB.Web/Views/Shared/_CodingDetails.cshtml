@@ -12,10 +12,10 @@
     <div class="card">
         <div class="card-body">
             <div id="modalContent"></div>
-            <h4 class="card-title">Coder Details</h4>
+            <h4 class="card-title"><span>Chart ID : <label style="color: black;">@Model.CodingDTO.ClinicalCaseID</label></span> Coder Details</h4>
         </div>
         @Html.HiddenFor(model => model.Dx)
-
+        @Html.HiddenFor(model => model.ProjectName)
         @Html.HiddenFor(model => model.ProjectID)
         @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID ,new { @id="ccid"})
 
@@ -52,7 +52,7 @@
             <label class="col-md-3 m-t-15">Dx</label>
             <div class="col-md-3">
                 @*@Html.TextAreaFor(model => model.Dx, new { @class = "form-control CoderDetails", @autocomplete = "off" })
-                    @Html.ValidationMessageFor(model => model.Dx, null, new { @class = "text-danger" })*@
+                @Html.ValidationMessageFor(model => model.Dx, null, new { @class = "text-danger" })*@
                 <table>
                     <tbody id="tableid" style="display:block">
                         <tr id="tr0">

@@ -36,13 +36,13 @@
                 <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll">
                 <label class="custom-control-label" for="chkAll">Accept All</label>
             </div>
-            <div class="custom-control col-md-2 input-group QAComments">
-                <label class="">Coder/QA</label>
+            <div style="padding-left:10px;" class="custom-control col-md-2 input-group QAComments">
+                <label class="" style="margin-left:10px;">Coder/QA</label>
             </div>
-            <div class="custom-control col-md-2 input-group QAComments">
+            <div class="custom-control col-md-2 input-group QAComments" >
                 <label class="">QA Comments</label>
             </div>
-            <div class="custom-control col-md-1 input-group QAComments">
+            <div class="custom-control col-md-1 input-group QAComments" style="margin-left:-15px;">
                 <label class=""></label>
             </div>
             <div class="custom-control col-md-2 input-group CoderComments">
@@ -253,10 +253,10 @@
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-md-3 lessWidth m-t-15">Coder Questions</label>
+            @*<label class="col-md-3 lessWidth m-t-15">Coder Questions</label>
             <div class="col-md-3 lessWidth">
                 @Html.TextAreaFor(model => model.CoderQuestion, new { @class = "form-control CoderDetails" })
-            </div>
+            </div>*@
             <label class="col-md-3 lessWidth m-t-15">Note Title</label>
             <div class="col-md-3 lessWidth">
                 @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails" })
@@ -323,6 +323,17 @@
         background: #cedc98;
         border: 1px solid #DDDDDD;
         color: #333333;
+    }
+    .custom-control-label:before {
+        left: -35px;
+    }
+
+    .custom-control-label:after {
+        left: -35px;
+    }
+
+    .custom-control {
+        padding-left: 0rem;
     }
 </style>
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
