@@ -124,7 +124,13 @@ namespace UAB.DAL
                         chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
                         chartSummaryDTO.CodingDTO.DateOfService = Convert.ToString(reader["DateOfService"]);
 
-                        if ((Role == "QA" && ChartType == "Available") ||
+                        if (Role == "Coder" && ChartType == "Block")
+                        {
+                            chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
+                            chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
+                            chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]);
+                        }
+                        else if ((Role == "QA" && ChartType == "Available") ||
                             (Role == "Coder" && ChartType == "ReadyForPosting") ||
                             (Role == "QA" && ChartType == "OnHold"))
                         {

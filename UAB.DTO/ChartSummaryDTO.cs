@@ -103,5 +103,10 @@ namespace UAB.DTO
         public string RevisedModRemarks { get; set; }
         public string RevisedDXRemarks { get; set; }
         public string RevisedProviderFeedbackRemarks { get; set; }
+
+        public string BlockCategory { get; set; }
+        public string BlockRemarks { get; set; }
+        public DateTime BlockedDate { get; set; }
+
     }
 }
