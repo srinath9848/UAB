@@ -11,5 +11,6 @@ namespace UAB.DAL.Models
         public int BlockCategoryId { get; set; }
         public string Remarks  { get; set; }
         public DateTime? CreateDate { get; set; }
+        public int ClinicalCaseId { get; set; }
     }
 }

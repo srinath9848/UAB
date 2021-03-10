@@ -1398,6 +1398,40 @@ namespace UAB.DAL
             }
             return lstDto;
         }
+
+
+    
+        public List<WorkflowHistoryDTO> GetWorkflowHistories(string ccid)
+        {
+            List<WorkflowHistoryDTO> lst = new List<WorkflowHistoryDTO>();
+            using (var context=new UABContext())
+            {
+                using (var con=context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "GetWorkFlowHistory";
+                    cmd.Connection = con;
+
+                    SqlParameter ccparam  = new SqlParameter();
+                    ccparam.ParameterName = "@ClinicalCaseID";
+                    ccparam.Value = Convert.ToInt32(ccid);
+                    cmd.Parameters.Add(ccparam);
+
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        WorkflowHistoryDTO wf = new WorkflowHistoryDTO();
+                        wf.Event = Convert.ToString(reader["Event"]);
+                        wf.DateandTime = Convert.ToDateTime(reader["Date"]);
+                        wf.ByUser = Convert.ToString(reader["UserName"]);
+                        lst.Add(wf);
+                    }
+                }
+                return lst;
+            }
+        }
         public List<BlockCategory> GetBlockCategories()
         {
             using (var context = new UABContext())
@@ -1411,16 +1445,17 @@ namespace UAB.DAL
             {
                 BlockHistory mdl = new BlockHistory()
                 {
-                    BlockCategoryId =Convert.ToInt32(bid),
+                    BlockCategoryId = Convert.ToInt32(bid),
                     BlockedByUserId = mUserId,
-                    Remarks =remarks,
-                    CreateDate = DateTime.Now
+                    Remarks = remarks,
+                    CreateDate = DateTime.Now,
+                    ClinicalCaseId=Convert.ToInt32(ccid)
                 };
                 context.BlockHistory.Add(mdl);//adding to blockhistory table
 
-                var existingworkitem =context.WorkItem.Where(a => a.ClinicalCaseId == Convert.ToInt32(ccid)).FirstOrDefault();
+                var existingworkitem = context.WorkItem.Where(a => a.ClinicalCaseId == Convert.ToInt32(ccid)).FirstOrDefault();
 
-                if (existingworkitem!=null)
+                if (existingworkitem != null)
                 {
                     existingworkitem.IsBlocked = 1;   //making Isblocked to 1 in workitem table
                     context.Entry(existingworkitem).State = EntityState.Modified;

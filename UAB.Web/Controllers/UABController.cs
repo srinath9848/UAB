@@ -55,6 +55,15 @@ namespace UAB.Controllers
 
             return View("Coding", chartSummaryDTO);
         }
+
+        [HttpGet]
+        public IActionResult ViewHistory(string ccid)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var reslut = clinicalcaseOperations.GetWorkflowHistories(ccid);
+            return PartialView("_ViewHistory", reslut);
+        }
+
         [HttpGet]
         public IActionResult BlockClinicalcase(string ccid)
         {

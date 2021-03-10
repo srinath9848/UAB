@@ -39,8 +39,33 @@
                 <div class="col-sm-3">
                     @Html.TextBoxFor(model => model.CodingDTO.DateOfService, new { @class = "form-control", @readonly = "readonly" })
                 </div>
+                <button type="button" class="btn btn-link Available" onclick="ViewHistory()">View History</button>
             </div>
         </div>
     </div>
 </div>
+
+
+<script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
+<script src="~/dashboardassets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
+<script src="~/dashboardassets/extra-libs/DataTables/datatables.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        ViewHistory = function () {
+
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("ViewHistory", "UAB")",
+                //data: {"ccid": $("#ccid").val()},
+                success: function (response) {
+                    $("#modalContent").html(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        };
+});
+</script>
 
