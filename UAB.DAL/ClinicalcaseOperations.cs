@@ -66,8 +66,8 @@ namespace UAB.DAL
                         dto.QARebuttalCharts = Convert.ToInt32(reader["IncorrectCharts"]);
                         dto.ShadowQARebuttalCharts = Convert.ToInt32(reader["ShadowQARebuttalCharts"]);
                         dto.ReadyForPostingCharts = Convert.ToInt32(reader["ReadyForPostingCharts"]);
-                        dto.OnHoldCharts = Convert.ToInt32(reader["OnHoldCharts"]);
-                        dto.OnHoldChartsOfCoder = Convert.ToInt32(reader["OnHoldChartsOfCoder"]);
+                        //dto.OnHoldCharts = Convert.ToInt32(reader["OnHoldCharts"]);
+                        dto.BlockedCharts = Convert.ToInt32(reader["BlockedCharts"]);
                         lstDto.Add(dto);
                     }
                 }
