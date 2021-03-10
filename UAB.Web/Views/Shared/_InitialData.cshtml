@@ -25,6 +25,7 @@
 <div class="col-md-12 form-horizontal">
     <div class="card">
         <div class="card-body">
+            <div id="modalContent"></div>
             <h4 class="card-title">@Model.ProjectName</h4><br />
             <div class="form-group row">
                 <label for="fname" class="col-sm-2">MRN</label>
@@ -53,7 +54,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         ViewHistory = function () {
-
             $.ajax({
                 type: "GET",
                 url: "@Url.Action("ViewHistory", "UAB")",
