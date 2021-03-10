@@ -17,7 +17,7 @@
         @Html.HiddenFor(model => model.Dx)
         @Html.HiddenFor(model => model.ProjectName)
         @Html.HiddenFor(model => model.ProjectID)
-        @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID ,new { @id="ccid"})
+        @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { @id = "ccid" })
 
         <div class="form-group row">
             <label class="col-md-3 m-t-15">Provider</label>
@@ -52,7 +52,7 @@
             <label class="col-md-3 m-t-15">Dx</label>
             <div class="col-md-3">
                 @*@Html.TextAreaFor(model => model.Dx, new { @class = "form-control CoderDetails", @autocomplete = "off" })
-                @Html.ValidationMessageFor(model => model.Dx, null, new { @class = "text-danger" })*@
+                    @Html.ValidationMessageFor(model => model.Dx, null, new { @class = "text-danger" })*@
                 <table>
                     <tbody id="tableid" style="display:block">
                         <tr id="tr0">
@@ -89,7 +89,8 @@
         </div>
         <div class="border-top">
             <div class="card-body" style="text-align:right">
-                <button type="button" class="btn btn-danger Available" onclick="Block()">Block</button>
+                <button id="btnBlock" type="button" class="btn btn-danger" onclick="Block()">Block</button>
+                <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger">Block History</button>
                 <button id="codingSubmit" name="codingSubmit" type="button" class="btn btn-success Available">Save</button>
                 <button id="codingSubmitAndGetNext" name="codingSubmitAndGetNext" type="submit" value="codingSubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
                 <button type="submit" class="btn btn-success Approved">Posted Completed</button>
@@ -106,7 +107,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         Block = function () {
-             
+
             $.ajax({
                 type: "GET",
                 url: "@Url.Action("BlockClinicalcase", "UAB")",

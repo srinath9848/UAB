@@ -21,6 +21,13 @@
 
 <script type="text/javascript">
 
+    var isBlocked = @(ViewBag.IsBlocked == null ? "0": "1");
+
+    if (isBlocked == 1) {
+        $("#btnBlock").hide();
+        $("#btnBlockHistory").show();
+    }
+
     $("#coding").addClass('selected');
     $('.Approved').hide();
     $('#divAnswer').hide();

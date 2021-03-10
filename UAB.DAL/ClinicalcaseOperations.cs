@@ -66,8 +66,8 @@ namespace UAB.DAL
                         dto.QARebuttalCharts = Convert.ToInt32(reader["IncorrectCharts"]);
                         dto.ShadowQARebuttalCharts = Convert.ToInt32(reader["ShadowQARebuttalCharts"]);
                         dto.ReadyForPostingCharts = Convert.ToInt32(reader["ReadyForPostingCharts"]);
-                        dto.OnHoldCharts = Convert.ToInt32(reader["OnHoldCharts"]);
-                        dto.OnHoldChartsOfCoder = Convert.ToInt32(reader["OnHoldChartsOfCoder"]);
+                        //dto.OnHoldCharts = Convert.ToInt32(reader["OnHoldCharts"]);
+                        dto.BlockedCharts = Convert.ToInt32(reader["BlockedCharts"]);
                         lstDto.Add(dto);
                     }
                 }
@@ -1411,16 +1411,16 @@ namespace UAB.DAL
             {
                 BlockHistory mdl = new BlockHistory()
                 {
-                    BlockCategoryId =Convert.ToInt32(bid),
+                    BlockCategoryId = Convert.ToInt32(bid),
                     BlockedByUserId = mUserId,
-                    Remarks =remarks,
+                    Remarks = remarks,
                     CreateDate = DateTime.Now
                 };
                 context.BlockHistory.Add(mdl);//adding to blockhistory table
 
-                var existingworkitem =context.WorkItem.Where(a => a.ClinicalCaseId == Convert.ToInt32(ccid)).FirstOrDefault();
+                var existingworkitem = context.WorkItem.Where(a => a.ClinicalCaseId == Convert.ToInt32(ccid)).FirstOrDefault();
 
-                if (existingworkitem!=null)
+                if (existingworkitem != null)
                 {
                     existingworkitem.IsBlocked = 1;   //making Isblocked to 1 in workitem table
                     context.Entry(existingworkitem).State = EntityState.Modified;

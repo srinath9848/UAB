@@ -27,9 +27,9 @@
                             <th scope="col" class="tblHeaderRow">
                                 Shadow QA Rejected Charts
                             </th>
-                            <th scope="col" class="tblHeaderRow">
+                            @*<th scope="col" class="tblHeaderRow">
                                 OnHold Charts
-                            </th>
+                            </th>*@
                         </tr>
                     </thead>
                     <tbody style="cursor:pointer;">
@@ -81,7 +81,7 @@
                                         <a href="@Url.Action("GetQARejectedChartsOfShadowQA", "UAB",new { Role=Roles.QA,ChartType="ShadowQARejected",ProjectID = item.ProjectID,ProjectName =item.ProjectName})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
-                                <td scope="col" style="text-align:center">
+                                @*<td scope="col" style="text-align:center">
                                     @if (item.OnHoldCharts == 0)
                                     {
                                         <label class="lblCharts">@item.OnHoldCharts</label>
@@ -94,7 +94,7 @@
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("GetQAOnHoldChart", "UAB",new { Role=Roles.QA,ChartType="OnHold",ProjectID = item.ProjectID,ProjectName =item.ProjectName})" class="btn btn-info btn-sm">Get Next</a>
                                     }
-                                </td>
+                                </td>*@
                             </tr>
                         }
                     </tbody>
