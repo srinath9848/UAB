@@ -63,6 +63,14 @@ namespace UAB.Controllers
             var reslut = clinicalcaseOperations.GetWorkflowHistories(ccid);
             return PartialView("_ViewHistory", reslut);
         }
+        [HttpGet]
+        public IActionResult BlockHistory(string ccid) 
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var reslut = clinicalcaseOperations.GetBlockHistories(ccid);
+            return PartialView("_BlockHistory", reslut);
+        }
+
 
 
         public IActionResult GetCodingBlockedChart(string Role, string ChartType, int ProjectID, string ProjectName)

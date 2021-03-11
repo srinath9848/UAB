@@ -1438,6 +1438,13 @@ namespace UAB.DAL
                 return lst;
             }
         }
+        public List<BlockHistory> GetBlockHistories(string ccid) 
+        {
+            using (var context=new UABContext())
+            {
+               return context.BlockHistory.Where(a => a.ClinicalCaseId == (Convert.ToInt32(ccid))).ToList();
+            }
+        }
         public List<BlockCategory> GetBlockCategories()
         {
             using (var context = new UABContext())

@@ -89,7 +89,7 @@
         <div class="border-top">
             <div class="card-body" style="text-align:right">
                 <button id="btnBlock" type="button" class="btn btn-danger" onclick="Block()">Block</button>
-                <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger">Block History</button>
+                <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger" onclick="BlockHistory()">Block History</button>
                 <button id="codingSubmit" name="codingSubmit" type="button" class="btn btn-success Available">Save</button>
                 <button id="codingSubmitAndGetNext" name="codingSubmitAndGetNext" type="submit" value="codingSubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
                 <button type="submit" class="btn btn-success Approved">Posted Completed</button>
@@ -110,6 +110,19 @@
             $.ajax({
                 type: "GET",
                 url: "@Url.Action("BlockClinicalcase", "UAB")",
+                data: {"ccid": $("#ccid").val()},
+                success: function (response) {
+                    $("#modalContent").html(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        };
+        BlockHistory = function () {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("BlockHistory", "UAB")",
                 data: {"ccid": $("#ccid").val()},
                 success: function (response) {
                     $("#modalContent").html(response);
