@@ -36,15 +36,16 @@ namespace UAB.DAL.Models
         public virtual DbSet<WorkItem> WorkItem { get; set; }
         public virtual DbSet<WorkItemAudit> WorkItemAudit { get; set; }
         public virtual DbSet<WorkItemProvider> WorkItemProvider { get; set; }
-        public virtual DbSet<BlockCategory> BlockCategory  { get; set; }
-        public virtual DbSet<BlockHistory> BlockHistory  { get; set; }
+        public virtual DbSet<BlockCategory> BlockCategory { get; set; }
+        public virtual DbSet<BlockHistory> BlockHistory { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
+                AppConfiguration app = new AppConfiguration();
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=VD-TSTPC10P-DB;App=UAB;Database=UAB-V1;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer(app.ConnectionString);
             }
         }
 
