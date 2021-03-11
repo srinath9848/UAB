@@ -989,13 +989,13 @@ namespace UAB.Controllers
             try
             {
                 string uploadedFile = Path.Combine(@"D:\\");
-                string uniqueFileName = Guid.NewGuid().ToString() + "_" + files.FileName;
-                string filePath = Path.Combine(uploadedFile, uniqueFileName);
+                string fileName = files.FileName;
+                string filePath = Path.Combine(uploadedFile, fileName);
 
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     files.CopyTo(stream);
-                    clinicalcaseOperations.UploadAndSave(stream, projectid);
+                    clinicalcaseOperations.UploadAndSave(stream, projectid, fileName);
                 }
                 TempData["Success"] = "Data uploaded Successfully!";
                 ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
