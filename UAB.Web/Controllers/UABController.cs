@@ -64,7 +64,7 @@ namespace UAB.Controllers
             return PartialView("_ViewHistory", reslut);
         }
         [HttpGet]
-        public IActionResult BlockHistory(string name,string remarks,string createdate ) 
+        public IActionResult BlockHistory(string name, string remarks, string createdate)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             BlockDTO dt = new BlockDTO()
@@ -532,22 +532,15 @@ namespace UAB.Controllers
 
         public List<BindDTO> BindErrorType()
         {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            List<ErrorType> lstErrorType = clinicalcaseOperations.GetErrorTypes();
+
             List<BindDTO> lstDto = new List<BindDTO>();
-            lstDto.Add(new BindDTO()
+
+            foreach (var err in lstErrorType)
             {
-                ID = 1,
-                Name = "CC not Supported"
-            });
-            lstDto.Add(new BindDTO()
-            {
-                ID = 2,
-                Name = "Consult not Supported",
-            });
-            lstDto.Add(new BindDTO()
-            {
-                ID = 3,
-                Name = "Mod Error",
-            });
+                lstDto.Add(new BindDTO() { ID = err.ErrorTypeId, Name = err.Name });
+            }
             return lstDto;
         }
 

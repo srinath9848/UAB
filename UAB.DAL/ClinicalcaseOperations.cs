@@ -128,7 +128,7 @@ namespace UAB.DAL
                         {
                             chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
                             chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
-                            chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]);
+                            chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate();
                         }
                         else if ((Role == "QA" && ChartType == "Available") ||
                             (Role == "Coder" && ChartType == "ReadyForPosting") ||
@@ -1406,20 +1406,20 @@ namespace UAB.DAL
         }
 
 
-    
+
         public List<WorkflowHistoryDTO> GetWorkflowHistories(string ccid)
         {
             List<WorkflowHistoryDTO> lst = new List<WorkflowHistoryDTO>();
-            using (var context=new UABContext())
+            using (var context = new UABContext())
             {
-                using (var con=context.Database.GetDbConnection())
+                using (var con = context.Database.GetDbConnection())
                 {
                     var cmd = con.CreateCommand();
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.CommandText = "GetWorkFlowHistory";
                     cmd.Connection = con;
 
-                    SqlParameter ccparam  = new SqlParameter();
+                    SqlParameter ccparam = new SqlParameter();
                     ccparam.ParameterName = "@ClinicalCaseID";
                     ccparam.Value = Convert.ToInt32(ccid);
                     cmd.Parameters.Add(ccparam);
@@ -1430,7 +1430,7 @@ namespace UAB.DAL
                     {
                         WorkflowHistoryDTO wf = new WorkflowHistoryDTO();
                         wf.Event = Convert.ToString(reader["Event"]);
-                        wf.DateandTime = Convert.ToDateTime(reader["Date"]);
+                        wf.DateandTime = Convert.ToDateTime(reader["Date"]).ToLocalDate();
                         wf.ByUser = Convert.ToString(reader["UserName"]);
                         lst.Add(wf);
                     }
@@ -1438,11 +1438,11 @@ namespace UAB.DAL
                 return lst;
             }
         }
-        public List<BlockHistory> GetBlockHistories(string ccid) 
+        public List<BlockHistory> GetBlockHistories(string ccid)
         {
-            using (var context=new UABContext())
+            using (var context = new UABContext())
             {
-               return context.BlockHistory.Where(a => a.ClinicalCaseId == (Convert.ToInt32(ccid))).ToList();
+                return context.BlockHistory.Where(a => a.ClinicalCaseId == (Convert.ToInt32(ccid))).ToList();
             }
         }
         public List<BlockCategory> GetBlockCategories()
@@ -1462,7 +1462,7 @@ namespace UAB.DAL
                     BlockedByUserId = mUserId,
                     Remarks = remarks,
                     CreateDate = DateTime.Now,
-                    ClinicalCaseId=Convert.ToInt32(ccid)
+                    ClinicalCaseId = Convert.ToInt32(ccid)
                 };
                 context.BlockHistory.Add(mdl);//adding to blockhistory table
 

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace UAB
+namespace UAB.DAL
 {
-    public static class ExtensionMethods
+    public static class DateTimeExtension
     {
         public static DateTime ToLocalDate(this DateTime dateTime)
         {
