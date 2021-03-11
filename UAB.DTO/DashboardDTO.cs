@@ -13,7 +13,7 @@ namespace UAB.DTO
         public int QARebuttalCharts { get; set; }
         public int ShadowQARebuttalCharts { get; set; }
         public int ReadyForPostingCharts { get; set; }
-        public int OnHoldCharts { get; set; }
-        public int OnHoldChartsOfCoder { get; set; }
+        //public int OnHoldCharts { get; set; }
+        public int BlockedCharts { get; set; }
     }
 }

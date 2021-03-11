@@ -56,6 +56,49 @@ namespace UAB.Controllers
             return View("Coding", chartSummaryDTO);
         }
 
+        [HttpGet]
+        public IActionResult ViewHistory(string ccid)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var reslut = clinicalcaseOperations.GetWorkflowHistories(ccid);
+            return PartialView("_ViewHistory", reslut);
+        }
+
+
+        public IActionResult GetCodingBlockedChart(string Role, string ChartType, int ProjectID, string ProjectName)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
+            chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
+            chartSummaryDTO.ProjectName = ProjectName;
+            ViewBag.IsBlocked = "1";
+
+            #region binding data
+            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
+            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
+            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            #endregion
+
+            return View("Coding", chartSummaryDTO);
+        }
+        [HttpGet]
+        public IActionResult BlockClinicalcase(string ccid)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            ViewBag.BlockCategories = clinicalcaseOperations.GetBlockCategories();
+            ViewBag.ccid = Convert.ToInt32(ccid);
+            return PartialView("_BlockCategory");
+        }
+        [HttpPost]
+        public IActionResult BlockClinicalcase(string ccid, string bid, string remarks)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            if (ccid != null && bid != null && remarks != null)
+            {
+                clinicalcaseOperations.BlockClinicalcase(ccid, bid, remarks);
+            }
+            return RedirectToAction("CodingSummary");
+        }
 
         public IActionResult GetCodingIncorrectChart(string Role, string ChartType, int ProjectID, string ProjectName)
         {
@@ -220,21 +263,21 @@ namespace UAB.Controllers
             #endregion
             return View("QARejectedChartsOfShadowQA", chartSummaryDTO);
         }
-        public IActionResult GetQAOnHoldChart(string Role, string ChartType, int ProjectID, string ProjectName)
-        {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
-            chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
-            chartSummaryDTO.ProjectName = ProjectName;
+        //public IActionResult GetQAOnHoldChart(string Role, string ChartType, int ProjectID, string ProjectName)
+        //{
+        //    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+        //    ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
+        //    chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
+        //    chartSummaryDTO.ProjectName = ProjectName;
 
-            #region binding data
-            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
-            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
-            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
-            #endregion
+        //    #region binding data
+        //    ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
+        //    ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
+        //    ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+        //    #endregion
 
-            return View("OnHold", chartSummaryDTO);
-        }
+        //    return View("OnHold", chartSummaryDTO);
+        //}
         public IActionResult SubmitQAAvailableChart(ChartSummaryDTO chartSummaryDTO, string SubmitAndGetNext)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
@@ -473,6 +516,7 @@ namespace UAB.Controllers
         #endregion
 
         #region Settings
+
         public List<BindDTO> BindErrorType()
         {
             List<BindDTO> lstDto = new List<BindDTO>();
@@ -524,7 +568,7 @@ namespace UAB.Controllers
 
             TempData["Success"] = "Clinical case AssignedSuccessfully";
 
-            return RedirectToAction("SettingsSearch", "UAB");
+            return RedirectToAction("SettingsSearch");
 
         }
         [HttpGet]

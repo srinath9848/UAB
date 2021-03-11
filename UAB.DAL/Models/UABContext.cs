@@ -36,6 +36,8 @@ namespace UAB.DAL.Models
         public virtual DbSet<WorkItem> WorkItem { get; set; }
         public virtual DbSet<WorkItemAudit> WorkItemAudit { get; set; }
         public virtual DbSet<WorkItemProvider> WorkItemProvider { get; set; }
+        public virtual DbSet<BlockCategory> BlockCategory  { get; set; }
+        public virtual DbSet<BlockHistory> BlockHistory  { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

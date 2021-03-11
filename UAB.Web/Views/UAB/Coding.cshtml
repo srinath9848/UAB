@@ -21,33 +21,40 @@
 
 <script type="text/javascript">
 
+    var isBlocked = @(ViewBag.IsBlocked == null ? "0": "1");
+
+    if (isBlocked == 1) {
+        $("#btnBlock").hide();
+        $("#btnBlockHistory").show();
+    }
+
     $("#coding").addClass('selected');
     $('.Approved').hide();
     $('#divAnswer').hide();
     $("#ProviderID").css("pointer-events", "none");
     $("#ProviderID").css("background-color", "#e9ecef");
 
-    $('#codingSubmit').click(function (e) {
-        // if ($("#Dx").val() != "") {
-        if ($("#CoderQuestion").val() !== "") {
-            $("#codingSubmit").prop("type", "button");
-            $(".text-danger").html("");
-            $("#frmSubmitCodingAvailableChart").submit();
-        } else {
-            $("#codingSubmit").prop("type", "submit");
-            $("#frmSubmitCodingAvailableChart").valid();
-            $("#frmSubmitCodingAvailableChart").submit();
-        }
-        //} else {
-        //    if ($("#CoderQuestion").val() == "") {
-        //        $(".Dxerror").html('<span id="projectdd-error" class="">Dx Code is required.</span>');
-        //        e.preventDefault();
-        //    } else {
-        //        $("#frmSubmitCodingAvailableChart").submit();
-        //    }
-        //}
+    //$('#codingSubmit').click(function (e) {
+    //    // if ($("#Dx").val() != "") {
+    //    if ($("#CoderQuestion").val() !== "") {
+    //        $("#codingSubmit").prop("type", "button");
+    //        $(".text-danger").html("");
+    //        $("#frmSubmitCodingAvailableChart").submit();
+    //    } else {
+    //        $("#codingSubmit").prop("type", "submit");
+    //        $("#frmSubmitCodingAvailableChart").valid();
+    //        $("#frmSubmitCodingAvailableChart").submit();
+    //    }
+    //    //} else {
+    //    //    if ($("#CoderQuestion").val() == "") {
+    //    //        $(".Dxerror").html('<span id="projectdd-error" class="">Dx Code is required.</span>');
+    //    //        e.preventDefault();
+    //    //    } else {
+    //    //        $("#frmSubmitCodingAvailableChart").submit();
+    //    //    }
+    //    //}
 
-    });
+    //});
 
     var dxArray = [];
     $(document).on("keyup", "input", function () {

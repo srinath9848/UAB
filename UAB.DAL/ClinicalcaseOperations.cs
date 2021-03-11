@@ -66,8 +66,8 @@ namespace UAB.DAL
                         dto.QARebuttalCharts = Convert.ToInt32(reader["IncorrectCharts"]);
                         dto.ShadowQARebuttalCharts = Convert.ToInt32(reader["ShadowQARebuttalCharts"]);
                         dto.ReadyForPostingCharts = Convert.ToInt32(reader["ReadyForPostingCharts"]);
-                        dto.OnHoldCharts = Convert.ToInt32(reader["OnHoldCharts"]);
-                        dto.OnHoldChartsOfCoder = Convert.ToInt32(reader["OnHoldChartsOfCoder"]);
+                        //dto.OnHoldCharts = Convert.ToInt32(reader["OnHoldCharts"]);
+                        dto.BlockedCharts = Convert.ToInt32(reader["BlockedCharts"]);
                         lstDto.Add(dto);
                     }
                 }
@@ -124,7 +124,13 @@ namespace UAB.DAL
                         chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
                         chartSummaryDTO.CodingDTO.DateOfService = Convert.ToString(reader["DateOfService"]);
 
-                        if ((Role == "QA" && ChartType == "Available") ||
+                        if (Role == "Coder" && ChartType == "Block")
+                        {
+                            chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
+                            chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
+                            chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]);
+                        }
+                        else if ((Role == "QA" && ChartType == "Available") ||
                             (Role == "Coder" && ChartType == "ReadyForPosting") ||
                             (Role == "QA" && ChartType == "OnHold"))
                         {
@@ -1399,6 +1405,70 @@ namespace UAB.DAL
             return lstDto;
         }
 
+
+    
+        public List<WorkflowHistoryDTO> GetWorkflowHistories(string ccid)
+        {
+            List<WorkflowHistoryDTO> lst = new List<WorkflowHistoryDTO>();
+            using (var context=new UABContext())
+            {
+                using (var con=context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "GetWorkFlowHistory";
+                    cmd.Connection = con;
+
+                    SqlParameter ccparam  = new SqlParameter();
+                    ccparam.ParameterName = "@ClinicalCaseID";
+                    ccparam.Value = Convert.ToInt32(ccid);
+                    cmd.Parameters.Add(ccparam);
+
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        WorkflowHistoryDTO wf = new WorkflowHistoryDTO();
+                        wf.Event = Convert.ToString(reader["Event"]);
+                        wf.DateandTime = Convert.ToDateTime(reader["Date"]);
+                        wf.ByUser = Convert.ToString(reader["UserName"]);
+                        lst.Add(wf);
+                    }
+                }
+                return lst;
+            }
+        }
+        public List<BlockCategory> GetBlockCategories()
+        {
+            using (var context = new UABContext())
+            {
+                return context.BlockCategory.ToList();
+            }
+        }
+        public void BlockClinicalcase(string ccid, string bid, string remarks)
+        {
+            using (var context = new UABContext())
+            {
+                BlockHistory mdl = new BlockHistory()
+                {
+                    BlockCategoryId = Convert.ToInt32(bid),
+                    BlockedByUserId = mUserId,
+                    Remarks = remarks,
+                    CreateDate = DateTime.Now,
+                    ClinicalCaseId=Convert.ToInt32(ccid)
+                };
+                context.BlockHistory.Add(mdl);//adding to blockhistory table
+
+                var existingworkitem = context.WorkItem.Where(a => a.ClinicalCaseId == Convert.ToInt32(ccid)).FirstOrDefault();
+
+                if (existingworkitem != null)
+                {
+                    existingworkitem.IsBlocked = 1;   //making Isblocked to 1 in workitem table
+                    context.Entry(existingworkitem).State = EntityState.Modified;
+                }
+                context.SaveChanges();
+            }
+        }
         public void AssignClinicalcase(SearchResultDTO searchResultDTO)
         {
             int ccid = Convert.ToInt32(searchResultDTO.ClinicalCaseId);
