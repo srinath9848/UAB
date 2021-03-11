@@ -123,7 +123,11 @@
             $.ajax({
                 type: "GET",
                 url: "@Url.Action("BlockHistory", "UAB")",
-                data: {"ccid": $("#ccid").val()},
+                data: {
+                    "name": "@Model.BlockCategory",
+                    "remarks": "@Model.BlockRemarks",
+                    "createdate": "@Model.BlockedDate"
+                    },
                 success: function (response) {
                     $("#modalContent").html(response);
                 },

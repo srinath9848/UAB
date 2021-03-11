@@ -64,11 +64,16 @@ namespace UAB.Controllers
             return PartialView("_ViewHistory", reslut);
         }
         [HttpGet]
-        public IActionResult BlockHistory(string ccid) 
+        public IActionResult BlockHistory(string name,string remarks,string createdate ) 
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var reslut = clinicalcaseOperations.GetBlockHistories(ccid);
-            return PartialView("_BlockHistory", reslut);
+            BlockDTO dt = new BlockDTO()
+            {
+                Name = name,
+                Remarks = remarks,
+                CreateDate = Convert.ToDateTime(createdate)
+            };
+            return PartialView("_BlockHistory", dt);
         }
 
 

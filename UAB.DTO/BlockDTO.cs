@@ -13,5 +13,6 @@ namespace UAB.DTO
         public string Name { get; set; }
         [Required]
         public string Remarks   { get; set; }
+        public DateTime ?CreateDate { get; set; }
     }
 }

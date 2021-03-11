@@ -1,4 +1,4 @@
-﻿@model List<UAB.DAL.Models.BlockHistory>;
+﻿@model UAB.DTO.BlockDTO;
 
 <style>
     .modal-content {
@@ -37,14 +37,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in Model)
-                                {
+                                
                                     <tr>
-                                        <td>@item.BlockCategoryId</td>
-                                        <td>@item.Remarks</td>
-                                        <td>@item.CreateDate</td>
+                                        <td>@Model.Name</td>
+                                        <td>@Model.Remarks</td>
+                                        <td>@Model.CreateDate</td>
                                     </tr>
-                                }
+                               
                             </tbody>
                         </table>
                     </div>
