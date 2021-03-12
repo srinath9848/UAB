@@ -1600,11 +1600,45 @@ namespace UAB.DAL
                 return context.User.ToList();
             }
         }
-        public WorkItem GetWorkItem(string ccid)
+
+        public List<User> GetAssignedToUsers(string ccid)
         {
             using (var context = new UABContext())
             {
-                return context.WorkItem.Where(a => a.ClinicalCaseId == Convert.ToInt32(ccid)).FirstOrDefault();
+                string fromemial = null;
+                var workitem = context.WorkItem.Where(a => a.ClinicalCaseId == Convert.ToInt32(ccid)).FirstOrDefault();
+                if (workitem.AssignedTo != null)
+                {
+                    var user = context.User.Where(a => a.UserId == workitem.AssignedTo).FirstOrDefault();
+                    fromemial = user.Email;
+                }
+                if (fromemial == null)
+                {
+                    return context.User.ToList();
+                }
+                else
+                {
+                    return context.User.Where(a => !a.Email.Contains(fromemial)).ToList();
+                }
+
+            }
+        }
+        public string GetAssignedusername(string ccid)
+        {
+            using (var context = new UABContext())
+            {
+                string username = null;
+                var workitem = context.WorkItem.Where(a => a.ClinicalCaseId == Convert.ToInt32(ccid)).FirstOrDefault();
+                if (workitem.AssignedTo != null)
+                {
+                    var user = context.User.Where(a => a.UserId == workitem.AssignedTo).FirstOrDefault();
+                    username = user.FirstName + user.LastName;
+                }
+                else
+                {
+                    username = "Un assigned";
+                }
+                return username;
             }
         }
         public ApplicationUser GetProjectUser(int projectuserid)
