@@ -3,7 +3,7 @@
 
 <style>
     .modal-content {
-        margin-top: 90px;
+        margin-top: 63px;
     }
 
     .errorTxt {
@@ -28,84 +28,75 @@
 
     <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
         <div class="modal-dialog">
-            <div class="modal-content" style="width:600px;">
-                <br />
+            <div class="modal-content">
                 <div class="col-md-12">
-                    <div class="form-group">
-                        <div class="col-md-6">
-                            <h5 class="card" style="width:300px">Add New User</h5>
-                        </div>
-                        <div class="form-group" style="font-size: 15px">
-                            <label style="width:80px;"><bold>Email :</bold></label>
-                            <span>
-                                @Html.DropDownListFor(model => model.Email, new SelectList(@ViewBag.Identityusers, "Email"), "--Select a Email--", new { @id = "emaildd" })
-                            </span>
-                            @Html.ValidationMessageFor(model => model.Email, null, new { @class = "text-danger" })
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        </div>
-                        <br />
-                        <div class="form-group" style="font-size: 15px">
-                            <label style="width:80px;"><bold>Project :</bold></label>
-                            <span>
-                                @Html.DropDownListFor(model => model.ProjectId, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select a Project--", new { @id = "projectdd" })
-                            </span>
-                            @Html.ValidationMessageFor(model => model.ProjectId, null, new { @class = "text-danger" })
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        </div>
-                        <br />
-                        <div class="form-group" style="font-size: 15px">
-                            <label style="width:80px;"><bold>Role :</bold></label>
-                            <span>
-                                @Html.DropDownListFor(model => model.RoleId, new SelectList(@ViewBag.Roles, "RoleId", "Name"), "--Select a Role--", new { @id = "roledd" })
-                            </span>
-                            @Html.ValidationMessageFor(model => model.RoleId, null, new { @class = "text-danger" })
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        </div>
-                        <br />
-                        <div class="col-md-3 custom-control custom-checkbox mr-sm-2">
-                            @Html.CheckBoxFor(model => model.IsActive, new { @class = "custom-control-input ShadowQADetails", @id = "customControlAutosizing1" })
-                            <label class="custom-control-label" for="customControlAutosizing1">Is Active</label>
-                        </div>
-                        <br />
-                        <div class="form-group" style="font-size: 15px">
-                            <label style="width:80px;"><bold>Sample % :</bold></label>
-                            <span>
-                                @Html.TextBoxFor(model => model.SamplePercentage, new { @type = "number", @class = "", style = "width:136px", @autofocus = "autofocus", @autocomplete = "off", @id = "samplepercentage", @placeholder = "Enter Sample % " })
-                            </span>
-                            <label id="sampleerror" style="color:red"></label>
-                            @Html.ValidationMessageFor(model => model.SamplePercentage, null, new { @class = "text-danger" })
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <h5 class="card" style="width:300px">Add New User</h5>
+                            </div>
+                            <div class="form-group" style="font-size: 15px">
+                                <label><bold>Email :</bold></label>
+                                <span>
+                                    @Html.DropDownListFor(model => model.Email, new SelectList(@ViewBag.Identityusers, "Email"), "--Select a Email--", new {
+                                   @style ="width:420px",@id = "emaildd" })
+                                </span>
+                                @Html.ValidationMessageFor(model => model.Email, null, new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group" style="font-size: 15px">
+                                <label><bold>Project :</bold></label>
+                                <span>
+                                    @Html.DropDownListFor(model => model.ProjectId, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select a Project--", new { @id = "projectdd" })
+                                </span>
+                                @Html.ValidationMessageFor(model => model.ProjectId, null, new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group" style="font-size: 15px">
+                                <label><bold>Role :</bold></label>
+                                <span>
+                                    @Html.DropDownListFor(model => model.RoleId, new SelectList(@ViewBag.Roles, "RoleId", "Name"), "--Select a Role--", new { @id = "roledd" })
+                                </span>
+                                @Html.ValidationMessageFor(model => model.RoleId, null, new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-3 custom-control custom-checkbox mr-sm-2">
+                                @Html.CheckBoxFor(model => model.IsActive, new { @class = "custom-control-input ShadowQADetails", @id = "customControlAutosizing1" })
+                                <label class="custom-control-label" for="customControlAutosizing1">Is Active</label>
+                            </div>
+                            <div class="form-group" style="font-size: 15px">
+                                <label><bold>Sample % :</bold></label>
+                                <span>
+                                    @Html.TextBoxFor(model => model.SamplePercentage, new { @type = "number", @class = "", style = "width:136px", @autofocus = "autofocus", @autocomplete = "off", @id = "samplepercentage", @placeholder = "Enter Sample % " })
+                                </span>
+                                <label id="sampleerror" style="color:red"></label>
+                                @Html.ValidationMessageFor(model => model.SamplePercentage, null, new { @class = "text-danger" })
+                            </div>
+                            <div id="addbtnerror" style="color:red"></div>
+                            <div class="col-md-10">
+                                <button type="button" class="btn btn-sm btn-info btn-fill" id="AddRoleandProject">Add</button>
+                            </div>
                         </div>
                         <br />
-                        <div id="addbtnerror" style="color:red"></div>
-                        <br />
-                        <div class="col-md-10">
-                            <button type="button" class="btn btn-sm btn-info btn-fill" id="AddRoleandProject">Add</button>
+                        <div class="form-group row" id="tbleProjectwithRoles" style="display:none;">
+                            <div class="table-responsive tableresponsiveforroles col-md-13">
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 250px; font-weight:900;">Project</th>
+                                            <th style="width: 250px; font-weight:900;">Role</th>
+                                            <th style="width: 250px; font-weight:900;">Sample %</th>
+                                            <th style="width: 250px; font-weight:900;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableid">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit">Save</button>
+                                <button type="button" class="btn btn-sm btn-danger btn-fill" onclick="ModalClose1()">Close</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group row" id="tbleProjectwithRoles" style="display:none;">
-                        <div class="table-responsive tableresponsiveforroles col-md-10">
-                            <table class="table table-striped table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 250px; font-weight:900;">Project</th>
-                                        <th style="width: 250px; font-weight:900;">Role</th>
-                                        <th style="width: 250px; font-weight:900;">Sample %</th>
-                                        <th style="width: 250px; font-weight:900;">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tableid">
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit">Save</button>
-                            <button type="button" class="btn btn-sm btn-danger btn-fill" onclick="ModalClose1()">Close</button>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

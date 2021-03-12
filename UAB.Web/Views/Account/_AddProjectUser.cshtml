@@ -3,7 +3,7 @@
 
 <style>
     .modal-content {
-        margin-top: 90px;
+        margin-top: 63px;
     }
 
     .errorTxt {
@@ -27,37 +27,34 @@
     @Html.HiddenFor(model => model.hdnProjectAndRole, new { @id = "hdnProjectAndRoleid" })
     <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
         <div class="modal-dialog">
-            <div class="modal-content" style="width: 500px;">
+            <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Add Project User</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="form-horizontal" style="width: 500px;">
+                    <div class="form-horizontal">
                         <div class="form-group" style="font-size: 15px">
-                            <label style="width:80px;"><bold>Email :</bold></label>
+                            <label style="width:80px;"><bold>Email</bold></label>
                             <span>@Model.Email</span>
                         </div>
-                        <br />
                         <div class="form-group" style="font-size: 15px">
-                            <label style="width:80px;"><bold>Project :</bold></label>
+                            <label style="width:80px;"><bold>Project</bold></label>
                             <span>
                                 @Html.DropDownListFor(model => model.ProjectId, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select a Project--", new { @id = "projectdd" })
                             </span>
                             @Html.ValidationMessageFor(model => model.ProjectId, null, new { @class = "text-danger" })
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         </div>
-                        <br />
                         <div class="form-group" style="font-size: 15px">
-                            <label style="width:80px;"><bold>Role :</bold></label>
+                            <label style="width:80px;"><bold>Role</bold></label>
                             <span>
                                 @Html.DropDownListFor(model => model.RoleId, new SelectList(@ViewBag.Roles, "RoleId", "Name"), "--Select a Role--", new { @id = "roledd" })
                             </span>
                             @Html.ValidationMessageFor(model => model.RoleId, null, new { @class = "text-danger" })
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         </div>
-                        <br />
                         <div class="form-group" style="font-size: 15px">
-                            <label style="width:80px;"><bold>Sample % :</bold></label>
+                            <label style="width:80px;"><bold>Sample %</bold></label>
                             <span>
                                 @Html.TextBoxFor(model => model.SamplePercentage, new { @type = "number", @class = "", style = "width:136px", @autofocus = "autofocus", @autocomplete = "off", @id = "samplepercentage", @placeholder = "Enter Sample %" })
                             </span>
@@ -65,21 +62,19 @@
                             @Html.ValidationMessageFor(model => model.SamplePercentage, null, new { @class = "text-danger" })
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         </div>
-                        <br />
                         <div id="addbtnerror" style="color:red"></div>
-                        <br />
                         <div class="col-md-10">
                             <button type="button" class="btn btn-sm btn-info btn-fill" id="AddRoleandProject">Add</button>
                         </div>
                         <br />
                         <div class="form-group row" id="tbleProjectwithRoles" style="display:none;">
-                            <div class="table-responsive tableresponsiveforroles col-md-10">
+                            <div class="table-responsive tableresponsiveforroles col-md-13">
                                 <table class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
                                             <th style="width: 250px; font-weight:900;">Project</th>
                                             <th style="width: 250px; font-weight:900;">Role</th>
-                                            <th style="width: 250px; font-weight:900;">SamplePercentage</th>
+                                            <th style="width: 250px; font-weight:900;">Sample %</th>
                                             <th style="width: 250px; font-weight:900;">Action</th>
                                         </tr>
                                     </thead>
