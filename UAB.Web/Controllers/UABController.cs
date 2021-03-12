@@ -548,15 +548,16 @@ namespace UAB.Controllers
         public IActionResult AssignClinicalCaseToUser(string ccid)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var assignusers = clinicalcaseOperations.GetManageUsers();
-            var workitem = clinicalcaseOperations.GetWorkItem(ccid);
+            string assignedusername = clinicalcaseOperations.GetAssignedusername(ccid);
+            var assignusers = clinicalcaseOperations.GetAssignedToUsers(ccid);
+            
 
 
             ViewBag.assignusers = assignusers;
             ViewBag.ccid = ccid;
             SearchResultDTO SearchResultDTO = new SearchResultDTO();
             SearchResultDTO.ClinicalCaseId = ccid;
-            SearchResultDTO.AssignFromUserEmail = workitem.AssignedTo.ToString();
+            SearchResultDTO.AssignFromUserEmail = assignedusername;
             return PartialView("_AssignClinicalCaseToUser", SearchResultDTO);
 
         }

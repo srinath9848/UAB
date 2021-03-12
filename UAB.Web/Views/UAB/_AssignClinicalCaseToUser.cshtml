@@ -28,14 +28,11 @@
                     <div class="col-md-6">
                         <h5 class="card" style="width:300px">Assign Clinical Case To User</h5>
                     </div>
-
-                    <div class="col-md-10">
-                        <label>Assign From User</label>
-                        @Html.DropDownListFor(model => model.AssignFromUserEmail, new SelectList(@ViewBag.assignusers, "UserId", "Email"), "--Select a User Email--", new { @id = "emailddfrom", @class = "form-control CoderDetails" })
-                        @Html.ValidationMessageFor(model => model.AssignFromUserEmail, null, new { @class = "text-danger" })
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    </div>
                     <br />
+                    <div class="col-md-10">
+                        <label>Assign From User : </label>
+                        <span>@Model.AssignFromUserEmail</span>
+                    </div>
                     <div class="col-md-10">
                         <label>Assign To User</label>
                         @Html.DropDownListFor(model => model.AssignToUserEmail, new SelectList(@ViewBag.assignusers, "UserId", "Email"), "--Select a User Email--", new { @id = "emailddto", @class = "form-control CoderDetails" })
@@ -68,24 +65,12 @@
     $(document).ready(function () {
 
         AssignTo = function () {
-
-            debugger;
-
-            var emailddfrom = $("#emailddfrom option:selected").text();
             var emailddto = $("#emailddto option:selected").text();
-
-
-            if (emailddfrom === "--Select a User Email--" && emailddto === "--Select a User Email--") {
-                $("#assignerror").html("Please Select Assign From And Assign To Emails, before Assign");
+            if (emailddto === "--Select a User Email--") {
+                $("#assignerror").html("Please Select Assign To Emails, before Assign");
                 $("#assignerror").fadeOut(10000);
             }
             else {
-                if (emailddfrom === "--Select a User Email--") {
-                    $("#assignerror").html("Please Select From Email before Assign");
-                    $("#assignerror").fadeOut(10000);
-                }
-                else
-                    $("#assignerror").html('');
                 if (emailddto === "--Select a User Email--") {
                     $("#assignerror").html("Please Select To Email before Assign");
                     $("#assignerror").fadeOut(10000);
@@ -94,7 +79,7 @@
                     $("#assignerror").html('');
             }
 
-            if (emailddfrom !== "--Select a User Email--" && emailddto !== "--Select a User Email--") {
+            if (emailddto !== "--Select a User Email--") {
                  $.ajax({
                 type: "POST",
                 url: "@Url.Action("AssignClinicalCaseToUser", "UAB")",
