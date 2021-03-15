@@ -41,7 +41,7 @@
             $(this).toggleClass('accept');
             $(this).siblings().removeClass('reject');
             //$("#" + id + "1").css("display", "none");
-            //$("#" + id + "2").css("display", "none");
+            //$("." + id).css("visibility", "hidden");
             var title = $("#" + id).attr('title');
             if (title == "PayorID1") {
                 $("#hdnPayorID").val($("#" + title + " option:selected").val());
@@ -52,15 +52,27 @@
                 $("#hdnProviderIDReject").val('');
             }
             if (title == "CPTCode1") {
-                $("#hdnCpt").val($("#" + title).val());
+                if ($("#" + title).val() != "") {
+                    $("#hdnCpt").val($("#" + title).val());
+                } else {
+                    $("#hdnCpt").val($("#" + title + "2").val());
+                }
                 $("#hdnCptReject").val('');
             }
             if (id == "Mod") {
-                $("#hdnMod").val($("#" + id + "1").val());
+                if ($("#" + id + "1") != "") {
+                    $("#hdnMod").val($("#" + id + "1").val());
+                } else {
+                    $("#hdnMod").val($("#" + id + "12").val());
+                }
                 $("#hdnModReject").val('');
             }
             if (title == "Dx1") {
-                $("#hdnDx").val($("#" + title).val());
+                if ($("#" + title).val() != "") {
+                    $("#hdnDx").val($("#" + title).val());
+                } else {
+                    $("#hdnDx").val($("#" + title + "2").val());
+                }
                 $("#hdnDxReject").val('');
             }
             if (title == "Feedback1") {
@@ -72,7 +84,7 @@
             $(this).toggleClass('reject');
             $(this).siblings().removeClass('accept');
             //$("#" + id + "1").css("display", "flex");
-            //$("#" + id + "2").css("display", "flex");
+            // $("." + id).css("visibility", "visible");
             var title = $("#" + id).attr('title');
             if (title == "PayorID1") {
                 $("#hdnPayorID").val('');
@@ -100,4 +112,24 @@
             }
         }
     });
+
+
+    $('#btnsubmit').click(function (e) {
+        var total = $(".fa-check-circle").length;
+        var reject = $(".reject").length;
+        var accept = $(".accept").length;
+        //if (total != accept) {
+        //    alert('test1');
+        //    e.preventDefault();
+        //}
+        if (total != accept + reject) {
+            $("#validationPopUp").show();
+            e.preventDefault();
+        }
+
+    });
+
+    validationPopUp = function () {
+        $("#validationPopUp").hide();
+    };
 </script>

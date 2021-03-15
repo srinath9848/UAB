@@ -61,10 +61,10 @@ namespace UAB.DTO
         public string QACPTCode { get; set; }
         [Required(ErrorMessage = "*")]
         public string QACPTCodeRemarks { get; set; }
-        [Required(ErrorMessage = "*")]
+        //[Required(ErrorMessage = "*")]
         public int QAProviderFeedbackID { get; set; }
         public string QAProviderFeedbackText { get; set; }
-        [Required(ErrorMessage = "*")]
+        //[Required(ErrorMessage = "*")]
         public string QAProviderFeedbackRemarks { get; set; }
 
         public int ProjectID { get; set; }
@@ -89,9 +89,9 @@ namespace UAB.DTO
         public string ShadowQACPTCode { get; set; }
         [Required(ErrorMessage = "*")]
         public string ShadowQACPTCodeRemarks { get; set; }
-        [Required(ErrorMessage = "*")]
+        //[Required(ErrorMessage = "*")]
         public int ShadowQAProviderFeedbackID { get; set; }
-        [Required(ErrorMessage = "*")]
+        //[Required(ErrorMessage = "*")]
         public string ShadowQAProviderFeedbackRemarks { get; set; }
         public string CodedBy { get; set; }
         public string QABy { get; set; }
