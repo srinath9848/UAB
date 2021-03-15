@@ -39,7 +39,7 @@
             <div style="padding-left:10px;" class="custom-control col-md-2 input-group QAComments">
                 <label class="" style="margin-left:10px;">Coder/QA</label>
             </div>
-            <div class="custom-control col-md-2 input-group QAComments" >
+            <div class="custom-control col-md-2 input-group QAComments">
                 <label class="">QA Comments</label>
             </div>
             <div class="custom-control col-md-1 input-group QAComments" style="margin-left:-15px;">
@@ -59,10 +59,14 @@
             <div title="@title" class="col-md-3 lessWidth input-group">
                 <div name="PayorText" class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
                     <span style="white-space:nowrap">
-                        <label style="color: green;">@PayorText</label>
                         @if (!string.IsNullOrEmpty(Model.QAPayorText))
                         {
-                            <label style="color:red">@QAPayorText</label>
+                            <label style="color:red">@PayorText</label>
+                            <label style="color:green;">@QAPayorText</label>
+                        }
+                        else
+                        {
+                            <label style="color: green;">@PayorText</label>
                         }
                     </span>
                 </div>
@@ -93,10 +97,15 @@
             <div title="@title" class="col-md-3 lessWidth input-group">
                 <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
                     <span style="white-space:nowrap">
-                        <label style="color: green;">@ProviderText</label>
+
                         @if (!string.IsNullOrEmpty(Model.QAProviderText))
                         {
-                            <label style="color:red">@QAProviderText</label>
+                            <label style="color: red;">@ProviderText</label>
+                            <label style="color: green">@QAProviderText</label>
+                        }
+                        else
+                        {
+                            <label style="color: green;">@ProviderText</label>
                         }
                     </span>
                 </div>
@@ -127,10 +136,14 @@
             <div title="@title" class="col-md-3 lessWidth input-group">
                 <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
                     <span style="white-space:nowrap">
-                        <label style="color: green;">@CPTCode</label>
                         @if (!string.IsNullOrEmpty(Model.QACPTCode))
                         {
-                            <label style="color:red">@QACPTCode</label>
+                            <label style="color: red;">@CPTCode</label>
+                            <label style="color:green">@QACPTCode</label>
+                        }
+                        else
+                        {
+                            <label style="color: green;">@CPTCode</label>
                         }
                     </span>
                 </div>
@@ -161,10 +174,14 @@
             <div title="@title" class="col-md-3 lessWidth input-group">
                 <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
                     <span style="white-space:nowrap">
-                        <label style="color: green;">@Mod</label>
                         @if (!string.IsNullOrEmpty(Model.QAMod))
                         {
-                            <label style="color:red">@QAMod</label>
+                            <label style="color: red;">@Mod</label>
+                            <label style="color:green">@QAMod</label>
+                        }
+                        else
+                        {
+                            <label style="color: green;">@Mod</label>
                         }
                     </span>
                 </div>
@@ -195,10 +212,15 @@
             <div title="@title" class="col-md-3 lessWidth input-group">
                 <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
                     <span style="white-space:nowrap">
-                        <label style="color: green;">@Dx</label>
+
                         @if (!string.IsNullOrEmpty(Model.QADx))
                         {
-                            <label style="color:red">@QADx</label>
+                            <label style="color: red;">@Dx</label>
+                            <label style="color:green">@QADx</label>
+                        }
+                        else
+                        {
+                            <label style="color: green;">@Dx</label>
                         }
                     </span>
                 </div>
@@ -229,10 +251,15 @@
             <div title="@title" class="col-md-3 lessWidth input-group">
                 <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
                     <span style="white-space:nowrap">
-                        <label style="color: green;">@ProviderFeedbackText</label>
+
                         @if (!string.IsNullOrEmpty(Model.QAProviderFeedbackText))
                         {
-                            <label style="color:red">@QAProviderFeedbackText</label>
+                            <label style="color: red;">@ProviderFeedbackText</label>
+                            <label style="color:green">@QAProviderFeedbackText</label>
+                        }
+                        else
+                        {
+                            <label style="color: green;">@ProviderFeedbackText</label>
                         }
                     </span>
                 </div>
@@ -254,9 +281,9 @@
         </div>
         <div class="form-group row">
             @*<label class="col-md-3 lessWidth m-t-15">Coder Questions</label>
-            <div class="col-md-3 lessWidth">
-                @Html.TextAreaFor(model => model.CoderQuestion, new { @class = "form-control CoderDetails" })
-            </div>*@
+                <div class="col-md-3 lessWidth">
+                    @Html.TextAreaFor(model => model.CoderQuestion, new { @class = "form-control CoderDetails" })
+                </div>*@
             <label class="col-md-3 lessWidth m-t-15">Note Title</label>
             <div class="col-md-3 lessWidth">
                 @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails" })
@@ -324,6 +351,7 @@
         border: 1px solid #DDDDDD;
         color: #333333;
     }
+
     .custom-control-label:before {
         left: -35px;
     }

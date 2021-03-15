@@ -66,10 +66,15 @@
             <div title="@title" class="col-md-3 lessWidth input-group">
                 <div name="PayorText" class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
                     <span style="white-space:nowrap">
-                        <label style="color: green;">@PayorText</label>
+
                         @if (!string.IsNullOrEmpty(Model.QAPayorText))
                         {
-                            <label style="color:red">@QAPayorText</label>
+                            <label style="color: red;">@PayorText</label>
+                            <label style="color:green">@QAPayorText</label>
+                        }
+                        else
+                        {
+                            <label style="color: green;">@PayorText</label>
                         }
                     </span>
                 </div>
@@ -103,10 +108,14 @@
             <div title="@title" class="col-md-3 lessWidth input-group">
                 <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
                     <span style="white-space:nowrap">
-                        <label style="color: green;">@ProviderText</label>
                         @if (!string.IsNullOrEmpty(Model.QAProviderText))
                         {
-                            <label style="color:red">@QAProviderText</label>
+                            <label style="color: red;">@ProviderText</label>
+                            <label style="color:green">@QAProviderText</label>
+                        }
+                        else
+                        {
+                            <label style="color: green;">@ProviderText</label>
                         }
                     </span>
                 </div>
@@ -142,10 +151,15 @@
             <div title="@title" class="col-md-3 lessWidth input-group">
                 <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
                     <span style="white-space:nowrap">
-                        <label style="color: green;">@CPTCode</label>
+
                         @if (!string.IsNullOrEmpty(Model.QACPTCode))
                         {
-                            <label style="color:red">@QACPTCode</label>
+                            <label style="color: red;">@CPTCode</label>
+                            <label style="color:green">@QACPTCode</label>
+                        }
+                        else
+                        {
+                            <label style="color: green;">@CPTCode</label>
                         }
                     </span>
                 </div>
@@ -181,10 +195,15 @@
             <div title="@title" class="col-md-3 lessWidth input-group">
                 <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
                     <span style="white-space:nowrap">
-                        <label style="color: green;">@Mod</label>
+
                         @if (!string.IsNullOrEmpty(Model.QAMod))
                         {
-                            <label style="color:red">@QAMod</label>
+                            <label style="color: red;">@Mod</label>
+                            <label style="color:green">@QAMod</label>
+                        }
+                        else
+                        {
+                            <label style="color: green;">@Mod</label>
                         }
                     </span>
                 </div>
@@ -221,10 +240,15 @@
             <div title="@title" class="col-md-3 lessWidth input-group">
                 <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
                     <span style="white-space:nowrap">
-                        <label style="color: green;">@Dx</label>
+
                         @if (!string.IsNullOrEmpty(Model.QADx))
                         {
-                            <label style="color:red">@QADx</label>
+                            <label style="color: red;">@Dx</label>
+                            <label style="color:green">@QADx</label>
+                        }
+                        else
+                        {
+                            <label style="color: green;">@Dx</label>
                         }
                     </span>
                 </div>
@@ -260,10 +284,15 @@
             <div title="@title" class="col-md-3 lessWidth input-group">
                 <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
                     <span style="white-space:nowrap">
-                        <label style="color: green;">@ProviderFeedbackText</label>
+
                         @if (!string.IsNullOrEmpty(Model.QAProviderFeedbackText))
                         {
-                            <label style="color:red">@QAProviderFeedbackText</label>
+                            <label style="color: red;">@ProviderFeedbackText</label>
+                            <label style="color:green">@QAProviderFeedbackText</label>
+                        }
+                        else
+                        {
+                            <label style="color: green;">@ProviderFeedbackText</label>
                         }
                     </span>
                 </div>
