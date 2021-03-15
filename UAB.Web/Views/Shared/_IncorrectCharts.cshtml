@@ -3,9 +3,10 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">
+                <span>Chart ID : <label style="color: black;">@Model.CodingDTO.ClinicalCaseID</label></span>
                 @if (Model.CodedBy != null)
                 {
-                    <span>Coded by : <label style="color:black;">@Model.CodedBy</label></span>
+                    <span> Coded by : <label style="color:black;">@Model.CodedBy</label></span>
                 }
                 @if (Model.QABy != null)
                 {
