@@ -572,11 +572,7 @@ namespace UAB.Controllers
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             clinicalcaseOperations.AssignClinicalcase(SearchResultDTO);
-
-            TempData["Success"] = "Clinical case AssignedSuccessfully";
-
             return RedirectToAction("SettingsSearch");
-
         }
         [HttpGet]
         public IActionResult SettingsSearch()

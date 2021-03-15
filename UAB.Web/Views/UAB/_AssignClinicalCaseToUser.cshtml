@@ -91,6 +91,7 @@
                 },
                 success: function (response) {
                     $("#modalContent1").html('');
+                    $("#Msg").html('<div class="alert alert-success alert-dismissable"><i class="fa fa-check"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Clinical case Assigned Successfully</div>')
                 },
                 failure: function (response) {
                     alert(response);
