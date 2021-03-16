@@ -18,6 +18,11 @@
     .roledddwith {
         width: 200px;
     }
+
+    .addtable {
+        border-collapse: separate;
+        border-spacing: 0 1em;
+    }
 </style>
 
 <form asp-action="AddUser" asp-controller="Account" method="POST">
@@ -28,46 +33,90 @@
 
     <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content" style="width:600px;">
                 <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="col-md-6">
-                                <h5 class="card" style="width:300px">Add New User</h5>
-                            </div>
-                            <div class="form-group" style="font-size: 15px">
-                                <label><bold>Email :</bold></label>
-                                <span>
-                                    @Html.DropDownListFor(model => model.Email, new SelectList(@ViewBag.Identityusers, "Email"), "--Select a Email--", new {
-                                   @style ="width:420px",@id = "emaildd" })
-                                </span>
-                                @Html.ValidationMessageFor(model => model.Email, null, new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group" style="font-size: 15px">
-                                <label><bold>Project :</bold></label>
-                                <span>
-                                    @Html.DropDownListFor(model => model.ProjectId, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select a Project--", new { @id = "projectdd" })
-                                </span>
-                                @Html.ValidationMessageFor(model => model.ProjectId, null, new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group" style="font-size: 15px">
-                                <label><bold>Role :</bold></label>
-                                <span>
-                                    @Html.DropDownListFor(model => model.RoleId, new SelectList(@ViewBag.Roles, "RoleId", "Name"), "--Select a Role--", new { @id = "roledd" })
-                                </span>
-                                @Html.ValidationMessageFor(model => model.RoleId, null, new { @class = "text-danger" })
-                            </div>
-                            <div class="col-md-3 custom-control custom-checkbox mr-sm-2">
-                                @Html.CheckBoxFor(model => model.IsActive, new { @class = "custom-control-input ShadowQADetails", @id = "customControlAutosizing1" })
-                                <label class="custom-control-label" for="customControlAutosizing1">Is Active</label>
-                            </div>
-                            <div class="form-group" style="font-size: 15px">
-                                <label><bold>Sample % :</bold></label>
-                                <span>
-                                    @Html.TextBoxFor(model => model.SamplePercentage, new { @type = "number", @class = "", style = "width:136px", @autofocus = "autofocus", @autocomplete = "off", @id = "samplepercentage", @placeholder = "Enter Sample % " })
-                                </span>
-                                <label id="sampleerror" style="color:red"></label>
-                                @Html.ValidationMessageFor(model => model.SamplePercentage, null, new { @class = "text-danger" })
-                            </div>
+                    <div class="form-group">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Add a New user</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ModalClose1()">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <table class="addtable">
+                                <tr>
+                                    <td>Email</td>
+                                    <td>
+                                        @Html.DropDownListFor(model => model.Email, new SelectList(@ViewBag.Identityusers, "Email"), "--Select a Email--", new
+                                                                    {
+                                                                   @style = "width:420px",
+                                                                        @id = "emaildd"
+                                                                    })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Project</td>
+                                    <td>@Html.DropDownListFor(model => model.ProjectId, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select a Project--", new { @id = "projectdd" })</td>
+                                </tr>
+                                <tr>
+                                    <td>Role</td>
+                                    <td>@Html.DropDownListFor(model => model.RoleId, new SelectList(@ViewBag.Roles, "RoleId", "Name"), "--Select a Role--", new { @id = "roledd" })</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="custom-control custom-checkbox mr-sm-1">
+                                            @Html.CheckBoxFor(model => model.IsActive, new { @class = "custom-control-input ShadowQADetails", @id = "customControlAutosizing1" })
+                                            <label class="custom-control-label" for="customControlAutosizing1">Is Active</label>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>Sample %</td>
+                                    <td>@Html.TextBoxFor(model => model.SamplePercentage, new { @type = "number", @class = "", style = "width:136px", @autofocus = "autofocus", @autocomplete = "off", @id = "samplepercentage", @placeholder = "Enter Sample % " })</td>
+                                </tr>
+                            </table>
+
+
+
+                            @*<div class="form-group" style="font-size: 15px">
+                                    <label><bold>Email :</bold></label>
+                                    <span>
+                                        @Html.DropDownListFor(model => model.Email, new SelectList(@ViewBag.Identityusers, "Email"), "--Select a Email--", new
+                                        {
+                                       @style = "width:420px",
+                                            @id = "emaildd"
+                                        })
+                                    </span>
+                                    @Html.ValidationMessageFor(model => model.Email, null, new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group" style="font-size: 15px">
+                                    <label><bold>Project :</bold></label>
+                                    <span>
+                                        @Html.DropDownListFor(model => model.ProjectId, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select a Project--", new { @id = "projectdd" })
+                                    </span>
+                                    @Html.ValidationMessageFor(model => model.ProjectId, null, new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group" style="font-size: 15px">
+                                    <label><bold>Role :</bold></label>
+                                    <span>
+                                        @Html.DropDownListFor(model => model.RoleId, new SelectList(@ViewBag.Roles, "RoleId", "Name"), "--Select a Role--", new { @id = "roledd" })
+                                    </span>
+                                    @Html.ValidationMessageFor(model => model.RoleId, null, new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-3 custom-control custom-checkbox mr-sm-2">
+                                    @Html.CheckBoxFor(model => model.IsActive, new { @class = "custom-control-input ShadowQADetails", @id = "customControlAutosizing1" })
+                                    <label class="custom-control-label" for="customControlAutosizing1">Is Active</label>
+                                </div>
+                                <div class="form-group" style="font-size: 15px">
+                                    <label><bold>Sample % :</bold></label>
+                                    <span>
+                                        @Html.TextBoxFor(model => model.SamplePercentage, new { @type = "number", @class = "", style = "width:136px", @autofocus = "autofocus", @autocomplete = "off", @id = "samplepercentage", @placeholder = "Enter Sample % " })
+                                    </span>
+                                    <label id="sampleerror" style="color:red"></label>
+                                    @Html.ValidationMessageFor(model => model.SamplePercentage, null, new { @class = "text-danger" })
+                                </div>*@
                             <div id="addbtnerror" style="color:red"></div>
                             <div class="col-md-10">
                                 <button type="button" class="btn btn-sm btn-info btn-fill" id="AddRoleandProject">Add</button>
@@ -90,13 +139,14 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit">Save</button>
-                                <button type="button" class="btn btn-sm btn-danger btn-fill" onclick="ModalClose1()">Close</button>
-                            </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit">Save</button>
+                            <button type="button" class="btn btn-sm btn-danger btn-fill" onclick="ModalClose1()">Close</button>
                         </div>
                     </div>
+                </div>
             </div>
         </div>
     </div>
