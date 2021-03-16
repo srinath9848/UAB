@@ -23,7 +23,6 @@ namespace UAB.Controllers
     public class UABController : Controller
     {
         private int mUserId;
-
         public UABController(IHttpContextAccessor httpContextAccessor)
         {
             mUserId = Convert.ToInt32(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value);
