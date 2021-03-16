@@ -39,21 +39,33 @@
         @Html.Hidden("hdnModReject")
         @Html.Hidden("hdnDxReject")
         @Html.Hidden("hdnProviderFeedbackIDReject")
-
         <div class="form-group row">
-            <div class="custom-control col-md-2 input-group QAComments">
-                <label class="" style="margin-left: 207px;">Coder</label>
+            <label class="col-md-3 lessWidth m-t-15"></label>
+            <label class="col-md-3 lessWidth m-t-15">Coder</label>
+            <label class="col-md-3 lessWidth m-t-15">ShadowQA Corrections</label>
+            <label class="col-md-3 lessWidth m-t-15">ShadowQA Comments</label>
+            <div class="input-group-append CoderCorrections" style="visibility:hidden">
+                <span class="input-group-text">
+                    &nbsp;<i id="CPT" title="CPTCode1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="CPT" title="CPTCode1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                </span>
             </div>
-            <div class="custom-control col-md-3 input-group QAComments" style="margin-left: 180px !important;">
-                <label class="">ShadowQA Corrections</label>
-            </div>
-            <div class="custom-control col-md-2 input-group QAComments" style="margin-left: -27px;">
-                <label class="">ShadowQA Comments</label>
-            </div>
-            <div class="custom-control col-md-2 input-group CoderComments" style="display:flex;margin-left:70px;">
-                <label class="">QA Comments</label>
-            </div>
+            <label class="col-md-3 lessWidth m-t-15">QA Comments</label>
         </div>
+        @*<div class="form-group row">
+                <div class="custom-control col-md-2 input-group QAComments">
+                    <label class="" style="margin-left: 207px;">Coder</label>
+                </div>
+                <div class="custom-control col-md-3 input-group QAComments" style="margin-left: 180px !important;">
+                    <label class="">ShadowQA Corrections</label>
+                </div>
+                <div class="custom-control col-md-2 input-group QAComments" style="margin-left: -27px;">
+                    <label class="">ShadowQA Comments</label>
+                </div>
+                <div class="custom-control col-md-2 input-group CoderComments" style="display:flex;margin-left:70px;">
+                    <label class="">QA Comments</label>
+                </div>
+            </div>*@
         <div class="form-group row">
             <label class="col-md-3 lessWidth m-t-15">Payor</label>
             <div class="col-md-3 lessWidth input-group">
