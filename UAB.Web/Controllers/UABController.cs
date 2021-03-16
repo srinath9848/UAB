@@ -22,13 +22,16 @@ namespace UAB.Controllers
     [Authorize]
     public class UABController : Controller
     {
-        private static int mUserId;
+        private int mUserId;
+
+        public UABController(IHttpContextAccessor httpContextAccessor)
+        {
+            mUserId = Convert.ToInt32(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value);
+        }
+
         #region Coding
         public IActionResult CodingSummary()
         {
-            var identity = (ClaimsIdentity)User.Identity;
-            mUserId = Convert.ToInt32(identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value);
-
             List<DashboardDTO> lstDto = new List<DashboardDTO>();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
@@ -550,7 +553,7 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             string assignedusername = clinicalcaseOperations.GetAssignedusername(ccid);
             var assignusers = clinicalcaseOperations.GetAssignedToUsers(ccid);
-            
+
 
 
             ViewBag.assignusers = assignusers;

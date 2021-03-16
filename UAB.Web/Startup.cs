@@ -31,7 +31,7 @@ namespace UAB
             services.AddSingleton<IClock, Clock>();
             services.AddSingleton<IPasswordAlgorithm, PasswordAlgorithm>();
             services.AddMvc();
-
+            services.AddHttpContextAccessor();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>
             {
