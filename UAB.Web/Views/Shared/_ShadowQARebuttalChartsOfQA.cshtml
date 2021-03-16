@@ -3,21 +3,21 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">
-                <span>Chart ID : <label style="color: black;">@Model.CodingDTO.ClinicalCaseID</label></span>
+                <span>Chart ID : <label style="color: black;">@Model.CodingDTO.ClinicalCaseID&nbsp;&nbsp;&nbsp;&nbsp;</label></span>
                 @if (Model.CodedBy != null)
                 {
-                    <span>Coded by : <label style="color: black;">@Model.CodedBy</label></span>
+                    <span> <label style="color: black;">@Model.CodedBy&nbsp;&nbsp;&nbsp;&nbsp;</label></span>
                 }
                 @if (Model.QABy != null)
                 {
                     <span>
-                        & QA by : <label style="color:black;"> @Model.QABy </label>
+                        QA by : <label style="color:black;"> @Model.QABy&nbsp;&nbsp;&nbsp;&nbsp; </label>
                     </span>
                 }
                 @if (Model.ShadowQABy != null)
                 {
                     <span>
-                        & ShadowQA by : <label style="color:black;"> @Model.ShadowQABy </label>
+                        ShadowQA by : <label style="color:black;"> @Model.ShadowQABy </label>
                     </span>
                 }
 
@@ -297,7 +297,6 @@
                             <label class="col-md-5 m-t-15"></label>
                             <div class="col-md-7">
                                 <button id="btnsubmit" type="submit" class="btn btn-success">Save</button>
-                                <button id="SubmitAndGetNext" name="SubmitAndGetNext" type="submit" value="SubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
                             </div>
                         </div>
                     </div>

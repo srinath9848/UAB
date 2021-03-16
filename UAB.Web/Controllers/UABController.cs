@@ -208,10 +208,17 @@ namespace UAB.Controllers
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("CodingSummary", lstDto);
         }
-        public IActionResult SubmitCodingReadyForPostingChart(ChartSummaryDTO chartSummaryDTO)
+        public IActionResult SubmitCodingReadyForPostingChart(ChartSummaryDTO chartSummaryDTO,string postingSubmitAndGetNext)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            clinicalcaseOperations.SubmitCodingReadyForPostingChart(chartSummaryDTO);
+
+            if (string.IsNullOrEmpty(postingSubmitAndGetNext))
+                clinicalcaseOperations.SubmitCodingReadyForPostingChart(chartSummaryDTO);
+            else
+            {
+                clinicalcaseOperations.SubmitCodingReadyForPostingChart(chartSummaryDTO);
+                return RedirectToAction("GetCodingReadyForPostingChart", new { Role = Roles.Coder.ToString(), ChartType = "ReadyForPosting", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName });
+            }
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
 
             TempData["Success"] = "Chart Details posted successfully !";
