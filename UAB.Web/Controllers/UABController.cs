@@ -604,6 +604,87 @@ namespace UAB.Controllers
             return PartialView("_SettingsSearchResults", searchData);
         }
         [HttpPost]
+
+        [HttpGet]
+        public IActionResult SettingsBlockCategories()
+        {
+            List<BlockCategory> lstblock  = new List<BlockCategory>();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            lstblock = clinicalcaseOperations.GetBlockCategories();
+            ViewBag.lstblock = lstblock;
+            return View();
+        }
+        [HttpGet]
+        public ActionResult Add_EditBlockCategories(int id = 0)
+        {
+            BlockCategory obj = new BlockCategory();
+            if (id != 0)
+            {
+                List<BlockCategory> lstProvider = new List<BlockCategory>();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                lstProvider = clinicalcaseOperations.GetBlockCategories();
+                var res = lstProvider.Where(a => a.BlockCategoryId == id).FirstOrDefault();
+                obj = res;
+            }
+            return PartialView("_AddEditBlockCategory", obj);
+        }
+        [HttpPost]
+        public IActionResult AddSettingsBlockCategory (BlockCategory category)
+        {
+            if (ModelState.IsValid)
+            {
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                List<BlockCategory> lstblock = clinicalcaseOperations.GetBlockCategories();
+                if (lstblock.Where(a => !a.Name.Contains(category.Name)).Any())
+                {
+                    if (category.BlockCategoryId == 0)
+                    {
+                        clinicalcaseOperations.AddBlockCategory(category);
+                        TempData["Success"] = "Block Category \"" + category.Name + "\" Added Successfully!";
+                    }
+                    else
+                    {
+                        clinicalcaseOperations.UpdateBlockCategory(category); // Update
+                        TempData["Success"] = "Block Category \"" + category.Name + "\" Updated Successfully!";
+                    }
+                }
+                else
+                {
+                    TempData["Error"] = "The Block Category \"" + category.Name + "\" is already present in our Block categories list!";
+                }
+            }
+            return RedirectToAction("SettingsBlockCategories");
+        }
+        [HttpGet]
+        public IActionResult DeleteBlockCategory (int id)
+        {
+            BlockCategory obj = new BlockCategory();
+            if (id != 0)
+            {
+                List<BlockCategory> lstblock  = new List<BlockCategory>();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                lstblock = clinicalcaseOperations.GetBlockCategories();
+                var res = lstblock.Where(a => a.BlockCategoryId == id).FirstOrDefault();
+                obj = res;
+            }
+            return PartialView("_DeleteBlockCategory", obj);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteBlockCategory(BlockCategory  blockCategory)
+        { 
+            try
+            {
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                if (blockCategory.BlockCategoryId!= 0)
+                    clinicalcaseOperations.DeletetBlockCategory(blockCategory.BlockCategoryId); // Delete
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = ex.Message;
+            }
+            return RedirectToAction("SettingsBlockCategories");
+        }
         public IActionResult AddSettingsProvider(Provider provider)
         {
             if (ModelState.IsValid)
@@ -640,6 +721,8 @@ namespace UAB.Controllers
             ViewBag.lstProvider = lstProvider;
             return View();
         }
+
+
 
         [HttpGet]
         public ActionResult Add_EditProvider(int id = 0)
