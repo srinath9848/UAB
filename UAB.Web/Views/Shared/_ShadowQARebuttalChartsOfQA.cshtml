@@ -6,7 +6,7 @@
                 <span>Chart ID : <label style="color: black;">@Model.CodingDTO.ClinicalCaseID&nbsp;&nbsp;&nbsp;&nbsp;</label></span>
                 @if (Model.CodedBy != null)
                 {
-                    <span> <label style="color: black;">@Model.CodedBy&nbsp;&nbsp;&nbsp;&nbsp;</label></span>
+            <span>Coded by :  <label style="color: black;">@Model.CodedBy&nbsp;&nbsp;&nbsp;&nbsp;</label></span>
                 }
                 @if (Model.QABy != null)
                 {
@@ -46,6 +46,8 @@
             <label class="col-md-3 lessWidth m-t-15">ShadowQA Comments</label>
             <div class="input-group-append CoderCorrections" style="visibility:hidden">
                 <span class="input-group-text">
+                    &nbsp;<i class="fa fa-save fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i class="fa fa-save fa-lg" aria-hidden="true"></i>
                 </span>
             </div>
             <label class="col-md-3 lessWidth m-t-15">QA Comments</label>
