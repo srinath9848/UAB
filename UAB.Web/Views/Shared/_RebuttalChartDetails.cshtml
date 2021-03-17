@@ -3,21 +3,21 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">
-                <span>Chart ID : <label style="color: black;">@Model.CodingDTO.ClinicalCaseID</label></span>
+                <span>Chart ID : <label style="color: black;">@Model.CodingDTO.ClinicalCaseID&nbsp;&nbsp;&nbsp;&nbsp;</label></span>
                 @if (Model.CodedBy != null)
                 {
-                    <span>Coded by : <label style="color: black;">@Model.CodedBy</label></span>
+                    <span> <label style="color: black;">@Model.CodedBy&nbsp;&nbsp;&nbsp;&nbsp;</label></span>
                 }
                 @if (Model.QABy != null)
                 {
                     <span>
-                        & QA by : <label style="color:black;"> @Model.QABy </label>
+                        QA by : <label style="color:black;"> @Model.QABy &nbsp;&nbsp;&nbsp;&nbsp;</label>
                     </span>
                 }
                 @if (Model.ShadowQABy != null)
                 {
                     <span>
-                        & ShadowQA by : <label style="color:black;"> @Model.ShadowQABy </label>
+                        ShadowQA by : <label style="color:black;"> @Model.ShadowQABy </label>
                     </span>
                 }
 
@@ -47,17 +47,17 @@
                 <label class="custom-control-label" for="chkAll">Accept All</label>
             </div>
             @*<label class="col-md-1 m-t-15"></label>
-            <div class="custom-control mr-sm-2 ShadowQACorrectionsComments">
-                <label class="">ShadowQA Corrections</label>
-            </div>
-            <label class="col-md-1 m-t-15"></label>
-            <div class="custom-control mr-sm-2 ShadowQACorrectionsComments">
-                <label class="">ShadowQA Comments</label>
-            </div>
-            <label class="col-md-1 m-t-15"></label>
-            <div class="custom-control mr-sm-2 QAComments">
-                <label class="">QA Comments</label>
-            </div>*@
+                <div class="custom-control mr-sm-2 ShadowQACorrectionsComments">
+                    <label class="">ShadowQA Corrections</label>
+                </div>
+                <label class="col-md-1 m-t-15"></label>
+                <div class="custom-control mr-sm-2 ShadowQACorrectionsComments">
+                    <label class="">ShadowQA Comments</label>
+                </div>
+                <label class="col-md-1 m-t-15"></label>
+                <div class="custom-control mr-sm-2 QAComments">
+                    <label class="">QA Comments</label>
+                </div>*@
         </div>
         <div class="form-group row">
             <label class="col-md-3 lessWidth m-t-15">Payor</label>
@@ -256,9 +256,9 @@
         </div>
         <div class="form-group row">
             @*<label class="col-md-3 lessWidth m-t-15">Coder Questions</label>
-            <div class="col-md-3 lessWidth">
-                @Html.TextAreaFor(model => model.CoderQuestion, new { @class = "form-control CoderDetails" })
-            </div>*@
+                <div class="col-md-3 lessWidth">
+                    @Html.TextAreaFor(model => model.CoderQuestion, new { @class = "form-control CoderDetails" })
+                </div>*@
             <label class="col-md-3 lessWidth m-t-15">Note Title</label>
             <div class="col-md-3 lessWidth">
                 @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails" })
@@ -327,6 +327,7 @@
         border: 1px solid #DDDDDD;
         color: #333333;
     }
+
     .custom-control-label:before {
         left: -35px;
     }

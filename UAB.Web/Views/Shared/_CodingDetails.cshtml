@@ -11,7 +11,7 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title"><span>Chart ID : <label style="color: black;">@Model.CodingDTO.ClinicalCaseID</label></span> Coder Details</h4>
+            <h4 class="card-title"><span>Chart ID : <label style="color: black;">@Model.CodingDTO.ClinicalCaseID</label></span></h4>
         </div>
         @Html.HiddenFor(model => model.Dx)
         @Html.HiddenFor(model => model.ProjectName)
@@ -73,18 +73,6 @@
                 @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails" })
                 @Html.ValidationMessageFor(model => model.ProviderFeedbackID, null, new { @class = "text-danger" })
             </div>
-            @*<label class="col-md-3 m-t-15">Coder Questions</label>
-                <div class="col-md-3">
-                    @Html.TextAreaFor(model => model.CoderQuestion, new { @class = "form-control CoderDetails", @autocomplete = "off" })
-                    @Html.ValidationMessageFor(model => model.NoteTitle, null, new { @class = "text-danger" })
-                </div>*@
-        </div>
-        <div class="form-group row" id="divAnswer">
-            <label class="col-md-3 m-t-15"> Answer</label>
-            <div class="col-md-3">
-                @Html.TextAreaFor(model => model.Answer, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Answer, null, new { @class = "text-danger", @id = "validationAnswer" })
-            </div>
         </div>
         <div class="border-top">
             <div class="card-body" style="text-align:right">
@@ -92,7 +80,9 @@
                 <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger" onclick="BlockHistory()">Block History</button>
                 <button id="codingSubmit" name="codingSubmit" type="submit" class="btn btn-success Available">Save</button>
                 <button id="codingSubmitAndGetNext" name="codingSubmitAndGetNext" type="submit" value="codingSubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
-                <button type="submit" class="btn btn-success Approved">Posted Completed</button>
+                <button type="submit" class="btn btn-success Approved">Posting Completed</button>
+                <button id="postingSubmitAndGetNext" name="postingSubmitAndGetNext" type="submit" value="postingSubmitAndGetNext" class="btn btn-success Approved">Post And GetNext</button>
+                <a href="@Url.Action("CodingSummary","UAB")" class="btn btn-danger Approved">Close</a>
             </div>
         </div>
     </div>

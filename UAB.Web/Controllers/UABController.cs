@@ -22,13 +22,15 @@ namespace UAB.Controllers
     [Authorize]
     public class UABController : Controller
     {
-        private static int mUserId;
+        private int mUserId;
+        public UABController(IHttpContextAccessor httpContextAccessor)
+        {
+            mUserId = Convert.ToInt32(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value);
+        }
+
         #region Coding
         public IActionResult CodingSummary()
         {
-            var identity = (ClaimsIdentity)User.Identity;
-            mUserId = Convert.ToInt32(identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value);
-
             List<DashboardDTO> lstDto = new List<DashboardDTO>();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
@@ -206,10 +208,17 @@ namespace UAB.Controllers
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("CodingSummary", lstDto);
         }
-        public IActionResult SubmitCodingReadyForPostingChart(ChartSummaryDTO chartSummaryDTO)
+        public IActionResult SubmitCodingReadyForPostingChart(ChartSummaryDTO chartSummaryDTO,string postingSubmitAndGetNext)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            clinicalcaseOperations.SubmitCodingReadyForPostingChart(chartSummaryDTO);
+
+            if (string.IsNullOrEmpty(postingSubmitAndGetNext))
+                clinicalcaseOperations.SubmitCodingReadyForPostingChart(chartSummaryDTO);
+            else
+            {
+                clinicalcaseOperations.SubmitCodingReadyForPostingChart(chartSummaryDTO);
+                return RedirectToAction("GetCodingReadyForPostingChart", new { Role = Roles.Coder.ToString(), ChartType = "ReadyForPosting", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName });
+            }
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
 
             TempData["Success"] = "Chart Details posted successfully !";
@@ -550,7 +559,7 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             string assignedusername = clinicalcaseOperations.GetAssignedusername(ccid);
             var assignusers = clinicalcaseOperations.GetAssignedToUsers(ccid);
-            
+
 
 
             ViewBag.assignusers = assignusers;
