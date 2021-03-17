@@ -100,7 +100,7 @@
     </div>
     <div class="col-md-9">
         <div id="error" style="color:red;max-height:20px;"></div>
-        <div id="modalContent"></div>
+        <div id="searchresultmodalContent"></div>
     </div>
 </div>
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
@@ -152,7 +152,7 @@
                         "providername": $("#txtProvidername").val()
                     },
                     success: function (response) {
-                        $("#modalContent").html(response);
+                        $("#searchresultmodalContent").html(response);
                             },
                     failure: function (response) {
                                 alert(response);
