@@ -1635,7 +1635,7 @@ namespace UAB.DAL
             return lstDto;
         }
         #endregion
-
+       
         public List<Provider> GetProviders()
         {
             Provider provider = new Provider();
@@ -2031,6 +2031,53 @@ namespace UAB.DAL
             };
         }
 
+
+        public void AddBlockCategory(BlockCategory blockCategory)
+        {
+            using (var context=new UABContext())
+            {
+                var isexistingcategory = context.BlockCategory.Where(a => a.Name == blockCategory.Name).FirstOrDefault();
+
+                if (isexistingcategory==null)
+                {
+                    context.BlockCategory.Add(blockCategory);
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        public void UpdateBlockCategory(BlockCategory blockCategory) 
+        {
+            using (var context = new UABContext())
+            {
+                var existingcategory = context.BlockCategory.Where(a => a.BlockCategoryId == blockCategory.BlockCategoryId).FirstOrDefault();
+
+                if (existingcategory != null)
+                {
+                    existingcategory.Name = blockCategory.Name;
+                    context.Entry(existingcategory).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
+            }
+        }
+        public void DeletetBlockCategory (int id )
+        {
+            using (var context = new UABContext())
+            {
+                var existingcategory = context.BlockCategory.Where(a => a.BlockCategoryId ==id).FirstOrDefault();
+
+                if (existingcategory != null)
+                {
+                    context.BlockCategory.Remove(existingcategory);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable To Delete Block Category");
+                }
+
+            }
+        }
         public void AddProvider(Provider provider)
         {
             using (var context = new UABContext())

@@ -1,0 +1,55 @@
+﻿@model UAB.DAL.Models.BlockCategory
+
+<style>
+    .modal-content {
+        margin-top: 63px;
+    }
+</style>
+<form asp-action="AddSettingsBlockCategory" asp-controller="UAB" method="POST">
+    @Html.HiddenFor(model => model.BlockCategoryId)
+    <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 500px;">
+                <br />
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            @if (Model.BlockCategoryId != 0)
+                            {
+                                <h5 class="card" style="width:300px">Update Block Category</h5>
+                            }
+                            else
+                            {
+
+                                <h5 class="card" style="width:300px">Add New Block Category</h5>
+                            }
+
+                        </div>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter Block Category Name " })
+                            @Html.ValidationMessageFor(model => model.Name, null, new { @class = "text-danger" })
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-12">
+                        <div class="modal-footer">
+                            @if (Model.BlockCategoryId != 0)
+                            {
+                                <button type="submit" class="btn btn-sm btn-info btn-fill">Update</button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn-sm btn-info btn-fill">Add</button>
+                            }
+                            <button type="button" class="btn btn-sm btn-danger btn-fill" onclick="ModalClose1()">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
+<script src="~/dashboardassets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>

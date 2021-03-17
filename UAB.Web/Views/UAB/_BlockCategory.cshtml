@@ -29,10 +29,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="col-md-6">
-                    <h5 class="card" style="width:300px">Block Clinical case</h5>
-                    <input type="hidden" id="ccid" value="@ViewBag.ccid" />
-                </div>
+                <input type="hidden" id="ccid" value="@ViewBag.ccid" />
                 <div class="col-md-10">
                     <label>Block Category</label>
                     @Html.DropDownListFor(model => model.BlockCategoryId, new SelectList(@ViewBag.BlockCategories, "BlockCategoryId", "Name"), "--Select a Category--", new { @id = "categorydd", @class = "form-control CoderDetails" })
