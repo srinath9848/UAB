@@ -148,12 +148,18 @@
                             <span class="input-group-text" id="basic-addon1">@j</span>
                         </div>
                         <input class="form-control CoderDetails valid" id="txt_@i" name="Dx_@i" title="txt_@i" type="text" value="@item">
-                        @*<div class="input-group-append CoderCorrections">
-                                <span class="input-group-text">
-                                    &nbsp;<i id="Dx_@i" title="Dx_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                                    &nbsp;<i id="Dx_@i" title="Dx_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                                </span>
-                            </div>*@
+                    </div>
+                    <div class="col-md-3 lessWidth input-group" id="DivDx">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">@j</span>
+                        </div>
+                        <input type="text" id="txtDx_@j" title="txtDx_@j" onfocusout="DxFunction('txtDx_@j')" class="form-control txtDx" autocomplete="off" placeholder="Code" value="@item" />
+                    </div>
+                    <div class="input-group-append CoderCorrections">
+                        <span class="input-group-text">
+                            &nbsp;<i id="Dx_@i" title="Dx_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                            &nbsp;<i id="Dx_@i" title="Dx_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                        </span>
                     </div>
                 </div>
 
@@ -178,37 +184,31 @@
                     {
                         <label class="col-md-3 lessWidth m-t-15"></label>
                     }
-                    <div class="col-md-3 lessWidth input-group">
+
+                    <div class="col-md-3 CptlessWidth input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">@j</span>
                         </div>
                         <input type="text" class="form-control CoderDetails" id="txtCpt_@i" title="txtCpt_@i" autocomplete="off" placeholder="Code" value="@cptcodes[0]" />
                         <input type="text" class="form-control CoderDetails" id="txtMod_@i" title="txtMod_@i" autocomplete="off" placeholder="Mod" value="@cptcodes[1]" />
                         <input type="text" id="txtQty_@i" title="txtQty_@i" class="form-control CoderDetails" autocomplete="off" placeholder="1" value="@cptcodes[2]" />
-                        <input type="text" id="txtLinks_@i" title="txtLinks_@i" onfocusout="CptFunction1('txtLinks_@i +')" class="form-control CoderDetails" autocomplete="off" placeholder="Link All" value="@cptcodes[3]" />
+                        <input type="text" id="txtLinks_@i" title="txtLinks_@i" class="form-control CoderDetails" autocomplete="off" placeholder="Link All" value="@cptcodes[3]" />
+                    </div>
 
-
-                        @*<tr id="cpttr0">
-                                <td><span class="badge badge-pill badge-info">1</span></td>
-
-                                <td style="width:50px;">
-                                </td>
-                                <td style="width:50px;">
-                                </td>
-                                <td style="width:30px;">
-                                </td>
-                                <td style="width:50px;">
-                                </td>
-                                <td>
-                                    <div class="input-group-append CoderCorrections">
-                                        <span class="input-group-text">
-                                            &nbsp;<i id="Cpt_@i" title="Cpt_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                                            &nbsp;<i id="Cpt_@i" title="Cpt_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                                        </span>
-                                    </div>
-                                </td>
-                            </tr>*@
-
+                    <div class="col-md-3 CptlessWidth input-group" id="DivCpt">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">@j</span>
+                        </div>
+                        <input type="text" class="form-control" id="txtCpt_@j" title="txtCpt_@j" autocomplete="off" placeholder="Code" value="@cptcodes[0]" />
+                        <input type="text" class="form-control" id="txtMod_@j" title="txtMod_@j" autocomplete="off" placeholder="Mod" value="@cptcodes[1]" />
+                        <input type="text" id="txtQty_@j" title="txtQty_@j" class="form-control" autocomplete="off" placeholder="1" value="@cptcodes[2]" />
+                        <input type="text" id="txtLinks_@j" title="txtLinks_@j" onfocusout="CptFunction('txtLinks_@j +')" class="form-control" autocomplete="off" placeholder="Link All" value="@cptcodes[3]" />
+                    </div>
+                    <div class="input-group-append CoderCorrections">
+                        <span class="input-group-text">
+                            &nbsp;<i id="Dx_@i" title="Dx_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                            &nbsp;<i id="Dx_@i" title="Dx_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                        </span>
                     </div>
                 </div>
                 i = i + 1;
@@ -395,12 +395,12 @@
     }
 
     /*     #sortable-1 li {
-                margin: 0 3px 3px 3px;
-                padding: 0.4em;
-                padding-left: 1.5em;
-                font-size: 17px;
-                height: 16px;
-            }*/
+                    margin: 0 3px 3px 3px;
+                    padding: 0.4em;
+                    padding-left: 1.5em;
+                    font-size: 17px;
+                    height: 16px;
+                }*/
 
     .default {
         background: #cedc98;
@@ -418,6 +418,10 @@
 
     .custom-control {
         padding-left: 0rem;
+    }
+
+    div.CptlessWidth {
+        max-width: 25% !important;
     }
 </style>
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>

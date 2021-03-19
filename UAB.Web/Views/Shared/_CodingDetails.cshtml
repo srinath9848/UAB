@@ -7,6 +7,10 @@
     .form-control {
         padding: 0 !important;
     }
+
+    div.CptlessWidth {
+        max-width: 25% !important;
+    }
 </style>
 <div class="col-md-12">
     <div class="card">
@@ -29,7 +33,7 @@
                 <li class="nav-item"> <a class="nav-link active tab" data-toggle="tab" href="#home" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down">Cliam 1</span></a> </li>
                 <li class="nav-item"> <a class="nav-link tab" data-toggle="tab" id="2" title="tabDiv" href="#profile" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down" id="htxt2">+</span></a> </li>
                 @*<li class="nav-item"> <a class="nav-link tab" data-toggle="tab" id="3" title="tabDiv" href="#profile" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down" id="htxt3">+</span></a> </li>
-                <li class="nav-item"> <a class="nav-link tab" data-toggle="tab" id="4" title="tabDiv" href="#profile" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down" id="htxt4">+</span></a> </li>*@
+                    <li class="nav-item"> <a class="nav-link tab" data-toggle="tab" id="4" title="tabDiv" href="#profile" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down" id="htxt4">+</span></a> </li>*@
             </ul>
             <!-- Tab panes -->
             <div class="tab-content tabcontent-border">
@@ -60,23 +64,35 @@
                                 @Html.ValidationMessageFor(model => model.NoteTitle, null, new { @class = "text-danger" })
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 m-t-15">Dx</label>
-                            <div class="col-md-3">
-                                <table>
-                                    <tbody id="tableid" style="display:block">
-                                        <tr id="tr0">
-                                            <td><span class="badge badge-pill badge-info">1</span></td>
-                                            <td>
-                                                @Html.TextBoxFor(model => model.Dx, new { @class = "form-control CoderDetails txtDx", @autocomplete = "off", @id = "txt0", @title = "txt_0", @placeholder = "Code", @onfocusout = "DxFunction('txt_0')" })
-                                                @Html.ValidationMessageFor(model => model.Dx, null, new { @class = "text-danger Dxerror" })
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                        <div id="DivDx">
+                            <div class="form-group row" id="DivDxRow_0">
+                                <label class="col-md-3 m-t-15">Dx</label>
+                                <div class="col-md-3 lessWidth input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">1</span>
+                                    </div>
+                                    @Html.TextBoxFor(model => model.Dx, new { @class = "form-control CoderDetails txtDx", @autocomplete = "off", @id = "txt0", @title = "txt_0", @placeholder = "Code", @onfocusout = "DxFunction('txt_0')" })
+                                    @Html.ValidationMessageFor(model => model.Dx, null, new { @class = "text-danger Dxerror" })
+                                </div>
                             </div>
+                        </div>
+                        <div id="DivCpt">
+                            <div class="form-group row" id="DivCptRow_0">
+                                <label class="col-md-3 m-t-15">CPT</label>
+                                <div class="col-md-3 CptlessWidth input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">1</span>
+                                    </div>
+                                    @Html.TextBoxFor(model => model.CPTCode, new { @class = "form-control CoderDetails txtCpt", @autocomplete = "off", @placeholder = "Code", @id = "txtCpt0", @title = "txtCpt_0", @tabindex = "5" })
+                                    @Html.ValidationMessageFor(model => model.CPTCode, null, new { @class = "text-danger Dxerror" })
+                                    <input type="text" class="form-control CoderDetails" id="txtMod0" title="txtMod_0" autocomplete="off" placeholder="Mod" tabindex="6" />
+                                    <input type="text" id="txtQty0" title="txtQty_0" class="form-control CoderDetails" autocomplete="off" placeholder="1" value="1" tabindex="7" />
+                                    <input type="text" id="txtLinks0" title="txtLinks_0" onfocusout="CptFunction('txtLinks_0')" class="form-control CoderDetails" autocomplete="off" placeholder="Link All" tabindex="8" />
+                                </div>
+                            </div>
+                        </div>
 
-                            <label class="col-md-3 m-t-15">CPT</label>
+                        @*<label class="col-md-3 m-t-15">CPT</label>
                             <div class="col-md-3">
                                 <table>
                                     <tbody id="cpttable" style="display:block">
@@ -98,31 +114,29 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>
+                            </div>*@
+
+                    </div>
+                    <div class="tab-pane p-20 show" id="profile" role="tabpanel">
+                        <div class="p-20" id="tabDiv">
                         </div>
                     </div>
-                </div>
-                <div class="tab-pane p-20 show" id="profile" role="tabpanel">
-                    <div class="p-20" id="tabDiv">
-                    </div>
-                </div>
-                <div class="border-top">
-                    <div class="card-body" style="text-align:right">
-                        <button id="btnBlock" type="button" class="btn btn-danger" onclick="Block()">Block</button>
-                        <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger" onclick="BlockHistory()">Block History</button>
-                        <button id="codingSubmit" name="codingSubmit" type="submit" class="btn btn-success Available">Save</button>
-                        <button id="codingSubmitAndGetNext" name="codingSubmitAndGetNext" type="submit" value="codingSubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
-                        <button type="submit" class="btn btn-success Approved">Posting Completed</button>
-                        <button id="postingSubmitAndGetNext" name="postingSubmitAndGetNext" type="submit" value="postingSubmitAndGetNext" class="btn btn-success Approved">Post And GetNext</button>
-                        <a href="@Url.Action("CodingSummary","UAB")" class="btn btn-danger Approved">Close</a>
+                    <div class="border-top">
+                        <div class="card-body" style="text-align:right">
+                            <button id="btnBlock" type="button" class="btn btn-danger" onclick="Block()">Block</button>
+                            <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger" onclick="BlockHistory()">Block History</button>
+                            <button id="codingSubmit" name="codingSubmit" type="submit" class="btn btn-success Available">Save</button>
+                            <button id="codingSubmitAndGetNext" name="codingSubmitAndGetNext" type="submit" value="codingSubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
+                            <button type="submit" class="btn btn-success Approved">Posting Completed</button>
+                            <button id="postingSubmitAndGetNext" name="postingSubmitAndGetNext" type="submit" value="postingSubmitAndGetNext" class="btn btn-success Approved">Post And GetNext</button>
+                            <a href="@Url.Action("CodingSummary","UAB")" class="btn btn-danger Approved">Close</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
 <script src="~/dashboardassets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
