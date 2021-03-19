@@ -55,6 +55,11 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             #endregion
 
+            if (chartSummaryDTO.CodingDTO.ClinicalCaseID == 0)
+            {
+                TempData["error"] = "There are no charts";
+                return RedirectToAction("CodingSummary");
+            }
             return View("Coding", chartSummaryDTO);
         }
 
@@ -208,7 +213,7 @@ namespace UAB.Controllers
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("CodingSummary", lstDto);
         }
-        public IActionResult SubmitCodingReadyForPostingChart(ChartSummaryDTO chartSummaryDTO,string postingSubmitAndGetNext)
+        public IActionResult SubmitCodingReadyForPostingChart(ChartSummaryDTO chartSummaryDTO, string postingSubmitAndGetNext)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
@@ -251,6 +256,12 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
+
+            if (chartSummaryDTO.CodingDTO.ClinicalCaseID == 0)
+            {
+                TempData["error"] = "There are no charts";
+                return RedirectToAction("QASummary");
+            }
             return View("QA", chartSummaryDTO);
         }
 
@@ -454,6 +465,13 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
+
+            if (chartSummaryDTO.CodingDTO.ClinicalCaseID == 0)
+            {
+                TempData["error"] = "There are no charts";
+                return RedirectToAction("ShadowQASummary");
+            }
+
             return View("ShadowQA", chartSummaryDTO);
         }
 
@@ -617,7 +635,7 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult SettingsBlockCategories()
         {
-            List<BlockCategory> lstblock  = new List<BlockCategory>();
+            List<BlockCategory> lstblock = new List<BlockCategory>();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             lstblock = clinicalcaseOperations.GetBlockCategories();
             ViewBag.lstblock = lstblock;
@@ -638,7 +656,7 @@ namespace UAB.Controllers
             return PartialView("_AddEditBlockCategory", obj);
         }
         [HttpPost]
-        public IActionResult AddSettingsBlockCategory (BlockCategory category)
+        public IActionResult AddSettingsBlockCategory(BlockCategory category)
         {
             if (ModelState.IsValid)
             {
@@ -665,12 +683,12 @@ namespace UAB.Controllers
             return RedirectToAction("SettingsBlockCategories");
         }
         [HttpGet]
-        public IActionResult DeleteBlockCategory (int id)
+        public IActionResult DeleteBlockCategory(int id)
         {
             BlockCategory obj = new BlockCategory();
             if (id != 0)
             {
-                List<BlockCategory> lstblock  = new List<BlockCategory>();
+                List<BlockCategory> lstblock = new List<BlockCategory>();
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 lstblock = clinicalcaseOperations.GetBlockCategories();
                 var res = lstblock.Where(a => a.BlockCategoryId == id).FirstOrDefault();
@@ -680,12 +698,12 @@ namespace UAB.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteBlockCategory(BlockCategory  blockCategory)
-        { 
+        public IActionResult DeleteBlockCategory(BlockCategory blockCategory)
+        {
             try
             {
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-                if (blockCategory.BlockCategoryId!= 0)
+                if (blockCategory.BlockCategoryId != 0)
                     clinicalcaseOperations.DeletetBlockCategory(blockCategory.BlockCategoryId); // Delete
             }
             catch (Exception ex)

@@ -83,6 +83,21 @@
         }
     });
 
+    $('#btnsubmit').click(function (e) {
+        var total = $('.CoderCorrections[style="display:flex"]  .fa-check-circle').length;
+        var accept = $('.CoderCorrections[style="display:flex"]  .accept').length;
+        var reject = $('.CoderCorrections[style="display:flex"]  .reject').length;
+
+        if (total != accept + reject) {
+            $("#validationPopUp").show();
+            e.preventDefault();
+        }
+    });
+
+    validationPopUp = function () {
+        $("#validationPopUp").hide();
+    };
+
 </script>
 
 
