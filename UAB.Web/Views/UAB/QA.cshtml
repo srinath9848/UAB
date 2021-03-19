@@ -20,7 +20,6 @@
     $(".QADetails").attr("readonly", false);
     $("#qa").addClass('selected');
     $(".accept").removeClass('accept');
-    $('.QACorrections').show();
 
     $('#chkAll').change(function () {
         if ($(this).is(':checked')) {
@@ -32,6 +31,7 @@
             $(".errMsg").text('');
             $("#QADTO_ErrorType").css("pointer-events", "none");
             $(".ErrorType").text('');
+            $(".QACorrectionsComments").hide();
         }
         else {
             $('.fa-check-circle').removeClass('accept');
@@ -56,6 +56,7 @@
                 $("#QADTO_ErrorType").css("pointer-events", "none");
                 $(".ErrorType").text('');
                 $(".errMsg").text('');
+                $(".QACorrectionsComments").hide();
             }
         }
         else if ($(this).hasClass('fa-times-circle')) {
@@ -65,6 +66,7 @@
             $("#" + id + "2").css("display", "flex");
             $("#chkAll").prop('checked', false);
             $("#QADTO_ErrorType").css("pointer-events", "auto");
+            $(".QACorrectionsComments").show();
         }
     });
 

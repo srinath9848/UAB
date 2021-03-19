@@ -89,9 +89,9 @@ namespace UAB.DTO
         public string ShadowQACPTCode { get; set; }
         [Required(ErrorMessage = "*")]
         public string ShadowQACPTCodeRemarks { get; set; }
-        //[Required(ErrorMessage = "*")]
+        [Required(ErrorMessage = "*")]
         public int ShadowQAProviderFeedbackID { get; set; }
-        //[Required(ErrorMessage = "*")]
+        [Required(ErrorMessage = "*")]
         public string ShadowQAProviderFeedbackRemarks { get; set; }
         public string CodedBy { get; set; }
         public string QABy { get; set; }
