@@ -10,5 +10,7 @@ namespace UAB.DAL.Models
         public int VersionId { get; set; }
         public string Cptcode1 { get; set; }
         public string Modifier { get; set; }
+        public string Qty { get; set; }
+        public string Links { get; set; }
     }
 }

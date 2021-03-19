@@ -1,0 +1,68 @@
+﻿@model UAB.DTO.ChartSummaryDTO
+@{
+    int id = ViewBag.id;
+}
+<br />
+<div class="form-group row">
+    <label class="col-md-3 m-t-15">Provider</label>
+    <div class="col-md-3">
+        @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails" })
+        @Html.ValidationMessageFor(model => model.ProviderID, null, new { @class = "text-danger" })
+    </div>
+    <label class="col-md-3 m-t-15">Payor</label>
+    <div class="col-md-3">
+        @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails" })
+        @Html.ValidationMessageFor(model => model.PayorID, null, new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-md-3 m-t-15"> Feedback to Provider</label>
+    <div class="col-md-3">
+        @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails" })
+        @Html.ValidationMessageFor(model => model.ProviderFeedbackID, null, new { @class = "text-danger" })
+    </div>
+    <label class="col-md-3 m-t-15">Note Title</label>
+    <div class="col-md-3">
+        @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails", @autocomplete = "off" })
+        @Html.ValidationMessageFor(model => model.NoteTitle, null, new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-md-3 m-t-15">Dx</label>
+    <div class="col-md-3">
+        <table>
+            <tbody id="tableid1" style="display:block">
+                <tr id="tr0">
+                    <td><span class="badge badge-pill badge-info">1</span></td>
+                    <td>
+                        <input type="text" id="txtDx_@id" title="txtDx_@id" onfocusout="DxFunction1('txtDx_@id')" class="form-control CoderDetails txtDx" autocomplete="off" placeholder="Code" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <label class="col-md-3 m-t-15">CPT</label>
+    <div class="col-md-3">
+        <table>
+            <tbody id="cpttable1" style="display:block">
+                <tr id="cpttr0">
+                    <td><span class="badge badge-pill badge-info">1</span></td>
+
+                    <td style="width:50px;">
+                        <input type="text" class="form-control CoderDetails" id="txtCpt_@id" title="txtCpt_@id" autocomplete="off" placeholder="Code" tabindex="5" />
+                    </td>
+                    <td style="width:50px;">
+                        <input type="text" class="form-control CoderDetails" id="txtMod_@id" title="txtMod_@id" autocomplete="off" placeholder="Mod" tabindex="6" />
+                    </td>
+                    <td style="width:30px;">
+                        <input type="text" id="txtQty_@id" title="txtQty_@id" class="form-control CoderDetails" autocomplete="off" placeholder="1" value="1" tabindex="7" />
+                    </td>
+                    <td style="width:50px;">
+                        <input type="text" id="txtLinks_@id" title="txtLinks_@id" onfocusout="CptFunction1('txtLinks_@id')" class="form-control CoderDetails" autocomplete="off" placeholder="Link All" tabindex="8" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

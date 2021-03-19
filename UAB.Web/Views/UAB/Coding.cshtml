@@ -34,64 +34,185 @@
     $("#ProviderID").css("pointer-events", "none");
     $("#ProviderID").css("background-color", "#e9ecef");
 
-    //$('#codingSubmit').click(function (e) {
-    //    // if ($("#Dx").val() != "") {
-    //    if ($("#CoderQuestion").val() !== "") {
-    //        $("#codingSubmit").prop("type", "button");
-    //        $(".text-danger").html("");
-    //        $("#frmSubmitCodingAvailableChart").submit();
-    //    } else {
-    //        $("#codingSubmit").prop("type", "submit");
-    //        $("#frmSubmitCodingAvailableChart").valid();
-    //        $("#frmSubmitCodingAvailableChart").submit();
-    //    }
-    //    //} else {
-    //    //    if ($("#CoderQuestion").val() == "") {
-    //    //        $(".Dxerror").html('<span id="projectdd-error" class="">Dx Code is required.</span>');
-    //    //        e.preventDefault();
-    //    //    } else {
-    //    //        $("#frmSubmitCodingAvailableChart").submit();
-    //    //    }
-    //    //}
-
-    //});
 
     var dxArray = [];
-    $(document).on("keyup", "input", function () {
-        var keycode = (window.event) ? event.keyCode : e.keyCode;
-        if (keycode == 9) {
-            var id = parseInt($(this).attr('title').split("_")[1]) + parseInt(1);
-            if ($(this).attr('title').split("_")[1] !== undefined) {
-                var id1 = parseInt(id) - parseInt(1);
-                var val = $("#txt" + id1).val();
-                if (val !== "" && val !== null) {
-                    if ($.inArray(val, dxArray) == -1) {
-                        dxArray.push(val);
-                        $("#Dx").val(dxArray);
-                        //alert(dxArray);
-                    }
-                    $("#tableid").append('<tr id="tr' + id + '"> <td> <input type="text" title="txt' + id + '" id="txt' + id + '" /></td><td><input type="button" id="btnDelete" class="btn btn-info btn-sm" title="btn_' + id + '" value="Delete" /></td></tr >');
-                    $("#txt" + id).focus();
-                } else {
-                    //alert('please enter value here');
-                    $("#txt" + id).focus();
+    function DxFunction(txt_0) {
+        var title = txt_0;
+        var id = parseInt(title.split("_")[1]) + parseInt(1);
+        if (title.split("_")[1] !== undefined) {
+            var id1 = parseInt(id) - parseInt(1);
+            var val = $("#txt" + id1).val();
+            if (val !== "" && val !== null) {
+                if ($.inArray(val, dxArray) == -1) {
+                    dxArray.push(val);
+                    $("#Dx").val(dxArray);
                 }
+                var count = id + parseInt(1);
+                $("#txt" + id).focus();
+                var text = "'" + "txt_" + id + "'";
+                $("#tableid").append('<tr id="tr' + id + '"> <td><span class="badge badge-pill badge-info">' + count + '</span></td><td> <input type="text" placeholder="Code" onfocusout="DxFunction(' + text +')" class="form-control CoderDetails txtDx" title="txt_' + id + '" id="txt' + id + '" /></td><td></td></tr >');
+                $("#txt" + id).focus();
+
+            } else {
+                //var id2 = parseInt(id) - parseInt(1);
+                //var val = $("#txt" + id2).val();
+                //if (val == "") {
+                //    if (id2 !== 0) {
+                //        dxArray.splice(id2, id2);
+                //        $("#Dx").val(dxArray);
+                //        $('#tr' + id2).remove();
+                //        //$("#txt" + id2).focus();
+                //    }
+                //}
             }
         }
-    });
+    }
 
-    $(document).on('click', '#btnDelete', function () {
-        var id = $(this).attr('title').split("btn_")[1];
-        var val = $("#txt" + id).val();
-        if (val !== "" && val !== null) {
-            if ($(this).attr('title') != "btn_0") {
-                dxArray.splice($.inArray(val, dxArray), 1);
-                $("#Dx").val(dxArray);
+    var dxArray1 = [];
+    function DxFunction1(txt_0) {
+        var title = txt_0;
+        var id = parseInt(title.split("_")[1]) + parseInt(1);
+        if (title.split("_")[1] !== undefined) {
+            var id1 = parseInt(id) - parseInt(1);
+            var val = $("#txtDx_" + id1).val();
+            if (val !== "" && val !== null) {
+                if ($.inArray(val, dxArray1) == -1) {
+                    dxArray1.push(val);
+                    $("#Dx1").val(dxArray1);
+                }
+                var count = id + parseInt(1);
+                $("#txtDx_" + id).focus();
+                var text = "'" + "txtDx_" + id + "'";
+                $("#tableid1").append('<tr id="tr' + id + '"> <td><span class="badge badge-pill badge-info">' + count + '</span></td><td> <input type="text" placeholder="Code" onfocusout="DxFunction1(' + text + ')" class="form-control CoderDetails txtDx" title="txtDx_' + id + '" id="txtDx_' + id + '" /></td><td></td></tr >');
+                $("#txtDx_" + id).focus();
+
+            } else {
+                //var id2 = parseInt(id) - parseInt(1);
+                //var val = $("#txt" + id2).val();
+                //if (val == "") {
+                //    if (id2 !== 0) {
+                //        dxArray.splice(id2, id2);
+                //        $("#Dx").val(dxArray);
+                //        $('#tr' + id2).remove();
+                //        //$("#txt" + id2).focus();
+                //    }
+                //}
             }
         }
-        if (id !== "0") {
-            $('#tr' + id).remove();
+    }
+
+    var cptArray = [];
+    function CptFunction(txtCpt_0) {
+        var title = txtCpt_0;
+        var id = parseInt(title.split("_")[1]) + parseInt(1);
+        if (title.split("_")[1] !== undefined) {
+            var id1 = parseInt(id) - parseInt(1);
+            var val1 = $("#txtCpt" + id1).val();
+
+            var val2 = null;
+            if ($("#txtMod" + id1).val() != "")
+                val2 = $("#txtMod" + id1).val();
+
+            var val3 = null;
+            if ($("#txtQty" + id1).val() != "")
+                val3 = $("#txtQty" + id1).val();
+
+            var val4 = null;
+            if ($("#txtLinks" + id1).val() != "")
+                val4 = $("#txtLinks" + id1).val();
+
+            if (val1 !== "") {
+                if ($.inArray(val1, cptArray) == -1) {
+                    cptArray.push(val1+"^"+val2 +"^"+val3 +"^"+ val4);
+                    $("#CPTCode").val(cptArray);
+                }
+                var count = id + parseInt(1);
+                var txtLinks = "'" + "txtLinks_" + id + "'";
+                var tabindex1 = parseInt(9) + parseInt(id)  + parseInt(count)+ parseInt(val1);
+                var tabindex2 = parseInt(10) + parseInt(id) + parseInt(count) + parseInt(val1);
+                var tabindex3 = parseInt(11) + parseInt(id) + parseInt(count) + parseInt(val1);
+                var tabindex4 = parseInt(12) + parseInt(id) + parseInt(count) + parseInt(val1);
+                $("#cpttable").append('<tr id="cpttr' + id + '"> <td><span class="badge badge-pill badge-info">' + count + '</span></td><td><input tabindex = "' + tabindex1 + '" type = "text" placeholder = "Code" class= "form-control CoderDetails txtCpt" title = "txtCpt_' + id + '" id = "txtCpt' + id + '" /></td><td><input tabindex="' + tabindex2 + '" type="text" class="form-control CoderDetails" placeholder="Mod" title="txtMod_' + id + '" id="txtMod' + id + '"/></td><td><input tabindex="' + tabindex3 + '" type="text" class="form-control CoderDetails" placeholder="1" value="1" title="txtQty_' + id + '" id="txtQty' + id + '"/></td><td><input tabindex="' + tabindex4 + '" type="text" class="form-control CoderDetails" placeholder="Link All" onfocusout="CptFunction(' + txtLinks + ')" title="txtLinks_' + id + '" id="txtLinks' + id + '"/></td></tr>');
+                $("#txtCpt" + id).focus();
+            } else {
+                //var id2 = parseInt(id) - parseInt(1);
+                //var val = $("#txtCpt" + id2).val();
+                //if (val == "") {
+                //    if (id2 !== 0) {
+                //        cptArray.splice(id2, id2);
+                //        $("#CPTCode").val(cptArray);
+                //        $('#cpttr' + id2).remove();
+                //        //$("#CPTCode" + id2).focus();
+                //    }
+                //}
+            }
+        }
+    }
+
+    var cptArray1 = [];
+    function CptFunction1(txtCpt_0) {
+        var title = txtCpt_0;
+        var id = parseInt(title.split("_")[1]) + parseInt(1);
+        if (title.split("_")[1] !== undefined) {
+            var id1 = parseInt(id) - parseInt(1);
+            var val1 = $("#txtCpt_" + id1).val();
+
+            var val2 = null;
+            if ($("#txtMod_" + id1).val() != "")
+                val2 = $("#txtMod_" + id1).val();
+
+            var val3 = null;
+            if ($("#txtQty_" + id1).val() != "")
+                val3 = $("#txtQty_" + id1).val();
+
+            var val4 = null;
+            if ($("#txtLinks_" + id1).val() != "")
+                val4 = $("#txtLinks_" + id1).val();
+
+            if (val1 !== "") {
+                if ($.inArray(val1, cptArray1) == -1) {
+                    cptArray1.push(val1 + "^" + val2 + "^" + val3 + "^" + val4);
+                    $("#CPTCode1").val(cptArray1);
+                }
+                var count = id + parseInt(1);
+                var txtLinks = "'" + "txtLinks_" + id + "'";
+                var tabindex1 = parseInt(9) + parseInt(id) + parseInt(count) + parseInt(val1);
+                var tabindex2 = parseInt(10) + parseInt(id) + parseInt(count) + parseInt(val1);
+                var tabindex3 = parseInt(11) + parseInt(id) + parseInt(count) + parseInt(val1);
+                var tabindex4 = parseInt(12) + parseInt(id) + parseInt(count) + parseInt(val1);
+                $("#cpttable1").append('<tr id="cpttr' + id + '"> <td><span class="badge badge-pill badge-info">' + count + '</span></td><td><input tabindex = "' + tabindex1 + '" type = "text" placeholder = "Code" class= "form-control CoderDetails txtCpt" title = "txtCpt_' + id + '" id = "txtCpt_' + id + '" /></td><td><input tabindex="' + tabindex2 + '" type="text" class="form-control CoderDetails" placeholder="Mod" title="txtMod_' + id + '" id="txtMod_' + id + '"/></td><td><input tabindex="' + tabindex3 + '" type="text" class="form-control CoderDetails" placeholder="1" value="1" title="txtQty_' + id + '" id="txtQty_' + id + '"/></td><td><input tabindex="' + tabindex4 + '" type="text" class="form-control CoderDetails" placeholder="Link All" onfocusout="CptFunction1(' + txtLinks + ')" title="txtLinks_' + id + '" id="txtLinks_' + id + '"/></td></tr>');
+                $("#txtCpt_" + id).focus();
+            } else {
+                //var id2 = parseInt(id) - parseInt(1);
+                //var val = $("#txtCpt" + id2).val();
+                //if (val == "") {
+                //    if (id2 !== 0) {
+                //        cptArray.splice(id2, id2);
+                //        $("#CPTCode").val(cptArray);
+                //        $('#cpttr' + id2).remove();
+                //        //$("#CPTCode" + id2).focus();
+                //    }
+                //}
+            }
+        }
+    }
+
+    $(".tab").click(function () {
+        var title = $(this).attr('title');
+        var id = $(this).attr('id');
+        $("#htxt" + id).text('Cliam '+id);
+        if (title != "" && id != "") {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetNewCliam", "UAB")",
+                data: {"id" : id },
+                success: function (response) {
+                    $("#" + title).html(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
         }
     });
-
 </script>
