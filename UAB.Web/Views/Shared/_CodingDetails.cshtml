@@ -1,4 +1,5 @@
 ﻿@model UAB.DTO.ChartSummaryDTO
+@using UAB.enums
 <style type="text/css">
     .col-md-3 {
         margin-left: 10px !important;
@@ -76,6 +77,8 @@
         </div>
         <div class="border-top">
             <div class="card-body" style="text-align:right">
+                <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.Coder, ChartType= "Block", ProjectID=@Model.ProjectID, ProjectName=Model.ProjectName,ccid=Model.CodingDTO.ClinicalCaseID,plusorminus="Previous"})" class="btn btn-success Available" id="btnPrevious" style="display:none">Previous</a>
+                <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.Coder, ChartType= "Block", ProjectID=@Model.ProjectID, ProjectName=Model.ProjectName,ccid=Model.CodingDTO.ClinicalCaseID,plusorminus="Next"})" class="btn btn-success Available" id="btnNext" style="display:none">Next</a>
                 <button id="btnBlock" type="button" class="btn btn-danger" onclick="Block()">Block</button>
                 <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger" onclick="BlockHistory()">Block History</button>
                 <button id="codingSubmit" name="codingSubmit" type="submit" class="btn btn-success Available">Save</button>
@@ -96,7 +99,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         Block = function () {
-
             $.ajax({
                 type: "GET",
                 url: "@Url.Action("BlockClinicalcase", "UAB")",

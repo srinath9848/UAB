@@ -84,6 +84,46 @@ namespace UAB.Controllers
         }
 
 
+        [HttpGet]
+        public IActionResult GetCodingBlockedCharts (string Role, string ChartType, int ProjectID, string ProjectName,string ccid ,string plusorminus)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+           List<ChartSummaryDTO> chartSummaryDTOlst = new List<ChartSummaryDTO>();
+            
+            chartSummaryDTOlst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);
+
+            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
+
+            if (plusorminus=="Next")
+            {
+                chartSummaryDTO = chartSummaryDTOlst.SkipWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).FirstOrDefault();
+                if (chartSummaryDTO==null)
+                {
+                    chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
+                }
+                chartSummaryDTO.ProjectName = ProjectName;
+            }
+            else
+            {
+                chartSummaryDTO = chartSummaryDTOlst.TakeWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).LastOrDefault();
+                if (chartSummaryDTO == null)
+                {
+                    chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
+                }
+                chartSummaryDTO.ProjectName = ProjectName;
+            }
+            
+            ViewBag.IsBlocked = "1";
+
+            #region binding data
+            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
+            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
+            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            #endregion
+
+            return View("Coding", chartSummaryDTO);
+
+        }
 
         public IActionResult GetCodingBlockedChart(string Role, string ChartType, int ProjectID, string ProjectName)
         {

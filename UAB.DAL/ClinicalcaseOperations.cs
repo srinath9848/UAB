@@ -74,6 +74,68 @@ namespace UAB.DAL
             }
             return lstDto;
         }
+
+        public List<ChartSummaryDTO> GetBlockNext(string Role, string ChartType, int projectID)
+        {
+            List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
+            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
+            chartSummaryDTO.ProjectID = projectID;
+            using (var context = new UABContext())
+            {
+                var param = new SqlParameter[] {
+                     new SqlParameter() {
+                            ParameterName = "@ProjectID",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = projectID
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@Role",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = Role
+                        }
+                        ,   new SqlParameter() {
+                            ParameterName = "@ChartType",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = ChartType
+                        }
+                         ,   new SqlParameter() {
+                            ParameterName = "@UserId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = mUserId
+                         }};
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[USPGetBlockCharts]";
+                    cmd.Parameters.AddRange(param);
+                    cmd.Connection = con;
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        chartSummaryDTO = new ChartSummaryDTO();
+                        chartSummaryDTO.CodingDTO.ClinicalCaseID = Convert.ToInt32(reader["ClinicalCaseID"]);
+                        chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
+                        chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
+                        chartSummaryDTO.CodingDTO.DateOfService = Convert.ToString(reader["DateOfService"]);
+                        chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
+                        chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
+                        chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate();
+                        chartSummaryDTO.ProjectID = projectID;
+
+                        lst.Add(chartSummaryDTO);
+                    }
+                }
+            }
+
+            return lst;
+        }
         public ChartSummaryDTO GetNext(string Role, string ChartType, int projectID)
         {
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
@@ -135,7 +197,7 @@ namespace UAB.DAL
                             (Role == "QA" && ChartType == "OnHold"))
                         {
                             chartSummaryDTO.CodedBy = Convert.ToString(reader["CodedBy"]);
-                            
+
                             if (reader["ProviderId"] != DBNull.Value)
                                 chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                             if (reader["PayorId"] != DBNull.Value)
@@ -186,7 +248,7 @@ namespace UAB.DAL
                             //if (reader["ProviderFeedbackId"] != DBNull.Value)
                             //    chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
                         }
-                        else if(Role == "ShadowQA" && ChartType == "RebuttalOfQA")
+                        else if (Role == "ShadowQA" && ChartType == "RebuttalOfQA")
                         {
                             chartSummaryDTO.CodedBy = Convert.ToString(reader["CodedBy"]);
                             chartSummaryDTO.QABy = Convert.ToString(reader["QABy"]);
@@ -1635,7 +1697,7 @@ namespace UAB.DAL
             return lstDto;
         }
         #endregion
-       
+
         public List<Provider> GetProviders()
         {
             Provider provider = new Provider();
@@ -2034,11 +2096,11 @@ namespace UAB.DAL
 
         public void AddBlockCategory(BlockCategory blockCategory)
         {
-            using (var context=new UABContext())
+            using (var context = new UABContext())
             {
                 var isexistingcategory = context.BlockCategory.Where(a => a.Name == blockCategory.Name).FirstOrDefault();
 
-                if (isexistingcategory==null)
+                if (isexistingcategory == null)
                 {
                     context.BlockCategory.Add(blockCategory);
                     context.SaveChanges();
@@ -2046,7 +2108,7 @@ namespace UAB.DAL
             }
         }
 
-        public void UpdateBlockCategory(BlockCategory blockCategory) 
+        public void UpdateBlockCategory(BlockCategory blockCategory)
         {
             using (var context = new UABContext())
             {
@@ -2060,11 +2122,11 @@ namespace UAB.DAL
                 }
             }
         }
-        public void DeletetBlockCategory (int id )
+        public void DeletetBlockCategory(int id)
         {
             using (var context = new UABContext())
             {
-                var existingcategory = context.BlockCategory.Where(a => a.BlockCategoryId ==id).FirstOrDefault();
+                var existingcategory = context.BlockCategory.Where(a => a.BlockCategoryId == id).FirstOrDefault();
 
                 if (existingcategory != null)
                 {
