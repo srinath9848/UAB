@@ -230,8 +230,8 @@ namespace UAB.DAL
                             chartSummaryDTO.QAMod = Convert.ToString(reader["QAMod"]);
                             chartSummaryDTO.QAModRemarks = Convert.ToString(reader["QAModRemark"]);
 
-                            chartSummaryDTO.QADx = Convert.ToString(reader["QADx"]);
-                            chartSummaryDTO.QADxRemarks = Convert.ToString(reader["QADxRemark"]);
+                            chartSummaryDTO.QADx = "R52,R54,R55";//Convert.ToString(reader["QADx"]);
+                            chartSummaryDTO.QADxRemarks = "QA Remarks"; //Convert.ToString(reader["QADxRemark"]);
 
                             chartSummaryDTO.ProviderFeedbackText = Convert.ToString(reader["ProviderFeedbackText"]);
                             chartSummaryDTO.QAProviderFeedbackText = Convert.ToString(reader["QAProviderFeedbackText"]);
@@ -242,7 +242,7 @@ namespace UAB.DAL
                             //if (reader["PayorId"] != DBNull.Value)
                             //    chartSummaryDTO.PayorID = Convert.ToInt32(reader["PayorId"]);
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
-                            chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
+                            chartSummaryDTO.Dx = "R51,R53,null"; //Convert.ToString(reader["DxCode"]);
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
                             chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
                             //if (reader["ProviderFeedbackId"] != DBNull.Value)

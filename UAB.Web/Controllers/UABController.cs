@@ -54,7 +54,11 @@ namespace UAB.Controllers
             ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             #endregion
-
+            if (chartSummaryDTO.CodingDTO.ClinicalCaseID == 0)
+            {
+                TempData["error"] = "There are no charts";
+                return RedirectToAction("CodingSummary");
+            }
             return View("Coding", chartSummaryDTO);
         }
 
@@ -305,6 +309,11 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
+            if (chartSummaryDTO.CodingDTO.ClinicalCaseID == 0)
+            {
+                TempData["error"] = "There are no charts";
+                return RedirectToAction("QASummary");
+            }
             return View("QA", chartSummaryDTO);
         }
 
@@ -508,6 +517,12 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
+
+            if (chartSummaryDTO.CodingDTO.ClinicalCaseID == 0)
+            {
+                TempData["error"] = "There are no charts";
+                return RedirectToAction("ShadowQASummary");
+            }
             return View("ShadowQA", chartSummaryDTO);
         }
 

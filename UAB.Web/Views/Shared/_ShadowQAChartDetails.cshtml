@@ -26,14 +26,14 @@
 
             if (string.IsNullOrEmpty(Model.QAPayorText) && string.IsNullOrEmpty(Model.QAProviderText)
             && string.IsNullOrEmpty(Model.QACPTCode)
-&& string.IsNullOrEmpty(Model.QAMod) && string.IsNullOrEmpty(Model.QADx) &&
-string.IsNullOrEmpty(Model.QAProviderFeedbackText))
+            && string.IsNullOrEmpty(Model.QAMod) && string.IsNullOrEmpty(Model.QADx) &&
+            string.IsNullOrEmpty(Model.QAProviderFeedbackText))
                 isQAAgreed = true;
 
             if (!string.IsNullOrEmpty(Model.QAPayorText) || !string.IsNullOrEmpty(Model.QAProviderText)
-           || !string.IsNullOrEmpty(Model.QACPTCode)
-|| !string.IsNullOrEmpty(Model.QAMod) || !string.IsNullOrEmpty(Model.QADx) ||
-!string.IsNullOrEmpty(Model.QAProviderFeedbackText))
+            || !string.IsNullOrEmpty(Model.QACPTCode)
+            || !string.IsNullOrEmpty(Model.QAMod) || !string.IsNullOrEmpty(Model.QADx) ||
+            !string.IsNullOrEmpty(Model.QAProviderFeedbackText))
                 Show = "display:flex";
 
         }
@@ -213,54 +213,52 @@ string.IsNullOrEmpty(Model.QAProviderFeedbackText))
             <div class="col-md-3 input-group">
                 @Html.TextAreaFor(model => model.ShadowQAMod, new { @style = "display:none", @class = "form-control QARevised", @id = "Mod1" })
                 @Html.ValidationMessageFor(model => model.ShadowQAMod, null, new { @class = "text-danger errMsg" })
-
             </div>
             <div class="col-md-2 input-group">
                 @Html.TextBoxFor(model => model.ShadowQAModRemarks, new { @style = "display:none", @class = "form-control QARevised", @id = "Mod2" })
                 @Html.ValidationMessageFor(model => model.ShadowQAModRemarks, null, new { @class = "text-danger errMsg" })
-
             </div>
         </div>
-        <div class="form-group row">
-            <label class="col-md-3 lessWidth m-t-15" style="margin-left:10px">Dx</label>
-            @{len = (!string.IsNullOrEmpty(Model.QADx) ? 10 : 20); }
-            @{string Dx = (Model.Dx?.Length > len) ? Model.Dx.Substring(0, len) + ".." : Model.Dx;}
-            @{string QADx = (Model.QADx?.Length > len) ? "/" + Model.QADx.Substring(0, len) + ".." : "/" + Model.QADx;}
-            @{title = (!string.IsNullOrEmpty(Model.QADx) ? Model.Dx + "/" + Model.QADx : Model.Dx);}
+        @*<div class="form-group row">
+                <label class="col-md-3 lessWidth m-t-15" style="margin-left:10px">Dx</label>
+                @{len = (!string.IsNullOrEmpty(Model.QADx) ? 10 : 20); }
+                @{string Dx = (Model.Dx?.Length > len) ? Model.Dx.Substring(0, len) + ".." : Model.Dx;}
+                @{string QADx = (Model.QADx?.Length > len) ? "/" + Model.QADx.Substring(0, len) + ".." : "/" + Model.QADx;}
+                @{title = (!string.IsNullOrEmpty(Model.QADx) ? Model.Dx + "/" + Model.QADx : Model.Dx);}
 
-            <div title="@title" class="col-md-3 lessWidth input-group">
-                <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
-                    <span style="white-space:nowrap">
+                <div title="@title" class="col-md-3 lessWidth input-group">
+                    <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
+                        <span style="white-space:nowrap">
 
-                        @if (!string.IsNullOrEmpty(Model.QADx))
-                        {
-                            <label style="color: red;">@Dx</label>
-                            <label style="color:green">@QADx</label>
-                        }
-                        else
-                        {
-                            <label style="color: green;">@Dx</label>
-                        }
+                            @if (!string.IsNullOrEmpty(Model.QADx))
+                            {
+                                <label style="color: red;">@Dx</label>
+                                <label style="color:green">@QADx</label>
+                            }
+                            else
+                            {
+                                <label style="color: green;">@Dx</label>
+                            }
+                        </span>
+                    </div>
+                    <span class="input-group-text">
+                        &nbsp;<i id="Dx" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i id="Dx" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                     </span>
                 </div>
-                <span class="input-group-text">
-                    &nbsp;<i id="Dx" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                    &nbsp;<i id="Dx" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                </span>
-            </div>
-            @{Show = (string.IsNullOrEmpty(Model.QADxRemarks) ? "visibility:hidden" : "display:flex");}
-            <div title="@Model.QADxRemarks" class="col-md-2 input-group" style="@Show">
-                <input type="text" class="form-control QARemarks" value="@Model.QADxRemarks" />
-            </div>
-            <div class="col-md-3 input-group">
-                @Html.TextAreaFor(model => model.ShadowQADx, new { @style = "display:none", @id = "Dx1", @class = "form-control QARevised" })
-                @Html.ValidationMessageFor(model => model.ShadowQADx, null, new { @class = "text-danger errMsg" })
-            </div>
-            <div class="col-md-2 input-group">
-                @Html.TextBoxFor(model => model.ShadowQADxRemarks, new { @style = "display:none", @class = "form-control QARevised", @id = "Dx2" })
-                @Html.ValidationMessageFor(model => model.ShadowQADxRemarks, null, new { @class = "text-danger errMsg" })
-            </div>
-        </div>
+                @{Show = (string.IsNullOrEmpty(Model.QADxRemarks) ? "visibility:hidden" : "display:flex");}
+                <div title="@Model.QADxRemarks" class="col-md-2 input-group" style="@Show">
+                    <input type="text" class="form-control QARemarks" value="@Model.QADxRemarks" />
+                </div>
+                <div class="col-md-3 input-group">
+                    @Html.TextAreaFor(model => model.ShadowQADx, new { @style = "display:none", @id = "Dx1", @class = "form-control QARevised" })
+                    @Html.ValidationMessageFor(model => model.ShadowQADx, null, new { @class = "text-danger errMsg" })
+                </div>
+                <div class="col-md-2 input-group">
+                    @Html.TextBoxFor(model => model.ShadowQADxRemarks, new { @style = "display:none", @class = "form-control QARevised", @id = "Dx2" })
+                    @Html.ValidationMessageFor(model => model.ShadowQADxRemarks, null, new { @class = "text-danger errMsg" })
+                </div>
+            </div>*@
         <div class="form-group row">
             <label class="col-md-3 lessWidth m-t-15"> Feedback to Provider</label>
             @{len = (!string.IsNullOrEmpty(Model.QAProviderFeedbackText) ? 10 : 20); }
@@ -306,42 +304,173 @@ string.IsNullOrEmpty(Model.QAProviderFeedbackText))
             </div>
         </div>
         <div class="form-group row">
-            @*<label class="col-md-3 lessWidth m-t-15">Coder Questions</label>
-                <div class="col-md-3">
-                    @Html.TextAreaFor(model => model.CoderQuestion, new { @class = "form-control CoderDetails" })
-                </div>*@
             <label class="col-md-3 lessWidth m-t-15">Note Title</label>
             <div class="col-md-3">
                 @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails" })
             </div>
         </div>
-    </div>
-</div>
-<div class="clearfix"></div>
-<div class="col-md-6">
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">QA Details</h4>
+        <div id="DivDx">
+            @{
+                int i = 0;
+                int j = 1;
+                int totalDxCount = Model.QADx.Split(",").Count() + 1;
+                int totalCoderDxCount = Model.Dx.Split(",").Count();
+                var lstCoderDx = Model.Dx.Split(",").ToList();
+                int totalQADxCount = Model.QADx.Split(",").Count();
+                var lstQaDx = Model.QADx.Split(",").ToList();
+                int count = (totalQADxCount > totalCoderDxCount) ? totalQADxCount : totalCoderDxCount;
+                for (int k = 0; k < count; k++)
+                {
+                    <div class="form-group row">
+                        @if (i == 0)
+                        {
+                            <label class="col-md-3 lessWidth m-t-15">Dx</label>
+                        }
+                        else
+                        {
+                            <label class="col-md-3 lessWidth m-t-15"></label>
+                        }
+
+                        @{
+                            if (lstCoderDx.ToList().Count() > k)
+                            {
+                                len = (!string.IsNullOrEmpty(lstCoderDx[k]) ? 10 : 20);
+                                string Dx1 = (lstCoderDx[k]?.Length > len) ? lstCoderDx[k].Substring(0, len) + ".." : lstCoderDx[k];
+                                string QADx1 = (lstQaDx[k]?.Length > len) ? "/" + lstQaDx[k].Substring(0, len) + ".." : "/" + lstQaDx[k];
+
+                                <div class="col-md-3 lessWidth input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">@j</span>
+                                    </div>
+                                    <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
+                                        <span style="white-space:nowrap">
+                                            @if (!string.IsNullOrEmpty(QADx1))
+                                            {
+                                                <label style="color: red;">@Dx1</label>
+                                                <label style="color:green">@QADx1</label>
+                                            }
+                                            else
+                                            {
+                                                <label style="color: green;">@lstQaDx[k]</label>
+                                            }
+                                        </span>
+                                    </div>
+                                </div>
+                                Show = (string.IsNullOrEmpty(Model.QADxRemarks) ? "visibility:hidden" : "display:flex");
+                                <div title="@Model.QADxRemarks" class="col-md-2 input-group" style="@Show">
+                                    <input type="text" class="form-control QARemarks" value="@Model.QADxRemarks" />
+                                </div>
+                                <div class="col-md-3 lessWidth input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">@j</span>
+                                    </div>
+                                    <input type="text" id="txtDx_@j" class="form-control txtDx" autocomplete="off" tabindex="@j" placeholder="Code" value="@lstQaDx[k]" />
+                                </div>
+                                <div class="input-group-append CoderCorrections">
+                                    <span class="input-group-text">
+                                        &nbsp;<i id="Dx_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                        &nbsp;<i id="Dx_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                    </span>
+                                </div>
+                                <div class="col-md-3 lessWidth input-group Dx_@i" style="display:none">
+                                    <input type="text" id="Dx_@i" class="form-control QARevised" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-3 lessWidth input-group">
+
+                                </div>
+                                <div class="col-md-2 input-group">
+                                </div>
+                                <div class="col-md-3 lessWidth input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">@j</span>
+                                    </div>
+                                    <input type="text" id="txtDx_@j" class="form-control txtDx" autocomplete="off" tabindex="@j" placeholder="Code" value="@lstQaDx[k]" />
+                                </div>
+
+                            }
+                        }
+                    </div>
+
+                    i = i + 1;
+                    j = j + 1;
+                }
+            }
+            <div class="form-group row">
+                <label class="col-md-3 lessWidth m-t-15"></label>
+                <div class="col-md-3 lessWidth input-group">
+                </div>
+                <div class="col-md-2 input-group">
+                </div>
+                <div class="col-md-3 lessWidth input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">@totalDxCount</span>
+                    </div>
+                    <input type="text" id="txtDx_@totalDxCount" onfocusout="DxFunction('txtDx_@totalDxCount')" class="form-control txtDx" tabindex="@totalDxCount" autofocus="autofocus" autocomplete="off" placeholder="Code" />
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-            <div class="col-12">
-                <div class="row mb-3">
-                    @*<div class="col-lg-6">
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">QA Details</h4>
+            </div>
+            <div class="card-body">
+                <div class="col-12">
+                    <div class="row mb-3">
+                        @*<div class="col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-5 m-t-15">Coder Rebuttal</label>
+                                    <div class="col-md-7">
+                                        @Html.TextAreaFor(model => model.QADTO.CoderRebuttal, new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                            </div>*@
+
+                        <div class="col-lg-6">
                             <div class="form-group row">
-                                <label class="col-md-5 m-t-15">Coder Rebuttal</label>
+                                <label class="col-md-5 m-t-15">
+                                    Error Type
+                                </label>
                                 <div class="col-md-7">
-                                    @Html.TextAreaFor(model => model.QADTO.CoderRebuttal, new { @class = "form-control", @readonly = "readonly" })
+                                    @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), new { @class = "form-control", @readonly = "readonly", @style = "pointer-events: none;" })
                                 </div>
                             </div>
-                        </div>*@
-
-                    <div class="col-lg-6">
-                        <div class="form-group row">
-                            <label class="col-md-5 m-t-15">
-                                Error Type
-                            </label>
-                            <div class="col-md-7">
-                                @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), new { @class = "form-control", @readonly = "readonly", @style = "pointer-events: none;" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Shadow QA Details</h4>
+            </div>
+            <div class="card-body">
+                <div class="col-12">
+                    <div class="row mb-3">
+                        <div class="col-lg-5">
+                            <div class="form-group row">
+                                <label class="col-md-5 m-t-15">
+                                    Error Type
+                                </label>
+                                <div class="col-md-7">
+                                    @Html.DropDownListFor(model => model.ShadowQADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ShadowQADTO.ErrorType, null, new { @class = "text-danger ErrorType" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="form-group row">
+                                <div class="col-md-10">
+                                    <button type="submit" id="btnsubmit" class="btn btn-success">Save</button>
+                                    <button id="SubmitAndGetNext" name="SubmitAndGetNext" type="submit" value="SubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -349,81 +478,48 @@ string.IsNullOrEmpty(Model.QAProviderFeedbackText))
             </div>
         </div>
     </div>
-</div>
-<div class="col-md-6">
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">Shadow QA Details</h4>
-        </div>
-        <div class="card-body">
-            <div class="col-12">
-                <div class="row mb-3">
-                    <div class="col-lg-5">
-                        <div class="form-group row">
-                            <label class="col-md-5 m-t-15">
-                                Error Type
-                            </label>
-                            <div class="col-md-7">
-                                @Html.DropDownListFor(model => model.ShadowQADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.ShadowQADTO.ErrorType, null, new { @class = "text-danger ErrorType" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-7">
-                        <div class="form-group row">
-                            <div class="col-md-10">
-                                <button type="submit" id="btnsubmit" class="btn btn-success">Save</button>
-                                <button id="SubmitAndGetNext" name="SubmitAndGetNext" type="submit" value="SubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
-<style>
-    .errMsg {
-        font-weight: bold;
-        font-size: 20px;
-    }
+    <style>
+        .errMsg {
+            font-weight: bold;
+            font-size: 20px;
+        }
 
-    #sortable-1 {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        width: 25%;
-    }
+        #sortable-1 {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            width: 25%;
+        }
 
-    /*     #sortable-1 li {
-            margin: 0 3px 3px 3px;
-            padding: 0.4em;
-            padding-left: 1.5em;
-            font-size: 17px;
-            height: 16px;
-        }*/
+        /*     #sortable-1 li {
+                    margin: 0 3px 3px 3px;
+                    padding: 0.4em;
+                    padding-left: 1.5em;
+                    font-size: 17px;
+                    height: 16px;
+                }*/
 
-    .default {
-        background: #cedc98;
-        border: 1px solid #DDDDDD;
-        color: #333333;
-    }
+        .default {
+            background: #cedc98;
+            border: 1px solid #DDDDDD;
+            color: #333333;
+        }
 
-    .custom-control-label:before {
-        left: -35px;
-    }
+        .custom-control-label:before {
+            left: -35px;
+        }
 
-    .custom-control-label:after {
-        left: -35px;
-    }
+        .custom-control-label:after {
+            left: -35px;
+        }
 
-    .custom-control {
-        padding-left: 0rem;
-    }
+        .custom-control {
+            padding-left: 0rem;
+        }
 
-    .CoderDetails {
-        width: 146px;
-    }
-</style>
+        .CoderDetails {
+            width: 146px;
+        }
+    </style>
