@@ -112,7 +112,7 @@
 
             var val2 = null;
             if ($("#txtMod_" + id1).val() != "")
-                val2 = $("#txtMod_" + id1).val();
+                val2 = $("#txtMod_" + id1).val().replace(",", "|");
 
             var val3 = null;
             if ($("#txtQty_" + id1).val() != "")
@@ -120,7 +120,7 @@
 
             var val4 = null;
             if ($("#txtLinks_" + id1).val() != "")
-                val4 = $("#txtLinks_" + id1).val();
+                val4 = $("#txtLinks_" + id1).val().replace(",", "|");
 
             if (val1 !== "") {
                 if ($.inArray(val1, cptArray) == -1) {
