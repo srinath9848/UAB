@@ -72,7 +72,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1">1</span>
                                     </div>
-                                    @Html.TextBoxFor(model => model.Dx, new { @class = "form-control CoderDetails txtDx", @autocomplete = "off", @id = "txt0", @title = "txt_0", @placeholder = "Code", @onfocusout = "DxFunction('txt_0')" })
+                                    @Html.TextBoxFor(model => model.Dx, new { @class = "form-control CoderDetails txtDx", @autocomplete = "off", @id = "txtDx_1", @placeholder = "Code", @onfocusout = "DxFunction('txtDx_1')" })
                                     @Html.ValidationMessageFor(model => model.Dx, null, new { @class = "text-danger Dxerror" })
                                 </div>
                             </div>
@@ -147,6 +147,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         Block = function () {
+
             $.ajax({
                 type: "GET",
                 url: "@Url.Action("BlockClinicalcase", "UAB")",

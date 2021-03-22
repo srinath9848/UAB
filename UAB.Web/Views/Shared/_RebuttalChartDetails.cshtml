@@ -26,6 +26,8 @@
         @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { @class = "form-control" })
         @Html.HiddenFor(model => model.ProjectID)
         @Html.HiddenFor(model => model.ProjectName)
+        @Html.HiddenFor(model => model.Dx)
+        @Html.HiddenFor(model => model.CPTCode)
         @Html.Hidden("hdnPayorID")
         @Html.Hidden("hdnProviderID")
         @Html.Hidden("hdnCpt")
@@ -128,93 +130,136 @@
                 @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails" })
             </div>
         </div>
-
-        @{
-            int i = 0;
-            int j = 1;
-            foreach (var item in Model.Dx.Split(","))
-            {
-                <div class="form-group row">
-                    @if (i == 0)
-                    {
-                        <label class="col-md-3 lessWidth m-t-15">Dx</label>
-                    }
-                    else
-                    {
-                        <label class="col-md-3 lessWidth m-t-15"></label>
-                    }
-                    <div class="col-md-3 lessWidth input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">@j</span>
+        <div id="DivDx">
+            @{
+                int i = 0;
+                int j = 1;
+                int totalDxCount = Model.Dx.Split(",").Count() + 1;
+                foreach (var item in Model.Dx.Split(","))
+                {
+                    <div class="form-group row">
+                        @if (i == 0)
+                        {
+                            <label class="col-md-3 lessWidth m-t-15">Dx</label>
+                        }
+                        else
+                        {
+                            <label class="col-md-3 lessWidth m-t-15"></label>
+                        }
+                        <div class="col-md-3 lessWidth input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">@j</span>
+                            </div>
+                            <input class="form-control CoderDetails valid" type="text" value="@item">
                         </div>
-                        <input class="form-control CoderDetails valid" id="txt_@i" name="Dx_@i" title="txt_@i" type="text" value="@item">
-                    </div>
-                    <div class="col-md-3 lessWidth input-group" id="DivDx">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">@j</span>
+                        <div class="col-md-3 lessWidth input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">@j</span>
+                            </div>
+                            <input type="text" id="txtDx_@j" class="form-control txtDx" autocomplete="off" tabindex="@j" placeholder="Code" value="@item" />
                         </div>
-                        <input type="text" id="txtDx_@j" title="txtDx_@j" onfocusout="DxFunction('txtDx_@j')" class="form-control txtDx" autocomplete="off" placeholder="Code" value="@item" />
+                        <div class="input-group-append CoderCorrections">
+                            <span class="input-group-text">
+                                &nbsp;<i id="Dx_@i" title="Dx_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                &nbsp;<i id="Dx_@i" title="Dx_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div class="col-md-3 lessWidth input-group Dx_@i" style="display:none">
+                            <input type="text" id="Dx_@i" class="form-control QARevised" />
+                        </div>
                     </div>
-                    <div class="input-group-append CoderCorrections">
-                        <span class="input-group-text">
-                            &nbsp;<i id="Dx_@i" title="Dx_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                            &nbsp;<i id="Dx_@i" title="Dx_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                </div>
 
-                i = i + 1;
-                j = j + 1;
+                    i = i + 1;
+                    j = j + 1;
+                }
             }
-        }
 
-        @{
-            i = 0;
-            j = 1;
-            foreach (var item in Model.CPTCode.Split(","))
-            {
-                string[] cptcodes = item.Split("^");
-
-                <div class="form-group row">
-                    @if (i == 0)
-                    {
-                        <label class="col-md-3 lessWidth m-t-15">CPT</label>
-                    }
-                    else
-                    {
-                        <label class="col-md-3 lessWidth m-t-15"></label>
-                    }
-
-                    <div class="col-md-3 CptlessWidth input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">@j</span>
-                        </div>
-                        <input type="text" class="form-control CoderDetails" id="txtCpt_@i" title="txtCpt_@i" autocomplete="off" placeholder="Code" value="@cptcodes[0]" />
-                        <input type="text" class="form-control CoderDetails" id="txtMod_@i" title="txtMod_@i" autocomplete="off" placeholder="Mod" value="@cptcodes[1]" />
-                        <input type="text" id="txtQty_@i" title="txtQty_@i" class="form-control CoderDetails" autocomplete="off" placeholder="1" value="@cptcodes[2]" />
-                        <input type="text" id="txtLinks_@i" title="txtLinks_@i" class="form-control CoderDetails" autocomplete="off" placeholder="Link All" value="@cptcodes[3]" />
-                    </div>
-
-                    <div class="col-md-3 CptlessWidth input-group" id="DivCpt">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">@j</span>
-                        </div>
-                        <input type="text" class="form-control" id="txtCpt_@j" title="txtCpt_@j" autocomplete="off" placeholder="Code" value="@cptcodes[0]" />
-                        <input type="text" class="form-control" id="txtMod_@j" title="txtMod_@j" autocomplete="off" placeholder="Mod" value="@cptcodes[1]" />
-                        <input type="text" id="txtQty_@j" title="txtQty_@j" class="form-control" autocomplete="off" placeholder="1" value="@cptcodes[2]" />
-                        <input type="text" id="txtLinks_@j" title="txtLinks_@j" onfocusout="CptFunction('txtLinks_@j +')" class="form-control" autocomplete="off" placeholder="Link All" value="@cptcodes[3]" />
-                    </div>
-                    <div class="input-group-append CoderCorrections">
-                        <span class="input-group-text">
-                            &nbsp;<i id="Dx_@i" title="Dx_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                            &nbsp;<i id="Dx_@i" title="Dx_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                        </span>
-                    </div>
+            <div class="form-group row">
+                <label class="col-md-3 lessWidth m-t-15"></label>
+                <div class="col-md-3 lessWidth input-group">
                 </div>
-                i = i + 1;
-                j = j + 1;
+                <div class="col-md-3 lessWidth input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">@totalDxCount</span>
+                    </div>
+                    <input type="text" id="txtDx_@totalDxCount" onfocusout="DxFunction('txtDx_@totalDxCount')" class="form-control txtDx" tabindex="@totalDxCount" autofocus="autofocus" autocomplete="off" placeholder="Code" />
+                </div>
+            </div>
+        </div>
+        <div id="DivCpt">
+            @{
+                i = 0;
+                j = 1;
+                int totalCptCount = Model.CPTCode.Split(",").Count() + 1;
+                foreach (var item in Model.CPTCode.Split(","))
+                {
+                    string[] cptcodes = item.Split("^");
+
+                    <div class="form-group row">
+                        @if (i == 0)
+                        {
+                            <label class="col-md-3 lessWidth m-t-15">CPT</label>
+                        }
+                        else
+                        {
+                            <label class="col-md-3 lessWidth m-t-15"></label>
+                        }
+
+                        <div class="col-md-3 CptlessWidth input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">@j</span>
+                            </div>
+                            <input type="text" class="form-control CoderDetails" id="txtCpt_@i" title="txtCpt_@i" autocomplete="off" placeholder="Code" value="@cptcodes[0]" />
+                            <input type="text" class="form-control CoderDetails" id="txtMod_@i" title="txtMod_@i" autocomplete="off" placeholder="Mod" value="@cptcodes[1]" />
+                            <input type="text" id="txtQty_@i" title="txtQty_@i" class="form-control CoderDetails" autocomplete="off" placeholder="1" value="@cptcodes[2]" />
+                            <input type="text" id="txtLinks_@i" title="txtLinks_@i" class="form-control CoderDetails" autocomplete="off" placeholder="Link All" value="@cptcodes[3]" />
+                        </div>
+
+                        <div class="col-md-3 CptlessWidth input-group" id="DivCpt">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">@j</span>
+                            </div>
+                            <input type="text" class="form-control" id="txtCpt_@j" title="txtCpt_@j" autocomplete="off" placeholder="Code" value="@cptcodes[0]" />
+                            <input type="text" class="form-control" id="txtMod_@j" title="txtMod_@j" autocomplete="off" placeholder="Mod" value="@cptcodes[1]" />
+                            <input type="text" id="txtQty_@j" title="txtQty_@j" class="form-control" autocomplete="off" placeholder="1" value="@cptcodes[2]" />
+                            @if (i + 1 == totalCptCount)
+                            {
+                                <input type="text" id="txtLinks_@j" title="txtLinks_@j" onfocusout="CptFunction('txtLinks_@j +')" class="form-control" autocomplete="off" placeholder="Link All" value="@cptcodes[3]" />
+                            }
+                            else
+                            {
+                                <input type="text" id="txtLinks_@j" title="txtLinks_@j" class="form-control" autocomplete="off" placeholder="Link All" value="@cptcodes[3]" />
+                            }
+                        </div>
+                        <div class="input-group-append CoderCorrections">
+                            <span class="input-group-text">
+                                &nbsp;<i id="Cpt_@i" title="Cpt_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                &nbsp;<i id="Cpt_@i" title="Cpt_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div class="col-md-3 lessWidth input-group Cpt_@i" style="display:none">
+                            <input type="text" id="Cpt_@i" class="form-control QARevised" />
+                        </div>
+                    </div>
+                    i = i + 1;
+                    j = j + 1;
+                }
             }
-        }
+            <div class="form-group row">
+                <label class="col-md-3 lessWidth m-t-15"></label>
+                <div class="col-md-3 CptlessWidth input-group">
+                </div>
+                <div class="col-md-3 CptlessWidth input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">@totalCptCount</span>
+                    </div>
+                    <input type="text" class="form-control" id="txtCpt_@totalCptCount" title="txtCpt_@totalCptCount" autofocus="autofocus" autocomplete="off" placeholder="Code" />
+                    <input type="text" class="form-control" id="txtMod_@totalCptCount" title="txtMod_@totalCptCount" autocomplete="off" placeholder="Mod" />
+                    <input type="text" id="txtQty_@totalCptCount" title="txtQty_@totalCptCount" class="form-control" autocomplete="off" placeholder="1" />
+                    <input type="text" id="txtLinks_@totalCptCount" title="txtLinks_@totalCptCount" onfocusout="CptFunction('txtLinks_@totalCptCount+')" class="form-control" autocomplete="off" placeholder="Link All" />
+                </div>
+            </div>
+        </div>
 
         @*<div class="form-group row">
                 <label class="col-md-3 lessWidth m-t-15">CPT</label>
