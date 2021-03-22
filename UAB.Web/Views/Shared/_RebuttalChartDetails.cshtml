@@ -63,7 +63,6 @@
                 @{string Accepted = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                 @{string Rejected = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-
                 @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @class = "form-control CoderDetails" })
                 <div class="input-group-append QACorrections">
                     <span class="input-group-text">
@@ -125,6 +124,39 @@
             </div>
         </div>
         <div class="form-group row">
+            <label class="col-md-3 lessWidth m-t-15"> Feedback to Provider</label>
+            <div class="col-md-3 lessWidth input-group">
+                @{ Accepted = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                @{ Rejected = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+
+                @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @class = "form-control CoderDetails" })
+                <div class="input-group-append" style="height: 38px;">
+                    <span class="input-group-text QACorrections">
+                        &nbsp;<i id="Feedback" class="@Accepted" aria-hidden="true"></i>
+                        &nbsp;<i id="Feedback" class="@Rejected" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+            @{Show = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "display:none" : "display:flex");}
+            <div class="col-md-3 lessWidth input-group">
+                @Html.DropDownListFor(model => model.QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = Show, @class = "form-control QARevised", @id = "Feedback1" })
+                @Html.ValidationMessageFor(model => model.QAProviderFeedbackID, null, new { @class = "text-danger errMsg" })
+            </div>
+            <div class="col-md-3 lessWidth input-group">
+                @Html.TextBoxFor(model => model.QAProviderFeedbackRemarks, new { @title = Model.QAProviderFeedbackRemarks, @style = Show, @class = "form-control QARevised", @id = "Feedback2" })
+                @Html.ValidationMessageFor(model => model.QAProviderFeedbackRemarks, null, new { @class = "text-danger errMsg" })
+            </div>
+            <div class="input-group-append CoderCorrections" style="@Show">
+                <span class="input-group-text">
+                    &nbsp;<i id="ProviderFeedback" title="Feedback1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="ProviderFeedback" title="Feedback1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                </span>
+            </div>
+            <div class="col-md-3 input-group CoderCorrections" style="@Show">
+                @Html.TextBoxFor(model => model.RevisedProviderFeedbackRemarks, new { @style = Show, @class = "form-control", @id = "RevisedProviderFeedbackRemarks" })
+            </div>
+        </div>
+        <div class="form-group row">
             <label class="col-md-3 lessWidth m-t-15">Note Title</label>
             <div class="col-md-3 lessWidth">
                 @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails" })
@@ -160,8 +192,8 @@
                         </div>
                         <div class="input-group-append CoderCorrections">
                             <span class="input-group-text">
-                                &nbsp;<i id="Dx_@i" title="Dx_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                                &nbsp;<i id="Dx_@i" title="Dx_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                &nbsp;<i id="Dx_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                &nbsp;<i id="Dx_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                             </span>
                         </div>
                         <div class="col-md-3 lessWidth input-group Dx_@i" style="display:none">
@@ -219,16 +251,16 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">@j</span>
                             </div>
-                            <input type="text" class="form-control" id="txtCpt_@j" title="txtCpt_@j" autocomplete="off" placeholder="Code" value="@cptcodes[0]" />
-                            <input type="text" class="form-control" id="txtMod_@j" title="txtMod_@j" autocomplete="off" placeholder="Mod" value="@cptcodes[1]" />
-                            <input type="text" id="txtQty_@j" title="txtQty_@j" class="form-control" autocomplete="off" placeholder="1" value="@cptcodes[2]" />
+                            <input type="text" class="form-control" id="txtCpt_@j" autocomplete="off" placeholder="Code" value="@cptcodes[0]" />
+                            <input type="text" class="form-control" id="txtMod_@j" autocomplete="off" placeholder="Mod" value="@cptcodes[1]" />
+                            <input type="text" id="txtQty_@j" class="form-control" autocomplete="off" placeholder="1" value="@cptcodes[2]" />
                             @if (i + 1 == totalCptCount)
                             {
-                                <input type="text" id="txtLinks_@j" title="txtLinks_@j" onfocusout="CptFunction('txtLinks_@j +')" class="form-control" autocomplete="off" placeholder="Link All" value="@cptcodes[3]" />
+                                <input type="text" id="txtLinks_@j" onfocusout="CptFunction('txtLinks_@j +')" class="form-control" autocomplete="off" placeholder="Link All" value="@cptcodes[3]" />
                             }
                             else
                             {
-                                <input type="text" id="txtLinks_@j" title="txtLinks_@j" class="form-control" autocomplete="off" placeholder="Link All" value="@cptcodes[3]" />
+                                <input type="text" id="txtLinks_@j" class="form-control" autocomplete="off" placeholder="Link All" value="@cptcodes[3]" />
                             }
                         </div>
                         <div class="input-group-append CoderCorrections">
@@ -262,133 +294,101 @@
         </div>
 
         @*<div class="form-group row">
-                <label class="col-md-3 lessWidth m-t-15">CPT</label>
-                <div class="col-md-3 lessWidth input-group">
-                    @{ Accepted = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                    @{ Rejected = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+            <label class="col-md-3 lessWidth m-t-15">CPT</label>
+            <div class="col-md-3 lessWidth input-group">
+                @{ Accepted = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                @{ Rejected = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-                    @Html.TextAreaFor(model => model.CPTCode, new { @class = "form-control CoderDetails" })
-                    <div class="input-group-append QACorrections">
-                        <span class="input-group-text">
-                            &nbsp;<i id="CPTCode" class="@Accepted" aria-hidden="true"></i>
-                            &nbsp;<i id="CPTCode" class="@Rejected" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                </div>
-                @{Show = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "display:none" : "display:flex");}
-                <div class="col-md-3 lessWidth input-group">
-                    @Html.TextAreaFor(model => model.QACPTCode, new { @title = Model.QACPTCode, @style = Show, @id = "CPTCode1", @class = "form-control QARevised" })
-                    @Html.ValidationMessageFor(model => model.QACPTCode, null, new { @class = "text-danger errMsg" })
-                </div>
-                <div class="col-md-3 lessWidth input-group">
-                    @Html.TextBoxFor(model => model.QACPTCodeRemarks, new { @title = Model.QACPTCodeRemarks, @style = Show, @class = "form-control QARevised", @id = "CPTCode2" })
-                    @Html.ValidationMessageFor(model => model.QACPTCodeRemarks, null, new { @class = "text-danger errMsg" })
-                </div>
-                <div class="input-group-append CoderCorrections" style="@Show">
+                @Html.TextAreaFor(model => model.CPTCode, new { @class = "form-control CoderDetails" })
+                <div class="input-group-append QACorrections">
                     <span class="input-group-text">
-                        &nbsp;<i id="CPT" title="CPTCode1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                        &nbsp;<i id="CPT" title="CPTCode1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i id="CPTCode" class="@Accepted" aria-hidden="true"></i>
+                        &nbsp;<i id="CPTCode" class="@Rejected" aria-hidden="true"></i>
                     </span>
-                </div>
-                <div class="col-md-3 input-group CoderCorrections" style="@Show">
-                    @Html.TextBoxFor(model => model.RevisedCPTRemarks, new { @style = Show, @class = "form-control", @id = "RevisedCPTRemarks" })
                 </div>
             </div>
-            <div class="form-group row">
-                <label class="col-md-3 lessWidth m-t-15">Mod</label>
-                <div class="col-md-3 lessWidth input-group">
-                    @{ Accepted = (string.IsNullOrEmpty(Model.QAModRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                    @{ Rejected = (string.IsNullOrEmpty(Model.QAModRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
-
-                    @Html.TextAreaFor(model => model.Mod, new { @class = "form-control CoderDetails" })
-                    <span class="input-group-text QACorrections">
-                        &nbsp;<i id="Mod" class="@Accepted" aria-hidden="true"></i>
-                        &nbsp;<i id="Mod" class="@Rejected" aria-hidden="true"></i>
-                    </span>
-                </div>
-                @{Show = (string.IsNullOrEmpty(Model.QAModRemarks) ? "display:none" : "display:flex");}
-                <div class="col-md-3 lessWidth input-group">
-                    @Html.TextAreaFor(model => model.QAMod, new { @title = Model.QAMod, @style = Show, @class = "form-control QARevised", @id = "Mod1" })
-                    @Html.ValidationMessageFor(model => model.QAMod, null, new { @class = "text-danger errMsg" })
-                </div>
-                <div class="col-md-3 lessWidth input-group">
-                    @Html.TextBoxFor(model => model.QAModRemarks, new { @title = Model.QAModRemarks, @style = Show, @class = "form-control QARevised", @id = "Mod2" })
-                    @Html.ValidationMessageFor(model => model.QAModRemarks, null, new { @class = "text-danger errMsg" })
-                </div>
-                <div class="input-group-append CoderCorrections" style="@Show">
-                    <span class="input-group-text">
-                        &nbsp;<i id="Mod" title="Mod1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                        &nbsp;<i id="Mod" title="Mod1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                    </span>
-                </div>
-                <div class="col-md-3 input-group CoderCorrections" style="@Show">
-                    @Html.TextBoxFor(model => model.RevisedModRemarks, new { @class = "form-control", @id = "RevisedModRemarks" })
-                </div>
+            @{Show = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "display:none" : "display:flex");}
+            <div class="col-md-3 lessWidth input-group">
+                @Html.TextAreaFor(model => model.QACPTCode, new { @title = Model.QACPTCode, @style = Show, @id = "CPTCode1", @class = "form-control QARevised" })
+                @Html.ValidationMessageFor(model => model.QACPTCode, null, new { @class = "text-danger errMsg" })
             </div>
-            <div class="form-group row">
-                <label class="col-md-3 lessWidth m-t-15">Dx</label>
-                <div class="col-md-3 lessWidth input-group">
-                    @{ Accepted = (string.IsNullOrEmpty(Model.QADxRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                    @{ Rejected = (string.IsNullOrEmpty(Model.QADxRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
-
-                    @Html.TextAreaFor(model => model.Dx, new { @class = "form-control CoderDetails" })
-                    <span class="input-group-text QACorrections">
-                        &nbsp;<i id="Dx" class="@Accepted" aria-hidden="true"></i>
-                        &nbsp;<i id="Dx" class="@Rejected" aria-hidden="true"></i>
-                    </span>
-                </div>
-                @{Show = (string.IsNullOrEmpty(Model.QADxRemarks) ? "display:none" : "display:flex");}
-                <div class="col-md-3 lessWidth input-group">
-                    @Html.TextAreaFor(model => model.QADx, new { @title = Model.QADx, @style = Show, @id = "Dx1", @class = "form-control QARevised" })
-                    @Html.ValidationMessageFor(model => model.QADx, null, new { @class = "text-danger errMsg" })
-                </div>
-                <div class="col-md-3 lessWidth input-group">
-                    @Html.TextBoxFor(model => model.QADxRemarks, new { @title = Model.QADxRemarks, @style = Show, @class = "form-control QARevised", @id = "Dx2" })
-                    @Html.ValidationMessageFor(model => model.QADxRemarks, null, new { @class = "text-danger errMsg" })
-                </div>
-                <div class="input-group-append CoderCorrections" style="@Show">
-                    <span class="input-group-text">
-                        &nbsp;<i id="DX" title="Dx1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                        &nbsp;<i id="DX" title="Dx1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                    </span>
-                </div>
-                <div class="col-md-3 input-group CoderCorrections" style="@Show">
-                    @Html.TextBoxFor(model => model.RevisedDXRemarks, new { @class = "form-control", @id = "RevisedDXRemarks" })
-                </div>
+            <div class="col-md-3 lessWidth input-group">
+                @Html.TextBoxFor(model => model.QACPTCodeRemarks, new { @title = Model.QACPTCodeRemarks, @style = Show, @class = "form-control QARevised", @id = "CPTCode2" })
+                @Html.ValidationMessageFor(model => model.QACPTCodeRemarks, null, new { @class = "text-danger errMsg" })
             </div>
-            <div class="form-group row">
-                <label class="col-md-3 lessWidth m-t-15"> Feedback to Provider</label>
-                <div class="col-md-3 lessWidth input-group">
-                    @{ Accepted = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                    @{ Rejected = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+            <div class="input-group-append CoderCorrections" style="@Show">
+                <span class="input-group-text">
+                    &nbsp;<i id="CPT" title="CPTCode1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="CPT" title="CPTCode1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                </span>
+            </div>
+            <div class="col-md-3 input-group CoderCorrections" style="@Show">
+                @Html.TextBoxFor(model => model.RevisedCPTRemarks, new { @style = Show, @class = "form-control", @id = "RevisedCPTRemarks" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 lessWidth m-t-15">Mod</label>
+            <div class="col-md-3 lessWidth input-group">
+                @{ Accepted = (string.IsNullOrEmpty(Model.QAModRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                @{ Rejected = (string.IsNullOrEmpty(Model.QAModRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-                    @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @class = "form-control CoderDetails" })
-                    <div class="input-group-append" style="height: 38px;">
-                        <span class="input-group-text QACorrections">
-                            &nbsp;<i id="Feedback" class="@Accepted" aria-hidden="true"></i>
-                            &nbsp;<i id="Feedback" class="@Rejected" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                </div>
-                @{Show = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "display:none" : "display:flex");}
-                <div class="col-md-3 lessWidth input-group">
-                    @Html.DropDownListFor(model => model.QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = Show, @class = "form-control QARevised", @id = "Feedback1" })
-                    @Html.ValidationMessageFor(model => model.QAProviderFeedbackID, null, new { @class = "text-danger errMsg" })
-                </div>
-                <div class="col-md-3 lessWidth input-group">
-                    @Html.TextBoxFor(model => model.QAProviderFeedbackRemarks, new { @title = Model.QAProviderFeedbackRemarks, @style = Show, @class = "form-control QARevised", @id = "Feedback2" })
-                    @Html.ValidationMessageFor(model => model.QAProviderFeedbackRemarks, null, new { @class = "text-danger errMsg" })
-                </div>
-                <div class="input-group-append CoderCorrections" style="@Show">
-                    <span class="input-group-text">
-                        &nbsp;<i id="ProviderFeedback" title="Feedback1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                        &nbsp;<i id="ProviderFeedback" title="Feedback1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                    </span>
-                </div>
-                <div class="col-md-3 input-group CoderCorrections" style="@Show">
-                    @Html.TextBoxFor(model => model.RevisedProviderFeedbackRemarks, new { @style = Show, @class = "form-control", @id = "RevisedProviderFeedbackRemarks" })
-                </div>
-            </div>*@
+                @Html.TextAreaFor(model => model.Mod, new { @class = "form-control CoderDetails" })
+                <span class="input-group-text QACorrections">
+                    &nbsp;<i id="Mod" class="@Accepted" aria-hidden="true"></i>
+                    &nbsp;<i id="Mod" class="@Rejected" aria-hidden="true"></i>
+                </span>
+            </div>
+            @{Show = (string.IsNullOrEmpty(Model.QAModRemarks) ? "display:none" : "display:flex");}
+            <div class="col-md-3 lessWidth input-group">
+                @Html.TextAreaFor(model => model.QAMod, new { @title = Model.QAMod, @style = Show, @class = "form-control QARevised", @id = "Mod1" })
+                @Html.ValidationMessageFor(model => model.QAMod, null, new { @class = "text-danger errMsg" })
+            </div>
+            <div class="col-md-3 lessWidth input-group">
+                @Html.TextBoxFor(model => model.QAModRemarks, new { @title = Model.QAModRemarks, @style = Show, @class = "form-control QARevised", @id = "Mod2" })
+                @Html.ValidationMessageFor(model => model.QAModRemarks, null, new { @class = "text-danger errMsg" })
+            </div>
+            <div class="input-group-append CoderCorrections" style="@Show">
+                <span class="input-group-text">
+                    &nbsp;<i id="Mod" title="Mod1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="Mod" title="Mod1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                </span>
+            </div>
+            <div class="col-md-3 input-group CoderCorrections" style="@Show">
+                @Html.TextBoxFor(model => model.RevisedModRemarks, new { @class = "form-control", @id = "RevisedModRemarks" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 lessWidth m-t-15">Dx</label>
+            <div class="col-md-3 lessWidth input-group">
+                @{ Accepted = (string.IsNullOrEmpty(Model.QADxRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                @{ Rejected = (string.IsNullOrEmpty(Model.QADxRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+
+                @Html.TextAreaFor(model => model.Dx, new { @class = "form-control CoderDetails" })
+                <span class="input-group-text QACorrections">
+                    &nbsp;<i id="Dx" class="@Accepted" aria-hidden="true"></i>
+                    &nbsp;<i id="Dx" class="@Rejected" aria-hidden="true"></i>
+                </span>
+            </div>
+            @{Show = (string.IsNullOrEmpty(Model.QADxRemarks) ? "display:none" : "display:flex");}
+            <div class="col-md-3 lessWidth input-group">
+                @Html.TextAreaFor(model => model.QADx, new { @title = Model.QADx, @style = Show, @id = "Dx1", @class = "form-control QARevised" })
+                @Html.ValidationMessageFor(model => model.QADx, null, new { @class = "text-danger errMsg" })
+            </div>
+            <div class="col-md-3 lessWidth input-group">
+                @Html.TextBoxFor(model => model.QADxRemarks, new { @title = Model.QADxRemarks, @style = Show, @class = "form-control QARevised", @id = "Dx2" })
+                @Html.ValidationMessageFor(model => model.QADxRemarks, null, new { @class = "text-danger errMsg" })
+            </div>
+            <div class="input-group-append CoderCorrections" style="@Show">
+                <span class="input-group-text">
+                    &nbsp;<i id="DX" title="Dx1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="DX" title="Dx1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                </span>
+            </div>
+            <div class="col-md-3 input-group CoderCorrections" style="@Show">
+                @Html.TextBoxFor(model => model.RevisedDXRemarks, new { @class = "form-control", @id = "RevisedDXRemarks" })
+            </div>
+        </div>
+        *@
     </div>
 
     <div class="clearfix"></div>
