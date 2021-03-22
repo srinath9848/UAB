@@ -463,10 +463,34 @@ namespace UAB.DAL
             }
             return chartSummaryDTO;
         }
+
+        private DataTable GetCpt(string cpt)
+        {
+            DataTable dtCPT = new DataTable();
+            dtCPT.Columns.Add("RNO", typeof(int));
+            dtCPT.Columns.Add("CPTCode", typeof(string));
+            dtCPT.Columns.Add("Mod", typeof(string));
+            dtCPT.Columns.Add("Qty", typeof(string));
+            dtCPT.Columns.Add("Links", typeof(string));
+            // 71045^null^1^null, 
+            // 71046^null^1^null, 
+            // 71047^ null^1^null
+            string[] lstcpts = cpt.Split(",");
+            int i = 0;
+            foreach (var item in lstcpts)
+            {
+                i = i + 1;
+                string[] lstcptrow = item.Split("^");
+                dtCPT.Rows.Add(i, lstcptrow[0], lstcptrow[1], lstcptrow[2], lstcptrow[3]);
+            }
+            return dtCPT;
+        }
         public void SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO)
         {
             using (var context = new UABContext())
             {
+                DataTable dtCPT = GetCpt(chartSummaryDTO.CPTCode);
+
                 var param = new SqlParameter[] {
                      new SqlParameter() {
                             ParameterName = "@PayorID",
@@ -487,44 +511,52 @@ namespace UAB.DAL
                             Value = chartSummaryDTO.ProviderID
                         },
                          new SqlParameter() {
-                            ParameterName = "@CPTCode",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            ParameterName = "@utCpt",
+                            SqlDbType =  System.Data.SqlDbType.Structured,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.CPTCode
+                            TypeName = "utCpt",
+                            Value = dtCPT
                         },
-                        new SqlParameter() {
-                            ParameterName = "@Mod",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.Mod
-                        }
-                        ,  new SqlParameter() {
-                            ParameterName = "@Dx",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.Dx
-                        } , new SqlParameter() {
-                            ParameterName = "@ProviderFeedbackID",
-                            SqlDbType =  System.Data.SqlDbType.Int,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.ProviderFeedbackID
-                        }, new SqlParameter() {
-                            ParameterName = "@CoderQuestion",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.CoderQuestion
-                        } ,   new SqlParameter() {
-                            ParameterName = "@ClinicalcaseID",
-                            SqlDbType =  System.Data.SqlDbType.Int,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.CodingDTO.ClinicalCaseID
-                        }
-                       ,   new SqlParameter() {
-                            ParameterName = "@UserId",
-                            SqlDbType =  System.Data.SqlDbType.Int,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = mUserId
-                         }
+
+                new SqlParameter()
+                {
+                    ParameterName = "@Mod",
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    Direction = System.Data.ParameterDirection.Input,
+                    Value = chartSummaryDTO.Mod
+                }
+                ,  new SqlParameter()
+                 {
+                     ParameterName = "@Dx",
+                     SqlDbType = System.Data.SqlDbType.VarChar,
+                     Direction = System.Data.ParameterDirection.Input,
+                     Value = chartSummaryDTO.Dx
+                 } , new SqlParameter()
+                 {
+                     ParameterName = "@ProviderFeedbackID",
+                     SqlDbType = System.Data.SqlDbType.Int,
+                     Direction = System.Data.ParameterDirection.Input,
+                     Value = chartSummaryDTO.ProviderFeedbackID
+                 }, new SqlParameter()
+                 {
+                     ParameterName = "@CoderQuestion",
+                     SqlDbType = System.Data.SqlDbType.VarChar,
+                     Direction = System.Data.ParameterDirection.Input,
+                     Value = chartSummaryDTO.CoderQuestion
+                 } ,   new SqlParameter()
+                 {
+                     ParameterName = "@ClinicalcaseID",
+                     SqlDbType = System.Data.SqlDbType.Int,
+                     Direction = System.Data.ParameterDirection.Input,
+                     Value = chartSummaryDTO.CodingDTO.ClinicalCaseID
+                 }
+                ,   new SqlParameter()
+                 {
+                     ParameterName = "@UserId",
+                     SqlDbType = System.Data.SqlDbType.Int,
+                     Direction = System.Data.ParameterDirection.Input,
+                     Value = mUserId
+                 }
                 };
 
                 using (var con = context.Database.GetDbConnection())

@@ -94,4 +94,85 @@
     validationPopUp = function () {
         $("#validationPopUp").hide();
     };
+
+    var dxArray = [];
+    function DxFunction(txt_0) {
+        var title = txt_0;
+        var id = parseInt(title.split("_")[1]) + parseInt(1);
+        if (title.split("_")[1] !== undefined) {
+            var id1 = parseInt(id) - parseInt(1);
+            var val = $("#txt" + id1).val();
+            if (val !== "" && val !== null) {
+                if ($.inArray(val, dxArray) == -1) {
+                    dxArray.push(val);
+                    $("#Dx").val(dxArray);
+                }
+                var count = id + parseInt(1);
+                $("#txt" + id).focus();
+                var text = "'" + "txt_" + id + "'";
+                $("#DivDx").append('<div id="DivDxRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" ></label><div class="col-md-3 lessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + count + '</span></div><input type="text" placeholder="Code" onfocusout="DxFunction(' + text + ')" class="form-control CoderDetails txtDx" title="txt_' + id + '" id="txt' + id + '" /></div></div>');
+                $("#txt" + id).focus();
+
+            } else {
+                //var id2 = parseInt(id) - parseInt(1);
+                //var val = $("#txt" + id2).val();
+                //if (val == "") {
+                //    if (id2 !== 0) {
+                //        dxArray.splice(id2, id2);
+                //        $("#Dx").val(dxArray);
+                //        $('#tr' + id2).remove();
+                //        //$("#txt" + id2).focus();
+                //    }
+                //}
+            }
+        }
+    }
+
+    var cptArray = [];
+    function CptFunction(txtCpt_0) {
+        var title = txtCpt_0;
+        var id = parseInt(title.split("_")[1]) + parseInt(1);
+        if (title.split("_")[1] !== undefined) {
+            var id1 = parseInt(id) - parseInt(1);
+            var val1 = $("#txtCpt" + id1).val();
+
+            var val2 = null;
+            if ($("#txtMod" + id1).val() != "")
+                val2 = $("#txtMod" + id1).val();
+
+            var val3 = null;
+            if ($("#txtQty" + id1).val() != "")
+                val3 = $("#txtQty" + id1).val();
+
+            var val4 = null;
+            if ($("#txtLinks" + id1).val() != "")
+                val4 = $("#txtLinks" + id1).val();
+
+            if (val1 !== "") {
+                if ($.inArray(val1, cptArray) == -1) {
+                    cptArray.push(val1 + "^" + val2 + "^" + val3 + "^" + val4);
+                    $("#CPTCode").val(cptArray);
+                }
+                var count = id + parseInt(1);
+                var txtLinks = "'" + "txtLinks_" + id + "'";
+                var tabindex1 = parseInt(9) + parseInt(id) + parseInt(count) + parseInt(val1);
+                var tabindex2 = parseInt(10) + parseInt(id) + parseInt(count) + parseInt(val1);
+                var tabindex3 = parseInt(11) + parseInt(id) + parseInt(count) + parseInt(val1);
+                var tabindex4 = parseInt(12) + parseInt(id) + parseInt(count) + parseInt(val1);
+                $("#DivCpt").append('<div id="DivCptRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" ></label><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + count + '</span></div><input tabindex = "' + tabindex1 + '" type = "text" placeholder = "Code" class= "form-control CoderDetails txtCpt" title = "txtCpt_' + id + '" id = "txtCpt' + id + '" /><input tabindex="' + tabindex2 + '" type="text" class="form-control CoderDetails" placeholder="Mod" title="txtMod_' + id + '" id="txtMod' + id + '"/><input tabindex="' + tabindex3 + '" type="text" class="form-control CoderDetails" placeholder="1" value="1" title="txtQty_' + id + '" id="txtQty' + id + '"/><input tabindex="' + tabindex4 + '" type="text" class="form-control CoderDetails" placeholder="Link All" onfocusout="CptFunction(' + txtLinks + ')" title="txtLinks_' + id + '" id="txtLinks' + id + '"/></div></div>');
+                $("#txtCpt" + id).focus();
+            } else {
+                //var id2 = parseInt(id) - parseInt(1);
+                //var val = $("#txtCpt" + id2).val();
+                //if (val == "") {
+                //    if (id2 !== 0) {
+                //        cptArray.splice(id2, id2);
+                //        $("#CPTCode").val(cptArray);
+                //        $('#cpttr' + id2).remove();
+                //        //$("#CPTCode" + id2).focus();
+                //    }
+                //}
+            }
+        }
+    }
 </script>

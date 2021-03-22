@@ -55,11 +55,6 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             #endregion
 
-            if (chartSummaryDTO.CodingDTO.ClinicalCaseID == 0)
-            {
-                TempData["error"] = "There are no charts";
-                return RedirectToAction("CodingSummary");
-            }
             return View("Coding", chartSummaryDTO);
         }
 
@@ -195,7 +190,7 @@ namespace UAB.Controllers
 
         [HttpPost]
         public IActionResult SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO, string codingSubmitAndGetNext)
-        {
+        {   
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             if (string.IsNullOrEmpty(codingSubmitAndGetNext))
@@ -269,6 +264,20 @@ namespace UAB.Controllers
             TempData["Success"] = "Chart Details posted successfully !";
             return View("CodingSummary", lstDto);
         }
+
+        public IActionResult GetNewCliam(int id)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+
+            #region binding data
+            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
+            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
+            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            #endregion
+
+            ViewBag.id = id;
+            return PartialView("_NewCliam");
+        }
         #endregion
 
         #region QA
@@ -280,7 +289,7 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.QA.ToString());
-
+	
             return View(lstDto);
         }
         public IActionResult GetQAAvailableChart(string Role, string ChartType, int ProjectID, string ProjectName)
@@ -296,12 +305,6 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
-
-            if (chartSummaryDTO.CodingDTO.ClinicalCaseID == 0)
-            {
-                TempData["error"] = "There are no charts";
-                return RedirectToAction("QASummary");
-            }
             return View("QA", chartSummaryDTO);
         }
 
@@ -505,13 +508,6 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
-
-            if (chartSummaryDTO.CodingDTO.ClinicalCaseID == 0)
-            {
-                TempData["error"] = "There are no charts";
-                return RedirectToAction("ShadowQASummary");
-            }
-
             return View("ShadowQA", chartSummaryDTO);
         }
 
