@@ -18,7 +18,6 @@
         <div class="card-body">
             <h4 class="card-title"><span>Chart ID : <label style="color: black;">@Model.CodingDTO.ClinicalCaseID</label></span></h4>
         </div>
-        <input type="hidden" id="tabindex" />
         @Html.HiddenFor(model => model.Dx)
         @Html.HiddenFor(model => model.CPTCode)
         @Html.HiddenFor(model => model.Dx, new { @id = "Dx1" })
@@ -32,15 +31,15 @@
         <div class="card">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item"> <a class="nav-link active tab" data-toggle="tab" href="#home" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down">Cliam 1</span></a> </li>
-                <li class="nav-item"> <a class="nav-link tab" data-toggle="tab" id="2" title="tabDiv" href="#profile" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down" id="htxt2">+</span></a> </li>
+                <li class="nav-item"> <a class="nav-link active tab" data-toggle="tab" id="1" title="tabDiv1" href="#home" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down">Cliam 1</span></a> </li>
+                <li class="nav-item"> <a class="nav-link tab" data-toggle="tab" id="2" title="tabDiv2" href="#profile" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down" id="htxt2">+</span></a> </li>
                 @*<li class="nav-item"> <a class="nav-link tab" data-toggle="tab" id="3" title="tabDiv" href="#profile" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down" id="htxt3">+</span></a> </li>
                     <li class="nav-item"> <a class="nav-link tab" data-toggle="tab" id="4" title="tabDiv" href="#profile" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down" id="htxt4">+</span></a> </li>*@
             </ul>
             <!-- Tab panes -->
             <div class="tab-content tabcontent-border">
                 <div class="tab-pane active" id="home" role="tabpanel">
-                    <div class="p-20">
+                    <div class="p-20" id="tabDiv1">
                         <br />
                         <div class="form-group row">
                             <label class="col-md-3 m-t-15">Provider</label>
@@ -93,34 +92,9 @@
                                 </div>
                             </div>
                         </div>
-
-                        @*<label class="col-md-3 m-t-15">CPT</label>
-                            <div class="col-md-3">
-                                <table>
-                                    <tbody id="cpttable" style="display:block">
-                                        <tr id="cpttr0">
-                                            <td><span class="badge badge-pill badge-info">1</span></td>
-                                            <td style="width:50px;">
-                                                @Html.TextBoxFor(model => model.CPTCode, new { @class = "form-control CoderDetails txtCpt", @autocomplete = "off", @placeholder = "Code", @id = "txtCpt0", @title = "txtCpt_0", @tabindex = "5" })
-                                                @Html.ValidationMessageFor(model => model.CPTCode, null, new { @class = "text-danger Dxerror" })
-                                            </td>
-                                            <td style="width:50px;">
-                                                <input type="text" class="form-control CoderDetails" id="txtMod0" title="txtMod_0" autocomplete="off" placeholder="Mod" tabindex="6" />
-                                            </td>
-                                            <td style="width:30px;">
-                                                <input type="text" id="txtQty0" title="txtQty_0" class="form-control CoderDetails" autocomplete="off" placeholder="1" value="1" tabindex="7" />
-                                            </td>
-                                            <td style="width:50px;">
-                                                <input type="text" id="txtLinks0" title="txtLinks_0" onfocusout="CptFunction('txtLinks_0')" class="form-control CoderDetails" autocomplete="off" placeholder="Link All" tabindex="8" />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>*@
-
                     </div>
                     <div class="tab-pane p-20 show" id="profile" role="tabpanel">
-                        <div class="p-20" id="tabDiv">
+                        <div class="p-20" id="tabDiv2">
                         </div>
                     </div>
                     <div class="border-top">

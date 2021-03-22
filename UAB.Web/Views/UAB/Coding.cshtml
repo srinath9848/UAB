@@ -53,7 +53,6 @@
                 $("#txtDx_" + currId).removeAttr("onfocusout", "");
                 $("#txtDx_1").removeAttr("onfocusout", "");
                 $("#txtDx_" + id).focus();
-                $("#tabindex").val(id);
             } else {
                 //var id2 = parseInt(id) - parseInt(1);
                 //var val = $("#txt" + id2).val();
@@ -71,22 +70,20 @@
 
     var dxArray1 = [];
     function DxFunction1(txt_0) {
-        var title = txt_0;
-        var id = parseInt(title.split("_")[1]) + parseInt(1);
-        if (title.split("_")[1] !== undefined) {
-            var id1 = parseInt(id) - parseInt(1);
-            var val = $("#txtDx_" + id1).val();
+        var id = parseInt(txt_0.split("_")[1]) + parseInt(1);
+        if (txt_0.split("_")[1] !== undefined) {
+            var currId = parseInt(id) - parseInt(1);
+            var val = $("#txtDxx_" + currId).val();
             if (val !== "" && val !== null) {
                 if ($.inArray(val, dxArray1) == -1) {
                     dxArray1.push(val);
                     $("#Dx1").val(dxArray1);
                 }
-                var count = id + parseInt(1);
-                $("#txtDx_" + id).focus();
-                var text = "'" + "txtDx_" + id + "'";
-                $("#tableid1").append('<tr id="tr' + id + '"> <td><span class="badge badge-pill badge-info">' + count + '</span></td><td> <input type="text" placeholder="Code" onfocusout="DxFunction1(' + text + ')" class="form-control CoderDetails txtDx" title="txtDx_' + id + '" id="txtDx_' + id + '" /></td><td></td></tr >');
-                $("#txtDx_" + id).focus();
-
+                var text = "'" + "txt_" + id + "'";
+                $("#DivDx1").append('<div id="DivDxRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" ></label><div class="col-md-3 lessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxFunction1(' + text + ')" class="form-control CoderDetails txtDx" id="txtDxx_' + id + '" /></div></div>');
+                $("#txtDxx_" + currId).removeAttr("onfocusout", "");
+                $("#txtDxx_1").removeAttr("onfocusout", "");
+                $("#txtDxx_" + id).focus();
             } else {
                 //var id2 = parseInt(id) - parseInt(1);
                 //var val = $("#txt" + id2).val();
@@ -153,23 +150,22 @@
 
     var cptArray1 = [];
     function CptFunction1(txtCpt_0) {
-        var title = txtCpt_0;
-        var id = parseInt(title.split("_")[1]) + parseInt(1);
-        if (title.split("_")[1] !== undefined) {
+        var id = parseInt(txtCpt_0.split("_")[1]) + parseInt(1);
+        if (txtCpt_0.split("_")[1] !== undefined) {
             var id1 = parseInt(id) - parseInt(1);
-            var val1 = $("#txtCpt_" + id1).val();
+            var val1 = $("#txtCpt1_" + id1).val();
 
             var val2 = null;
-            if ($("#txtMod_" + id1).val() != "")
-                val2 = $("#txtMod_" + id1).val();
+            if ($("#txtMod1_" + id1).val() != "")
+                val2 = $("#txtMod1_" + id1).val();
 
             var val3 = null;
-            if ($("#txtQty_" + id1).val() != "")
-                val3 = $("#txtQty_" + id1).val();
+            if ($("#txtQty1_" + id1).val() != "")
+                val3 = $("#txtQty1_" + id1).val();
 
             var val4 = null;
-            if ($("#txtLinks_" + id1).val() != "")
-                val4 = $("#txtLinks_" + id1).val();
+            if ($("#txtLinks1_" + id1).val() != "")
+                val4 = $("#txtLinks1_" + id1).val();
 
             if (val1 !== "") {
                 if ($.inArray(val1, cptArray1) == -1) {
@@ -177,13 +173,15 @@
                     $("#CPTCode1").val(cptArray1);
                 }
                 var count = id + parseInt(1);
-                var txtLinks = "'" + "txtLinks_" + id + "'";
+                var txtLinks = "'" + "txtLinks1_" + id + "'";
                 var tabindex1 = parseInt(9) + parseInt(id) + parseInt(count) + parseInt(val1);
                 var tabindex2 = parseInt(10) + parseInt(id) + parseInt(count) + parseInt(val1);
                 var tabindex3 = parseInt(11) + parseInt(id) + parseInt(count) + parseInt(val1);
                 var tabindex4 = parseInt(12) + parseInt(id) + parseInt(count) + parseInt(val1);
-                $("#cpttable1").append('<tr id="cpttr' + id + '"> <td><span class="badge badge-pill badge-info">' + count + '</span></td><td><input tabindex = "' + tabindex1 + '" type = "text" placeholder = "Code" class= "form-control CoderDetails txtCpt" title = "txtCpt_' + id + '" id = "txtCpt_' + id + '" /></td><td><input tabindex="' + tabindex2 + '" type="text" class="form-control CoderDetails" placeholder="Mod" title="txtMod_' + id + '" id="txtMod_' + id + '"/></td><td><input tabindex="' + tabindex3 + '" type="text" class="form-control CoderDetails" placeholder="1" value="1" title="txtQty_' + id + '" id="txtQty_' + id + '"/></td><td><input tabindex="' + tabindex4 + '" type="text" class="form-control CoderDetails" placeholder="Link All" onfocusout="CptFunction1(' + txtLinks + ')" title="txtLinks_' + id + '" id="txtLinks_' + id + '"/></td></tr>');
-                $("#txtCpt_" + id).focus();
+                $("#DivCpt1").append('<div id="DivCptRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" ></label><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input tabindex = "' + tabindex1 + '" type = "text" placeholder = "Code" class= "form-control CoderDetails txtCpt" id = "txtCpt1_' + id + '" /><input tabindex="' + tabindex2 + '" type="text" class="form-control CoderDetails" placeholder="Mod" id="txtMod1_' + id + '"/><input tabindex="' + tabindex3 + '" type="text" class="form-control CoderDetails" placeholder="1" value="1" id="txtQty1_' + id + '"/><input tabindex="' + tabindex4 + '" type="text" class="form-control CoderDetails" placeholder="Link All" onfocusout="CptFunction1(' + txtLinks + ')" id="txtLinks1_' + id + '"/></div></div>');
+                $("#txtLinks1_" + id1).removeAttr("onfocusout", "");
+                $("#txtLinks1_1").removeAttr("onfocusout", "");
+                $("#txtCpt1_" + id).focus();
             } else {
                 //var id2 = parseInt(id) - parseInt(1);
                 //var val = $("#txtCpt" + id2).val();
@@ -199,9 +197,20 @@
         }
     }
 
-    $(".tab").click(function () {
+    $(".tab").click(function (e) {
         var title = $(this).attr('title');
         var id = $(this).attr('id');
+        if (title == "tabDiv1") {
+            $("#tabDiv1").show();
+            $("#tabDiv2").hide();
+            $("#1").addClass('active show');
+            $("#2").removeClass('active show');
+            return false;
+            e.preventDefault();
+        }
+        $("#1").removeClass('active show');
+        $("#2").addClass('active show');
+        
         $("#htxt" + id).text('Cliam '+id);
         if (title != "" && id != "") {
             $.ajax({
@@ -209,7 +218,9 @@
                 url: "@Url.Action("GetNewCliam", "UAB")",
                 data: {"id" : id },
                 success: function (response) {
+                    $("#tabDiv1").hide();
                     $("#" + title).html(response);
+                    $("#" + title).show();
                 },
                 failure: function (response) {
                     alert(response);
