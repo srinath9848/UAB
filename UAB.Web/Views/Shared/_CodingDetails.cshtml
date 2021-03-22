@@ -18,6 +18,7 @@
         <div class="card-body">
             <h4 class="card-title"><span>Chart ID : <label style="color: black;">@Model.CodingDTO.ClinicalCaseID</label></span></h4>
         </div>
+        <input type="hidden" id="tabindex" />
         @Html.HiddenFor(model => model.Dx)
         @Html.HiddenFor(model => model.CPTCode)
         @Html.HiddenFor(model => model.Dx, new { @id = "Dx1" })
@@ -84,11 +85,11 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1">1</span>
                                     </div>
-                                    @Html.TextBoxFor(model => model.CPTCode, new { @class = "form-control CoderDetails txtCpt", @autocomplete = "off", @placeholder = "Code", @id = "txtCpt0", @title = "txtCpt_0", @tabindex = "5" })
+                                    @Html.TextBoxFor(model => model.CPTCode, new { @class = "form-control CoderDetails txtCpt", @autocomplete = "off", @placeholder = "Code", @id = "txtCpt_1", @tabindex = "5" })
                                     @Html.ValidationMessageFor(model => model.CPTCode, null, new { @class = "text-danger Dxerror" })
-                                    <input type="text" class="form-control CoderDetails" id="txtMod0" title="txtMod_0" autocomplete="off" placeholder="Mod" tabindex="6" />
-                                    <input type="text" id="txtQty0" title="txtQty_0" class="form-control CoderDetails" autocomplete="off" placeholder="1" value="1" tabindex="7" />
-                                    <input type="text" id="txtLinks0" title="txtLinks_0" onfocusout="CptFunction('txtLinks_0')" class="form-control CoderDetails" autocomplete="off" placeholder="Link All" tabindex="8" />
+                                    <input type="text" class="form-control CoderDetails" id="txtMod_1" autocomplete="off" placeholder="Mod" tabindex="6" />
+                                    <input type="text" id="txtQty_1" class="form-control CoderDetails" autocomplete="off" placeholder="1" value="1" tabindex="7" />
+                                    <input type="text" id="txtLinks_1" onfocusout="CptFunction('txtLinks_1')" class="form-control CoderDetails" autocomplete="off" placeholder="Link All" tabindex="8" />
                                 </div>
                             </div>
                         </div>
