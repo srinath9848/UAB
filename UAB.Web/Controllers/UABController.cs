@@ -56,7 +56,7 @@ namespace UAB.Controllers
             #endregion
             if (chartSummaryDTO.CodingDTO.ClinicalCaseID == 0)
             {
-                TempData["error"] = "There are no charts";
+                TempData["Toast"] = "There are no charts available";
                 return RedirectToAction("CodingSummary");
             }
             return View("Coding", chartSummaryDTO);
@@ -189,6 +189,11 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
+            if (chartSummaryDTO.CodingDTO.ClinicalCaseID == 0)
+            {
+                TempData["Toast"] = "There are no charts available";
+                return RedirectToAction("CodingSummary");
+            }
             return View("ReadyForPostingChart", chartSummaryDTO);
         }
 
@@ -311,7 +316,7 @@ namespace UAB.Controllers
             #endregion
             if (chartSummaryDTO.CodingDTO.ClinicalCaseID == 0)
             {
-                TempData["error"] = "There are no charts";
+                TempData["Toast"] = "There are no charts available";
                 return RedirectToAction("QASummary");
             }
             return View("QA", chartSummaryDTO);
@@ -520,7 +525,7 @@ namespace UAB.Controllers
 
             if (chartSummaryDTO.CodingDTO.ClinicalCaseID == 0)
             {
-                TempData["error"] = "There are no charts";
+                TempData["Toast"] = "There are no charts available";
                 return RedirectToAction("ShadowQASummary");
             }
             return View("ShadowQA", chartSummaryDTO);
