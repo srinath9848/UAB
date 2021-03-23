@@ -495,7 +495,7 @@ namespace UAB.Controllers
             return View("QASummary", lstDto);
         }
 
-       
+
 
         #endregion
 
@@ -554,6 +554,12 @@ namespace UAB.Controllers
         public IActionResult SubmitShadowQAAvailableChart(ChartSummaryDTO chartSummaryDTO, bool hdnIsQAAgreed, string SubmitAndGetNext)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+
+            var hdnShadowQADxCodes = Request.Form["hdnShadowQADxCodes"].ToString();
+            var hdnShadowQADxRemarks = Request.Form["hdnShadowQADxRemarks"].ToString();
+            chartSummaryDTO.ShadowQADx = hdnShadowQADxCodes;
+            chartSummaryDTO.ShadowQADxRemarks = hdnShadowQADxRemarks;
+
             bool isQAAgreed = hdnIsQAAgreed;// Convert.ToBoolean(Request.Form["hdnIsQAAgreed"]);
 
             if (string.IsNullOrEmpty(SubmitAndGetNext))
