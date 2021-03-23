@@ -367,6 +367,12 @@ namespace UAB.Controllers
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
+            var hdnQADx = Request.Form["hdnQADxCodes"].ToString();
+            var hdnQADxRemarks = Request.Form["hdnQADxRemarks"].ToString();
+            chartSummaryDTO.QADx = hdnQADx;
+            chartSummaryDTO.QADxRemarks = hdnQADxRemarks;
+
+
             if (string.IsNullOrEmpty(SubmitAndGetNext))
                 clinicalcaseOperations.SubmitQAAvailableChart(chartSummaryDTO);
             else

@@ -48,6 +48,7 @@
             $("#" + id + "1").css("display", "none");
             $("#" + id + "2").css("display", "none");
             $("#" + id + "1").val('');
+            $("." + id).val('');
             $("#" + id + "2").val('');
             var total = $(".lessWidth").find(".fa-check-circle").length;
             var accept = $(".lessWidth").find(".accept").length;
@@ -79,6 +80,50 @@
     });
 
     $('#btnsubmit,#SubmitAndGetNext').click(function (e) {
+
+        var Dxremarks = $("[class*=DxRemarks_]");
+        $("#hdnQADxRemarks").val("");
+        for (var i = 0; i < Dxremarks.length; i++) {
+
+            if ($("." + $(Dxremarks[i]).attr("id")).css("display") == "flex") {
+
+                var id = parseInt($(Dxremarks[i]).attr("id").split("_")[1]);
+
+                if ($("#hdnQADxRemarks").val() == "")
+                    $("#hdnQADxRemarks").val(id + "^" + $(Dxremarks[i]).val());
+                else
+                    $("#hdnQADxRemarks").val($("#hdnQADxRemarks").val() + "|" + id + "^" + $(Dxremarks[i]).val());
+            }
+        }
+
+        var DxCodes = $("[id*=txtDx_]");
+        $("#hdnQADxCodes").val("");
+        for (var i = 0; i < DxCodes.length; i++) {
+
+            var id = parseInt($(DxCodes[i]).attr("id").split("_")[1]);
+
+            if ($(".DxRemarks_" + id).length) {
+
+                if ($("#" + $(DxCodes[i]).attr("id")).val() != "" &&
+                    $(".Dx_" + id).css("display") == "flex") {
+
+                    if ($("#hdnQADxCodes").val() == "")
+                        $("#hdnQADxCodes").val(id + "^" + $(DxCodes[i]).val());
+                    else
+                        $("#hdnQADxCodes").val($("#hdnQADxCodes").val() + "|" + id + "^" + $(DxCodes[i]).val());
+                }
+            }
+            else {
+                if ($("#" + $(DxCodes[i]).attr("id")).val() != "") {
+
+                    if ($("#hdnQADxCodes").val() == "")
+                        $("#hdnQADxCodes").val(id + "^" + $(DxCodes[i]).val());
+                    else
+                        $("#hdnQADxCodes").val($("#hdnQADxCodes").val() + "|" + id + "^" + $(DxCodes[i]).val());
+                }
+            }
+        }
+
         var total = $(".lessWidth").find(".fa-check-circle").length;
         var reject = $(".lessWidth").find(".reject").length;
         var accept = $(".lessWidth").find(".accept").length;
