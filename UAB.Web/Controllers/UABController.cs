@@ -216,6 +216,10 @@ namespace UAB.Controllers
             var hdnMod = Request.Form["hdnMod"].ToString();
             var hdnDx = Request.Form["hdnDx"].ToString();
             var hdnProviderFeedbackID = Request.Form["hdnProviderFeedbackID"].ToString();
+
+            var hdnCoderDxRemarks = Request.Form["hdnCoderDxRemarks"].ToString();
+            chartSummaryDTO.ShadowQADx = hdnCoderDxRemarks;
+
             int statusId = 0;
 
             if (!string.IsNullOrEmpty(hdnPayorID) || !string.IsNullOrEmpty(hdnProviderID)
