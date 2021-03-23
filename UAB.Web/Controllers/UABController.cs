@@ -84,19 +84,19 @@ namespace UAB.Controllers
 
 
         [HttpGet]
-        public IActionResult GetCodingBlockedCharts (string Role, string ChartType, int ProjectID, string ProjectName,string ccid ,string plusorminus)
+        public IActionResult GetCodingBlockedCharts(string Role, string ChartType, int ProjectID, string ProjectName, string ccid, string plusorminus)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-           List<ChartSummaryDTO> chartSummaryDTOlst = new List<ChartSummaryDTO>();
-            
+            List<ChartSummaryDTO> chartSummaryDTOlst = new List<ChartSummaryDTO>();
+
             chartSummaryDTOlst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);
 
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
 
-            if (plusorminus=="Next")
+            if (plusorminus == "Next")
             {
                 chartSummaryDTO = chartSummaryDTOlst.SkipWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).FirstOrDefault();
-                if (chartSummaryDTO==null)
+                if (chartSummaryDTO == null)
                 {
                     chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
                 }
@@ -111,7 +111,7 @@ namespace UAB.Controllers
                 }
                 chartSummaryDTO.ProjectName = ProjectName;
             }
-            
+
             ViewBag.IsBlocked = "1";
 
             #region binding data
@@ -199,7 +199,7 @@ namespace UAB.Controllers
 
         [HttpPost]
         public IActionResult SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO, string codingSubmitAndGetNext)
-        {   
+        {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             if (string.IsNullOrEmpty(codingSubmitAndGetNext))
@@ -298,7 +298,7 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.QA.ToString());
-	
+
             return View(lstDto);
         }
         public IActionResult GetQAAvailableChart(string Role, string ChartType, int ProjectID, string ProjectName)
@@ -499,6 +499,8 @@ namespace UAB.Controllers
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("QASummary", lstDto);
         }
+
+       
 
         #endregion
 
