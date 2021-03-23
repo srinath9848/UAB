@@ -20,6 +20,10 @@
         @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { @class = "form-control" })
         @Html.HiddenFor(model => model.ProjectName)
         @Html.HiddenFor(model => model.ProjectID)
+        @Html.HiddenFor(model => model.Dx)
+        @Html.HiddenFor(model => model.QADx)
+
+
         @{
             bool isQAAgreed = false;
             string Show = "visibility:hidden";
@@ -309,17 +313,18 @@
                 @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails" })
             </div>
         </div>
+        @{
+            Dictionary<int, string> dictQADxCodes = Utility.GetQADxCodes(Model.QADx);
+            List<string> lstdxCodes = Model.Dx.Split(',').ToList();
+            int? count = (dictQADxCodes?.Count() > lstdxCodes.Count()) ? dictQADxCodes?.Count() : lstdxCodes.Count();
+            Dictionary<int, string> dictDxCodes = Utility.GetDxCodes(Model.Dx, count.Value);
+            int totalDxCount = count.Value + 1;
+            Dictionary<int, string> dictQADxRemarks = Utility.GetQADxRemarks(Model.QADxRemarks, count.Value); 
+        }
         <div id="DivDx">
             @{
-                int i = 0;
                 int j = 1;
-                int totalDxCount = Model.QADx.Split(",").Count() + 1;
-                int totalCoderDxCount = Model.Dx.Split(",").Count();
-                var lstCoderDx = Model.Dx.Split(",").ToList();
-                int totalQADxCount = Model.QADx.Split(",").Count();
-                var lstQaDx = Model.QADx.Split(",").ToList();
-                int count = (totalQADxCount > totalCoderDxCount) ? totalQADxCount : totalCoderDxCount;
-                for (int k = 0; k < count; k++)
+                for (int i = 0; i < count; i++)
                 {
                     <div class="form-group row">
                         @if (i == 0)
@@ -331,73 +336,60 @@
                             <label class="col-md-3 lessWidth m-t-15"></label>
                         }
 
-                        @{
-                            if (lstCoderDx.ToList().Count() > k)
-                            {
-                                len = (!string.IsNullOrEmpty(lstCoderDx[k]) ? 10 : 20);
-                                string Dx1 = (lstCoderDx[k]?.Length > len) ? lstCoderDx[k].Substring(0, len) + ".." : lstCoderDx[k];
-                                string QADx1 = (lstQaDx[k]?.Length > len) ? "/" + lstQaDx[k].Substring(0, len) + ".." : "/" + lstQaDx[k];
+                        @{len = (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? 10 : 20); }
+                        @{string Dx = (dictDxCodes.ElementAt(i).Value?.Length > len) ? dictDxCodes.ElementAt(i).Value.Substring(0, len) + ".." : dictDxCodes.ElementAt(i).Value;}
+                        @{string QADx = (dictQADxCodes?.ElementAt(i).Value?.Length > len) ? "/" + dictQADxCodes?.ElementAt(i).Value.Substring(0, len) + ".." : "/" + dictQADxCodes?.ElementAt(i).Value;}
+                        @{title = (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? dictDxCodes.ElementAt(i).Value + "/" + dictQADxCodes?.ElementAt(i).Value : dictDxCodes.ElementAt(i).Value);}
 
-                                <div class="col-md-3 lessWidth input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1">@j</span>
-                                    </div>
-                                    <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
-                                        <span style="white-space:nowrap">
-                                            @if (!string.IsNullOrEmpty(QADx1))
-                                            {
-                                                <label style="color: red;">@Dx1</label>
-                                                <label style="color:green">@QADx1</label>
-                                            }
-                                            else
-                                            {
-                                                <label style="color: green;">@lstQaDx[k]</label>
-                                            }
-                                        </span>
-                                    </div>
-                                </div>
-                                Show = (string.IsNullOrEmpty(Model.QADxRemarks) ? "visibility:hidden" : "display:flex");
-                                <div title="@Model.QADxRemarks" class="col-md-2 input-group" style="@Show">
-                                    <input type="text" class="form-control QARemarks" value="@Model.QADxRemarks" />
-                                </div>
-                                <div class="col-md-3 lessWidth input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1">@j</span>
-                                    </div>
-                                    <input type="text" id="txtDx_@j" class="form-control txtDx" autocomplete="off" tabindex="@j" placeholder="Code" value="@lstQaDx[k]" />
-                                </div>
-                                <div class="input-group-append CoderCorrections">
-                                    <span class="input-group-text">
-                                        &nbsp;<i id="Dx_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                                        &nbsp;<i id="Dx_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                                    </span>
-                                </div>
-                                <div class="col-md-3 lessWidth input-group Dx_@i" style="display:none">
-                                    <input type="text" id="Dx_@i" class="form-control QARevised" />
-                                </div>
+                        <div class="col-md-3 lessWidth input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">@j</span>
+                            </div>
+                            <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
+                                <span style="white-space:nowrap">
+                                    @if (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value))
+                                    {
+                                        <label style="color: red;">@Dx</label>
+                                        <label style="color:green">@QADx</label>
+                                    }
+                                    else
+                                    {
+                                        <label style="color: green;">@Dx</label>
+                                    }
+                                </span>
+                            </div>
+                        </div>
+                        @{ Show = (string.IsNullOrEmpty(dictQADxRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
+                        <div title="" class="col-md-2 input-group" style="@Show">
+                            <input type="text" class="form-control QARemarks" value="@dictQADxRemarks?.ElementAt(i).Value" />
+                        </div>
+
+                        <div class="col-md-3 lessWidth input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">@j</span>
+                            </div>
+                            @{
+                                string QaDxVal = !string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? dictQADxCodes?.ElementAt(i).Value : dictDxCodes.ElementAt(i).Value;
                             }
-                            else
-                            {
-                                <div class="col-md-3 lessWidth input-group">
+                            <input type="text" id="txtDx_@i" class="form-control txtDx" autocomplete="off" tabindex="@i" placeholder="Code" value="@QaDxVal" />
+                        </div>
 
-                                </div>
-                                <div class="col-md-2 input-group">
-                                </div>
-                                <div class="col-md-3 lessWidth input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1">@j</span>
-                                    </div>
-                                    <input type="text" id="txtDx_@j" class="form-control txtDx" autocomplete="off" tabindex="@j" placeholder="Code" value="@lstQaDx[k]" />
-                                </div>
+                        <div class="input-group-append CoderCorrections">
+                            <span class="input-group-text">
+                                &nbsp;<i id="Dx_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                &nbsp;<i id="Dx_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div class="col-md-3 lessWidth input-group Dx_@i" style="display:none">
+                            <input type="text" id="Dx_@i" class="form-control QARevised" />
+                        </div>
 
-                            }
-                        }
                     </div>
 
-                    i = i + 1;
                     j = j + 1;
                 }
             }
+
             <div class="form-group row">
                 <label class="col-md-3 lessWidth m-t-15"></label>
                 <div class="col-md-3 lessWidth input-group">
@@ -478,22 +470,22 @@
             </div>
         </div>
     </div>
+</div>
 
+<style>
+    .errMsg {
+        font-weight: bold;
+        font-size: 20px;
+    }
 
-    <style>
-        .errMsg {
-            font-weight: bold;
-            font-size: 20px;
-        }
+    #sortable-1 {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 25%;
+    }
 
-        #sortable-1 {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            width: 25%;
-        }
-
-        /*     #sortable-1 li {
+    /*     #sortable-1 li {
                     margin: 0 3px 3px 3px;
                     padding: 0.4em;
                     padding-left: 1.5em;
@@ -501,25 +493,25 @@
                     height: 16px;
                 }*/
 
-        .default {
-            background: #cedc98;
-            border: 1px solid #DDDDDD;
-            color: #333333;
-        }
+    .default {
+        background: #cedc98;
+        border: 1px solid #DDDDDD;
+        color: #333333;
+    }
 
-        .custom-control-label:before {
-            left: -35px;
-        }
+    .custom-control-label:before {
+        left: -35px;
+    }
 
-        .custom-control-label:after {
-            left: -35px;
-        }
+    .custom-control-label:after {
+        left: -35px;
+    }
 
-        .custom-control {
-            padding-left: 0rem;
-        }
+    .custom-control {
+        padding-left: 0rem;
+    }
 
-        .CoderDetails {
-            width: 146px;
-        }
-    </style>
+    .CoderDetails {
+        width: 146px;
+    }
+</style>
