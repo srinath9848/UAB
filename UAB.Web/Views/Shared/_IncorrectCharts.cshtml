@@ -283,11 +283,11 @@
         </div>
 
         @{
-            Dictionary<int, string> dictQADxCodes = Utility.GetQADxCodes(Model.QADx);
+            Dictionary<int, string> dictQADxCodes = Utility.GetQAOrShadowQADxCodes(Model.QADx);
             List<string> lstdxCodes = Model.Dx.Split(',').ToList();
             int? count = (dictQADxCodes?.Count() > lstdxCodes.Count()) ? dictQADxCodes?.Count() : lstdxCodes.Count();
             Dictionary<int, string> dictDxCodes = Utility.GetDxCodes(Model.Dx, count.Value);
-            Dictionary<int, string> dictQADxRemarks = Utility.GetQADxRemarks(Model.QADxRemarks, count.Value);
+            Dictionary<int, string> dictQADxRemarks = Utility.GetQAOrShadowQADxRemarks(Model.QADxRemarks, count.Value);
         }
         <div id="DivDx">
             @{
