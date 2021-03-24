@@ -1,5 +1,10 @@
 ﻿@model List<UAB.DTO.SearchResultDTO>
-
+@using UAB.enums
+@using System.Security.Claims;
+@{
+    var identity = (ClaimsIdentity)User.Identity;
+    string roles = identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+}
 <style>
     .table td, .table th {
         padding: 10px !important;
@@ -57,9 +62,15 @@
                                 {
                                     <tr>
                                         <td>
-                                            <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit" onclick="ViewHistory('@item.ClinicalCaseId')">History</button>
-                                            <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit" onclick="Assign('@item.ClinicalCaseId')">Assign</button>
-                                        </td>
+                                            @if (roles.Split(',').ToList().Contains(Roles.Manager.ToString()))
+                                            {
+                                                @if (!@item.Status.Contains("Ready for Posting") && !@item.Status.Contains("Posting Completed"))
+                                                {
+                                                    <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit" onclick="Assign('@item.ClinicalCaseId')">Assign</button>
+                                                }
+                                            }
+                                                <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit" onclick="ViewHistory('@item.ClinicalCaseId')">History</button>
+                                            </td>
                                         <td>@item.ClinicalCaseId</td>
                                         <td>@item.MRN</td>
                                         <td>@item.FirstName</td>

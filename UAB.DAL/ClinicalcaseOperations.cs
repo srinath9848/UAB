@@ -985,7 +985,9 @@ namespace UAB.DAL
                             ProviderName = Convert.ToString(reader["Provider"]),
                             DoS = Convert.ToDateTime(reader["DateOfService"]),
                             ProjectName = Convert.ToString(reader["ProjectName"]),
-                            Status = Convert.ToString(reader["Status"])
+                            Status = Convert.ToString(reader["Status"]),
+                            IncludeBlocked=Convert.ToString(reader["IsBlocked"])
+                            
                         };
                         lstDto.Add(dto);
                     }
@@ -1016,6 +1018,8 @@ namespace UAB.DAL
                     lstDto = lstDto.Where(a => a.Status == searchParametersDTO.StatusName).ToList();
                 if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProjectName) && searchParametersDTO.ProjectName != "--Select a Project--")
                     lstDto = lstDto.Where(a => a.ProjectName == searchParametersDTO.ProjectName).ToList();
+                if (searchParametersDTO.IncludeBlocked)
+                    lstDto = lstDto.Where(a => a.IncludeBlocked == "1").ToList();
             }
             return lstDto;
         }

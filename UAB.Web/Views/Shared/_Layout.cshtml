@@ -140,10 +140,15 @@
                         {
                             <li id="shadowQA" class="sidebar-item">
                                 <a class="sidebar-link waves-effect waves-dark sidebar-link" asp-area="" asp-controller="UAB" asp-action="ShadowQASummary">
-                                    <i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Shadow QA</span>
+                                    <i class="mdi mdi-chart-bar"></i><span class="hide-menu">Shadow QA</span>
                                 </a>
                             </li>
                         }
+                        <li id="dashBoard" class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsSearch">
+                                <i class="mdi mdi-receipt"></i><span class="hide-menu">Search</span>
+                            </a>
+                        </li>
                         @if (roles.Split(',').ToList().Contains(Roles.Manager.ToString()))
                         {
                             <li id="settings" class="sidebar-item">
@@ -158,13 +163,13 @@
                                             </span>
                                         </a>
                                     </li>
-                                    <li class="sidebar-item">
+                                    @*<li class="sidebar-item">
                                         <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsSearch">
                                             <i class="fa fa-search"></i><span class="hide-menu">
                                                 Search
                                             </span>
                                         </a>
-                                    </li>
+                                    </li>*@
                                     <li class="sidebar-item">
                                         <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsBlockCategories">
                                             <i class="mdi mdi-note-outline"></i><span class="hide-menu">

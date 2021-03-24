@@ -22,6 +22,7 @@ namespace UAB.DTO
 
         //public StatusDTO Status { get; set; }
         public string StatusName  { get; set; }
+        public bool IncludeBlocked  { get; set; } 
 
 
     }
@@ -51,5 +52,6 @@ namespace UAB.DTO
         [Required(ErrorMessage = "Assign To User Email is required.")]
         public string AssignToUserEmail { get; set; } 
         public bool IsPriority  { get; set; }
+        public string IncludeBlocked { get; set; }
     }
 }
