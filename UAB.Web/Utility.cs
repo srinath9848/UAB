@@ -25,18 +25,18 @@ namespace UAB
             return dictDxCodes;
         }
 
-        public static Dictionary<int, string> GetQADxCodes(string QAdxCodes)
+        public static Dictionary<int, string> GetQAOrShadowQADxCodes(string dxCodes)
         {
-            if (QAdxCodes == "")
+            if (dxCodes == "")
                 return null;
 
-            List<string> lstQADxCodes = QAdxCodes.Split('|').ToList();
+            List<string> lstDxCodes = dxCodes.Split('|').ToList();
 
-            Dictionary<int, string> dictQADxCodes = new Dictionary<int, string>();
+            Dictionary<int, string> dictDxCodes = new Dictionary<int, string>();
 
             int rno = 1;
 
-            foreach (var item in lstQADxCodes)
+            foreach (var item in lstDxCodes)
             {
                 string[] strItem = item.Split('^');
 
@@ -44,16 +44,16 @@ namespace UAB
                 {
                     for (int j = rno; j < Convert.ToInt16(strItem[0]); j++)
                     {
-                        dictQADxCodes.Add(j, "");
+                        dictDxCodes.Add(j, "");
                         rno += 1;
                     }
                 }
 
-                dictQADxCodes.Add(Convert.ToInt16(strItem[0]), strItem[1]);
+                dictDxCodes.Add(Convert.ToInt16(strItem[0]), strItem[1]);
                 rno += 1;
             }
 
-            return dictQADxCodes;
+            return dictDxCodes;
         }
 
         public static Dictionary<int, string> GetQADxCodes(string QAdxCodes,int? count)
@@ -95,17 +95,17 @@ namespace UAB
             return dictQADxCodes;
         }
 
-        public static Dictionary<int, string> GetQADxRemarks(string QAdxRemarks, int count = 0)
+        public static Dictionary<int, string> GetQAOrShadowQADxRemarks(string dxRemarks, int count = 0)
         {
-            if (QAdxRemarks == "")
+            if (dxRemarks == "")
                 return null;
 
-            List<string> lstQADxRemarks = QAdxRemarks.Split('|').ToList();
+            List<string> lstDxRemarks = dxRemarks.Split('|').ToList();
 
-            Dictionary<int, string> dictQADxRemarks = new Dictionary<int, string>();
+            Dictionary<int, string> dictDxRemarks = new Dictionary<int, string>();
 
             int rno = 1;
-            foreach (var item in lstQADxRemarks)
+            foreach (var item in lstDxRemarks)
             {
                 string[] strItem = item.Split('^');
 
@@ -113,91 +113,23 @@ namespace UAB
                 {
                     for (int j = rno; j < Convert.ToInt16(strItem[0]); j++)
                     {
-                        dictQADxRemarks.Add(j, "");
+                        dictDxRemarks.Add(j, "");
                         rno += 1;
                     }
                 }
-                dictQADxRemarks.Add(Convert.ToInt16(strItem[0]), strItem[1]);
+                dictDxRemarks.Add(Convert.ToInt16(strItem[0]), strItem[1]);
                 rno += 1;
             }
             if (rno <= count)
             {
                 for (int j = rno; j <= count; j++)
                 {
-                    dictQADxRemarks.Add(j, "");
+                    dictDxRemarks.Add(j, "");
                     rno += 1;
                 }
             }
 
-            return dictQADxRemarks;
-        }
-
-        public static Dictionary<int, string> GetShadowQADxCodes(string ShadowQAdxCodes)
-        {
-            if (ShadowQAdxCodes == "")
-                return null;
-
-            List<string> lstShadowQADxCodes = ShadowQAdxCodes.Split('|').ToList();
-
-            Dictionary<int, string> dictShadowQADxCodes = new Dictionary<int, string>();
-
-            int rno = 1;
-
-            foreach (var item in lstShadowQADxCodes)
-            {
-                string[] strItem = item.Split('^');
-
-                if (rno != Convert.ToInt16(strItem[0]))
-                {
-                    for (int j = rno; j < Convert.ToInt16(strItem[0]); j++)
-                    {
-                        dictShadowQADxCodes.Add(j, "");
-                        rno += 1;
-                    }
-                }
-
-                dictShadowQADxCodes.Add(Convert.ToInt16(strItem[0]), strItem[1]);
-                rno += 1;
-            }
-
-            return dictShadowQADxCodes;
-        }
-
-        public static Dictionary<int, string> GetShadowQADxRemarks(string ShadowQAdxRemarks, int count = 0)
-        {
-            if (ShadowQAdxRemarks == "")
-                return null;
-
-            List<string> lstShadowQADxRemarks = ShadowQAdxRemarks.Split('|').ToList();
-
-            Dictionary<int, string> dictShadowQADxRemarks = new Dictionary<int, string>();
-
-            int rno = 1;
-            foreach (var item in lstShadowQADxRemarks)
-            {
-                string[] strItem = item.Split('^');
-
-                if (rno != Convert.ToInt16(strItem[0]))
-                {
-                    for (int j = rno; j < Convert.ToInt16(strItem[0]); j++)
-                    {
-                        dictShadowQADxRemarks.Add(j, "");
-                        rno += 1;
-                    }
-                }
-                dictShadowQADxRemarks.Add(Convert.ToInt16(strItem[0]), strItem[1]);
-                rno += 1;
-            }
-            if (rno <= count)
-            {
-                for (int j = rno; j <= count; j++)
-                {
-                    dictShadowQADxRemarks.Add(j, "");
-                    rno += 1;
-                }
-            }
-
-            return dictShadowQADxRemarks;
+            return dictDxRemarks;
         }
     }
 }
