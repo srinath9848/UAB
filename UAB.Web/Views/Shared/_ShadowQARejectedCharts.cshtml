@@ -224,7 +224,7 @@
             </div>
 
         </div>
-        <div class="form-group row">
+        @*<div class="form-group row">
             <label class="col-md-3 lessWidth m-t-15">Dx</label>
             @{len = (!string.IsNullOrEmpty(Model.QADx) ? 10 : 20); }
             @{string Dx = (Model.Dx?.Length > len) ? Model.Dx.Substring(0, len) + ".." : Model.Dx;}
@@ -267,7 +267,7 @@
             <div title="@Model.ShadowQADxRemarks" class="col-md-2 input-group" style="@Show">
                 <input type="text" class="form-control QARemarks" value="@Model.ShadowQADxRemarks" />
             </div>
-        </div>
+        </div>*@
         <div class="form-group row">
             <label class="col-md-3 lessWidth m-t-15"> Feedback to Provider</label>
             @{len = (!string.IsNullOrEmpty(Model.QAProviderFeedbackText) ? 10 : 20); }
@@ -318,6 +318,121 @@
                 @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails" })
             </div>
         </div>
+
+
+
+        @{
+            Dictionary<int, string> dictShadowQADxCodes = Utility.GetShadowQADxCodes(Model.ShadowQADx);
+            List<string> lstdxCodes = Model.Dx.Split(',').ToList();
+            int? countShadow = (dictShadowQADxCodes?.Count() > lstdxCodes.Count()) ? dictShadowQADxCodes?.Count() : lstdxCodes.Count();
+            Dictionary<int, string> dictQADxCodes = Utility.GetQADxCodes(Model.QADx,countShadow);
+            int? count = (dictQADxCodes?.Count() > lstdxCodes.Count()) ? dictQADxCodes?.Count() : lstdxCodes.Count();
+            Dictionary<int, string> dictDxCodes = Utility.GetDxCodes(Model.Dx, countShadow.Value);
+            int totalDxCount = count.Value + 1;
+            Dictionary<int, string> dictQADxRemarks = Utility.GetQADxRemarks(Model.QADxRemarks, count.Value);
+            Dictionary<int, string> dictShadowQADxRemarks = Utility.GetShadowQADxRemarks(Model.ShadowQADxRemarks, countShadow.Value);
+        }
+        <div id="DivDx">
+            @{
+                int j = 1;
+                for (int i = 0; i < countShadow; i++)
+                {
+                        <div class="form-group row">
+                            @if (i == 0)
+                            {
+                                <label class="col-md-3 lessWidth m-t-15">Dx</label>
+                            }
+                            else
+                            {
+                                <label class="col-md-3 lessWidth m-t-15"></label>
+                            }
+
+                            @{len = (!string.IsNullOrEmpty(dictShadowQADxCodes?.ElementAt(i).Value) ? 10 : 20); }
+                            @{string Dx = (dictDxCodes.ElementAt(i).Value?.Length > len) ? dictDxCodes.ElementAt(i).Value.Substring(0, len) + ".." : dictDxCodes.ElementAt(i).Value;}
+                            @{string QADx = (dictQADxCodes?.ElementAt(i).Value?.Length > len) ? "/" + dictQADxCodes?.ElementAt(i).Value.Substring(0, len) + ".." : "/" + dictQADxCodes?.ElementAt(i).Value;}
+                            @{string ShadowQADx = (dictShadowQADxCodes?.ElementAt(i).Value?.Length > len) ? "/" + dictShadowQADxCodes?.ElementAt(i).Value.Substring(0, len) + ".." : "/" + dictShadowQADxCodes?.ElementAt(i).Value;}
+                            @{title = (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? dictDxCodes.ElementAt(i).Value + "/" + dictQADxCodes?.ElementAt(i).Value : dictDxCodes.ElementAt(i).Value);}
+
+                            <div class="col-md-3 lessWidth input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">@j</span>
+                                </div>
+                                <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
+                                    <span style="white-space:nowrap">
+                                        @if (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value))
+                                        {
+                                            <label style="color: red;">@Dx</label>
+                                            <label style="color:green">@QADx</label>
+                                        }
+                                        else
+                                        {
+                                            <label style="color: green;">@Dx</label>
+                                        }
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="input-group-append CoderCorrections" style="visibility:hidden">
+                                <span class="input-group-text">
+                                    &nbsp;<i id="Dx_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                    &nbsp;<i id="Dx_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            @{ Show = (string.IsNullOrEmpty(dictQADxRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
+                            <div title="" class="col-md-2 input-group" style="@Show">
+                                <input type="text" class="form-control QARemarks" value="@dictQADxRemarks?.ElementAt(i).Value" />
+                            </div>
+
+                            <div class="col-md-3 lessWidth input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">@j</span>
+                                </div>
+                                @{
+                                    string ShadowQaDxVal = !string.IsNullOrEmpty(dictShadowQADxCodes?.ElementAt(i).Value) ? dictShadowQADxCodes?.ElementAt(i).Value : (dictQADxCodes?.ElementAt(i).Value);
+                                }
+                                <input type="text" id="txtDx_@i" class="form-control txtDx" autocomplete="off" tabindex="@i" placeholder="Code" value="@ShadowQaDxVal" />
+                            </div>
+
+                            <div class="input-group-append CoderCorrections">
+                                <span class="input-group-text">
+                                    &nbsp;<i id="Dx_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                    &nbsp;<i id="Dx_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <div class="col-md-3 lessWidth input-group Dx_@i" style="display:none">
+                                <input type="text" id="Dx_@i" class="form-control QARevised" />
+                            </div>
+
+                            @{ Show = (string.IsNullOrEmpty(dictShadowQADxRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
+                            <div title="" class="col-md-2 input-group" style="@Show">
+                                <input type="text" class="form-control QARemarks" value="@dictShadowQADxRemarks?.ElementAt(i).Value" />
+                            </div>
+
+                        </div>
+
+                    j = j + 1;
+                }
+            }
+
+        <div class="form-group row">
+            <label class="col-md-3 lessWidth m-t-15"></label>
+            <div class="col-md-3 lessWidth input-group">
+            </div>
+            <div class="col-md-1 lessWidth input-group" style="margin-left: -22px;">
+            </div>
+            <div class="col-md-2 input-group">
+            </div>
+            <div class="col-md-3 lessWidth input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">@totalDxCount</span>
+                </div>
+                <input type="text" id="txtDx_@totalDxCount" onfocusout="DxFunction('txtDx_@totalDxCount')" class="form-control txtDx" tabindex="@totalDxCount" autofocus="autofocus" autocomplete="off" placeholder="Code" />
+            </div>
+        </div>
+        </div>
+
+
+
+
     </div>
 
     <div class="clearfix"></div>
