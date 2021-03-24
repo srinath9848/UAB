@@ -21,6 +21,24 @@
 
 <script type="text/javascript">
 
+    $('#codingSubmit,#codingSubmitAndGetNext').click(function (e) {
+
+        var DxCodes = $("[id*=txtDx_]");
+        $("#hdnDxCodes").val("");
+        for (var i = 0; i < DxCodes.length; i++) {
+
+            var id = parseInt($(DxCodes[i]).attr("id").split("_")[1]);
+
+                if ($("#" + $(DxCodes[i]).attr("id")).val() != "") {
+
+                    if ($("#hdnDxCodes").val() == "")
+                        $("#hdnDxCodes").val($(DxCodes[i]).val());
+                    else
+                        $("#hdnDxCodes").val($("#hdnDxCodes").val() + "," + $(DxCodes[i]).val());
+                }
+        }
+
+    });
     var isBlocked = @(ViewBag.IsBlocked == null ? "0": "1");
 
     if (isBlocked == 1) {
@@ -87,7 +105,7 @@
                     $("#txtDxx_1").removeAttr("onfocusout", "");
                     $("#txtDxx_" + id).focus();
                 }
-               
+
             } else {
                 //var id2 = parseInt(id) - parseInt(1);
                 //var val = $("#txt" + id2).val();
@@ -187,7 +205,7 @@
                     $("#txtLinks1_1").removeAttr("onfocusout", "");
                     $("#txtCpt1_" + id).focus();
                 }
-                
+
             } else {
                 //var id2 = parseInt(id) - parseInt(1);
                 //var val = $("#txtCpt" + id2).val();

@@ -41,6 +41,8 @@
         @Html.Hidden("hdnModReject")
         @Html.Hidden("hdnDxReject")
         @Html.Hidden("hdnProviderFeedbackIDReject")
+        @Html.Hidden("hdnQADxRemarks")
+        @Html.Hidden("hdnQADxCodes")
 
         <div class="form-group row">
             <label class="col-md-3 m-t-15"></label>
@@ -164,13 +166,13 @@
         </div>
         <div id="DivDx">
             @{
-                int i = 0;
-                int j = 1;
+                int i = 1;
+
                 int totalDxCount = Model.Dx.Split(",").Count() + 1;
                 foreach (var item in Model.Dx.Split(","))
                 {
                     <div class="form-group row">
-                        @if (i == 0)
+                        @if (i == 1)
                         {
                             <label class="col-md-3 lessWidth m-t-15">Dx</label>
                         }
@@ -180,15 +182,15 @@
                         }
                         <div class="col-md-3 lessWidth input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">@j</span>
+                                <span class="input-group-text" id="basic-addon1">@i</span>
                             </div>
                             <input class="form-control CoderDetails valid" type="text" value="@item">
                         </div>
                         <div class="col-md-3 lessWidth input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">@j</span>
+                                <span class="input-group-text" id="basic-addon1">@i</span>
                             </div>
-                            <input type="text" id="txtDx_@j" class="form-control txtDx" autocomplete="off" tabindex="@j" placeholder="Code" value="@item" />
+                            <input type="text" id="txtDx_@i" class="form-control txtDx" autocomplete="off" tabindex="@i" placeholder="Code" value="@item" />
                         </div>
                         <div class="input-group-append CoderCorrections">
                             <span class="input-group-text">
@@ -196,13 +198,12 @@
                                 &nbsp;<i id="Dx_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                             </span>
                         </div>
-                        <div class="col-md-3 lessWidth input-group Dx_@i" style="display:none">
-                            <input type="text" id="Dx_@i" class="form-control QARevised" />
+                        <div class="col-md-3 lessWidth input-group">
+                            <input type="text" id="DxRemarks_@i" class="form-control QARevised DxRemarks_@i Dx_@i" style="display:none" />
                         </div>
                     </div>
 
                     i = i + 1;
-                    j = j + 1;
                 }
             }
 
@@ -220,15 +221,14 @@
         </div>
         <div id="DivCpt">
             @{
-                i = 0;
-                j = 1;
+                i = 1;
                 int totalCptCount = Model.CPTCode.Split(",").Count() + 1;
                 foreach (var item in Model.CPTCode.Split(","))
                 {
                     string[] cptcodes = item.Split("^");
 
                     <div class="form-group row">
-                        @if (i == 0)
+                        @if (i == 1)
                         {
                             <label class="col-md-3 lessWidth m-t-15">CPT</label>
                         }
@@ -239,7 +239,7 @@
 
                         <div class="col-md-3 CptlessWidth input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">@j</span>
+                                <span class="input-group-text" id="basic-addon1">@i</span>
                             </div>
                             <input type="text" class="form-control CoderDetails" id="txtCpt_@i" autocomplete="off" placeholder="Code" value="@cptcodes[0]" />
                             <input type="text" class="form-control CoderDetails" id="txtMod_@i" autocomplete="off" placeholder="Mod" value="@cptcodes[1].Replace("|",",")" />
@@ -249,12 +249,12 @@
 
                         <div class="col-md-3 CptlessWidth input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">@j</span>
+                                <span class="input-group-text" id="basic-addon1">@i</span>
                             </div>
-                            <input type="text" class="form-control" id="txtCpt_@j" autocomplete="off" placeholder="Code" value="@cptcodes[0]" />
-                            <input type="text" class="form-control" id="txtMod_@j" autocomplete="off" placeholder="Mod" value="@cptcodes[1].Replace("|",",")" />
-                            <input type="text" id="txtQty_@j" class="form-control" autocomplete="off" placeholder="1" value="@cptcodes[2]" />
-                            <input type="text" id="txtLinks_@j" class="form-control" autocomplete="off" placeholder="Link All" value="@cptcodes[3].Replace("|",",")" />
+                            <input type="text" class="form-control" id="txtCpt_@i" autocomplete="off" placeholder="Code" value="@cptcodes[0]" />
+                            <input type="text" class="form-control" id="txtMod_@i" autocomplete="off" placeholder="Mod" value="@cptcodes[1].Replace("|",",")" />
+                            <input type="text" id="txtQty_@i" class="form-control" autocomplete="off" placeholder="1" value="@cptcodes[2]" />
+                            <input type="text" id="txtLinks_@i" class="form-control" autocomplete="off" placeholder="Link All" value="@cptcodes[3].Replace("|",",")" />
                         </div>
                         <div class="input-group-append CoderCorrections">
                             <span class="input-group-text">
@@ -267,7 +267,6 @@
                         </div>
                     </div>
                     i = i + 1;
-                    j = j + 1;
                 }
             }
             <div class="form-group row">

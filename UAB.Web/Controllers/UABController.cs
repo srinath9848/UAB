@@ -54,7 +54,11 @@ namespace UAB.Controllers
             ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             #endregion
-
+            if (chartSummaryDTO.CodingDTO.ClinicalCaseID == 0)
+            {
+                TempData["error"] = "There are no charts";
+                return RedirectToAction("CodingSummary");
+            }
             return View("Coding", chartSummaryDTO);
         }
 
@@ -80,19 +84,19 @@ namespace UAB.Controllers
 
 
         [HttpGet]
-        public IActionResult GetCodingBlockedCharts (string Role, string ChartType, int ProjectID, string ProjectName,string ccid ,string plusorminus)
+        public IActionResult GetCodingBlockedCharts(string Role, string ChartType, int ProjectID, string ProjectName, string ccid, string plusorminus)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-           List<ChartSummaryDTO> chartSummaryDTOlst = new List<ChartSummaryDTO>();
-            
+            List<ChartSummaryDTO> chartSummaryDTOlst = new List<ChartSummaryDTO>();
+
             chartSummaryDTOlst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);
 
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
 
-            if (plusorminus=="Next")
+            if (plusorminus == "Next")
             {
                 chartSummaryDTO = chartSummaryDTOlst.SkipWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).FirstOrDefault();
-                if (chartSummaryDTO==null)
+                if (chartSummaryDTO == null)
                 {
                     chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
                 }
@@ -107,7 +111,7 @@ namespace UAB.Controllers
                 }
                 chartSummaryDTO.ProjectName = ProjectName;
             }
-            
+
             ViewBag.IsBlocked = "1";
 
             #region binding data
@@ -190,8 +194,11 @@ namespace UAB.Controllers
 
         [HttpPost]
         public IActionResult SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO, string codingSubmitAndGetNext)
-        {   
+        {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+
+            string hdnDxCodes = Request.Form["hdnDxCodes"].ToString();
+            chartSummaryDTO.Dx = hdnDxCodes;
 
             if (string.IsNullOrEmpty(codingSubmitAndGetNext))
                 clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDTO);
@@ -212,6 +219,10 @@ namespace UAB.Controllers
             var hdnMod = Request.Form["hdnMod"].ToString();
             var hdnDx = Request.Form["hdnDx"].ToString();
             var hdnProviderFeedbackID = Request.Form["hdnProviderFeedbackID"].ToString();
+
+            var hdnCoderDxRemarks = Request.Form["hdnCoderDxRemarks"].ToString();
+            chartSummaryDTO.ShadowQADx = hdnCoderDxRemarks;
+
             int statusId = 0;
 
             if (!string.IsNullOrEmpty(hdnPayorID) || !string.IsNullOrEmpty(hdnProviderID)
@@ -289,7 +300,7 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.QA.ToString());
-	
+
             return View(lstDto);
         }
         public IActionResult GetQAAvailableChart(string Role, string ChartType, int ProjectID, string ProjectName)
@@ -305,6 +316,11 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
+            if (chartSummaryDTO.CodingDTO.ClinicalCaseID == 0)
+            {
+                TempData["error"] = "There are no charts";
+                return RedirectToAction("QASummary");
+            }
             return View("QA", chartSummaryDTO);
         }
 
@@ -357,6 +373,12 @@ namespace UAB.Controllers
         public IActionResult SubmitQAAvailableChart(ChartSummaryDTO chartSummaryDTO, string SubmitAndGetNext)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+
+            var hdnQADx = Request.Form["hdnQADxCodes"].ToString();
+            var hdnQADxRemarks = Request.Form["hdnQADxRemarks"].ToString();
+            chartSummaryDTO.QADx = hdnQADx;
+            chartSummaryDTO.QADxRemarks = hdnQADxRemarks;
+
 
             if (string.IsNullOrEmpty(SubmitAndGetNext))
                 clinicalcaseOperations.SubmitQAAvailableChart(chartSummaryDTO);
@@ -480,6 +502,8 @@ namespace UAB.Controllers
             return View("QASummary", lstDto);
         }
 
+
+
         #endregion
 
         #region Shadow QA
@@ -508,6 +532,12 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
+
+            if (chartSummaryDTO.CodingDTO.ClinicalCaseID == 0)
+            {
+                TempData["error"] = "There are no charts";
+                return RedirectToAction("ShadowQASummary");
+            }
             return View("ShadowQA", chartSummaryDTO);
         }
 
@@ -531,6 +561,12 @@ namespace UAB.Controllers
         public IActionResult SubmitShadowQAAvailableChart(ChartSummaryDTO chartSummaryDTO, bool hdnIsQAAgreed, string SubmitAndGetNext)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+
+            var hdnShadowQADxCodes = Request.Form["hdnShadowQADxCodes"].ToString();
+            var hdnShadowQADxRemarks = Request.Form["hdnShadowQADxRemarks"].ToString();
+            chartSummaryDTO.ShadowQADx = hdnShadowQADxCodes;
+            chartSummaryDTO.ShadowQADxRemarks = hdnShadowQADxRemarks;
+
             bool isQAAgreed = hdnIsQAAgreed;// Convert.ToBoolean(Request.Form["hdnIsQAAgreed"]);
 
             if (string.IsNullOrEmpty(SubmitAndGetNext))
