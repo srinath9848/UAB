@@ -22,6 +22,8 @@
         @Html.HiddenFor(model => model.ProjectID)
         @Html.HiddenFor(model => model.Dx)
         @Html.HiddenFor(model => model.QADx)
+        @Html.Hidden("hdnShadowQADxRemarks")
+        @Html.Hidden("hdnShadowQADxCodes")
 
 
         @{
@@ -319,7 +321,7 @@
             int? count = (dictQADxCodes?.Count() > lstdxCodes.Count()) ? dictQADxCodes?.Count() : lstdxCodes.Count();
             Dictionary<int, string> dictDxCodes = Utility.GetDxCodes(Model.Dx, count.Value);
             int totalDxCount = count.Value + 1;
-            Dictionary<int, string> dictQADxRemarks = Utility.GetQADxRemarks(Model.QADxRemarks, count.Value); 
+            Dictionary<int, string> dictQADxRemarks = Utility.GetQADxRemarks(Model.QADxRemarks, count.Value);
         }
         <div id="DivDx">
             @{
@@ -371,17 +373,17 @@
                             @{
                                 string QaDxVal = !string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? dictQADxCodes?.ElementAt(i).Value : dictDxCodes.ElementAt(i).Value;
                             }
-                            <input type="text" id="txtDx_@i" class="form-control txtDx" autocomplete="off" tabindex="@i" placeholder="Code" value="@QaDxVal" />
+                            <input type="text" id="txtDx_@j" class="form-control txtDx" autocomplete="off" tabindex="@j" placeholder="Code" value="@QaDxVal" />
                         </div>
 
                         <div class="input-group-append CoderCorrections">
                             <span class="input-group-text">
-                                &nbsp;<i id="Dx_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                                &nbsp;<i id="Dx_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                &nbsp;<i id="Dx_@j" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                &nbsp;<i id="Dx_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                             </span>
                         </div>
-                        <div class="col-md-3 lessWidth input-group Dx_@i" style="display:none">
-                            <input type="text" id="Dx_@i" class="form-control QARevised" />
+                        <div class="col-md-3 lessWidth input-group">
+                            <input type="text" id="DxRemarks_@j" class="form-control DxRemarks_@j Dx_@j" style="display:none" />
                         </div>
 
                     </div>

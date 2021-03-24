@@ -29,65 +29,68 @@
             <tr>
                 <td>
                     <div class="form-group">
-                        <label class="lblSearch">Clinical case Id</label>
-                        @Html.TextBoxFor(model => model.ClinicalCaseId, new { @class = "form-control", @autofocus = "autofocus", @id = "txtClinicalCaseId", @autocomplete = "off" })
+                        @*<label class="lblSearch">Clinical case Id</label>*@
+                        @Html.TextBoxFor(model => model.ClinicalCaseId, new { @class = "form-control", @autofocus = "autofocus", @id = "txtClinicalCaseId", @autocomplete = "off", @placeholder = "Enter Chart Id" })
                         @Html.ValidationMessageFor(model => model.ClinicalCaseId, null, new { @class = "text-danger" })
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="form-group">
-                        <label class="lblSearch">First Name</label>
-                        @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @autofocus = "autofocus", @id = "txtFirstName", @autocomplete = "off" })
+                        @*<label class="lblSearch">First Name</label>*@
+                        @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @autofocus = "autofocus", @id = "txtFirstName", @autocomplete = "off", @placeholder = "Enter FirstName" })
                         @Html.ValidationMessageFor(model => model.FirstName, null, new { @class = "text-danger" })
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
                     </div>
 
                     <div class="form-group">
-                        <label class="lblSearch">Last Name</label>
-                        @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", @autofocus = "autofocus", @id = "txtLastName", @autocomplete = "off" })
+                        @*<label class="lblSearch">Last Name</label>*@
+                        @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", @autofocus = "autofocus", @id = "txtLastName", @autocomplete = "off", @placeholder = "Enter LastName" })
                         @Html.ValidationMessageFor(model => model.LastName, null, new { @class = "text-danger" })
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
                     </div>
 
                     <div class="form-group">
-                        <label class="lblSearch">Provider Name </label>
-                        @Html.TextBoxFor(model => model.ProviderName, new { @class = "form-control", @autofocus = "autofocus", @id = "txtProvidername", @autocomplete = "off" })
+                        @*<label class="lblSearch">Provider Name </label>*@
+                        @Html.TextBoxFor(model => model.ProviderName, new { @class = "form-control", @autofocus = "autofocus", @id = "txtProvidername", @autocomplete = "off", @placeholder = "Enter Provider" })
                         @Html.ValidationMessageFor(model => model.ProviderName, null, new { @class = "text-danger" })
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
                     </div>
                     <div class="form-group">
-                        <label class="lblSearch">MRN</label>
-                        @Html.TextBoxFor(model => model.MRN, new { @class = "form-control", @autofocus = "autofocus", @id = "txtMRN", @autocomplete = "off" })
+                        @*<label class="lblSearch">MRN</label>*@
+                        @Html.TextBoxFor(model => model.MRN, new { @class = "form-control", @autofocus = "autofocus", @id = "txtMRN", @autocomplete = "off", @placeholder = "Enter MRN" })
                         @Html.ValidationMessageFor(model => model.MRN, null, new { @class = "text-danger" })
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
                     </div>
 
+                    <div class="custom-control custom-checkbox mr-sm-1">
+                        @Html.CheckBoxFor(model => model.IncludeBlocked, new { @class = "custom-control-input ShadowQADetails", @id = "customControlAutosizing1" })
+                        <label class="custom-control-label" for="customControlAutosizing1">Include Blocked</label>
+                    </div>
                     <div class="form-group">
-                        <label class="lblSearch">DOS From</label>
-                        @Html.TextBoxFor(model => model.DoSFrom, new { @class = "form-control", @type = "date", @autofocus = "autofocus", @id = "txtDoSFrom", @autocomplete = "off" })
+                        @*<label class="lblSearch">DOS From</label>*@
+                        @Html.TextBoxFor(model => model.DoSFrom, new { @class = "form-control", @type = "date", @autofocus = "autofocus", @id = "txtDoSFrom", @autocomplete = "off", @placeholder = "Select DOS FRom" })
                         @Html.ValidationMessageFor(model => model.DoSFrom, null, new { @class = "text-danger" })
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
                     </div>
 
                     <div class="form-group">
-                        <label class="lblSearch">DOS To</label>
-                        @Html.TextBoxFor(model => model.DoSTo, new { @class = "form-control", @type = "date", @autofocus = "autofocus", @id = "txtDoSTo", @autocomplete = "off" })
+                        @*<label class="lblSearch">DOS To</label>*@
+                        @Html.TextBoxFor(model => model.DoSTo, new { @class = "form-control", @type = "date", @autofocus = "autofocus", @id = "txtDoSTo", @autocomplete = "off", @placeholder = "Select DOS To" })
                         @Html.ValidationMessageFor(model => model.DoSTo, null, new { @class = "text-danger" })
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
                     </div>
 
                     <div class="form-group">
-                        <label class="lblSearch">Status</label>
+                        @*<label class="lblSearch">Status</label>*@
                         @Html.DropDownListFor(model => model.StatusName, new SelectList(@ViewBag.Status, "StatusId", "Name"), "--Select a Status--", new { @class = "form-control", @id = "statusdd" })
                         @Html.ValidationMessageFor(model => model.StatusName, null, new { @class = "text-danger" })
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
                     </div>
 
                     <div class="form-group">
-                        <label class="lblSearch">Project</label>
+                        @*<label class="lblSearch">Project</label>*@
                         @Html.DropDownListFor(model => model.ProjectName, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select a Project--", new { @class = "form-control", @id = "projectdd" })
                         @Html.ValidationMessageFor(model => model.ProjectName, null, new { @class = "text-danger" })
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
                     </div>
                 </td>
             </tr>
@@ -121,6 +124,7 @@
             $("#statusdd").find('option:selected').text("--Select a Status--");
             $("#projectdd").find('option:selected').text("--Select a Project--");
             $("#txtProvidername").val('');
+            $("#customControlAutosizing1").prop("checked", false);
                 }
 
                 Search = function () {
@@ -134,8 +138,9 @@
                     var statusname = $("#statusdd").find('option:selected').text();
                     var projectname = $("#projectdd").find('option:selected').text();
                     var providername = $("#txtProvidername").val();
+                    var includeblocked = $("#customControlAutosizing1").prop("checked");
                     if (ccid !== "" || fname !=="" || lname !=="" || mrn !=="" || dosfrom !=="" || dosto !=="" || providername !=="" ||
-                        projectname !== "--Select a Project--" || statusname !== "--Select a Status--") {
+                        projectname !== "--Select a Project--" || statusname !== "--Select a Status--" || includeblocked!==false) {
                 $("#error").hide();
                 $.ajax({
                         type: "POST",
@@ -149,7 +154,9 @@
                         "dosto": $("#txtDoSTo").val(),
                         "statusname": $("#statusdd").find('option:selected').text(),
                         "projectname": $("#projectdd").find('option:selected').text(),
-                        "providername": $("#txtProvidername").val()
+                        "providername": $("#txtProvidername").val(),
+                        "includeblocked": $("#customControlAutosizing1").prop("checked")
+
                     },
                     success: function (response) {
                         $("#searchresultmodalContent").html(response);

@@ -7,7 +7,7 @@ cc.PatientLastName as LastName,
 PatientMRN,pro.Name as Provider,  
    CAST(DateOfService AS VARCHAR(20)) AS DateOfService,
    p.Name as ProjectName,  
-    s.Name   as Status 
+    s.Name   as Status ,wi.IsBlocked
 from ClinicalCase cc
 join WorkItem wi on cc.ClinicalCaseId=wi.ClinicalCaseId
 join Status s on s.StatusId=wi.StatusId

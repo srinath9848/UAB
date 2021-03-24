@@ -202,6 +202,9 @@ namespace UAB.Controllers
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
+            string hdnDxCodes = Request.Form["hdnDxCodes"].ToString();
+            chartSummaryDTO.Dx = hdnDxCodes;
+
             if (string.IsNullOrEmpty(codingSubmitAndGetNext))
                 clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDTO);
             else
@@ -221,6 +224,10 @@ namespace UAB.Controllers
             var hdnMod = Request.Form["hdnMod"].ToString();
             var hdnDx = Request.Form["hdnDx"].ToString();
             var hdnProviderFeedbackID = Request.Form["hdnProviderFeedbackID"].ToString();
+
+            var hdnCoderDxRemarks = Request.Form["hdnCoderDxRemarks"].ToString();
+            chartSummaryDTO.ShadowQADx = hdnCoderDxRemarks;
+
             int statusId = 0;
 
             if (!string.IsNullOrEmpty(hdnPayorID) || !string.IsNullOrEmpty(hdnProviderID)
@@ -500,7 +507,7 @@ namespace UAB.Controllers
             return View("QASummary", lstDto);
         }
 
-       
+
 
         #endregion
 
@@ -559,6 +566,12 @@ namespace UAB.Controllers
         public IActionResult SubmitShadowQAAvailableChart(ChartSummaryDTO chartSummaryDTO, bool hdnIsQAAgreed, string SubmitAndGetNext)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+
+            var hdnShadowQADxCodes = Request.Form["hdnShadowQADxCodes"].ToString();
+            var hdnShadowQADxRemarks = Request.Form["hdnShadowQADxRemarks"].ToString();
+            chartSummaryDTO.ShadowQADx = hdnShadowQADxCodes;
+            chartSummaryDTO.ShadowQADxRemarks = hdnShadowQADxRemarks;
+
             bool isQAAgreed = hdnIsQAAgreed;// Convert.ToBoolean(Request.Form["hdnIsQAAgreed"]);
 
             if (string.IsNullOrEmpty(SubmitAndGetNext))
@@ -675,7 +688,7 @@ namespace UAB.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult SettingsSearch(string ccid, string fname, string lname, string mrn, DateTime dosfrom, DateTime dosto, string statusname, string projectname, string providername)
+        public IActionResult SettingsSearch(string ccid, string fname, string lname, string mrn, DateTime dosfrom, DateTime dosto, string statusname, string projectname, string providername,bool includeblocked)
         {
 
             SearchParametersDTO searchParametersDTO = new SearchParametersDTO()
@@ -688,7 +701,8 @@ namespace UAB.Controllers
                 DoSTo = dosto,
                 StatusName = statusname,
                 ProjectName = projectname,
-                ProviderName = providername
+                ProviderName = providername,
+                IncludeBlocked=includeblocked
             };
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var searchData = clinicalcaseOperations.GetSearchData(searchParametersDTO);
