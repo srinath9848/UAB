@@ -40,7 +40,10 @@
                 <div class="col-sm-3">
                     @Html.TextBoxFor(model => model.CodingDTO.DateOfService, new { @class = "form-control", @readonly = "readonly" })
                 </div>
-                <button type="button" class="btn btn-link Available" onclick="ViewHistory()">View History</button>
+                 <div class="col-sm-2">
+                     <button type="button" class="btn btn-link Available form-control" onclick="ViewHistory()">View History</button>
+                </div>
+                
             </div>
         </div>
     </div>
