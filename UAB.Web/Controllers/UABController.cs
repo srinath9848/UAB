@@ -204,6 +204,8 @@ namespace UAB.Controllers
 
             string hdnDxCodes = Request.Form["hdnDxCodes"].ToString();
             chartSummaryDTO.Dx = hdnDxCodes;
+            string hdnCptCodes = Request.Form["hdnCptCodes"].ToString();
+            chartSummaryDTO.CPTCode = hdnCptCodes;
 
             if (string.IsNullOrEmpty(codingSubmitAndGetNext))
                 clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDTO);
@@ -378,6 +380,10 @@ namespace UAB.Controllers
             chartSummaryDTO.QADx = hdnQADx;
             chartSummaryDTO.QADxRemarks = hdnQADxRemarks;
 
+            var hdnQACptCodes = Request.Form["hdnQACptCodes"].ToString();
+            var hdnQACptRemarks = Request.Form["hdnQACptRemarks"].ToString();
+            chartSummaryDTO.QACPTCode = hdnQACptCodes;
+            chartSummaryDTO.QACPTCodeRemarks = hdnQACptRemarks;
 
             if (string.IsNullOrEmpty(SubmitAndGetNext))
                 clinicalcaseOperations.SubmitQAAvailableChart(chartSummaryDTO);
