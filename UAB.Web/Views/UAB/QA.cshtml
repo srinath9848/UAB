@@ -89,7 +89,7 @@
         $("#hdnQADxRemarks").val("");
         for (var i = 0; i < Dxremarks.length; i++) {
 
-            if ($(Dxremarks[i]).css("display") == "flex") {           
+            if ($(Dxremarks[i]).css("display") == "flex") {
 
                 var id = parseInt($(Dxremarks[i]).attr("id").split("_")[1]);
 
@@ -128,6 +128,63 @@
             }
         }
 
+        var CptRemarks = $("[class*=CptRemarks_]");
+        $("#hdnQACptRemarks").val("");
+        for (var i = 0; i < CptRemarks.length; i++) {
+
+            var id = parseInt($(CptRemarks[i]).attr("id").split("_")[1]);
+
+            if ($(CptRemarks[i]).css("display") == "flex") {
+
+                if ($("#hdnQACptRemarks").val() == "")
+                    $("#hdnQACptRemarks").val(id + "^" + $(CptRemarks[i]).val());
+                else
+                    $("#hdnQACptRemarks").val($("#hdnQACptRemarks").val() + "|" + id + "^" + $(CptRemarks[i]).val());
+            }
+        }
+
+        var CptCodes = $("[id*=DivCptRow_]");
+        $("#hdnQACptCodes").val("");
+        for (var i = 1; i <= CptCodes.length; i++) {
+            var id = parseInt($("#txtCpt_" + i).attr("id").split("_")[1]);
+            if ($(".CptRemarks_" + id).length) {
+                if ($("#txtCpt_" + i).val() != "" && $(".Cpt_" + id).css("display") == "flex") {
+                    if ($("#hdnQACptCodes").val() == "") {
+                        if ($("#txtCpt_" + i).val() != "") {
+                            var mod = $("#txtMod_" + i).val() != "" ? $("#txtMod_" + i).val() : null;
+                            var qty = $("#txtQty_" + i).val() != "" ? $("#txtQty_" + i).val() : null;
+                            var links = $("#txtLinks_" + i).val() != "" ? $("#txtLinks_" + i).val() : null;
+                            $("#hdnQACptCodes").val(id + "^" + $("#txtCpt_" + i).val() + "^" + mod + "^" + qty + "^" + links);
+                        }
+                    }
+                    else {
+                        if ($("#txtCpt_" + i).val() != "") {
+                            var mod = $("#txtMod_" + i).val() != "" ? $("#txtMod_" + i).val() : null;
+                            var qty = $("#txtQty_" + i).val() != "" ? $("#txtQty_" + i).val() : null;
+                            var links = $("#txtLinks_" + i).val() != "" ? $("#txtLinks_" + i).val() : null;
+                            $("#hdnQACptCodes").val($("#hdnQACptCodes").val() + "|" + id + "^" + $("#txtCpt_" + i).val() + "^" + mod + "^" + qty + "^" + links);
+                        }
+                    }
+                }
+            }
+            else {
+                if ($("#txtCpt_" + i).val() != "") {
+                    if ($("#hdnQACptCodes").val() == "") {
+                        var mod = $("#txtMod_" + i).val() != "" ? $("#txtMod_" + i).val() : null;
+                        var qty = $("#txtQty_" + i).val() != "" ? $("#txtQty_" + i).val() : null;
+                        var links = $("#txtLinks_" + i).val() != "" ? $("#txtLinks_" + i).val() : null;
+                        $("#hdnQACptCodes").val(id + "^" + $("#txtCpt_" + i).val() + "^" + mod + "^" + qty + "^" + links);
+                    }
+                    else {
+                            var mod = $("#txtMod_" + i).val() != "" ? $("#txtMod_" + i).val() : null;
+                            var qty = $("#txtQty_" + i).val() != "" ? $("#txtQty_" + i).val() : null;
+                            var links = $("#txtLinks_" + i).val() != "" ? $("#txtLinks_" + i).val() : null;
+                            $("#hdnQACptCodes").val($("#hdnQACptCodes").val() + "|" + id + "^" + $("#txtCpt_" + i).val() + "^" + mod + "^" + qty + "^" + links);
+                    }
+                }
+            }
+        }
+
         var total = $(".lessWidth").find(".fa-check-circle").length;
         var reject = $(".lessWidth").find(".reject").length;
         var accept = $(".lessWidth").find(".accept").length;
@@ -157,7 +214,7 @@
                     dxArray.push(val);
                     $("#Dx").val(dxArray);
                     var text = "'" + "txtDx_" + id + "'";
-                    $("#DivDx").append('<div class="form-group row"><label class= "col-md-3 lessWidth m-t-15" ></label><div class="col-md-3 lessWidth input-group"></div><div class="col-md-3 lessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" tabindex="' + id + '" onfocusout="DxFunction(' + text + ')" class="form-control CoderDetails txtDx" id="txtDx_' + id + '" /></div></div>');
+                    $("#DivDx").append('<div id="DivDxRow_' + id + '" class="form-group row"><label class= "col-md-3 lessWidth m-t-15" ></label><div class="col-md-3 lessWidth input-group"></div><div class="col-md-3 lessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" tabindex="' + id + '" onfocusout="DxFunction(' + text + ')" class="form-control CoderDetails txtDx" id="txtDx_' + id + '" /></div></div>');
                     $("#txtDx_" + currId).removeAttr("onfocusout", "");
                     $("#txtDx_" + id).focus();
                 }
@@ -205,7 +262,7 @@
                     var tabindex2 = parseInt(10) + parseInt(id) + parseInt(count) + parseInt(val1);
                     var tabindex3 = parseInt(11) + parseInt(id) + parseInt(count) + parseInt(val1);
                     var tabindex4 = parseInt(12) + parseInt(id) + parseInt(count) + parseInt(val1);
-                    $("#DivCpt").append('<div class="form-group row"><label class="col-md-3 lessWidth m-t-15"></label><div class="col-md-3 CptlessWidth input-group"></div ><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input tabindex = "' + tabindex1 + '" type = "text" placeholder = "Code" class= "form-control CoderDetails txtCpt" id = "txtCpt_' + id + '" /><input tabindex="' + tabindex2 + '" type="text" class="form-control CoderDetails" placeholder="Mod" id="txtMod_' + id + '"/><input tabindex="' + tabindex3 + '" type="text" class="form-control CoderDetails" placeholder="1" value="1" id="txtQty_' + id + '"/><input tabindex="' + tabindex4 + '" type="text" class="form-control CoderDetails" placeholder="Link All" onfocusout="CptFunction(' + txtLinks + ')" id="txtLinks_' + id + '"/></div></div>');
+                    $("#DivCpt").append('<div id="DivCptRow_' + id + '" class="form-group row"><label class="col-md-3 lessWidth m-t-15"></label><div class="col-md-3 CptlessWidth input-group"></div ><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input tabindex = "' + tabindex1 + '" type = "text" placeholder = "Code" class= "form-control CoderDetails txtCpt" id = "txtCpt_' + id + '" /><input tabindex="' + tabindex2 + '" type="text" class="form-control CoderDetails" placeholder="Mod" id="txtMod_' + id + '"/><input tabindex="' + tabindex3 + '" type="text" class="form-control CoderDetails" placeholder="1" value="1" id="txtQty_' + id + '"/><input tabindex="' + tabindex4 + '" type="text" class="form-control CoderDetails" placeholder="Link All" onfocusout="CptFunction(' + txtLinks + ')" id="txtLinks_' + id + '"/></div></div>');
                     $("#txtLinks_" + id1).removeAttr("onfocusout", "");
                     $("#txtCpt_" + id).focus();
                 }

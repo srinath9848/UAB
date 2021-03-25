@@ -25,17 +25,35 @@
 
         var DxCodes = $("[id*=txtDx_]");
         $("#hdnDxCodes").val("");
+        $("#hdnCptCodes").val("");
         for (var i = 0; i < DxCodes.length; i++) {
 
-            var id = parseInt($(DxCodes[i]).attr("id").split("_")[1]);
-
                 if ($("#" + $(DxCodes[i]).attr("id")).val() != "") {
-
                     if ($("#hdnDxCodes").val() == "")
                         $("#hdnDxCodes").val($(DxCodes[i]).val());
                     else
                         $("#hdnDxCodes").val($("#hdnDxCodes").val() + "," + $(DxCodes[i]).val());
                 }
+        }
+
+        var CptCodes = $("[id*=DivCptRow_]");
+        for (var i = 1; i < CptCodes.length; i++) {
+
+            if ($("#hdnCptCodes").val() == "") {               
+                if ($("#txtCpt_" + i).val() != "") {
+                    var mod = $("#txtMod_" + i).val() != "" ? $("#txtMod_" + i).val() : null;
+                    var qty = $("#txtQty_" + i).val() != "" ? $("#txtQty_" + i).val() : null;
+                    var links = $("#txtLinks_" + i).val() != "" ? $("#txtLinks_" + i).val() : null;
+                    $("#hdnCptCodes").val($("#txtCpt_" + i).val() + "^" + mod + "^" + qty + "^" + links);
+                }
+            } else {
+                if ($("#txtCpt_" + i).val() != "") {
+                    var mod = $("#txtMod_" + i).val() != "" ? $("#txtMod_" + i).val() : null;
+                    var qty = $("#txtQty_" + i).val() != "" ? $("#txtQty_" + i).val() : null;
+                    var links = $("#txtLinks_" + i).val() != "" ? $("#txtLinks_" + i).val() : null;
+                    $("#hdnCptCodes").val($("#hdnCptCodes").val() + "|" + $("#txtCpt_" + i).val() + "^" + mod + "^" + qty + "^" + links);
+                }
+            }
         }
 
     });

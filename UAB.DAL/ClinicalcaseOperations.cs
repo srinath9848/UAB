@@ -472,10 +472,7 @@ namespace UAB.DAL
             dtCPT.Columns.Add("Mod", typeof(string));
             dtCPT.Columns.Add("Qty", typeof(string));
             dtCPT.Columns.Add("Links", typeof(string));
-            // 71045^null^1^null, 
-            // 71046^null^1^null, 
-            // 71047^ null^1^null
-            string[] lstcpts = cpt.Split(",");
+            string[] lstcpts = cpt.Split("|");
             int i = 0;
             foreach (var item in lstcpts)
             {
