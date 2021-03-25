@@ -316,9 +316,11 @@
             </div>
         </div>
         @{
-            Dictionary<int, string> dictQADxCodes = Utility.GetQAOrShadowQADxCodes(Model.QADx);
+            List<string> lstQadxCodes = Model.QADx.Split('|').ToList();
             List<string> lstdxCodes = Model.Dx.Split(',').ToList();
-            int? count = (dictQADxCodes?.Count() > lstdxCodes.Count()) ? dictQADxCodes?.Count() : lstdxCodes.Count();
+            int? count = (lstQadxCodes?.Count() > lstdxCodes.Count()) ? lstQadxCodes?.Count() : lstdxCodes.Count();
+            Dictionary<int, string> dictQADxCodes = Utility.GetQADxCodes(Model.QADx, count.Value);
+            count = (count > dictQADxCodes.Count()) ? count : dictQADxCodes.Count();
             Dictionary<int, string> dictDxCodes = Utility.GetDxCodes(Model.Dx, count.Value);
             int totalDxCount = count.Value + 1;
             Dictionary<int, string> dictQADxRemarks = Utility.GetQAOrShadowQADxRemarks(Model.QADxRemarks, count.Value);
@@ -343,7 +345,7 @@
                         @{string QADx = (dictQADxCodes?.ElementAt(i).Value?.Length > len) ? "/" + dictQADxCodes?.ElementAt(i).Value.Substring(0, len) + ".." : "/" + dictQADxCodes?.ElementAt(i).Value;}
                         @{title = (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? dictDxCodes.ElementAt(i).Value + "/" + dictQADxCodes?.ElementAt(i).Value : dictDxCodes.ElementAt(i).Value);}
 
-                        <div class="col-md-3 lessWidth input-group">
+                        <div title="@title" class="col-md-3 lessWidth input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">@j</span>
                             </div>
@@ -360,32 +362,34 @@
                                     }
                                 </span>
                             </div>
+                            <div class="input-group-append" style="height: 45px;">
+                                <span class="input-group-text">
+                                    &nbsp;<i id="Dx_@j" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                    &nbsp;<i id="Dx_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                </span>
+                            </div>
                         </div>
                         @{ Show = (string.IsNullOrEmpty(dictQADxRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
                         <div title="" class="col-md-2 input-group" style="@Show">
                             <input type="text" class="form-control QARemarks" value="@dictQADxRemarks?.ElementAt(i).Value" />
                         </div>
-
                         <div class="col-md-3 lessWidth input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">@j</span>
                             </div>
                             @{
                                 string QaDxVal = !string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? dictQADxCodes?.ElementAt(i).Value : dictDxCodes.ElementAt(i).Value;
+
+                                if (dictQADxCodes?.ElementAt(i).Value == "NA" && !string.IsNullOrEmpty(dictDxCodes?.ElementAt(i).Value))
+                                {
+                                    QaDxVal = dictDxCodes.ElementAt(i).Value;
+                                }
                             }
                             <input type="text" id="txtDx_@j" class="form-control txtDx" autocomplete="off" tabindex="@j" placeholder="Code" value="@QaDxVal" />
-                        </div>
-
-                        <div class="input-group-append CoderCorrections">
-                            <span class="input-group-text">
-                                &nbsp;<i id="Dx_@j" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                                &nbsp;<i id="Dx_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                            </span>
                         </div>
                         <div class="col-md-3 lessWidth input-group">
                             <input type="text" id="DxRemarks_@j" class="form-control DxRemarks_@j Dx_@j" style="display:none" />
                         </div>
-
                     </div>
 
                     j = j + 1;
@@ -396,7 +400,13 @@
                 <label class="col-md-3 lessWidth m-t-15"></label>
                 <div class="col-md-3 lessWidth input-group">
                 </div>
-                <div class="col-md-2 input-group">
+                <div class="col-md-2 input-group" style="visibility:hidden;">
+                    <div class="input-group-append" style="height: 38px;">
+                        <span class="input-group-text">
+                            &nbsp;<i class="fa fa-edit fa-lg" aria-hidden="true"></i>
+                            &nbsp;<i class="fa fa-edit fa-lg" aria-hidden="true"></i>
+                        </span>
+                    </div>
                 </div>
                 <div class="col-md-3 lessWidth input-group">
                     <div class="input-group-prepend">
@@ -416,15 +426,6 @@
             <div class="card-body">
                 <div class="col-12">
                     <div class="row mb-3">
-                        @*<div class="col-lg-6">
-                                <div class="form-group row">
-                                    <label class="col-md-5 m-t-15">Coder Rebuttal</label>
-                                    <div class="col-md-7">
-                                        @Html.TextAreaFor(model => model.QADTO.CoderRebuttal, new { @class = "form-control", @readonly = "readonly" })
-                                    </div>
-                                </div>
-                            </div>*@
-
                         <div class="col-lg-6">
                             <div class="form-group row">
                                 <label class="col-md-5 m-t-15">

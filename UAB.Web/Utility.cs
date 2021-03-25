@@ -88,7 +88,7 @@ namespace UAB
                 int j = dictQADxCodes.Count;
                 for(int i = j; i < count; i++)
                 {
-                    dictQADxCodes.Add(j+1, "NA");
+                    dictQADxCodes.Add(j+1, "");
                 }
             }
 

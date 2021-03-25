@@ -51,7 +51,7 @@
                 <label class="custom-control-label" for="chkAll">Accept All</label>
             </div>
             <label class="col-md-1 m-t-15"></label>
-            <div class="custom-control mr-sm-2 QACorrectionsComments" style="display:none" ;>
+            <div class="custom-control mr-sm-2 QACorrectionsComments">
                 <label class="">QA Corrections</label>
             </div>
             <label class="col-md-1 m-t-15"></label>
@@ -185,18 +185,18 @@
                                 <span class="input-group-text" id="basic-addon1">@i</span>
                             </div>
                             <input class="form-control CoderDetails valid" type="text" value="@item">
+                            <div class="input-group-append" style="height: 38px;">
+                                <span class="input-group-text QACorrections">
+                                    &nbsp;<i id="Dx_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                    &nbsp;<i id="Dx_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                </span>
+                            </div>
                         </div>
                         <div class="col-md-3 lessWidth input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">@i</span>
                             </div>
                             <input type="text" id="txtDx_@i" class="form-control txtDx" autocomplete="off" tabindex="@i" placeholder="Code" value="@item" />
-                        </div>
-                        <div class="input-group-append CoderCorrections">
-                            <span class="input-group-text">
-                                &nbsp;<i id="Dx_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                                &nbsp;<i id="Dx_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                            </span>
                         </div>
                         <div class="col-md-3 lessWidth input-group">
                             <input type="text" id="DxRemarks_@i" class="form-control QARevised DxRemarks_@i Dx_@i" style="display:none" />
@@ -209,7 +209,13 @@
 
             <div class="form-group row">
                 <label class="col-md-3 lessWidth m-t-15"></label>
-                <div class="col-md-3 lessWidth input-group">
+                <div class="col-md-3 lessWidth input-group" style="visibility:hidden;">
+                    <div class="input-group-append" style="height: 38px;">
+                        <span class="input-group-text">
+                            &nbsp;<i class="fa fa-edit fa-lg" aria-hidden="true"></i>
+                            &nbsp;<i class="fa fa-edit fa-lg" aria-hidden="true"></i>
+                        </span>
+                    </div>
                 </div>
                 <div class="col-md-3 lessWidth input-group">
                     <div class="input-group-prepend">

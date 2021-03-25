@@ -222,20 +222,14 @@ namespace UAB.Controllers
             var hdnProviderID = Request.Form["hdnProviderID"].ToString();
             var hdnCpt = Request.Form["hdnCpt"].ToString();
             var hdnMod = Request.Form["hdnMod"].ToString();
-            var hdnDx = Request.Form["hdnDx"].ToString();
+            // var hdnDx = Request.Form["hdnDx"].ToString();
             var hdnProviderFeedbackID = Request.Form["hdnProviderFeedbackID"].ToString();
 
+            var hdnStatusId = Request.Form["hdnStatusId"].ToString();
             var hdnCoderDxRemarks = Request.Form["hdnCoderDxRemarks"].ToString();
-            chartSummaryDTO.ShadowQADx = hdnCoderDxRemarks;
-
-            int statusId = 0;
-
-            if (!string.IsNullOrEmpty(hdnPayorID) || !string.IsNullOrEmpty(hdnProviderID)
-                || !string.IsNullOrEmpty(hdnCpt) || !string.IsNullOrEmpty(hdnMod)
-                || !string.IsNullOrEmpty(hdnDx) || !string.IsNullOrEmpty(hdnProviderFeedbackID))
-                statusId = 15;
-            else
-                statusId = 12;
+            chartSummaryDTO.RevisedDXRemarks = hdnCoderDxRemarks;
+            var hdnCoderDxCodes = Request.Form["hdnCoderDxCodes"].ToString();
+            chartSummaryDTO.Dx = hdnCoderDxCodes;
 
             if (!string.IsNullOrEmpty(hdnPayorID))
                 chartSummaryDTO.PayorID = Convert.ToInt32(hdnPayorID);
@@ -249,15 +243,15 @@ namespace UAB.Controllers
             if (!string.IsNullOrEmpty(hdnMod))
                 chartSummaryDTO.Mod = hdnMod;
 
-            if (!string.IsNullOrEmpty(hdnDx))
-                chartSummaryDTO.Dx = hdnDx;
+            //if (!string.IsNullOrEmpty(hdnDx))
+            //    chartSummaryDTO.Dx = hdnDx;
 
             if (!string.IsNullOrEmpty(hdnProviderFeedbackID))
                 chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(hdnProviderFeedbackID);
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
-            clinicalcaseOperations.SubmitCodingIncorrectChart(chartSummaryDTO, statusId);
+            clinicalcaseOperations.SubmitCodingIncorrectChart(chartSummaryDTO, Convert.ToInt16(hdnStatusId));
 
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
 
@@ -688,7 +682,7 @@ namespace UAB.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult SettingsSearch(string ccid, string fname, string lname, string mrn, DateTime dosfrom, DateTime dosto, string statusname, string projectname, string providername,bool includeblocked)
+        public IActionResult SettingsSearch(string ccid, string fname, string lname, string mrn, DateTime dosfrom, DateTime dosto, string statusname, string projectname, string providername, bool includeblocked)
         {
 
             SearchParametersDTO searchParametersDTO = new SearchParametersDTO()
@@ -702,7 +696,7 @@ namespace UAB.Controllers
                 StatusName = statusname,
                 ProjectName = projectname,
                 ProviderName = providername,
-                IncludeBlocked=includeblocked
+                IncludeBlocked = includeblocked
             };
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var searchData = clinicalcaseOperations.GetSearchData(searchParametersDTO);

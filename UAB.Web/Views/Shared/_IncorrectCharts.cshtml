@@ -31,6 +31,8 @@
         @Html.Hidden("hdnDx")
         @Html.Hidden("hdnProviderFeedbackID")
         @Html.Hidden("hdnCoderDxRemarks")
+        @Html.Hidden("hdnStatusId")
+        @Html.Hidden("hdnCoderDxCodes")
 
         <div class="form-group row">
             <label class="col-md-3 lessWidth m-t-15"></label>
@@ -78,8 +80,8 @@
                     &nbsp;<i id="Payor" title="PayorID1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                 </span>
             </div>
-            <div class="col-md-3 input-group CoderCorrections" style="@Show">
-                @Html.TextBoxFor(model => model.RevisedPayorRemarks, new { @class = "form-control", @id = "RevisedPayorRemarks" })
+            <div class="col-md-3 input-group CoderCorrections">
+                @Html.TextBoxFor(model => model.RevisedPayorRemarks, new { @class = "form-control Revised", @id = "RevisedPayorRemarks", @style = @Show })
             </div>
         </div>
         <div class="form-group row">
@@ -117,8 +119,8 @@
                     &nbsp;<i id="Provider" title="ProviderID1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                 </span>
             </div>
-            <div class="col-md-3 input-group CoderCorrections" style="@Show">
-                @Html.TextBoxFor(model => model.RevisedProviderRemarks, new { @class = "form-control", @id = "RevisedProviderRemarks" })
+            <div class="col-md-3 input-group CoderCorrections">
+                @Html.TextBoxFor(model => model.RevisedProviderRemarks, new { @class = "form-control Revised", @id = "RevisedProviderRemarks", @style = @Show })
             </div>
         </div>
         <div class="form-group row">
@@ -155,8 +157,8 @@
                     &nbsp;<i id="CPT" title="CPTCode1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                 </span>
             </div>
-            <div class="col-md-3 input-group CoderCorrections" style="@Show">
-                @Html.TextBoxFor(model => model.RevisedCPTRemarks, new { @class = "form-control", @id = "RevisedCPTRemarks" })
+            <div class="col-md-3 input-group CoderCorrections">
+                @Html.TextBoxFor(model => model.RevisedCPTRemarks, new { @class = "form-control Revised", @id = "RevisedCPTRemarks", @style = @Show })
             </div>
         </div>
         <div class="form-group row">
@@ -193,8 +195,8 @@
                     &nbsp;<i id="Mod" title="Mod1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                 </span>
             </div>
-            <div class="col-md-3 input-group CoderCorrections" style="@Show">
-                @Html.TextBoxFor(model => model.RevisedModRemarks, new { @class = "form-control", @id = "RevisedModRemarks" })
+            <div class="col-md-3 input-group CoderCorrections">
+                @Html.TextBoxFor(model => model.RevisedModRemarks, new { @class = "form-control Revised", @id = "RevisedModRemarks", @style = @Show })
             </div>
         </div>
         @*<div class="form-group row">
@@ -271,8 +273,8 @@
                 </span>
             </div>
             @Html.DropDownListFor(model => model.QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @style = "display:none", @class = "form-control QARevised", @id = "Feedback1" })
-            <div class="col-md-3 input-group CoderCorrections" style="@Show">
-                @Html.TextBoxFor(model => model.RevisedProviderFeedbackRemarks, new { @class = "form-control", @id = "RevisedProviderFeedbackRemarks" })
+            <div class="col-md-3 input-group CoderCorrections">
+                @Html.TextBoxFor(model => model.RevisedProviderFeedbackRemarks, new { @class = "form-control Revised", @id = "RevisedProviderFeedbackRemarks", @style = @Show })
             </div>
         </div>
         <div class="form-group row">
@@ -283,11 +285,21 @@
         </div>
 
         @{
-            Dictionary<int, string> dictQADxCodes = Utility.GetQAOrShadowQADxCodes(Model.QADx);
+            //Dictionary<int, string> dictQADxCodes = Utility.GetQADxCodes(Model.QADx, 0);
+            //List<string> lstdxCodes = Model.Dx.Split(',').ToList();
+            //int? count = (dictQADxCodes?.Count() > lstdxCodes.Count()) ? dictQADxCodes?.Count() : lstdxCodes.Count();
+            //Dictionary<int, string> dictDxCodes = Utility.GetDxCodes(Model.Dx, count.Value);
+            //Dictionary<int, string> dictQADxRemarks = Utility.GetQAOrShadowQADxRemarks(Model.QADxRemarks, count.Value);
+
+            List<string> lstQadxCodes = Model.QADx.Split('|').ToList();
             List<string> lstdxCodes = Model.Dx.Split(',').ToList();
-            int? count = (dictQADxCodes?.Count() > lstdxCodes.Count()) ? dictQADxCodes?.Count() : lstdxCodes.Count();
+            int? count = (lstQadxCodes?.Count() > lstdxCodes.Count()) ? lstQadxCodes?.Count() : lstdxCodes.Count();
+            Dictionary<int, string> dictQADxCodes = Utility.GetQADxCodes(Model.QADx, count.Value);
+            count = (count > dictQADxCodes.Count()) ? count : dictQADxCodes.Count();
             Dictionary<int, string> dictDxCodes = Utility.GetDxCodes(Model.Dx, count.Value);
+            int totalDxCount = count.Value + 1;
             Dictionary<int, string> dictQADxRemarks = Utility.GetQAOrShadowQADxRemarks(Model.QADxRemarks, count.Value);
+
         }
         <div id="DivDx">
             @{
@@ -317,7 +329,7 @@
                                 <span style="white-space:nowrap">
                                     @if (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value))
                                     {
-                                        <label style="color: red;">@Dx</label>
+                                        <label class="Dx_@j" style="color: red;">@Dx</label>
                                         <label style="color:green">@QADx</label>
                                     }
                                     else
@@ -333,12 +345,12 @@
                         </div>
                         <div class="input-group-append CoderCorrections" style="@Show">
                             <span class="input-group-text">
-                                &nbsp;<i id="Dx_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                                &nbsp;<i id="Dx_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                &nbsp;<i id="Dx_@j" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                &nbsp;<i id="Dx_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                             </span>
                         </div>
-                        <div class="col-md-3 lessWidth input-group Dx_@i" style="display:none">
-                            <input type="text" id="Dx_@i" class="form-control DxRemarks_@j" />
+                        <div class="col-md-3 input-group CoderCorrections">
+                            <input type="text" id="Dx_@j" class="form-control DxRemarks_@j" style="@Show" />
                         </div>
                     </div>
 

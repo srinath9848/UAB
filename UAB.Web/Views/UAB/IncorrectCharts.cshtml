@@ -36,9 +36,8 @@
             //$(".CoderComments").hide();
             $(this).toggleClass('accept');
             $(this).siblings().removeClass('reject');
-            $("." + id).css("display", "none");
             //$("#Revised" + id + "Remarks").css("display", "none");
-            $("#Revised" + id + "Remarks").val('');
+            //  $("#Revised" + id + "Remarks").val('');
             var title = $("#" + id).attr('title');
             if (title == "PayorID1")
                 $("#hdnPayorID").val($("#" + title + " option:selected").val());
@@ -62,7 +61,6 @@
             $(".CoderComments").show();
             $(this).toggleClass('reject');
             $(this).siblings().removeClass('accept');
-            $("." + id).css("display", "flex");
             $("#Revised" + id + "Remarks").css("display", "flex");
             var title = $("#" + id).attr('title');
             if (title == "PayorID1")
@@ -86,22 +84,33 @@
     });
 
     $('#btnsubmit').click(function (e) {
+        if ($('.CoderCorrections[style="display:flex"] .reject').length > 0)
+            $("#hdnStatusId").val('12');
+        else
+            $("#hdnStatusId").val('15');
 
-        var Dxremarks = $("[class*=DxRemarks_]");
+        var Dxremarks = $('[class*=DxRemarks_][style="display:flex"]');
+        var Dxcodes = $("[class*=Dx_]");
+        $("#hdnCoderDxCodes").val("");
         $("#hdnCoderDxRemarks").val("");
         for (var i = 0; i < Dxremarks.length; i++) {
 
-            if ($(Dxremarks[i]).css("display") == "flex") {
-
-                var id = parseInt($(Dxremarks[i]).attr("id").split("_")[1]);
+            var id = $(Dxremarks[i]).attr("id");
+            var rowNumber = parseInt(id.split("_")[1]);
+            var res = $("[id=" + id + "]:eq(1)").attr('class');
+            if (res.includes('reject') && $(Dxremarks[i]).val() != "") {
+                $("#hdnStatusId").val('12');
+                if ($("#hdnCoderDxCodes").val() == "")
+                    $("#hdnCoderDxCodes").val(rowNumber + "^" + $(Dxcodes[i]).text());
+                else
+                    $("#hdnCoderDxCodes").val($("#hdnCoderDxCodes").val() + "," + rowNumber + "^" + $(Dxcodes[i]).text());
 
                 if ($("#hdnCoderDxRemarks").val() == "")
-                    $("#hdnCoderDxRemarks").val(id + "^" + $(Dxremarks[i]).val());
+                    $("#hdnCoderDxRemarks").val(rowNumber + "^" + $(Dxremarks[i]).val());
                 else
-                    $("#hdnCoderDxRemarks").val($("#hdnCoderDxRemarks").val() + "|" + id + "^" + $(Dxremarks[i]).val());
+                    $("#hdnCoderDxRemarks").val($("#hdnCoderDxRemarks").val() + "|" + rowNumber + "^" + $(Dxremarks[i]).val());
             }
         }
-
         var total = $('.CoderCorrections[style="display:flex"]  .fa-check-circle').length;
         var accept = $('.CoderCorrections[style="display:flex"]  .accept').length;
         var reject = $('.CoderCorrections[style="display:flex"]  .reject').length;
@@ -109,6 +118,22 @@
         if (total != accept + reject) {
             $("#validationPopUp").show();
             e.preventDefault();
+        } else {
+            var remarks = $('.Revised[style="display:flex"]');
+            var dxremarks = $('[class*=DxRemarks_][style="display:flex"]');
+            var isRemarkEmpty = false;
+            for (var i = 0; i < dxremarks.length; i++) {
+                if ($(dxremarks[i]).val() == "")
+                    isRemarkEmpty = true;
+            }
+            for (var i = 0; i < remarks.length; i++) {
+                if ($(remarks[i]).val() == "")
+                    isRemarkEmpty = true;
+            }
+            if (isRemarkEmpty) {
+                $("#validationPopUp").show();
+                e.preventDefault();
+            }
         }
     });
 
