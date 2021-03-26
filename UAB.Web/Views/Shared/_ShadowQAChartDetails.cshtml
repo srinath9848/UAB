@@ -33,14 +33,12 @@
             string Show = "visibility:hidden";
 
             if (string.IsNullOrEmpty(Model.QAPayorText) && string.IsNullOrEmpty(Model.QAProviderText)
-            && string.IsNullOrEmpty(Model.QACPTCode)
-            && string.IsNullOrEmpty(Model.QAMod) && string.IsNullOrEmpty(Model.QADx) &&
+            && string.IsNullOrEmpty(Model.QACPTCode) && string.IsNullOrEmpty(Model.QADx) &&
             string.IsNullOrEmpty(Model.QAProviderFeedbackText))
                 isQAAgreed = true;
 
             if (!string.IsNullOrEmpty(Model.QAPayorText) || !string.IsNullOrEmpty(Model.QAProviderText)
-            || !string.IsNullOrEmpty(Model.QACPTCode)
-            || !string.IsNullOrEmpty(Model.QAMod) || !string.IsNullOrEmpty(Model.QADx) ||
+            || !string.IsNullOrEmpty(Model.QACPTCode) || !string.IsNullOrEmpty(Model.QADx) ||
             !string.IsNullOrEmpty(Model.QAProviderFeedbackText))
                 Show = "display:flex";
 
