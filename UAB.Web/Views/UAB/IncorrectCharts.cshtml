@@ -36,6 +36,7 @@
             //$(".CoderComments").hide();
             $(this).toggleClass('accept');
             $(this).siblings().removeClass('reject');
+            $("." + id).css("display", "none");
             //$("#Revised" + id + "Remarks").css("display", "none");
             //  $("#Revised" + id + "Remarks").val('');
             var title = $("#" + id).attr('title');
@@ -61,6 +62,7 @@
             $(".CoderComments").show();
             $(this).toggleClass('reject');
             $(this).siblings().removeClass('accept');
+            $("." + id).css("display", "flex");
             $("#Revised" + id + "Remarks").css("display", "flex");
             var title = $("#" + id).attr('title');
             if (title == "PayorID1")
