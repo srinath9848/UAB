@@ -575,6 +575,12 @@ namespace UAB.Controllers
             chartSummaryDTO.ShadowQADx = hdnShadowQADxCodes;
             chartSummaryDTO.ShadowQADxRemarks = hdnShadowQADxRemarks;
 
+            var hdnShadowQACptCodes = Request.Form["hdnShadowQACptCodes"].ToString();
+            var hdnShadowQACptRemarks = Request.Form["hdnShadowQACptRemarks"].ToString();
+            chartSummaryDTO.ShadowQACPTCode = hdnShadowQACptCodes;
+            chartSummaryDTO.ShadowQACPTCodeRemarks = hdnShadowQACptRemarks;
+
+
             bool isQAAgreed = hdnIsQAAgreed;// Convert.ToBoolean(Request.Form["hdnIsQAAgreed"]);
 
             if (string.IsNullOrEmpty(SubmitAndGetNext))

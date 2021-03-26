@@ -244,7 +244,7 @@ namespace UAB.DAL
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
                             chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
-                            chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
+                            // chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
                             //if (reader["ProviderFeedbackId"] != DBNull.Value)
                             //    chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
                         }
