@@ -30,6 +30,7 @@ namespace UAB.DTO
         public string NoteTitle { get; set; }
         [Required(ErrorMessage = "Dx Code is required.")]
         public string Dx { get; set; }
+        public string RejectedDx { get; set; }
 
         //[Required(ErrorMessage = "Modifiers is required.")]
         public string Mod { get; set; }

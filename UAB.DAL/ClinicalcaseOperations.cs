@@ -752,6 +752,11 @@ namespace UAB.DAL
                             Direction = System.Data.ParameterDirection.Input,
                             Value = chartSummaryDTO.Dx
                         },  new SqlParameter() {
+                            ParameterName = "@RejectedDx",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.RejectedDx
+                        },  new SqlParameter() {
                             ParameterName = "@DxRemarks",
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
@@ -983,8 +988,8 @@ namespace UAB.DAL
                             DoS = Convert.ToDateTime(reader["DateOfService"]),
                             ProjectName = Convert.ToString(reader["ProjectName"]),
                             Status = Convert.ToString(reader["Status"]),
-                            IncludeBlocked=Convert.ToString(reader["IsBlocked"])
-                            
+                            IncludeBlocked = Convert.ToString(reader["IsBlocked"])
+
                         };
                         lstDto.Add(dto);
                     }

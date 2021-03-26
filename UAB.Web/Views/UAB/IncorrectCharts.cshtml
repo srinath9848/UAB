@@ -51,8 +51,8 @@
             if (id == "Mod")
                 $("#hdnMod").val($("#" + id + "1").val());
 
-            if (title == "Dx1")
-                $("#hdnDx").val($("#" + title).val());
+            //if (title == "Dx1")
+            //    $("#hdnDx").val($("#" + title).val());
 
             if (title == "Feedback1")
                 $("#hdnProviderFeedbackID").val($("#" + title + " option:selected").val());
@@ -75,8 +75,8 @@
             if (id == "Mod")
                 $("#hdnMod").val('');
 
-            if (title == "Dx1")
-                $("#hdnDx").val('');
+            //if (title == "Dx1")
+            //    $("#hdnDx").val('');
 
             if (title == "Feedback1")
                 $("#hdnProviderFeedbackID").val('');
@@ -84,6 +84,7 @@
     });
 
     $('#btnsubmit').click(function (e) {
+
         if ($('.CoderCorrections[style="display:flex"] .reject').length > 0)
             $("#hdnStatusId").val('12');
         else
@@ -91,26 +92,53 @@
 
         var Dxremarks = $('[class*=DxRemarks_][style="display:flex"]');
         var Dxcodes = $("[class*=Dx_]");
-        $("#hdnCoderDxCodes").val("");
-        $("#hdnCoderDxRemarks").val("");
+        $("#hdnDxCodes").val("");
+        $("#hdnRejectedDxCodes").val("");
+        $("#hdnRejectedDxRemarks").val("");
         for (var i = 0; i < Dxremarks.length; i++) {
 
             var id = $(Dxremarks[i]).attr("id");
             var rowNumber = parseInt(id.split("_")[1]);
-            var res = $("[id=" + id + "]:eq(1)").attr('class');
-            if (res.includes('reject') && $(Dxremarks[i]).val() != "") {
-                $("#hdnStatusId").val('12');
-                if ($("#hdnCoderDxCodes").val() == "")
-                    $("#hdnCoderDxCodes").val(rowNumber + "^" + $(Dxcodes[i]).text());
-                else
-                    $("#hdnCoderDxCodes").val($("#hdnCoderDxCodes").val() + "," + rowNumber + "^" + $(Dxcodes[i]).text());
 
-                if ($("#hdnCoderDxRemarks").val() == "")
-                    $("#hdnCoderDxRemarks").val(rowNumber + "^" + $(Dxremarks[i]).val());
+            var res2 = $("[id=" + id + "]:eq(1)").attr('class');
+
+            if (res2.includes('reject') && $(Dxremarks[i]).val() != "") {
+                $("#hdnStatusId").val('12');
+                if ($("#hdnRejectedDxCodes").val() == "")
+                    $("#hdnRejectedDxCodes").val(rowNumber + "^" + $(Dxcodes[i]).text());
                 else
-                    $("#hdnCoderDxRemarks").val($("#hdnCoderDxRemarks").val() + "|" + rowNumber + "^" + $(Dxremarks[i]).val());
+                    $("#hdnRejectedDxCodes").val($("#hdnRejectedDxCodes").val() + "," + rowNumber + "^" + $(Dxcodes[i]).text());
+
+                if ($("#hdnRejectedDxRemarks").val() == "")
+                    $("#hdnRejectedDxRemarks").val(rowNumber + "^" + $(Dxremarks[i]).val());
+                else
+                    $("#hdnRejectedDxRemarks").val($("#hdnRejectedDxRemarks").val() + "|" + rowNumber + "^" + $(Dxremarks[i]).val());
             }
         }
+
+        var CoderDxcodes = $("[id*=DxCoder_]");
+        for (var i = 0; i < CoderDxcodes.length; i++) {
+
+            var id = parseInt($(CoderDxcodes[i]).attr("id").split("_")[1]);
+
+            var res1 = $("[id='Dx_" + id + "']:eq(0)").attr('class');
+            var res2 = $("[id='Dx_" + id + "']:eq(1)").attr('class');
+
+            if (res2.includes('reject') || (!res1.includes('accept') && !res2.includes('reject'))) {
+                if ($("#hdnDxCodes").val() == "")
+                    $("#hdnDxCodes").val($("#DxCoder_" + id).val());
+                else
+                    $("#hdnDxCodes").val($("#hdnDxCodes").val() + "," + $("#DxCoder_" + id).val());
+            }
+            else {
+                if ($("#hdnDxCodes").val() == "")
+                    $("#hdnDxCodes").val($("#DxQA_" + id).val());
+                else
+                    $("#hdnDxCodes").val($("#hdnDxCodes").val() + "," + $("#DxQA_" + id).val());
+
+            }
+        }
+
         var total = $('.CoderCorrections[style="display:flex"]  .fa-check-circle').length;
         var accept = $('.CoderCorrections[style="display:flex"]  .accept').length;
         var reject = $('.CoderCorrections[style="display:flex"]  .reject').length;
