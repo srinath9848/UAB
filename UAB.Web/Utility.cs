@@ -131,5 +131,31 @@ namespace UAB
 
             return dictDxRemarks;
         }
+
+        public static Dictionary<int, string> GetDxCodes(string dxCodes)
+        {
+            List<string> lstdxCodes = dxCodes.Split(',').ToList();
+
+            Dictionary<int, string> dictDxCodes = new Dictionary<int, string>();
+
+            for (int i = 0; i < lstdxCodes.Count(); i++)
+            {
+                dictDxCodes.Add(i + 1, lstdxCodes[i]);
+            }
+
+            return dictDxCodes;
+        }
+
+        public static Dictionary<int, string> AddEmptyRows(Dictionary<int, string> dxCodes, int maxCount, string value)
+        {
+            if (dxCodes == null)
+                dxCodes = new Dictionary<int, string>();
+
+            for (int i = dxCodes.Count() + 1; i <= maxCount; i++)
+            {
+                dxCodes.Add(i, value);
+            }
+            return dxCodes;
+        }
     }
 }
