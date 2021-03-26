@@ -301,12 +301,10 @@
             <div class="col-md-3 input-group">
                 @Html.DropDownListFor(model => model.ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = "display:none", @class = "form-control QARevised", @id = "Feedback1" })
                 @Html.ValidationMessageFor(model => model.ShadowQAProviderFeedbackID, null, new { @class = "text-danger errMsg" })
-
             </div>
             <div class="col-md-2 input-group">
                 @Html.TextBoxFor(model => model.ShadowQAProviderFeedbackRemarks, new { @style = "display:none", @class = "form-control QARevised", @id = "Feedback2" })
                 @Html.ValidationMessageFor(model => model.ShadowQAProviderFeedbackRemarks, null, new { @class = "text-danger errMsg" })
-
             </div>
         </div>
         <div class="form-group row">
@@ -316,14 +314,20 @@
             </div>
         </div>
         @{
-            List<string> lstQadxCodes = Model.QADx.Split('|').ToList();
-            List<string> lstdxCodes = Model.Dx.Split(',').ToList();
-            int? count = (lstQadxCodes?.Count() > lstdxCodes.Count()) ? lstQadxCodes?.Count() : lstdxCodes.Count();
-            Dictionary<int, string> dictQADxCodes = Utility.GetQADxCodes(Model.QADx, count.Value);
-            count = (count > dictQADxCodes.Count()) ? count : dictQADxCodes.Count();
-            Dictionary<int, string> dictDxCodes = Utility.GetDxCodes(Model.Dx, count.Value);
-            int totalDxCount = count.Value + 1;
-            Dictionary<int, string> dictQADxRemarks = Utility.GetQAOrShadowQADxRemarks(Model.QADxRemarks, count.Value);
+            Dictionary<int, string> dictDxCodes = Utility.GetDxCodes(Model.Dx);
+            Dictionary<int, string> dictQADxCodes = Utility.GetQAOrShadowQADxCodes(Model.QADx);
+            Dictionary<int, string> dictQADxRemarks = Utility.GetQAOrShadowQADxRemarks(Model.QADxRemarks);
+
+            dictQADxCodes = (dictQADxCodes == null) ? new Dictionary<int, string>() : dictQADxCodes;
+            dictQADxRemarks = (dictQADxRemarks == null) ? new Dictionary<int, string>() : dictQADxRemarks;
+
+            int count = Math.Max(dictDxCodes.Count(), dictQADxCodes.Count());
+
+            int totalDxCount = count + 1;
+
+            Utility.AddEmptyRows(dictDxCodes, count, "NA");
+            Utility.AddEmptyRows(dictQADxCodes, count, "");
+            Utility.AddEmptyRows(dictQADxRemarks, count, "");
         }
         <div id="DivDx">
             @{
