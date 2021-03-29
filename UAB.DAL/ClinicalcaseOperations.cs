@@ -21,7 +21,7 @@ namespace UAB.DAL
         {
             mUserId = UserId;
         }
-        public ClinicalcaseOperations(int UserId,string UserRole)
+        public ClinicalcaseOperations(int UserId, string UserRole)
         {
             mUserId = UserId;
             mUserRole = UserRole;
@@ -282,7 +282,7 @@ namespace UAB.DAL
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
                             chartSummaryDTO.QACPTCode = Convert.ToString(reader["QACPTCode"]);
                             chartSummaryDTO.QACPTCodeRemarks = Convert.ToString(reader["QACPTCodeRemark"]);
-                            chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
+                            // chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
                             chartSummaryDTO.QAMod = Convert.ToString(reader["QAMod"]);
                             chartSummaryDTO.QAModRemarks = Convert.ToString(reader["QAModRemark"]);
                             if (reader["ProviderFeedbackID"] != DBNull.Value)
@@ -994,15 +994,15 @@ namespace UAB.DAL
                             ProjectName = Convert.ToString(reader["ProjectName"]),
                             Status = Convert.ToString(reader["Status"]),
                             IncludeBlocked = Convert.ToString(reader["IsBlocked"]),
-                            Assigneduser=Convert.ToString(reader["AssignedTo"])
+                            Assigneduser = Convert.ToString(reader["AssignedTo"])
                         };
                         lstDto.Add(dto);
                     }
                 }
             }
-            
-           if(!mUserRole.Contains("Manager"))
-             lstDto = lstDto.Where(a => a.Assigneduser.Equals(Convert.ToString(mUserId))).ToList();
+
+            if (!mUserRole.Contains("Manager"))
+                lstDto = lstDto.Where(a => a.Assigneduser.Equals(Convert.ToString(mUserId))).ToList();
 
             if (!string.IsNullOrWhiteSpace(searchParametersDTO.ClinicalCaseId))
             {
