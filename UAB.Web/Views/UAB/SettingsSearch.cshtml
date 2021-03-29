@@ -36,14 +36,14 @@
 
                     <div class="form-group">
                         @*<label class="lblSearch">First Name</label>*@
-                        @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @autofocus = "autofocus", @id = "txtFirstName", @autocomplete = "off", @placeholder = "Enter FirstName" })
+                        @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @autofocus = "autofocus", @id = "txtFirstName", @autocomplete = "off", @placeholder = "Enter First Name" })
                         @Html.ValidationMessageFor(model => model.FirstName, null, new { @class = "text-danger" })
 
                     </div>
 
                     <div class="form-group">
                         @*<label class="lblSearch">Last Name</label>*@
-                        @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", @autofocus = "autofocus", @id = "txtLastName", @autocomplete = "off", @placeholder = "Enter LastName" })
+                        @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", @autofocus = "autofocus", @id = "txtLastName", @autocomplete = "off", @placeholder = "Enter Last Name" })
                         @Html.ValidationMessageFor(model => model.LastName, null, new { @class = "text-danger" })
 
                     </div>
@@ -63,18 +63,18 @@
 
                     <div class="custom-control custom-checkbox mr-sm-1">
                         @Html.CheckBoxFor(model => model.IncludeBlocked, new { @class = "custom-control-input ShadowQADetails", @id = "customControlAutosizing1" })
-                        <label class="custom-control-label" for="customControlAutosizing1">Include Blocked</label>
+                        <label class="custom-control-label" for="customControlAutosizing1">Show Blocked Charts</label>
                     </div>
                     <div class="form-group">
                         @*<label class="lblSearch">DOS From</label>*@
-                        @Html.TextBoxFor(model => model.DoSFrom, new { @class = "form-control", @type = "date", @autofocus = "autofocus", @id = "txtDoSFrom", @autocomplete = "off", @placeholder = "Select DOS FRom" })
+                        @Html.TextBoxFor(model => model.DoSFrom, new { @class = "form-control", @type = "date", @autofocus = "autofocus", @id = "txtDoSFrom", @autocomplete = "off", @placeholder = "Enter DOS From", @onfocus = "(this.type='date')", @onblur = "(this.type='text')" })
                         @Html.ValidationMessageFor(model => model.DoSFrom, null, new { @class = "text-danger" })
 
                     </div>
 
                     <div class="form-group">
                         @*<label class="lblSearch">DOS To</label>*@
-                        @Html.TextBoxFor(model => model.DoSTo, new { @class = "form-control", @type = "date", @autofocus = "autofocus", @id = "txtDoSTo", @autocomplete = "off", @placeholder = "Select DOS To" })
+                        @Html.TextBoxFor(model => model.DoSTo, new { @class = "form-control", @type = "date", @autofocus = "autofocus", @id = "txtDoSTo", @autocomplete = "off", @placeholder = "Enter DOS To", @onfocus = "(this.type='date')", @onblur = "(this.type='text')" })
                         @Html.ValidationMessageFor(model => model.DoSTo, null, new { @class = "text-danger" })
 
                     </div>

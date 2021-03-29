@@ -986,8 +986,8 @@ namespace UAB.DAL
                             DoS = Convert.ToDateTime(reader["DateOfService"]),
                             ProjectName = Convert.ToString(reader["ProjectName"]),
                             Status = Convert.ToString(reader["Status"]),
-                            IncludeBlocked=Convert.ToString(reader["IsBlocked"])
-                            
+                            IncludeBlocked = Convert.ToString(reader["IsBlocked"])
+
                         };
                         lstDto.Add(dto);
                     }
@@ -1014,12 +1014,25 @@ namespace UAB.DAL
                 }
                 if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProviderName))
                     lstDto = lstDto.Where(a => a.ProviderName == searchParametersDTO.ProviderName).ToList();
+
                 if (!string.IsNullOrWhiteSpace(searchParametersDTO.StatusName) && searchParametersDTO.StatusName != "--Select a Status--")
-                    lstDto = lstDto.Where(a => a.Status == searchParametersDTO.StatusName).ToList();
+                {
+                    if (searchParametersDTO.IncludeBlocked)
+                    {
+                        lstDto = lstDto.Where(a => a.Status == searchParametersDTO.StatusName || a.IncludeBlocked == "1").ToList();
+                    }
+                    else
+                    {
+                        lstDto = lstDto.Where(a => a.Status == searchParametersDTO.StatusName).ToList();
+                    }
+                }
                 if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProjectName) && searchParametersDTO.ProjectName != "--Select a Project--")
                     lstDto = lstDto.Where(a => a.ProjectName == searchParametersDTO.ProjectName).ToList();
-                if (searchParametersDTO.IncludeBlocked)
+                if (searchParametersDTO.IncludeBlocked &&( searchParametersDTO.StatusName==null||searchParametersDTO.StatusName== "--Select a Status--"))
+                {
                     lstDto = lstDto.Where(a => a.IncludeBlocked == "1").ToList();
+                }
+                    
             }
             return lstDto;
         }
