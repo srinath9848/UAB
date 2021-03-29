@@ -205,7 +205,7 @@ namespace UAB.DAL
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
                             chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
-                            chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
+                            // chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
                             if (reader["ProviderFeedbackId"] != DBNull.Value)
                                 chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
                             if (Role == "QA" && ChartType == "OnHold")
@@ -1030,11 +1030,11 @@ namespace UAB.DAL
                 }
                 if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProjectName) && searchParametersDTO.ProjectName != "--Select a Project--")
                     lstDto = lstDto.Where(a => a.ProjectName == searchParametersDTO.ProjectName).ToList();
-                if (searchParametersDTO.IncludeBlocked &&( searchParametersDTO.StatusName==null||searchParametersDTO.StatusName== "--Select a Status--"))
+                if (searchParametersDTO.IncludeBlocked && (searchParametersDTO.StatusName == null || searchParametersDTO.StatusName == "--Select a Status--"))
                 {
                     lstDto = lstDto.Where(a => a.IncludeBlocked == "1").ToList();
                 }
-                    
+
             }
             return lstDto;
         }
