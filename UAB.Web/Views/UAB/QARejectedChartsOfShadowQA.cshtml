@@ -112,6 +112,36 @@
         }
     });
 
+    var dxArray = [];
+    function DxFunction(txt_0) {
+        var id = parseInt(txt_0.split("_")[1]) + parseInt(1);
+        if (txt_0.split("_")[1] !== undefined) {
+            var currId = parseInt(id) - parseInt(1);
+            var val = $("#txtDx_" + currId).val();
+            if (val !== "" && val !== null) {
+                if ($.inArray(val, dxArray) == -1) {
+                    dxArray.push(val);
+                    $("#Dx").val(dxArray);
+                    var text = "'" + "txtDx_" + id + "'";
+                    $("#DivDx").append('<div class="form-group row"><label class= "col-md-3 lessWidth m-t-15" ></label><div class="col-md-3 lessWidth input-group"></div><div class="input-group-append" style="min-width: 70px;"></div><div class="col-md-2 input-group"></div ><div class="col-md-3 lessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" tabindex="' + id + '" onfocusout="DxFunction(' + text + ')" class="form-control CoderDetails txtDx" id="txtDx_' + id + '" /></div></div>');
+                    $("#txtDx_" + currId).removeAttr("onfocusout", "");
+                    $("#txtDx_" + id).focus();
+                }
+            } else {
+                //var id2 = parseInt(id) - parseInt(1);
+                //var val = $("#txt" + id2).val();
+                //if (val == "") {
+                //    if (id2 !== 0) {
+                //        dxArray.splice(id2, id2);
+                //        $("#Dx").val(dxArray);
+                //        $('#tr' + id2).remove();
+                //        //$("#txt" + id2).focus();
+                //    }
+                //}
+            }
+        }
+    }
+
 
     $('#btnsubmit').click(function (e) {
         var total = $(".fa-check-circle").length;

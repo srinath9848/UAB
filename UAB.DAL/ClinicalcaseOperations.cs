@@ -244,7 +244,7 @@ namespace UAB.DAL
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
                             chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
-                            chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
+                            // chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
                             //if (reader["ProviderFeedbackId"] != DBNull.Value)
                             //    chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
                         }
@@ -346,7 +346,7 @@ namespace UAB.DAL
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
                             chartSummaryDTO.QACPTCode = Convert.ToString(reader["QACPTCode"]);
                             chartSummaryDTO.QACPTCodeRemarks = Convert.ToString(reader["QACPTCodeRemark"]);
-                            chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
+                            //chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
                             chartSummaryDTO.QAMod = Convert.ToString(reader["QAMod"]);
                             chartSummaryDTO.QAModRemarks = Convert.ToString(reader["QAModRemark"]);
                             if (reader["ProviderFeedbackID"] != DBNull.Value)
@@ -472,10 +472,7 @@ namespace UAB.DAL
             dtCPT.Columns.Add("Mod", typeof(string));
             dtCPT.Columns.Add("Qty", typeof(string));
             dtCPT.Columns.Add("Links", typeof(string));
-            // 71045^null^1^null, 
-            // 71046^null^1^null, 
-            // 71047^ null^1^null
-            string[] lstcpts = cpt.Split(",");
+            string[] lstcpts = cpt.Split("|");
             int i = 0;
             foreach (var item in lstcpts)
             {
@@ -754,6 +751,11 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = chartSummaryDTO.Dx
+                        },  new SqlParameter() {
+                            ParameterName = "@RejectedDx",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.RejectedDx
                         },  new SqlParameter() {
                             ParameterName = "@DxRemarks",
                             SqlDbType =  System.Data.SqlDbType.VarChar,

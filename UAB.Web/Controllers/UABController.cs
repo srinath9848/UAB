@@ -204,6 +204,8 @@ namespace UAB.Controllers
 
             string hdnDxCodes = Request.Form["hdnDxCodes"].ToString();
             chartSummaryDTO.Dx = hdnDxCodes;
+            string hdnCptCodes = Request.Form["hdnCptCodes"].ToString();
+            chartSummaryDTO.CPTCode = hdnCptCodes;
 
             if (string.IsNullOrEmpty(codingSubmitAndGetNext))
                 clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDTO);
@@ -222,14 +224,17 @@ namespace UAB.Controllers
             var hdnProviderID = Request.Form["hdnProviderID"].ToString();
             var hdnCpt = Request.Form["hdnCpt"].ToString();
             var hdnMod = Request.Form["hdnMod"].ToString();
-            // var hdnDx = Request.Form["hdnDx"].ToString();
             var hdnProviderFeedbackID = Request.Form["hdnProviderFeedbackID"].ToString();
 
             var hdnStatusId = Request.Form["hdnStatusId"].ToString();
-            var hdnCoderDxRemarks = Request.Form["hdnCoderDxRemarks"].ToString();
-            chartSummaryDTO.RevisedDXRemarks = hdnCoderDxRemarks;
-            var hdnCoderDxCodes = Request.Form["hdnCoderDxCodes"].ToString();
-            chartSummaryDTO.Dx = hdnCoderDxCodes;
+            var hdnRejectedDxRemarks = Request.Form["hdnRejectedDxRemarks"].ToString();
+            chartSummaryDTO.RevisedDXRemarks = hdnRejectedDxRemarks;
+
+            var hdnRejectedDxCodes = Request.Form["hdnRejectedDxCodes"].ToString();
+            chartSummaryDTO.RejectedDx = hdnRejectedDxCodes;
+            
+            var hdnDxCodes = Request.Form["hdnDxCodes"].ToString();
+            chartSummaryDTO.Dx = hdnDxCodes;
 
             if (!string.IsNullOrEmpty(hdnPayorID))
                 chartSummaryDTO.PayorID = Convert.ToInt32(hdnPayorID);
@@ -378,6 +383,10 @@ namespace UAB.Controllers
             chartSummaryDTO.QADx = hdnQADx;
             chartSummaryDTO.QADxRemarks = hdnQADxRemarks;
 
+            var hdnQACptCodes = Request.Form["hdnQACptCodes"].ToString();
+            var hdnQACptRemarks = Request.Form["hdnQACptRemarks"].ToString();
+            chartSummaryDTO.QACPTCode = hdnQACptCodes;
+            chartSummaryDTO.QACPTCodeRemarks = hdnQACptRemarks;
 
             if (string.IsNullOrEmpty(SubmitAndGetNext))
                 clinicalcaseOperations.SubmitQAAvailableChart(chartSummaryDTO);
@@ -565,6 +574,12 @@ namespace UAB.Controllers
             var hdnShadowQADxRemarks = Request.Form["hdnShadowQADxRemarks"].ToString();
             chartSummaryDTO.ShadowQADx = hdnShadowQADxCodes;
             chartSummaryDTO.ShadowQADxRemarks = hdnShadowQADxRemarks;
+
+            var hdnShadowQACptCodes = Request.Form["hdnShadowQACptCodes"].ToString();
+            var hdnShadowQACptRemarks = Request.Form["hdnShadowQACptRemarks"].ToString();
+            chartSummaryDTO.ShadowQACPTCode = hdnShadowQACptCodes;
+            chartSummaryDTO.ShadowQACPTCodeRemarks = hdnShadowQACptRemarks;
+
 
             bool isQAAgreed = hdnIsQAAgreed;// Convert.ToBoolean(Request.Form["hdnIsQAAgreed"]);
 
