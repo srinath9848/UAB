@@ -405,26 +405,33 @@
                             {
                                 string codercptCode = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[0]);
                                 string qacptCode = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[0]);
-                                <input type="text" class="form-control QARemarks" value="@qacptCode" style="width:17px;" />
+                                string color = (codercptCode != qacptCode) ? "color:blue;" : "";
+                                <input type="text" class="form-control QARemarks" value="@qacptCode" style="width:17px;@color" />
 
                                 string coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[1]);
                                 string qaMod = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[1]);
-                                <input type="text" class="form-control QARemarks" value="@qaMod" style="" />
+                                color = (coderMod != qaMod) ? "color:blue;" : "";
+                                <input type="text" class="form-control QARemarks" value="@qaMod" style="@color" />
 
                                 string coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[2]);
                                 string qaQty = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[2]);
-                                <input type="text" class="form-control QARemarks" value="@qaQty" style="" />
+                                color = (coderQty != qaQty) ? "color:blue;" : "";
+                                <input type="text" class="form-control QARemarks" value="@qaQty" style="@color" />
 
                                 string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
                                 string qaLinks = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[3]);
-                                <input type="text" class="form-control QARemarks" value="@qaLinks" style="" />
+                                color = (coderLinks != qaLinks) ? "color:blue;" : "";
+                                <input type="text" class="form-control QARemarks" value="@qaLinks" style="@color" />
                             }
                             else
                             {
-                                <input type="text" class="form-control QARemarks" placeholder="Code" value="@coderCptcodes[0]" style="width:17px;" />
-                                <input type="text" class="form-control QARemarks" placeholder="Mod" value="@coderCptcodes[1]" />
-                                <input type="text" class="form-control QARemarks" placeholder="1" value="@coderCptcodes[2]" />
-                                <input type="text" class="form-control QARemarks" placeholder="Link All" value="@coderCptcodes[3]" />
+                                string modVal = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
+                                string linkAllVal = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
+
+                                <input type="text" class="form-control QARemarks" style="color: green;width: 17px;" placeholder="Code" value="@coderCptcodes[0]" style="width:17px;" />
+                                <input type="text" class="form-control QARemarks" style="color:green;" placeholder="Mod" value="@modVal" />
+                                <input type="text" class="form-control QARemarks" style="color:green;" placeholder="1" value="@coderCptcodes[2]" />
+                                <input type="text" class="form-control QARemarks" style="color: green;" placeholder="Link All" value="@linkAllVal" />
 
                             }
                         </div>
