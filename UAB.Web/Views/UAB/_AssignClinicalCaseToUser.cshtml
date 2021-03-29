@@ -41,8 +41,8 @@
                 </div>
                 <br />
                 <div class="col-md-3 custom-control custom-checkbox mr-sm-2">
-                    @Html.CheckBoxFor(model => model.IsPriority, new { @class = "custom-control-input ShadowQADetails", @id = "customControlAutosizing1" })
-                    <label class="custom-control-label" for="customControlAutosizing1">Is Priority</label>
+                    @Html.CheckBoxFor(model => model.IsPriority, new { @class = "custom-control-input ShadowQADetails", @id = "customControlAutosizing2" })
+                    <label class="custom-control-label" for="customControlAutosizing2">Is Priority</label>
                 </div>
             </div>
             <div id="assignerror" style="color:red"></div>
@@ -84,7 +84,7 @@
                 {
                     "ccid": $("#ccid").val(),
                     "AssignedTo": $("#emailddto option:selected").val(),
-                    "IsPriority": $("#customControlAutosizing1").val()
+                    "IsPriority": $("#customControlAutosizing2").val()
                 },
                 success: function (response) {
                     $("#modalContent").html('');
