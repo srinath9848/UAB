@@ -22,7 +22,8 @@ namespace UAB.DTO
 
         //public StatusDTO Status { get; set; }
         public string StatusName  { get; set; }
-        public bool IncludeBlocked  { get; set; } 
+        public bool IncludeBlocked  { get; set; }
+        public string Assigneduser { get; set; }
 
 
     }
@@ -53,5 +54,6 @@ namespace UAB.DTO
         public string AssignToUserEmail { get; set; } 
         public bool IsPriority  { get; set; }
         public string IncludeBlocked { get; set; }
+        public string Assigneduser { get; set; }
     }
 }

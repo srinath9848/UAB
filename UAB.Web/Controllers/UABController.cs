@@ -23,9 +23,11 @@ namespace UAB.Controllers
     public class UABController : Controller
     {
         private int mUserId;
+        private string mUserRole;
         public UABController(IHttpContextAccessor httpContextAccessor)
         {
             mUserId = Convert.ToInt32(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value);
+            mUserRole =httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Role)?.Value;
         }
 
         #region Coding
@@ -713,7 +715,7 @@ namespace UAB.Controllers
                 ProviderName = providername,
                 IncludeBlocked = includeblocked
             };
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId,mUserRole);
             var searchData = clinicalcaseOperations.GetSearchData(searchParametersDTO);
             return PartialView("_SettingsSearchResults", searchData);
         }

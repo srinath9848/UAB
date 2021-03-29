@@ -16,11 +16,16 @@ namespace UAB.DAL
     public class ClinicalcaseOperations
     {
         int mUserId;
+        string mUserRole;
         public ClinicalcaseOperations(int UserId)
         {
             mUserId = UserId;
         }
-
+        public ClinicalcaseOperations(int UserId,string UserRole)
+        {
+            mUserId = UserId;
+            mUserRole = UserRole;
+        }
         public ClinicalcaseOperations()
         {
 
@@ -988,13 +993,16 @@ namespace UAB.DAL
                             DoS = Convert.ToDateTime(reader["DateOfService"]),
                             ProjectName = Convert.ToString(reader["ProjectName"]),
                             Status = Convert.ToString(reader["Status"]),
-                            IncludeBlocked = Convert.ToString(reader["IsBlocked"])
-
+                            IncludeBlocked = Convert.ToString(reader["IsBlocked"]),
+                            Assigneduser=Convert.ToString(reader["AssignedTo"])
                         };
                         lstDto.Add(dto);
                     }
                 }
             }
+            
+           if(!mUserRole.Contains("Manager"))
+             lstDto = lstDto.Where(a => a.Assigneduser.Equals(Convert.ToString(mUserId))).ToList();
 
             if (!string.IsNullOrWhiteSpace(searchParametersDTO.ClinicalCaseId))
             {
