@@ -97,6 +97,20 @@
 
     $('#searchresults').DataTable();
     $("#searchresults_length").html('')
+
+    //$('.dataTables_filter input').attr("placeholder", "Filter Here");
+
+    $('#searchresults').dataTable({
+        "oLanguage": {
+            "sSearch": "Filter Charts:",
+            "sSearchPlaceholder": "Search..."
+        },
+        "bDestroy": true
+    });
+
+    
+
+
     $(document).ready(function () {
 
         Assign = function (ClinicalCaseId) {
