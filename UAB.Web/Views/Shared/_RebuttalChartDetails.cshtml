@@ -234,8 +234,11 @@
                 int totalCptCount = Model.CPTCode.Split("|").Count() + 1;
                 foreach (var item in Model.CPTCode.Split("|"))
                 {
-                    string[] cptcodes = item.Split("^");
-
+                    string[] cptCodes = item.Split("^");
+                    string cptVal = cptCodes[0] == "NA" ? "" : cptCodes[0];
+                    string modVal = cptCodes[1] == "null" ? "" : cptCodes[1];
+                    string qtyVal = cptCodes[2];
+                    string linkAllVal = cptCodes[3] == "null" ? "" : cptCodes[3];
                     <div class="form-group row" id="DivCptRow_@i">
                         @if (i == 1)
                         {
@@ -250,10 +253,10 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">@i</span>
                             </div>
-                            <input type="text" class="form-control CoderDetails" autocomplete="off" placeholder="Code" value="@cptcodes[0]" />
-                            <input type="text" class="form-control CoderDetails" autocomplete="off" placeholder="Mod" value="@cptcodes[1].Replace("|",",")" />
-                            <input type="text" class="form-control CoderDetails" autocomplete="off" placeholder="1" value="@cptcodes[2]" />
-                            <input type="text" class="form-control CoderDetails" autocomplete="off" placeholder="Link All" value="@cptcodes[3].Replace("|",",")" />
+                            <input type="text" class="form-control CoderDetails" autocomplete="off" placeholder="Code" value="@cptVal" />
+                            <input type="text" class="form-control CoderDetails" autocomplete="off" placeholder="Mod" value="@modVal" />
+                            <input type="text" class="form-control CoderDetails" autocomplete="off" placeholder="1" value="@qtyVal" />
+                            <input type="text" class="form-control CoderDetails" autocomplete="off" placeholder="Link All" value="@linkAllVal" />
                             <div class="input-group-append" style="height: 38px;">
                                 <span class="input-group-text">
                                     &nbsp;<i id="Cpt_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
@@ -265,10 +268,10 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">@i</span>
                             </div>
-                            <input type="text" class="form-control" id="txtCpt_@i" autocomplete="off" placeholder="Code" value="@cptcodes[0]" />
-                            <input type="text" class="form-control" id="txtMod_@i" autocomplete="off" placeholder="Mod" value="@cptcodes[1].Replace("|",",")" />
-                            <input type="text" id="txtQty_@i" class="form-control" autocomplete="off" placeholder="1" value="@cptcodes[2]" />
-                            <input type="text" id="txtLinks_@i" class="form-control" autocomplete="off" placeholder="Link All" value="@cptcodes[3].Replace("|",",")" />
+                            <input type="text" class="form-control" id="txtCpt_@i" autocomplete="off" placeholder="Code" value="@cptVal" />
+                            <input type="text" class="form-control" id="txtMod_@i" autocomplete="off" placeholder="Mod" value="@modVal" />
+                            <input type="text" class="form-control" id="txtQty_@i" autocomplete="off" placeholder="1" value="@qtyVal" />
+                            <input type="text" class="form-control" id="txtLinks_@i" autocomplete="off" placeholder="Link All" value="@linkAllVal" />
                         </div>
 
                         <div class="col-md-3 lessWidth input-group">

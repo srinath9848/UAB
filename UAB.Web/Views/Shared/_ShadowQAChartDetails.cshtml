@@ -424,29 +424,44 @@
                             string codercptCode = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[0]);
                             string qacptCode = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[0]);
                             string color = (codercptCode != qacptCode) ? "color:blue;" : "";
+                            if (codercptCode == "NA")
+                                color = "color:fuchsia;";
                             <input type="text" class="form-control" value="@qacptCode" style="width:17px;@color" />
 
                             string coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[1]);
                             string qaMod = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[1]);
+                            string mod = qaMod == "null" ? "" : qaMod;
                             color = (coderMod != qaMod) ? "color:blue;" : "";
-                            <input type="text" class="form-control" value="@qaMod" style="@color" />
+                            if (coderMod == "NA")
+                                color = "color:fuchsia;";
+                            <input type="text" class="form-control" value="@mod" style="@color" />
 
                             string coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[2]);
                             string qaQty = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[2]);
                             color = (coderQty != qaQty) ? "color:blue;" : "";
+                            if (coderQty == "NA")
+                                color = "color:fuchsia;";
                             <input type="text" class="form-control" value="@qaQty" style="@color" />
 
                             string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
                             string qaLinks = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[3]);
+                            string linkAll = qaLinks == "null" ? "" : qaLinks;
                             color = (coderLinks != qaLinks) ? "color:blue;" : "";
-                            <input type="text" class="form-control" value="@qaLinks" style="@color" />
+                            if (coderLinks == "NA")
+                                color = "color:fuchsia;";
+                            <input type="text" class="form-control" value="@linkAll" style="@color" />
                         }
                         else
                         {
-                            <input type="text" class="form-control" placeholder="Code" value="@coderCptcodes[0]" style="width:17px;" />
-                            <input type="text" class="form-control" placeholder="Mod" value="@coderCptcodes[1]" />
-                            <input type="text" class="form-control" placeholder="1" value="@coderCptcodes[2]" />
-                            <input type="text" class="form-control" placeholder="Link All" value="@coderCptcodes[3]" />
+                            string cptVal = coderCptcodes[0] == "NA" ? "" : coderCptcodes[0];
+                            string modVal1 = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
+                            string qtyVal = coderCptcodes[2];
+                            string linkAllVal1 = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
+
+                            <input type="text" class="form-control" style="color: green;width: 17px;" placeholder="Code" value="@cptVal" />
+                            <input type="text" class="form-control" style="color:green;" placeholder="Mod" value="@modVal1" />
+                            <input type="text" class="form-control" style="color:green;" placeholder="1" value="@qtyVal" />
+                            <input type="text" class="form-control" style="color: green;" placeholder="Link All" value="@linkAllVal1" />
 
                         }
                         <div class="input-group-append" style="height: 45px;">
@@ -473,11 +488,14 @@
                             string qaQty1 = (dictQACptCodes?.ElementAt(i).Value == "" ? coderCptcodes[2] : qaCptcodes[2]);
 
                             string qaLinks1 = (dictQACptCodes?.ElementAt(i).Value == "" ? coderCptcodes[3] : qaCptcodes[3]);
+
+                            string modVal = qaMod1 == "null" ? "" : qaMod1;
+                            string linkAllVal = qaLinks1 == "null" ? "" : qaLinks1;
                         }
                         <input type="text" class="form-control" id="txtCpt_@j" autocomplete="off" placeholder="Code" value="@qacptCode1" />
-                        <input type="text" class="form-control" id="txtMod_@j" autocomplete="off" placeholder="Mod" value="@qaMod1" />
+                        <input type="text" class="form-control" id="txtMod_@j" autocomplete="off" placeholder="Mod" value="@modVal" />
                         <input type="text" id="txtQty_@j" class="form-control" autocomplete="off" placeholder="1" value="@qaQty1" />
-                        <input type="text" id="txtLinks_@j" class="form-control" autocomplete="off" placeholder="Link All" value="@qaLinks1" />
+                        <input type="text" id="txtLinks_@j" class="form-control" autocomplete="off" placeholder="Link All" value="@linkAllVal" />
                     </div>
                     <div class="col-md-3 lessWidth input-group">
                         <input type="text" id="CptRemarks_@j" class="form-control CptRemarks_@j Cpt_@j" style="display:none" />

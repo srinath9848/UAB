@@ -76,8 +76,8 @@
                 foreach (var item in Model.CPTCode.Split('|'))
                 {
                     string[] coderCptcodes = item.Split("^");
-                    string mod = coderCptcodes[1] == "null" ? "Mod" : coderCptcodes[1];
-                    string linkAll = coderCptcodes[3] == "null" ? "Link All" : coderCptcodes[3];
+                    string mod = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
+                    string linkAll = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
                     <div class="form-group row">
                         @if (i == 1)
                         {
