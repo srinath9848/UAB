@@ -43,8 +43,8 @@
             if (id == "Mod")
                 $("#hdnMod").val('');
 
-            if (title == "Dx1")
-                $("#hdnDx").val('');
+            //if (title == "Dx1")
+            //    $("#hdnDx").val('');
 
             if (title == "Feedback1")
                 $("#hdnProviderFeedbackID").val('');
@@ -67,11 +67,62 @@
             if (id == "Mod")
                 $("#hdnMod").val($("#" + id + "1").val());
 
-            if (title == "Dx1")
-                $("#hdnDx").val($("#" + title).val());
+            //if (title == "Dx1")
+            //    $("#hdnDx").val($("#" + title).val());
 
             if (title == "Feedback1")
                 $("#hdnProviderFeedbackID").val($("#" + title + " option:selected").val());
         }
     });
+
+    $('#btnsubmit').click(function (e) {
+
+        var Dxcodes = $("[id*=DxRemarks_]");
+        $("#hdnDx").val('');
+        $("#hdnDxRemarks").val('');
+        for (var i = 0; i < Dxcodes.length; i++) {
+
+            var id = parseInt($(Dxcodes[i]).attr("id").split("_")[1]);
+
+            var res = $("[id='Dx_" + id + "']:eq(1)").attr('class');
+
+            if (res.includes('reject')) {
+                if ($("#hdnDx").val() == "")
+                    $("#hdnDx").val(id + "^" + $("#txtDxCode_" + id).text());
+                else
+                    $("#hdnDx").val($("#hdnDx").val() + "|" + id + "^" + $("#txtDxCode_" + id).text());
+
+                if ($("#hdnDxRemarks").val() == "")
+                    $("#hdnDxRemarks").val(id + "^" + $("#DxRemarks_" + id).val());
+                else
+                    $("#hdnDxRemarks").val($("#hdnDxRemarks").val() + "|" + id + "^" + $("#DxRemarks_" + id).val());
+            }
+        }
+
+        var total = $('.CoderCorrections[style="display:flex"]  .fa-check-circle').length;
+        var accept = $('.CoderCorrections[style="display:flex"]  .accept').length;
+        var reject = $('.CoderCorrections[style="display:flex"]  .reject').length;
+
+        if (total != accept + reject) {
+            $("#validationPopUp").show();
+            e.preventDefault();
+        } else {
+            var remarks = $('.QARevised[style="display:flex"]');
+            var isRemarkEmpty = false;
+           
+            for (var i = 0; i < remarks.length; i++) {
+                if ($(remarks[i]).val() == "")
+                    isRemarkEmpty = true;
+            }
+            if (isRemarkEmpty) {
+                $("#validationPopUp").show();
+                e.preventDefault();
+            }
+        }
+    });
+
+    validationPopUp = function () {
+        $("#validationPopUp").hide();
+    };
+
 </script>
