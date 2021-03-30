@@ -306,8 +306,11 @@
             Dictionary<int, string> dictQACptRemarks = Utility.GetQAOrShadowQACptRemarks(Model.QACPTCodeRemarks);
             Dictionary<int, string> dictShadowQACptRemarks = Utility.GetQAOrShadowQADxRemarks(Model.ShadowQACPTCodeRemarks);
 
+            dictCptCodes = (dictCptCodes == null) ? new Dictionary<int, string>() : dictCptCodes;
             dictQACptCodes = (dictQACptCodes == null) ? new Dictionary<int, string>() : dictQACptCodes;
+            dictShadowQACptCodes = (dictShadowQACptCodes == null) ? new Dictionary<int, string>() : dictShadowQACptCodes;
             dictQACptRemarks = (dictQACptRemarks == null) ? new Dictionary<int, string>() : dictQACptRemarks;
+            dictShadowQACptRemarks = (dictShadowQACptRemarks == null) ? new Dictionary<int, string>() : dictShadowQACptRemarks;
 
             count = Math.Max(dictCptCodes.Count(), Math.Max(dictQACptCodes.Count(), dictShadowQACptCodes.Count()));
 
