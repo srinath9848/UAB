@@ -265,7 +265,7 @@
                                 &nbsp;<i id="Dx_@i" class="@Rejected" aria-hidden="true"></i>
                             </span>
                         </div>
-                        <div title="" class="col-md-2 input-group" style="@Show">
+                        <div title="" class="col-md-3 input-group" style="@Show">
                             <input type="text" class="form-control" value="@dictQADxRemarks?.ElementAt(i).Value" />
                         </div>
 
@@ -280,7 +280,7 @@
                                     ShadowQaDxVal = dictDxCodes.ElementAt(i).Value;
                                 }
                             }
-                            <input type="text" id="txtDx_@i" class="form-control txtDx" autocomplete="off" tabindex="@i" placeholder="Code" value="@ShadowQaDxVal" />
+                            <input type="text" id="txtDx_@i" class="form-control txtDx QARemarks" autocomplete="off" tabindex="@i" placeholder="Code" value="@ShadowQaDxVal" />
                         </div>
                         <div class="col-md-3 lessWidth input-group Dx_@i" style="display:none">
                             <input type="text" id="Dx_@i" class="form-control QARevised" />
