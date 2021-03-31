@@ -91,17 +91,17 @@
                 @Html.DropDownListFor(model => model.QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = "PayorID1", @class = "form-control QARevised", @style = (Model.QAPayorID == 0 ? "display:none" : "display:flex") })
                 @Html.ValidationMessageFor(model => model.QAPayorID, null, new { @class = "text-danger errMsg" })
             </div>
+
+            <div class="col-md-3 lessWidth input-group">
+                @Html.TextBoxFor(model => model.QAPayorRemarks, new { @title = Model.QAPayorRemarks, @style = Show, @class = "form-control QARevised", @id = "PayorID2" })
+                @Html.ValidationMessageFor(model => model.QAPayorRemarks, null, new { @class = "text-danger errMsg" })
+            </div>
             <div class="input-group-append CoderCorrections" style="@Show">
                 <span class="input-group-text">
                     &nbsp;<i id="Payor" title="PayorID1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
                     &nbsp;<i id="Payor" title="PayorID1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                 </span>
             </div>
-            <div class="col-md-3 lessWidth input-group">
-                @Html.TextBoxFor(model => model.QAPayorRemarks, new { @title = Model.QAPayorRemarks, @style = Show, @class = "form-control QARevised", @id = "PayorID2" })
-                @Html.ValidationMessageFor(model => model.QAPayorRemarks, null, new { @class = "text-danger errMsg" })
-            </div>
-
             <div class="col-md-3 input-group CoderCorrections" style="@Show">
                 @Html.TextBoxFor(model => model.RevisedPayorRemarks, new { @class = "form-control", @id = "RevisedPayorRemarks" })
             </div>
@@ -139,70 +139,70 @@
                 @Html.TextBoxFor(model => model.RevisedProviderRemarks, new { @class = "form-control", @id = "RevisedProviderRemarks" })
             </div>
         </div>
-        <div class="form-group row">
-            <label class="col-md-3 lessWidth m-t-15">CPT</label>
-            <div class="col-md-3 lessWidth input-group">
-                @{ Accepted = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                @{ Rejected = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+        @*<div class="form-group row">
+                <label class="col-md-3 lessWidth m-t-15">CPT</label>
+                <div class="col-md-3 lessWidth input-group">
+                    @{ Accepted = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                    @{ Rejected = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-                @Html.TextAreaFor(model => model.CPTCode, new { @class = "form-control CoderDetails" })
-                <div class="input-group-append QACorrections">
+                    @Html.TextAreaFor(model => model.CPTCode, new { @class = "form-control CoderDetails" })
+                    <div class="input-group-append QACorrections">
+                        <span class="input-group-text">
+                            &nbsp;<i id="CPTCode" class="@Accepted" aria-hidden="true"></i>
+                            &nbsp;<i id="CPTCode" class="@Rejected" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                </div>
+                @{Show = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "display:none" : "display:flex");}
+                <div class="col-md-3 lessWidth input-group">
+                    @Html.TextAreaFor(model => model.QACPTCode, new { @title = Model.QACPTCode, @style = Show, @id = "CPTCode1", @class = "form-control QARevised" })
+                    @Html.ValidationMessageFor(model => model.QACPTCode, null, new { @class = "text-danger errMsg" })
+                </div>
+                <div class="col-md-3 lessWidth input-group">
+                    @Html.TextBoxFor(model => model.QACPTCodeRemarks, new { @title = Model.QACPTCodeRemarks, @style = Show, @class = "form-control QARevised", @id = "CPTCode2" })
+                    @Html.ValidationMessageFor(model => model.QACPTCodeRemarks, null, new { @class = "text-danger errMsg" })
+                </div>
+                <div class="input-group-append CoderCorrections" style="@Show">
                     <span class="input-group-text">
-                        &nbsp;<i id="CPTCode" class="@Accepted" aria-hidden="true"></i>
-                        &nbsp;<i id="CPTCode" class="@Rejected" aria-hidden="true"></i>
+                        &nbsp;<i id="CPT" title="CPTCode1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i id="CPT" title="CPTCode1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                     </span>
                 </div>
+                <div class="col-md-3 input-group CoderCorrections" style="@Show">
+                    @Html.TextBoxFor(model => model.RevisedCPTRemarks, new { @style = Show, @class = "form-control", @id = "RevisedCPTRemarks" })
+                </div>
             </div>
-            @{Show = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "display:none" : "display:flex");}
-            <div class="col-md-3 lessWidth input-group">
-                @Html.TextAreaFor(model => model.QACPTCode, new { @title = Model.QACPTCode, @style = Show, @id = "CPTCode1", @class = "form-control QARevised" })
-                @Html.ValidationMessageFor(model => model.QACPTCode, null, new { @class = "text-danger errMsg" })
-            </div>
-            <div class="col-md-3 lessWidth input-group">
-                @Html.TextBoxFor(model => model.QACPTCodeRemarks, new { @title = Model.QACPTCodeRemarks, @style = Show, @class = "form-control QARevised", @id = "CPTCode2" })
-                @Html.ValidationMessageFor(model => model.QACPTCodeRemarks, null, new { @class = "text-danger errMsg" })
-            </div>
-            <div class="input-group-append CoderCorrections" style="@Show">
-                <span class="input-group-text">
-                    &nbsp;<i id="CPT" title="CPTCode1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                    &nbsp;<i id="CPT" title="CPTCode1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                </span>
-            </div>
-            <div class="col-md-3 input-group CoderCorrections" style="@Show">
-                @Html.TextBoxFor(model => model.RevisedCPTRemarks, new { @style = Show, @class = "form-control", @id = "RevisedCPTRemarks" })
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-md-3 lessWidth m-t-15">Mod</label>
-            <div class="col-md-3 lessWidth input-group">
-                @{ Accepted = (string.IsNullOrEmpty(Model.QAModRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                @{ Rejected = (string.IsNullOrEmpty(Model.QAModRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+            <div class="form-group row">
+                <label class="col-md-3 lessWidth m-t-15">Mod</label>
+                <div class="col-md-3 lessWidth input-group">
+                    @{ Accepted = (string.IsNullOrEmpty(Model.QAModRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                    @{ Rejected = (string.IsNullOrEmpty(Model.QAModRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-                @Html.TextAreaFor(model => model.Mod, new { @class = "form-control CoderDetails" })
-                <span class="input-group-text QACorrections">
-                    &nbsp;<i id="Mod" class="@Accepted" aria-hidden="true"></i>
-                    &nbsp;<i id="Mod" class="@Rejected" aria-hidden="true"></i>
-                </span>
-            </div>
-            @{Show = (string.IsNullOrEmpty(Model.QAModRemarks) ? "display:none" : "display:flex");}
-            <div class="col-md-3 lessWidth input-group">
-                @Html.TextAreaFor(model => model.QAMod, new { @title = Model.QAMod, @style = Show, @class = "form-control QARevised", @id = "Mod1" })
-                @Html.ValidationMessageFor(model => model.QAMod, null, new { @class = "text-danger errMsg" })
-            </div>
-            <div class="col-md-3 lessWidth input-group">
-                @Html.TextBoxFor(model => model.QAModRemarks, new { @title = Model.QAModRemarks, @style = Show, @class = "form-control QARevised", @id = "Mod2" })
-                @Html.ValidationMessageFor(model => model.QAModRemarks, null, new { @class = "text-danger errMsg" })
-            </div>
-            <div class="input-group-append CoderCorrections" style="@Show">
-                <span class="input-group-text">
-                    &nbsp;<i id="Mod" title="Mod1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                    &nbsp;<i id="Mod" title="Mod1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                </span>
-            </div>
-            <div class="col-md-3 input-group CoderCorrections" style="@Show">
-                @Html.TextBoxFor(model => model.RevisedModRemarks, new { @class = "form-control", @id = "RevisedModRemarks" })
-            </div>
-        </div>
+                    @Html.TextAreaFor(model => model.Mod, new { @class = "form-control CoderDetails" })
+                    <span class="input-group-text QACorrections">
+                        &nbsp;<i id="Mod" class="@Accepted" aria-hidden="true"></i>
+                        &nbsp;<i id="Mod" class="@Rejected" aria-hidden="true"></i>
+                    </span>
+                </div>
+                @{Show = (string.IsNullOrEmpty(Model.QAModRemarks) ? "display:none" : "display:flex");}
+                <div class="col-md-3 lessWidth input-group">
+                    @Html.TextAreaFor(model => model.QAMod, new { @title = Model.QAMod, @style = Show, @class = "form-control QARevised", @id = "Mod1" })
+                    @Html.ValidationMessageFor(model => model.QAMod, null, new { @class = "text-danger errMsg" })
+                </div>
+                <div class="col-md-3 lessWidth input-group">
+                    @Html.TextBoxFor(model => model.QAModRemarks, new { @title = Model.QAModRemarks, @style = Show, @class = "form-control QARevised", @id = "Mod2" })
+                    @Html.ValidationMessageFor(model => model.QAModRemarks, null, new { @class = "text-danger errMsg" })
+                </div>
+                <div class="input-group-append CoderCorrections" style="@Show">
+                    <span class="input-group-text">
+                        &nbsp;<i id="Mod" title="Mod1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i id="Mod" title="Mod1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                    </span>
+                </div>
+                <div class="col-md-3 input-group CoderCorrections" style="@Show">
+                    @Html.TextBoxFor(model => model.RevisedModRemarks, new { @class = "form-control", @id = "RevisedModRemarks" })
+                </div>
+            </div>*@
 
 
         <div class="form-group row">
@@ -239,10 +239,6 @@
             </div>
         </div>
         <div class="form-group row">
-            @*<label class="col-md-3 lessWidth m-t-15">Coder Questions</label>
-                <div class="col-md-3 lessWidth">
-                    @Html.TextAreaFor(model => model.CoderQuestion, new { @class = "form-control CoderDetails" })
-                </div>*@
             <label class="col-md-3 lessWidth m-t-15">Note Title</label>
             <div class="col-md-3 lessWidth">
                 @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails" })
@@ -269,7 +265,8 @@
         <div id="DivDx">
             @{
                 int j = 1;
-                for (int i = 0; i < count; i++)
+                int i;
+                for (i = 0; i < count; i++)
                 {
                     <div class="form-group row">
                         @if (i == 0)
@@ -318,6 +315,137 @@
             }
         </div>
 
+        @{
+            Dictionary<int, string> dictCptCodes = Utility.GetCptCodes(Model.CPTCode);
+            Dictionary<int, string> dictQACptCodes = Utility.GetQAOrShadowQACptCodes(Model.QACPTCode);
+            Dictionary<int, string> dictQACptRemarks = Utility.GetQAOrShadowQACptRemarks(Model.QACPTCodeRemarks);
+            Dictionary<int, string> dictRevisedCptRemarks = Utility.GetQAOrShadowQADxRemarks(Model.RevisedCPTRemarks);
+
+            dictCptCodes = (dictCptCodes == null) ? new Dictionary<int, string>() : dictCptCodes;
+            dictQACptCodes = (dictQACptCodes == null) ? new Dictionary<int, string>() : dictQACptCodes;
+            dictQACptRemarks = (dictQACptRemarks == null) ? new Dictionary<int, string>() : dictQACptRemarks;
+            dictQACptRemarks = (dictQACptRemarks == null) ? new Dictionary<int, string>() : dictQACptRemarks;
+
+            count = Math.Max(dictCptCodes.Count(), Math.Max(dictQACptCodes.Count(), 0));
+
+            int totalCptCount = count + 1;
+
+            Utility.AddEmptyRows(dictCptCodes, count, "NA");
+            Utility.AddEmptyRows(dictQACptCodes, count, "");
+            Utility.AddEmptyRows(dictQACptRemarks, count, "");
+            Utility.AddEmptyRows(dictRevisedCptRemarks, count, "");
+
+        }
+        <div id="DivCpt">
+            @{
+                j = 1;
+                for (i = 0; i < count; i++)
+                {
+
+                    <div class="form-group row" id="DivCptRow_@j">
+                        @if (i == 0)
+                        {
+                            <label class="col-md-3 lessWidth m-t-15">CPT</label>
+                        }
+                        else
+                        {
+                            <label class="col-md-3 lessWidth m-t-15"></label>
+                        }
+                        @{ string[] coderCptcodes = dictCptCodes?.ElementAt(i).Value.Split("^");}
+                        @{ string[] qaCptcodes = dictQACptCodes?.ElementAt(i).Value.Split("^");}
+
+                        <div class="col-md-3 input-group" @*style="max-width:26% !important;"*@>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">@j</span>
+                            </div>
+
+                            @if (!string.IsNullOrEmpty(dictQACptCodes?.ElementAt(i).Value))
+                            {
+                                string codercptCode = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[0]);
+                                string qacptCode = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[0]);
+                                <input type="text" class="form-control QARemarks" value="@qacptCode" style="width: 17px;color: green;" />
+                                string coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[1]);
+                                string qaMod = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[1]);
+                                <input type="text" class="form-control QARemarks" value="@qaMod" style="color: green;" />
+
+                                string coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[2]);
+                                string qaQty = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[2]);
+                                <input type="text" class="form-control QARemarks" value="@qaQty" style="color: green; " />
+
+                                string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
+                                string qaLinks = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[3]);
+                                <input type="text" class="form-control QARemarks" value="@qaLinks" style="color: green; " />
+                            }
+                            else
+                            {
+                                if (coderCptcodes[0] != "NA")
+                                {
+                                    string coderModVal = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
+                                    string coderLinkAllVal = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
+
+                                    <input type="text" class="form-control QARemarks" style="color: green;width: 17px;" placeholder="Code" value="@coderCptcodes[0]" />
+                                    <input type="text" class="form-control QARemarks" style="color:green;" placeholder="Mod" value="@coderModVal" />
+                                    <input type="text" class="form-control QARemarks" style="color:green;" placeholder="1" value="@coderCptcodes[2]" />
+                                    <input type="text" class="form-control QARemarks" style="color: green;" placeholder="Link All" value="@coderLinkAllVal" />
+                                }
+                            }
+                        </div>
+                        <div class="col-md-3 CptlessWidth input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">@j</span>
+                            </div>
+
+                            @{
+                                string ShadowQaCptVal = "";
+                                string ShadowQaModVal = "";
+                                string ShadowQaQtyVal = "";
+                                string ShadowQaLinkAllVal = "";
+                                ShadowQaCptVal = !string.IsNullOrEmpty(dictQACptCodes?.ElementAt(i).Value) ? dictQACptCodes?.ElementAt(i).Value : !string.IsNullOrEmpty(dictQACptCodes?.ElementAt(i).Value) ? dictQACptCodes?.ElementAt(i).Value : dictCptCodes?.ElementAt(i).Value;
+                                if (dictQACptCodes?.ElementAt(i).Value == "NA" && string.IsNullOrEmpty(dictQACptCodes?.ElementAt(i).Value))
+                                {
+                                    string[] CptCodes = dictCptCodes.ElementAt(i).Value.Split("^");
+                                    ShadowQaCptVal = CptCodes[0];
+                                    ShadowQaModVal = CptCodes[1] == "null" ? "" : CptCodes[1];
+                                    ShadowQaQtyVal = CptCodes[2];
+                                    ShadowQaLinkAllVal = CptCodes[3] == "null" ? "" : CptCodes[3];
+                                }
+                                else
+                                {
+                                    string[] CptCodes = ShadowQaCptVal.Split("^");
+                                    ShadowQaCptVal = CptCodes[0] == "NA" ? "" : CptCodes[0];
+                                    if (ShadowQaCptVal != "")
+                                    {
+                                        ShadowQaModVal = CptCodes[1] == "null" ? "" : CptCodes[1];
+                                        ShadowQaQtyVal = CptCodes[2];
+                                        ShadowQaLinkAllVal = CptCodes[3] == "null" ? "" : CptCodes[3];
+                                    }
+                                }
+                            }
+                            <input type="text" class="form-control QARemarks" id="txtCpt_@j" autocomplete="off" placeholder="Code" value="@ShadowQaCptVal" />
+                            <input type="text" class="form-control QARemarks" id="txtMod_@j" autocomplete="off" placeholder="Mod" value="@ShadowQaModVal" />
+                            <input type="text" id="txtQty_@j" class="form-control QARemarks" autocomplete="off" placeholder="1" value="@ShadowQaQtyVal" />
+                            <input type="text" id="txtLinks_@j" class="form-control QARemarks" autocomplete="off" placeholder="Link All" value="@ShadowQaLinkAllVal" />
+                        </div>
+                        @{ Show = (string.IsNullOrEmpty(dictRevisedCptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
+                        <div title="" class="col-md-2 input-group" style="@Show">
+                            <input type="text" class="form-control QACptRemarks_@i" value="@dictQACptRemarks?.ElementAt(i).Value" />
+                        </div>
+                        <div class="input-group-append CoderCorrections" style="@Show">
+                            <span class="input-group-text">
+                                &nbsp;<i id="Cpt_@j" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                &nbsp;<i id="Cpt_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div title="" class="col-md-2 input-group CoderCorrections" style="@Show">
+                            <input type="text" class="form-control" value="@dictRevisedCptRemarks?.ElementAt(i).Value" />
+                        </div>
+                    </div>
+                    j = j + 1;
+                }
+            }
+
+        </div>
+
         <div class="clearfix"></div>
         <div class="card">
             <div class="card-body">
@@ -351,22 +479,22 @@
             </div>
         </div>
     </div>
+</div>
 
+<style>
+    .errMsg {
+        font-weight: bold;
+        font-size: 20px;
+    }
 
-    <style>
-        .errMsg {
-            font-weight: bold;
-            font-size: 20px;
-        }
+    #sortable-1 {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 25%;
+    }
 
-        #sortable-1 {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            width: 25%;
-        }
-
-        /*     #sortable-1 li {
+    /*     #sortable-1 li {
             margin: 0 3px 3px 3px;
             padding: 0.4em;
             padding-left: 1.5em;
@@ -374,57 +502,56 @@
             height: 16px;
         }*/
 
-        .default {
-            background: #cedc98;
-            border: 1px solid #DDDDDD;
-            color: #333333;
-        }
+    .default {
+        background: #cedc98;
+        border: 1px solid #DDDDDD;
+        color: #333333;
+    }
 
-        .custom-control-label:before {
-            left: -35px;
-        }
+    .custom-control-label:before {
+        left: -35px;
+    }
 
-        .custom-control-label:after {
-            left: -35px;
-        }
+    .custom-control-label:after {
+        left: -35px;
+    }
 
-        .custom-control {
-            padding-left: 0rem;
-        }
-    </style>
-    <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript">
-        $("#PayorID1").attr('title', $("#PayorID1 option:selected").text());
-        $("#ProviderID").attr('title', $("#ProviderID option:selected").text());
-        $("#ProviderFeedbackID").attr('title', $("#ProviderFeedbackID option:selected").text());
-        var dxArray = [];
-        function DxFunction(txt_0) {
-            var id = parseInt(txt_0.split("_")[1]) + parseInt(1);
-            if (txt_0.split("_")[1] !== undefined) {
-                var currId = parseInt(id) - parseInt(1);
-                var val = $("#txtDx_" + currId).val();
-                if (val !== "" && val !== null) {
-                    if ($.inArray(val, dxArray) == -1) {
-                        dxArray.push(val);
-                        $("#Dx").val(dxArray);
-                        var text = "'" + "txtDx_" + id + "'";
-                        $("#DivDx").append('<div class="form-group row"><label class= "col-md-3 lessWidth m-t-15" ></label><div class="col-md-2 input-group"></div ><div class="col-md-2 lessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" tabindex="' + id + '" onfocusout="DxFunction(' + text + ')" class="form-control CoderDetails txtDx" id="txtDx_' + id + '" /></div></div>');
-                        $("#txtDx_" + currId).removeAttr("onfocusout", "");
-                        $("#txtDx_" + id).focus();
-                    }
-                } else {
-                    //var id2 = parseInt(id) - parseInt(1);
-                    //var val = $("#txt" + id2).val();
-                    //if (val == "") {
-                    //    if (id2 !== 0) {
-                    //        dxArray.splice(id2, id2);
-                    //        $("#Dx").val(dxArray);
-                    //        $('#tr' + id2).remove();
-                    //        //$("#txt" + id2).focus();
-                    //    }
-                    //}
+    .custom-control {
+        padding-left: 0rem;
+    }
+</style>
+<script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    $("#PayorID1").attr('title', $("#PayorID1 option:selected").text());
+    $("#ProviderID").attr('title', $("#ProviderID option:selected").text());
+    $("#ProviderFeedbackID").attr('title', $("#ProviderFeedbackID option:selected").text());
+    var dxArray = [];
+    function DxFunction(txt_0) {
+        var id = parseInt(txt_0.split("_")[1]) + parseInt(1);
+        if (txt_0.split("_")[1] !== undefined) {
+            var currId = parseInt(id) - parseInt(1);
+            var val = $("#txtDx_" + currId).val();
+            if (val !== "" && val !== null) {
+                if ($.inArray(val, dxArray) == -1) {
+                    dxArray.push(val);
+                    $("#Dx").val(dxArray);
+                    var text = "'" + "txtDx_" + id + "'";
+                    $("#DivDx").append('<div class="form-group row"><label class= "col-md-3 lessWidth m-t-15" ></label><div class="col-md-2 input-group"></div ><div class="col-md-2 lessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" tabindex="' + id + '" onfocusout="DxFunction(' + text + ')" class="form-control CoderDetails txtDx" id="txtDx_' + id + '" /></div></div>');
+                    $("#txtDx_" + currId).removeAttr("onfocusout", "");
+                    $("#txtDx_" + id).focus();
                 }
+            } else {
+                //var id2 = parseInt(id) - parseInt(1);
+                //var val = $("#txt" + id2).val();
+                //if (val == "") {
+                //    if (id2 !== 0) {
+                //        dxArray.splice(id2, id2);
+                //        $("#Dx").val(dxArray);
+                //        $('#tr' + id2).remove();
+                //        //$("#txt" + id2).focus();
+                //    }
+                //}
             }
         }
-    </script>
-  
+    }
+</script>
