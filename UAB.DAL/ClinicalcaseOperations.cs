@@ -197,6 +197,12 @@ namespace UAB.DAL
                             chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
                             chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate();
                         }
+                        else if (Role == "QA" && ChartType == "Block")
+                        {
+                            chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
+                            chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
+                            chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate();
+                        }
                         else if ((Role == "QA" && ChartType == "Available") ||
                             (Role == "Coder" && ChartType == "ReadyForPosting") ||
                             (Role == "QA" && ChartType == "OnHold"))
@@ -1641,6 +1647,13 @@ namespace UAB.DAL
             using (var context = new UABContext())
             {
                 return context.BlockHistory.Where(a => a.ClinicalCaseId == (Convert.ToInt32(ccid))).ToList();
+            }
+        }
+        public int GetStatusId(string ccid)
+        {
+            using (var context = new UABContext())
+            {
+                return  context.WorkItem.Where(a => a.ClinicalCaseId == Convert.ToInt32(ccid)).Select(a=>a.StatusId).FirstOrDefault();
             }
         }
         public List<BlockCategory> GetBlockCategories()

@@ -321,6 +321,8 @@
                         <div class="form-group row">
                             <label class="col-md-5 m-t-15"></label>
                             <div class="col-md-7">
+                                <button id="btnBlock" type="button" class="btn btn-danger" onclick="Block()">Block</button>
+                                <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger" onclick="BlockHistory()">Block History</button>
                                 <button id="btnsubmit" type="submit" class="btn btn-success">Save</button>
                                 <button id="SubmitAndGetNext" name="SubmitAndGetNext" type="submit" value="SubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
                             </div>
@@ -381,4 +383,39 @@
     $("#PayorID1").attr('title', $("#PayorID1 option:selected").text());
     $("#ProviderID").attr('title', $("#ProviderID option:selected").text());
     $("#ProviderFeedbackID").attr('title', $("#ProviderFeedbackID option:selected").text());
+
+    $(document).ready(function () {
+        Block = function () {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("BlockClinicalcase", "UAB")",
+                data: {"ccid": @Model.CodingDTO.ClinicalCaseID},
+                success: function (response) {
+                    $("#modalContent").html(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        };
+        BlockHistory = function () {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("BlockHistory", "UAB")",
+                data: {
+                    "name": "@Model.BlockCategory",
+                    "remarks": "@Model.BlockRemarks",
+                    "createdate": "@Model.BlockedDate"
+                    },
+                success: function (response) {
+                    $("#modalContent").html(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        };
+});
+
+
 </script>
