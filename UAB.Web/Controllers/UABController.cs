@@ -27,7 +27,7 @@ namespace UAB.Controllers
         public UABController(IHttpContextAccessor httpContextAccessor)
         {
             mUserId = Convert.ToInt32(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value);
-            mUserRole =httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Role)?.Value;
+            mUserRole = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Role)?.Value;
         }
 
         #region Coding
@@ -224,8 +224,7 @@ namespace UAB.Controllers
         {
             var hdnPayorID = Request.Form["hdnPayorID"].ToString();
             var hdnProviderID = Request.Form["hdnProviderID"].ToString();
-            var hdnCpt = Request.Form["hdnCpt"].ToString();
-            var hdnMod = Request.Form["hdnMod"].ToString();
+            var hdnCptCodes = Request.Form["hdnCptCodes"].ToString();
             var hdnProviderFeedbackID = Request.Form["hdnProviderFeedbackID"].ToString();
 
             var hdnStatusId = Request.Form["hdnStatusId"].ToString();
@@ -234,9 +233,15 @@ namespace UAB.Controllers
 
             var hdnRejectedDxCodes = Request.Form["hdnRejectedDxCodes"].ToString();
             chartSummaryDTO.RejectedDx = hdnRejectedDxCodes;
-            
+
             var hdnDxCodes = Request.Form["hdnDxCodes"].ToString();
             chartSummaryDTO.Dx = hdnDxCodes;
+
+            var hdnRejectedCptRemarks = Request.Form["hdnRejectedCptRemarks"].ToString();
+            chartSummaryDTO.RevisedCPTRemarks = hdnRejectedCptRemarks;
+
+            var hdnRejectedCptCodes = Request.Form["hdnRejectedCptCodes"].ToString();
+            chartSummaryDTO.RejectedCpt = hdnRejectedCptCodes;
 
             if (!string.IsNullOrEmpty(hdnPayorID))
                 chartSummaryDTO.PayorID = Convert.ToInt32(hdnPayorID);
@@ -244,11 +249,8 @@ namespace UAB.Controllers
             if (!string.IsNullOrEmpty(hdnProviderID))
                 chartSummaryDTO.ProviderID = Convert.ToInt32(hdnProviderID);
 
-            if (!string.IsNullOrEmpty(hdnCpt))
-                chartSummaryDTO.CPTCode = hdnCpt;
-
-            if (!string.IsNullOrEmpty(hdnMod))
-                chartSummaryDTO.Mod = hdnMod;
+            if (!string.IsNullOrEmpty(hdnCptCodes))
+                chartSummaryDTO.CPTCode = hdnCptCodes;
 
             //if (!string.IsNullOrEmpty(hdnDx))
             //    chartSummaryDTO.Dx = hdnDx;
@@ -717,7 +719,7 @@ namespace UAB.Controllers
                 ProviderName = providername,
                 IncludeBlocked = includeblocked
             };
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId,mUserRole);
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId, mUserRole);
             var searchData = clinicalcaseOperations.GetSearchData(searchParametersDTO);
             return PartialView("_SettingsSearchResults", searchData);
         }
