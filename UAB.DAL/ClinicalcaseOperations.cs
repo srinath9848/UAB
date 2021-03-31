@@ -202,6 +202,19 @@ namespace UAB.DAL
                             chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
                             chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
                             chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate();
+
+                            chartSummaryDTO.CodedBy = Convert.ToString(reader["CodedBy"]);
+
+                            if (reader["ProviderId"] != DBNull.Value)
+                                chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
+                            if (reader["PayorId"] != DBNull.Value)
+                                chartSummaryDTO.PayorID = Convert.ToInt32(reader["PayorId"]);
+                            chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
+                            chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
+                            chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
+                            // chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
+                            if (reader["ProviderFeedbackId"] != DBNull.Value)
+                                chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
                         }
                         else if ((Role == "QA" && ChartType == "Available") ||
                             (Role == "Coder" && ChartType == "ReadyForPosting") ||
