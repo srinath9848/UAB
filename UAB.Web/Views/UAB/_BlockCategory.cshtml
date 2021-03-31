@@ -30,6 +30,7 @@
             </div>
             <div class="modal-body">
                 <input type="hidden" id="ccid" value="@ViewBag.ccid" />
+                <input type="hidden" id="statusid" value="@ViewBag.statusid" />
                 <div class="col-md-10">
                     <label>Block Category</label>
                     @Html.DropDownListFor(model => model.BlockCategoryId, new SelectList(@ViewBag.BlockCategories, "BlockCategoryId", "Name"), "--Select a Category--", new { @id = "categorydd", @class = "form-control CoderDetails" })
@@ -60,9 +61,6 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-
-
-
         BlockClinicalcase = function () {
 
             if ($("#categorydd").find('option:selected').val() !== "" && $("#txtremarks").val() !== "") {
@@ -75,8 +73,12 @@
                         "remarks": $("#txtremarks").val()
                     },
                     success: function (response) {
+                        var sid = $("#statusid").val();
                         $("#modalContent").html('');
-                        window.location.href = "/UAB/CodingSummary";
+                        if (sid ==="5")
+                            window.location.href = "/UAB/QASummary";
+                        else
+                            window.location.href = "/UAB/CodingSummary";
                     },
                     failure: function (response) {
                         alert(response);
@@ -86,28 +88,6 @@
                 alert("Please select category and enter remarks");
             }
         }
-
-
-
-        @*BlockClinicalcase  = function () {
-        $.ajax({
-            type: "POST",
-            url: "@Url.Action("BlockClinicalcase", "UAB")",
-            data: {
-                "ccid": $("#ccid").val(),
-                "bid": $("#categorydd").find('option:selected').val(),
-                "remarks":$("#txtremarks").val()
-            },
-            success: function (response) {
-                $("#modalContent").html('');
-                window.location.href = "/UAB/CodingSummary";
-            },
-            failure: function (response) {
-                alert(response);
-            }
-        });
-        }*@
-
         ModalClose1 = function () {
             $("#modalContent").html('');
         }
