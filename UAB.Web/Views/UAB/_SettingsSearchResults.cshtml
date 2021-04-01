@@ -76,7 +76,7 @@
                                         <td>@item.FirstName</td>
                                         <td>@item.LastName</td>
                                         <td>@item.ProviderName</td>
-                                        <td>@item.DoS</td>
+                                        <td>@item.DoS.ToString("MM/dd/yyyy")</td>
                                         <td>@item.ProjectName</td>
                                         <td>@item.Status</td>
                                     </tr>
@@ -103,7 +103,8 @@
     $('#searchresults').dataTable({
         "oLanguage": {
             "sSearch": "Filter Charts:",
-            "sSearchPlaceholder": "Search..."
+            "sSearchPlaceholder": "Search...",
+            "sLengthMenu": "Show Entries _MENU_ "
         },
         "bDestroy": true
     });
