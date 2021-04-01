@@ -46,7 +46,15 @@
                         <div class="form-group row">
                             <label class="col-md-3 m-t-15">Provider</label>
                             <div class="col-md-3">
-                                @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @class = "form-control CoderDetails" })
+                                @if (@Model.ProviderID != 0)
+                                {
+                                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails", @disabled = "disabled" })
+                                }
+                                else
+                                {
+                                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails"})
+                                }
+
                                 @Html.ValidationMessageFor(model => model.ProviderID, null, new { @class = "text-danger" })
                             </div>
                             <label class="col-md-3 m-t-15">Payor</label>

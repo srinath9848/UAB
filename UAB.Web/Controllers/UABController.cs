@@ -120,9 +120,13 @@ namespace UAB.Controllers
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
             ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            ViewBag.ErrorTypes = BindErrorType();
             #endregion
 
-            return View("Coding", chartSummaryDTO);
+            if (Role==Roles.QA.ToString())
+            return View("QA", chartSummaryDTO);
+            else
+                return View("Coding", chartSummaryDTO);
 
         }
 
