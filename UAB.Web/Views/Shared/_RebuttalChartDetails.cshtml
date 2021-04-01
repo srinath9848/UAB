@@ -1,4 +1,5 @@
 ﻿@model UAB.DTO.ChartSummaryDTO
+@using UAB.enums
 <div class="col-md-12">
     <div class="card">
         <div class="card-body">
@@ -319,8 +320,10 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group row">
-                            <label class="col-md-5 m-t-15"></label>
-                            <div class="col-md-7">
+                            @*<label class="col-md-5 m-t-15"></label>*@
+                            <div class="col-md-15">
+                                <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.QA, ChartType= "Block", ProjectID=@Model.ProjectID, ProjectName=Model.ProjectName,ccid=Model.CodingDTO.ClinicalCaseID,plusorminus="Previous"})" class="btn btn-success Available" id="btnPrevious" style="display:none">Previous</a>
+                                <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.QA, ChartType= "Block", ProjectID=@Model.ProjectID, ProjectName=Model.ProjectName,ccid=Model.CodingDTO.ClinicalCaseID,plusorminus="Next"})" class="btn btn-success Available" id="btnNext" style="display:none">Next</a>
                                 <button id="btnBlock" type="button" class="btn btn-danger" onclick="Block()">Block</button>
                                 <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger" onclick="BlockHistory()">Block History</button>
                                 <button id="btnsubmit" type="submit" class="btn btn-success">Save</button>

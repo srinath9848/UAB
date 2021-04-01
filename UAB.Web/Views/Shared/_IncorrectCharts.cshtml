@@ -26,13 +26,14 @@
         @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { @class = "form-control" })
         @Html.Hidden("hdnPayorID")
         @Html.Hidden("hdnProviderID")
-        @Html.Hidden("hdnCpt")
-        @Html.Hidden("hdnMod")
         @Html.Hidden("hdnProviderFeedbackID")
         @Html.Hidden("hdnRejectedDxRemarks")
         @Html.Hidden("hdnStatusId")
         @Html.Hidden("hdnRejectedDxCodes")
         @Html.Hidden("hdnDxCodes")
+        @Html.Hidden("hdnRejectedCptCodes")
+        @Html.Hidden("hdnRejectedCptRemarks")
+        @Html.Hidden("hdnCptCodes")
 
         <div class="form-group row">
             <label class="col-md-3 lessWidth m-t-15"></label>
@@ -124,120 +125,120 @@
             </div>
         </div>
         @*<div class="form-group row">
-                <label class="col-md-3 lessWidth m-t-15">CPT</label>
-                @{len = (!string.IsNullOrEmpty(Model.QACPTCode) ? 10 : 20); }
-                @{string CPTCode = (Model.CPTCode?.Length > len) ? Model.CPTCode.Substring(0, len) + ".." : Model.CPTCode;}
-                @{string QACPTCode = (Model.QACPTCode?.Length > len) ? "/" + Model.QACPTCode.Substring(0, len) + ".." : "/" + Model.QACPTCode;}
-                @{title = (!string.IsNullOrEmpty(Model.QACPTCode) ? Model.CPTCode + "/" + Model.QACPTCode : Model.CPTCode);}
-                @Html.TextAreaFor(model => model.CPTCode, new { @style = "display:none", @class = "form-control CoderDetails" })
+            <label class="col-md-3 lessWidth m-t-15">CPT</label>
+            @{len = (!string.IsNullOrEmpty(Model.QACPTCode) ? 10 : 20); }
+            @{string CPTCode = (Model.CPTCode?.Length > len) ? Model.CPTCode.Substring(0, len) + ".." : Model.CPTCode;}
+            @{string QACPTCode = (Model.QACPTCode?.Length > len) ? "/" + Model.QACPTCode.Substring(0, len) + ".." : "/" + Model.QACPTCode;}
+            @{title = (!string.IsNullOrEmpty(Model.QACPTCode) ? Model.CPTCode + "/" + Model.QACPTCode : Model.CPTCode);}
+            @Html.TextAreaFor(model => model.CPTCode, new { @style = "display:none", @class = "form-control CoderDetails" })
 
-                <div title="@title" class="col-md-3 lessWidth input-group">
-                    <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
-                        <span style="white-space:nowrap">
-                            @if (!string.IsNullOrEmpty(Model.QACPTCode))
-                            {
-                            <label style="color: red;">@CPTCode</label>
-                            <label style="color:green">@QACPTCode</label>
-                            }
-                            else
-                            {
-                            <label style="color: green;">@CPTCode</label>
-                            }
-                        </span>
-                    </div>
-                </div>
-                @{Show = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "visibility:hidden" : "display:flex");}
-                <div title="@Model.QACPTCodeRemarks" class="col-md-2 input-group" style="@Show">
-                    <input type="text" class="form-control QARemarks" value="@Model.QACPTCodeRemarks" />
-                </div>
-                @Html.HiddenFor(model => model.QACPTCode, new { @class = "form-control", @id = "CPTCode1" })
-                <div class="input-group-append CoderCorrections" style="@Show">
-                    <span class="input-group-text">
-                        &nbsp;<i id="CPT" title="CPTCode1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                        &nbsp;<i id="CPT" title="CPTCode1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+            <div title="@title" class="col-md-3 lessWidth input-group">
+                <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
+                    <span style="white-space:nowrap">
+                        @if (!string.IsNullOrEmpty(Model.QACPTCode))
+                        {
+                        <label style="color: red;">@CPTCode</label>
+                        <label style="color:green">@QACPTCode</label>
+                        }
+                        else
+                        {
+                        <label style="color: green;">@CPTCode</label>
+                        }
                     </span>
-                </div>
-                <div class="col-md-3 input-group CoderCorrections">
-                    @Html.TextBoxFor(model => model.RevisedCPTRemarks, new { @class = "form-control Revised", @id = "RevisedCPTRemarks", @style = @Show })
                 </div>
             </div>
-            <div class="form-group row">
-                <label class="col-md-3 lessWidth m-t-15">Mod</label>
-                @{len = (!string.IsNullOrEmpty(Model.QAMod) ? 10 : 20); }
-                @{string Mod = (Model.Mod?.Length > len) ? Model.Mod.Substring(0, len) + ".." : Model.Mod;}
-                @{string QAMod = (Model.QAMod?.Length > len) ? "/" + Model.QAMod.Substring(0, len) + ".." : "/" + Model.QAMod;}
-                @{title = (!string.IsNullOrEmpty(Model.QAMod) ? Model.Mod + "/" + Model.QAMod : Model.Mod);}
-                @Html.TextAreaFor(model => model.Mod, new { @style = "display:none", @class = "form-control CoderDetails" })
+            @{Show = (string.IsNullOrEmpty(Model.QACPTCodeRemarks) ? "visibility:hidden" : "display:flex");}
+            <div title="@Model.QACPTCodeRemarks" class="col-md-2 input-group" style="@Show">
+                <input type="text" class="form-control QARemarks" value="@Model.QACPTCodeRemarks" />
+            </div>
+            @Html.HiddenFor(model => model.QACPTCode, new { @class = "form-control", @id = "CPTCode1" })
+            <div class="input-group-append CoderCorrections" style="@Show">
+                <span class="input-group-text">
+                    &nbsp;<i id="CPT" title="CPTCode1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="CPT" title="CPTCode1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                </span>
+            </div>
+            <div class="col-md-3 input-group CoderCorrections">
+                @Html.TextBoxFor(model => model.RevisedCPTRemarks, new { @class = "form-control Revised", @id = "RevisedCPTRemarks", @style = @Show })
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 lessWidth m-t-15">Mod</label>
+            @{len = (!string.IsNullOrEmpty(Model.QAMod) ? 10 : 20); }
+            @{string Mod = (Model.Mod?.Length > len) ? Model.Mod.Substring(0, len) + ".." : Model.Mod;}
+            @{string QAMod = (Model.QAMod?.Length > len) ? "/" + Model.QAMod.Substring(0, len) + ".." : "/" + Model.QAMod;}
+            @{title = (!string.IsNullOrEmpty(Model.QAMod) ? Model.Mod + "/" + Model.QAMod : Model.Mod);}
+            @Html.TextAreaFor(model => model.Mod, new { @style = "display:none", @class = "form-control CoderDetails" })
 
-                <div title="@title" class="col-md-3 lessWidth input-group">
-                    <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
-                        <span style="white-space:nowrap">
-                            @if (!string.IsNullOrEmpty(Model.QAMod))
-                            {
-                            <label style="color: red;">@Mod</label>
-                            <label style="color:green">@QAMod</label>
-                            }
-                            else
-                            {
-                            <label style="color: green;">@Mod</label>
-                            }
-                        </span>
-                    </div>
-                </div>
-                @{Show = (string.IsNullOrEmpty(Model.QAModRemarks) ? "visibility:hidden" : "display:flex");}
-                <div title="@Model.QAModRemarks" class="col-md-2 input-group" style="@Show">
-                    <input type="text" class="form-control QARemarks" value="@Model.QAModRemarks" />
-                </div>
-                @Html.HiddenFor(model => model.QAMod, new { @class = "form-control", @id = "Mod1" })
-                <div class="input-group-append CoderCorrections" style="@Show">
-                    <span class="input-group-text">
-                        &nbsp;<i id="Mod" title="Mod1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                        &nbsp;<i id="Mod" title="Mod1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+            <div title="@title" class="col-md-3 lessWidth input-group">
+                <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
+                    <span style="white-space:nowrap">
+                        @if (!string.IsNullOrEmpty(Model.QAMod))
+                        {
+                        <label style="color: red;">@Mod</label>
+                        <label style="color:green">@QAMod</label>
+                        }
+                        else
+                        {
+                        <label style="color: green;">@Mod</label>
+                        }
                     </span>
                 </div>
-                <div class="col-md-3 input-group CoderCorrections">
-                    @Html.TextBoxFor(model => model.RevisedModRemarks, new { @class = "form-control Revised", @id = "RevisedModRemarks", @style = @Show })
-                </div>
-            </div>*@
+            </div>
+            @{Show = (string.IsNullOrEmpty(Model.QAModRemarks) ? "visibility:hidden" : "display:flex");}
+            <div title="@Model.QAModRemarks" class="col-md-2 input-group" style="@Show">
+                <input type="text" class="form-control QARemarks" value="@Model.QAModRemarks" />
+            </div>
+            @Html.HiddenFor(model => model.QAMod, new { @class = "form-control", @id = "Mod1" })
+            <div class="input-group-append CoderCorrections" style="@Show">
+                <span class="input-group-text">
+                    &nbsp;<i id="Mod" title="Mod1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="Mod" title="Mod1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                </span>
+            </div>
+            <div class="col-md-3 input-group CoderCorrections">
+                @Html.TextBoxFor(model => model.RevisedModRemarks, new { @class = "form-control Revised", @id = "RevisedModRemarks", @style = @Show })
+            </div>
+        </div>*@
         @*<div class="form-group row">
-                <label class="col-md-3 lessWidth m-t-15">Dx</label>
-                @{len = (!string.IsNullOrEmpty(Model.QADx) ? 10 : 20); }
-                @{string Dx = (Model.Dx?.Length > len) ? Model.Dx.Substring(0, len) + ".." : Model.Dx;}
-                @{string QADx = (Model.QADx?.Length > len) ? "/" + Model.QADx.Substring(0, len) + ".." : "/" + Model.QADx;}
-                @{title = (!string.IsNullOrEmpty(Model.QADx) ? Model.Dx + "/" + Model.QADx : Model.Dx);}
-                @Html.TextAreaFor(model => model.Dx, new { @style = "display:none", @class = "form-control CoderDetails" })
+            <label class="col-md-3 lessWidth m-t-15">Dx</label>
+            @{len = (!string.IsNullOrEmpty(Model.QADx) ? 10 : 20); }
+            @{string Dx = (Model.Dx?.Length > len) ? Model.Dx.Substring(0, len) + ".." : Model.Dx;}
+            @{string QADx = (Model.QADx?.Length > len) ? "/" + Model.QADx.Substring(0, len) + ".." : "/" + Model.QADx;}
+            @{title = (!string.IsNullOrEmpty(Model.QADx) ? Model.Dx + "/" + Model.QADx : Model.Dx);}
+            @Html.TextAreaFor(model => model.Dx, new { @style = "display:none", @class = "form-control CoderDetails" })
 
-                <div title="@title" class="col-md-3 lessWidth input-group">
-                    <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
-                        <span style="white-space:nowrap">
+            <div title="@title" class="col-md-3 lessWidth input-group">
+                <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
+                    <span style="white-space:nowrap">
 
-                            @if (!string.IsNullOrEmpty(Model.QADx))
-                            {
-                                <label style="color: red;">@Dx</label>
-                                <label style="color:green">@QADx</label>
-                            }
-                            else
-                            {
-                                <label style="color: green;">@Dx</label>
-                            }
-                        </span>
-                    </div>
-                </div>
-                @{Show = (string.IsNullOrEmpty(Model.QADxRemarks) ? "visibility:hidden" : "display:flex");}
-                <div title="@Model.QADxRemarks" class="col-md-2 input-group" style="@Show">
-                    <input type="text" class="form-control QARemarks" value="@Model.QADxRemarks" />
-                </div>
-                <div class="input-group-append CoderCorrections" style="@Show">
-                    <span class="input-group-text">
-                        &nbsp;<i id="DX" title="Dx1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                        &nbsp;<i id="DX" title="Dx1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                        @if (!string.IsNullOrEmpty(Model.QADx))
+                        {
+                            <label style="color: red;">@Dx</label>
+                            <label style="color:green">@QADx</label>
+                        }
+                        else
+                        {
+                            <label style="color: green;">@Dx</label>
+                        }
                     </span>
                 </div>
-                @Html.HiddenFor(model => model.QADx, new { @class = "form-control", @id = "Dx1" })
-                <div class="col-md-3 input-group CoderCorrections" style="@Show">
-                    @Html.TextBoxFor(model => model.RevisedDXRemarks, new { @class = "form-control", @id = "RevisedDXRemarks" })
-                </div>
-            </div>*@
+            </div>
+            @{Show = (string.IsNullOrEmpty(Model.QADxRemarks) ? "visibility:hidden" : "display:flex");}
+            <div title="@Model.QADxRemarks" class="col-md-2 input-group" style="@Show">
+                <input type="text" class="form-control QARemarks" value="@Model.QADxRemarks" />
+            </div>
+            <div class="input-group-append CoderCorrections" style="@Show">
+                <span class="input-group-text">
+                    &nbsp;<i id="DX" title="Dx1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="DX" title="Dx1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                </span>
+            </div>
+            @Html.HiddenFor(model => model.QADx, new { @class = "form-control", @id = "Dx1" })
+            <div class="col-md-3 input-group CoderCorrections" style="@Show">
+                @Html.TextBoxFor(model => model.RevisedDXRemarks, new { @class = "form-control", @id = "RevisedDXRemarks" })
+            </div>
+        </div>*@
         <div class="form-group row">
             <label class="col-md-3 lessWidth m-t-15"> Feedback to Provider</label>
             @{len = (!string.IsNullOrEmpty(Model.QAProviderFeedbackText) ? 10 : 20); }
@@ -396,45 +397,51 @@
                         @{ string[] coderCptcodes = dictCptCodes?.ElementAt(i).Value.Split("^");}
                         @{ string[] qaCptcodes = dictQACptCodes?.ElementAt(i).Value.Split("^");}
 
-                        <div class="col-md-3 input-group" style="max-width:26% !important;">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">@j</span>
-                            </div>
-
-                            @if (!string.IsNullOrEmpty(dictQACptCodes?.ElementAt(i).Value))
-                            {
-                                string codercptCode = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[0]);
-                                string qacptCode = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[0]);
-                                string color = (codercptCode != qacptCode) ? "color:blue;" : "";
-                                <input type="text" class="form-control QARemarks" value="@qacptCode" style="width:17px;@color" />
-
-                                string coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[1]);
-                                string qaMod = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[1]);
-                                color = (coderMod != qaMod) ? "color:blue;" : "";
-                                <input type="text" class="form-control QARemarks" value="@qaMod" style="@color" />
-
-                                string coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[2]);
-                                string qaQty = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[2]);
-                                color = (coderQty != qaQty) ? "color:blue;" : "";
-                                <input type="text" class="form-control QARemarks" value="@qaQty" style="@color" />
-
-                                string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
-                                string qaLinks = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[3]);
-                                color = (coderLinks != qaLinks) ? "color:blue;" : "";
-                                <input type="text" class="form-control QARemarks" value="@qaLinks" style="@color" />
-                            }
-                            else
-                            {
-                                string modVal = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
-                                string linkAllVal = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
-
-                                <input type="text" class="form-control QARemarks" style="color: green;width: 17px;" placeholder="Code" value="@coderCptcodes[0]" style="width:17px;" />
-                                <input type="text" class="form-control QARemarks" style="color:green;" placeholder="Mod" value="@modVal" />
-                                <input type="text" class="form-control QARemarks" style="color:green;" placeholder="1" value="@coderCptcodes[2]" />
-                                <input type="text" class="form-control QARemarks" style="color: green;" placeholder="Link All" value="@linkAllVal" />
-
-                            }
+                    <div class="col-md-3 input-group" style="max-width:26% !important;">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">@j</span>
                         </div>
+
+                        @if (!string.IsNullOrEmpty(dictQACptCodes?.ElementAt(i).Value))
+                        {
+                            string codercptCode = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[0]);
+                            string qacptCode = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[0]);
+                            string color = (codercptCode != qacptCode) ? "color:blue;" : "";
+                            string codercpt = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[0] : coderCptcodes[0]);
+                            <input type="text" class="form-control QARemarks" value="@qacptCode" style="width:17px;@color" />
+
+                            string coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[1]);
+                            string qaMod = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[1]);
+                            color = (coderMod != qaMod) ? "color:blue;" : "";
+                            coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[1] : coderCptcodes[1]);
+                            <input type="text" class="form-control QARemarks" value="@qaMod" style="@color" />
+
+                            string coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[2]);
+                            string qaQty = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[2]);
+                            color = (coderQty != qaQty) ? "color:blue;" : "";
+                            coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[2] : coderCptcodes[2]);
+                            <input type="text" class="form-control QARemarks" value="@qaQty" style="@color" />
+
+                            string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
+                            string qaLinks = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[3]);
+                            color = (coderLinks != qaLinks) ? "color:blue;" : "";
+                            coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[3] : coderCptcodes[3]);
+                            <input type="text" class="form-control QARemarks" value="@qaLinks" style="@color" />
+                            <input type="hidden" id="hdnCoderCptCodes_@j" value="@codercpt^@coderMod^@coderQty^@coderLinks" />
+                            <input type="hidden" id="hdnQaCptCodes_@j" value="@qaCptcodes[0]^@qaCptcodes[1]^@qaCptcodes[2]^@qaCptcodes[3]" />
+                        }
+                        else
+                        {
+                            string modVal = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
+                            string linkAllVal = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
+
+                            <input type="text" class="form-control QARemarks" style="color: green;width: 17px;" placeholder="Code" value="@coderCptcodes[0]" style="width:17px;" />
+                            <input type="text" class="form-control QARemarks" style="color:green;" placeholder="Mod" value="@modVal" />
+                            <input type="text" class="form-control QARemarks" style="color:green;" placeholder="1" value="@coderCptcodes[2]" />
+                            <input type="text" class="form-control QARemarks" style="color: green;" placeholder="Link All" value="@linkAllVal" />
+
+                        }
+                    </div>
 
                         @{ Show = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
                         <div title="" class="col-md-2 input-group" style="@Show">
@@ -447,7 +454,7 @@
                             </span>
                         </div>
                         <div class="col-md-3 lessWidth input-group">
-                            <input type="text" id="Cpt_@j" class="form-control CptRemarks_@j Cpt_@j" style="display:none" />
+                            <input type="text" id="Cpt_@j" class="form-control CptRemarks_@j" style="@Show" />
                         </div>
                     </div>
                     j = j + 1;

@@ -21,6 +21,18 @@
     $("#qa").addClass('selected');
     $(".accept").removeClass('accept');
 
+
+
+    var isBlocked = @(ViewBag.IsBlocked == null ? "0": "1");
+
+    if (isBlocked == 1) {
+        $("#btnBlock").hide();
+        $("#btnBlockHistory").show();
+        $("#btnPrevious").show();
+        $("#btnNext").show();
+    }
+
+
     $('#chkAll').change(function () {
         if ($(this).is(':checked')) {
             $('.fa-check-circle').addClass('accept');

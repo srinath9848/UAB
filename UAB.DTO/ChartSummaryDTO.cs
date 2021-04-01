@@ -27,6 +27,8 @@ namespace UAB.DTO
         [Required(ErrorMessage = "CPT Code is required.")]
         public string CPTCode { get; set; }
 
+        public string RejectedCpt { get; set; }
+
         public string NoteTitle { get; set; }
         [Required(ErrorMessage = "Dx Code is required.")]
         public string Dx { get; set; }

@@ -28,22 +28,30 @@
             <div id="modalContent"></div>
             <h4 class="card-title">@Model.ProjectName</h4><br />
             <div class="form-group row">
-                <label for="fname" class="col-sm-2">MRN</label>
-                <div class="col-sm-3">
+                
+                    @if (@Model.CodingDTO.ListName != null)
+                    {
+                        <label for="fname">List Name</label>
+                        <div class="col-md-2">
+                            @Html.TextBoxFor(model => model.CodingDTO.ListName, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    }
+                <label for="fname">MRN</label>
+                <div class="col-md-2">
                     @Html.TextBoxFor(model => model.CodingDTO.PatientMRN, new { @class = "form-control", @readonly = "readonly" })
                 </div>
-                <label for="fname" class="col-sm-2">Patient</label>
-                <div class="col-sm-3">
+                <label for="fname">Patient</label>
+                <div class="col-md-2">
                     @Html.TextBoxFor(model => model.CodingDTO.Name, new { @class = "form-control", @readonly = "readonly" })
                 </div>
-                <label for="fname" class="col-sm-2">DOS</label>
-                <div class="col-sm-3">
+                <label for="fname">DOS</label>
+                <div class="col-md-2">
                     @Html.TextBoxFor(model => model.CodingDTO.DateOfService, new { @class = "form-control", @readonly = "readonly" })
                 </div>
-                 <div class="col-sm-2">
-                     <button type="button" class="btn btn-link Available form-control" onclick="ViewHistory()">View History</button>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-link Available form-control" onclick="ViewHistory()">View History</button>
                 </div>
-                
+
             </div>
         </div>
     </div>

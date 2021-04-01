@@ -11,6 +11,7 @@ namespace UAB.DTO
         public string PatientMRN { get; set; }
         public string Name { get; set; }
         public string DateOfService { get; set; }
+        public string ListName  { get; set; }
     }
 
     public class QADTO
