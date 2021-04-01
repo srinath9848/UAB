@@ -211,11 +211,15 @@ namespace UAB.DAL
                     while (reader.Read())
                     {
                         chartSummaryDTO.CodingDTO.ClinicalCaseID = Convert.ToInt32(reader["ClinicalCaseID"]);
-                        chartSummaryDTO.CodingDTO.ListName = Convert.ToString(reader["ListName"]);
+                        //chartSummaryDTO.CodingDTO.ListName = Convert.ToString(reader["ListName"]);
+                        chartSummaryDTO.CodingDTO.ListName = "PK-Card APP Consult";
                         chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
                         chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
                         chartSummaryDTO.CodingDTO.DateOfService = Convert.ToString(reader["DateOfService"]);
-                        //chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
+                        if (Role == "Coder" && ChartType == "Available")
+                        {
+                            chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
+                        }
 
                         if (Role == "Coder" && ChartType == "Block")
                         {
