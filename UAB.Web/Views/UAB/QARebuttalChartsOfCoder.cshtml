@@ -37,11 +37,11 @@
             if (title == "ProviderID1")
                 $("#hdnProviderID").val('');
 
-            if (title == "CPTCode1")
-                $("#hdnCpt").val('');
+            //if (title == "CPTCode1")
+            //    $("#hdnCpt").val('');
 
-            if (id == "Mod")
-                $("#hdnMod").val('');
+            //if (id == "Mod")
+            //    $("#hdnMod").val('');
 
             //if (title == "Dx1")
             //    $("#hdnDx").val('');
@@ -61,11 +61,11 @@
             if (title == "ProviderID1")
                 $("#hdnProviderID").val($("#" + title + " option:selected").val());
 
-            if (title == "CPTCode1")
-                $("#hdnCpt").val($("#" + title).val());
+            //if (title == "CPTCode1")
+            //    $("#hdnCpt").val($("#" + title).val());
 
-            if (id == "Mod")
-                $("#hdnMod").val($("#" + id + "1").val());
+            //if (id == "Mod")
+            //    $("#hdnMod").val($("#" + id + "1").val());
 
             //if (title == "Dx1")
             //    $("#hdnDx").val($("#" + title).val());
@@ -88,14 +88,36 @@
 
             if (res.includes('reject')) {
                 if ($("#hdnDx").val() == "")
-                    $("#hdnDx").val(id + "^" + $("#txtDxCode_" + id).text());
+                    $("#hdnDx").val(id + "^" + $("#txtDxCode_" + id).val());
                 else
-                    $("#hdnDx").val($("#hdnDx").val() + "|" + id + "^" + $("#txtDxCode_" + id).text());
+                    $("#hdnDx").val($("#hdnDx").val() + "|" + id + "^" + $("#txtDxCode_" + id).val());
 
                 if ($("#hdnDxRemarks").val() == "")
                     $("#hdnDxRemarks").val(id + "^" + $("#DxRemarks_" + id).val());
                 else
                     $("#hdnDxRemarks").val($("#hdnDxRemarks").val() + "|" + id + "^" + $("#DxRemarks_" + id).val());
+            }
+        }
+
+        var CPTcodes = $("[id*=CptRemarks_]");
+        $("#hdnCpt").val('');
+        $("#hdnCptRemarks").val('');
+        for (var i = 0; i < CPTcodes.length; i++) {
+
+            var id = parseInt($(CPTcodes[i]).attr("id").split("_")[1]);
+
+            var res = $("[id='Cpt_" + id + "']:eq(1)").attr('class');
+
+            if (res.includes('reject')) {
+                if ($("#hdnCpt").val() == "")
+                    $("#hdnCpt").val(id + "^" + $("#txtCpt_" + id).val() + "^" + $("#txtMod_" + id).val() + "^" + $("#txtQty_" + id).val() + "^" + $("#txtLinks_" + id).val());
+                else
+                    $("#hdnCpt").val($("#hdnCpt").val() + "|" + id + "^" + $("#txtCpt_" + id).val() + "^" + $("#txtMod_" + id).val() + "^" + $("#txtQty_" + id).val() + "^" + $("#txtLinks_" + id).val());
+
+                if ($("#hdnCptRemarks").val() == "")
+                    $("#hdnCptRemarks").val(id + "^" + $("#CptRemarks_" + id).val());
+                else
+                    $("#hdnCptRemarks").val($("#hdnCptRemarks").val() + "|" + id + "^" + $("#CptRemarks_" + id).val());
             }
         }
 
@@ -109,7 +131,7 @@
         } else {
             var remarks = $('.QARevised[style="display:flex"]');
             var isRemarkEmpty = false;
-           
+
             for (var i = 0; i < remarks.length; i++) {
                 if ($(remarks[i]).val() == "")
                     isRemarkEmpty = true;

@@ -143,7 +143,7 @@ namespace UAB.Controllers
             if (Role == "QA")
                 return View("QA", chartSummaryDTO);
             else
-                    return View("Coding", chartSummaryDTO);
+                return View("Coding", chartSummaryDTO);
 
         }
         [HttpGet]
@@ -161,9 +161,9 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             if (ccid != null && bid != null && remarks != null)
             {
-                 clinicalcaseOperations.BlockClinicalcase(ccid, bid, remarks);
+                clinicalcaseOperations.BlockClinicalcase(ccid, bid, remarks);
             }
-                return RedirectToAction("CodingSummary");
+            return RedirectToAction("CodingSummary");
         }
 
         public IActionResult GetCodingIncorrectChart(string Role, string ChartType, int ProjectID, string ProjectName)
@@ -417,7 +417,9 @@ namespace UAB.Controllers
             var hdnMod = Request.Form["hdnMod"].ToString();
             var hdnDx = Request.Form["hdnDx"].ToString();
             var hdnDxRemarks = Request.Form["hdnDxRemarks"].ToString();
+            var hdnCptRemarks = Request.Form["hdnCptRemarks"].ToString();
             chartSummaryDTO.QADxRemarks = hdnDxRemarks;
+            chartSummaryDTO.QACPTCodeRemarks = hdnCptRemarks;
             var hdnProviderFeedbackID = Request.Form["hdnProviderFeedbackID"].ToString();
 
             if (!string.IsNullOrEmpty(hdnPayorID))
@@ -472,6 +474,8 @@ namespace UAB.Controllers
             var hdnCpt = Request.Form["hdnCpt"].ToString();
             var hdnMod = Request.Form["hdnMod"].ToString();
             var hdnDx = Request.Form["hdnDx"].ToString();
+            var hdnDxRemarks = Request.Form["hdnDxRemarks"].ToString();
+            chartSummaryDTO.QADxRemarks = hdnDxRemarks;
             var hdnProviderFeedbackID = Request.Form["hdnProviderFeedbackID"].ToString();
 
             var hdnPayorIDReject = Request.Form["hdnPayorIDReject"].ToString();
