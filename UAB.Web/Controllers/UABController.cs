@@ -123,8 +123,10 @@ namespace UAB.Controllers
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
 
-            if (Role==Roles.QA.ToString())
-            return View("QA", chartSummaryDTO);
+            if (Role == Roles.QA.ToString())
+                return View("QA", chartSummaryDTO);
+            else if (Role == "ShadowQA")
+                return View("ShadowQA", chartSummaryDTO);
             else
                 return View("Coding", chartSummaryDTO);
 
@@ -146,8 +148,10 @@ namespace UAB.Controllers
             #endregion
             if (Role == "QA")
                 return View("QA", chartSummaryDTO);
+            else if (Role == "ShadowQA")
+                return View("ShadowQA", chartSummaryDTO);
             else
-                    return View("Coding", chartSummaryDTO);
+                return View("Coding", chartSummaryDTO);
 
         }
         [HttpGet]
@@ -165,9 +169,9 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             if (ccid != null && bid != null && remarks != null)
             {
-                 clinicalcaseOperations.BlockClinicalcase(ccid, bid, remarks);
+                clinicalcaseOperations.BlockClinicalcase(ccid, bid, remarks);
             }
-                return RedirectToAction("CodingSummary");
+            return RedirectToAction("CodingSummary");
         }
 
         public IActionResult GetCodingIncorrectChart(string Role, string ChartType, int ProjectID, string ProjectName)
