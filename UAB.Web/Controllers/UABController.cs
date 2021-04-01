@@ -120,9 +120,12 @@ namespace UAB.Controllers
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
             ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            ViewBag.ErrorTypes = BindErrorType();
             #endregion
-
-            return View("Coding", chartSummaryDTO);
+            if (Role == "ShadowQA")
+                return View("ShadowQA", chartSummaryDTO);
+            else
+                return View("Coding", chartSummaryDTO);
 
         }
 
@@ -142,6 +145,8 @@ namespace UAB.Controllers
             #endregion
             if (Role == "QA")
                 return View("QA", chartSummaryDTO);
+            else if (Role == "ShadowQA")
+                return View("ShadowQA", chartSummaryDTO);
             else
                     return View("Coding", chartSummaryDTO);
 
