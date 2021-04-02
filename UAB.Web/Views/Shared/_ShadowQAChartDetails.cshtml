@@ -392,7 +392,7 @@
 
         int Cptcount = Math.Max(dictCptCodes.Count(), dictQACptCodes.Count());
 
-        int totalCptCount = count + 1;
+        int totalCptCount = Cptcount + 1;
 
         Utility.AddEmptyRows(dictCptCodes, count, "NA");
         Utility.AddEmptyRows(dictQACptCodes, count, "");
@@ -428,7 +428,7 @@
                             string color = (codercptCode != qacptCode) ? "color:blue;" : "";
                             if (codercptCode == "NA")
                                 color = "color:fuchsia;";
-                            <input type="text" class="form-control" value="@qacptCode" style="width:17px;@color" />
+                            <input type="text" class="form-control CoderDetails" value="@qacptCode" style="width:17px;@color" />
 
                             string coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[1]);
                             string qaMod = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[1]);
@@ -436,14 +436,14 @@
                             color = (coderMod != qaMod) ? "color:blue;" : "";
                             if (coderMod == "NA")
                                 color = "color:fuchsia;";
-                            <input type="text" class="form-control" value="@mod" style="@color" />
+                            <input type="text" class="form-control CoderDetails" value="@mod" style="@color" />
 
                             string coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[2]);
                             string qaQty = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[2]);
                             color = (coderQty != qaQty) ? "color:blue;" : "";
                             if (coderQty == "NA")
                                 color = "color:fuchsia;";
-                            <input type="text" class="form-control" value="@qaQty" style="@color" />
+                            <input type="text" class="form-control CoderDetails" value="@qaQty" style="@color" />
 
                             string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
                             string qaLinks = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[3]);
@@ -451,7 +451,7 @@
                             color = (coderLinks != qaLinks) ? "color:blue;" : "";
                             if (coderLinks == "NA")
                                 color = "color:fuchsia;";
-                            <input type="text" class="form-control" value="@linkAll" style="@color" />
+                            <input type="text" class="form-control CoderDetails" value="@linkAll" style="@color" />
                         }
                         else
                         {
@@ -460,10 +460,10 @@
                             string qtyVal = coderCptcodes[2];
                             string linkAllVal1 = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
 
-                            <input type="text" class="form-control" style="color: green;width: 17px;" placeholder="Code" value="@cptVal" />
-                            <input type="text" class="form-control" style="color:green;" placeholder="Mod" value="@modVal1" />
-                            <input type="text" class="form-control" style="color:green;" placeholder="1" value="@qtyVal" />
-                            <input type="text" class="form-control" style="color: green;" placeholder="Link All" value="@linkAllVal1" />
+                            <input type="text" class="form-control CoderDetails" style="color: green;width: 17px;" placeholder="Code" value="@cptVal" />
+                            <input type="text" class="form-control CoderDetails" style="color:green;" placeholder="Mod" value="@modVal1" />
+                            <input type="text" class="form-control CoderDetails" style="color:green;" placeholder="1" value="@qtyVal" />
+                            <input type="text" class="form-control CoderDetails" style="color: green;" placeholder="Link All" value="@linkAllVal1" />
 
                         }
                         <div class="input-group-append" style="height: 45px;">

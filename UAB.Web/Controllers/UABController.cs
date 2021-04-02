@@ -479,11 +479,13 @@ namespace UAB.Controllers
         {
             var hdnPayorID = Request.Form["hdnPayorID"].ToString();
             var hdnProviderID = Request.Form["hdnProviderID"].ToString();
-            var hdnCpt = Request.Form["hdnCpt"].ToString();
+            var hdnCpt = Request.Form["hdnCPT"].ToString();
             var hdnMod = Request.Form["hdnMod"].ToString();
             var hdnDx = Request.Form["hdnDx"].ToString();
             var hdnDxRemarks = Request.Form["hdnDxRemarks"].ToString();
             chartSummaryDTO.QADxRemarks = hdnDxRemarks;
+            var hdnCPTRemarks = Request.Form["hdnCPTRemarks"].ToString();
+            chartSummaryDTO.QACPTCodeRemarks = hdnCPTRemarks;
             var hdnProviderFeedbackID = Request.Form["hdnProviderFeedbackID"].ToString();
 
             var hdnPayorIDReject = Request.Form["hdnPayorIDReject"].ToString();
@@ -657,7 +659,7 @@ namespace UAB.Controllers
 
             clinicalcaseOperations.SubmitShadowQARebuttalChartsOfQA(chartSummaryDTO, hdnPayorIDReject, hdnProviderIDReject, hdnCptReject, hdnModReject, hdnDxReject, hdnProviderFeedbackIDReject);
 
-            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.QA.ToString());
+            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.ShadowQA.ToString());
 
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("ShadowQASummary", lstDto);

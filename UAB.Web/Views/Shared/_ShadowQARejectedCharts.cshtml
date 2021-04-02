@@ -26,11 +26,11 @@
         @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { })
         @Html.Hidden("hdnPayorID")
         @Html.Hidden("hdnProviderID")
-        @Html.Hidden("hdnCpt")
-        @Html.Hidden("hdnMod")
         @Html.Hidden("hdnDx")
         @Html.Hidden("hdnDxRemarks")
         @Html.Hidden("hdnProviderFeedbackID")
+        @Html.Hidden("hdnCPT")
+        @Html.Hidden("hdnCPTRemarks")
 
         @Html.Hidden("hdnPayorIDReject")
         @Html.Hidden("hdnProviderIDReject")
@@ -248,7 +248,7 @@
                                     {
                                         <label style="color: green;">@Dx</label>
                                     }
-                                    @{string finalVal = string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? Dx : QADx;}
+                                    @{string finalVal = string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? Dx : dictQADxCodes?.ElementAt(i).Value;}
                                     <input type="hidden" id="txtDxCode_@j" value="@finalVal" />
                                 </span>
                             </div>
@@ -370,6 +370,8 @@
                                 if (coderLinks == "NA")
                                     color = "color:fuchsia;";
                                 <input type="text" class="form-control QARemarks" value="@qaLinks" style="@color" />
+
+                                <input type="hidden" id="txtCPTCode_@j" value="@qacptCode^@qaMod^@qaQty^@qaLinks" />
                             }
                             else
                             {
@@ -380,19 +382,19 @@
                                 <input type="text" class="form-control QARemarks" style="color:green;" placeholder="Mod" value="@coderModVal" />
                                 <input type="text" class="form-control QARemarks" style="color:green;" placeholder="1" value="@coderCptcodes[2]" />
                                 <input type="text" class="form-control QARemarks" style="color: green;" placeholder="Link All" value="@coderLinkAllVal" />
-
+                                <input type="hidden" id="txtCPTCode_@j" value="@@coderCptcodes[0]^@coderModVal^@coderCptcodes[2]^@coderLinkAllVal" />
                             }
                             @{ Show = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
                             <div class="input-group-append CoderCorrections" style="height: 45px;@Show">
                                 <span class="input-group-text">
-                                    &nbsp;<i id="Cpt_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                                    &nbsp;<i id="Cpt_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                    &nbsp;<i id="Cpt_@j" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                    &nbsp;<i id="Cpt_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                                 </span>
                             </div>
                         </div>
 
                         <div title="" class="col-md-2 input-group" style="@Show">
-                            <input type="text" class="form-control QACptRemarks_@i" value="@dictQACptRemarks?.ElementAt(i).Value" />
+                            <input type="text" id="QACptRemarks_@j" class="form-control" value="@dictQACptRemarks?.ElementAt(i).Value" />
                         </div>
                         <div class="col-md-3 CptlessWidth input-group" style="@Show">
                             <div class="input-group-prepend">

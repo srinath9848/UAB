@@ -41,18 +41,18 @@
                 $("#hdnProviderID").val($("#" + title + " option:selected").val());
                 $("#hdnProviderIDReject").val('');
             }
-            if (title == "CPTCode1") {
-                $("#hdnCpt").val($("#" + title).val());
-                $("#hdnCptReject").val('');
-            }
-            if (id == "Mod") {
-                $("#hdnMod").val($("#" + id + "1").val());
-                $("#hdnModReject").val('');
-            }
-            if (title == "Dx1") {
-                $("#hdnDx").val($("#" + title).val());
-                $("#hdnDxReject").val('');
-            }
+            //if (title == "CPTCode1") {
+            //    $("#hdnCpt").val($("#" + title).val());
+            //    $("#hdnCptReject").val('');
+            //}
+            //if (id == "Mod") {
+            //    $("#hdnMod").val($("#" + id + "1").val());
+            //    $("#hdnModReject").val('');
+            //}
+            //if (title == "Dx1") {
+            //    $("#hdnDx").val($("#" + title).val());
+            //    $("#hdnDxReject").val('');
+            //}
             if (title == "Feedback1") {
                 $("#hdnProviderFeedbackID").val($("#" + title + " option:selected").val());
                 $("#hdnProviderFeedbackIDReject").val('');
@@ -72,23 +72,23 @@
                 $("#hdnProviderID").val('');
                 $("#hdnProviderIDReject").val('1');
             }
-            if (title == "CPTCode1") {
-                $("#hdnCpt").val('');
-                $("#hdnCptReject").val('1');
-            }
-            if (id == "Mod") {
-                $("#hdnMod").val('');
-                $("#hdnModReject").val('1');
-            }
-            if (title == "Dx1") {
-                $("#hdnDx").val('');
-                $("#hdnDxReject").val('1');
-            }
-            if (title == "Feedback1") {
-                $("#hdnProviderFeedbackID").val('');
-                $("#hdnProviderFeedbackIDReject").val('1');
-            }
+            //if (title == "CPTCode1") {
+            //    $("#hdnCpt").val('');
+            //    $("#hdnCptReject").val('1');
+            //}
+            //if (id == "Mod") {
+            //    $("#hdnMod").val('');
+            //    $("#hdnModReject").val('1');
+            //}
+            //if (title == "Dx1") {
+            //    $("#hdnDx").val('');
+            //    $("#hdnDxReject").val('1');
         }
+        if (title == "Feedback1") {
+            $("#hdnProviderFeedbackID").val('');
+            $("#hdnProviderFeedbackIDReject").val('1');
+        }
+    
     });
 
     var dxArray = [];
