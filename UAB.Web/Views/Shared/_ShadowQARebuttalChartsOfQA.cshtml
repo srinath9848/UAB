@@ -75,7 +75,7 @@
             @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @style = "display:none", @class = "form-control CoderDetails" })
 
             <div title="@title" class="col-md-3 lessWidth input-group">
-                <div name="PayorText" class="form-control" style="line-height:2.5;overflow:hidden">
+                <div name="PayorText" class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
                     <span style="white-space:nowrap">
                         @if (!string.IsNullOrEmpty(Model.QAPayorText))
                         {
@@ -154,7 +154,7 @@
                 </div>
             </div>-->
             <div class="col-md-3 lessWidth input-group">
-                @Html.DropDownListFor(model => model.ShadowQAProviderID, new SelectList(@ViewBag.ShadowQAProviderID, "ID", "Name"), "--Select--", new { @id = "ProviderID1", @class = "form-control QARevised", @style = (Model.ShadowQAProviderID == 0 ? "display:none" : "display:flex") })
+                @Html.DropDownListFor(model => model.ShadowQAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = "ProviderID1", @class = "form-control QARevised", @style = (Model.ShadowQAProviderID == 0 ? "display:none" : "display:flex") })
                 @Html.ValidationMessageFor(model => model.ShadowQAProviderID, null, new { @class = "text-danger errMsg" })
             </div>
             @{Show = (string.IsNullOrEmpty(Model.ShadowQAProviderRemarks) ? "display:none" : "display:flex");}
@@ -281,7 +281,7 @@
                 </div>
             </div>
             <div class="col-md-3 lessWidth input-group">
-                @Html.DropDownListFor(model => model.ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ShadowQAProviderFeedbackID, "ID", "Name"), "--Select--", new { @id = "ProviderID1", @class = "form-control QARevised", @style = (Model.ShadowQAProviderFeedbackID == 0 ? "display:none" : "display:flex") })
+                @Html.DropDownListFor(model => model.ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @id = "ProviderID1", @class = "form-control QARevised", @style = (Model.ShadowQAProviderFeedbackID == 0 ? "display:none" : "display:flex") })
                 @Html.ValidationMessageFor(model => model.ShadowQAProviderFeedbackID, null, new { @class = "text-danger errMsg" })
             </div>
             @{Show = (string.IsNullOrEmpty(Model.ShadowQAProviderFeedbackRemarks) ? "display:none" : "display:flex");}
