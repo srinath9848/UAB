@@ -50,30 +50,30 @@
                 $("#hdnProviderID").val($("#" + title + " option:selected").val());
                 $("#hdnProviderIDReject").val('');
             }
-            if (title == "CPTCode1") {
-                if ($("#" + title).val() != "") {
-                    $("#hdnCpt").val($("#" + title).val());
-                } else {
-                    $("#hdnCpt").val($("#" + title + "2").val());
-                }
-                $("#hdnCptReject").val('');
-            }
-            if (id == "Mod") {
-                if ($("#" + id + "1") != "") {
-                    $("#hdnMod").val($("#" + id + "1").val());
-                } else {
-                    $("#hdnMod").val($("#" + id + "12").val());
-                }
-                $("#hdnModReject").val('');
-            }
-            if (title == "Dx1") {
-                if ($("#" + title).val() != "") {
-                    $("#hdnDx").val($("#" + title).val());
-                } else {
-                    $("#hdnDx").val($("#" + title + "2").val());
-                }
-                $("#hdnDxReject").val('');
-            }
+            //if (title == "CPTCode1") {
+            //    if ($("#" + title).val() != "") {
+            //        $("#hdnCpt").val($("#" + title).val());
+            //    } else {
+            //        $("#hdnCpt").val($("#" + title + "2").val());
+            //    }
+            //    $("#hdnCptReject").val('');
+            //}
+            //if (id == "Mod") {
+            //    if ($("#" + id + "1") != "") {
+            //        $("#hdnMod").val($("#" + id + "1").val());
+            //    } else {
+            //        $("#hdnMod").val($("#" + id + "12").val());
+            //    }
+            //    $("#hdnModReject").val('');
+            //}
+            //if (title == "Dx1") {
+            //    if ($("#" + title).val() != "") {
+            //        $("#hdnDx").val($("#" + title).val());
+            //    } else {
+            //        $("#hdnDx").val($("#" + title + "2").val());
+            //    }
+            //    $("#hdnDxReject").val('');
+            //}
             if (title == "Feedback1") {
                 $("#hdnProviderFeedbackID").val($("#" + title + " option:selected").val());
                 $("#hdnProviderFeedbackIDReject").val('');
@@ -93,18 +93,18 @@
                 $("#hdnProviderID").val('');
                 $("#hdnProviderIDReject").val('1');
             }
-            if (title == "CPTCode1") {
-                $("#hdnCpt").val('');
-                $("#hdnCptReject").val('1');
-            }
-            if (id == "Mod") {
-                $("#hdnMod").val('');
-                $("#hdnModReject").val('1');
-            }
-            if (title == "Dx1") {
-                $("#hdnDx").val('');
-                $("#hdnDxReject").val('1');
-            }
+            //if (title == "CPTCode1") {
+            //    $("#hdnCpt").val('');
+            //    $("#hdnCptReject").val('1');
+            //}
+            //if (id == "Mod") {
+            //    $("#hdnMod").val('');
+            //    $("#hdnModReject").val('1');
+            //}
+            //if (title == "Dx1") {
+            //    $("#hdnDx").val('');
+            //    $("#hdnDxReject").val('1');
+            //}
             if (title == "Feedback1") {
                 $("#hdnProviderFeedbackID").val('');
                 $("#hdnProviderFeedbackIDReject").val('1');
@@ -113,9 +113,62 @@
     });
 
     $('#btnsubmit').click(function (e) {
-        var total = $(".fa-check-circle").length;
-        var reject = $(".reject").length;
-        var accept = $(".accept").length;
+
+        var Dxcodes = $("[id*=DxRemarks_]");
+        $("#hdnDx").val('');
+        $("#hdnDxRemarks").val('');
+        $("#hdnDxReject").val('');
+
+        for (var i = 0; i < Dxcodes.length; i++) {
+
+            var id = parseInt($(Dxcodes[i]).attr("id").split("_")[1]);
+
+            var res = $("[id='Dx_" + id + "']:eq(1)").attr('class');
+
+            if (res.includes('reject')) {
+                $("#hdnDxReject").val('1');
+
+                if ($("#hdnDx").val() == "")
+                    $("#hdnDx").val(id + "^" + $("#txtDxCode_" + id).val());
+                else
+                    $("#hdnDx").val($("#hdnDx").val() + "|" + id + "^" + $("#txtDxCode_" + id).val());
+
+                if ($("#hdnDxRemarks").val() == "")
+                    $("#hdnDxRemarks").val(id + "^" + $("#DxRemarks_" + id).val());
+                else
+                    $("#hdnDxRemarks").val($("#hdnDxRemarks").val() + "|" + id + "^" + $("#DxRemarks_" + id).val());
+            }
+        }
+
+        var CPTcodes = $("[id*=QACptRemarks_]");
+        $("#hdnCPT").val('');
+        $("#hdnCPTRemarks").val('');
+        $("#hdnCptReject").val('');
+
+        for (var i = 0; i < CPTcodes.length; i++) {
+
+            var id = parseInt($(CPTcodes[i]).attr("id").split("_")[1]);
+
+            var res = $("[id='Cpt_" + id + "']:eq(1)").attr('class');
+
+            if (res.includes('reject')) {
+                $("#hdnCptReject").val('1');
+
+                if ($("#hdnCPT").val() == "")
+                    $("#hdnCPT").val(id + "^" + $("#txtCPTCode_" + id).val());
+                else
+                    $("#hdnCPT").val($("#hdnCPT").val() + "|" + id + "^" + $("#txtCPTCode_" + id).val());
+
+                if ($("#hdnCPTRemarks").val() == "")
+                    $("#hdnCPTRemarks").val(id + "^" + $("#QACptRemarks_" + id).val());
+                else
+                    $("#hdnCPTRemarks").val($("#hdnCPTRemarks").val() + "|" + id + "^" + $("#QACptRemarks_" + id).val());
+            }
+        }
+
+        var total = $('.CoderCorrections[style="display:flex"]  .fa-check-circle').length;
+        var accept = $('.CoderCorrections[style="display:flex"]  .accept').length;
+        var reject = $('.CoderCorrections[style="display:flex"]  .reject').length;
         //if (total != accept) {
         //    alert('test1');
         //    e.preventDefault();

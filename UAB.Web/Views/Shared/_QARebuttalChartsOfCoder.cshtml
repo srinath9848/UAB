@@ -29,17 +29,11 @@
         @Html.Hidden("hdnPayorID")
         @Html.Hidden("hdnProviderID")
         @Html.Hidden("hdnCpt")
-        @Html.Hidden("hdnMod")
+        @Html.Hidden("hdnCptRemarks")
         @Html.Hidden("hdnDx")
         @Html.Hidden("hdnDxRemarks")
         @Html.Hidden("hdnProviderFeedbackID")
 
-        @Html.Hidden("hdnPayorIDReject")
-        @Html.Hidden("hdnProviderIDReject")
-        @Html.Hidden("hdnCptReject")
-        @Html.Hidden("hdnModReject")
-        @Html.Hidden("hdnDxReject")
-        @Html.Hidden("hdnProviderFeedbackIDReject")
 
         @*<div class="form-group row">
                 <label class="col-md-3 m-t-15"></label>
@@ -284,7 +278,7 @@
                             </div>
                             <div class="form-control CoderDetails" style="line-height:2.5;overflow:hidden">
                                 <span style="white-space:nowrap">
-                                    <label id="txtDxCode_@j" style="color: green;">@dictDxCodes.ElementAt(i).Value</label>
+                                    <label style="color: green;">@dictDxCodes.ElementAt(i).Value</label>
                                 </span>
                             </div>
                         </div>
@@ -292,7 +286,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">@j</span>
                             </div>
-                            <input type="text" class="form-control txtDx" autocomplete="off" tabindex="@j" placeholder="Code" value="@dictQADxCodes.ElementAt(i).Value" />
+                            <input id="txtDxCode_@j" type="text" class="form-control" autocomplete="off" tabindex="@j" placeholder="Code" value="@dictQADxCodes.ElementAt(i).Value" />
                         </div>
                         @{ Show = (string.IsNullOrEmpty(dictRevisedDxRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
                         <div title="" class="col-md-2 input-group">
@@ -428,7 +422,7 @@
                         </div>
                         @{ Show = (string.IsNullOrEmpty(dictRevisedCptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
                         <div title="" class="col-md-2 input-group" style="@Show">
-                            <input type="text" class="form-control QACptRemarks_@i" value="@dictQACptRemarks?.ElementAt(i).Value" />
+                            <input type="text" id="CptRemarks_@j" class="form-control" value="@dictQACptRemarks?.ElementAt(i).Value" />
                         </div>
                         <div class="input-group-append CoderCorrections" style="@Show">
                             <span class="input-group-text">

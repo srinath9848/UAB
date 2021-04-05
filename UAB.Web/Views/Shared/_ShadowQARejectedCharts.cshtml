@@ -26,10 +26,11 @@
         @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { })
         @Html.Hidden("hdnPayorID")
         @Html.Hidden("hdnProviderID")
-        @Html.Hidden("hdnCpt")
-        @Html.Hidden("hdnMod")
         @Html.Hidden("hdnDx")
+        @Html.Hidden("hdnDxRemarks")
         @Html.Hidden("hdnProviderFeedbackID")
+        @Html.Hidden("hdnCPT")
+        @Html.Hidden("hdnCPTRemarks")
 
         @Html.Hidden("hdnPayorIDReject")
         @Html.Hidden("hdnProviderIDReject")
@@ -74,13 +75,11 @@
                     </span>
                 </div>
             </div>
-            @{string Accepted = (string.IsNullOrEmpty(Model.ShadowQAPayorRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-            @{string Rejected = (string.IsNullOrEmpty(Model.ShadowQAPayorRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
             @{string Show = (!string.IsNullOrEmpty(Model.ShadowQAPayorRemarks) || !string.IsNullOrEmpty(Model.QAPayorText) ? "display:flex" : "visibility:hidden");}
             <div class="input-group-append CoderCorrections" style="@Show">
                 <span class="input-group-text">
-                    &nbsp;<i id="PayorID" title="PayorID1" class="@Accepted" aria-hidden="true"></i>
-                    &nbsp;<i id="PayorID" title="PayorID1" class="@Rejected" aria-hidden="true"></i>
+                    &nbsp;<i id="PayorID" title="PayorID1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="PayorID" title="PayorID1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                 </span>
             </div>
             <div class="col-md-3 input-group CoderCorrections PayorID" style="@Show">
@@ -118,13 +117,11 @@
                     </span>
                 </div>
             </div>
-            @{Accepted = (string.IsNullOrEmpty(Model.ShadowQAProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-            @{Rejected = (string.IsNullOrEmpty(Model.ShadowQAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
             @{Show = (!string.IsNullOrEmpty(Model.ShadowQAProviderRemarks) || !string.IsNullOrEmpty(Model.QAPayorText) ? "display:flex" : "visibility:hidden");}
             <div class="input-group-append CoderCorrections" style="@Show">
                 <span class="input-group-text">
-                    &nbsp;<i id="ProviderID" title="ProviderID1" class="@Accepted" aria-hidden="true"></i>
-                    &nbsp;<i id="ProviderID" title="ProviderID1" class="@Rejected" aria-hidden="true"></i>
+                    &nbsp;<i id="ProviderID" title="ProviderID1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="ProviderID" title="ProviderID1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                 </span>
             </div>
             <div class="col-md-3 input-group CoderCorrections ProviderID" style="@Show">
@@ -165,13 +162,11 @@
                     </span>
                 </div>
             </div>
-            @{Accepted = (string.IsNullOrEmpty(Model.ShadowQAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-            @{Rejected = (string.IsNullOrEmpty(Model.ShadowQAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
             @{Show = (!string.IsNullOrEmpty(Model.ShadowQAProviderFeedbackRemarks) || !string.IsNullOrEmpty(Model.QAPayorText) ? "display:flex" : "visibility:hidden");}
             <div class="input-group-append CoderCorrections" style="@Show">
                 <span class="input-group-text">
-                    &nbsp;<i id="Feedback" title="Feedback1" class="@Rejected" aria-hidden="true"></i>
-                    &nbsp;<i id="Feedback" title="Feedback1" class="@Accepted" aria-hidden="true"></i>
+                    &nbsp;<i id="Feedback" title="Feedback1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="Feedback" title="Feedback1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                 </span>
             </div>
             <div class="col-md-3 input-group CoderCorrections Feedback" style="@Show">
@@ -232,10 +227,10 @@
                             <label class="col-md-3 lessWidth m-t-15"></label>
                         }
 
-                        @{len = (!string.IsNullOrEmpty(dictShadowQADxCodes?.ElementAt(i).Value) ? 10 : 20); }
+                        @{len = (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? 10 : 20); }
                         @{string Dx = (dictDxCodes.ElementAt(i).Value?.Length > len) ? dictDxCodes.ElementAt(i).Value.Substring(0, len) + ".." : dictDxCodes.ElementAt(i).Value;}
                         @{string QADx = (dictQADxCodes?.ElementAt(i).Value?.Length > len) ? "/" + dictQADxCodes?.ElementAt(i).Value.Substring(0, len) + ".." : "/" + dictQADxCodes?.ElementAt(i).Value;}
-                        @{string ShadowQADx = (dictShadowQADxCodes?.ElementAt(i).Value?.Length > len) ? "/" + dictShadowQADxCodes?.ElementAt(i).Value.Substring(0, len) + ".." : "/" + dictShadowQADxCodes?.ElementAt(i).Value;}
+
                         @{title = (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? dictDxCodes.ElementAt(i).Value + "/" + dictQADxCodes?.ElementAt(i).Value : dictDxCodes.ElementAt(i).Value);}
 
                         <div class="col-md-3 lessWidth input-group">
@@ -253,22 +248,21 @@
                                     {
                                         <label style="color: green;">@Dx</label>
                                     }
+                                    @{string finalVal = string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? Dx : dictQADxCodes?.ElementAt(i).Value;}
+                                    <input type="hidden" id="txtDxCode_@j" value="@finalVal" />
                                 </span>
                             </div>
                         </div>
-                        @{Accepted = (string.IsNullOrEmpty(dictShadowQADxRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                        @{Rejected = (string.IsNullOrEmpty(dictShadowQADxRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
                         @{ Show = (string.IsNullOrEmpty(dictShadowQADxRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
                         <div class="input-group-append CoderCorrections" style="@Show">
                             <span class="input-group-text">
-                                &nbsp;<i id="Dx_@i" class="@Accepted" aria-hidden="true"></i>
-                                &nbsp;<i id="Dx_@i" class="@Rejected" aria-hidden="true"></i>
+                                &nbsp;<i id="Dx_@j" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                &nbsp;<i id="Dx_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                             </span>
                         </div>
                         <div title="" class="col-md-3 input-group" style="@Show">
-                            <input type="text" class="form-control" value="@dictQADxRemarks?.ElementAt(i).Value" />
+                            <input type="text" id="DxRemarks_@j" class="form-control" value="@dictQADxRemarks?.ElementAt(i).Value" />
                         </div>
-
                         <div class="col-md-3 lessWidth input-group" style="@Show">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">@j</span>
@@ -280,10 +274,10 @@
                                     ShadowQaDxVal = dictDxCodes.ElementAt(i).Value;
                                 }
                             }
-                            <input type="text" id="txtDx_@i" class="form-control txtDx QARemarks" autocomplete="off" tabindex="@i" placeholder="Code" value="@ShadowQaDxVal" />
+                            <input type="text" class="form-control txtDx QARemarks" autocomplete="off" tabindex="@i" placeholder="Code" value="@ShadowQaDxVal" />
                         </div>
-                        <div class="col-md-3 lessWidth input-group Dx_@i" style="display:none">
-                            <input type="text" id="Dx_@i" class="form-control QARevised" />
+                        <div class="col-md-3 lessWidth input-group" style="display:none">
+                            <input type="text" id="Dx_@j" class="form-control QARevised" />
                         </div>
 
                         @{ Show = (string.IsNullOrEmpty(dictShadowQADxRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
@@ -376,6 +370,8 @@
                                 if (coderLinks == "NA")
                                     color = "color:fuchsia;";
                                 <input type="text" class="form-control QARemarks" value="@qaLinks" style="@color" />
+
+                                <input type="hidden" id="txtCPTCode_@j" value="@qacptCode^@qaMod^@qaQty^@qaLinks" />
                             }
                             else
                             {
@@ -386,21 +382,19 @@
                                 <input type="text" class="form-control QARemarks" style="color:green;" placeholder="Mod" value="@coderModVal" />
                                 <input type="text" class="form-control QARemarks" style="color:green;" placeholder="1" value="@coderCptcodes[2]" />
                                 <input type="text" class="form-control QARemarks" style="color: green;" placeholder="Link All" value="@coderLinkAllVal" />
-
+                                <input type="hidden" id="txtCPTCode_@j" value="@@coderCptcodes[0]^@coderModVal^@coderCptcodes[2]^@coderLinkAllVal" />
                             }
-                            @{Accepted = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                            @{Rejected = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
                             @{ Show = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
                             <div class="input-group-append CoderCorrections" style="height: 45px;@Show">
                                 <span class="input-group-text">
-                                    &nbsp;<i id="Cpt_@i" class="@Accepted" aria-hidden="true"></i>
-                                    &nbsp;<i id="Cpt_@i" class="@Rejected" aria-hidden="true"></i>
+                                    &nbsp;<i id="Cpt_@j" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                    &nbsp;<i id="Cpt_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                                 </span>
                             </div>
                         </div>
 
                         <div title="" class="col-md-2 input-group" style="@Show">
-                            <input type="text" class="form-control QACptRemarks_@i" value="@dictQACptRemarks?.ElementAt(i).Value" />
+                            <input type="text" id="QACptRemarks_@j" class="form-control" value="@dictQACptRemarks?.ElementAt(i).Value" />
                         </div>
                         <div class="col-md-3 CptlessWidth input-group" style="@Show">
                             <div class="input-group-prepend">

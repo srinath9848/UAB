@@ -18,6 +18,9 @@
         vertical-align: top;
         border-top: 1px solid #dee2e6;
     }
+    .custom-control-label:after {
+        background-color: white;
+    }
 </style>
 
 <div class="col-md-10">
@@ -67,14 +70,14 @@
                     </div>
                     <div class="form-group">
                         @*<label class="lblSearch">DOS From</label>*@
-                        @Html.TextBoxFor(model => model.DoSFrom, new { @class = "form-control", @type = "date", @autofocus = "autofocus", @id = "txtDoSFrom", @autocomplete = "off", @placeholder = "Enter DOS From", @onfocus = "(this.type='date')", @onblur = "(this.type='text')" })
+                        @Html.TextBoxFor(model => model.DoSFrom, new { @class = "form-control", @type = "text", @autofocus = "autofocus", @id = "txtDoSFrom", @autocomplete = "off", @placeholder = "Enter DOS From", @onfocus = "(this.type='date')", @onblur = "(this.type='text')" })
                         @Html.ValidationMessageFor(model => model.DoSFrom, null, new { @class = "text-danger" })
 
                     </div>
 
                     <div class="form-group">
                         @*<label class="lblSearch">DOS To</label>*@
-                        @Html.TextBoxFor(model => model.DoSTo, new { @class = "form-control", @type = "date", @autofocus = "autofocus", @id = "txtDoSTo", @autocomplete = "off", @placeholder = "Enter DOS To", @onfocus = "(this.type='date')", @onblur = "(this.type='text')" })
+                        @Html.TextBoxFor(model => model.DoSTo, new { @class = "form-control", @type = "text", @autofocus = "autofocus", @id = "txtDoSTo", @autocomplete = "off", @placeholder = "Enter DOS To", @onfocus = "(this.type='date')", @onblur = "(this.type='text')" })
                         @Html.ValidationMessageFor(model => model.DoSTo, null, new { @class = "text-danger" })
 
                     </div>

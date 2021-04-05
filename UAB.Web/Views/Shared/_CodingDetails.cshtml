@@ -36,7 +36,7 @@
                 <li class="nav-item"> <a class="nav-link active tab" data-toggle="tab" id="1" title="tabDiv1" href="#home" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down">Cliam 1</span></a> </li>
                 <li class="nav-item"> <a class="nav-link tab" data-toggle="tab" id="2" title="tabDiv2" href="#profile" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down" id="htxt2">+</span></a> </li>
                 @*<li class="nav-item"> <a class="nav-link tab" data-toggle="tab" id="3" title="tabDiv" href="#profile" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down" id="htxt3">+</span></a> </li>
-                <li class="nav-item"> <a class="nav-link tab" data-toggle="tab" id="4" title="tabDiv" href="#profile" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down" id="htxt4">+</span></a> </li>*@
+                    <li class="nav-item"> <a class="nav-link tab" data-toggle="tab" id="4" title="tabDiv" href="#profile" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down" id="htxt4">+</span></a> </li>*@
             </ul>
             <!-- Tab panes -->
             <div class="tab-content tabcontent-border">
@@ -48,11 +48,11 @@
                             <div class="col-md-3">
                                 @if (@Model.ProviderID != 0)
                                 {
-                                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails" })
+                                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails", @style = "pointer-events:none;background-color:#e9ecef" })
                                 }
                                 else
                                 {
-                                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails"})
+                                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails" })
                                 }
 
                                 @Html.ValidationMessageFor(model => model.ProviderID, null, new { @class = "text-danger" })
