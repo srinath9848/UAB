@@ -37,9 +37,9 @@
         }
 
         var CptCodes = $("[id*=DivCptRow_]");
-        for (var i = 1; i < CptCodes.length; i++) {
+        for (var i = 1; i <= CptCodes.length; i++) {
 
-            if ($("#hdnCptCodes").val() == "") {               
+            if ($("#hdnCptCodes").val() == "") {
                 if ($("#txtCpt_" + i).val() != "") {
                     var mod = $("#txtMod_" + i).val() != "" ? $("#txtMod_" + i).val() : null;
                     var qty = $("#txtQty_" + i).val() != "" ? $("#txtQty_" + i).val() : null;
