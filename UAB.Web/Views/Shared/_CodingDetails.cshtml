@@ -15,9 +15,9 @@
 </style>
 <div class="col-md-12">
     <div class="card">
-        <div class="card-body">
+        @*<div class="card-body">
             <h4 class="card-title"><span>Chart ID : <label style="color: black;">@Model.CodingDTO.ClinicalCaseID</label></span></h4>
-        </div>
+        </div>*@
         @Html.HiddenFor(model => model.Dx)
         @Html.HiddenFor(model => model.CPTCode)
         @Html.HiddenFor(model => model.Dx, new { @id = "Dx1" })
@@ -48,7 +48,7 @@
                             <div class="col-md-3">
                                 @if (@Model.ProviderID != 0)
                                 {
-                                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails", @disabled = "disabled" })
+                                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails" })
                                 }
                                 else
                                 {
@@ -57,6 +57,8 @@
 
                                 @Html.ValidationMessageFor(model => model.ProviderID, null, new { @class = "text-danger" })
                             </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-md-3 m-t-15">Payor</label>
                             <div class="col-md-3">
                                 @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails" })
@@ -64,11 +66,11 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 m-t-15"> Feedback to Provider</label>
+                            @*<label class="col-md-3 m-t-15"> Feedback to Provider</label>
                             <div class="col-md-3">
                                 @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails" })
                                 @Html.ValidationMessageFor(model => model.ProviderFeedbackID, null, new { @class = "text-danger" })
-                            </div>
+                            </div>*@
                             <label class="col-md-3 m-t-15">Note Title</label>
                             <div class="col-md-3">
                                 @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails", @autocomplete = "off" })
@@ -101,6 +103,13 @@
                                     @Html.ValidationMessageFor(model => model.CPTCode, null, new { @class = "text-danger Dxerror" })
 
                                 </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 m-t-15"> Provider Feedback</label>
+                            <div class="col-md-3">
+                                @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails" })
+                                @Html.ValidationMessageFor(model => model.ProviderFeedbackID, null, new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
