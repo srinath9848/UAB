@@ -27,29 +27,29 @@
         @*<div class="card-body">
             <h4 class="card-title"><span>Chart ID : <label style="color: black;">@Model.CodingDTO.ClinicalCaseID</label></span></h4>
         </div>*@
-        @Html.HiddenFor(model => model.Dx)
-        @Html.HiddenFor(model => model.CPTCode)
-        @Html.HiddenFor(model => model.Dx, new { @id = "Dx1" })
-        @Html.HiddenFor(model => model.CPTCode, new { @id = "CPTCode1" })
         @Html.HiddenFor(model => model.Links)
         @Html.HiddenFor(model => model.ProjectName)
         @Html.HiddenFor(model => model.ProjectID)
         @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { @id = "ccid" })
         @Html.Hidden("hdnDxCodes")
         @Html.Hidden("hdnCptCodes")
+        @Html.Hidden("hdnDxCodes1")
+        @Html.Hidden("hdnCptCodes1")
+        @Html.Hidden("hdnDxCodes2")
+        @Html.Hidden("hdnCptCodes2")
+        @Html.Hidden("hdnDxCodes3")
+        @Html.Hidden("hdnCptCodes3")
 
         <!-- Tabs -->
         <div class="card">
-            <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item"> <a class="nav-link active tab" data-toggle="tab" id="1" title="tabDiv1" href="#home" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down">Cliam 1</span></a> </li>
-                <li class="nav-item"> <a class="nav-link tab" data-toggle="tab" id="2" title="tabDiv2" href="#profile" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down" id="htxt2">+</span></a> </li>
-                @*<li class="nav-item"> <a class="nav-link tab" data-toggle="tab" id="3" title="tabDiv" href="#profile" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down" id="htxt3">+</span></a> </li>
-                    <li class="nav-item"> <a class="nav-link tab" data-toggle="tab" id="4" title="tabDiv" href="#profile" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down" id="htxt4">+</span></a> </li>*@
+                <li class="nav-item tabDiv1"> <a class="nav-link active tab" data-toggle="tab" id="1" alt="tabDiv1" href="#cliam1" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down">Cliam 1</span></a> </li>
+                <li class="nav-item tabDiv2"> <a class="nav-link tab" data-toggle="tab" id="2" alt="tabDiv2" href="#cliam2" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down" id="htxt2">+</span></a> </li>
+                <li class="nav-item tabDiv3" style="display:none;"> <a class="nav-link tab" data-toggle="tab" id="3" alt="tabDiv3" href="#cliam3" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down" id="htxt3">+</span></a> </li>
+                <li class="nav-item tabDiv4" style="display:none;"> <a class="nav-link tab" data-toggle="tab" id="4" alt="tabDiv4" href="#cliam4" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down" id="htxt4">+</span></a> </li>
             </ul>
-            <!-- Tab panes -->
             <div class="tab-content tabcontent-border">
-                <div class="tab-pane active" id="home" role="tabpanel">
+                <div class="tab-pane active" id="cliam1" role="tabpanel">
                     <div class="p-20" id="tabDiv1">
                         <br />
                         <div class="form-group row">
@@ -75,11 +75,6 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            @*<label class="col-md-3 m-t-15"> Feedback to Provider</label>
-                            <div class="col-md-3">
-                                @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails" })
-                                @Html.ValidationMessageFor(model => model.ProviderFeedbackID, null, new { @class = "text-danger" })
-                            </div>*@
                             <label class="col-md-3 m-t-15 AlignControl">Note Title</label>
                             <div class="col-md-3">
                                 @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails ControlHeight", @autocomplete = "off" })
@@ -122,24 +117,33 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane p-20 show" id="profile" role="tabpanel">
-                        <div class="p-20" id="tabDiv2">
-                        </div>
-                    </div>
-                    <div class="border-top">
-                        <div class="card-body" style="text-align:right">
-                            <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.Coder, ChartType= "Block", ProjectID=@Model.ProjectID, ProjectName=Model.ProjectName,ccid=Model.CodingDTO.ClinicalCaseID,plusorminus="Previous"})" class="btn btn-success Available" id="btnPrevious" style="display:none">Previous</a>
-                            <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.Coder, ChartType= "Block", ProjectID=@Model.ProjectID, ProjectName=Model.ProjectName,ccid=Model.CodingDTO.ClinicalCaseID,plusorminus="Next"})" class="btn btn-success Available" id="btnNext" style="display:none">Next</a>
-                            <button id="btnBlock" type="button" class="btn btn-danger" onclick="Block()">Block</button>
-                            <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger" onclick="BlockHistory()">Block History</button>
-                            <button id="codingSubmit" name="codingSubmit" type="submit" class="btn btn-success Available">Save</button>
-                            <button id="codingSubmitAndGetNext" name="codingSubmitAndGetNext" type="submit" value="codingSubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
-                            <button type="submit" class="btn btn-success Approved">Posting Completed</button>
-                            <button id="postingSubmitAndGetNext" name="postingSubmitAndGetNext" type="submit" value="postingSubmitAndGetNext" class="btn btn-success Approved">Post And GetNext</button>
-                            <a href="@Url.Action("CodingSummary","UAB")" class="btn btn-danger Approved">Close</a>
-                        </div>
+                </div>
+                <div class="tab-pane" id="cliam2" role="tabpanel">
+                    <div class="p-20" id="tabDiv2">
                     </div>
                 </div>
+                <div class="tab-pane" id="cliam3" role="tabpanel">
+                    <div class="p-20" id="tabDiv3">
+                    </div>
+                </div>
+                <div class="tab-pane" id="cliam4" role="tabpanel">
+                    <div class="p-20" id="tabDiv4">
+                    </div>
+                </div>
+                <div class="border-top">
+                    <div class="card-body" style="text-align:right">
+                        <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.Coder, ChartType= "Block", ProjectID=@Model.ProjectID, ProjectName=Model.ProjectName,ccid=Model.CodingDTO.ClinicalCaseID,plusorminus="Previous"})" class="btn btn-success Available" id="btnPrevious" style="display:none">Previous</a>
+                        <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.Coder, ChartType= "Block", ProjectID=@Model.ProjectID, ProjectName=Model.ProjectName,ccid=Model.CodingDTO.ClinicalCaseID,plusorminus="Next"})" class="btn btn-success Available" id="btnNext" style="display:none">Next</a>
+                        <button id="btnBlock" type="button" class="btn btn-danger" onclick="Block()">Block</button>
+                        <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger" onclick="BlockHistory()">Block History</button>
+                        <button id="codingSubmit" name="codingSubmit" type="submit" class="btn btn-success Available">Save</button>
+                        <button id="codingSubmitAndGetNext" name="codingSubmitAndGetNext" type="submit" value="codingSubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
+                        <button type="submit" class="btn btn-success Approved">Posting Completed</button>
+                        <button id="postingSubmitAndGetNext" name="postingSubmitAndGetNext" type="submit" value="postingSubmitAndGetNext" class="btn btn-success Approved">Post And GetNext</button>
+                        <a href="@Url.Action("CodingSummary","UAB")" class="btn btn-danger Approved">Close</a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
