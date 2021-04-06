@@ -10,7 +10,16 @@
     }
 
     div.CptlessWidth {
-        max-width: 25% !important;
+        max-width: 20% !important;
+    }
+    .ControlHeight{
+        height:32px !important;
+    }
+    label.lessWidth {
+        max-width: 12% !important;
+    }
+    .AlignControl{
+        margin-right:-115px;
     }
 </style>
 <div class="col-md-12">
@@ -44,24 +53,24 @@
                     <div class="p-20" id="tabDiv1">
                         <br />
                         <div class="form-group row">
-                            <label class="col-md-3 m-t-15">Provider</label>
-                            <div class="col-md-3">
+                            <label class="col-md-3 m-t-15 AlignControl">Provider</label>
+                            <div class="col-md-3" style="display:inherit;">
                                 @if (@Model.ProviderID != 0)
                                 {
-                                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails", @style = "pointer-events:none;background-color:#e9ecef" })
+                                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @style = "pointer-events:none;background-color:#e9ecef" })
                                 }
                                 else
                                 {
-                                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails" })
+                                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight" })
                                 }
 
                                 @Html.ValidationMessageFor(model => model.ProviderID, null, new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 m-t-15">Payor</label>
-                            <div class="col-md-3">
-                                @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails" })
+                            <label class="col-md-3 m-t-15 AlignControl">Payor</label>
+                            <div class="col-md-3" style="display:inherit;">
+                                @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight" })
                                 @Html.ValidationMessageFor(model => model.PayorID, null, new { @class = "text-danger" })
                             </div>
                         </div>
@@ -71,32 +80,32 @@
                                 @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails" })
                                 @Html.ValidationMessageFor(model => model.ProviderFeedbackID, null, new { @class = "text-danger" })
                             </div>*@
-                            <label class="col-md-3 m-t-15">Note Title</label>
+                            <label class="col-md-3 m-t-15 AlignControl">Note Title</label>
                             <div class="col-md-3">
-                                @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails", @autocomplete = "off" })
+                                @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails ControlHeight", @autocomplete = "off" })
                                 @Html.ValidationMessageFor(model => model.NoteTitle, null, new { @class = "text-danger" })
                             </div>
                         </div>
                         <div id="DivDx">
                             <div class="form-group row" id="DivDxRow_0">
-                                <label class="col-md-3 m-t-15">Dx</label>
-                                <div class="col-md-3 lessWidth input-group">
-                                    <div class="input-group-prepend">
+                                <label class="col-md-3 m-t-15 AlignControl">Dx</label>
+                                <div class="col-md-3 input-group">
+                                    <div class="input-group-prepend ControlHeight">
                                         <span class="input-group-text" id="basic-addon1">1</span>
                                     </div>
-                                    @Html.TextBoxFor(model => model.Dx, new { @class = "form-control CoderDetails txtDx", @autocomplete = "off", @id = "txtDx_1", @placeholder = "Code", @onfocusout = "DxFunction('txtDx_1')" })
+                                    @Html.TextBoxFor(model => model.Dx, new { @class = "form-control CoderDetails txtDx ControlHeight", @autocomplete = "off", @id = "txtDx_1", @placeholder = "Code", @onfocusout = "DxFunction('txtDx_1')" })
                                     @Html.ValidationMessageFor(model => model.Dx, null, new { @class = "text-danger Dxerror" })
                                 </div>
                             </div>
                         </div>
                         <div id="DivCpt">
                             <div class="form-group row" id="DivCptRow_0">
-                                <label class="col-md-3 m-t-15">CPT</label>
+                                <label class="col-md-3 m-t-15 AlignControl">CPT</label>
                                 <div class="col-md-3 CptlessWidth input-group">
-                                    <div class="input-group-prepend">
+                                    <div class="input-group-prepend ControlHeight">
                                         <span class="input-group-text" id="basic-addon1">1</span>
                                     </div>
-                                    @Html.TextBoxFor(model => model.CPTCode, new { @class = "form-control CoderDetails txtCpt", @autocomplete = "off", @placeholder = "Code", @id = "txtCpt_1", @tabindex = "5" })
+                                    @Html.TextBoxFor(model => model.CPTCode, new { @class = "form-control CoderDetails txtCpt ControlHeight", @autocomplete = "off", @placeholder = "Code", @id = "txtCpt_1", @tabindex = "5" })
                                     <input type="text" class="form-control CoderDetails" id="txtMod_1" autocomplete="off" placeholder="Mod" tabindex="6" />
                                     <input type="text" id="txtQty_1" class="form-control CoderDetails" autocomplete="off" placeholder="1" value="1" tabindex="7" />
                                     <input type="text" id="txtLinks_1" onfocusout="CptFunction('txtLinks_1')" class="form-control CoderDetails" autocomplete="off" placeholder="Link All" tabindex="8" />
@@ -106,9 +115,9 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 m-t-15"> Provider Feedback</label>
+                            <label class="col-md-3 m-t-15 AlignControl"> Provider Feedback</label>
                             <div class="col-md-3">
-                                @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails" })
+                                @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight" })
                                 @Html.ValidationMessageFor(model => model.ProviderFeedbackID, null, new { @class = "text-danger" })
                             </div>
                         </div>

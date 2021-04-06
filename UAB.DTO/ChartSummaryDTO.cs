@@ -17,20 +17,20 @@ namespace UAB.DTO
         public int? ProviderFeedbackID { get; set; }
         public string ProviderFeedbackText { get; set; }
         public int AssignedTo { get; set; }
-        [Required(ErrorMessage = "Payor is required.")]
+        [Required(ErrorMessage = "*")]
         public int PayorID { get; set; }
         public string PayorText { get; set; }
 
-        [Required(ErrorMessage = "Provider is required.")]
+        [Required(ErrorMessage = "*")]
         public int ProviderID { get; set; }
         public string ProviderText { get; set; }
-        [Required(ErrorMessage = "CPT Code is required.")]
+        [Required(ErrorMessage = "*")]
         public string CPTCode { get; set; }
 
         public string RejectedCpt { get; set; }
 
         public string NoteTitle { get; set; }
-        [Required(ErrorMessage = "Dx Code is required.")]
+        [Required(ErrorMessage = "*")]
         public string Dx { get; set; }
         public string RejectedDx { get; set; }
 
