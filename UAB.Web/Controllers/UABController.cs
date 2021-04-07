@@ -307,17 +307,40 @@ namespace UAB.Controllers
             return View("CodingSummary", lstDto);
         }
 
-        public IActionResult GetNewCliam(int id)
+
+        [HttpGet]
+        public IActionResult AddNewCliam(int cliamID)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-
-            #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
             ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
-            #endregion
+            ViewBag.CliamId = cliamID;
+            if (cliamID == 2)
+            {
+                ViewBag.DxCliam = "txtDx2Cliam" + "_1";
+                ViewBag.CptCliam = "txt2Cpt" + "_1";
+                ViewBag.CptModCliam = "txt2mod" + "_1";
+                ViewBag.CptQtyCliam = "txt2qty" + "_1";
+                ViewBag.CptLinksCliam = "txt2links" + "_1";
+            }
+            if (cliamID == 3)
+            {
+                ViewBag.Cliam = "txtDx3Cliam" + "_1";
+                ViewBag.CptCliam = "txt3Cpt" + "_1";
+                ViewBag.CptModCliam = "txt3mod" + "_1";
+                ViewBag.CptQtyCliam = "txt3qty" + "_1";
+                ViewBag.CptLinksCliam = "txt3links" + "_1";
+            }
+            if (cliamID == 4)
+            {
+                ViewBag.Cliam = "txtDx4Cliam" + "_1";
+                ViewBag.CptCliam = "txt4Cpt" + "_1";
+                ViewBag.CptModCliam = "txt4mod" + "_1";
+                ViewBag.CptQtyCliam = "txt4qty" + "_1";
+                ViewBag.CptLinksCliam = "txt4links" + "_1";
+            }
 
-            ViewBag.id = id;
             return PartialView("_NewCliam");
         }
         #endregion

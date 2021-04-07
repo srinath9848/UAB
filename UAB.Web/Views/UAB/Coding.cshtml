@@ -69,9 +69,6 @@
     $("#coding").addClass('selected');
     $('.Approved').hide();
     $('#divAnswer').hide();
-    //$("#ProviderID").css("pointer-events", "none");
-    //$("#ProviderID").css("background-color", "#e9ecef");
-
 
     var dxArray = [];
     function DxFunction(txt_0) {
@@ -82,59 +79,74 @@
             if (val !== "" && val !== null) {
                 if ($.inArray(val, dxArray) == -1) {
                     dxArray.push(val);
-                    $("#Dx").val(dxArray);
+                    $("#hdnDxCodes").val(dxArray);
                     var text = "'" + "txt_" + id + "'";
-                    $("#DivDx").append('<div id="DivDxRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" ></label><div class="col-md-3 lessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxFunction(' + text + ')" class="form-control CoderDetails txtDx" id="txtDx_' + id + '" /></div></div>');
+                    $("#DivDx").append('<div id="DivDxRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxFunction(' + text + ')" class="form-control CoderDetails txtDx" id="txtDx_' + id + '" /></div></div>');
                     $("#txtDx_" + currId).removeAttr("onfocusout", "");
                     $("#txtDx_1").removeAttr("onfocusout", "");
                     $("#txtDx_" + id).focus();
                 } else {
                     $("#txtDx_" + currId).addClass('text-danger');
                 }
-
-            } else {
-                //var id2 = parseInt(id) - parseInt(1);
-                //var val = $("#txt" + id2).val();
-                //if (val == "") {
-                //    if (id2 !== 0) {
-                //        dxArray.splice(id2, id2);
-                //        $("#Dx").val(dxArray);
-                //        $('#tr' + id2).remove();
-                //        //$("#txt" + id2).focus();
-                //    }
-                //}
             }
         }
     }
 
-    var dxArray1 = [];
-    function DxFunction1(txt_0) {
+    var dxArray2 = [];
+    var dxArray3 = [];
+    var dxArray4 = [];
+    function DxCliams(txt_0) {
         var id = parseInt(txt_0.split("_")[1]) + parseInt(1);
-        if (txt_0.split("_")[1] !== undefined) {
-            var currId = parseInt(id) - parseInt(1);
-            var val = $("#txtDxx_" + currId).val();
-            if (val !== "" && val !== null) {
-                if ($.inArray(val, dxArray1) == -1) {
-                    dxArray1.push(val);
-                    $("#Dx1").val(dxArray1);
-                    var text = "'" + "txt_" + id + "'";
-                    $("#DivDx1").append('<div id="DivDxRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" ></label><div class="col-md-3 lessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxFunction1(' + text + ')" class="form-control CoderDetails txtDx" id="txtDxx_' + id + '" /></div></div>');
-                    $("#txtDxx_" + currId).removeAttr("onfocusout", "");
-                    $("#txtDxx_1").removeAttr("onfocusout", "");
-                    $("#txtDxx_" + id).focus();
+        var cliamid = parseInt(txt_0.split("_")[2]);
+        if (cliamid == 2) {
+            if (txt_0.split("_")[1] !== undefined) {
+                var currId = parseInt(id) - parseInt(1);
+                var val = $("#txtDx2Cliam_" + currId).val();
+                if (val !== "" && val !== null) {
+                    if ($.inArray(val, dxArray2) == -1) {
+                        dxArray2.push(val);
+                        $("#hdnDxCodes1").val(dxArray2);
+                        var text = "'" + "txtDx_" + id + "_" +  parseInt(2) +"'";
+                        $("#DivDx_2").append('<div id="DivDxRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 lessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxCliams(' + text + ')" class="form-control CoderDetails cliam_' + cliamid + '" id="txtDx2Cliam_' + id + '" /></div></div>');
+                        $("#txtDx2Cliam_" + currId).removeAttr("onfocusout", "");
+                        $("#txtDx2Cliam_1").removeAttr("onfocusout", "");
+                        $("#txtDx2Cliam_" + id).focus();
+                    }
                 }
-
-            } else {
-                //var id2 = parseInt(id) - parseInt(1);
-                //var val = $("#txt" + id2).val();
-                //if (val == "") {
-                //    if (id2 !== 0) {
-                //        dxArray.splice(id2, id2);
-                //        $("#Dx").val(dxArray);
-                //        $('#tr' + id2).remove();
-                //        //$("#txt" + id2).focus();
-                //    }
-                //}
+            }
+        }
+        if (cliamid == 3) {
+            if (txt_0.split("_")[1] !== undefined) {
+                var currId = parseInt(id) - parseInt(1);
+                var val = $("#txtDx3Cliam_" + currId).val();
+                if (val !== "" && val !== null) {
+                    if ($.inArray(val, dxArray3) == -1) {
+                        dxArray3.push(val);
+                        $("#hdnDxCodes2").val(dxArray3);
+                        var text = "'" + "txtDx_" + id + "_" + parseInt(3) + "'";
+                        $("#DivDx_3").append('<div id="DivDxRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 lessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxCliams(' + text + ')" class="form-control CoderDetails cliam_' + cliamid + '" id="txtDx3Cliam_' + id + '" /></div></div>');
+                        $("#txtDx3Cliam_" + currId).removeAttr("onfocusout", "");
+                        $("#txtDx3Cliam_1").removeAttr("onfocusout", "");
+                        $("#txtDx3Cliam_" + id).focus();
+                    }
+                }
+            }
+        }
+        if (cliamid == 4) {
+            if (txt_0.split("_")[1] !== undefined) {
+                var currId = parseInt(id) - parseInt(1);
+                var val = $("#txtDx4Cliam_" + currId).val();
+                if (val !== "" && val !== null) {
+                    if ($.inArray(val, dxArray4) == -1) {
+                        dxArray4.push(val);
+                        $("#hdnDxCodes3").val(dxArray4);
+                        var text = "'" + "txtDx_" + id + "_" + parseInt(4) + "'";
+                        $("#DivDx_4").append('<div id="DivDxRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 lessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxCliams(' + text + ')" class="form-control CoderDetails Dxcliam_' + cliamid + '" id="txtDx4Cliam_' + id + '" /></div></div>');
+                        $("#txtDx4Cliam_" + currId).removeAttr("onfocusout", "");
+                        $("#txtDx4Cliam_1").removeAttr("onfocusout", "");
+                        $("#txtDx4Cliam_" + id).focus();
+                    }
+                }
             }
         }
     }
@@ -161,113 +173,184 @@
             if (val1 !== "") {
                 if ($.inArray(val1, cptArray) == -1) {
                     cptArray.push(val1+"^"+val2 +"^"+val3 +"^"+ val4);
-                    $("#CPTCode").val(cptArray);
+                    $("#hdnCptCodes").val(cptArray);
                     var count = id + parseInt(1);
                     var txtLinks = "'" + "txtLinks_" + id + "'";
                     var tabindex1 = parseInt(9) + parseInt(id) + parseInt(count) + parseInt(val1);
                     var tabindex2 = parseInt(10) + parseInt(id) + parseInt(count) + parseInt(val1);
                     var tabindex3 = parseInt(11) + parseInt(id) + parseInt(count) + parseInt(val1);
                     var tabindex4 = parseInt(12) + parseInt(id) + parseInt(count) + parseInt(val1);
-                    $("#DivCpt").append('<div id="DivCptRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" ></label><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input tabindex = "' + tabindex1 + '" type = "text" placeholder = "Code" class= "form-control CoderDetails txtCpt" id = "txtCpt_' + id + '" /><input tabindex="' + tabindex2 + '" type="text" class="form-control CoderDetails" placeholder="Mod" id="txtMod_' + id + '"/><input tabindex="' + tabindex3 + '" type="text" class="form-control CoderDetails" placeholder="1" value="1" id="txtQty_' + id + '"/><input tabindex="' + tabindex4 + '" type="text" class="form-control CoderDetails" placeholder="Link All" onfocusout="CptFunction(' + txtLinks + ')" id="txtLinks_' + id + '"/></div></div>');
+                    $("#DivCpt").append('<div id="DivCptRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input tabindex = "' + tabindex1 + '" type = "text" placeholder = "Code" class= "form-control CoderDetails txtCpt" id = "txtCpt_' + id + '" /><input tabindex="' + tabindex2 + '" type="text" class="form-control CoderDetails" placeholder="Mod" id="txtMod_' + id + '"/><input tabindex="' + tabindex3 + '" type="text" class="form-control CoderDetails" placeholder="1" value="1" id="txtQty_' + id + '"/><input tabindex="' + tabindex4 + '" type="text" class="form-control CoderDetails" placeholder="Link All" onfocusout="CptFunction(' + txtLinks + ')" id="txtLinks_' + id + '"/></div></div>');
                     $("#txtLinks_" + id1).removeAttr("onfocusout", "");
                     $("#txtLinks_1").removeAttr("onfocusout", "");
                     $("#txtCpt_" + id).focus();
                 }
 
-            } else {
-                //var id2 = parseInt(id) - parseInt(1);
-                //var val = $("#txtCpt" + id2).val();
-                //if (val == "") {
-                //    if (id2 !== 0) {
-                //        cptArray.splice(id2, id2);
-                //        $("#CPTCode").val(cptArray);
-                //        $('#cpttr' + id2).remove();
-                //        //$("#CPTCode" + id2).focus();
-                //    }
-                //}
             }
         }
     }
 
-    var cptArray1 = [];
-    function CptFunction1(txtCpt_0) {
+    var cptArray2 = [];
+    var cptArray3 = [];
+    var cptArray4 = [];
+    function CptCliams(txtCpt_0) {
         var id = parseInt(txtCpt_0.split("_")[1]) + parseInt(1);
-        if (txtCpt_0.split("_")[1] !== undefined) {
-            var id1 = parseInt(id) - parseInt(1);
-            var val1 = $("#txtCpt1_" + id1).val();
+        var cliamid = parseInt(txtCpt_0.split("_")[2]);
+        if (cliamid == 2) {
+            if (txtCpt_0.split("_")[1] !== undefined) {
+                var id1 = parseInt(id) - parseInt(1);
+                var val1 = $("#txt2Cpt_" + id1).val();
 
-            var val2 = null;
-            if ($("#txtMod1_" + id1).val() != "")
-                val2 = $("#txtMod1_" + id1).val();
+                var val2 = null;
+                if ($("#txt2mod_" + id1).val() != "")
+                    val2 = $("#txt2mod_" + id1).val();
 
-            var val3 = null;
-            if ($("#txtQty1_" + id1).val() != "")
-                val3 = $("#txtQty1_" + id1).val();
+                var val3 = null;
+                if ($("#txt2qty_" + id1).val() != "")
+                    val3 = $("#txt2qty_" + id1).val();
 
-            var val4 = null;
-            if ($("#txtLinks1_" + id1).val() != "")
-                val4 = $("#txtLinks1_" + id1).val();
+                var val4 = null;
+                if ($("#txt2links_" + id1).val() != "")
+                    val4 = $("#txt2links_" + id1).val();
 
-            if (val1 !== "") {
-                if ($.inArray(val1, cptArray1) == -1) {
-                    cptArray1.push(val1 + "^" + val2 + "^" + val3 + "^" + val4);
-                    $("#CPTCode1").val(cptArray1);
-                    var count = id + parseInt(1);
-                    var txtLinks = "'" + "txtLinks1_" + id + "'";
-                    var tabindex1 = parseInt(9) + parseInt(id) + parseInt(count) + parseInt(val1);
-                    var tabindex2 = parseInt(10) + parseInt(id) + parseInt(count) + parseInt(val1);
-                    var tabindex3 = parseInt(11) + parseInt(id) + parseInt(count) + parseInt(val1);
-                    var tabindex4 = parseInt(12) + parseInt(id) + parseInt(count) + parseInt(val1);
-                    $("#DivCpt1").append('<div id="DivCptRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" ></label><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input tabindex = "' + tabindex1 + '" type = "text" placeholder = "Code" class= "form-control CoderDetails txtCpt" id = "txtCpt1_' + id + '" /><input tabindex="' + tabindex2 + '" type="text" class="form-control CoderDetails" placeholder="Mod" id="txtMod1_' + id + '"/><input tabindex="' + tabindex3 + '" type="text" class="form-control CoderDetails" placeholder="1" value="1" id="txtQty1_' + id + '"/><input tabindex="' + tabindex4 + '" type="text" class="form-control CoderDetails" placeholder="Link All" onfocusout="CptFunction1(' + txtLinks + ')" id="txtLinks1_' + id + '"/></div></div>');
-                    $("#txtLinks1_" + id1).removeAttr("onfocusout", "");
-                    $("#txtLinks1_1").removeAttr("onfocusout", "");
-                    $("#txtCpt1_" + id).focus();
+                if (val1 !== "") {
+                    if ($.inArray(val1, cptArray2) == -1) {
+                        if (val1 !== undefined) {
+                            cptArray2.push(val1 + "^" + val2 + "^" + val3 + "^" + val4);
+                            $("#hdnCptCodes1").val(cptArray2);
+                            var txtLinks = "'" + "txt2links_" + id + "_" + parseInt(2) + "'";
+                            $("#DivCpt_2").append('<div id="DivCptRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input type = "text" placeholder = "Code" class= "form-control CoderDetails Cptcliam_' + cliamid + '" id = "txt2Cpt_' + id + '" /><input type="text" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="Mod" id="txt2mod_' + id + '"/><input type="text" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="1" value="1" id="txt2qty_' + id + '"/><input type="text" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="Link All" onfocusout="CptCliams(' + txtLinks + ')" id="txt2links_' + id + '"/></div></div>');
+                            $("#txt2links_" + id1).removeAttr("onfocusout", "");
+                            $("#txt2links_1").removeAttr("onfocusout", "");
+                            $("#txt2Cpt_" + id).focus();
+                        }
+                    }
                 }
+            }
+        }
 
-            } else {
-                //var id2 = parseInt(id) - parseInt(1);
-                //var val = $("#txtCpt" + id2).val();
-                //if (val == "") {
-                //    if (id2 !== 0) {
-                //        cptArray.splice(id2, id2);
-                //        $("#CPTCode").val(cptArray);
-                //        $('#cpttr' + id2).remove();
-                //        //$("#CPTCode" + id2).focus();
-                //    }
-                //}
+        if (cliamid == 3) {
+            if (txtCpt_0.split("_")[1] !== undefined) {
+                var id1 = parseInt(id) - parseInt(1);
+                var val1 = $("#txt3Cpt_" + id1).val();
+
+                var val2 = null;
+                if ($("#txt3mod_" + id1).val() != "")
+                    val2 = $("#txt3mod_" + id1).val();
+
+                var val3 = null;
+                if ($("#txt3qty_" + id1).val() != "")
+                    val3 = $("#txt3qty_" + id1).val();
+
+                var val4 = null;
+                if ($("#txt3links_" + id1).val() != "")
+                    val4 = $("#txt3links_" + id1).val();
+
+                if (val1 !== "") {
+                    if ($.inArray(val1, cptArray3) == -1) {
+                        if (val1 !== undefined) {
+                            cptArray3.push(val1 + "^" + val2 + "^" + val3 + "^" + val4);
+                            $("#hdnCptCodes2").val(cptArray3);
+                            var txtLinks = "'" + "txt3links_" + id + "_" + parseInt(3) + "'";
+                            $("#DivCpt_3").append('<div id="DivCptRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input type = "text" placeholder = "Code" class= "form-control CoderDetails Cptcliam_' + cliamid + '" id = "txt3Cpt_' + id + '" /><input type="text" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="Mod" id="txt3mod_' + id + '"/><input type="text" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="1" value="1" id="txt3qty_' + id + '"/><input type="text" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="Link All" onfocusout="CptCliams(' + txtLinks + ')" id="txt3links_' + id + '"/></div></div>');
+                            $("#txt3links_" + id1).removeAttr("onfocusout", "");
+                            $("#txt3links_1").removeAttr("onfocusout", "");
+                            $("#txt3Cpt_" + id).focus();
+                        }
+                    }
+                }
+            }
+        }
+
+        if (cliamid == 4) {
+            if (txtCpt_0.split("_")[1] !== undefined) {
+                var id1 = parseInt(id) - parseInt(1);
+                var val1 = $("#txt4Cpt_" + id1).val();
+
+                var val2 = null;
+                if ($("#txt4mod_" + id1).val() != "")
+                    val2 = $("#txt4mod_" + id1).val();
+
+                var val3 = null;
+                if ($("#txt4qty_" + id1).val() != "")
+                    val3 = $("#txt4qty_" + id1).val();
+
+                var val4 = null;
+                if ($("#txt4links_" + id1).val() != "")
+                    val4 = $("#txt4links_" + id1).val();
+
+                if (val1 !== "") {
+                    if ($.inArray(val1, cptArray4) == -1) {
+                        if (val1 !== undefined) {
+                            cptArray4.push(val1 + "^" + val2 + "^" + val3 + "^" + val4);
+                            $("#hdnCptCodes3").val(cptArray4);
+                            var txtLinks = "'" + "txt4links_" + id + "_" + parseInt(4) + "'";
+                            $("#DivCpt_4").append('<div id="DivCptRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input type = "text" placeholder = "Code" class= "form-control CoderDetails Cptcliam_' + cliamid + '" id = "txt4Cpt_' + id + '" /><input type="text" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="Mod" id="txt4mod_' + id + '"/><input type="text" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="1" value="1" id="txt4qty_' + id + '"/><input type="text" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="Link All" onfocusout="CptCliams(' + txtLinks + ')" id="txt4links_' + id + '"/></div></div>');
+                            $("#txt4links_" + id1).removeAttr("onfocusout", "");
+                            $("#txt4links_1").removeAttr("onfocusout", "");
+                            $("#txt4Cpt_" + id).focus();
+                        }
+                    }
+                }
             }
         }
     }
 
-    $(".tab").click(function (e) {
-        var title = $(this).attr('title');
-        var id = $(this).attr('id');
-        if (title == "tabDiv1") {
-            $("#tabDiv1").show();
-            $("#tabDiv2").hide();
-            $("#1").addClass('active show');
-            $("#2").removeClass('active show');
-            return false;
-            e.preventDefault();
-        }
-        $("#1").removeClass('active show');
-        $("#2").addClass('active show');
 
-        $("#htxt" + id).text('Cliam '+id);
+    var tabArray = [];
+    tabArray.push("1");
+    $(".tab").click(function () {
+        var title = $(this).attr('alt');
+        var id = $(this).attr('id');
+        $("#htxt" + id).text('Cliam ' + id);
         if (title != "" && id != "") {
-            $.ajax({
-                type: "GET",
-                url: "@Url.Action("GetNewCliam", "UAB")",
-                data: {"id" : id },
-                success: function (response) {
-                    $("#tabDiv1").hide();
-                    $("#" + title).html(response);
-                    $("#" + title).show();
-                },
-                failure: function (response) {
-                    alert(response);
-                }
-            });
+            if (id == "1" && title == "tabDiv1") {
+              $("#" + title).show();
+              $("#tabDiv2").hide();
+              $("#tabDiv3").hide();
+              $("#tabDiv4").hide();
+            } else {
+                if ($.inArray(id, tabArray) == -1) {
+                    $.ajax({
+                        type: "GET",
+                        url: "@Url.Action("AddNewCliam", "UAB")",
+                        data: { "cliamID": id },
+                        success: function (response) {
+                            tabArray.push(id);
+                            $("#" + title).html(response);
+                        }
+                    });
+                };
+               $("#tabDiv1").hide();
+               if (title == "tabDiv1") {
+                   $("#" + title).show();
+                   $("#tabDiv2").hide();
+                   $("#tabDiv3").hide();
+                   $("#tabDiv4").hide();
+                   $("#cliam" + id).addClass('active show');
+               }
+               if (title == "tabDiv2") {
+                   $("#" + title).show();
+                   $(".tabDiv3").show();
+                   $("#tabDiv3").hide();
+                   $("#tabDiv4").hide();
+                   $("#cliam" + id).addClass('active show');
+               }
+               if (title == "tabDiv3") {
+                   $("#" + title).show();
+                   $("#tabDiv2").hide();
+                   $("#tabDiv4").hide();
+                   $(".tabDiv4").show();
+                   $("#cliam" + id).addClass('active show');
+               }
+               if (title == "tabDiv4") {
+                   $("#" + title).show();
+                   $("#tabDiv2").hide();
+                   $("#tabDiv3").hide();
+                   $(".tabDiv4").show();
+                   $("#cliam" + id).addClass('active show');
+               }
+            }
         }
     });
 </script>
