@@ -257,7 +257,8 @@ namespace UAB.DAL
                         chartSummaryDTO.CodingDTO.DateOfService = Convert.ToString(reader["DateOfService"]);
                         if (Role == "Coder" && ChartType == "Available")
                         {
-                            chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
+                            if (reader["ProviderId"] != DBNull.Value)
+                                chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                         }
 
                         if (Role == "Coder" && ChartType == "Block")
