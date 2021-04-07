@@ -12,6 +12,7 @@
     .ControlHeight {
         height: 32px !important;
     }
+
     .AlignControl {
         margin-right: -115px;
     }
@@ -39,28 +40,28 @@
     </div>
 </div>
 <div id="DivDx_@cliamID">
-    <div class="form-group row" id="DivDxRow_@cliamID">
+    <div class="form-group row" id="@ViewBag.Div2DxRow">
         <label class="col-md-3 m-t-15 AlignControl">Dx</label>
         <div class="col-md-3 lessWidth input-group">
             <div class="input-group-prepend ControlHeight">
-                <span class="input-group-text" id="basic-addon1">1</span>
+                <span class="input-group-text @ViewBag.dx2index" id="basic-addon1">1</span>
             </div>
-            <input type="text" id="@dxCliam" onfocusout="DxCliams('txtDx_1_@cliamID')" class="form-control CoderDetails Dxcliam_@cliamID" autocomplete="off" placeholder="Code" />
+            <input type="text" id="@dxCliam" onfocusout="DxCliams('txtDx_1_@cliamID')" class="form-control CoderDetails @ViewBag.Dx2Cliam Dxcliam_@cliamID" autocomplete="off" placeholder="Code" />
             @Html.ValidationMessageFor(model => model.Dx, null, new { @class = "text-danger Dxerror" })
         </div>
     </div>
 </div>
 <div id="DivCpt_@cliamID">
-    <div class="form-group row" id="DivCptRow_@cliamID">
+    <div class="form-group row" id="@ViewBag.Div2CptRow">
         <label class="col-md-3 m-t-15 AlignControl">CPT</label>
         <div class="col-md-3 CptlessWidth input-group">
             <div class="input-group-prepend ControlHeight">
-                <span class="input-group-text" id="basic-addon1">1</span>
+                <span class="input-group-text @ViewBag.cpt2index" id="basic-addon1">1</span>
             </div>
             <input type="text" id="@cptCliam" class="form-control CoderDetails Cptcliam_@cliamID" autocomplete="off" placeholder="Code" tabindex="5" />
             <input type="text" id="@cptModCliam" class="form-control CoderDetails Cptcliam_@cliamID" autocomplete="off" placeholder="Mod" tabindex="6" />
             <input type="text" id="@cptQtyCliam" class="form-control CoderDetails Cptcliam_@cliamID" autocomplete="off" placeholder="1" value="1" tabindex="7" />
-            <input type="text" id="@cptLinksCliam" class="form-control CoderDetails Cptcliam_@cliamID" onfocusout="CptCliams('txtLinks_1_@cliamID')" autocomplete="off" placeholder="Link All" tabindex="8" />
+            <input type="text" id="@cptLinksCliam" class="form-control CoderDetails @ViewBag.Cpt2Link Cptcliam_@cliamID" onfocusout="CptCliams('txtLinks_1_@cliamID')" autocomplete="off" placeholder="Link All" tabindex="8" />
         </div>
     </div>
 </div>

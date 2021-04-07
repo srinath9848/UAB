@@ -323,6 +323,14 @@ namespace UAB.Controllers
                 ViewBag.CptModCliam = "txt2mod" + "_1";
                 ViewBag.CptQtyCliam = "txt2qty" + "_1";
                 ViewBag.CptLinksCliam = "txt2links" + "_1";
+
+                ViewBag.dx2index = "dx2index";
+                ViewBag.Dx2Cliam = "txt2Dx";
+                ViewBag.Div2DxRow = "Div2DxRow_1";
+
+                ViewBag.cpt2index = "cpt2index";
+                ViewBag.Cpt2Link = "txt2Link";
+                ViewBag.Div2CptRow = "Div2CptRow_1";
             }
             if (cliamID == 3)
             {
