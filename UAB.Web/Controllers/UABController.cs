@@ -47,21 +47,29 @@ namespace UAB.Controllers
         public IActionResult GetCodingAvailableChart(string Role, string ChartType, int ProjectID, string ProjectName)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
-            chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
-            chartSummaryDTO.ProjectName = ProjectName;
+            ChartSummaryDTO chartSummary = new ChartSummaryDTO();
+            chartSummary = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
+            chartSummary.ProjectName = ProjectName;
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
             ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             #endregion
-            if (chartSummaryDTO.CodingDTO.ClinicalCaseID == 0)
+            if (chartSummary.CodingDTO.ClinicalCaseID == 0)
             {
                 TempData["Toast"] = "There are no charts available";
                 return RedirectToAction("CodingSummary");
             }
-            return View("Coding", chartSummaryDTO);
+            return View("Coding", chartSummary);
+        }
+        [HttpGet]
+        public IActionResult GetBlockedChartsList(string Role,string ChartType,int ProjectID)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
+            lst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID); 
+            return PartialView("_BlockedList" ,lst);
         }
 
         [HttpGet]
@@ -86,32 +94,34 @@ namespace UAB.Controllers
 
 
         [HttpGet]
-        public IActionResult GetCodingBlockedCharts(string Role, string ChartType, int ProjectID, string ProjectName, string ccid, string plusorminus)
+        public IActionResult GetCodingBlockedCharts(string Role, string ChartType, int ProjectID, string ProjectName,string ccid, string plusorminus)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<ChartSummaryDTO> chartSummaryDTOlst = new List<ChartSummaryDTO>();
 
             chartSummaryDTOlst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);
-
+            
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
+            switch (plusorminus)
+            {
+                case "Next":
+                    chartSummaryDTO = chartSummaryDTOlst.SkipWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).FirstOrDefault();
+                    if (chartSummaryDTO == null)
+                    {
+                        chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
+                    }
+                    break;
+                case "Previous":
+                    chartSummaryDTO = chartSummaryDTOlst.TakeWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).LastOrDefault();
+                    if (chartSummaryDTO == null)
+                    {
+                        chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
+                    }
+                    break;
 
-            if (plusorminus == "Next")
-            {
-                chartSummaryDTO = chartSummaryDTOlst.SkipWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).FirstOrDefault();
-                if (chartSummaryDTO == null)
-                {
+                default:
                     chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
-                }
-                chartSummaryDTO.ProjectName = ProjectName;
-            }
-            else
-            {
-                chartSummaryDTO = chartSummaryDTOlst.TakeWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).LastOrDefault();
-                if (chartSummaryDTO == null)
-                {
-                    chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
-                }
-                chartSummaryDTO.ProjectName = ProjectName;
+                    break;
             }
 
             ViewBag.IsBlocked = "1";
@@ -313,6 +323,14 @@ namespace UAB.Controllers
                 ViewBag.CptModCliam = "txt2mod" + "_1";
                 ViewBag.CptQtyCliam = "txt2qty" + "_1";
                 ViewBag.CptLinksCliam = "txt2links" + "_1";
+
+                ViewBag.dx2index = "dx2index";
+                ViewBag.Dx2Cliam = "txt2Dx";
+                ViewBag.Div2DxRow = "Div2DxRow_1";
+
+                ViewBag.cpt2index = "cpt2index";
+                ViewBag.Cpt2Link = "txt2Link";
+                ViewBag.Div2CptRow = "Div2CptRow_1";
             }
             if (cliamID == 3)
             {

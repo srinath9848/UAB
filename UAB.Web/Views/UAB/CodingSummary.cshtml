@@ -1,45 +1,46 @@
 ﻿@using UAB.enums
 @model List<UAB.DTO.DashboardDTO>
-@{
+    @{
     ViewData["Title"] = "CodingSummary";
-}
-<style type="text/css">
-    .highlight {
-        background-color: #a8cb17 !important;
     }
-</style>
+    <style type="text/css">
+        .highlight {
+            background-color: #a8cb17 !important;
+        }
+    </style>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Projects</h4><br />
-                    @await Html.PartialAsync("_Msg")
-                </div>
-                <table class="table table-striped table-bordered dataTable workcontexts">
-                    <thead>
-                        <tr>
-                            <th scope="col" class="tblHeaderRow">
-                                Name
-                            </th>
-                            <th scope="col" class="tblHeaderRow">
-                                Available Charts
-                            </th>
-                            <th scope="col" class="tblHeaderRow">
-                                Incorrect Charts
-                            </th>
-                            <th scope="col" class="tblHeaderRow">
-                                ReadyForPosting Charts
-                            </th>
-                            <th scope="col" class="tblHeaderRow">
-                                Blocked Charts
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody style="cursor:pointer;">
-                        @foreach (var item in Model)
-                        {
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div id="modalContent"></div>
+                        <h4 class="card-title">Projects</h4><br />
+                        @await Html.PartialAsync("_Msg")
+                    </div>
+                    <table class="table table-striped table-bordered dataTable workcontexts">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="tblHeaderRow">
+                                    Name
+                                </th>
+                                <th scope="col" class="tblHeaderRow">
+                                    Available Charts
+                                </th>
+                                <th scope="col" class="tblHeaderRow">
+                                    Incorrect Charts
+                                </th>
+                                <th scope="col" class="tblHeaderRow">
+                                    ReadyForPosting Charts
+                                </th>
+                                <th scope="col" class="tblHeaderRow">
+                                    Blocked Charts
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody style="cursor:pointer;">
+                            @foreach (var item in Model)
+                            {
                             <tr>
                                 <td scope="col">
                                     <b> @item.ProjectName</b>
@@ -47,75 +48,95 @@
                                 <td scope="col" style="text-align:center">
                                     @if (item.AvailableCharts == 0)
                                     {
-                                        <label class="lblCharts">@item.AvailableCharts</label>
-                                        <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("GetCodingAvailableChart", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
+                                    <label class="lblCharts">@item.AvailableCharts</label>
+                                    <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
+                                    <a href="@Url.Action("GetCodingAvailableChart", "UAB" )" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
-                                        <label class="lblCharts">@item.AvailableCharts</label>
-                                        <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("GetCodingAvailableChart", "UAB",new { Role=Roles.Coder,ChartType="Available",ProjectID = item.ProjectID,ProjectName =item.ProjectName})" class="btn btn-info btn-sm">Get Next</a>
+                                    <label class="lblCharts">@item.AvailableCharts</label>
+                                    <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
+                                    <a href="@Url.Action("GetCodingAvailableChart", "UAB" ,new { Role=Roles.Coder,ChartType ="Available" ,ProjectID=item.ProjectID,ProjectName =item.ProjectName})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">
                                     @if (item.QARebuttalCharts == 0)
                                     {
-                                        <label class="lblCharts">@item.QARebuttalCharts</label>
-                                        <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("GetCodingIncorrectChart", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
+                                    <label class="lblCharts">@item.QARebuttalCharts</label>
+                                    <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
+                                    <a href="@Url.Action(" GetCodingIncorrectChart", "UAB" )" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
-                                        <label class="lblCharts">@item.QARebuttalCharts</label>
-                                        <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("GetCodingIncorrectChart", "UAB",new { Role=Roles.Coder,ChartType="Incorrect",ProjectID = item.ProjectID,ProjectName =item.ProjectName})" class="btn btn-info btn-sm">Get Next</a>
+                                    <label class="lblCharts">@item.QARebuttalCharts</label>
+                                    <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
+                                    <a href="@Url.Action(" GetCodingIncorrectChart", "UAB" ,new { Role=Roles.Coder,ChartType ="Incorrect" ,ProjectID=item.ProjectID,ProjectName =item.ProjectName})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">
                                     @if (item.ReadyForPostingCharts == 0)
                                     {
-                                        <label class="lblCharts">@item.ReadyForPostingCharts</label>
-                                        <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("GetCodingReadyForPostingChart", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
+                                    <label class="lblCharts">@item.ReadyForPostingCharts</label>
+                                    <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
+                                    <a href="@Url.Action(" GetCodingReadyForPostingChart", "UAB" )" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
-                                        <label class="lblCharts">@item.ReadyForPostingCharts</label>
-                                        <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("GetCodingReadyForPostingChart", "UAB",new { Role=Roles.Coder,ChartType="ReadyForPosting",ProjectID = item.ProjectID,ProjectName =item.ProjectName})" class="btn btn-info btn-sm">Get Next</a>
+                                    <label class="lblCharts">@item.ReadyForPostingCharts</label>
+                                    <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
+                                    <a href="@Url.Action(" GetCodingReadyForPostingChart", "UAB" ,new { Role=Roles.Coder,ChartType ="ReadyForPosting" ,ProjectID=item.ProjectID,ProjectName =item.ProjectName})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
                                 <td scope="col" style="text-align:center">
                                     @if (item.BlockedCharts == 0)
                                     {
-                                        <label class="lblCharts">@item.BlockedCharts</label>
-                                        <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("GetCodingBlockedChart", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
+                                    <label class="lblCharts">@item.BlockedCharts</label>
+                                    <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
+                                    <a href="@Url.Action(" GetCodingBlockedChart", "UAB" )" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
-                                        <label class="lblCharts">@item.BlockedCharts</label>
-                                        <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
-                                        <a href="@Url.Action("GetCodingBlockedChart", "UAB",new { Role=Roles.Coder,ChartType="Block",ProjectID = item.ProjectID,ProjectName =item.ProjectName})" class="btn btn-info btn-sm">Get Next</a>
+                                    <label class="lblCharts">@item.BlockedCharts</label>
+                                    <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
+                                    <a href="@Url.Action(" GetCodingBlockedChart", "UAB" ,new { Role=Roles.Coder,ChartType ="Block" ,ProjectID=item.ProjectID,ProjectName =item.ProjectName})" class="btn btn-info btn-sm">Get Next</a>
                                     }
+                                    <button id="btnBlocklist" type="button" class="btn btn-info btn-sm" onclick="BlockedChartsList(@item.ProjectID)">Show All Blocked Charts</button>
                                 </td>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div>
+    <div>
 
-</div>
-<script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript">
+    </div>
+    <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript">
     $(document).ready(function () {
         $("#coding").addClass('selected');
         setTimeout('$(".autohide").hide()', 5000);
+
+        BlockedChartsList = function (ProjectId) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetBlockedChartsList", "UAB")",
+                data: {
+                    "Role": "@Roles.Coder",
+                    "ChartType": "Block",
+                    "ProjectID": ProjectId,
+                    },
+                success: function (response) {
+                    $("#modalContent").html(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        };
+
     });
-</script>
+    </script>
 
