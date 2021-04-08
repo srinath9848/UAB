@@ -107,7 +107,7 @@
                         dxArray2.push(val);
                         $("#hdnDxCodes1").val(dxArray2);
                         var text = "'" + "txtDx_" + id + "_" +  parseInt(2) +"'";
-                        $("#DivDx_2").append('<div id="DivDxRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 lessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxCliams(' + text + ')" class="form-control CoderDetails cliam_' + cliamid + '" id="txtDx2Cliam_' + id + '" /></div></div>');
+                        $("#DivDx_2").append('<div id="DivDxRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxCliams(' + text + ')" class="form-control CoderDetails cliam_' + cliamid + '" id="txtDx2Cliam_' + id + '" /></div></div>');
                         $("#txtDx2Cliam_" + currId).removeAttr("onfocusout", "");
                         $("#txtDx2Cliam_1").removeAttr("onfocusout", "");
                         $("#txtDx2Cliam_" + id).focus();
@@ -124,7 +124,7 @@
                         dxArray3.push(val);
                         $("#hdnDxCodes2").val(dxArray3);
                         var text = "'" + "txtDx_" + id + "_" + parseInt(3) + "'";
-                        $("#DivDx_3").append('<div id="DivDxRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 lessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxCliams(' + text + ')" class="form-control CoderDetails cliam_' + cliamid + '" id="txtDx3Cliam_' + id + '" /></div></div>');
+                        $("#DivDx_3").append('<div id="DivDxRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxCliams(' + text + ')" class="form-control CoderDetails cliam_' + cliamid + '" id="txtDx3Cliam_' + id + '" /></div></div>');
                         $("#txtDx3Cliam_" + currId).removeAttr("onfocusout", "");
                         $("#txtDx3Cliam_1").removeAttr("onfocusout", "");
                         $("#txtDx3Cliam_" + id).focus();
@@ -141,7 +141,7 @@
                         dxArray4.push(val);
                         $("#hdnDxCodes3").val(dxArray4);
                         var text = "'" + "txtDx_" + id + "_" + parseInt(4) + "'";
-                        $("#DivDx_4").append('<div id="DivDxRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 lessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxCliams(' + text + ')" class="form-control CoderDetails Dxcliam_' + cliamid + '" id="txtDx4Cliam_' + id + '" /></div></div>');
+                        $("#DivDx_4").append('<div id="DivDxRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxCliams(' + text + ')" class="form-control CoderDetails Dxcliam_' + cliamid + '" id="txtDx4Cliam_' + id + '" /></div></div>');
                         $("#txtDx4Cliam_" + currId).removeAttr("onfocusout", "");
                         $("#txtDx4Cliam_1").removeAttr("onfocusout", "");
                         $("#txtDx4Cliam_" + id).focus();
@@ -353,4 +353,84 @@
             }
         }
     });
+
+        $(document).on('change', '#Providers_2', function () {
+            EnableButtonForClaim2();
+        });
+    $(document).on('change', '#Payors_2', function () {
+            EnableButtonForClaim2();
+    });
+    $(document).on('change', '#txtDx2Cliam_1', function () {
+            EnableButtonForClaim2();
+    });
+    $(document).on('change', '#txt2Cpt_1', function () {
+            EnableButtonForClaim2();
+        });
+
+        EnableButtonForClaim2 = function () {
+            if ($('#PayorID').val() !== "" && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== ""
+                && $('#Providers_2').val() !== "" && $('#Payors_2').val() !== "" && $('#txtDx2Cliam_1').val() !== "" && $('#txt2Cpt_1').val() !== ""
+                && $('#Providers_3').val() === undefined && $('#Providers_4').val() === undefined) {
+                $('#codingSubmit').prop('disabled', false);
+                $('#codingSubmitAndGetNext').prop('disabled', false);
+            }
+            else {
+                $('#codingSubmit').prop('disabled', true);
+                $('#codingSubmitAndGetNext').prop('disabled', true);
+            }
+    }
+
+    $(document).on('change', '#Providers_3', function () {
+        EnableButtonForClaim3();
+    });
+    $(document).on('change', '#Payors_3', function () {
+        EnableButtonForClaim3();
+    });
+    $(document).on('change', '.Dxcliam_3', function () {
+        EnableButtonForClaim3();
+    });
+    $(document).on('change', '#txt3Cpt_1', function () {
+        EnableButtonForClaim3();
+    });
+
+    EnableButtonForClaim3 = function () {
+        if ($('#PayorID').val() !== "" && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== ""
+            && $('#Providers_2').val() !== "" && $('#Payors_2').val() !== "" && $('#txtDx2Cliam_1').val() !== "" && $('#txt2Cpt_1').val() !== ""
+            && $('#Providers_3').val() !== "" && $('#Payors_3').val() !== "" && $('.Dxcliam_3').val() !== "" && $('#txt3Cpt_1').val() !== ""
+            && $('#Providers_4').val() === undefined) {
+            $('#codingSubmit').prop('disabled', false);
+            $('#codingSubmitAndGetNext').prop('disabled', false);
+        }
+        else {
+            $('#codingSubmit').prop('disabled', true);
+            $('#codingSubmitAndGetNext').prop('disabled', true);
+        }
+    }
+
+    $(document).on('change', '#Providers_4', function () {
+        EnableButtonForClaim3();
+    });
+    $(document).on('change', '#Payors_4', function () {
+        EnableButtonForClaim3();
+    });
+    $(document).on('change', '.Dxcliam_4', function () {
+        EnableButtonForClaim3();
+    });
+    $(document).on('change', '#txt4Cpt_1', function () {
+        EnableButtonForClaim3();
+    });
+
+    EnableButtonForClaim3 = function () {
+        if ($('#PayorID').val() !== "" && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== ""
+            && $('#Providers_2').val() !== "" && $('#Payors_2').val() !== "" && $('#txtDx2Cliam_1').val() !== "" && $('#txt2Cpt_1').val() !== ""
+            && $('#Providers_3').val() !== "" && $('#Payors_3').val() !== "" && $('.Dxcliam_3').val() !== "" && $('#txt3Cpt_1').val() !== ""
+            && $('#Providers_4').val() !== "" && $('#Payors_4').val() !== "" && $('.Dxcliam_4').val() !== "" && $('#txt4Cpt_1').val() !== "") {
+            $('#codingSubmit').prop('disabled', false);
+            $('#codingSubmitAndGetNext').prop('disabled', false);
+        }
+        else {
+            $('#codingSubmit').prop('disabled', true);
+            $('#codingSubmitAndGetNext').prop('disabled', true);
+        }
+    }
 </script>

@@ -136,8 +136,8 @@
                         <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.Coder, ChartType= "Block", ProjectID=@Model.ProjectID, ProjectName=Model.ProjectName,ccid=Model.CodingDTO.ClinicalCaseID,plusorminus="Next"})" class="btn btn-success Available" id="btnNext" style="display:none">Next</a>
                         <button id="btnBlock" type="button" class="btn btn-danger" onclick="Block()">Block</button>
                         <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger" onclick="BlockHistory()">Block History</button>
-                        <button id="codingSubmit" name="codingSubmit" type="submit" class="btn btn-success Available">Save</button>
-                        <button id="codingSubmitAndGetNext" name="codingSubmitAndGetNext" type="submit" value="codingSubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
+                        <button id="codingSubmit" name="codingSubmit" type="submit" class="btn btn-success Available" disabled>Save</button>
+                        <button id="codingSubmitAndGetNext" name="codingSubmitAndGetNext" type="submit" value="codingSubmitAndGetNext" class="btn btn-success Available" disabled>Save And GetNext</button>
                         <button type="submit" class="btn btn-success Approved">Posting Completed</button>
                         <button id="postingSubmitAndGetNext" name="postingSubmitAndGetNext" type="submit" value="postingSubmitAndGetNext" class="btn btn-success Approved">Post And GetNext</button>
                         <a href="@Url.Action("CodingSummary","UAB")" class="btn btn-danger Approved">Close</a>
@@ -185,6 +185,51 @@
                 }
             });
         };
+        $('#PayorID').change(function () {
+            EnableButton();
+        });
+        $('#txtDx_1').change(function () {
+            EnableButton();
+        });
+        $('#txtCpt_1').change(function () {
+            EnableButton();
+        });
+
+        EnableButton = function () {
+            if ($('#PayorID').val() !== "" && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== "" && $('#Providers_2').val() === undefined && $('#Providers_3').val() === undefined && $('#Providers_4').val() === undefined) {
+                $('#codingSubmit').prop('disabled', false);
+                $('#codingSubmitAndGetNext').prop('disabled', false);
+            }
+            else {
+                $('#codingSubmit').prop('disabled', true);
+                $('#codingSubmitAndGetNext').prop('disabled', true);
+            }
+        }
+
+        $('#Providers_2').change(function () {
+            EnableButtonForClaim2();
+        });
+        $('#Payors_2').change(function () {
+            EnableButtonForClaim2();
+        });
+        $('#txtDx2Cliam_1').change(function () {
+            EnableButtonForClaim2();
+        });
+        $('#txt2Cpt_1').change(function () {
+            EnableButtonForClaim2();
+        });
+
+        EnableButtonForClaim2 = function () {
+            if ($('#PayorID').val() !== "" && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== ""
+                && $('#Providers_2').val() !== "" && $('#Payors_2').val() !== "" && $('#txtDx2Cliam_1').val() !== "" && $('#txt2Cpt_1').val() !== "" && $('#Providers_3').val() === undefined && $('#Providers_4').val() === undefined) {
+                $('#codingSubmit').prop('disabled', false);
+                $('#codingSubmitAndGetNext').prop('disabled', false);
+            }
+            else {
+                $('#codingSubmit').prop('disabled', true);
+                $('#codingSubmitAndGetNext').prop('disabled', true);
+            }
+        }
 });
 </script>
 
