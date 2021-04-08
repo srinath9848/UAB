@@ -334,19 +334,35 @@ namespace UAB.Controllers
             }
             if (cliamID == 3)
             {
-                ViewBag.Cliam = "txtDx3Cliam" + "_1";
+                ViewBag.DxCliam = "txtDx3Cliam" + "_1";
                 ViewBag.CptCliam = "txt3Cpt" + "_1";
                 ViewBag.CptModCliam = "txt3mod" + "_1";
                 ViewBag.CptQtyCliam = "txt3qty" + "_1";
                 ViewBag.CptLinksCliam = "txt3links" + "_1";
+
+                ViewBag.dx2index = "dx3index";
+                ViewBag.Dx2Cliam = "txt3Dx";
+                ViewBag.Div2DxRow = "Div3DxRow_1";
+
+                ViewBag.cpt2index = "cpt3index";
+                ViewBag.Cpt2Link = "txt3Link";
+                ViewBag.Div2CptRow = "Div3CptRow_1";
             }
             if (cliamID == 4)
             {
-                ViewBag.Cliam = "txtDx4Cliam" + "_1";
+                ViewBag.DxCliam = "txtDx4Cliam" + "_1";
                 ViewBag.CptCliam = "txt4Cpt" + "_1";
                 ViewBag.CptModCliam = "txt4mod" + "_1";
                 ViewBag.CptQtyCliam = "txt4qty" + "_1";
                 ViewBag.CptLinksCliam = "txt4links" + "_1";
+
+                ViewBag.dx2index = "dx4index";
+                ViewBag.Dx2Cliam = "txt4Dx";
+                ViewBag.Div2DxRow = "Div4DxRow_1";
+
+                ViewBag.cpt2index = "cpt4index";
+                ViewBag.Cpt2Link = "txt4Link";
+                ViewBag.Div2CptRow = "Div4CptRow_1";
             }
 
             return PartialView("_NewCliam");
