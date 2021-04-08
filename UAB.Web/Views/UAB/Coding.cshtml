@@ -14,6 +14,9 @@
     /* .input-group-text {
         display: none;
     }*/
+    .AlignCross{
+        display:inherit;
+    }
 </style>
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
 <script src="~/dashboardassets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
@@ -353,6 +356,7 @@
                    $("#tabDiv2").hide();
                    $("#tabDiv4").hide();
                    $(".tabDiv4").show();
+                   $(".tabDiv3").addClass('AlignCross');
                    $("#cliam" + id).addClass('active show');
                    $("#" + nexttab).show();
                    $("#htxt4").show();
@@ -362,6 +366,7 @@
                    $("#tabDiv2").hide();
                    $("#tabDiv3").hide();
                    $(".tabDiv4").show();
+                   $(".tabDiv4").addClass('AlignCross');
                    $("#cliam" + id).addClass('active show');
                    $("#" + nexttab).show();
                }
