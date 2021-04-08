@@ -9,6 +9,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <div id="modalContent"></div>
                     <h4 class="card-title">Projects</h4>
                     @await Html.PartialAsync("_Msg")
                 </div>
@@ -97,6 +98,7 @@
                                         <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
                                         <a href="@Url.Action("GetCodingBlockedChart", "UAB",new { Role=Roles.QA,ChartType="Block",ProjectID = item.ProjectID,ProjectName =item.ProjectName})" class="btn btn-info btn-sm">Get Next</a>
                                     }
+                                    <button id="btnBlocklist" type="button" class="btn btn-info btn-sm" onclick="BlockedChartsList(@item.ProjectID)">Show All Blocked Charts</button>
                                 </td>
                                 @*<td scope="col" style="text-align:center">
                                         @if (item.OnHoldCharts == 0)
@@ -123,6 +125,26 @@
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+
+        BlockedChartsList = function (ProjectId) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetBlockedChartsList", "UAB")",
+                data: {
+                    "Role": "@Roles.QA",
+                    "ChartType": "Block",
+                    "ProjectID": ProjectId,
+                    },
+                success: function (response) {
+                    $("#modalContent").html(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        };
+
+
 
         $("#qa").addClass('selected');
         //setTimeout('$(".autohide").hide()', 5000);

@@ -68,7 +68,8 @@ namespace UAB.Controllers
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
-            lst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID); 
+            lst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);
+            ViewBag.Role = Role;
             return PartialView("_BlockedList" ,lst);
         }
 
@@ -96,6 +97,7 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult GetCodingBlockedCharts(string Role, string ChartType, int ProjectID, string ProjectName,string ccid, string plusorminus)
         {
+            int cid  = Convert.ToInt32(ccid);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<ChartSummaryDTO> chartSummaryDTOlst = new List<ChartSummaryDTO>();
 
@@ -105,26 +107,30 @@ namespace UAB.Controllers
             switch (plusorminus)
             {
                 case "Next":
-                    chartSummaryDTO = chartSummaryDTOlst.SkipWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).FirstOrDefault();
+                    chartSummaryDTO = chartSummaryDTOlst.SkipWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(cid)).Skip(1).FirstOrDefault();
                     if (chartSummaryDTO == null)
                     {
-                        chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
+                        chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == cid).FirstOrDefault();
                     }
                     break;
                 case "Previous":
-                    chartSummaryDTO = chartSummaryDTOlst.TakeWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).LastOrDefault();
+                    var x = chartSummaryDTOlst;
+                    x.Reverse();
+                    chartSummaryDTO = x.SkipWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(cid)).Skip(1).FirstOrDefault();
+
                     if (chartSummaryDTO == null)
                     {
-                        chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
+                        chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID ==cid).FirstOrDefault();
                     }
                     break;
 
                 default:
-                    chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
+                    chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID ==cid).FirstOrDefault();
                     break;
             }
 
             ViewBag.IsBlocked = "1";
+            ViewBag.Postionindex = 0;
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
