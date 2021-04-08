@@ -12,21 +12,24 @@
     div.CptlessWidth {
         max-width: 20% !important;
     }
-    .ControlHeight{
-        height:32px !important;
+
+    .ControlHeight {
+        height: 32px !important;
     }
+
     label.lessWidth {
         max-width: 12% !important;
     }
-    .AlignControl{
-        margin-right:-115px;
+
+    .AlignControl {
+        margin-right: -115px;
     }
 </style>
 <div class="col-md-12">
     <div class="card">
         @*<div class="card-body">
-            <h4 class="card-title"><span>Chart ID : <label style="color: black;">@Model.CodingDTO.ClinicalCaseID</label></span></h4>
-        </div>*@
+                <h4 class="card-title"><span>Chart ID : <label style="color: black;">@Model.CodingDTO.ClinicalCaseID</label></span></h4>
+            </div>*@
         @Html.HiddenFor(model => model.Links)
         @Html.HiddenFor(model => model.ProjectName)
         @Html.HiddenFor(model => model.ProjectID)
@@ -43,10 +46,10 @@
         <!-- Tabs -->
         <div class="card">
             <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item tabDiv1"> <a class="nav-link active tab" data-toggle="tab" id="1" alt="tabDiv1" href="#cliam1" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down">Cliam 1</span></a> </li>
-                <li class="nav-item tabDiv2"> <a class="nav-link tab" data-toggle="tab" id="2" alt="tabDiv2" href="#cliam2" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down" id="htxt2">+</span></a> </li>
-                <li class="nav-item tabDiv3" style="display:none;"> <a class="nav-link tab" data-toggle="tab" id="3" alt="tabDiv3" href="#cliam3" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down" id="htxt3">+</span></a> </li>
-                <li class="nav-item tabDiv4" style="display:none;"> <a class="nav-link tab" data-toggle="tab" id="4" alt="tabDiv4" href="#cliam4" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down" id="htxt4">+</span></a> </li>
+                <li class="nav-item tabDiv1"> <a class="nav-link active tab" data-toggle="tab" id="1" alt="tabDiv1" href="#cliam1" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick">Cliam 1</span></a> </li>
+                <li class="nav-item tabDiv2" style="display:inherit;"> <a class="nav-link tab" data-toggle="tab" id="2" alt="tabDiv2" href="#cliam2" role="tab"> <span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick" id="htxt2">+</span></a><a id="deletecliam2" style="display:none;"><span class="btn btn-sm" onclick="Deletetabcliam('tabDiv_2')"><i class="fa fa-times"></i></span></a></li>
+                <li class="nav-item tabDiv3" style="display:none;"> <a class="nav-link tab" data-toggle="tab" id="3" alt="tabDiv3" href="#cliam3" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick" id="htxt3">+</span></a><a id="deletecliam3" style="display:none;"><span class="btn btn-sm" onclick="Deletetabcliam('tabDiv_3')"><i class="fa fa-times"></i></span></a> </li>
+                <li class="nav-item tabDiv4" style="display:none;"> <a class="nav-link tab" data-toggle="tab" id="4" alt="tabDiv4" href="#cliam4" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick" id="htxt4">+</span></a><a id="deletecliam4" style="display:none;"><span class="btn btn-sm" onclick="Deletetabcliam('tabDiv_4')"><i class="fa fa-times"></i></span></a> </li>
             </ul>
             <div class="tab-content tabcontent-border">
                 <div class="tab-pane active" id="cliam1" role="tabpanel">
@@ -82,30 +85,31 @@
                             </div>
                         </div>
                         <div id="DivDx">
-                            <div class="form-group row" id="DivDxRow_0">
+                            <div class="form-group row" id="DivDxRow_1">
                                 <label class="col-md-3 m-t-15 AlignControl">Dx</label>
                                 <div class="col-md-3 input-group">
                                     <div class="input-group-prepend ControlHeight">
-                                        <span class="input-group-text" id="basic-addon1">1</span>
+                                        <span class="input-group-text dxindex" id="basic-addon1">1</span>
                                     </div>
                                     @Html.TextBoxFor(model => model.Dx, new { @class = "form-control CoderDetails txtDx ControlHeight", @autocomplete = "off", @id = "txtDx_1", @placeholder = "Code", @onfocusout = "DxFunction('txtDx_1')" })
                                     @Html.ValidationMessageFor(model => model.Dx, null, new { @class = "text-danger Dxerror" })
+                                    @*<button type="button" class="btn btn-sm" onclick="DeleteDxCodes('DivDxRow_1')"><i class="fa fa-times"></i></button>*@
                                 </div>
                             </div>
                         </div>
                         <div id="DivCpt">
-                            <div class="form-group row" id="DivCptRow_0">
+                            <div class="form-group row" id="DivCptRow_1">
                                 <label class="col-md-3 m-t-15 AlignControl">CPT</label>
                                 <div class="col-md-3 CptlessWidth input-group">
                                     <div class="input-group-prepend ControlHeight">
-                                        <span class="input-group-text" id="basic-addon1">1</span>
+                                        <span class="input-group-text cptindex" id="basic-addon1">1</span>
                                     </div>
                                     @Html.TextBoxFor(model => model.CPTCode, new { @class = "form-control CoderDetails txtCpt ControlHeight", @autocomplete = "off", @placeholder = "Code", @id = "txtCpt_1", @tabindex = "5" })
-                                    <input type="text" class="form-control CoderDetails" id="txtMod_1" autocomplete="off" placeholder="Mod" tabindex="6" />
-                                    <input type="text" id="txtQty_1" class="form-control CoderDetails" autocomplete="off" placeholder="1" value="1" tabindex="7" />
-                                    <input type="text" id="txtLinks_1" onfocusout="CptFunction('txtLinks_1')" class="form-control CoderDetails" autocomplete="off" placeholder="Link All" tabindex="8" />
+                                    <input type="text" class="form-control CoderDetails txtMod" id="txtMod_1" autocomplete="off" placeholder="Mod" tabindex="6" />
+                                    <input type="text" id="txtQty_1" class="form-control CoderDetails txtQty" autocomplete="off" placeholder="1" value="1" tabindex="7" />
+                                    <input type="text" id="txtLinks_1" onfocusout="CptFunction('txtLinks_1')" class="form-control CoderDetails txtLinks" autocomplete="off" placeholder="Link All" tabindex="8" />
                                     @Html.ValidationMessageFor(model => model.CPTCode, null, new { @class = "text-danger Dxerror" })
-
+                                    @*<button type="button" class="btn btn-sm" onclick="DeleteCptCodes('txtLinks_1')"><i class="fa fa-times"></i></button>*@
                                 </div>
                             </div>
                         </div>
@@ -136,8 +140,8 @@
                         <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.Coder, ChartType= "Block", ProjectID=@Model.ProjectID, ProjectName=Model.ProjectName,ccid=Model.CodingDTO.ClinicalCaseID,plusorminus="Next"})" class="btn btn-success Available" id="btnNext" style="display:none">Next</a>
                         <button id="btnBlock" type="button" class="btn btn-danger" onclick="Block()">Block</button>
                         <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger" onclick="BlockHistory()">Block History</button>
-                        <button id="codingSubmit" name="codingSubmit" type="submit" class="btn btn-success Available">Save</button>
-                        <button id="codingSubmitAndGetNext" name="codingSubmitAndGetNext" type="submit" value="codingSubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
+                        <button id="codingSubmit" name="codingSubmit" type="submit" class="btn btn-success Available" disabled>Save</button>
+                        <button id="codingSubmitAndGetNext" name="codingSubmitAndGetNext" type="submit" value="codingSubmitAndGetNext" class="btn btn-success Available" disabled>Save And GetNext</button>
                         <button type="submit" class="btn btn-success Approved">Posting Completed</button>
                         <button id="postingSubmitAndGetNext" name="postingSubmitAndGetNext" type="submit" value="postingSubmitAndGetNext" class="btn btn-success Approved">Post And GetNext</button>
                         <a href="@Url.Action("CodingSummary","UAB")" class="btn btn-danger Approved">Close</a>
@@ -185,6 +189,51 @@
                 }
             });
         };
+        $('#PayorID').change(function () {
+            EnableButton();
+        });
+        $('#txtDx_1').change(function () {
+            EnableButton();
+        });
+        $('#txtCpt_1').change(function () {
+            EnableButton();
+        });
+
+        EnableButton = function () {
+            if ($('#PayorID').val() !== "" && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== "" && $('#Providers_2').val() === undefined && $('#Providers_3').val() === undefined && $('#Providers_4').val() === undefined) {
+                $('#codingSubmit').prop('disabled', false);
+                $('#codingSubmitAndGetNext').prop('disabled', false);
+            }
+            else {
+                $('#codingSubmit').prop('disabled', true);
+                $('#codingSubmitAndGetNext').prop('disabled', true);
+            }
+        }
+
+        $('#Providers_2').change(function () {
+            EnableButtonForClaim2();
+        });
+        $('#Payors_2').change(function () {
+            EnableButtonForClaim2();
+        });
+        $('#txtDx2Cliam_1').change(function () {
+            EnableButtonForClaim2();
+        });
+        $('#txt2Cpt_1').change(function () {
+            EnableButtonForClaim2();
+        });
+
+        EnableButtonForClaim2 = function () {
+            if ($('#PayorID').val() !== "" && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== ""
+                && $('#Providers_2').val() !== "" && $('#Payors_2').val() !== "" && $('#txtDx2Cliam_1').val() !== "" && $('#txt2Cpt_1').val() !== "" && $('#Providers_3').val() === undefined && $('#Providers_4').val() === undefined) {
+                $('#codingSubmit').prop('disabled', false);
+                $('#codingSubmitAndGetNext').prop('disabled', false);
+            }
+            else {
+                $('#codingSubmit').prop('disabled', true);
+                $('#codingSubmitAndGetNext').prop('disabled', true);
+            }
+        }
 });
 </script>
 

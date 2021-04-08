@@ -12,6 +12,7 @@
     .ControlHeight {
         height: 32px !important;
     }
+
     .AlignControl {
         margin-right: -115px;
     }
@@ -20,54 +21,54 @@
 <div class="form-group row">
     <label class="col-md-3 m-t-15 AlignControl">Provider</label>
     <div class="col-md-3" style="display:inherit;">
-        @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails", @id = string.Format("Providers_{0}", cliamID) })
+        @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("Providers_{0}", cliamID) })
         @Html.ValidationMessageFor(model => model.ProviderID, null, new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group row">
     <label class="col-md-3 m-t-15 AlignControl">Payor</label>
     <div class="col-md-3" style="display:inherit;">
-        @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails", @id = string.Format("Payors_{0}", cliamID) })
+        @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("Payors_{0}", cliamID) })
         @Html.ValidationMessageFor(model => model.PayorID, null, new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group row">
     <label class="col-md-3 m-t-15 AlignControl">Note Title</label>
     <div class="col-md-3">
-        @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails", @autocomplete = "off", @id = string.Format("NoteTitle_{0}", cliamID) })
+        @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails ControlHeight", @autocomplete = "off", @id = string.Format("NoteTitle_{0}", cliamID) })
         @Html.ValidationMessageFor(model => model.NoteTitle, null, new { @class = "text-danger" })
     </div>
 </div>
 <div id="DivDx_@cliamID">
-    <div class="form-group row" id="DivDxRow_@cliamID">
+    <div class="form-group row" id="@ViewBag.Div2DxRow">
         <label class="col-md-3 m-t-15 AlignControl">Dx</label>
-        <div class="col-md-3 lessWidth input-group">
+        <div class="col-md-3 input-group">
             <div class="input-group-prepend ControlHeight">
-                <span class="input-group-text" id="basic-addon1">1</span>
+                <span class="input-group-text @ViewBag.dx2index" id="basic-addon1">1</span>
             </div>
-            <input type="text" id="@dxCliam" onfocusout="DxCliams('txtDx_1_@cliamID')" class="form-control CoderDetails Dxcliam_@cliamID" autocomplete="off" placeholder="Code" />
+            <input type="text" id="@dxCliam" onfocusout="DxCliams('txtDx_1_@cliamID')" class="form-control CoderDetails @ViewBag.Dx2Cliam Dxcliam_@cliamID" autocomplete="off" placeholder="Code" />
             @Html.ValidationMessageFor(model => model.Dx, null, new { @class = "text-danger Dxerror" })
         </div>
     </div>
 </div>
 <div id="DivCpt_@cliamID">
-    <div class="form-group row" id="DivCptRow_@cliamID">
+    <div class="form-group row" id="@ViewBag.Div2CptRow">
         <label class="col-md-3 m-t-15 AlignControl">CPT</label>
         <div class="col-md-3 CptlessWidth input-group">
             <div class="input-group-prepend ControlHeight">
-                <span class="input-group-text" id="basic-addon1">1</span>
+                <span class="input-group-text @ViewBag.cpt2index" id="basic-addon1">1</span>
             </div>
-            <input type="text" id="@cptCliam" class="form-control CoderDetails Cptcliam_@cliamID" autocomplete="off" placeholder="Code" tabindex="5" />
-            <input type="text" id="@cptModCliam" class="form-control CoderDetails Cptcliam_@cliamID" autocomplete="off" placeholder="Mod" tabindex="6" />
-            <input type="text" id="@cptQtyCliam" class="form-control CoderDetails Cptcliam_@cliamID" autocomplete="off" placeholder="1" value="1" tabindex="7" />
-            <input type="text" id="@cptLinksCliam" class="form-control CoderDetails Cptcliam_@cliamID" onfocusout="CptCliams('txtLinks_1_@cliamID')" autocomplete="off" placeholder="Link All" tabindex="8" />
+            <input type="text" id="@cptCliam" class="form-control CoderDetails ControlHeight Cptcliam_@cliamID" autocomplete="off" placeholder="Code" tabindex="5" />
+            <input type="text" id="@cptModCliam" class="form-control CoderDetails ControlHeight Cptcliam_@cliamID" autocomplete="off" placeholder="Mod" tabindex="6" />
+            <input type="text" id="@cptQtyCliam" class="form-control CoderDetails ControlHeight Cptcliam_@cliamID" autocomplete="off" placeholder="1" value="1" tabindex="7" />
+            <input type="text" id="@cptLinksCliam" class="form-control CoderDetails ControlHeight @ViewBag.Cpt2Link Cptcliam_@cliamID" onfocusout="CptCliams('txtLinks_1_@cliamID')" autocomplete="off" placeholder="Link All" tabindex="8" />
         </div>
     </div>
 </div>
 <div class="form-group row">
-    <label class="col-md-3 m-t-15">Provider Feedback</label>
+    <label class="col-md-3 m-t-15 AlignControl">Provider Feedback</label>
     <div class="col-md-3">
-        @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails", @id = string.Format("ProviderFeedbacks_{0}", cliamID) })
+        @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("ProviderFeedbacks_{0}", cliamID) })
         @Html.ValidationMessageFor(model => model.ProviderFeedbackID, null, new { @class = "text-danger" })
     </div>
 </div>
