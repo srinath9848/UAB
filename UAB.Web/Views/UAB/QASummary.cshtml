@@ -47,13 +47,13 @@
                                     @if (item.AvailableCharts == 0)
                                     {
                                         <label class="lblCharts">@item.AvailableCharts</label>
-                                        <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
+                                        <b>&nbsp;</b>
                                         <a href="@Url.Action("GetQAAvailableChart", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
                                         <label class="lblCharts">@item.AvailableCharts</label>
-                                        <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
+                                        <b>&nbsp;</b>
                                         <a href="@Url.Action("GetQAAvailableChart", "UAB",new { Role=Roles.QA,ChartType="Available",ProjectID = item.ProjectID,ProjectName =item.ProjectName})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
@@ -61,13 +61,13 @@
                                     @if (item.CoderRebuttalCharts == 0)
                                     {
                                         <label class="lblCharts">@item.CoderRebuttalCharts</label>
-                                        <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
+                                        <b>&nbsp;</b>
                                         <a href="@Url.Action("GetQARebuttalChartsOfCoder", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
                                         <label class="lblCharts">@item.CoderRebuttalCharts</label>
-                                        <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
+                                        <b>&nbsp;</b>
                                         <a href="@Url.Action("GetQARebuttalChartsOfCoder", "UAB",new { Role=Roles.QA,ChartType="RebuttalOfCoder",ProjectID = item.ProjectID,ProjectName =item.ProjectName})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
@@ -75,13 +75,13 @@
                                     @if (item.ShadowQARebuttalCharts == 0)
                                     {
                                         <label class="lblCharts">@item.ShadowQARebuttalCharts</label>
-                                        <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
+                                        <b>&nbsp;</b>
                                         <a href="@Url.Action("GetQARejectedChartsOfShadowQA", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
                                         <label class="lblCharts">@item.ShadowQARebuttalCharts</label>
-                                        <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
+                                        <b>&nbsp;</b>
                                         <a href="@Url.Action("GetQARejectedChartsOfShadowQA", "UAB",new { Role=Roles.QA,ChartType="ShadowQARejected",ProjectID = item.ProjectID,ProjectName =item.ProjectName})" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                 </td>
@@ -89,16 +89,16 @@
                                     @if (item.BlockedCharts == 0)
                                     {
                                         <label class="lblCharts">@item.BlockedCharts</label>
-                                        <b>&nbsp;&nbsp; &nbsp; &nbsp;</b>
+                                        <b>&nbsp;</b>
                                         <a href="@Url.Action("GetCodingBlockedChart", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
                                     }
                                     else
                                     {
                                         <label class="lblCharts">@item.BlockedCharts</label>
-                                        <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
+                                        <b>&nbsp;</b>
                                         <a href="@Url.Action("GetCodingBlockedChart", "UAB",new { Role=Roles.QA,ChartType="Block",ProjectID = item.ProjectID,ProjectName =item.ProjectName})" class="btn btn-info btn-sm">Get Next</a>
                                     }
-                                    <button id="btnBlocklist" type="button" class="btn btn-info btn-sm" onclick="BlockedChartsList(@item.ProjectID)">Show All Blocked Charts</button>
+                                    <button id="btnBlocklist" type="button" class="btn btn-info btn-sm" onclick="BlockedChartsList(@item.ProjectID)">Show All</button>
                                 </td>
                                 @*<td scope="col" style="text-align:center">
                                         @if (item.OnHoldCharts == 0)
