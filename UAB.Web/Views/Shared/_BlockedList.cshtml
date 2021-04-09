@@ -43,16 +43,24 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                        <tr>
-                            <td>
-                                <a href="@Url.Action("GetCodingBlockedCharts", "UAB", new { Role = Roles.Coder, ChartType = "Block", ProjectID =item.ProjectID, ProjectName =item.ProjectName,ccid=item.CodingDTO.ClinicalCaseID,plusorminus="Current"})" class="btn btn-info btn-sm">Open</a>
-                            </td>
-                            <td>@item.CodingDTO.ClinicalCaseID</td>
-                            <td>@item.CodingDTO.PatientMRN</td>
-                            <td>@item.BlockCategory</td>
-                            <td>@item.BlockRemarks</td>
-                            <td>@item.BlockedDate</td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    @switch (@ViewBag.Role)
+                                    {
+                                        case "QA":
+                                            <a href="@Url.Action("GetCodingBlockedCharts", "UAB", new { Role = Roles.QA, ChartType = "Block", ProjectID =item.ProjectID, ProjectName =item.ProjectName,ccid=item.CodingDTO.ClinicalCaseID,plusorminus="Current"})" class="btn btn-info btn-sm">Open</a>
+                                            break;
+                                        default:
+                                            <a href="@Url.Action("GetCodingBlockedCharts", "UAB", new { Role = Roles.Coder, ChartType = "Block", ProjectID =item.ProjectID, ProjectName =item.ProjectName,ccid=item.CodingDTO.ClinicalCaseID,plusorminus="Current"})" class="btn btn-info btn-sm">Open</a>
+                                            break;
+                                    }
+                                </td>
+                                <td>@item.CodingDTO.ClinicalCaseID</td>
+                                <td>@item.CodingDTO.PatientMRN</td>
+                                <td>@item.BlockCategory</td>
+                                <td>@item.BlockRemarks</td>
+                                <td>@item.BlockedDate</td>
+                            </tr>
                         }
                     </tbody>
                 </table>

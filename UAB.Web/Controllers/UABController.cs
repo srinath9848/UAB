@@ -68,7 +68,8 @@ namespace UAB.Controllers
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
-            lst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID); 
+            lst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);
+            ViewBag.Role = Role;
             return PartialView("_BlockedList" ,lst);
         }
 
@@ -96,6 +97,7 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult GetCodingBlockedCharts(string Role, string ChartType, int ProjectID, string ProjectName,string ccid, string plusorminus)
         {
+            int cid  = Convert.ToInt32(ccid);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<ChartSummaryDTO> chartSummaryDTOlst = new List<ChartSummaryDTO>();
 
@@ -105,26 +107,30 @@ namespace UAB.Controllers
             switch (plusorminus)
             {
                 case "Next":
-                    chartSummaryDTO = chartSummaryDTOlst.SkipWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).FirstOrDefault();
+                    chartSummaryDTO = chartSummaryDTOlst.SkipWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(cid)).Skip(1).FirstOrDefault();
                     if (chartSummaryDTO == null)
                     {
-                        chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
+                        chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == cid).FirstOrDefault();
                     }
                     break;
                 case "Previous":
-                    chartSummaryDTO = chartSummaryDTOlst.TakeWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).LastOrDefault();
+                    var x = chartSummaryDTOlst;
+                    x.Reverse();
+                    chartSummaryDTO = x.SkipWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(cid)).Skip(1).FirstOrDefault();
+
                     if (chartSummaryDTO == null)
                     {
-                        chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
+                        chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID ==cid).FirstOrDefault();
                     }
                     break;
 
                 default:
-                    chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
+                    chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID ==cid).FirstOrDefault();
                     break;
             }
 
             ViewBag.IsBlocked = "1";
+            ViewBag.Postionindex = 0;
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -334,19 +340,35 @@ namespace UAB.Controllers
             }
             if (cliamID == 3)
             {
-                ViewBag.Cliam = "txtDx3Cliam" + "_1";
+                ViewBag.DxCliam = "txtDx3Cliam" + "_1";
                 ViewBag.CptCliam = "txt3Cpt" + "_1";
                 ViewBag.CptModCliam = "txt3mod" + "_1";
                 ViewBag.CptQtyCliam = "txt3qty" + "_1";
                 ViewBag.CptLinksCliam = "txt3links" + "_1";
+
+                ViewBag.dx2index = "dx3index";
+                ViewBag.Dx2Cliam = "txt3Dx";
+                ViewBag.Div2DxRow = "Div3DxRow_1";
+
+                ViewBag.cpt2index = "cpt3index";
+                ViewBag.Cpt2Link = "txt3Link";
+                ViewBag.Div2CptRow = "Div3CptRow_1";
             }
             if (cliamID == 4)
             {
-                ViewBag.Cliam = "txtDx4Cliam" + "_1";
+                ViewBag.DxCliam = "txtDx4Cliam" + "_1";
                 ViewBag.CptCliam = "txt4Cpt" + "_1";
                 ViewBag.CptModCliam = "txt4mod" + "_1";
                 ViewBag.CptQtyCliam = "txt4qty" + "_1";
                 ViewBag.CptLinksCliam = "txt4links" + "_1";
+
+                ViewBag.dx2index = "dx4index";
+                ViewBag.Dx2Cliam = "txt4Dx";
+                ViewBag.Div2DxRow = "Div4DxRow_1";
+
+                ViewBag.cpt2index = "cpt4index";
+                ViewBag.Cpt2Link = "txt4Link";
+                ViewBag.Div2CptRow = "Div4CptRow_1";
             }
 
             return PartialView("_NewCliam");
