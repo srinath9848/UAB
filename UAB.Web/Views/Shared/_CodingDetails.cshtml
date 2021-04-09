@@ -28,18 +28,21 @@
 <div class="col-md-12">
     <div class="card">
         @*<div class="card-body">
-                <h4 class="card-title"><span>Chart ID : <label style="color: black;">@Model.CodingDTO.ClinicalCaseID</label></span></h4>
-            </div>*@
+            <h4 class="card-title"><span>Chart ID : <label style="color: black;">@Model.CodingDTO.ClinicalCaseID</label></span></h4>
+        </div>*@
         @Html.HiddenFor(model => model.Links)
         @Html.HiddenFor(model => model.ProjectName)
         @Html.HiddenFor(model => model.ProjectID)
         @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { @id = "ccid" })
         @Html.Hidden("hdnDxCodes")
         @Html.Hidden("hdnCptCodes")
+        @Html.Hidden("hdnClaim2")
         @Html.Hidden("hdnDxCodes1")
         @Html.Hidden("hdnCptCodes1")
+        @Html.Hidden("hdnClaim3")
         @Html.Hidden("hdnDxCodes2")
         @Html.Hidden("hdnCptCodes2")
+        @Html.Hidden("hdnClaim4")
         @Html.Hidden("hdnDxCodes3")
         @Html.Hidden("hdnCptCodes3")
 
