@@ -286,8 +286,7 @@ namespace UAB.DAL
                             if (reader["ProviderFeedbackId"] != DBNull.Value)
                                 chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
                         }
-                        else if ((Role == "QA" && ChartType == "Available") ||
-                            (Role == "Coder" && ChartType == "ReadyForPosting") ||
+                        else if ((Role == "QA" && ChartType == "Available") || (Role == "Coder" && ChartType == "ReadyForPosting") ||
                             (Role == "QA" && ChartType == "OnHold"))
                         {
                             chartSummaryDTO.CodedBy = Convert.ToString(reader["CodedBy"]);
@@ -609,7 +608,7 @@ namespace UAB.DAL
                 }
             }
             return chartSummaryDTO;
-        }
+        }        
 
         private DataTable GetCpt(string cpt)
         {
@@ -629,7 +628,7 @@ namespace UAB.DAL
             }
             return dtCPT;
         }
-        public void SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO)
+        public void SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO, DataTable dtClaim, DataTable dtCpt1)
         {
             using (var context = new UABContext())
             {
@@ -700,6 +699,22 @@ namespace UAB.DAL
                      SqlDbType = System.Data.SqlDbType.Int,
                      Direction = System.Data.ParameterDirection.Input,
                      Value = mUserId
+                 }
+                ,
+                 new SqlParameter() {
+                    ParameterName = "@utClaim1",
+                    SqlDbType =  System.Data.SqlDbType.Structured,
+                    Direction = System.Data.ParameterDirection.Input,
+                    TypeName = "utClaim",
+                    Value = dtClaim
+                 },
+
+                 new SqlParameter() {
+                    ParameterName = "@utCpt1",
+                    SqlDbType =  System.Data.SqlDbType.Structured,
+                    Direction = System.Data.ParameterDirection.Input,
+                    TypeName = "utCpt",
+                    Value = dtCpt1
                  }
                 };
 
