@@ -113,5 +113,8 @@ namespace UAB.DTO
         public string BlockRemarks { get; set; }
         public DateTime BlockedDate { get; set; }
 
+        public int? ClaimId { get; set; }
+        public int TabIndex { get; set; }
+
     }
 }

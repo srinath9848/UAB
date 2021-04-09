@@ -416,7 +416,7 @@ namespace UAB.Controllers
                 ViewBag.Div2CptRow = "Div4CptRow_1";
             }
 
-            return PartialView("_NewCliam");
+            return PartialView("_CodingCliam");
         }
         #endregion
 
@@ -435,9 +435,9 @@ namespace UAB.Controllers
         public IActionResult GetQAAvailableChart(string Role, string ChartType, int ProjectID, string ProjectName)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
-            chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
-            chartSummaryDTO.ProjectName = ProjectName;
+            List<ChartSummaryDTO> lstchartSummary = new List<ChartSummaryDTO>();
+            lstchartSummary = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
+            lstchartSummary.FirstOrDefault().ProjectName = ProjectName;
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -445,12 +445,12 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
-            if (chartSummaryDTO.CodingDTO.ClinicalCaseID == 0)
+            if (lstchartSummary.FirstOrDefault().CodingDTO.ClinicalCaseID == 0)
             {
                 TempData["Toast"] = "There are no charts available";
                 return RedirectToAction("QASummary");
             }
-            return View("QA", chartSummaryDTO);
+            return View("QA", lstchartSummary);
         }
 
         public IActionResult GetQARebuttalChartsOfCoder(string Role, string ChartType, int ProjectID, string ProjectName)

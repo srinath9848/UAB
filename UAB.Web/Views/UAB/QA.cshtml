@@ -1,11 +1,11 @@
-﻿@model UAB.DTO.ChartSummaryDTO
+﻿@model List<UAB.DTO.ChartSummaryDTO>
 @{
     ViewData["Title"] = "QA";
 }
 <form asp-action="SubmitQAAvailableChart" id="form1" asp-controller="UAB" method="POST">
     <div class="container-fluid">
         <div class="row">
-            <partial name="_InitialData" model=Model />
+            <partial name="_InitialData" model=Model.FirstOrDefault() />
             <partial name="_RebuttalChartDetails" model=Model />
         </div>
     </div>

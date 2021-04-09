@@ -1,34 +1,34 @@
-﻿@model UAB.DTO.ChartSummaryDTO
+﻿@model List<UAB.DTO.ChartSummaryDTO>
 @using UAB.enums
 <div class="col-md-12">
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">
-                <span>Chart ID : <label style="color: black;">@Model.CodingDTO.ClinicalCaseID&nbsp;&nbsp;&nbsp;&nbsp;</label></span>
-                @if (Model.CodedBy != null)
+                <span>Chart ID : <label style="color: black;">@Model.FirstOrDefault().CodingDTO.ClinicalCaseID&nbsp;&nbsp;&nbsp;&nbsp;</label></span>
+                @if (Model.FirstOrDefault().CodedBy != null)
                 {
-                <span>Coded by : <label style="color: black;">@Model.CodedBy&nbsp;&nbsp;&nbsp;&nbsp;</label></span>
+                    <span>Coded by : <label style="color: black;">@Model.FirstOrDefault().CodedBy&nbsp;&nbsp;&nbsp;&nbsp;</label></span>
                 }
-                @if (Model.QABy != null)
+                @if (Model.FirstOrDefault().QABy != null)
                 {
-                <span>
-                    QA by : <label style="color:black;"> @Model.QABy &nbsp;&nbsp;&nbsp;&nbsp;</label>
-                </span>
+                    <span>
+                        QA by : <label style="color:black;"> @Model.FirstOrDefault().QABy &nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    </span>
                 }
-                @if (Model.ShadowQABy != null)
+                @if (Model.FirstOrDefault().ShadowQABy != null)
                 {
-                <span>
-                    ShadowQA by : <label style="color:black;"> @Model.ShadowQABy </label>
-                </span>
+                    <span>
+                        ShadowQA by : <label style="color:black;"> @Model.FirstOrDefault().ShadowQABy </label>
+                    </span>
                 }
 
             </h4>
         </div>
-        @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { @class = "form-control" })
-        @Html.HiddenFor(model => model.ProjectID)
-        @Html.HiddenFor(model => model.ProjectName)
-        @Html.HiddenFor(model => model.Dx)
-        @Html.HiddenFor(model => model.CPTCode)
+        @Html.HiddenFor(model => model.FirstOrDefault().CodingDTO.ClinicalCaseID, new { @class = "form-control" })
+        @Html.HiddenFor(model => model.FirstOrDefault().ProjectID)
+        @Html.HiddenFor(model => model.FirstOrDefault().ProjectName)
+        @Html.HiddenFor(model => model.FirstOrDefault().Dx)
+        @Html.HiddenFor(model => model.FirstOrDefault().CPTCode)
         @Html.Hidden("hdnPayorID")
         @Html.Hidden("hdnProviderID")
         @Html.Hidden("hdnCpt")
@@ -48,285 +48,332 @@
         @Html.Hidden("hdnQACptCodes")
 
 
-        <div class="form-group row">
-            <label class="col-md-3 m-t-15"></label>
-            <div class="custom-control custom-checkbox mr-sm-2" id="divChkAll">
-                <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll">
-                <label class="custom-control-label" for="chkAll">Accept All</label>
-            </div>
-            <label class="col-md-1 m-t-15"></label>
-            <div class="custom-control mr-sm-2 QACorrectionsComments">
-                <label class="">QA Corrections</label>
-            </div>
-            <label class="col-md-1 m-t-15"></label>
-            <div class="custom-control mr-sm-2 QACorrectionsComments" style="display:none" ;>
-                <label class="">QA Comments</label>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-md-3 lessWidth m-t-15">Payor</label>
-            <div class="col-md-3 lessWidth input-group">
-                @{string Accepted = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                @{string Rejected = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
-
-                @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @class = "form-control CoderDetails" })
-                <div class="input-group-append QACorrections">
-                    <span class="input-group-text">
-                        &nbsp;<i id="PayorID" class="@Accepted" aria-hidden="true"></i>
-                        &nbsp;<i id="PayorID" class="@Rejected" aria-hidden="true"></i>
-                    </span>
-                </div>
-            </div>
-            <div class="col-md-3 lessWidth input-group">
-                @Html.DropDownListFor(model => model.QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = "PayorID1", @class = "form-control QARevised", @style = (Model.QAPayorID == 0 ? "display:none" : "display:flex") })
-                @Html.ValidationMessageFor(model => model.QAPayorID, null, new { @class = "text-danger errMsg" })
-            </div>
-            @{string Show = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "display:none" : "display:flex");}
-            <div class="col-md-3 lessWidth input-group">
-                @Html.TextBoxFor(model => model.QAPayorRemarks, new { @title = Model.QAPayorRemarks, @style = Show, @class = "form-control QARevised", @id = "PayorID2" })
-                @Html.ValidationMessageFor(model => model.QAPayorRemarks, null, new { @class = "text-danger errMsg" })
-            </div>           
-        </div>
-        <div class="form-group row">
-            <label class="col-md-3 lessWidth m-t-15">Provider</label>
-            <div class="col-md-3 lessWidth input-group">
-                @{ Accepted = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                @{ Rejected = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
-
-                @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @class = "form-control CoderDetails" })
-                <div class="input-group-append QACorrections">
-                    <span class="input-group-text">
-                        &nbsp;<i id="ProviderID" class="@Accepted" aria-hidden="true"></i>
-                        &nbsp;<i id="ProviderID" class="@Rejected" aria-hidden="true"></i>
-                    </span>
-                </div>
-            </div>
-            <div class="col-md-3 lessWidth input-group">
-                @Html.DropDownListFor(model => model.QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = "ProviderID1", @class = "form-control QARevised", @style = (Model.QAProviderID == 0 ? "display:none" : "display:flex") })
-                @Html.ValidationMessageFor(model => model.QAProviderID, null, new { @class = "text-danger errMsg" })
-            </div>
-            @{Show = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "display:none" : "display:flex");}
-            <div class="col-md-3 lessWidth input-group">
-                @Html.TextBoxFor(model => model.QAProviderRemarks, new { @title = Model.QAProviderRemarks, @style = Show, @class = "form-control QARevised", @id = "ProviderID2" })
-                @Html.ValidationMessageFor(model => model.QAProviderRemarks, null, new { @class = "text-danger errMsg" })
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-md-3 lessWidth m-t-15"> Feedback to Provider</label>
-            <div class="col-md-3 lessWidth input-group">
-                @{ Accepted = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                @{ Rejected = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
-
-                @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @class = "form-control CoderDetails" })
-                <div class="input-group-append" style="height: 38px;">
-                    <span class="input-group-text QACorrections">
-                        &nbsp;<i id="Feedback" class="@Accepted" aria-hidden="true"></i>
-                        &nbsp;<i id="Feedback" class="@Rejected" aria-hidden="true"></i>
-                    </span>
-                </div>
-            </div>
-            @{Show = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "display:none" : "display:flex");}
-            <div class="col-md-3 lessWidth input-group">
-                @Html.DropDownListFor(model => model.QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = Show, @class = "form-control QARevised", @id = "Feedback1" })
-                @Html.ValidationMessageFor(model => model.QAProviderFeedbackID, null, new { @class = "text-danger errMsg" })
-            </div>
-            <div class="col-md-3 lessWidth input-group">
-                @Html.TextBoxFor(model => model.QAProviderFeedbackRemarks, new { @title = Model.QAProviderFeedbackRemarks, @style = Show, @class = "form-control QARevised", @id = "Feedback2" })
-                @Html.ValidationMessageFor(model => model.QAProviderFeedbackRemarks, null, new { @class = "text-danger errMsg" })
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-md-3 lessWidth m-t-15">Note Title</label>
-            <div class="col-md-3 lessWidth">
-                @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails" })
-            </div>
-        </div>
-        <div id="DivDx">
+        <ul class="nav nav-tabs" role="tablist">
             @{
-                int i = 1;
-
-                int totalDxCount = Model.Dx.Split(",").Count() + 1;
-                foreach (var item in Model.Dx.Split(","))
+                int tabIndex = 1;
+                foreach (var tabitem in Model)
                 {
-                <div class="form-group row">
-                    @if (i == 1)
-                        {
-                    <label class="col-md-3 lessWidth m-t-15">Dx</label>
-                        }
-                        else
-                        {
-                    <label class="col-md-3 lessWidth m-t-15"></label>
-                        }
-                    <div class="col-md-3 lessWidth input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">@i</span>
-                        </div>
-                        <input class="form-control CoderDetails valid" type="text" value="@item">
-                        <div class="input-group-append" style="height: 38px;">
-                            <span class="input-group-text QACorrections">
-                                &nbsp;<i id="Dx_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                                &nbsp;<i id="Dx_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-3 lessWidth input-group Dx_@i" style="display:none">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">@i</span>
-                        </div>
-                        <input type="text" id="txtDx_@i" class="form-control txtDx Dx_@i" autocomplete="off" tabindex="@i" placeholder="Code" value="" style="display:none" />
-                    </div>
-                    <div class="col-md-3 lessWidth input-group">
-                        <input type="text" id="DxRemarks_@i" class="form-control QARevised DxRemarks_@i Dx_@i" style="display:none" />
-                    </div>
-                </div>
-
-                    i = i + 1;
+                    if (tabitem.ClaimId == null)
+                    {
+                        <li class="nav-item tabDiv1"> <a class="nav-link active tab" data-toggle="tab" id="@tabIndex" alt="tabDiv1" href="#cliam1" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick">Cliam @tabIndex</span></a> </li>
+                    }
+                    else
+                    {
+                        <li class="@string.Format("nav-item tabDiv{0}", tabIndex)" style="display:inherit;"> <a class="nav-link tab" data-toggle="tab" id="@tabIndex" alt="tabDiv2" href="@string.Format("#cliam{0}", tabIndex)" role="tab"> <span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick">Cliam @tabIndex</span></a></li>
+                    }
+                    tabIndex = tabIndex + 1;
                 }
             }
 
-            <div class="form-group row">
-                <label class="col-md-3 lessWidth m-t-15"></label>
-                <div class="col-md-3 lessWidth input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">@totalDxCount</span>
-                    </div>
-                    <input class="form-control CoderDetails valid" type="text" value="">
-                    <div class="input-group-append" style="height: 38px;">
-                        <span class="input-group-text QACorrections">
-                            &nbsp;<i id="Dx_@totalDxCount" class="fa fa-edit fa-lg" aria-hidden="true" style="visibility:hidden"></i>
-                            &nbsp;<i id="Dx_@totalDxCount" class="fa fa-times-circle fa-lg ignore" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-md-3 lessWidth input-group Dx_@totalDxCount" style="display:none">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">@totalDxCount</span>
-                    </div>
-                    <input type="text" id="txtDx_@totalDxCount" class="form-control txtDx Dx_@totalDxCount" autocomplete="off" tabindex="@totalDxCount" placeholder="Code" onfocusout="DxFunction('txtDx_@totalDxCount')" value="" style="display:none" />
-                </div>
-            </div>
-        </div>
-        <div id="DivCpt">
+            @*<li class="nav-item tabDiv1"> <a class="nav-link active tab" data-toggle="tab" id="1" alt="tabDiv1" href="#cliam1" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick">Cliam 1</span></a> </li>
+                <li class="nav-item tabDiv2" style="display:inherit;"> <a class="nav-link tab" data-toggle="tab" id="2" alt="tabDiv2" href="#cliam2" role="tab"> <span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick" id="htxt2">+</span></a><a id="deletecliam2" style="display:none;"><span class="btn btn-sm" onclick="Deletetabcliam('tabDiv_2')"><i class="fa fa-times"></i></span></a></li>
+                <li class="nav-item tabDiv3" style="display:none;"> <a class="nav-link tab" data-toggle="tab" id="3" alt="tabDiv3" href="#cliam3" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick" id="htxt3">+</span></a><a id="deletecliam3" style="display:none;"><span class="btn btn-sm" onclick="Deletetabcliam('tabDiv_3')"><i class="fa fa-times"></i></span></a> </li>
+                <li class="nav-item tabDiv4" style="display:none;"> <a class="nav-link tab" data-toggle="tab" id="4" alt="tabDiv4" href="#cliam4" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick" id="htxt4">+</span></a><a id="deletecliam4" style="display:none;"><span class="btn btn-sm" onclick="Deletetabcliam('tabDiv_4')"><i class="fa fa-times"></i></span></a> </li>*@
+        </ul>
+        <div class="tab-content tabcontent-border">
             @{
-                i = 1;
-                int totalCptCount = Model.CPTCode.Split("|").Count() + 1;
-                foreach (var item in Model.CPTCode.Split("|"))
+                tabIndex = 1;
+                foreach (var tabitem in Model)
                 {
-                    string[] cptCodes = item.Split("^");
-                    string cptVal = cptCodes[0] == "NA" ? "" : cptCodes[0];
-                    string modVal = cptCodes[1] == "null" ? "" : cptCodes[1];
-                    string qtyVal = cptCodes[2];
-                    string linkAllVal = cptCodes[3] == "null" ? "" : cptCodes[3];
-                <div class="form-group row" id="DivCptRow_@i">
-                    @if (i == 1)
-                        {
-                    <label class="col-md-3 lessWidth m-t-15">CPT</label>
-                        }
-                        else
-                        {
-                    <label class="col-md-3 lessWidth m-t-15"></label>
-                        }
+                    tabitem.TabIndex = tabIndex;
+                    if (tabitem.ClaimId == null)
+                    {
+                        <div class="tab-pane active" id="cliam1" role="tabpanel">
+                            <div class="p-20" id="tabDiv1">
+                                <br />
+                                <div class="form-group row">
+                                    <label class="col-md-3 m-t-15"></label>
+                                    <div class="custom-control custom-checkbox mr-sm-2" id="divChkAll">
+                                        <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll">
+                                        <label class="custom-control-label" for="chkAll">Accept All</label>
+                                    </div>
+                                    <label class="col-md-1 m-t-15"></label>
+                                    <div class="custom-control mr-sm-2 QACorrectionsComments">
+                                        <label class="">QA Corrections</label>
+                                    </div>
+                                    <label class="col-md-1 m-t-15"></label>
+                                    <div class="custom-control mr-sm-2 QACorrectionsComments" style="display:none" ;>
+                                        <label class="">QA Comments</label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 lessWidth m-t-15">Payor</label>
+                                    <div class="col-md-3 lessWidth input-group">
+                                        @{string Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                                        @{string Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-                    <div class="col-md-3 CptlessWidth input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">@i</span>
-                        </div>
-                        <input type="text" class="form-control CoderDetails" autocomplete="off" placeholder="Code" value="@cptVal" />
-                        <input type="text" class="form-control CoderDetails" autocomplete="off" placeholder="Mod" value="@modVal" />
-                        <input type="text" class="form-control CoderDetails" autocomplete="off" placeholder="1" value="@qtyVal" />
-                        <input type="text" class="form-control CoderDetails" autocomplete="off" placeholder="Link All" value="@linkAllVal" />
-                        <div class="input-group-append" style="height: 38px;">
-                            <span class="input-group-text">
-                                &nbsp;<i id="Cpt_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                                &nbsp;<i id="Cpt_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-3 CptlessWidth input-group Cpt_@i" style="display:none">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">@i</span>
-                        </div>
-                        <input type="text" class="form-control" id="txtCpt_@i" autocomplete="off" placeholder="Code" value="@cptVal" />
-                        <input type="text" class="form-control" id="txtMod_@i" autocomplete="off" placeholder="Mod" value="@modVal" />
-                        <input type="text" class="form-control" id="txtQty_@i" autocomplete="off" placeholder="1" value="@qtyVal" />
-                        <input type="text" class="form-control" id="txtLinks_@i" autocomplete="off" placeholder="Link All" value="@linkAllVal" />
-                    </div>
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @class = "form-control CoderDetails" })
+                                        <div class="input-group-append QACorrections">
+                                            <span class="input-group-text">
+                                                &nbsp;<i id="PayorID" class="@Accepted" aria-hidden="true"></i>
+                                                &nbsp;<i id="PayorID" class="@Rejected" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 lessWidth input-group">
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = "PayorID1", @class = "form-control QARevised", @style = (Model.FirstOrDefault().QAPayorID == 0 ? "display:none" : "display:flex") })
+                                        @Html.ValidationMessageFor(model => model.FirstOrDefault().QAPayorID, null, new { @class = "text-danger errMsg" })
+                                    </div>
+                                    @{string Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorRemarks) ? "display:none" : "display:flex");}
+                                    <div class="col-md-3 lessWidth input-group">
+                                        @Html.TextBoxFor(model => model.FirstOrDefault().QAPayorRemarks, new { @title = Model.FirstOrDefault().QAPayorRemarks, @style = Show, @class = "form-control QARevised", @id = "PayorID2" })
+                                        @Html.ValidationMessageFor(model => model.FirstOrDefault().QAPayorRemarks, null, new { @class = "text-danger errMsg" })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 lessWidth m-t-15">Provider</label>
+                                    <div class="col-md-3 lessWidth input-group">
+                                        @{ Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                                        @{ Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-                    <div class="col-md-3 lessWidth input-group">
-                        <input type="text" id="CptRemarks_@i" class="form-control QARevised CptRemarks_@i Cpt_@i" style="display:none" />
-                    </div>
-                </div>
-                    i = i + 1;
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @class = "form-control CoderDetails" })
+                                        <div class="input-group-append QACorrections">
+                                            <span class="input-group-text">
+                                                &nbsp;<i id="ProviderID" class="@Accepted" aria-hidden="true"></i>
+                                                &nbsp;<i id="ProviderID" class="@Rejected" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 lessWidth input-group">
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = "ProviderID1", @class = "form-control QARevised", @style = (Model.FirstOrDefault().QAProviderID == 0 ? "display:none" : "display:flex") })
+                                        @Html.ValidationMessageFor(model => model.FirstOrDefault().QAProviderID, null, new { @class = "text-danger errMsg" })
+                                    </div>
+                                    @{Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "display:none" : "display:flex");}
+                                    <div class="col-md-3 lessWidth input-group">
+                                        @Html.TextBoxFor(model => model.FirstOrDefault().QAProviderRemarks, new { @title = Model.FirstOrDefault().QAProviderRemarks, @style = Show, @class = "form-control QARevised", @id = "ProviderID2" })
+                                        @Html.ValidationMessageFor(model => model.FirstOrDefault().QAProviderRemarks, null, new { @class = "text-danger errMsg" })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 lessWidth m-t-15"> Feedback to Provider</label>
+                                    <div class="col-md-3 lessWidth input-group">
+                                        @{ Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                                        @{ Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @class = "form-control CoderDetails" })
+                                        <div class="input-group-append" style="height: 38px;">
+                                            <span class="input-group-text QACorrections">
+                                                &nbsp;<i id="Feedback" class="@Accepted" aria-hidden="true"></i>
+                                                &nbsp;<i id="Feedback" class="@Rejected" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    @{Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "display:none" : "display:flex");}
+                                    <div class="col-md-3 lessWidth input-group">
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = Show, @class = "form-control QARevised", @id = "Feedback1" })
+                                        @Html.ValidationMessageFor(model => model.FirstOrDefault().QAProviderFeedbackID, null, new { @class = "text-danger errMsg" })
+                                    </div>
+                                    <div class="col-md-3 lessWidth input-group">
+                                        @Html.TextBoxFor(model => model.FirstOrDefault().QAProviderFeedbackRemarks, new { @title = Model.FirstOrDefault().QAProviderFeedbackRemarks, @style = Show, @class = "form-control QARevised", @id = "Feedback2" })
+                                        @Html.ValidationMessageFor(model => model.FirstOrDefault().QAProviderFeedbackRemarks, null, new { @class = "text-danger errMsg" })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 lessWidth m-t-15">Note Title</label>
+                                    <div class="col-md-3 lessWidth">
+                                        @Html.TextAreaFor(model => model.FirstOrDefault().NoteTitle, new { @class = "form-control CoderDetails" })
+                                    </div>
+                                </div>
+                                <div id="DivDx">
+                                    @{
+                                        int i = 1;
+
+                                        int totalDxCount = Model.FirstOrDefault().Dx.Split(",").Count() + 1;
+                                        foreach (var item in Model.FirstOrDefault().Dx.Split(","))
+                                        {
+                                            <div class="form-group row">
+                                                @if (i == 1)
+                                                {
+                                                    <label class="col-md-3 lessWidth m-t-15">Dx</label>
+                                                }
+                                                else
+                                                {
+                                                    <label class="col-md-3 lessWidth m-t-15"></label>
+                                                }
+                                                <div class="col-md-3 lessWidth input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">@i</span>
+                                                    </div>
+                                                    <input class="form-control CoderDetails valid" type="text" value="@item">
+                                                    <div class="input-group-append" style="height: 38px;">
+                                                        <span class="input-group-text QACorrections">
+                                                            &nbsp;<i id="Dx_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                                            &nbsp;<i id="Dx_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 lessWidth input-group Dx_@i" style="display:none">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">@i</span>
+                                                    </div>
+                                                    <input type="text" id="txtDx_@i" class="form-control txtDx Dx_@i" autocomplete="off" tabindex="@i" placeholder="Code" value="" style="display:none" />
+                                                </div>
+                                                <div class="col-md-3 lessWidth input-group">
+                                                    <input type="text" id="DxRemarks_@i" class="form-control QARevised DxRemarks_@i Dx_@i" style="display:none" />
+                                                </div>
+                                            </div>
+
+                                            i = i + 1;
+                                        }
+                                    }
+
+                                    <div class="form-group row">
+                                        <label class="col-md-3 lessWidth m-t-15"></label>
+                                        <div class="col-md-3 lessWidth input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">@totalDxCount</span>
+                                            </div>
+                                            <input class="form-control CoderDetails valid" type="text" value="">
+                                            <div class="input-group-append" style="height: 38px;">
+                                                <span class="input-group-text QACorrections">
+                                                    &nbsp;<i id="Dx_@totalDxCount" class="fa fa-edit fa-lg" aria-hidden="true" style="visibility:hidden"></i>
+                                                    &nbsp;<i id="Dx_@totalDxCount" class="fa fa-times-circle fa-lg ignore" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 lessWidth input-group Dx_@totalDxCount" style="display:none">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">@totalDxCount</span>
+                                            </div>
+                                            <input type="text" id="txtDx_@totalDxCount" class="form-control txtDx Dx_@totalDxCount" autocomplete="off" tabindex="@totalDxCount" placeholder="Code" onfocusout="DxFunction('txtDx_@totalDxCount')" value="" style="display:none" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="DivCpt">
+                                    @{
+                                        i = 1;
+                                        int totalCptCount = Model.FirstOrDefault().CPTCode.Split("|").Count() + 1;
+                                        foreach (var item in Model.FirstOrDefault().CPTCode.Split("|"))
+                                        {
+                                            string[] cptCodes = item.Split("^");
+                                            string cptVal = cptCodes[0] == "NA" ? "" : cptCodes[0];
+                                            string modVal = cptCodes[1] == "null" ? "" : cptCodes[1];
+                                            string qtyVal = cptCodes[2];
+                                            string linkAllVal = cptCodes[3] == "null" ? "" : cptCodes[3];
+                                            <div class="form-group row" id="DivCptRow_@i">
+                                                @if (i == 1)
+                                                {
+                                                    <label class="col-md-3 lessWidth m-t-15">CPT</label>
+                                                }
+                                                else
+                                                {
+                                                    <label class="col-md-3 lessWidth m-t-15"></label>
+                                                }
+
+                                                <div class="col-md-3 CptlessWidth input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">@i</span>
+                                                    </div>
+                                                    <input type="text" class="form-control CoderDetails" autocomplete="off" placeholder="Code" value="@cptVal" />
+                                                    <input type="text" class="form-control CoderDetails" autocomplete="off" placeholder="Mod" value="@modVal" />
+                                                    <input type="text" class="form-control CoderDetails" autocomplete="off" placeholder="1" value="@qtyVal" />
+                                                    <input type="text" class="form-control CoderDetails" autocomplete="off" placeholder="Link All" value="@linkAllVal" />
+                                                    <div class="input-group-append" style="height: 38px;">
+                                                        <span class="input-group-text">
+                                                            &nbsp;<i id="Cpt_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                                            &nbsp;<i id="Cpt_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 CptlessWidth input-group Cpt_@i" style="display:none">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">@i</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="txtCpt_@i" autocomplete="off" placeholder="Code" value="@cptVal" />
+                                                    <input type="text" class="form-control" id="txtMod_@i" autocomplete="off" placeholder="Mod" value="@modVal" />
+                                                    <input type="text" class="form-control" id="txtQty_@i" autocomplete="off" placeholder="1" value="@qtyVal" />
+                                                    <input type="text" class="form-control" id="txtLinks_@i" autocomplete="off" placeholder="Link All" value="@linkAllVal" />
+                                                </div>
+
+                                                <div class="col-md-3 lessWidth input-group">
+                                                    <input type="text" id="CptRemarks_@i" class="form-control QARevised CptRemarks_@i Cpt_@i" style="display:none" />
+                                                </div>
+                                            </div>
+                                            i = i + 1;
+                                        }
+                                    }
+                                    <div class="form-group row">
+                                        <label class="col-md-3 lessWidth m-t-15"></label>
+                                        <div class="col-md-3 CptlessWidth input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">@totalCptCount</span>
+                                            </div>
+                                            <input type="text" class="form-control CoderDetails" autocomplete="off" placeholder="Code" value="" />
+                                            <input type="text" class="form-control CoderDetails" autocomplete="off" placeholder="Mod" value="" />
+                                            <input type="text" class="form-control CoderDetails" autocomplete="off" placeholder="1" value="" />
+                                            <input type="text" class="form-control CoderDetails" autocomplete="off" placeholder="Link All" value="" />
+                                            <div class="input-group-append" style="height: 38px;">
+                                                <span class="input-group-text">
+                                                    &nbsp;<i id="Cpt_@totalCptCount" class="fa fa-edit fa-lg" aria-hidden="true" style="visibility:hidden"></i>
+                                                    &nbsp;<i id="Cpt_@totalCptCount" class="fa fa-times-circle fa-lg ignore" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 CptlessWidth input-group Cpt_@totalCptCount" style="display:none">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">@totalCptCount</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="txtCpt_@totalCptCount" autocomplete="off" placeholder="Code" value="" />
+                                            <input type="text" class="form-control" id="txtMod_@totalCptCount" autocomplete="off" placeholder="Mod" value="" />
+                                            <input type="text" class="form-control" id="txtQty_@totalCptCount" autocomplete="off" placeholder="1" value="" />
+                                            <input type="text" class="form-control" id="txtLinks_@totalCptCount" autocomplete="off" placeholder="Link All" onfocusout="CptFunction('txtLinks_@totalCptCount+')" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">QA Details</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="col-12">
+                                        <div class="row mb-3">
+                                            <div class="col-lg-6">
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 m-t-15">
+                                                        Error Type
+                                                    </label>
+                                                    <div class="col-md-7">
+                                                        @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.FirstOrDefault().QADTO.ErrorType, null, new { @class = "text-danger ErrorType" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group row">
+                                                    @*<label class="col-md-5 m-t-15"></label>*@
+                                                    <div class="col-md-15">
+                                                        <a href="@Url.Action("GetCodingBlockedCharts", "UAB", new { Role = Roles.QA, ChartType = "Block", ProjectID = @Model.FirstOrDefault().ProjectID, ProjectName = Model.FirstOrDefault().ProjectName, ccid = Model.FirstOrDefault().CodingDTO.ClinicalCaseID, plusorminus = "Previous" })" class="btn btn-success Available" id="btnPrevious" style="display:none">Previous</a>
+                                                        <a href="@Url.Action("GetCodingBlockedCharts", "UAB", new { Role = Roles.QA, ChartType = "Block", ProjectID = @Model.FirstOrDefault().ProjectID, ProjectName = Model.FirstOrDefault().ProjectName, ccid = Model.FirstOrDefault().CodingDTO.ClinicalCaseID, plusorminus = "Next" })" class="btn btn-success Available" id="btnNext" style="display:none">Next</a>
+                                                        <button id="btnBlock" type="button" class="btn btn-danger" onclick="Block()">Block</button>
+                                                        <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger" onclick="BlockHistory()">Block History</button>
+                                                        <button id="btnsubmit" type="submit" class="btn btn-success">Save</button>
+                                                        <button id="SubmitAndGetNext" name="SubmitAndGetNext" type="submit" value="SubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="tab-pane" id="@string.Format("cliam{0}", tabIndex)" role="tabpanel">
+                            <div class="p-20" id="@string.Format("tabDiv{0}", tabIndex)">
+                                <partial name="_QAClaim" model=tabitem />
+                            </div>
+                        </div>
+                    }
+                    tabIndex = tabIndex + 1;
                 }
             }
-            <div class="form-group row">
-                <label class="col-md-3 lessWidth m-t-15"></label>
-                <div class="col-md-3 CptlessWidth input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">@totalCptCount</span>
-                    </div>
-                    <input type="text" class="form-control CoderDetails" autocomplete="off" placeholder="Code" value="" />
-                    <input type="text" class="form-control CoderDetails" autocomplete="off" placeholder="Mod" value="" />
-                    <input type="text" class="form-control CoderDetails" autocomplete="off" placeholder="1" value="" />
-                    <input type="text" class="form-control CoderDetails" autocomplete="off" placeholder="Link All" value="" />
-                    <div class="input-group-append" style="height: 38px;">
-                        <span class="input-group-text">
-                            &nbsp;<i id="Cpt_@totalCptCount" class="fa fa-edit fa-lg" aria-hidden="true" style="visibility:hidden"></i>
-                            &nbsp;<i id="Cpt_@totalCptCount" class="fa fa-times-circle fa-lg ignore" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-md-3 CptlessWidth input-group Cpt_@totalCptCount" style="display:none">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">@totalCptCount</span>
-                    </div>
-                    <input type="text" class="form-control" id="txtCpt_@totalCptCount" autocomplete="off" placeholder="Code" value="" />
-                    <input type="text" class="form-control" id="txtMod_@totalCptCount" autocomplete="off" placeholder="Mod" value="" />
-                    <input type="text" class="form-control" id="txtQty_@totalCptCount" autocomplete="off" placeholder="1" value="" />
-                    <input type="text" class="form-control" id="txtLinks_@totalCptCount" autocomplete="off" placeholder="Link All" onfocusout="CptFunction('txtLinks_@totalCptCount+')" />
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="clearfix"></div>
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">QA Details</h4>
-        </div>
-        <div class="card-body">
-            <div class="col-12">
-                <div class="row mb-3">
-                    <div class="col-lg-6">
-                        <div class="form-group row">
-                            <label class="col-md-3 m-t-15">
-                                Error Type
-                            </label>
-                            <div class="col-md-7">
-                                @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.QADTO.ErrorType, null, new { @class = "text-danger ErrorType" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group row">
-                            @*<label class="col-md-5 m-t-15"></label>*@
-                            <div class="col-md-15">
-                                <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.QA, ChartType= "Block", ProjectID=@Model.ProjectID, ProjectName=Model.ProjectName,ccid=Model.CodingDTO.ClinicalCaseID,plusorminus="Previous"})" class="btn btn-success Available" id="btnPrevious" style="display:none">Previous</a>
-                                <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.QA, ChartType= "Block", ProjectID=@Model.ProjectID, ProjectName=Model.ProjectName,ccid=Model.CodingDTO.ClinicalCaseID,plusorminus="Next"})" class="btn btn-success Available" id="btnNext" style="display:none">Next</a>
-                                <button id="btnBlock" type="button" class="btn btn-danger" onclick="Block()">Block</button>
-                                <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger" onclick="BlockHistory()">Block History</button>
-                                <button id="btnsubmit" type="submit" class="btn btn-success">Save</button>
-                                <button id="SubmitAndGetNext" name="SubmitAndGetNext" type="submit" value="SubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
-
 
 <style>
     .errMsg {
@@ -382,7 +429,7 @@
             $.ajax({
                 type: "GET",
                 url: "@Url.Action("BlockClinicalcase", "UAB")",
-                data: {"ccid": @Model.CodingDTO.ClinicalCaseID},
+                data: {"ccid": @Model.FirstOrDefault().CodingDTO.ClinicalCaseID},
                 success: function (response) {
                     $("#modalContent").html(response);
                 },
@@ -396,9 +443,9 @@
                 type: "GET",
                 url: "@Url.Action("BlockHistory", "UAB")",
                 data: {
-                    "name": "@Model.BlockCategory",
-                    "remarks": "@Model.BlockRemarks",
-                    "createdate": "@Model.BlockedDate"
+                    "name": "@Model.FirstOrDefault().BlockCategory",
+                    "remarks": "@Model.FirstOrDefault().BlockRemarks",
+                    "createdate": "@Model.FirstOrDefault().BlockedDate"
                     },
                 success: function (response) {
                     $("#modalContent").html(response);
