@@ -180,9 +180,13 @@ BEGIN
    ,QAProviderFeedbackIDRemark    
  ,bc.Name AS BlockCategory    
  ,bh.Remarks AS BlockRemarks    
- ,bh.CreateDate AS BlockedDate    
+ ,bh.CreateDate AS BlockedDate
+ ,proj.Name AS ProjectName
+ ,l.Name AS ListName
  --INTO #ShadowQABlocked    
-    FROM ClinicalCase cc INNER JOIN WorkItem wi ON wi.ClinicalCaseId = cc.ClinicalCaseId    
+    FROM ClinicalCase cc INNER JOIN WorkItem wi ON wi.ClinicalCaseId = cc.ClinicalCaseId  
+    INNER JOIN Project proj ON proj.ProjectId=cc.ProjectId
+	LEFT JOIN List l ON l.ListId=cc.ListId
  LEFT JOIN BlockHistory bh ON bh.ClinicalCaseId =CC.ClinicalCaseId    
  LEFT JOIN BlockCategory bc ON bc.BlockCategoryId =bh.BlockCategoryId    
     LEFT JOIN WorkItemProvider wp ON wp.ClinicalCaseId =CC.ClinicalCaseId                                        
