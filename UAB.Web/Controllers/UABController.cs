@@ -452,15 +452,15 @@ namespace UAB.Controllers
                 TempData["Toast"] = "There are no charts available";
                 return RedirectToAction("QASummary");
             }
-            return View("QA", lstchartSummary);
+            return View("QA", lstchartSummary.OrderBy(a => a.ClaimId).ToList());
         }
 
         public IActionResult GetQARebuttalChartsOfCoder(string Role, string ChartType, int ProjectID, string ProjectName)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
-            chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
-            chartSummaryDTO.ProjectName = ProjectName;
+            List<ChartSummaryDTO> lstchartSummary = new List<ChartSummaryDTO>();
+            lstchartSummary = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
+            lstchartSummary.FirstOrDefault().ProjectName = ProjectName;
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -468,7 +468,7 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
-            return View("QARebuttalChartsOfCoder", chartSummaryDTO);
+            return View("QARebuttalChartsOfCoder", lstchartSummary.OrderBy(a => a.ClaimId).ToList());
         }
 
         public IActionResult GetQARejectedChartsOfShadowQA(string Role, string ChartType, int ProjectID, string ProjectName)

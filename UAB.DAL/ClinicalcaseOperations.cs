@@ -717,7 +717,10 @@ namespace UAB.DAL
                         else if (Role == "QA" && ChartType == "Available")
                         {
                             chartSummaryDTO.CodedBy = Convert.ToString(reader["CodedBy"]);
-                            chartSummaryDTO.ClaimId = null; //Convert.ToInt32(reader["ClaimId"]);
+                            if (reader["ClaimId"] != DBNull.Value)
+                                chartSummaryDTO.ClaimId = Convert.ToInt32(reader["ClaimId"]);
+                            else
+                                chartSummaryDTO.ClaimId = null;
                             if (reader["ProviderId"] != DBNull.Value)
                                 chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                             if (reader["PayorId"] != DBNull.Value)
@@ -933,6 +936,10 @@ namespace UAB.DAL
                             chartSummaryDTO.QABy = Convert.ToString(reader["QABy"]);
                             chartSummaryDTO.ShadowQABy = Convert.ToString(reader["ShadowQABy"]);
 
+                            //if (reader["ClaimId"] != DBNull.Value)
+                            //    chartSummaryDTO.ClaimId = Convert.ToInt32(reader["ClaimId"]);
+                            //else
+                            chartSummaryDTO.ClaimId = null;
                             chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                             if (reader["QAProviderID"] != DBNull.Value)
                                 chartSummaryDTO.QAProviderID = Convert.ToInt32(reader["QAProviderID"]);
@@ -948,8 +955,8 @@ namespace UAB.DAL
                             chartSummaryDTO.QACPTCode = Convert.ToString(reader["QACPTCode"]);
                             chartSummaryDTO.QACPTCodeRemarks = Convert.ToString(reader["QACPTCodeRemark"]);
                             //chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
-                            chartSummaryDTO.QAMod = Convert.ToString(reader["QAMod"]);
-                            chartSummaryDTO.QAModRemarks = Convert.ToString(reader["QAModRemark"]);
+                            //chartSummaryDTO.QAMod = Convert.ToString(reader["QAMod"]);
+                            //chartSummaryDTO.QAModRemarks = Convert.ToString(reader["QAModRemark"]);
                             if (reader["ProviderFeedbackID"] != DBNull.Value)
                                 chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackID"]);
                             if (reader["QAProviderFeedbackID"] != DBNull.Value)
@@ -996,6 +1003,7 @@ namespace UAB.DAL
                         lstchartSummaryDTO.Add(chartSummaryDTO);
 
                         //chartSummaryDTO = new ChartSummaryDTO();
+
                         //chartSummaryDTO.CodingDTO.ClinicalCaseID = Convert.ToInt32(reader["ClinicalCaseID"]);
                         ////chartSummaryDTO.CodingDTO.ListName = Convert.ToString(reader["ListName"]);
                         //chartSummaryDTO.CodingDTO.ListName = "PK-Card APP Consult";
@@ -1003,18 +1011,38 @@ namespace UAB.DAL
                         //chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
                         //chartSummaryDTO.CodingDTO.DateOfService = Convert.ToString(reader["DateOfService"]);
 
-                        //chartSummaryDTO.CodedBy = Convert.ToString(reader["CodedBy"]);
                         //chartSummaryDTO.ClaimId = 1;
-                        //if (reader["ProviderId"] != DBNull.Value)
-                        //    chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
-                        //if (reader["PayorId"] != DBNull.Value)
-                        //    chartSummaryDTO.PayorID = Convert.ToInt32(reader["PayorId"]);
+                        //chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
+                        //if (reader["QAProviderID"] != DBNull.Value)
+                        //    chartSummaryDTO.QAProviderID = Convert.ToInt32(reader["QAProviderID"]);
+                        //chartSummaryDTO.QAProviderRemarks = Convert.ToString(reader["QAProviderIDRemark"]);
+                        //chartSummaryDTO.PayorID = Convert.ToInt32(reader["PayorId"]);
+                        //if (reader["QAPayorID"] != DBNull.Value)
+                        //    chartSummaryDTO.QAPayorID = Convert.ToInt32(reader["QAPayorID"]);
+                        //chartSummaryDTO.QAPayorRemarks = Convert.ToString(reader["QAPayorIdRemark"]);
+                        //chartSummaryDTO.Dx = "1,2";//Convert.ToString(reader["DxCode"]);
+                        //chartSummaryDTO.QADx = "2^2"; //Convert.ToString(reader["QADx"]);
+                        //chartSummaryDTO.QADxRemarks = "2^2 is Wrong";//Convert.ToString(reader["QADxRemark"]);
+                        //chartSummaryDTO.CPTCode = "71046^^1^";//Convert.ToString(reader["CPTCode"]);
+                        //chartSummaryDTO.QACPTCode = "2^71046^^1^";//Convert.ToString(reader["QACPTCode"]);
+                        //chartSummaryDTO.QACPTCodeRemarks = "2^71046 is Wrong";//Convert.ToString(reader["QACPTCodeRemark"]);
+                        ////chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
+                        ////chartSummaryDTO.QAMod = Convert.ToString(reader["QAMod"]);
+                        ////chartSummaryDTO.QAModRemarks = Convert.ToString(reader["QAModRemark"]);
+                        //if (reader["ProviderFeedbackID"] != DBNull.Value)
+                        //    chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackID"]);
+                        //if (reader["QAProviderFeedbackID"] != DBNull.Value)
+                        //    chartSummaryDTO.QAProviderFeedbackID = Convert.ToInt32(reader["QAProviderFeedbackID"]);
+                        //chartSummaryDTO.QAProviderFeedbackRemarks = Convert.ToString(reader["QAProviderFeedbackIDRemark"]);
                         //chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
-                        //chartSummaryDTO.Dx = "K51,K52,K53,K54";//Convert.ToString(reader["DxCode"]);
-                        //chartSummaryDTO.CPTCode = "01234^26^1^null|56789^1^1^1";//Convert.ToString(reader["CPTCode"]);
-                        //// chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
-                        //if (reader["ProviderFeedbackId"] != DBNull.Value)
-                        //    chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
+
+                        //chartSummaryDTO.RevisedPayorRemarks = Convert.ToString(reader["RebuttedPayorIdRemark"]);
+                        //chartSummaryDTO.RevisedProviderRemarks = Convert.ToString(reader["RebuttedProviderIDRemark"]);
+                        //chartSummaryDTO.RevisedCPTRemarks = Convert.ToString(reader["RebuttedCPTCodeRemark"]);
+                        ////chartSummaryDTO.RevisedModRemarks = Convert.ToString(reader["RebuttedModRemark"]);
+                        //chartSummaryDTO.RevisedDXRemarks = Convert.ToString(reader["RebuttedDxRemark"]);
+                        //chartSummaryDTO.RevisedProviderFeedbackRemarks = Convert.ToString(reader["RebuttedProviderFeedbackIDRemark"]);
+
                         //lstchartSummaryDTO.Add(chartSummaryDTO);
 
                     }

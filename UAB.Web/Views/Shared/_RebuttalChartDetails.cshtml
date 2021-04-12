@@ -2,7 +2,7 @@
 @using UAB.enums
 <div class="col-md-12">
     <div class="card">
-        <div class="card-body">
+        @*<div class="card-body">
             <h4 class="card-title">
                 <span>Chart ID : <label style="color: black;">@Model.FirstOrDefault().CodingDTO.ClinicalCaseID&nbsp;&nbsp;&nbsp;&nbsp;</label></span>
                 @if (Model.FirstOrDefault().CodedBy != null)
@@ -23,7 +23,7 @@
                 }
 
             </h4>
-        </div>
+        </div>*@
         @Html.HiddenFor(model => model.FirstOrDefault().CodingDTO.ClinicalCaseID, new { @class = "form-control" })
         @Html.HiddenFor(model => model.FirstOrDefault().ProjectID)
         @Html.HiddenFor(model => model.FirstOrDefault().ProjectName)
