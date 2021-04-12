@@ -21,7 +21,7 @@
 </style>
 <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
     <div class="modal-dialog">
-        <div class="modal-content" style="width:900px;">
+        <div class="modal-content" style="width:900px;max-height:500px;">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">List Of Blocked Charts</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ModalClose1()">
@@ -47,6 +47,9 @@
                                 <td>
                                     @switch (@ViewBag.Role)
                                     {
+                                        case "ShadowQA":
+                                            <a href="@Url.Action("GetCodingBlockedCharts", "UAB", new { Role = Roles.ShadowQA, ChartType = "Block", ProjectID =item.ProjectID, ProjectName =item.ProjectName,ccid=item.CodingDTO.ClinicalCaseID,plusorminus="Current"})" class="btn btn-info btn-sm">Open</a>
+                                            break;
                                         case "QA":
                                             <a href="@Url.Action("GetCodingBlockedCharts", "UAB", new { Role = Roles.QA, ChartType = "Block", ProjectID =item.ProjectID, ProjectName =item.ProjectName,ccid=item.CodingDTO.ClinicalCaseID,plusorminus="Current"})" class="btn btn-info btn-sm">Open</a>
                                             break;

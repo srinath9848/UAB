@@ -69,6 +69,7 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             lst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);
+            ViewBag.Role = Role;
             return PartialView("_BlockedList", lst);
         }
 
@@ -125,6 +126,7 @@ namespace UAB.Controllers
             }
 
             ViewBag.IsBlocked = "1";
+            ViewBag.Postionindex = 0;
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
