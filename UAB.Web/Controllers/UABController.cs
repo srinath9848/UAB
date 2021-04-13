@@ -189,9 +189,9 @@ namespace UAB.Controllers
         public IActionResult GetCodingIncorrectChart(string Role, string ChartType, int ProjectID, string ProjectName)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
-            chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
-            chartSummaryDTO.ProjectName = ProjectName;
+            List<ChartSummaryDTO> lstchartSummary = new List<ChartSummaryDTO>();
+            lstchartSummary = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
+            lstchartSummary.FirstOrDefault().ProjectName = ProjectName;
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -200,7 +200,7 @@ namespace UAB.Controllers
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
 
-            return View("IncorrectCharts", chartSummaryDTO);
+            return View("IncorrectCharts", lstchartSummary);
         }
 
         public IActionResult GetCodingReadyForPostingChart(string Role, string ChartType, int ProjectID, string ProjectName)
