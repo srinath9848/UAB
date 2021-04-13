@@ -35,7 +35,7 @@
 <div class="form-group row">
     <label class="col-md-3 m-t-15 AlignControl">Note Title</label>
     <div class="col-md-3">
-        @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails ControlHeight", @autocomplete = "off", @id = string.Format("NoteTitle_{0}", cliamID) })
+        @Html.TextBoxFor(model => model.NoteTitle, new { @class = "form-control CoderDetails ControlHeight", @autocomplete = "off", @id = string.Format("NoteTitle_{0}", cliamID) })
         @Html.ValidationMessageFor(model => model.NoteTitle, null, new { @class = "text-danger" })
     </div>
 </div>
@@ -58,9 +58,9 @@
             <div class="input-group-prepend ControlHeight">
                 <span class="input-group-text @ViewBag.cpt2index" id="basic-addon1">1</span>
             </div>
-            <input type="text" id="@cptCliam" class="form-control CoderDetails ControlHeight Cptcliam_@cliamID" autocomplete="off" placeholder="Code" tabindex="5" />
-            <input type="text" id="@cptModCliam" class="form-control CoderDetails ControlHeight Cptcliam_@cliamID" autocomplete="off" placeholder="Mod" tabindex="6" />
-            <input type="text" id="@cptQtyCliam" class="form-control CoderDetails ControlHeight Cptcliam_@cliamID" autocomplete="off" placeholder="1" value="1" tabindex="7" />
+            <input type="text" id="@cptCliam" style="max-width:55px;" class="form-control CoderDetails ControlHeight Cptcliam_@cliamID" autocomplete="off" placeholder="Code" tabindex="5" />
+            <input type="text" id="@cptModCliam" style="max-width:50px;" class="form-control CoderDetails ControlHeight Cptcliam_@cliamID" autocomplete="off" placeholder="Mod" tabindex="6" />
+            <input type="text" id="@cptQtyCliam" style="max-width:30px;" class="form-control CoderDetails ControlHeight Cptcliam_@cliamID" autocomplete="off" placeholder="1" value="1" tabindex="7" />
             <input type="text" id="@cptLinksCliam" class="form-control CoderDetails ControlHeight @ViewBag.Cpt2Link Cptcliam_@cliamID" onfocusout="CptCliams('txtLinks_1_@cliamID')" autocomplete="off" placeholder="Link All" tabindex="8" />
         </div>
     </div>

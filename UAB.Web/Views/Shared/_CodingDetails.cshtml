@@ -50,9 +50,9 @@
         <div class="card">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item tabDiv1"> <a class="nav-link active tab" data-toggle="tab" id="1" alt="tabDiv1" href="#cliam1" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick">Cliam 1</span></a> </li>
-                <li class="nav-item tabDiv2" style="display:inherit;"> <a class="nav-link tab" data-toggle="tab" id="2" alt="tabDiv2" href="#cliam2" role="tab"> <span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick" id="htxt2">+</span></a><a id="deletecliam2" style="display:none;"><span class="btn btn-sm" onclick="Deletetabcliam('tabDiv_2')"><i class="fa fa-times"></i></span></a></li>
-                <li class="nav-item tabDiv3" style="display:none;"> <a class="nav-link tab" data-toggle="tab" id="3" alt="tabDiv3" href="#cliam3" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick" id="htxt3">+</span></a><a id="deletecliam3" style="display:none;"><span class="btn btn-sm" onclick="Deletetabcliam('tabDiv_3')"><i class="fa fa-times"></i></span></a> </li>
-                <li class="nav-item tabDiv4" style="display:none;"> <a class="nav-link tab" data-toggle="tab" id="4" alt="tabDiv4" href="#cliam4" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick" id="htxt4">+</span></a><a id="deletecliam4" style="display:none;"><span class="btn btn-sm" onclick="Deletetabcliam('tabDiv_4')"><i class="fa fa-times"></i></span></a> </li>
+                <li class="nav-item tabDiv2" style="display:inherit;"> <a class="nav-link tab" data-toggle="tab" id="2" alt="tabDiv2" href="#cliam2" role="tab"> <span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick" id="htxt2">+</span></a><a class="nav-link tab" id="deletecliam2" style="display:none;"><span class="btn btn-sm" onclick="Deletetabcliam('tabDiv_2')"><i class="fa fa-times"></i></span></a></li>
+                <li class="nav-item tabDiv3" style="display:none;"> <a class="nav-link tab" style="height:46px" data-toggle="tab" id="3" alt="tabDiv3" href="#cliam3" role="tab"><span class="hidden-sm-up"></span> <span" class="hidden-xs-down tabclick" id="htxt3">+</span></a><a class="nav-link tab" id="deletecliam3" style="display:none;"><span class="btn btn-sm" onclick="Deletetabcliam('tabDiv_3')"><i class="fa fa-times"></i></span></a> </li>
+                <li class="nav-item tabDiv4" style="display:none;"> <a class="nav-link tab" style="height:46px" data-toggle="tab" id="4" alt="tabDiv4" href="#cliam4" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick" id="htxt4">+</span></a><a class="nav-link tab" id="deletecliam4" style="display:none;"><span class="btn btn-sm" onclick="Deletetabcliam('tabDiv_4')"><i class="fa fa-times"></i></span></a> </li>
             </ul>
             <div class="tab-content tabcontent-border">
                 <div class="tab-pane active" id="cliam1" role="tabpanel">
@@ -83,7 +83,7 @@
                         <div class="form-group row">
                             <label class="col-md-3 m-t-15 AlignControl">Note Title</label>
                             <div class="col-md-3">
-                                @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails ControlHeight", @autocomplete = "off" })
+                                @Html.TextBoxFor(model => model.NoteTitle, new { @class = "form-control CoderDetails ControlHeight", @autocomplete = "off" })
                                 @Html.ValidationMessageFor(model => model.NoteTitle, null, new { @class = "text-danger" })
                             </div>
                         </div>
@@ -107,9 +107,9 @@
                                     <div class="input-group-prepend ControlHeight">
                                         <span class="input-group-text cptindex" id="basic-addon1">1</span>
                                     </div>
-                                    @Html.TextBoxFor(model => model.CPTCode, new { @class = "form-control CoderDetails txtCpt ControlHeight", @autocomplete = "off", @placeholder = "Code", @id = "txtCpt_1", @tabindex = "5" })
-                                    <input type="text" class="form-control CoderDetails txtMod" id="txtMod_1" autocomplete="off" placeholder="Mod" tabindex="6" />
-                                    <input type="text" id="txtQty_1" class="form-control CoderDetails txtQty" autocomplete="off" placeholder="1" value="1" tabindex="7" />
+                                    @Html.TextBoxFor(model => model.CPTCode, new { @class = "form-control CoderDetails txtCpt ControlHeight", @autocomplete = "off", @placeholder = "Code", @id = "txtCpt_1", @tabindex = "5", @style = "max-width:55px;" })
+                                    <input type="text" class="form-control CoderDetails txtMod" id="txtMod_1" autocomplete="off" placeholder="Mod" tabindex="6" style="max-width:50px;" />
+                                    <input type="text" id="txtQty_1" class="form-control CoderDetails txtQty" autocomplete="off" placeholder="1" value="1" tabindex="7" style="max-width:30px;" />
                                     <input type="text" id="txtLinks_1" onfocusout="CptFunction('txtLinks_1')" class="form-control CoderDetails txtLinks" autocomplete="off" placeholder="Link All" tabindex="8" />
                                     @Html.ValidationMessageFor(model => model.CPTCode, null, new { @class = "text-danger Dxerror" })
                                     @*<button type="button" class="btn btn-sm" onclick="DeleteCptCodes('txtLinks_1')"><i class="fa fa-times"></i></button>*@
