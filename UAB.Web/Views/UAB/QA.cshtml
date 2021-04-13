@@ -1,11 +1,11 @@
-﻿@model UAB.DTO.ChartSummaryDTO
+﻿@model List<UAB.DTO.ChartSummaryDTO>
 @{
     ViewData["Title"] = "QA";
 }
 <form asp-action="SubmitQAAvailableChart" id="form1" asp-controller="UAB" method="POST">
     <div class="container-fluid">
         <div class="row">
-            <partial name="_InitialData" model=Model />
+            <partial name="_InitialData" model=Model.FirstOrDefault() />
             <partial name="_RebuttalChartDetails" model=Model />
         </div>
     </div>
@@ -42,6 +42,12 @@
 
             $("[class*=DxRemarks_]").val('');
             $("[class*=DxRemarks_]").hide();
+
+            $("[class*=Dx_]").val('');
+            $("[class*=Dx_]").hide();
+
+            $("[class*=Cpt_]").val('');
+            $("[class*=Cpt_]").hide();
 
             $(".CodingDetails").hide();
             $(".errMsg").text('');
@@ -227,7 +233,7 @@
                     dxArray.push(val);
                     $("#Dx").val(dxArray);
                     var text = "'" + "txtDx_" + id + "'";
-                    $("#DivDx").append('<div id="DivDxRow_' + id + '" class="form-group row"><label class= "col-md-3 lessWidth m-t-15" ></label><div class="col-md-3 lessWidth input-group"></div><div class="col-md-3 lessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" tabindex="' + id + '" onfocusout="DxFunction(' + text + ')" class="form-control CoderDetails txtDx" id="txtDx_' + id + '" /></div></div>');
+                    $("#DivDx").append('<div id="DivDxRow_' + id + '" class="form-group row"><label class= "col-md-3 lessWidth m-t-15" ></label><div class="col-md-3 input-group"></div><div class="col-md-3 lessWidth input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" tabindex="' + id + '" onfocusout="DxFunction(' + text + ')" class="form-control CoderDetails ControlHeight txtDx" id="txtDx_' + id + '" /></div></div>');
                     $("#txtDx_" + currId).removeAttr("onfocusout", "");
                     $("#txtDx_" + id).focus();
                 }
@@ -275,7 +281,7 @@
                     var tabindex2 = parseInt(10) + parseInt(id) + parseInt(count) + parseInt(val1);
                     var tabindex3 = parseInt(11) + parseInt(id) + parseInt(count) + parseInt(val1);
                     var tabindex4 = parseInt(12) + parseInt(id) + parseInt(count) + parseInt(val1);
-                    $("#DivCpt").append('<div id="DivCptRow_' + id + '" class="form-group row"><label class="col-md-3 lessWidth m-t-15"></label><div class="col-md-3 CptlessWidth input-group"></div ><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input tabindex = "' + tabindex1 + '" type = "text" placeholder = "Code" class= "form-control CoderDetails txtCpt" id = "txtCpt_' + id + '" /><input tabindex="' + tabindex2 + '" type="text" class="form-control CoderDetails" placeholder="Mod" id="txtMod_' + id + '"/><input tabindex="' + tabindex3 + '" type="text" class="form-control CoderDetails" placeholder="1" value="1" id="txtQty_' + id + '"/><input tabindex="' + tabindex4 + '" type="text" class="form-control CoderDetails" placeholder="Link All" onfocusout="CptFunction(' + txtLinks + ')" id="txtLinks_' + id + '"/></div></div>');
+                    $("#DivCpt").append('<div id="DivCptRow_' + id + '" class="form-group row"><label class="col-md-3 lessWidth m-t-15"></label><div class="col-md-3 CptlessWidth input-group"></div ><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text" id="basic-addon1">' + id + '</span></div><input tabindex = "' + tabindex1 + '" type = "text" placeholder = "Code" class= "form-control CoderDetails ControlHeight txtCpt" id = "txtCpt_' + id + '" /><input tabindex="' + tabindex2 + '" type="text" class="form-control CoderDetails ControlHeight" placeholder="Mod" id="txtMod_' + id + '"/><input tabindex="' + tabindex3 + '" type="text" class="form-control CoderDetails ControlHeight" placeholder="1" value="1" id="txtQty_' + id + '"/><input tabindex="' + tabindex4 + '" type="text" class="form-control CoderDetails ControlHeight" placeholder="Link All" onfocusout="CptFunction(' + txtLinks + ')" id="txtLinks_' + id + '"/></div></div>');
                     $("#txtLinks_" + id1).removeAttr("onfocusout", "");
                     $("#txtCpt_" + id).focus();
                 }

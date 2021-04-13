@@ -14,8 +14,8 @@
     /* .input-group-text {
         display: none;
     }*/
-    .AlignCross{
-        display:inherit;
+    .AlignCross {
+        display: inherit;
     }
 </style>
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
@@ -23,8 +23,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-
     $('#codingSubmit,#codingSubmitAndGetNext').click(function (e) {
+        var claimArray = [];
+        $(".AlignCross .tab").each(function () {
+            var tabid = $(this).attr('id');
+            claimArray.push($("#Providers_" + tabid).val() + "^" + $("#Payors_" + tabid).val() + "^" + $("#NoteTitle_" + tabid).val() + "^" + $("#ProviderFeedbacks_" + tabid).val());
+            $("#hdnClaim" + tabid).val(claimArray);
+            claimArray = [];
+        });
 
         var DxCodes = $("[id*=txtDx_]");
         $("#hdnDxCodes").val("");
@@ -82,10 +88,10 @@
             if (val !== "" && val !== null) {
                 if ($.inArray(val, dxArray) == -1) {
                     dxArray.push(val);
-                    $("#hdnDxCodes").val(dxArray);
+                    //$("#hdnDxCodes").val(dxArray);
                     var text = "'" + "txt_" + id + "'";
                     var deleteDx = "'" + "DivDxRow_" + id + "'";
-                    $("#DivDx").append('<div id="DivDxRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 input-group"><div class="input-group-prepend"><span class="input-group-text dxindex" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxFunction(' + text + ')" class="form-control CoderDetails txtDx" id="txtDx_' + id + '" /><button type="button" id="DeleteDxCodes_'+ id+'" class="btn btn-sm" onclick="DeleteDxCodes(' + deleteDx +')"><i class="fa fa-times"></i></button></div></div>');
+                    $("#DivDx").append('<div id="DivDxRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text dxindex" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxFunction(' + text + ')" class="form-control CoderDetails txtDx" id="txtDx_' + id + '" /><button type="button" id="DeleteDxCodes_' + id +'" class="btn btn-sm" style="max-width:23px;margin-left:-5px;" onclick="DeleteDxCodes(' + deleteDx +')"><i class="fa fa-times"></i></button></div></div>');
                     $("#txtDx_" + currId).removeAttr("onfocusout", "");
                     $("#txtDx_1").removeAttr("onfocusout", "");
                     $("#txtDx_" + id).focus();
@@ -112,7 +118,7 @@
                         $("#hdnDxCodes1").val(dxArray2);
                         var text = "'" + "txt" + cliamid +"Dx_" + id + "_" + parseInt(2) + "'";
                         var deleteDx = "'" + "Div2DxRow_" + id + "_" + cliamid + "'";
-                        $("#DivDx_2").append('<div id="Div2DxRow_' + id + "_" + cliamid +'" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 input-group"><div class="input-group-prepend"><span class="input-group-text dx2index" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxCliams(' + text + ')" class="form-control CoderDetails cliam_' + cliamid + '" id="txtDx2Cliam_' + id + '" /><button type="button" id="DeleteDx2Codes_' + id + '" class="btn btn-sm" onclick="DeleteDxCliams(' + deleteDx +')"><i class="fa fa-times"></i></button></div></div>');
+                        $("#DivDx_2").append('<div id="Div2DxRow_' + id + "_" + cliamid + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text dx2index" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxCliams(' + text + ')" class="form-control CoderDetails cliam_' + cliamid + '" id="txtDx2Cliam_' + id + '" /><button type="button" id="DeleteDx2Codes_' + id + '" class="btn btn-sm" style="max-width:23px;margin-left:-5px;" onclick="DeleteDxCliams(' + deleteDx +')"><i class="fa fa-times"></i></button></div></div>');
                         $("#txtDx2Cliam_" + currId).removeAttr("onfocusout", "");
                         $("#txtDx2Cliam_1").removeAttr("onfocusout", "");
                         $("#txtDx2Cliam_" + id).focus();
@@ -130,7 +136,7 @@
                         $("#hdnDxCodes2").val(dxArray3);
                         var text = "'" + "txt" + cliamid+"Dx_" + id + "_" + parseInt(3) + "'";
                         var deleteDx = "'" + "Div3DxRow_" + id + "_" + cliamid + "'";
-                        $("#DivDx_3").append('<div id="Div3DxRow_' + id + "_" + cliamid + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 input-group"><div class="input-group-prepend"><span class="input-group-text dx3index" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxCliams(' + text + ')" class="form-control CoderDetails cliam_' + cliamid + '" id="txtDx3Cliam_' + id + '" /><button type="button" id="DeleteDx3Codes_' + id + '" class="btn btn-sm" onclick="DeleteDxCliams(' + deleteDx + ')"><i class="fa fa-times"></i></button></div></div>');
+                        $("#DivDx_3").append('<div id="Div3DxRow_' + id + "_" + cliamid + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text dx3index" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxCliams(' + text + ')" class="form-control CoderDetails cliam_' + cliamid + '" id="txtDx3Cliam_' + id + '" /><button type="button" id="DeleteDx3Codes_' + id + '" class="btn btn-sm" style="max-width:23px;margin-left:-5px;" onclick="DeleteDxCliams(' + deleteDx + ')"><i class="fa fa-times"></i></button></div></div>');
                         $("#txtDx3Cliam_" + currId).removeAttr("onfocusout", "");
                         $("#txtDx3Cliam_1").removeAttr("onfocusout", "");
                         $("#txtDx3Cliam_" + id).focus();
@@ -148,7 +154,7 @@
                         $("#hdnDxCodes3").val(dxArray4);
                         var text = "'" + "txt" + cliamid +"Dx_" + id + "_" + parseInt(4) + "'";
                         var deleteDx = "'" + "Div4DxRow_" + id + "_" + cliamid + "'";
-                        $("#DivDx_4").append('<div id="Div4DxRow_' + id + "_" + cliamid + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 input-group"><div class="input-group-prepend"><span class="input-group-text dx4index" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxCliams(' + text + ')" class="form-control CoderDetails cliam_' + cliamid + '" id="txtDx4Cliam_' + id + '" /><button type="button" id="DeleteDx4Codes_' + id + '" class="btn btn-sm" onclick="DeleteDxCliams(' + deleteDx + ')"><i class="fa fa-times"></i></button></div></div>');
+                        $("#DivDx_4").append('<div id="Div4DxRow_' + id + "_" + cliamid + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text dx4index" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxCliams(' + text + ')" class="form-control CoderDetails cliam_' + cliamid + '" id="txtDx4Cliam_' + id + '" /><button type="button" id="DeleteDx4Codes_' + id + '" class="btn btn-sm" style="max-width:23px;margin-left:-5px;" onclick="DeleteDxCliams(' + deleteDx + ')"><i class="fa fa-times"></i></button></div></div>');
                         $("#txtDx4Cliam_" + currId).removeAttr("onfocusout", "");
                         $("#txtDx4Cliam_1").removeAttr("onfocusout", "");
                         $("#txtDx4Cliam_" + id).focus();
@@ -167,7 +173,7 @@
 
             var val2 = null;
             if ($("#txtMod_" + id1).val() != "")
-                val2 = $("#txtMod_" + id1).val().replace(",", "|");
+                val2 = $("#txtMod_" + id1).val();
 
             var val3 = null;
             if ($("#txtQty_" + id1).val() != "")
@@ -175,12 +181,12 @@
 
             var val4 = null;
             if ($("#txtLinks_" + id1).val() != "")
-                val4 = $("#txtLinks_" + id1).val().replace(",", "|");
+                val4 = $("#txtLinks_" + id1).val();
 
             if (val1 !== "") {
                 if ($.inArray(val1, cptArray) == -1) {
                     cptArray.push(val1+"^"+val2 +"^"+val3 +"^"+ val4);
-                    $("#hdnCptCodes").val(cptArray);
+                    //$("#hdnCptCodes").val(cptArray);
                     var count = id + parseInt(1);
                     var txtLinks = "'" + "txtLinks_" + id + "'";
                     var deleteCpt = "'" + "DivCptRow_" + id + "'";
@@ -188,7 +194,7 @@
                     var tabindex2 = parseInt(10) + parseInt(id) + parseInt(count) + parseInt(val1);
                     var tabindex3 = parseInt(11) + parseInt(id) + parseInt(count) + parseInt(val1);
                     var tabindex4 = parseInt(12) + parseInt(id) + parseInt(count) + parseInt(val1);
-                    $("#DivCpt").append('<div id="DivCptRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend"><span class="input-group-text cptindex" id="basic-addon1">' + id + '</span></div><input tabindex = "' + tabindex1 + '" type = "text" placeholder = "Code" class= "form-control CoderDetails txtCpt" id = "txtCpt_' + id + '" /><input tabindex="' + tabindex2 + '" type="text" class="form-control CoderDetails" placeholder="Mod" id="txtMod_' + id + '"/><input tabindex="' + tabindex3 + '" type="text" class="form-control CoderDetails" placeholder="1" value="1" id="txtQty_' + id + '"/><input tabindex="' + tabindex4 + '" type="text" class="form-control CoderDetails txtLinks" placeholder="Link All" onfocusout="CptFunction(' + txtLinks + ')" id="txtLinks_' + id + '"/><button type="button" class="btn btn-sm" onclick="DeleteCptCodes(' + deleteCpt+')"><i class="fa fa-times"></i></button></div></div>');
+                    $("#DivCpt").append('<div id="DivCptRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text cptindex" id="basic-addon1">' + id + '</span></div><input tabindex = "' + tabindex1 + '" type = "text" placeholder = "Code" style="max-width:55px;" class= "form-control CoderDetails txtCpt" id = "txtCpt_' + id + '" /><input tabindex="' + tabindex2 + '" type="text" class="form-control CoderDetails" style="max-width:50px;" placeholder="Mod" id="txtMod_' + id + '"/><input tabindex="' + tabindex3 + '" type="text" class="form-control CoderDetails" style="max-width:30px;" placeholder="1" value="1" id="txtQty_' + id + '"/><input tabindex="' + tabindex4 + '" type="text" class="form-control CoderDetails txtLinks" placeholder="Link All" onfocusout="CptFunction(' + txtLinks + ')" id="txtLinks_' + id + '"/><button type="button" class="btn btn-sm" style="max-width:23px;margin-left:-5px;" onclick="DeleteCptCodes(' + deleteCpt+')"><i class="fa fa-times"></i></button></div></div>');
                     $("#txtLinks_" + id1).removeAttr("onfocusout", "");
                     $("#txtLinks_1").removeAttr("onfocusout", "");
                     $("#txtCpt_" + id).focus();
@@ -223,11 +229,18 @@
                 if (val1 !== "") {
                     if ($.inArray(val1, cptArray2) == -1) {
                         if (val1 !== undefined) {
-                            cptArray2.push(val1 + "^" + val2 + "^" + val3 + "^" + val4);
-                            $("#hdnCptCodes1").val(cptArray2);
+                            if ($("#hdnCptCodes1").val() == "") {
+                                $("#hdnCptCodes1").val(val1 + "^" + val2 + "^" + val3 + "^" + val4);
+                            }
+                            else {
+                                $("#hdnCptCodes1").val($("#hdnCptCodes1").val() + "|" + val1 + "^" + val2 + "^" + val3 + "^" + val4);
+                            }
+                           // cptArray2.push(val1 + "^" + val2 + "^" + val3 + "^" + val4 + "|");
+                            //cptArray2.join(',').replace(',', '');
+                            //$("#hdnCptCodes1").val(cptArray2);
                             var txtLinks = "'" + "txt" + cliamid + "links_" + id + "_" + parseInt(2) + "'";
                             var deleteCpt = "'" + "Div2CptRow_" + id + "_" + cliamid + "'";
-                            $("#DivCpt_2").append('<div id="Div2CptRow_' + id + "_" + cliamid + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend"><span class="input-group-text cpt2index" id="basic-addon1">' + id + '</span></div><input type = "text" placeholder = "Code" class= "form-control CoderDetails Cptcliam_' + cliamid + '" id = "txt2Cpt_' + id + '" /><input type="text" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="Mod" id="txt2mod_' + id + '"/><input type="text" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="1" value="1" id="txt2qty_' + id + '"/><input type="text" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="Link All" onfocusout="CptCliams(' + txtLinks + ')" id="txt2links_' + id + '"/><button type="button" class="btn btn-sm" onclick="DeleteCptCliams(' + deleteCpt +')"><i class="fa fa-times"></i></button></div></div>');
+                            $("#DivCpt_2").append('<div id="Div2CptRow_' + id + "_" + cliamid + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text cpt2index" id="basic-addon1">' + id + '</span></div><input type = "text" placeholder = "Code" style="max-width:55px;" class= "form-control CoderDetails Cptcliam_' + cliamid + '" id = "txt2Cpt_' + id + '" /><input type="text" style="max-width:50px;" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="Mod" id="txt2mod_' + id + '"/><input type="text" style="max-width:30px;" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="1" value="1" id="txt2qty_' + id + '"/><input type="text" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="Link All" onfocusout="CptCliams(' + txtLinks + ')" id="txt2links_' + id + '"/><button type="button" class="btn btn-sm" style="max-width:23px;margin-left:-5px;" onclick="DeleteCptCliams(' + deleteCpt +')"><i class="fa fa-times"></i></button></div></div>');
                             $("#txt2links_" + id1).removeAttr("onfocusout", "");
                             $("#txt2links_1").removeAttr("onfocusout", "");
                             $("#txt2Cpt_" + id).focus();
@@ -257,11 +270,18 @@
                 if (val1 !== "") {
                     if ($.inArray(val1, cptArray3) == -1) {
                         if (val1 !== undefined) {
-                            cptArray3.push(val1 + "^" + val2 + "^" + val3 + "^" + val4);
-                            $("#hdnCptCodes2").val(cptArray3);
+                            if ($("#hdnCptCodes2").val() == "") {
+                                $("#hdnCptCodes2").val(val1 + "^" + val2 + "^" + val3 + "^" + val4);
+                            }
+                            else {
+                                $("#hdnCptCodes2").val($("#hdnCptCodes2").val() + "|" + val1 + "^" + val2 + "^" + val3 + "^" + val4);
+                            }
+                            //cptArray3.push(val1 + "^" + val2 + "^" + val3 + "^" + val4);
+                            //$("#hdnCptCodes2").val(cptArray3);
+                            //cptArray3.join(',').replace(',', '');
                             var txtLinks = "'" + "txt" + cliamid + "links_" + id + "_" + parseInt(3) + "'";
                             var deleteCpt = "'" + "Div3CptRow_" + id + "_" + cliamid + "'";
-                            $("#DivCpt_3").append('<div id="Div3CptRow_' + id + "_" + cliamid + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend"><span class="input-group-text cpt2index" id="basic-addon1">' + id + '</span></div><input type = "text" placeholder = "Code" class= "form-control CoderDetails Cptcliam_' + cliamid + '" id = "txt3Cpt_' + id + '" /><input type="text" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="Mod" id="txt3mod_' + id + '"/><input type="text" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="1" value="1" id="txt3qty_' + id + '"/><input type="text" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="Link All" onfocusout="CptCliams(' + txtLinks + ')" id="txt3links_' + id + '"/><button type="button" class="btn btn-sm" onclick="DeleteCptCliams(' + deleteCpt + ')"><i class="fa fa-times"></i></button></div></div>');
+                            $("#DivCpt_3").append('<div id="Div3CptRow_' + id + "_" + cliamid + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text cpt2index" id="basic-addon1">' + id + '</span></div><input type = "text" placeholder = "Code" style="max-width:55px;" class= "form-control CoderDetails Cptcliam_' + cliamid + '" id = "txt3Cpt_' + id + '" /><input type="text" style="max-width:50px;" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="Mod" id="txt3mod_' + id + '"/><input type="text" style="max-width:30px;" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="1" value="1" id="txt3qty_' + id + '"/><input type="text" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="Link All" onfocusout="CptCliams(' + txtLinks + ')" id="txt3links_' + id + '"/><button type="button" class="btn btn-sm" style="max-width:23px;margin-left:-5px;" onclick="DeleteCptCliams(' + deleteCpt + ')"><i class="fa fa-times"></i></button></div></div>');
                             $("#txt3links_" + id1).removeAttr("onfocusout", "");
                             $("#txt3links_1").removeAttr("onfocusout", "");
                             $("#txt3Cpt_" + id).focus();
@@ -291,11 +311,18 @@
                 if (val1 !== "") {
                     if ($.inArray(val1, cptArray4) == -1) {
                         if (val1 !== undefined) {
-                            cptArray4.push(val1 + "^" + val2 + "^" + val3 + "^" + val4);
-                            $("#hdnCptCodes3").val(cptArray4);
+                            if ($("#hdnCptCodes3").val() == "") {
+                                $("#hdnCptCodes3").val(val1 + "^" + val2 + "^" + val3 + "^" + val4);
+                            }
+                            else {
+                                $("#hdnCptCodes3").val($("#hdnCptCodes3").val() + "|" + val1 + "^" + val2 + "^" + val3 + "^" + val4);
+                            }
+                            //cptArray4.push(val1 + "^" + val2 + "^" + val3 + "^" + val4);
+                            //$("#hdnCptCodes3").val(cptArray4);
+                            //cptArray3.join(',').replace(',', '');
                             var txtLinks = "'" + "txt" + cliamid + "links_" + id + "_" + parseInt(4) + "'";
                             var deleteCpt = "'" + "Div4CptRow_" + id + "_" + cliamid + "'";
-                            $("#DivCpt_4").append('<div id="Div4CptRow_' + id + "_" + cliamid + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend"><span class="input-group-text cpt2index" id="basic-addon1">' + id + '</span></div><input type = "text" placeholder = "Code" class= "form-control CoderDetails Cptcliam_' + cliamid + '" id = "txt4Cpt_' + id + '" /><input type="text" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="Mod" id="txt4mod_' + id + '"/><input type="text" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="1" value="1" id="txt4qty_' + id + '"/><input type="text" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="Link All" onfocusout="CptCliams(' + txtLinks + ')" id="txt4links_' + id + '"/><button type="button" class="btn btn-sm" onclick="DeleteCptCliams(' + deleteCpt + ')"><i class="fa fa-times"></i></button></div></div>');
+                            $("#DivCpt_4").append('<div id="Div4CptRow_' + id + "_" + cliamid + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text cpt2index" id="basic-addon1">' + id + '</span></div><input type = "text" placeholder = "Code" style="max-width:55px;" class= "form-control CoderDetails Cptcliam_' + cliamid + '" id = "txt4Cpt_' + id + '" /><input type="text" style="max-width:50px;" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="Mod" id="txt4mod_' + id + '"/><input type="text" style="max-width:30px;" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="1" value="1" id="txt4qty_' + id + '"/><input type="text" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="Link All" onfocusout="CptCliams(' + txtLinks + ')" id="txt4links_' + id + '"/><button type="button" class="btn btn-sm" style="max-width:23px;margin-left:-5px;" onclick="DeleteCptCliams(' + deleteCpt + ')"><i class="fa fa-times"></i></button></div></div>');
                             $("#txt4links_" + id1).removeAttr("onfocusout", "");
                             $("#txt4links_1").removeAttr("onfocusout", "");
                             $("#txt4Cpt_" + id).focus();
@@ -321,7 +348,19 @@
               $("#" + title).show();
               $("#tabDiv2").hide();
               $("#tabDiv3").hide();
-              $("#tabDiv4").hide();
+                $("#tabDiv4").hide();
+                $("#deletecliam2").css("border-right", "");
+                $("#deletecliam2").css("color", "");
+                $("#deletecliam2").css("background-color", "");
+                $("#deletecliam2").css("border-color", "");
+                $("#deletecliam3").css("border-right", "");
+                $("#deletecliam3").css("color", "");
+                $("#deletecliam3").css("background-color", "");
+                $("#deletecliam3").css("border-color", "");
+                $("#deletecliam4").css("border-right", "");
+                $("#deletecliam4").css("color", "");
+                $("#deletecliam4").css("background-color", "");
+                $("#deletecliam4").css("border-color", "");
             } else {
                 if ($.inArray(id, tabArray) == -1) {
                     $.ajax({
@@ -347,9 +386,27 @@
                    $(".tabDiv3").show();
                    $("#tabDiv3").hide();
                    $("#tabDiv4").hide();
+                   $(".tabDiv2").addClass('AlignCross');
                    $("#cliam" + id).addClass('active show');
                    $("#" + nexttab).show();
                    $("#htxt3").show();
+                   $("#deletecliam" + id).css("border-right", "1px solid #dee2e6");
+                   $("#deletecliam" + id).css("border-left", "none");
+                   $("#deletecliam" + id).css("width", "50px");
+                   $("#deletecliam" + id).css("margin-left", "-15px");
+                   $("#deletecliam" + id).css("border-bottom", "none");
+                   $("#deletecliam" + id).css("color", "#4F5467");
+                   $("#deletecliam" + id).css("background-color", "#fff");
+                   $("#deletecliam" + id).css("border-color", "#dee2e6 #dee2e6 #fff");
+                   $("#" + id).css("border-right", "none");
+                   $("#deletecliam3").css("color", "");
+                   $("#deletecliam3").css("background-color", "");
+                   $("#deletecliam3").css("border-color", "");
+                   $("#deletecliam4").css("color", "");
+                   $("#deletecliam4").css("background-color", "");
+                   $("#deletecliam4").css("border-color", "");
+                   $("#3").removeClass('active');
+                   $("#4").removeClass('active');
                }
                if (title == "tabDiv3") {
                    $("#" + title).show();
@@ -360,6 +417,23 @@
                    $("#cliam" + id).addClass('active show');
                    $("#" + nexttab).show();
                    $("#htxt4").show();
+                   $("#deletecliam" + id).css("border-right", "1px solid #dee2e6");
+                   $("#deletecliam" + id).css("border-left", "none");
+                   $("#deletecliam" + id).css("width", "50px");
+                   $("#deletecliam" + id).css("margin-left", "-15px");
+                   $("#deletecliam" + id).css("border-bottom", "none");
+                   $("#deletecliam" + id).css("color", "#4F5467");
+                   $("#deletecliam" + id).css("background-color", "#fff");
+                   $("#deletecliam" + id).css("border-color", "#dee2e6 #dee2e6 #fff");
+                   $("#" + id).css("border-right", "none");
+                   $("#deletecliam2").css("color", "");
+                   $("#deletecliam2").css("background-color", "");
+                   $("#deletecliam2").css("border-color", "");
+                   $("#deletecliam4").css("color", "");
+                   $("#deletecliam4").css("background-color", "");
+                   $("#deletecliam4").css("border-color", "");
+                   $("#2").removeClass('active');
+                   $("#4").removeClass('active');
                }
                if (title == "tabDiv4") {
                    $("#" + title).show();
@@ -369,6 +443,23 @@
                    $(".tabDiv4").addClass('AlignCross');
                    $("#cliam" + id).addClass('active show');
                    $("#" + nexttab).show();
+                   $("#deletecliam" + id).css("border-right", "1px solid #dee2e6");
+                   $("#deletecliam" + id).css("border-left", "none");
+                   $("#deletecliam" + id).css("width", "50px");
+                   $("#deletecliam" + id).css("margin-left", "-15px");
+                   $("#deletecliam" + id).css("border-bottom", "none");
+                   $("#deletecliam" + id).css("color", "#4F5467");
+                   $("#deletecliam" + id).css("background-color", "#fff");
+                   $("#deletecliam" + id).css("border-color", "#dee2e6 #dee2e6 #fff");
+                   $("#" + id).css("border-right", "none");
+                   $("#deletecliam2").css("color", "");
+                   $("#deletecliam2").css("background-color", "");
+                   $("#deletecliam2").css("border-color", "");
+                   $("#deletecliam3").css("color", "");
+                   $("#deletecliam3").css("background-color", "");
+                   $("#deletecliam3").css("border-color", "");
+                   $("#2").removeClass('active');
+                   $("#3").removeClass('active');
                }
             }
         }
@@ -384,6 +475,7 @@
         $("#2").removeClass('active show');
         $("#3").removeClass('active show');
         $("#4").removeClass('active show');
+        $(".tabDiv" + tabid).removeClass('AlignCross');
         if (tabid == 2) {
             if ($("#htxt3").text() != "+") {
                 $("#3").addClass('active show');
@@ -524,7 +616,7 @@
                 $(this).text(iCnt);
             }
         });
-        
+
         $(".txt" + cliamId + "Link").each(function () {
             if (Cnt <= 100) {
                 Cnt = Cnt + 1;

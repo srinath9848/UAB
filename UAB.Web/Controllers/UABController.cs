@@ -64,13 +64,13 @@ namespace UAB.Controllers
             return View("Coding", chartSummary);
         }
         [HttpGet]
-        public IActionResult GetBlockedChartsList(string Role,string ChartType,int ProjectID)
+        public IActionResult GetBlockedChartsList(string Role, string ChartType, int ProjectID)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             lst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);
             ViewBag.Role = Role;
-            return PartialView("_BlockedList" ,lst);
+            return PartialView("_BlockedList", lst);
         }
 
         [HttpGet]
@@ -95,37 +95,33 @@ namespace UAB.Controllers
 
 
         [HttpGet]
-        public IActionResult GetCodingBlockedCharts(string Role, string ChartType, int ProjectID, string ProjectName,string ccid, string plusorminus)
+        public IActionResult GetCodingBlockedCharts(string Role, string ChartType, int ProjectID, string ProjectName, string ccid, string plusorminus)
         {
-            int cid  = Convert.ToInt32(ccid);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<ChartSummaryDTO> chartSummaryDTOlst = new List<ChartSummaryDTO>();
 
             chartSummaryDTOlst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);
-            
+
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             switch (plusorminus)
             {
                 case "Next":
-                    chartSummaryDTO = chartSummaryDTOlst.SkipWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(cid)).Skip(1).FirstOrDefault();
+                    chartSummaryDTO = chartSummaryDTOlst.SkipWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).FirstOrDefault();
                     if (chartSummaryDTO == null)
                     {
-                        chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == cid).FirstOrDefault();
+                        chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
                     }
                     break;
                 case "Previous":
-                    var x = chartSummaryDTOlst;
-                    x.Reverse();
-                    chartSummaryDTO = x.SkipWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(cid)).Skip(1).FirstOrDefault();
-
+                    chartSummaryDTO = chartSummaryDTOlst.TakeWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).LastOrDefault();
                     if (chartSummaryDTO == null)
                     {
-                        chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID ==cid).FirstOrDefault();
+                        chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
                     }
                     break;
 
                 default:
-                    chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID ==cid).FirstOrDefault();
+                    chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
                     break;
             }
 
@@ -193,9 +189,9 @@ namespace UAB.Controllers
         public IActionResult GetCodingIncorrectChart(string Role, string ChartType, int ProjectID, string ProjectName)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
-            chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
-            chartSummaryDTO.ProjectName = ProjectName;
+            List<ChartSummaryDTO> lstchartSummary = new List<ChartSummaryDTO>();
+            lstchartSummary = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
+            lstchartSummary.FirstOrDefault().ProjectName = ProjectName;
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -204,7 +200,7 @@ namespace UAB.Controllers
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
 
-            return View("IncorrectCharts", chartSummaryDTO);
+            return View("IncorrectCharts", lstchartSummary);
         }
 
         public IActionResult GetCodingReadyForPostingChart(string Role, string ChartType, int ProjectID, string ProjectName)
@@ -228,6 +224,23 @@ namespace UAB.Controllers
             return View("ReadyForPostingChart", chartSummaryDTO);
         }
 
+        private void PrepareClaim(string basicParams, string dx, string cpt, int rno, ref DataTable dtClaim, ref DataTable dtCpt)
+        {
+            string[] lstbasicParams = basicParams.Split("^");
+            dtClaim.Rows.Add(rno, lstbasicParams[0], lstbasicParams[1], lstbasicParams[2], lstbasicParams[3], dx);
+            PrepareCpt(cpt, dtCpt, rno);
+        }
+
+        private void PrepareCpt(string cpt, DataTable dtCPT, int rno)
+        {
+            string[] lstcpts = cpt.Split("|");
+            foreach (var item in lstcpts)
+            {
+                string[] lstcptrow = item.Split("^");
+                dtCPT.Rows.Add(rno, lstcptrow[0], lstcptrow[1], lstcptrow[2], lstcptrow[3]);
+            }
+        }
+
         [HttpPost]
         public IActionResult SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO, string codingSubmitAndGetNext)
         {
@@ -238,11 +251,45 @@ namespace UAB.Controllers
             string hdnCptCodes = Request.Form["hdnCptCodes"].ToString();
             chartSummaryDTO.CPTCode = hdnCptCodes;
 
+            string hdnClaim1 = Request.Form["hdnClaim2"].ToString();
+            string hdnDxClaim1 = Request.Form["hdnDxCodes1"].ToString();
+            string hdnCptClaim1 = Request.Form["hdnCptCodes1"].ToString();
+
+            DataTable dtClaim = new DataTable();
+            dtClaim.Columns.Add("RNO", typeof(int));
+            dtClaim.Columns.Add("ProviderId", typeof(int));
+            dtClaim.Columns.Add("PayorId", typeof(int));
+            dtClaim.Columns.Add("NoteTitle", typeof(string));
+            dtClaim.Columns.Add("ProviderFeedbackId", typeof(string));
+            dtClaim.Columns.Add("Dx", typeof(string));
+
+            DataTable dtCpt = new DataTable();
+            dtCpt.Columns.Add("RNO", typeof(int));
+            dtCpt.Columns.Add("CPTCode", typeof(string));
+            dtCpt.Columns.Add("Mod", typeof(string));
+            dtCpt.Columns.Add("Qty", typeof(string));
+            dtCpt.Columns.Add("Links", typeof(string));
+            if (!string.IsNullOrEmpty(hdnClaim1))
+                PrepareClaim(hdnClaim1, hdnDxClaim1, hdnCptClaim1, 1, ref dtClaim, ref dtCpt);
+
+            string hdnClaim2 = Request.Form["hdnClaim3"].ToString();
+            string hdnDxClaim2 = Request.Form["hdnDxCodes2"].ToString();
+            string hdnCptClaim2 = Request.Form["hdnCptCodes2"].ToString();
+
+            if (!string.IsNullOrEmpty(hdnClaim2))
+                PrepareClaim(hdnClaim2, hdnDxClaim2, hdnCptClaim2, 2, ref dtClaim, ref dtCpt);
+
+            string hdnClaim3 = Request.Form["hdnClaim4"].ToString();
+            string hdnDxClaim3 = Request.Form["hdnDxCodes3"].ToString();
+            string hdnCptClaim3 = Request.Form["hdnCptCodes3"].ToString();
+            if (!string.IsNullOrEmpty(hdnClaim3))
+                PrepareClaim(hdnClaim3, hdnDxClaim3, hdnCptClaim3, 3, ref dtClaim, ref dtCpt);
+
             if (string.IsNullOrEmpty(codingSubmitAndGetNext))
-                clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDTO);
+                clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDTO, dtClaim, dtCpt);
             else
             {
-                clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDTO);
+                clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDTO, dtClaim, dtCpt);
                 return RedirectToAction("GetCodingAvailableChart", new { Role = Roles.Coder.ToString(), ChartType = "Available", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName });
             }
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
@@ -371,7 +418,7 @@ namespace UAB.Controllers
                 ViewBag.Div2CptRow = "Div4CptRow_1";
             }
 
-            return PartialView("_NewCliam");
+            return PartialView("_CodingCliam");
         }
         #endregion
 
@@ -390,9 +437,9 @@ namespace UAB.Controllers
         public IActionResult GetQAAvailableChart(string Role, string ChartType, int ProjectID, string ProjectName)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
-            chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
-            chartSummaryDTO.ProjectName = ProjectName;
+            List<ChartSummaryDTO> lstchartSummary = new List<ChartSummaryDTO>();
+            lstchartSummary = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
+            lstchartSummary.FirstOrDefault().ProjectName = ProjectName;
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -400,20 +447,20 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
-            if (chartSummaryDTO.CodingDTO.ClinicalCaseID == 0)
+            if (lstchartSummary.FirstOrDefault().CodingDTO.ClinicalCaseID == 0)
             {
                 TempData["Toast"] = "There are no charts available";
                 return RedirectToAction("QASummary");
             }
-            return View("QA", chartSummaryDTO);
+            return View("QA", lstchartSummary.OrderBy(a => a.ClaimId).ToList());
         }
 
         public IActionResult GetQARebuttalChartsOfCoder(string Role, string ChartType, int ProjectID, string ProjectName)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
-            chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
-            chartSummaryDTO.ProjectName = ProjectName;
+            List<ChartSummaryDTO> lstchartSummary = new List<ChartSummaryDTO>();
+            lstchartSummary = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
+            lstchartSummary.FirstOrDefault().ProjectName = ProjectName;
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -421,7 +468,7 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
-            return View("QARebuttalChartsOfCoder", chartSummaryDTO);
+            return View("QARebuttalChartsOfCoder", lstchartSummary.OrderBy(a => a.ClaimId).ToList());
         }
 
         public IActionResult GetQARejectedChartsOfShadowQA(string Role, string ChartType, int ProjectID, string ProjectName)
