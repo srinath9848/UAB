@@ -32,33 +32,32 @@
             <tr>
                 <td>
                     <div class="form-group">
-                        @*<label class="lblSearch">Clinical case Id</label>*@
                         @Html.TextBoxFor(model => model.ClinicalCaseId, new { @class = "form-control", @autofocus = "autofocus", @id = "txtClinicalCaseId", @autocomplete = "off", @placeholder = "Enter Chart Id" })
                         @Html.ValidationMessageFor(model => model.ClinicalCaseId, null, new { @class = "text-danger" })
                     </div>
-
                     <div class="form-group">
-                        @*<label class="lblSearch">First Name</label>*@
+                        @Html.DropDownListFor(model => model.ProjectName, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select a Project--", new { @class = "form-control", @id = "projectdd" })
+                        @Html.ValidationMessageFor(model => model.ProjectName, null, new { @class = "text-danger" })
+
+                    </div>
+                    <div class="form-group">
                         @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @autofocus = "autofocus", @id = "txtFirstName", @autocomplete = "off", @placeholder = "Enter First Name" })
                         @Html.ValidationMessageFor(model => model.FirstName, null, new { @class = "text-danger" })
 
                     </div>
 
                     <div class="form-group">
-                        @*<label class="lblSearch">Last Name</label>*@
                         @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", @autofocus = "autofocus", @id = "txtLastName", @autocomplete = "off", @placeholder = "Enter Last Name" })
                         @Html.ValidationMessageFor(model => model.LastName, null, new { @class = "text-danger" })
 
                     </div>
 
                     <div class="form-group">
-                        @*<label class="lblSearch">Provider Name </label>*@
                         @Html.TextBoxFor(model => model.ProviderName, new { @class = "form-control", @autofocus = "autofocus", @id = "txtProvidername", @autocomplete = "off", @placeholder = "Enter Provider" })
                         @Html.ValidationMessageFor(model => model.ProviderName, null, new { @class = "text-danger" })
 
                     </div>
                     <div class="form-group">
-                        @*<label class="lblSearch">MRN</label>*@
                         @Html.TextBoxFor(model => model.MRN, new { @class = "form-control", @autofocus = "autofocus", @id = "txtMRN", @autocomplete = "off", @placeholder = "Enter MRN" })
                         @Html.ValidationMessageFor(model => model.MRN, null, new { @class = "text-danger" })
 
@@ -69,32 +68,23 @@
                         <label class="custom-control-label" for="customControlAutosizing1">Show Blocked Charts</label>
                     </div>
                     <div class="form-group">
-                        @*<label class="lblSearch">DOS From</label>*@
                         @Html.TextBoxFor(model => model.DoSFrom, new { @class = "form-control", @type = "text", @autofocus = "autofocus", @id = "txtDoSFrom", @autocomplete = "off", @placeholder = "Enter DOS From", @onfocus = "(this.type='date')", @onblur = "(this.type='text')" })
                         @Html.ValidationMessageFor(model => model.DoSFrom, null, new { @class = "text-danger" })
 
                     </div>
 
                     <div class="form-group">
-                        @*<label class="lblSearch">DOS To</label>*@
                         @Html.TextBoxFor(model => model.DoSTo, new { @class = "form-control", @type = "text", @autofocus = "autofocus", @id = "txtDoSTo", @autocomplete = "off", @placeholder = "Enter DOS To", @onfocus = "(this.type='date')", @onblur = "(this.type='text')" })
                         @Html.ValidationMessageFor(model => model.DoSTo, null, new { @class = "text-danger" })
 
                     </div>
 
                     <div class="form-group">
-                        @*<label class="lblSearch">Status</label>*@
                         @Html.DropDownListFor(model => model.StatusName, new SelectList(@ViewBag.Status, "StatusId", "Name"), "--Select a Status--", new { @class = "form-control", @id = "statusdd" })
                         @Html.ValidationMessageFor(model => model.StatusName, null, new { @class = "text-danger" })
 
                     </div>
 
-                    <div class="form-group">
-                        @*<label class="lblSearch">Project</label>*@
-                        @Html.DropDownListFor(model => model.ProjectName, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select a Project--", new { @class = "form-control", @id = "projectdd" })
-                        @Html.ValidationMessageFor(model => model.ProjectName, null, new { @class = "text-danger" })
-
-                    </div>
                 </td>
             </tr>
         </table>

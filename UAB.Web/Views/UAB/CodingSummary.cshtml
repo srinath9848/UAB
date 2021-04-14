@@ -97,10 +97,10 @@
                                     else
                                     {
                                         <label class="lblCharts">@item.BlockedCharts</label>
-                                        <b>&nbsp;</b>
-                                        <a href="@Url.Action("GetCodingBlockedChart", "UAB" ,new { Role=Roles.Coder,ChartType ="Block" ,ProjectID=item.ProjectID,ProjectName =item.ProjectName})" class="btn btn-info btn-sm">Get Next</a>
+                                        <b>&nbsp; &nbsp; &nbsp; &nbsp;</b>
+                                        <a href="@Url.Action("GetCodingBlockedChart", "UAB" ,new { Role=Roles.Coder,ChartType ="Block",ProjectID=item.ProjectID,ProjectName =item.ProjectName})" class="btn btn-info btn-sm">Get Next</a>
                                     }
-                                    <button id="btnBlocklist" type="button" class="btn btn-info btn-sm" onclick="BlockedChartsList(@item.ProjectID)">Show All</button>
+                                    <button id="btnBlocklist" type="button" class="btn btn-info btn-sm" onclick="BlockedChartsList(@item.ProjectID)">Show All </button>
                                 </td>
                             </tr>
                             }
@@ -126,8 +126,8 @@
                 data: {
                     "Role": "@Roles.Coder",
                     "ChartType": "Block",
-                    "ProjectID": ProjectId,
-                    },
+                    "ProjectID": ProjectId
+                },
                 success: function (response) {
                     $("#modalContent").html(response);
                 },
