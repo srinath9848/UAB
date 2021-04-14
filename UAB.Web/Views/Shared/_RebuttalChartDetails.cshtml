@@ -104,8 +104,8 @@
 
                                                     @Html.DropDownListFor(model => model.FirstOrDefault().ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight" })
                                                     <div class="input-group-append QACorrections ControlHeight">
-                                                        <span class="input-group-text">
-                                                            &nbsp;<i id="ProviderID" class="@Accepted" aria-hidden="true"></i>
+                                                        <span class="input-group-text AcceptRejectWidth">
+                                                            &nbsp;<i id="ProviderID" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
                                                             &nbsp;<i id="ProviderID" class="@Rejected" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
@@ -128,8 +128,8 @@
 
                                                     @Html.DropDownListFor(model => model.FirstOrDefault().PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight" })
                                                     <div class="input-group-append QACorrections ControlHeight">
-                                                        <span class="input-group-text">
-                                                            &nbsp;<i id="PayorID" class="@Accepted" aria-hidden="true"></i>
+                                                        <span class="input-group-text AcceptRejectWidth">
+                                                            &nbsp;<i id="PayorID" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
                                                             &nbsp;<i id="PayorID" class="@Rejected" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
@@ -147,7 +147,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 lessWidth m-t-15">Note Title</label>
                                                 <div class="col-md-3">
-                                                    @Html.TextAreaFor(model => model.FirstOrDefault().NoteTitle, new { @class = "form-control CoderDetails ControlHeight" })
+                                                    @Html.TextBoxFor(model => model.FirstOrDefault().NoteTitle, new { @class = "form-control CoderDetails ControlHeight" })
                                                 </div>
                                             </div>
                                             <div id="DivDx">
@@ -168,19 +168,19 @@
                                                             }
                                                             <div class="col-md-3 input-group">
                                                                 <div class="input-group-prepend ControlHeight">
-                                                                    <span class="input-group-text" id="basic-addon1">@i</span>
+                                                                    <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
                                                                 </div>
                                                                 <input class="form-control CoderDetails ControlHeight valid" type="text" value="@item">
                                                                 <div class="input-group-append">
-                                                                    <span class="input-group-text QACorrections ControlHeight">
-                                                                        &nbsp;<i id="Dx_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                                                    <span class="input-group-text AcceptRejectWidth QACorrections ControlHeight">
+                                                                        &nbsp;<i id="Dx_@i" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
                                                                         &nbsp;<i id="Dx_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                                                                     </span>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3 input-group Dx_@i" style="display:none">
                                                                 <div class="input-group-prepend ControlHeight">
-                                                                    <span class="input-group-text" id="basic-addon1">@i</span>
+                                                                    <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
                                                                 </div>
                                                                 <input type="text" id="txtDx_@i" class="form-control ControlHeight txtDx Dx_@i" autocomplete="off" tabindex="@i" placeholder="Code" value="" style="display:none" />
                                                             </div>
@@ -197,19 +197,19 @@
                                                     <label class="col-md-3 lessWidth m-t-15"></label>
                                                     <div class="col-md-3 input-group">
                                                         <div class="input-group-prepend ControlHeight">
-                                                            <span class="input-group-text" id="basic-addon1">@totalDxCount</span>
+                                                            <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@totalDxCount</span>
                                                         </div>
                                                         <input class="form-control CoderDetails ControlHeight valid" type="text" value="">
                                                         <div class="input-group-append">
-                                                            <span class="input-group-text QACorrections ControlHeight">
-                                                                &nbsp;<i id="Dx_@totalDxCount" class="fa fa-edit fa-lg" aria-hidden="true" style="visibility:hidden"></i>
+                                                            <span class="input-group-text QACorrections ControlHeight AcceptRejectWidth">
+                                                                &nbsp;<i id="Dx_@totalDxCount" class="fa fa-edit fa-lg AdjustAcceptReject" aria-hidden="true" style="visibility:hidden"></i>
                                                                 &nbsp;<i id="Dx_@totalDxCount" class="fa fa-times-circle fa-lg ignore" aria-hidden="true"></i>
                                                             </span>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3 input-group Dx_@totalDxCount" style="display:none">
                                                         <div class="input-group-prepend ControlHeight">
-                                                            <span class="input-group-text" id="basic-addon1">@totalDxCount</span>
+                                                            <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@totalDxCount</span>
                                                         </div>
                                                         <input type="text" id="txtDx_@totalDxCount" class="form-control ControlHeight txtDx Dx_@totalDxCount" autocomplete="off" tabindex="@totalDxCount" placeholder="Code" onfocusout="DxFunction('txtDx_@totalDxCount')" value="" style="display:none" />
                                                     </div>
@@ -238,26 +238,26 @@
 
                                                             <div class="col-md-3 CptlessWidth input-group">
                                                                 <div class="input-group-prepend ControlHeight">
-                                                                    <span class="input-group-text" id="basic-addon1">@i</span>
+                                                                    <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
                                                                 </div>
-                                                                <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Code" value="@cptVal" />
-                                                                <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Mod" value="@modVal" />
-                                                                <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="1" value="@qtyVal" />
+                                                                <input type="text" style="min-width:50px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Code" value="@cptVal" />
+                                                                <input type="text" style="min-width:42px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Mod" value="@modVal" />
+                                                                <input type="text" style="max-width:23px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="1" value="@qtyVal" />
                                                                 <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="@linkAllVal" />
                                                                 <div class="input-group-append ControlHeight">
-                                                                    <span class="input-group-text">
-                                                                        &nbsp;<i id="Cpt_@i" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                                                    <span class="input-group-text AcceptRejectWidth">
+                                                                        &nbsp;<i id="Cpt_@i" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
                                                                         &nbsp;<i id="Cpt_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                                                                     </span>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3 CptlessWidth input-group Cpt_@i" style="display:none">
                                                                 <div class="input-group-prepend ControlHeight">
-                                                                    <span class="input-group-text" id="basic-addon1">@i</span>
+                                                                    <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
                                                                 </div>
-                                                                <input type="text" class="form-control ControlHeight" id="txtCpt_@i" autocomplete="off" placeholder="Code" value="@cptVal" />
-                                                                <input type="text" class="form-control ControlHeight" id="txtMod_@i" autocomplete="off" placeholder="Mod" value="@modVal" />
-                                                                <input type="text" class="form-control ControlHeight" id="txtQty_@i" autocomplete="off" placeholder="1" value="@qtyVal" />
+                                                                <input type="text" style="min-width:50px;" class="form-control ControlHeight" id="txtCpt_@i" autocomplete="off" placeholder="Code" value="@cptVal" />
+                                                                <input type="text" style="min-width:42px;" class="form-control ControlHeight" id="txtMod_@i" autocomplete="off" placeholder="Mod" value="@modVal" />
+                                                                <input type="text" style="max-width:23px;" class="form-control ControlHeight" id="txtQty_@i" autocomplete="off" placeholder="1" value="@qtyVal" />
                                                                 <input type="text" class="form-control ControlHeight" id="txtLinks_@i" autocomplete="off" placeholder="Link All" value="@linkAllVal" />
                                                             </div>
 
@@ -272,26 +272,26 @@
                                                     <label class="col-md-3 lessWidth m-t-15"></label>
                                                     <div class="col-md-3 CptlessWidth input-group">
                                                         <div class="input-group-prepend ControlHeight">
-                                                            <span class="input-group-text" id="basic-addon1">@totalCptCount</span>
+                                                            <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@totalCptCount</span>
                                                         </div>
-                                                        <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Code" value="" />
-                                                        <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Mod" value="" />
-                                                        <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="1" value="" />
+                                                        <input type="text" style="min-width:50px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Code" value="" />
+                                                        <input type="text" style="min-width:42px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Mod" value="" />
+                                                        <input type="text" style="max-width:23px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="1" value="" />
                                                         <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="" />
                                                         <div class="input-group-append ControlHeight">
-                                                            <span class="input-group-text">
-                                                                &nbsp;<i id="Cpt_@totalCptCount" class="fa fa-edit fa-lg" aria-hidden="true" style="visibility:hidden"></i>
+                                                            <span class="input-group-text AcceptRejectWidth">
+                                                                &nbsp;<i id="Cpt_@totalCptCount" class="fa fa-edit fa-lg AdjustAcceptReject" aria-hidden="true" style="visibility:hidden"></i>
                                                                 &nbsp;<i id="Cpt_@totalCptCount" class="fa fa-times-circle fa-lg ignore" aria-hidden="true"></i>
                                                             </span>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3 CptlessWidth input-group Cpt_@totalCptCount" style="display:none">
                                                         <div class="input-group-prepend ControlHeight">
-                                                            <span class="input-group-text" id="basic-addon1">@totalCptCount</span>
+                                                            <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@totalCptCount</span>
                                                         </div>
-                                                        <input type="text" class="form-control ControlHeight" id="txtCpt_@totalCptCount" autocomplete="off" placeholder="Code" value="" />
-                                                        <input type="text" class="form-control ControlHeight" id="txtMod_@totalCptCount" autocomplete="off" placeholder="Mod" value="" />
-                                                        <input type="text" class="form-control ControlHeight" id="txtQty_@totalCptCount" autocomplete="off" placeholder="1" value="" />
+                                                        <input type="text" style="min-width:50px;" class="form-control ControlHeight" id="txtCpt_@totalCptCount" autocomplete="off" placeholder="Code" value="" />
+                                                        <input type="text" style="min-width:42px;" class="form-control ControlHeight" id="txtMod_@totalCptCount" autocomplete="off" placeholder="Mod" value="" />
+                                                        <input type="text" style="max-width:23px;" class="form-control ControlHeight" id="txtQty_@totalCptCount" autocomplete="off" placeholder="1" value="" />
                                                         <input type="text" class="form-control ControlHeight" id="txtLinks_@totalCptCount" autocomplete="off" placeholder="Link All" onfocusout="CptFunction('txtLinks_@totalCptCount+')" />
                                                     </div>
                                                 </div>
@@ -304,8 +304,8 @@
 
                                                     @Html.DropDownListFor(model => model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight" })
                                                     <div class="input-group-append ControlHeight">
-                                                        <span class="input-group-text QACorrections">
-                                                            &nbsp;<i id="Feedback" class="@Accepted" aria-hidden="true"></i>
+                                                        <span class="input-group-text AcceptRejectWidth QACorrections">
+                                                            &nbsp;<i id="Feedback" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
                                                             &nbsp;<i id="Feedback" class="@Rejected" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
@@ -419,6 +419,16 @@
     }
     .ControlHeight{
         height: 32px !important;
+    }
+    .AcceptRejectWidth{
+        max-width: 50px;
+    }
+    .AdjustAcceptReject{
+        margin-left: -13px;
+    }
+    .AdjustSerialNumber{
+        max-width: 25px;
+        padding-left: 5px;
     }
 </style>
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>

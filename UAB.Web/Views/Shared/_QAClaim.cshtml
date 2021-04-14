@@ -24,8 +24,8 @@
 
         @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("ProviderID_{0}", Model.TabIndex) })
         <div class="input-group-append QACorrections ControlHeight">
-            <span class="input-group-text">
-                &nbsp;<i id="ProviderID_@Model.TabIndex" class="@Accepted" aria-hidden="true"></i>
+            <span class="input-group-text AcceptRejectWidth">
+                &nbsp;<i id="ProviderID_@Model.TabIndex" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
                 &nbsp;<i id="ProviderID_@Model.TabIndex" class="@Rejected" aria-hidden="true"></i>
             </span>
         </div>
@@ -48,8 +48,8 @@
 
         @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("PayorID_{0}", Model.TabIndex) })
         <div class="input-group-append QACorrections ControlHeight">
-            <span class="input-group-text">
-                &nbsp;<i id="PayorID_@Model.TabIndex" class="@Accepted" aria-hidden="true"></i>
+            <span class="input-group-text AcceptRejectWidth">
+                &nbsp;<i id="PayorID_@Model.TabIndex" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
                 &nbsp;<i id="PayorID_@Model.TabIndex" class="@Rejected" aria-hidden="true"></i>
             </span>
         </div>
@@ -67,7 +67,7 @@
 <div class="form-group row">
     <label class="col-md-3 lessWidth m-t-15">Note Title</label>
     <div class="col-md-3">
-        @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails ControlHeight" })
+        @Html.TextBoxFor(model => model.NoteTitle, new { @class = "form-control CoderDetails ControlHeight" })
     </div>
 </div>
 <div id="DivDx">
@@ -88,19 +88,19 @@
                 }
                 <div class="col-md-3 input-group">
                     <div class="input-group-prepend ControlHeight">
-                        <span class="input-group-text" id="basic-addon1">@i</span>
+                        <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
                     </div>
                     <input class="form-control CoderDetails ControlHeight valid" type="text" value="@item">
                     <div class="input-group-append ControlHeight">
-                        <span class="input-group-text QACorrections">
-                            &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                        <span class="input-group-text AcceptRejectWidth QACorrections">
+                            &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
                             &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                         </span>
                     </div>
                 </div>
                 <div class="col-md-3 input-group @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" style="display:none">
                     <div class="input-group-prepend ControlHeight">
-                        <span class="input-group-text" id="basic-addon1">@i</span>
+                        <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
                     </div>
                     <input type="text" id="@string.Format("txtDx_{0}_{1}", Model.TabIndex,i)" class="form-control ControlHeight txtDx @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" autocomplete="off" tabindex="@i" placeholder="Code" value="" style="display:none" />
                 </div>
@@ -117,19 +117,19 @@
         <label class="col-md-3 lessWidth m-t-15"></label>
         <div class="col-md-3 input-group">
             <div class="input-group-prepend ControlHeight">
-                <span class="input-group-text" id="basic-addon1">@totalDxCount</span>
+                <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@totalDxCount</span>
             </div>
             <input class="form-control CoderDetails ControlHeight valid" type="text" value="">
             <div class="input-group-append ControlHeight">
-                <span class="input-group-text QACorrections">
-                    &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,totalDxCount)" class="fa fa-edit fa-lg" aria-hidden="true" style="visibility:hidden"></i>
+                <span class="input-group-text AcceptRejectWidth QACorrections">
+                    &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,totalDxCount)" class="fa fa-edit fa-lg AdjustAcceptReject" aria-hidden="true" style="visibility:hidden"></i>
                     &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,totalDxCount)" class="fa fa-times-circle fa-lg ignore" aria-hidden="true"></i>
                 </span>
             </div>
         </div>
         <div class="col-md-3 input-group @string.Format("DxClaim_{0}_{1}", Model.TabIndex,totalDxCount)" style="display:none">
             <div class="input-group-prepend ControlHeight">
-                <span class="input-group-text" id="basic-addon1">@totalDxCount</span>
+                <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@totalDxCount</span>
             </div>
             <input type="text" id="@string.Format("txtDx_{0}_{1}", Model.TabIndex,totalDxCount)" class="form-control ControlHeight txtDx @string.Format("DxClaim_{0}_{1}", Model.TabIndex,totalDxCount)" autocomplete="off" tabindex="@totalDxCount" placeholder="Code" onfocusout="DxFunction('txtDx_@totalDxCount')" value="" style="display:none" />
         </div>
@@ -158,26 +158,26 @@
 
                 <div class="col-md-3 CptlessWidth input-group">
                     <div class="input-group-prepend ControlHeight">
-                        <span class="input-group-text" id="basic-addon1">@i</span>
+                        <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
                     </div>
-                    <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Code" value="@cptVal" />
-                    <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Mod" value="@modVal" />
-                    <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="1" value="@qtyVal" />
+                    <input type="text" style="min-width:50px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Code" value="@cptVal" />
+                    <input type="text" style="min-width:42px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Mod" value="@modVal" />
+                    <input type="text" style="max-width:23px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="1" value="@qtyVal" />
                     <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="@linkAllVal" />
                     <div class="input-group-append ControlHeight">
-                        <span class="input-group-text">
-                            &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                        <span class="input-group-text AcceptRejectWidth">
+                            &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
                             &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                         </span>
                     </div>
                 </div>
                 <div class="col-md-3 CptlessWidth input-group @string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" style="display:none">
                     <div class="input-group-prepend ControlHeight">
-                        <span class="input-group-text" id="basic-addon1">@i</span>
+                        <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
                     </div>
-                    <input type="text" class="form-control ControlHeight" id="@string.Format("txtCpt_{0}_{1}", Model.TabIndex,i)" autocomplete="off" placeholder="Code" value="@cptVal" />
-                    <input type="text" class="form-control ControlHeight" id="@string.Format("txtMod_{0}_{1}", Model.TabIndex,i)" autocomplete="off" placeholder="Mod" value="@modVal" />
-                    <input type="text" class="form-control ControlHeight" id="@string.Format("txtQty_{0}_{1}", Model.TabIndex,i)" autocomplete="off" placeholder="1" value="@qtyVal" />
+                    <input type="text" style="min-width:50px;" class="form-control ControlHeight" id="@string.Format("txtCpt_{0}_{1}", Model.TabIndex,i)" autocomplete="off" placeholder="Code" value="@cptVal" />
+                    <input type="text" style="min-width:42px;" class="form-control ControlHeight" id="@string.Format("txtMod_{0}_{1}", Model.TabIndex,i)" autocomplete="off" placeholder="Mod" value="@modVal" />
+                    <input type="text" style="max-width:23px;" class="form-control ControlHeight" id="@string.Format("txtQty_{0}_{1}", Model.TabIndex,i)" autocomplete="off" placeholder="1" value="@qtyVal" />
                     <input type="text" class="form-control ControlHeight" id="@string.Format("txtLinks_{0}_{1}", Model.TabIndex,i)" autocomplete="off" placeholder="Link All" value="@linkAllVal" />
                 </div>
 
@@ -192,26 +192,26 @@
         <label class="col-md-3 lessWidth m-t-15"></label>
         <div class="col-md-3 CptlessWidth input-group">
             <div class="input-group-prepend ControlHeight">
-                <span class="input-group-text" id="basic-addon1">@totalCptCount</span>
+                <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@totalCptCount</span>
             </div>
-            <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Code" value="" />
-            <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Mod" value="" />
-            <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="1" value="" />
+            <input type="text" style="min-width:50px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Code" value="" />
+            <input type="text" style="min-width:42px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Mod" value="" />
+            <input type="text" style="max-width:23px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="1" value="" />
             <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="" />
             <div class="input-group-append ControlHeight">
-                <span class="input-group-text">
-                    &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,totalCptCount)" class="fa fa-edit fa-lg" aria-hidden="true" style="visibility:hidden"></i>
+                <span class="input-group-text AcceptRejectWidth">
+                    &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,totalCptCount)" class="fa fa-edit fa-lg AdjustAcceptReject" aria-hidden="true" style="visibility:hidden"></i>
                     &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,totalCptCount)" class="fa fa-times-circle fa-lg ignore" aria-hidden="true"></i>
                 </span>
             </div>
         </div>
         <div class="col-md-3 CptlessWidth input-group @string.Format("Cpt_{0}_{1}", Model.TabIndex,totalCptCount)" style="display:none">
             <div class="input-group-prepend ControlHeight">
-                <span class="input-group-text" id="basic-addon1">@totalCptCount</span>
+                <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@totalCptCount</span>
             </div>
-            <input type="text" class="form-control ControlHeight" id="@string.Format("txtCpt_{0}_{1}", Model.TabIndex,totalCptCount)" autocomplete="off" placeholder="Code" value="" />
-            <input type="text" class="form-control ControlHeight" id="@string.Format("txtMod_{0}_{1}", Model.TabIndex,totalCptCount)" autocomplete="off" placeholder="Mod" value="" />
-            <input type="text" class="form-control ControlHeight" id="@string.Format("txtQty_{0}_{1}", Model.TabIndex,totalCptCount)" autocomplete="off" placeholder="1" value="" />
+            <input type="text" style="min-width:50px;" class="form-control ControlHeight" id="@string.Format("txtCpt_{0}_{1}", Model.TabIndex,totalCptCount)" autocomplete="off" placeholder="Code" value="" />
+            <input type="text" style="min-width:42px;" class="form-control ControlHeight" id="@string.Format("txtMod_{0}_{1}", Model.TabIndex,totalCptCount)" autocomplete="off" placeholder="Mod" value="" />
+            <input type="text" style="max-width:23px;" class="form-control ControlHeight" id="@string.Format("txtQty_{0}_{1}", Model.TabIndex,totalCptCount)" autocomplete="off" placeholder="1" value="" />
             <input type="text" class="form-control ControlHeight" id="@string.Format("txtLinks_{0}_{1}", Model.TabIndex,totalCptCount)" autocomplete="off" placeholder="Link All" onfocusout="CptFunction('txtLinks_@totalCptCount+')" />
         </div>
     </div>
@@ -224,8 +224,8 @@
 
         @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("Feedback_{0}", Model.TabIndex) })
         <div class="input-group-append ControlHeight">
-            <span class="input-group-text QACorrections">
-                &nbsp;<i id="Feedback_@Model.TabIndex" class="@Accepted" aria-hidden="true"></i>
+            <span class="input-group-text AcceptRejectWidth QACorrections">
+                &nbsp;<i id="Feedback_@Model.TabIndex" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
                 &nbsp;<i id="Feedback_@Model.TabIndex" class="@Rejected" aria-hidden="true"></i>
             </span>
         </div>
