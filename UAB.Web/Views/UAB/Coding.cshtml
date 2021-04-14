@@ -482,12 +482,14 @@
                 $("#cliam3").show();
                 $("#tabDiv3").show();
                 $("#htxt3").show();
+                $("#deletecliam3").addClass('active');
             }
             if ($("#htxt4").text() != "+") {
                 $("#4").addClass('active show');
                 $("#cliam4").show();
                 $("#tabDiv4").show();
                 $("#htxt4").show();
+                $("#deletecliam4").addClass('active');
             }
         }
         if (tabid == 3) {
@@ -496,12 +498,14 @@
             $("#tabDiv2").show();
             $("#htxt2").show();
             $("#htxt4").hide();
+            $("#deletecliam2").addClass('active');
         }
         if (tabid == 4) {
             $("#3").addClass('active show');
             $("#cliam3").show();
             $("#tabDiv3").show();
             $("#htxt3").show();
+            $("#deletecliam3").addClass('active');
         }
         if ($("#htxt2").text() == "+" && $("#htxt3").text() == "+" && $("#htxt4").text() == "+") {
             $("#1").addClass('active show');
