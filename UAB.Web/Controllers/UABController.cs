@@ -24,10 +24,12 @@ namespace UAB.Controllers
     {
         private int mUserId;
         private string mUserRole;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         public UABController(IHttpContextAccessor httpContextAccessor)
         {
             mUserId = Convert.ToInt32(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value);
             mUserRole = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Role)?.Value;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         #region Coding
@@ -285,6 +287,9 @@ namespace UAB.Controllers
             if (!string.IsNullOrEmpty(hdnClaim3))
                 PrepareClaim(hdnClaim3, hdnDxClaim3, hdnCptClaim3, 3, ref dtClaim, ref dtCpt);
 
+            bool audit = IsAuditRequired("Coding");
+            chartSummaryDTO.IsAuditRequired = audit;
+
             if (string.IsNullOrEmpty(codingSubmitAndGetNext))
                 clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDTO, dtClaim, dtCpt);
             else
@@ -295,6 +300,67 @@ namespace UAB.Controllers
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("CodingSummary", lstDto);
+        }
+        bool IsAuditRequired(string chartType)
+        {
+            int projectId = Convert.ToInt16(Request.Form["ProjectID"]);
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
+            int samplePercentage = clinicalcaseOperations.GetSamplingPercentage(mUserId, chartType, projectId);
+
+            if (samplePercentage > 0)
+            {
+                string auditCookie = _httpContextAccessor.HttpContext.Request.Cookies[chartType + mUserId];
+
+                if (auditCookie == null || auditCookie.Split(",")[0] != DateTime.Now.ToString("MM/dd/yyyy"))
+                {
+                    CookieOptions option = new CookieOptions();
+                    option.Expires = new DateTimeOffset(DateTime.Now.AddYears(10));
+                    Response.Cookies.Append(chartType + mUserId, DateTime.Now.ToString("MM/dd/yyyy") + ",1-10:1~11-20:0~21-30:0~31-40:0~41-50:0~51-60:0~61-70:0,1", option);
+                    return true;
+                }
+                else
+                {
+                    if (auditCookie.Split(",")[0] == DateTime.Now.ToString("MM/dd/yyyy"))
+                    {
+                        int currentChart = Convert.ToInt32(auditCookie.Split(",")[2]) + 1;
+
+                        string[] arrAuditDetails = auditCookie.Split(",")[1].Split("~");
+
+                        foreach (var item in arrAuditDetails)
+                        {
+                            int auditedCharts = Convert.ToInt32(item.Substring(item.IndexOf(":") + 1));
+                            int startIndex = Convert.ToInt32(item.Substring(0, item.IndexOf("-")));
+                            int lastIndex = Convert.ToInt32(item.Substring(item.IndexOf("-") + 1, item.IndexOf(":") - item.IndexOf("-") - 1));
+
+                            if (currentChart >= startIndex && currentChart <= lastIndex)
+                            {
+                                if (samplePercentage / 10 > auditedCharts)
+                                {
+                                    Random r = new Random();
+                                    int genRand = r.Next(startIndex, lastIndex);
+                                    if (currentChart >= genRand)
+                                    {
+                                        //1-10:1
+                                        string cookieValue = auditCookie.Split(",")[1].Replace(startIndex + "-" + lastIndex + ":" + auditedCharts, startIndex + "-" + lastIndex + ":" + auditedCharts + 1);
+
+                                        CookieOptions option = new CookieOptions();
+                                        int nextChart = currentChart;
+                                        option.Expires = new DateTimeOffset(DateTime.Now.AddYears(10));
+                                        Response.Cookies.Append(chartType + mUserId, DateTime.Now.ToString("MM/dd/yyyy") + "," + cookieValue + "," + nextChart, option);
+                                        return true;
+                                    }
+                                }
+                                CookieOptions option1 = new CookieOptions();
+                                int nextChart1 = currentChart;
+                                option1.Expires = new DateTimeOffset(DateTime.Now.AddYears(10));
+                                Response.Cookies.Append(chartType + mUserId, DateTime.Now.ToString("MM/dd/yyyy") + "," + auditCookie.Split(",")[1] + "," + nextChart1, option1);
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
         }
         public IActionResult SubmitCodingIncorrectChart(ChartSummaryDTO chartSummaryDTO)
         {
@@ -514,6 +580,9 @@ namespace UAB.Controllers
             var hdnQACptRemarks = Request.Form["hdnQACptRemarks"].ToString();
             chartSummaryDTO.QACPTCode = hdnQACptCodes;
             chartSummaryDTO.QACPTCodeRemarks = hdnQACptRemarks;
+
+            bool audit = IsAuditRequired("QA");
+            chartSummaryDTO.IsAuditRequired = audit;
 
             if (string.IsNullOrEmpty(SubmitAndGetNext))
                 clinicalcaseOperations.SubmitQAAvailableChart(chartSummaryDTO);

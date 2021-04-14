@@ -115,6 +115,7 @@ namespace UAB.DTO
 
         public int? ClaimId { get; set; }
         public int TabIndex { get; set; }
+        public bool IsAuditRequired { get; set; }
 
     }
 }
