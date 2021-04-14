@@ -79,7 +79,7 @@
                         <div class="form-group row">
                             <label class="col-md-3 m-t-15 AlignControl">Note Title</label>
                             <div class="col-md-3">
-                                @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails ControlHeight", @autocomplete = "off" })
+                                @Html.TextBoxFor(model => model.NoteTitle, new { @class = "form-control CoderDetails ControlHeight", @autocomplete = "off" })
                                 @Html.ValidationMessageFor(model => model.NoteTitle, null, new { @class = "text-danger" })
                             </div>
                         </div>
@@ -119,11 +119,11 @@
                                 <div class="form-group row">
                                     @if (i == 1)
                                     {
-                                        <label class="col-md-3 m-t-15">Dx</label>
+                                        <label class="col-md-3 m-t-15 AlignControl">Dx</label>
                                     }
                                     else
                                     {
-                                        <label class="col-md-3 m-t-15"></label>
+                                        <label class="col-md-3 m-t-15 AlignControl"></label>
                                     }
                                     <div class="col-md-3 input-group">
                                         <div class="input-group-prepend">
@@ -146,11 +146,11 @@
                                 <div class="form-group row">
                                     @if (i == 1)
                                     {
-                                        <label class="col-md-3 m-t-15">CPT</label>
+                                        <label class="col-md-3 m-t-15 AlignControl">CPT</label>
                                     }
                                     else
                                     {
-                                        <label class="col-md-3 m-t-15"></label>
+                                        <label class="col-md-3 m-t-15 AlignControl"></label>
                                     }
                                     <div class="col-md-3 lessWidth input-group" style="max-width:20% !important;">
                                         <div class="input-group-prepend">
