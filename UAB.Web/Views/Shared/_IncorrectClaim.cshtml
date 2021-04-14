@@ -93,7 +93,7 @@
 <div class="form-group row">
     <label class="col-md-3 lessWidth m-t-15">Note Title</label>
     <div class="col-md-3 lessWidth ControlWidth">
-        @Html.TextAreaFor(model => model.NoteTitle, new { @class = "form-control CoderDetails ControlHeight" })
+        @Html.TextBoxFor(model => model.NoteTitle, new { @class = "form-control CoderDetails ControlHeight" })
     </div>
 </div>
 
@@ -209,8 +209,8 @@
                 @{ string[] coderCptcodes = dictCptCodes?.ElementAt(i).Value.Split("^");}
                 @{ string[] qaCptcodes = dictQACptCodes?.ElementAt(i).Value.Split("^");}
 
-                <div class="col-md-3 input-group" style="max-width:20% !important;">
-                    <div class="input-group-prepend ControlHeight">
+                <div class="col-md-3 input-group ControlHeight" style="max-width:20% !important;">
+                    <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">@j</span>
                     </div>
 
@@ -256,17 +256,17 @@
                 </div>
 
                 @{ Show = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
-                <div title="" class="col-md-2 input-group" style="@Show">
+                <div title="" class="col-md-2 input-group ControlHeight" style="@Show">
                     <input type="text" class="form-control QARemarks" value="@dictQACptRemarks?.ElementAt(i).Value" />
                 </div>
-                <div class="input-group-append CoderCorrections" style="@Show">
-                    <span class="input-group-text">
+                <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
+                    <span class="input-group-text" style="margin-left:-12px;">
                         &nbsp;<i id="Cpt_@j" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
                         &nbsp;<i id="Cpt_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                     </span>
                 </div>
-                <div class="col-md-3 lessWidth input-group">
-                    <input type="text" id="Cpt_@j" class="form-control CptRemarks_@j" style="@Show" />
+                <div class="col-md-3 input-group">
+                    <input type="text" id="Cpt_@j" class="form-control ControlHeight CptRemarks_@j" style="@Show" />
                 </div>
             </div>
             j = j + 1;
