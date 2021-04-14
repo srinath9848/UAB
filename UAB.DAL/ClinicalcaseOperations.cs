@@ -1186,6 +1186,12 @@ namespace UAB.DAL
                     Direction = System.Data.ParameterDirection.Input,
                     TypeName = "utCpt",
                     Value = dtCpt1
+                 },
+                  new SqlParameter() {
+                    ParameterName = "@IsAuditRequired",
+                    SqlDbType = System.Data.SqlDbType.Bit,
+                     Direction = System.Data.ParameterDirection.Input,
+                     Value = chartSummaryDTO.IsAuditRequired
                  }
                 };
 
@@ -1302,6 +1308,11 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = chartSummaryDTO.QADTO.ErrorType
+                        },   new SqlParameter() {
+                            ParameterName = "@IsAuditRequired",
+                            SqlDbType =  System.Data.SqlDbType.Bit,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.IsAuditRequired
                         }
                 };
 
@@ -3450,6 +3461,22 @@ namespace UAB.DAL
             using (UAB.DAL.Models.UABContext context = new UABContext())
             {
                 return context.ProjectType.ToList();
+            }
+        }
+        public int GetSamplingPercentage(int userId, string role, int projetId)
+        {
+            int roleId = 1;
+            if (role == "Coding")
+                roleId = 1;
+            else if (role == "QA")
+                roleId = 2;
+
+            using (UABContext context = new UABContext())
+            {
+                return context.ProjectUser
+                    .Where(x => x.UserId == userId && x.RoleId == roleId && x.ProjectId == projetId)
+                    .Select(x => x.SamplePercentage)
+                    .FirstOrDefault();
             }
         }
 
