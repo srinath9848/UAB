@@ -43,7 +43,7 @@
     </div>
     @Html.DropDownListFor(model => model.QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @id = string.Format("ProviderID1_{0}", Model.TabIndex), @class = "form-control QARevised", @style = "display:none" })
     <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
-        <span class="input-group-text">
+        <span class="input-group-text ControlHeight" style="margin-left:-12px;">
             &nbsp;<i id="Provider" title="ProviderID1_@Model.TabIndex" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
             &nbsp;<i id="Provider" title="ProviderID1_@Model.TabIndex" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
         </span>
@@ -80,7 +80,7 @@
     </div>
     @Html.DropDownListFor(model => model.QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @id = string.Format("PayorID1_{0}", Model.TabIndex), @class = "form-control QARevised", @style = "display:none" })
     <div class="input-group-append CoderCorrections" style="@Show">
-        <span class="input-group-text">
+        <span class="input-group-text ControlHeight" style="margin-left:-12px;">
             &nbsp;<i id="Payor" title="PayorID1_@Model.TabIndex" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
             &nbsp;<i id="Payor" title="PayorID1_@Model.TabIndex" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
         </span>
@@ -309,7 +309,7 @@
                     <input type="text" class="form-control QARemarks" value="@dictQACptRemarks?.ElementAt(i).Value" />
                 </div>
                 <div class="input-group-append CoderCorrections" style="@Show">
-                    <span class="input-group-text">
+                    <span class="input-group-text ControlHeight" style="margin-left:-12px;">
                         &nbsp;<i id="@CptClaim" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
                         &nbsp;<i id="@CptClaim" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                     </span>
@@ -352,7 +352,7 @@
         <input type="text" class="form-control QARemarks" value="@Model.QAProviderFeedbackRemarks" />
     </div>
     <div class="input-group-append CoderCorrections" style="@Show">
-        <span class="input-group-text">
+        <span class="input-group-text ControlHeight" style="margin-left:-12px;">
             &nbsp;<i id="ProviderFeedback" title="Feedback1_@Model.TabIndex" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
             &nbsp;<i id="ProviderFeedback" title="Feedback1_@Model.TabIndex" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
         </span>

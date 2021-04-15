@@ -127,7 +127,7 @@
                                     </div>
                                     @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @id = "ProviderID1", @class = "form-control QARevised", @style = "display:none" })
                                     <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
-                                        <span class="input-group-text">
+                                        <span class="input-group-text ControlHeight" style="margin-left:-12px;">
                                             &nbsp;<i id="Provider" title="ProviderID1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
                                             &nbsp;<i id="Provider" title="ProviderID1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                                         </span>
@@ -164,7 +164,7 @@
                                     </div>
                                     @Html.DropDownListFor(model => model.FirstOrDefault().QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @id = "PayorID1", @class = "form-control QARevised", @style = "display:none" })
                                     <div class="input-group-append CoderCorrections" style="@Show">
-                                        <span class="input-group-text">
+                                        <span class="input-group-text ControlHeight" style="margin-left:-12px;">
                                             &nbsp;<i id="Payor" title="PayorID1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
                                             &nbsp;<i id="Payor" title="PayorID1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                                         </span>
@@ -420,7 +420,7 @@
                                         <input type="text" class="form-control QARemarks" value="@Model.FirstOrDefault().QAProviderFeedbackRemarks" />
                                     </div>
                                     <div class="input-group-append CoderCorrections" style="@Show">
-                                        <span class="input-group-text">
+                                        <span class="input-group-text ControlHeight" style="margin-left:-12px;"> 
                                             &nbsp;<i id="ProviderFeedback" title="Feedback1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
                                             &nbsp;<i id="ProviderFeedback" title="Feedback1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                                         </span>

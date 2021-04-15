@@ -38,7 +38,7 @@
         @Html.ValidationMessageFor(model => model.QAProviderRemarks, null, new { @class = "text-danger errMsg" })
     </div>
     <div class="input-group-append CoderCorrections" style="@Show">
-        <span class="input-group-text">
+        <span class="input-group-text ControlHeight" style="margin-left:-12px;">
             &nbsp;<i id="Provider_@Model.TabIndex" title="ProviderID1_@Model.TabIndex" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
             &nbsp;<i id="Provider_@Model.TabIndex" title="ProviderID1_@Model.TabIndex" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
         </span>
@@ -73,7 +73,7 @@
         @Html.ValidationMessageFor(model => model.QAPayorRemarks, null, new { @class = "text-danger errMsg" })
     </div>
     <div class="input-group-append CoderCorrections" style="@Show">
-        <span class="input-group-text">
+        <span class="input-group-text ControlHeight" style="margin-left:-12px;">
             &nbsp;<i id="Payor" title="PayorID1_@Model.TabIndex" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
             &nbsp;<i id="Payor" title="PayorID1_@Model.TabIndex" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
         </span>
@@ -143,7 +143,7 @@
                     <input type="text" id="DxRemarks_@j" style="@Show" class="form-control QARevised ControlHeight" value="@dictQADxRemarks?.ElementAt(i).Value" />
                 </div>
                 <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
-                    <span class="input-group-text" style="margin-left:-12px;">
+                    <span class="input-group-text ControlHeight" style="margin-left:-12px;">
                         &nbsp;<i id="Dx_@j" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
                         &nbsp;<i id="Dx_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                     </span>
@@ -275,7 +275,7 @@
                     <input type="text" id="CptRemarks_@j" class="form-control ControlHeight" value="@dictQACptRemarks?.ElementAt(i).Value" />
                 </div>
                 <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
-                    <span class="input-group-text" style="margin-left:-12px;">
+                    <span class="input-group-text ControlHeight" style="margin-left:-12px;">
                         &nbsp;<i id="Cpt_@j" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
                         &nbsp;<i id="Cpt_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                     </span>
@@ -313,7 +313,7 @@
         @Html.ValidationMessageFor(model => model.QAProviderFeedbackRemarks, null, new { @class = "text-danger errMsg" })
     </div>
     <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
-        <span class="input-group-text">
+        <span class="input-group-text ControlHeight" style="margin-left:-12px;">
             &nbsp;<i id="ProviderFeedback_@Model.TabIndex" title="Feedback1_@Model.TabIndex" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
             &nbsp;<i id="ProviderFeedback_@Model.TabIndex" title="Feedback1_@Model.TabIndex" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
         </span>
