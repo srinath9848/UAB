@@ -35,6 +35,28 @@
         @Html.Hidden("hdnRejectedCptCodes")
         @Html.Hidden("hdnRejectedCptRemarks")
         @Html.Hidden("hdnCptCodes")
+
+        @Html.Hidden("hdnRejectedDxRemarks1")
+        @Html.Hidden("hdnRejectedDxCodes1")
+        @Html.Hidden("hdnDxCodes1")
+        @Html.Hidden("hdnRejectedCptCodes1")
+        @Html.Hidden("hdnRejectedCptRemarks1")
+        @Html.Hidden("hdnCptCodes1")
+
+        @Html.Hidden("hdnRejectedDxRemarks2")
+        @Html.Hidden("hdnRejectedDxCodes2")
+        @Html.Hidden("hdnDxCodes2")
+        @Html.Hidden("hdnRejectedCptCodes2")
+        @Html.Hidden("hdnRejectedCptRemarks2")
+        @Html.Hidden("hdnCptCodes2")
+
+        @Html.Hidden("hdnRejectedDxRemarks3")
+        @Html.Hidden("hdnRejectedDxCodes3")
+        @Html.Hidden("hdnDxCodes3")
+        @Html.Hidden("hdnRejectedCptCodes3")
+        @Html.Hidden("hdnRejectedCptRemarks3")
+        @Html.Hidden("hdnCptCodes3")
+
         <ul class="nav nav-tabs" role="tablist">
             @{
                 int tabIndex = 1;
@@ -42,7 +64,7 @@
                 {
                     if (tabitem.ClaimId == null)
                     {
-                        <li class="nav-item tabDiv1"> <a class="nav-link active tab" data-toggle="tab" id="@tabIndex" alt="tabDiv1" href="#cliam1" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick">Cliam @tabIndex</span></a> </li>
+                        <li class="nav-item tabDiv1"> <a class="nav-link tab active show" data-toggle="tab" id="@tabIndex" alt="tabDiv1" href="#cliam1" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick">Cliam @tabIndex</span></a> </li>
                     }
                     else
                     {
@@ -376,38 +398,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="clearfix"></div>
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title">QA Details</h4>
-                                </div>
-                                <div class="card-body">
-                                    <div class="col-12">
-                                        <div class="row mb-3">
-                                            <div class="col-lg-6">
-                                                <div class="form-group row">
-                                                    <label class="col-md-3 m-t-15">
-                                                        Error Type
-                                                    </label>
-                                                    <div class="col-md-7">
-                                                        @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight" })
-                                                        @Html.ValidationMessageFor(model => model.FirstOrDefault().QADTO.ErrorType, null, new { @class = "text-danger ErrorType" })
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group row">
-                                                    <label class="col-md-5 m-t-15"></label>
-                                                    <div class="col-md-7">
-                                                        <button id="btnsubmit" type="submit" class="btn btn-success">Submit</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
                     }
@@ -422,6 +412,37 @@
                     tabIndex = tabIndex + 1;
                 }
             }
+            <div class="clearfix"></div>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">QA Details</h4>
+                </div>
+                <div class="card-body">
+                    <div class="col-12">
+                        <div class="row mb-3">
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-3 m-t-15">
+                                        Error Type
+                                    </label>
+                                    <div class="col-md-7">
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight" })
+                                        @Html.ValidationMessageFor(model => model.FirstOrDefault().QADTO.ErrorType, null, new { @class = "text-danger ErrorType" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-5 m-t-15"></label>
+                                    <div class="col-md-7">
+                                        <button id="btnsubmit" type="submit" class="btn btn-success">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
