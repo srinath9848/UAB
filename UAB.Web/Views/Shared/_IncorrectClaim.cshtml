@@ -120,62 +120,94 @@
         int i;
         for (i = 0; i < count; i++)
         {
-            <div class="form-group row">
-                @if (i == 0)
-                {
-                    <label class="col-md-3 lessWidth m-t-15">Dx</label>
-                }
-                else
-                {
-                    <label class="col-md-3 lessWidth m-t-15"></label>
-                }
+        <div class="form-group row">
+            @if (i == 0)
+            {
+                <label class="col-md-3 lessWidth m-t-15">Dx</label>
+            }
+            else
+            {
+                <label class="col-md-3 lessWidth m-t-15"></label>
+            }
 
-                @{len = (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? 10 : 20); }
-                @{string Dx = (dictDxCodes.ElementAt(i).Value?.Length > len) ? dictDxCodes.ElementAt(i).Value.Substring(0, len) + ".." : dictDxCodes.ElementAt(i).Value;}
-                @{string QADx = (dictQADxCodes?.ElementAt(i).Value?.Length > len) ? "/" + dictQADxCodes?.ElementAt(i).Value.Substring(0, len) + ".." : "/" + dictQADxCodes?.ElementAt(i).Value;}
-                @{title = (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? dictDxCodes.ElementAt(i).Value + "/" + dictQADxCodes?.ElementAt(i).Value : dictDxCodes.ElementAt(i).Value);}
+            @{len = (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? 10 : 20); }
+            @{string Dx = (dictDxCodes.ElementAt(i).Value?.Length > len) ? dictDxCodes.ElementAt(i).Value.Substring(0, len) + ".." : dictDxCodes.ElementAt(i).Value;}
+            @{string QADx = (dictQADxCodes?.ElementAt(i).Value?.Length > len) ? "/" + dictQADxCodes?.ElementAt(i).Value.Substring(0, len) + ".." : "/" + dictQADxCodes?.ElementAt(i).Value;}
+            @{title = (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? dictDxCodes.ElementAt(i).Value + "/" + dictQADxCodes?.ElementAt(i).Value : dictDxCodes.ElementAt(i).Value);}
 
-                @{
-                    var DxClaimRemarks = string.Format("form-control DxClaim_{0}_Remarks_{1}", @Model.TabIndex, @j);
-                    var DxClaim = string.Format("DxClaim_{0}_{1}", @Model.TabIndex, @j);
-                }
-                <div class="col-md-3 lessWidth input-group ControlWidth">
+            @{
+                var DxClaimRemarks = string.Format("form-control DxClaim_{0}_Remarks_{1}", @Model.TabIndex, @j);
+                var DxClaim = string.Format("DxClaim_{0}_{1}", @Model.TabIndex, @j);
+            }
+            @*<div class="col-md-3 lessWidth input-group ControlWidth">
+            <div class="input-group-prepend ControlHeight">
+                <span class="input-group-text" id="basic-addon1">@j</span>
+            </div>
+            <div class="form-control CoderDetails" style="line-height:2.2;overflow:hidden;height:32px;">
+                <span style="white-space:nowrap">
+                    @if (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value))
+                    {
+                        <label class="@DxClaim" style="color: red;">@Dx</label>
+                        <label style="color:green">@QADx</label>
+                    }
+                    else
+                    {
+                        <label style="color: green;">@Dx</label>
+                    }
+                </span>
+            </div>
+        </div>*@
+
+
+
+            @if (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value))
+            {
+                <div title="@Dx@QADx" class="col-md-3 lessWidth input-group ControlWidth">
                     <div class="input-group-prepend ControlHeight">
                         <span class="input-group-text" id="basic-addon1">@j</span>
                     </div>
                     <div class="form-control CoderDetails" style="line-height:2.2;overflow:hidden;height:32px;">
                         <span style="white-space:nowrap">
-                            @if (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value))
-                            {
-                                <label class="@DxClaim" style="color: red;">@Dx</label>
-                                <label style="color:green">@QADx</label>
-                            }
-                            else
-                            {
-                                <label style="color: green;">@Dx</label>
-                            }
+                            <label class="Dx_@j" style="color: red;">@Dx</label>
+                            <label style="color:green">@QADx</label>
                         </span>
                     </div>
                 </div>
-
-                @{ Show = (string.IsNullOrEmpty(dictQADxRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
-                <div title="" class="col-md-2 input-group ControlHeight" style="@Show">
-                    <input type="text" class="form-control QARemarks" value="@dictQADxRemarks?.ElementAt(i).Value" />
+            }
+            else
+            {
+                <div title="@Dx" class="col-md-3 lessWidth input-group ControlWidth">
+                    <div class="input-group-prepend ControlHeight">
+                        <span class="input-group-text" id="basic-addon1">@j</span>
+                    </div>
+                    <div class="form-control CoderDetails" style="line-height:2.2;overflow:hidden;height:32px;">
+                        <span style="white-space:nowrap">
+                            <label style="color: green;">@Dx</label>
+                        </span>
+                    </div>
                 </div>
+            }
 
-                @Html.HiddenFor(model => dictDxCodes.ElementAt(i).Value, new { @class = "form-control", @id = string.Format("DxClaim_{0}_Coder_{1}", Model.TabIndex, @j) })
-                @Html.HiddenFor(model => dictQADxCodes.ElementAt(i).Value, new { @class = "form-control", @id = string.Format("DxClaim_{0}_QA_{1}", Model.TabIndex, @j) })
-                <div class="input-group-append CoderCorrections" style="@Show">
-                    <span class="input-group-text ControlHeight" style="margin-left:-12px;">
-                        &nbsp;<i id="@DxClaim" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                        &nbsp;<i id="@DxClaim" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                    </span>
-                </div>
 
-                <div class="col-md-3 input-group CoderCorrections">
-                    <input type="text" id="@DxClaim" class="@DxClaimRemarks" style="@Show" />
-                </div>
+
+            @{ Show = (string.IsNullOrEmpty(dictQADxRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
+            <div title="" class="col-md-2 input-group ControlHeight" style="@Show">
+                <input type="text" class="form-control QARemarks" value="@dictQADxRemarks?.ElementAt(i).Value" />
             </div>
+
+            @Html.HiddenFor(model => dictDxCodes.ElementAt(i).Value, new { @class = "form-control", @id = string.Format("DxClaim_{0}_Coder_{1}", Model.TabIndex, @j) })
+            @Html.HiddenFor(model => dictQADxCodes.ElementAt(i).Value, new { @class = "form-control", @id = string.Format("DxClaim_{0}_QA_{1}", Model.TabIndex, @j) })
+            <div class="input-group-append CoderCorrections" style="@Show">
+                <span class="input-group-text ControlHeight" style="margin-left:-12px;">
+                    &nbsp;<i id="@DxClaim" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                    &nbsp;<i id="@DxClaim" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                </span>
+            </div>
+
+            <div class="col-md-3 input-group CoderCorrections">
+                <input type="text" id="@DxClaim" class="@DxClaimRemarks" style="@Show" />
+            </div>
+        </div>
 
             j = j + 1;
         }
@@ -202,150 +234,225 @@
         j = 1;
         for (i = 0; i < Cptcount; i++)
         {
-            <div class="form-group row" id="DivCptRow_@j">
-                @if (i == 0)
-                {
-                    <label class="col-md-3 lessWidth m-t-15">CPT</label>
-                }
-                else
-                {
-                    <label class="col-md-3 lessWidth m-t-15"></label>
-                }
-                @{ string[] coderCptcodes = dictCptCodes?.ElementAt(i).Value.Split("^");}
-                @{ string[] qaCptcodes = dictQACptCodes?.ElementAt(i).Value.Split("^");}
+        <div class="form-group row" id="DivCptRow_@j">
+            @if (i == 0)
+            {
+                <label class="col-md-3 lessWidth m-t-15">CPT</label>
+            }
+            else
+            {
+                <label class="col-md-3 lessWidth m-t-15"></label>
+            }
+            @{ string[] coderCptcodes = dictCptCodes?.ElementAt(i).Value.Split("^");}
+            @{ string[] qaCptcodes = dictQACptCodes?.ElementAt(i).Value.Split("^");}
 
-                @{
-                    var CptClaimRemarks = string.Format("form-control CptClaim_{0}_Remarks_{1}", @Model.TabIndex, @j);
-                    var CptClaim = string.Format("CptClaim_{0}_{1}", @Model.TabIndex, @j);
-                }
+            @{
+                var CptClaimRemarks = string.Format("form-control CptClaim_{0}_Remarks_{1}", @Model.TabIndex, @j);
+                var CptClaim = string.Format("CptClaim_{0}_{1}", @Model.TabIndex, @j);
+            }
 
-                <div class="col-md-3 input-group" style="max-width:20% !important;">
+            @*<div class="col-md-3 lessWidth input-group ControlWidth">
+            <div class="input-group-prepend ControlHeight">
+                <span class="input-group-text" id="basic-addon1">@j</span>
+            </div>
+
+            @if (!string.IsNullOrEmpty(dictQACptCodes?.ElementAt(i).Value))
+            {
+                string codercptCode = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[0]);
+                string qacptCode = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[0]);
+                string color = (codercptCode != qacptCode) ? "color:blue;" : "";
+                string codercpt = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[0] : coderCptcodes[0]);
+                <input type="text" class="form-control QARemarks" value="@qacptCode" style="width:17px;@color" />
+
+                string coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[1]);
+                string qaMod = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[1]);
+                color = (coderMod != qaMod) ? "color:blue;" : "";
+                coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[1] : coderCptcodes[1]);
+                <input type="text" class="form-control QARemarks" value="@qaMod" style="@color" />
+
+                string coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[2]);
+                string qaQty = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[2]);
+                color = (coderQty != qaQty) ? "color:blue;" : "";
+                coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[2] : coderCptcodes[2]);
+                <input type="text" class="form-control QARemarks" value="@qaQty" style="@color" />
+
+                string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
+                string qaLinks = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[3]);
+                color = (coderLinks != qaLinks) ? "color:blue;" : "";
+                coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[3] : coderCptcodes[3]);
+                <input type="text" class="form-control QARemarks" value="@qaLinks" style="@color" />
+
+                var hdnClaimCoderCptCodes = string.Format("hdnClaim_{0}_CoderCptCodes_{1}", Model.TabIndex, @j);
+                var hdnClaimQACptCodes = string.Format("hdnClaim_{0}_QACptCodes_{1}", Model.TabIndex, @j);
+
+                <input type="hidden" id="@hdnClaimCoderCptCodes" value="@codercpt^@coderMod^@coderQty^@coderLinks" />
+                <input type="hidden" id="@hdnClaimQACptCodes" value="@qaCptcodes[0]^@qaCptcodes[1]^@qaCptcodes[2]^@qaCptcodes[3]" />
+            }
+            else
+            {
+                string modVal = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
+                string linkAllVal = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
+
+                <input type="text" class="form-control QARemarks ControlHeight" style="color: green;width: 17px;" placeholder="Code" value="@coderCptcodes[0]" />
+                <input type="text" class="form-control QARemarks ControlHeight" style="color:green;" placeholder="Mod" value="@modVal" />
+                <input type="text" class="form-control QARemarks ControlHeight" style="color:green;" placeholder="1" value="@coderCptcodes[2]" />
+                <input type="text" class="form-control QARemarks ControlHeight" style="color: green;" placeholder="Link All" value="@linkAllVal" />
+
+            }
+        </div>*@
+
+
+
+
+            @if (!string.IsNullOrEmpty(dictQACptCodes?.ElementAt(i).Value))
+            {
+
+                string codercptCode = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[0]);
+                string qacptCode = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[0]);
+                string color = (codercptCode != qacptCode) ? "color:blue;" : "";
+                string codercpt = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[0] : coderCptcodes[0]);
+
+                string coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[1]);
+                string qaMod = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[1]);
+                color = (coderMod != qaMod) ? "color:blue;" : "";
+                coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[1] : coderCptcodes[1]);
+
+                string coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[2]);
+                string qaQty = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[2]);
+                color = (coderQty != qaQty) ? "color:blue;" : "";
+                coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[2] : coderCptcodes[2]);
+
+                string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
+                string qaLinks = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[3]);
+                color = (coderLinks != qaLinks) ? "color:blue;" : "";
+                coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[3] : coderCptcodes[3]);
+
+                string link = !string.IsNullOrEmpty(@qaLinks) || @qaLinks != "null" ? @qaLinks : "Link All";
+
+                <div title="Code : @qacptCode, Mod : @qaMod, Quantity : @qaQty, Links : @link" class="col-md-3 lessWidth input-group ControlWidth">
                     <div class="input-group-prepend ControlHeight">
                         <span class="input-group-text" id="basic-addon1">@j</span>
                     </div>
 
-                    @if (!string.IsNullOrEmpty(dictQACptCodes?.ElementAt(i).Value))
-                    {
-                        string codercptCode = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[0]);
-                        string qacptCode = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[0]);
-                        string color = (codercptCode != qacptCode) ? "color:blue;" : "";
-                        string codercpt = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[0] : coderCptcodes[0]);
-                        <input type="text" class="form-control QARemarks" value="@qacptCode" style="width:17px;@color" />
 
-                        string coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[1]);
-                        string qaMod = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[1]);
-                        color = (coderMod != qaMod) ? "color:blue;" : "";
-                        coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[1] : coderCptcodes[1]);
-                        <input type="text" class="form-control QARemarks" value="@qaMod" style="@color" />
+                    <input type="text" class="form-control QARemarks" value="@qacptCode" style="width:17px;@color" />
 
-                        string coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[2]);
-                        string qaQty = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[2]);
-                        color = (coderQty != qaQty) ? "color:blue;" : "";
-                        coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[2] : coderCptcodes[2]);
-                        <input type="text" class="form-control QARemarks" value="@qaQty" style="@color" />
 
-                        string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
-                        string qaLinks = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[3]);
-                        color = (coderLinks != qaLinks) ? "color:blue;" : "";
-                        coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[3] : coderCptcodes[3]);
-                        <input type="text" class="form-control QARemarks" value="@qaLinks" style="@color" />
+                    <input type="text" class="form-control QARemarks" value="@qaMod" style="@color" />
 
-                        var hdnClaimCoderCptCodes = string.Format("hdnClaim_{0}_CoderCptCodes_{1}", Model.TabIndex, @j);
-                        var hdnClaimQACptCodes = string.Format("hdnClaim_{0}_QACptCodes_{1}", Model.TabIndex, @j);
 
-                        <input type="hidden" id="@hdnClaimCoderCptCodes" value="@codercpt^@coderMod^@coderQty^@coderLinks" />
-                        <input type="hidden" id="@hdnClaimQACptCodes" value="@qaCptcodes[0]^@qaCptcodes[1]^@qaCptcodes[2]^@qaCptcodes[3]" />
-                    }
-                    else
-                    {
-                        string modVal = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
-                        string linkAllVal = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
+                    <input type="text" class="form-control QARemarks" value="@qaQty" style="@color" />
 
-                        <input type="text" class="form-control QARemarks ControlHeight" style="color: green;width: 17px;" placeholder="Code" value="@coderCptcodes[0]" />
-                        <input type="text" class="form-control QARemarks ControlHeight" style="color:green;" placeholder="Mod" value="@modVal" />
-                        <input type="text" class="form-control QARemarks ControlHeight" style="color:green;" placeholder="1" value="@coderCptcodes[2]" />
-                        <input type="text" class="form-control QARemarks ControlHeight" style="color: green;" placeholder="Link All" value="@linkAllVal" />
 
-                    }
+                    <input type="text" class="form-control QARemarks" value="@qaLinks" style="@color" />
+                    <input type="hidden" id="hdnCoderCptCodes_@j" value="@codercpt^@coderMod^@coderQty^@coderLinks" />
+                    <input type="hidden" id="hdnQaCptCodes_@j" value="@qaCptcodes[0]^@qaCptcodes[1]^@qaCptcodes[2]^@qaCptcodes[3]" />
+
                 </div>
 
 
-                @if (!string.IsNullOrEmpty(dictQACptCodes?.ElementAt(i).Value))
-                {
 
-                    string codercptCode = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[0]);
-                    string qacptCode = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[0]);
-                    string color = (codercptCode != qacptCode) ? "color:blue;" : "";
-                    string codercpt = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[0] : coderCptcodes[0]);
-
-                    string coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[1]);
-                    string qaMod = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[1]);
-                    color = (coderMod != qaMod) ? "color:blue;" : "";
-                    coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[1] : coderCptcodes[1]);
-
-                    string coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[2]);
-                    string qaQty = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[2]);
-                    color = (coderQty != qaQty) ? "color:blue;" : "";
-                    coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[2] : coderCptcodes[2]);
-
-                    string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
-                    string qaLinks = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[3]);
-                    color = (coderLinks != qaLinks) ? "color:blue;" : "";
-                    coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[3] : coderCptcodes[3]);
-
-                    string link = !string.IsNullOrEmpty(@qaLinks) ? @qaLinks : "Link All";
-
-                    <div title="Code : @qacptCode, Mod : @qaMod, Quantity : @qaQty, Links : @link" class="col-md-3 input-group" style="max-width:20% !important;">
-                        <div class="input-group-prepend ControlHeight">
-                            <span class="input-group-text" id="basic-addon1">@j</span>
-                        </div>
-
-
-                        <input type="text" class="form-control QARemarks" value="@qacptCode" style="width:17px;@color" />
-
-
-                        <input type="text" class="form-control QARemarks" value="@qaMod" style="@color" />
-
-
-                        <input type="text" class="form-control QARemarks" value="@qaQty" style="@color" />
-
-
-                        <input type="text" class="form-control QARemarks" value="@qaLinks" style="@color" />
-                        <input type="hidden" id="hdnCoderCptCodes_@j" value="@codercpt^@coderMod^@coderQty^@coderLinks" />
-                        <input type="hidden" id="hdnQaCptCodes_@j" value="@qaCptcodes[0]^@qaCptcodes[1]^@qaCptcodes[2]^@qaCptcodes[3]" />
-
+            }
+            else
+            {
+                string modVal = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
+                string linkAllVal = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
+                string links = !string.IsNullOrEmpty(@linkAllVal) || @linkAllVal != "null" ? @linkAllVal : "Link All";
+                <div title="Code : @coderCptcodes[0], Mod : @modVal, Quantity : @coderCptcodes[2], Links : @links" class="col-md-3 lessWidth input-group ControlWidth">
+                    <div class="input-group-prepend ControlHeight">
+                        <span class="input-group-text" id="basic-addon1">@j</span>
                     </div>
 
 
 
-                }
-                else
-                {
-                    string modVal = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
-                    string linkAllVal = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
-                    string links = !string.IsNullOrEmpty(@linkAllVal) ? @linkAllVal : "Link All";
-                    <div title="Code : @coderCptcodes[0], Mod : @modVal, Quantity : @coderCptcodes[2], Links : @links" class="col-md-3 input-group" style="max-width:20% !important;">
-                        <div class="input-group-prepend ControlHeight">
-                            <span class="input-group-text" id="basic-addon1">@j</span>
-                        </div>
+                    <input type="text" class="form-control QARemarks ControlHeight" style="color: green;width: 17px;" placeholder="Code" value="@coderCptcodes[0]" style="width:17px;" />
+                    <input type="text" class="form-control QARemarks ControlHeight" style="color:green;" placeholder="Mod" value="@modVal" />
+                    <input type="text" class="form-control QARemarks ControlHeight" style="color:green;" placeholder="1" value="@coderCptcodes[2]" />
+                    <input type="text" class="form-control QARemarks ControlHeight" style="color: green;" placeholder="Link All" value="@linkAllVal" />
 
-                        @{ Show = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
-                        <div title="" class="col-md-2 input-group" style="@Show">
-                            <input type="text" class="form-control QARemarks" value="@dictQACptRemarks?.ElementAt(i).Value" />
-                        </div>
-                        <div class="input-group-append CoderCorrections" style="@Show">
-                            <span class="input-group-text">
-                                &nbsp;<i id="@CptClaim" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                                &nbsp;<i id="@CptClaim" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                            </span>
-                        </div>
-                        <div class="col-md-3 lessWidth input-group">
-                            <input type="text" id="@CptClaim" class="@CptClaimRemarks" style="@Show" />
-                        </div>
+                </div>
+            }
+
+
+
+
+
+            @if (!string.IsNullOrEmpty(dictQACptCodes?.ElementAt(i).Value))
+            {
+
+                string codercptCode = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[0]);
+                string qacptCode = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[0]);
+                string color = (codercptCode != qacptCode) ? "color:blue;" : "";
+                string codercpt = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[0] : coderCptcodes[0]);
+
+                string coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[1]);
+                string qaMod = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[1]);
+                color = (coderMod != qaMod) ? "color:blue;" : "";
+                coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[1] : coderCptcodes[1]);
+
+                string coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[2]);
+                string qaQty = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[2]);
+                color = (coderQty != qaQty) ? "color:blue;" : "";
+                coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[2] : coderCptcodes[2]);
+
+                string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
+                string qaLinks = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[3]);
+                color = (coderLinks != qaLinks) ? "color:blue;" : "";
+                coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[3] : coderCptcodes[3]);
+
+                string link = !string.IsNullOrEmpty(@qaLinks) ? @qaLinks : "Link All";
+
+                <div title="Code : @qacptCode, Mod : @qaMod, Quantity : @qaQty, Links : @link" class="col-md-3 lessWidth input-group ControlWidth">
+                    <div class="input-group-prepend ControlHeight">
+                        <span class="input-group-text" id="basic-addon1">@j</span>
                     </div>
-                    j = j + 1;
-                }
-            </div>
+
+
+                    <input type="text" class="form-control QARemarks" value="@qacptCode" style="width:17px;@color" />
+
+
+                    <input type="text" class="form-control QARemarks" value="@qaMod" style="@color" />
+
+
+                    <input type="text" class="form-control QARemarks" value="@qaQty" style="@color" />
+
+
+                    <input type="text" class="form-control QARemarks" value="@qaLinks" style="@color" />
+                    <input type="hidden" id="hdnCoderCptCodes_@j" value="@codercpt^@coderMod^@coderQty^@coderLinks" />
+                    <input type="hidden" id="hdnQaCptCodes_@j" value="@qaCptcodes[0]^@qaCptcodes[1]^@qaCptcodes[2]^@qaCptcodes[3]" />
+
+                </div>
+
+
+
+            }
+            else
+            {
+                string modVal = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
+                string linkAllVal = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
+                string links = !string.IsNullOrEmpty(@linkAllVal) ? @linkAllVal : "Link All";
+                <div title="Code : @coderCptcodes[0], Mod : @modVal, Quantity : @coderCptcodes[2], Links : @links" class="col-md-3 lessWidth input-group ControlWidth">
+                    <div class="input-group-prepend ControlHeight">
+                        <span class="input-group-text" id="basic-addon1">@j</span>
+                    </div>
+
+                    @{ Show = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
+                    <div title="" class="col-md-2 input-group" style="@Show">
+                        <input type="text" class="form-control QARemarks" value="@dictQACptRemarks?.ElementAt(i).Value" />
+                    </div>
+                    <div class="input-group-append CoderCorrections" style="@Show">
+                        <span class="input-group-text">
+                            &nbsp;<i id="@CptClaim" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                            &nbsp;<i id="@CptClaim" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <div class="col-md-3 lessWidth input-group">
+                        <input type="text" id="@CptClaim" class="@CptClaimRemarks" style="@Show" />
+                    </div>
+                </div>
+                j = j + 1;
+            }
+        </div>
         }
     }
 </div>
