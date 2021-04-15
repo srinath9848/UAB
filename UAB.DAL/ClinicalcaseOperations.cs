@@ -762,24 +762,10 @@ namespace UAB.DAL
                             chartSummaryDTO.QAPayorRemarks = Convert.ToString(reader["QAPayorIdRemark"]);
                             chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
                             chartSummaryDTO.QADx = Convert.ToString(reader["QADx"]);
-                            if (chartSummaryDTO.ClaimId == null)
-                            {
-                                chartSummaryDTO.QADxRemarks = "1^R51 is Wrong";//Convert.ToString(reader["QADxRemark"]);
-                                chartSummaryDTO.QACPTCodeRemarks = "1^71045 is Wrong";//Convert.ToString(reader["QACPTCodeRemark"]);
-                            }
-                            else if (chartSummaryDTO.ClaimId == 15)
-                            {
-                                chartSummaryDTO.QADxRemarks = "1^K15 is Wrong";//Convert.ToString(reader["QADxRemark"]);
-                                chartSummaryDTO.QACPTCodeRemarks = "1^71045 is Wrong";//Convert.ToString(reader["QACPTCodeRemark"]);
-                            }
-                            else if (chartSummaryDTO.ClaimId == 16)
-                            {
-                                chartSummaryDTO.QADxRemarks = "1^J98.6 is Wrong";//Convert.ToString(reader["QADxRemark"]);
-                                chartSummaryDTO.QACPTCodeRemarks = "1^71045 is Wrong";//Convert.ToString(reader["QACPTCodeRemark"]);
-                            }
+                            chartSummaryDTO.QADxRemarks = Convert.ToString(reader["QADxRemark"]);
+                            chartSummaryDTO.QACPTCodeRemarks = Convert.ToString(reader["QACPTCodeRemark"]);
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
                             chartSummaryDTO.QACPTCode = Convert.ToString(reader["QACPTCode"]);
-
                             //chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
                             chartSummaryDTO.QAMod = Convert.ToString(reader["QAMod"]);
                             chartSummaryDTO.QAModRemarks = Convert.ToString(reader["QAModRemark"]);
