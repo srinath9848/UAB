@@ -762,8 +762,31 @@ namespace UAB.DAL
                             chartSummaryDTO.QAPayorRemarks = Convert.ToString(reader["QAPayorIdRemark"]);
                             chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
                             chartSummaryDTO.QADx = Convert.ToString(reader["QADx"]);
-                            chartSummaryDTO.QADxRemarks = Convert.ToString(reader["QADxRemark"]);
-                            chartSummaryDTO.QACPTCodeRemarks = Convert.ToString(reader["QACPTCodeRemark"]);
+                            if (chartSummaryDTO.ClaimId == null)
+                            {
+                                chartSummaryDTO.QAProviderRemarks = "Provider0 Wrong";
+                                chartSummaryDTO.QAPayorRemarks = "Payor0 Wrong";
+                                chartSummaryDTO.QAProviderFeedbackRemarks = "ProviderFeedback0 Wrong";
+
+                                chartSummaryDTO.QADxRemarks = "1^R51 is Wrong";//Convert.ToString(reader["QADxRemark"]);
+                                chartSummaryDTO.QACPTCodeRemarks = "1^71045 is Wrong";//Convert.ToString(reader["QACPTCodeRemark"]);
+                            }
+                            else if (chartSummaryDTO.ClaimId == 15)
+                            {
+                                chartSummaryDTO.QAProviderRemarks = "Provider1 Wrong";
+                                chartSummaryDTO.QAPayorRemarks = "Payor1 Wrong";
+                                chartSummaryDTO.QAProviderFeedbackRemarks = "ProviderFeedback1 Wrong";
+                                chartSummaryDTO.QADxRemarks = "1^K15 is Wrong";//Convert.ToString(reader["QADxRemark"]);
+                                chartSummaryDTO.QACPTCodeRemarks = "1^71045 is Wrong";//Convert.ToString(reader["QACPTCodeRemark"]);
+                            }
+                            else if (chartSummaryDTO.ClaimId == 16)
+                            {
+                                chartSummaryDTO.QAProviderRemarks = "Provider2 Wrong";
+                                chartSummaryDTO.QAPayorRemarks = "Payor2 Wrong";
+                                chartSummaryDTO.QAProviderFeedbackRemarks = "ProviderFeedback2 Wrong";
+                                chartSummaryDTO.QADxRemarks = "1^J98.6 is Wrong";//Convert.ToString(reader["QADxRemark"]);
+                                chartSummaryDTO.QACPTCodeRemarks = "1^71045 is Wrong";//Convert.ToString(reader["QACPTCodeRemark"]);
+                            }
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
                             chartSummaryDTO.QACPTCode = Convert.ToString(reader["QACPTCode"]);
                             //chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
@@ -773,7 +796,7 @@ namespace UAB.DAL
                                 chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackID"]);
                             if (reader["QAProviderFeedbackID"] != DBNull.Value)
                                 chartSummaryDTO.QAProviderFeedbackID = Convert.ToInt32(reader["QAProviderFeedbackID"]);
-                            chartSummaryDTO.QAProviderFeedbackRemarks = Convert.ToString(reader["QAProviderFeedbackIDRemark"]);
+                            //chartSummaryDTO.QAProviderFeedbackRemarks = Convert.ToString(reader["QAProviderFeedbackIDRemark"]);
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
 
                             if (reader["ShadowQAPayorID"] != DBNull.Value)
@@ -1330,7 +1353,7 @@ namespace UAB.DAL
             }
             return dto;
         }
-        public CodingDTO SubmitCodingIncorrectChart(ChartSummaryDTO chartSummaryDTO, int statusId)
+        public CodingDTO SubmitCodingIncorrectChart(ChartSummaryDTO chartSummaryDTO, int statusId, DataTable dtAudit)
         {
             CodingDTO dto = new CodingDTO();
 
@@ -1385,61 +1408,6 @@ namespace UAB.DAL
                             Direction = System.Data.ParameterDirection.Input,
                             Value = chartSummaryDTO.RevisedCPTRemarks
                         },
-                          new SqlParameter() {
-                            ParameterName = "@Claim1CPTCode",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.Claim1CPTCode
-                        },
-                         new SqlParameter() {
-                            ParameterName = "@RejectedClaim1Cpt",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.RejectedClaim1Cpt
-                        },
-                         new SqlParameter() {
-                            ParameterName = "@RevisedClaim1CPTRemarks",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.RevisedClaim1CPTRemarks
-                        },
-                          new SqlParameter() {
-                            ParameterName = "@Claim2CPTCode",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.Claim2CPTCode
-                        },
-                         new SqlParameter() {
-                            ParameterName = "@RejectedClaim2Cpt",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.RejectedClaim2Cpt
-                        },
-                         new SqlParameter() {
-                            ParameterName = "@RevisedClaim2CPTRemarks",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.RevisedClaim2CPTRemarks
-                        }
-                         ,
-                          new SqlParameter() {
-                            ParameterName = "@Claim3CPTCode",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.Claim3CPTCode
-                        },
-                         new SqlParameter() {
-                            ParameterName = "@RejectedClaim3Cpt",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.RejectedClaim3Cpt
-                        },
-                         new SqlParameter() {
-                            ParameterName = "@RevisedClaim3CPTRemarks",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.RevisedClaim3CPTRemarks
-                        },
 
                         new SqlParameter() {
                             ParameterName = "@Mod",
@@ -1469,54 +1437,6 @@ namespace UAB.DAL
                             Value = chartSummaryDTO.RevisedDXRemarks
                         }
 
-                        ,  new SqlParameter() {
-                            ParameterName = "@Claim1Dx",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.Claim1Dx
-                        },  new SqlParameter() {
-                            ParameterName = "@RejectedClaim1Dx",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.RejectedClaim1Dx
-                        },  new SqlParameter() {
-                            ParameterName = "@RevisedClaim1DXRemarks",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.RevisedClaim1DXRemarks
-                        }
-                         ,  new SqlParameter() {
-                            ParameterName = "@Claim2Dx",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.Claim2Dx
-                        },  new SqlParameter() {
-                            ParameterName = "@RejectedClaim2Dx",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.RejectedClaim2Dx
-                        },  new SqlParameter() {
-                            ParameterName = "@RevisedClaim2DXRemarks",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.RevisedClaim2DXRemarks
-                        }
-                         ,  new SqlParameter() {
-                            ParameterName = "@Claim3Dx",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.Claim3Dx
-                        },  new SqlParameter() {
-                            ParameterName = "@RejectedClaim3Dx",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.RejectedClaim3Dx
-                        },  new SqlParameter() {
-                            ParameterName = "@RevisedClaim3DXRemarks",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.RevisedClaim3DXRemarks
-                        }
                         , new SqlParameter() {
                             ParameterName = "@ProviderFeedbackID",
                             SqlDbType =  System.Data.SqlDbType.Int,
@@ -1553,6 +1473,13 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = statusId
+                        },
+                          new SqlParameter() {
+                            ParameterName = "@utAudit",
+                            SqlDbType =  System.Data.SqlDbType.Structured,
+                            Direction = System.Data.ParameterDirection.Input,
+                            TypeName = "utAudit",
+                            Value = dtAudit
                         }
                 };
 
