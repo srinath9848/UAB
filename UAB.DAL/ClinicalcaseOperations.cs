@@ -763,9 +763,9 @@ namespace UAB.DAL
                             chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
                             chartSummaryDTO.QADx = Convert.ToString(reader["QADx"]);
                             chartSummaryDTO.QADxRemarks = Convert.ToString(reader["QADxRemark"]);
+                            chartSummaryDTO.QACPTCodeRemarks = Convert.ToString(reader["QACPTCodeRemark"]);
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
                             chartSummaryDTO.QACPTCode = Convert.ToString(reader["QACPTCode"]);
-                            chartSummaryDTO.QACPTCodeRemarks = Convert.ToString(reader["QACPTCodeRemark"]);
                             //chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
                             chartSummaryDTO.QAMod = Convert.ToString(reader["QAMod"]);
                             chartSummaryDTO.QAModRemarks = Convert.ToString(reader["QAModRemark"]);
@@ -1385,6 +1385,62 @@ namespace UAB.DAL
                             Direction = System.Data.ParameterDirection.Input,
                             Value = chartSummaryDTO.RevisedCPTRemarks
                         },
+                          new SqlParameter() {
+                            ParameterName = "@Claim1CPTCode",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.Claim1CPTCode
+                        },
+                         new SqlParameter() {
+                            ParameterName = "@RejectedClaim1Cpt",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.RejectedClaim1Cpt
+                        },
+                         new SqlParameter() {
+                            ParameterName = "@RevisedClaim1CPTRemarks",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.RevisedClaim1CPTRemarks
+                        },
+                          new SqlParameter() {
+                            ParameterName = "@Claim2CPTCode",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.Claim2CPTCode
+                        },
+                         new SqlParameter() {
+                            ParameterName = "@RejectedClaim2Cpt",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.RejectedClaim2Cpt
+                        },
+                         new SqlParameter() {
+                            ParameterName = "@RevisedClaim2CPTRemarks",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.RevisedClaim2CPTRemarks
+                        }
+                         ,
+                          new SqlParameter() {
+                            ParameterName = "@Claim3CPTCode",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.Claim3CPTCode
+                        },
+                         new SqlParameter() {
+                            ParameterName = "@RejectedClaim3Cpt",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.RejectedClaim3Cpt
+                        },
+                         new SqlParameter() {
+                            ParameterName = "@RevisedClaim3CPTRemarks",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.RevisedClaim3CPTRemarks
+                        },
+
                         new SqlParameter() {
                             ParameterName = "@Mod",
                             SqlDbType =  System.Data.SqlDbType.VarChar,
@@ -1411,7 +1467,57 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = chartSummaryDTO.RevisedDXRemarks
-                        } , new SqlParameter() {
+                        }
+
+                        ,  new SqlParameter() {
+                            ParameterName = "@Claim1Dx",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.Claim1Dx
+                        },  new SqlParameter() {
+                            ParameterName = "@RejectedClaim1Dx",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.RejectedClaim1Dx
+                        },  new SqlParameter() {
+                            ParameterName = "@RevisedClaim1DXRemarks",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.RevisedClaim1DXRemarks
+                        }
+                         ,  new SqlParameter() {
+                            ParameterName = "@Claim2Dx",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.Claim2Dx
+                        },  new SqlParameter() {
+                            ParameterName = "@RejectedClaim2Dx",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.RejectedClaim2Dx
+                        },  new SqlParameter() {
+                            ParameterName = "@RevisedClaim2DXRemarks",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.RevisedClaim2DXRemarks
+                        }
+                         ,  new SqlParameter() {
+                            ParameterName = "@Claim3Dx",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.Claim3Dx
+                        },  new SqlParameter() {
+                            ParameterName = "@RejectedClaim3Dx",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.RejectedClaim3Dx
+                        },  new SqlParameter() {
+                            ParameterName = "@RevisedClaim3DXRemarks",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.RevisedClaim3DXRemarks
+                        }
+                        , new SqlParameter() {
                             ParameterName = "@ProviderFeedbackID",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
