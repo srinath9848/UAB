@@ -32,9 +32,9 @@
             claimArray = [];
         });
 
+        //Claim1
         var DxCodes = $("[id*=txtDx_]");
-        $("#hdnDxCodes").val("");
-        $("#hdnCptCodes").val("");
+        $("#hdnDxCodes").val("");       
         for (var i = 0; i < DxCodes.length; i++) {
 
                 if ($("#" + $(DxCodes[i]).attr("id")).val() != "") {
@@ -45,6 +45,50 @@
                 }
         }
 
+        //Claim2
+        $("#hdnDxCodes1")
+        DxCodes = $("[id*=txtDx2Cliam_]");
+        $("#hdnDxCodes1").val("");
+        for (var i = 0; i < DxCodes.length; i++) {
+
+            if ($("#" + $(DxCodes[i]).attr("id")).val() != "") {
+                if ($("#hdnDxCodes1").val() == "")
+                    $("#hdnDxCodes1").val($(DxCodes[i]).val());
+                else
+                    $("#hdnDxCodes1").val($("#hdnDxCodes1").val() + "," + $(DxCodes[i]).val());
+            }
+        }
+
+        //Claim3
+        $("#hdnDxCodes2")
+        DxCodes = $("[id*=txtDx3Cliam_]");
+        $("#hdnDxCodes2").val("");      
+        for (var i = 0; i < DxCodes.length; i++) {
+
+            if ($("#" + $(DxCodes[i]).attr("id")).val() != "") {
+                if ($("#hdnDxCodes2").val() == "")
+                    $("#hdnDxCodes2").val($(DxCodes[i]).val());
+                else
+                    $("#hdnDxCodes2").val($("#hdnDxCodes2").val() + "," + $(DxCodes[i]).val());
+            }
+        }
+
+        //Claim4
+        $("#hdnDxCodes3")
+        DxCodes = $("[id*=txtDx4Cliam_]");
+        $("#hdnDxCodes3").val("");
+        for (var i = 0; i < DxCodes.length; i++) {
+
+            if ($("#" + $(DxCodes[i]).attr("id")).val() != "") {
+                if ($("#hdnDxCodes3").val() == "")
+                    $("#hdnDxCodes3").val($(DxCodes[i]).val());
+                else
+                    $("#hdnDxCodes3").val($("#hdnDxCodes3").val() + "," + $(DxCodes[i]).val());
+            }
+        }
+
+
+        $("#hdnCptCodes").val("");
         var CptCodes = $("[id*=DivCptRow_]");
         for (var i = 1; i <= CptCodes.length; i++) {
 
@@ -115,7 +159,7 @@
                 if (val !== "" && val !== null) {
                     if ($.inArray(val, dxArray2) == -1) {
                         dxArray2.push(val);
-                        $("#hdnDxCodes1").val(dxArray2);
+                        //$("#hdnDxCodes1").val(dxArray2);
                         var text = "'" + "txt" + cliamid +"Dx_" + id + "_" + parseInt(2) + "'";
                         var deleteDx = "'" + "Div2DxRow_" + id + "_" + cliamid + "'";
                         $("#DivDx_2").append('<div id="Div2DxRow_' + id + "_" + cliamid + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text dx2index" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxCliams(' + text + ')" class="form-control CoderDetails cliam_' + cliamid + '" id="txtDx2Cliam_' + id + '" /><button type="button" id="DeleteDx2Codes_' + id + '" class="btn btn-sm" style="max-width:23px;margin-left:-5px;" onclick="DeleteDxCliams(' + deleteDx +')"><i class="fa fa-times"></i></button></div></div>');
@@ -133,7 +177,7 @@
                 if (val !== "" && val !== null) {
                     if ($.inArray(val, dxArray3) == -1) {
                         dxArray3.push(val);
-                        $("#hdnDxCodes2").val(dxArray3);
+                        //$("#hdnDxCodes2").val(dxArray3);
                         var text = "'" + "txt" + cliamid+"Dx_" + id + "_" + parseInt(3) + "'";
                         var deleteDx = "'" + "Div3DxRow_" + id + "_" + cliamid + "'";
                         $("#DivDx_3").append('<div id="Div3DxRow_' + id + "_" + cliamid + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text dx3index" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxCliams(' + text + ')" class="form-control CoderDetails cliam_' + cliamid + '" id="txtDx3Cliam_' + id + '" /><button type="button" id="DeleteDx3Codes_' + id + '" class="btn btn-sm" style="max-width:23px;margin-left:-5px;" onclick="DeleteDxCliams(' + deleteDx + ')"><i class="fa fa-times"></i></button></div></div>');
@@ -151,7 +195,7 @@
                 if (val !== "" && val !== null) {
                     if ($.inArray(val, dxArray4) == -1) {
                         dxArray4.push(val);
-                        $("#hdnDxCodes3").val(dxArray4);
+                        //$("#hdnDxCodes3").val(dxArray4);
                         var text = "'" + "txt" + cliamid +"Dx_" + id + "_" + parseInt(4) + "'";
                         var deleteDx = "'" + "Div4DxRow_" + id + "_" + cliamid + "'";
                         $("#DivDx_4").append('<div id="Div4DxRow_' + id + "_" + cliamid + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text dx4index" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxCliams(' + text + ')" class="form-control CoderDetails cliam_' + cliamid + '" id="txtDx4Cliam_' + id + '" /><button type="button" id="DeleteDx4Codes_' + id + '" class="btn btn-sm" style="max-width:23px;margin-left:-5px;" onclick="DeleteDxCliams(' + deleteDx + ')"><i class="fa fa-times"></i></button></div></div>');
