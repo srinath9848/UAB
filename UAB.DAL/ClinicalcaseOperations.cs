@@ -1200,6 +1200,12 @@ namespace UAB.DAL
                     SqlDbType = System.Data.SqlDbType.Bit,
                      Direction = System.Data.ParameterDirection.Input,
                      Value = chartSummaryDTO.IsAuditRequired
+                 },
+                  new SqlParameter() {
+                    ParameterName = "@SubmitAndPostAlso",
+                    SqlDbType = System.Data.SqlDbType.Bit,
+                     Direction = System.Data.ParameterDirection.Input,
+                     Value = chartSummaryDTO.SubmitAndPostAlso
                  }
                 };
 

@@ -23,6 +23,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
+
     $('#codingSubmit,#codingSubmitAndGetNext').click(function (e) {
         var claimArray = [];
         $(".AlignCross .tab").each(function () {
@@ -34,7 +35,7 @@
 
         //Claim1
         var DxCodes = $("[id*=txtDx_]");
-        $("#hdnDxCodes").val("");       
+        $("#hdnDxCodes").val("");
         for (var i = 0; i < DxCodes.length; i++) {
 
                 if ($("#" + $(DxCodes[i]).attr("id")).val() != "") {
@@ -62,7 +63,7 @@
         //Claim3
         $("#hdnDxCodes2")
         DxCodes = $("[id*=txtDx3Cliam_]");
-        $("#hdnDxCodes2").val("");      
+        $("#hdnDxCodes2").val("");
         for (var i = 0; i < DxCodes.length; i++) {
 
             if ($("#" + $(DxCodes[i]).attr("id")).val() != "") {
@@ -108,6 +109,45 @@
                 }
             }
         }
+        var buttonType = $(this).attr("name");
+        var isAuditRequired;
+         $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetAuditDetails", "UAB")",
+                data: {
+                    "chartType": "Coding",
+                    "projectId": $("#ProjectID").val()
+                },
+             success: function (response) {
+
+                 isAuditRequired = response;
+
+                 if (isAuditRequired == false) {
+                     $.ajax({
+                         type: "GET",
+                         url: "@Url.Action("codingSubmitPopup", "UAB")",
+                         data: {
+                             "chartSummaryDTO": "@Model",
+                             "buttonType": buttonType
+                         },
+                         success: function (response) {
+                             $("#modalContent").html(response);
+                         },
+                         failure: function (response) {
+                             alert(response);
+                         }
+                     });
+                 }
+                 else {
+                     $("#hdnButtonType").val(buttonType);
+                     $("#hdnIsAuditRequired").val("true");
+                     $("#frmSubmitCodingAvailableChart").submit();
+                 }
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+         });
 
     });
     var isBlocked = @(ViewBag.IsBlocked == null ? "0": "1");
