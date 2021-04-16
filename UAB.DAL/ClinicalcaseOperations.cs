@@ -755,11 +755,10 @@ namespace UAB.DAL
                             chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                             if (reader["QAProviderID"] != DBNull.Value)
                                 chartSummaryDTO.QAProviderID = Convert.ToInt32(reader["QAProviderID"]);
-                            chartSummaryDTO.QAProviderRemarks = Convert.ToString(reader["QAProviderIDRemark"]);
                             chartSummaryDTO.PayorID = Convert.ToInt32(reader["PayorId"]);
                             if (reader["QAPayorID"] != DBNull.Value)
                                 chartSummaryDTO.QAPayorID = Convert.ToInt32(reader["QAPayorID"]);
-                            chartSummaryDTO.QAPayorRemarks = Convert.ToString(reader["QAPayorIdRemark"]);
+                            //chartSummaryDTO.QAPayorRemarks = Convert.ToString(reader["QAPayorIdRemark"]);
                             chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
                             chartSummaryDTO.QADx = Convert.ToString(reader["QADx"]);
                             chartSummaryDTO.QADxRemarks = Convert.ToString(reader["QADxRemark"]);
@@ -773,7 +772,7 @@ namespace UAB.DAL
                                 chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackID"]);
                             if (reader["QAProviderFeedbackID"] != DBNull.Value)
                                 chartSummaryDTO.QAProviderFeedbackID = Convert.ToInt32(reader["QAProviderFeedbackID"]);
-                            chartSummaryDTO.QAProviderFeedbackRemarks = Convert.ToString(reader["QAProviderFeedbackIDRemark"]);
+                            // chartSummaryDTO.QAProviderFeedbackRemarks = Convert.ToString(reader["QAProviderFeedbackIDRemark"]);
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
 
                             if (reader["ShadowQAPayorID"] != DBNull.Value)
@@ -1335,7 +1334,7 @@ namespace UAB.DAL
             }
             return dto;
         }
-        public CodingDTO SubmitCodingIncorrectChart(ChartSummaryDTO chartSummaryDTO, int statusId, DataTable dtAudit)
+        public CodingDTO SubmitCodingIncorrectChart(ChartSummaryDTO chartSummaryDTO, int statusId, DataTable dtAudit, DataTable dtbasicParams, DataTable dtDx, DataTable dtCpt)
         {
             CodingDTO dto = new CodingDTO();
 
@@ -1462,7 +1461,29 @@ namespace UAB.DAL
                             Direction = System.Data.ParameterDirection.Input,
                             TypeName = "utAudit",
                             Value = dtAudit
+                        },
+                          new SqlParameter() {
+                            ParameterName = "@utBasicParams",
+                            SqlDbType =  System.Data.SqlDbType.Structured,
+                            Direction = System.Data.ParameterDirection.Input,
+                            TypeName = "utBasicParams",
+                            Value = dtbasicParams
+                        },
+                          new SqlParameter() {
+                            ParameterName = "@utDxCode",
+                            SqlDbType =  System.Data.SqlDbType.Structured,
+                            Direction = System.Data.ParameterDirection.Input,
+                            TypeName = "utDxCode",
+                            Value = dtDx
+                        },
+                          new SqlParameter() {
+                            ParameterName = "@utCptCode",
+                            SqlDbType =  System.Data.SqlDbType.Structured,
+                            Direction = System.Data.ParameterDirection.Input,
+                            TypeName = "utCptCode",
+                            Value = dtCpt
                         }
+
                 };
 
                 using (var con = context.Database.GetDbConnection())
