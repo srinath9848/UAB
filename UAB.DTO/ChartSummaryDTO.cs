@@ -26,26 +26,12 @@ namespace UAB.DTO
         public string ProviderText { get; set; }
         [Required(ErrorMessage = "*")]
         public string CPTCode { get; set; }
-        public string Claim1CPTCode { get; set; }
-        public string Claim2CPTCode { get; set; }
-        public string Claim3CPTCode { get; set; }
-
         public string RejectedCpt { get; set; }
-        public string RejectedClaim1Cpt { get; set; }
-        public string RejectedClaim2Cpt { get; set; }
-        public string RejectedClaim3Cpt { get; set; }
-
         public string NoteTitle { get; set; }
         [Required(ErrorMessage = "*")]
         public string Dx { get; set; }
-        public string Claim1Dx { get; set; }
-        public string Claim2Dx { get; set; }
-        public string Claim3Dx { get; set; }
 
         public string RejectedDx { get; set; }
-        public string RejectedClaim1Dx { get; set; }
-        public string RejectedClaim2Dx { get; set; }
-        public string RejectedClaim3Dx { get; set; }
 
         //[Required(ErrorMessage = "Modifiers is required.")]
         public string Mod { get; set; }
@@ -118,14 +104,8 @@ namespace UAB.DTO
         public string RevisedPayorRemarks { get; set; }
         public string RevisedProviderRemarks { get; set; }
         public string RevisedCPTRemarks { get; set; }
-        public string RevisedClaim1CPTRemarks { get; set; }
-        public string RevisedClaim2CPTRemarks { get; set; }
-        public string RevisedClaim3CPTRemarks { get; set; }
         public string RevisedModRemarks { get; set; }
         public string RevisedDXRemarks { get; set; }
-        public string RevisedClaim1DXRemarks { get; set; }
-        public string RevisedClaim2DXRemarks { get; set; }
-        public string RevisedClaim3DXRemarks { get; set; }
         public string RevisedProviderFeedbackRemarks { get; set; }
 
         public string BlockCategory { get; set; }

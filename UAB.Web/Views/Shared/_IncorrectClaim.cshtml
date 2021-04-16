@@ -19,7 +19,8 @@
     @{string ProviderText = (Model.ProviderText?.Length > len) ? Model.ProviderText.Substring(0, len) + ".." : Model.ProviderText;}
     @{string QAProviderText = (Model.QAProviderText?.Length > len) ? "/" + Model.QAProviderText.Substring(0, len) + ".." : "/" + Model.QAProviderText;}
     @{string title = (!string.IsNullOrEmpty(Model.QAProviderText) ? Model.ProviderText + "/" + Model.QAProviderText : Model.ProviderText);}
-    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @style = "display:none", @class = "form-control CoderDetails" })
+    @{ var ProviderID = string.Format("ProviderID_{0}", @Model.TabIndex);}
+    @Html.DropDownList(ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @style = "display:none", @class = "form-control CoderDetails", @id = ProviderID })
 
     <div title="@title" class="col-md-3 lessWidth input-group ControlWidth">
         <div class="form-control CoderDetails" style="line-height:2.2;overflow:hidden;height:32px;">
@@ -37,11 +38,12 @@
             </span>
         </div>
     </div>
+    @{ var QAProviderID = string.Format("QAProviderID_{0}", @Model.TabIndex);}
     @{string Show = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "visibility:hidden" : "display:flex");}
     <div title="@Model.QAProviderRemarks" class="col-md-2 input-group" style="@Show">
         <input type="text" class="form-control QARemarks ControlHeight" value="@Model.QAProviderRemarks" />
     </div>
-    @Html.DropDownListFor(model => model.QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @id = string.Format("ProviderID1_{0}", Model.TabIndex), @class = "form-control QARevised", @style = "display:none" })
+    @Html.DropDownList(QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @id = QAProviderID, @class = "form-control QARevised", @style = "display:none" })
     <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
         <span class="input-group-text ControlHeight" style="margin-left:-12px;">
             &nbsp;<i id="Provider" title="ProviderID1_@Model.TabIndex" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
@@ -49,7 +51,7 @@
         </span>
     </div>
     <div class="col-md-3 input-group CoderCorrections">
-        @Html.TextBoxFor(model => model.RevisedProviderRemarks, new { @class = "form-control Revised", @id = "RevisedProviderRemarks", @style = @Show })
+        @Html.TextBoxFor(model => model.RevisedProviderRemarks, new { @class = string.Format("form-control Revised RevisedProvider_{0}", @Model.TabIndex), @id = "RevisedProviderRemarks", @style = @Show })
     </div>
 </div>
 <div class="form-group row">
@@ -58,7 +60,8 @@
     @{string PayorText = (Model.PayorText?.Length > len) ? Model.PayorText.Substring(0, len) + ".." : Model.PayorText;}
     @{string QAPayorText = (Model.QAPayorText?.Length > len) ? "/" + Model.QAPayorText.Substring(0, len) + ".." : "/" + Model.QAPayorText;}
     @{title = (!string.IsNullOrEmpty(Model.QAPayorText) ? Model.PayorText + "/" + Model.QAPayorText : Model.PayorText);}
-    @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @style = "display:none", @class = "form-control CoderDetails" })
+    @{ var PayorID = string.Format("PayorID_{0}", @Model.TabIndex);}
+    @Html.DropDownList(PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @style = "display:none", @class = "form-control CoderDetails", @id = PayorID })
     <div title="@title" class="col-md-3 lessWidth input-group ControlWidth">
         <div name="PayorText" class="form-control CoderDetails" style="line-height:2.2;overflow:hidden;height:32px;">
             <span style="white-space:nowrap">
@@ -78,7 +81,8 @@
     <div title="@Model.QAPayorRemarks" class="col-md-2 input-group" style="@Show">
         <input type="text" class="form-control QARemarks" value="@Model.QAPayorRemarks" />
     </div>
-    @Html.DropDownListFor(model => model.QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @id = string.Format("PayorID1_{0}", Model.TabIndex), @class = "form-control QARevised", @style = "display:none" })
+    @{ var QAPayorID = string.Format("QAPayorID_{0}", @Model.TabIndex);}
+    @Html.DropDownList(QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @id = QAPayorID, @class = "form-control QARevised", @style = "display:none" })
     <div class="input-group-append CoderCorrections" style="@Show">
         <span class="input-group-text ControlHeight" style="margin-left:-12px;">
             &nbsp;<i id="Payor" title="PayorID1_@Model.TabIndex" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
@@ -86,7 +90,7 @@
         </span>
     </div>
     <div class="col-md-3 input-group CoderCorrections">
-        @Html.TextBoxFor(model => model.RevisedPayorRemarks, new { @class = "form-control Revised", @id = "RevisedPayorRemarks", @style = @Show })
+        @Html.TextBoxFor(model => model.RevisedPayorRemarks, new { @class = string.Format("form-control Revised RevisedPayor_{0}", @Model.TabIndex), @style = @Show })
     </div>
 </div>
 
@@ -329,7 +333,8 @@
     @{string ProviderFeedbackText = (Model.ProviderFeedbackText?.Length > len) ? Model.ProviderFeedbackText.Substring(0, len) + ".." : Model.ProviderFeedbackText;}
     @{string QAProviderFeedbackText = (Model.QAProviderFeedbackText?.Length > len) ? "/" + Model.QAProviderFeedbackText.Substring(0, len) + ".." : "/" + Model.QAProviderFeedbackText;}
     @{title = (!string.IsNullOrEmpty(Model.QAProviderFeedbackText) ? Model.ProviderFeedbackText + "/" + Model.QAProviderFeedbackText : Model.ProviderFeedbackText);}
-    @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @style = "display:none", @class = "form-control CoderDetails" })
+    @{ var ProviderFeedbackID = string.Format("ProviderFeedbackID_{0}", @Model.TabIndex);}
+    @Html.DropDownList(ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @style = "display:none", @class = "form-control CoderDetails", @id = ProviderFeedbackID })
 
     <div title="@title" class="col-md-3 lessWidth input-group ControlWidth">
         <div class="form-control CoderDetails" style="line-height:2.2;overflow:hidden;height:32px;">
@@ -357,8 +362,9 @@
             &nbsp;<i id="ProviderFeedback" title="Feedback1_@Model.TabIndex" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
         </span>
     </div>
-    @Html.DropDownListFor(model => model.QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @style = "display:none", @class = "form-control QARevised", @id = string.Format("Feedback1_{0}", Model.TabIndex) })
+    @{ var QAProviderFeedbackID = string.Format("QAProviderFeedbackID_{0}", @Model.TabIndex);}
+    @Html.DropDownList(QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @style = "display:none", @class = "form-control QARevised", @id = QAProviderFeedbackID })
     <div class="col-md-3 input-group CoderCorrections">
-        @Html.TextBoxFor(model => model.RevisedProviderFeedbackRemarks, new { @class = "form-control Revised", @id = "RevisedProviderFeedbackRemarks", @style = @Show })
+        @Html.TextBoxFor(model => model.RevisedProviderFeedbackRemarks, new { @class = string.Format("form-control Revised RevisedProviderFeedback_{0}", @Model.TabIndex), @id = "RevisedProviderFeedbackRemarks", @style = @Show })
     </div>
 </div>
