@@ -218,7 +218,6 @@
         j = 1;
         for (i = 0; i < Cptcount; i++)
         {
-
             <div class="form-group row" id="DivCptRow_@j">
                 @if (i == 0)
                 {
@@ -234,6 +233,8 @@
                 @{
                     var CptClaimRemarks = string.Format("form-control CptClaim_{0}_Remarks_{1}", @Model.TabIndex, @j);
                     var CptClaim = string.Format("CptClaim_{0}_{1}", @Model.TabIndex, @j);
+                    var cptCoderClaim = string.Format("CptClaim_{0}_Coder_{1}", Model.TabIndex, @j);
+                    var cptQAClaim = string.Format("CptClaim_{0}_QA_{1}", Model.TabIndex, @j);
                 }
 
                 @if (!string.IsNullOrEmpty(dictQACptCodes?.ElementAt(i).Value))
@@ -259,31 +260,19 @@
                     color = (coderLinks != qaLinks) ? "color:blue;" : "";
                     coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[3] : coderCptcodes[3]);
 
-                    string link = !string.IsNullOrEmpty(@qaLinks) || @qaLinks != "null" ? @qaLinks : "Link All";
+                    string link = !string.IsNullOrEmpty(@qaLinks) || @qaLinks != "null" ? @qaLinks : "Link All";                    
 
                     <div title="Code : @qacptCode, Mod : @qaMod, Quantity : @qaQty, Links : @link" class="col-md-3 lessWidth input-group ControlWidth">
                         <div class="input-group-prepend ControlHeight">
                             <span class="input-group-text" id="basic-addon1">@j</span>
                         </div>
-
-
                         <input type="text" class="form-control QARemarks" value="@qacptCode" style="width:17px;@color" />
-
-
                         <input type="text" class="form-control QARemarks" value="@qaMod" style="@color" />
-
-
                         <input type="text" class="form-control QARemarks" value="@qaQty" style="@color" />
-
-
                         <input type="text" class="form-control QARemarks" value="@qaLinks" style="@color" />
-                        <input type="hidden" id="hdnCoderCptCodes_@j" value="@codercpt^@coderMod^@coderQty^@coderLinks" />
-                        <input type="hidden" id="hdnQaCptCodes_@j" value="@qaCptcodes[0]^@qaCptcodes[1]^@qaCptcodes[2]^@qaCptcodes[3]" />
-
+                        <input type="hidden" id="@cptCoderClaim" value="@codercpt^@coderMod^@coderQty^@coderLinks" />
+                        <input type="hidden" id="@cptQAClaim" value="@qaCptcodes[0]^@qaCptcodes[1]^@qaCptcodes[2]^@qaCptcodes[3]" />
                     </div>
-
-
-
                 }
                 else
                 {
@@ -294,20 +283,14 @@
                         <div class="input-group-prepend ControlHeight">
                             <span class="input-group-text" id="basic-addon1">@j</span>
                         </div>
-
-
-
-                        <input type="text" class="form-control QARemarks ControlHeight" style="color: green;width: 17px;" placeholder="Code" value="@coderCptcodes[0]" style="width:17px;" />
+                        <input type="text" class="form-control QARemarks ControlHeight" style="color: green;width: 17px;" placeholder="Code" value="@coderCptcodes[0]" />
                         <input type="text" class="form-control QARemarks ControlHeight" style="color:green;" placeholder="Mod" value="@modVal" />
                         <input type="text" class="form-control QARemarks ControlHeight" style="color:green;" placeholder="1" value="@coderCptcodes[2]" />
                         <input type="text" class="form-control QARemarks ControlHeight" style="color: green;" placeholder="Link All" value="@linkAllVal" />
-
+                        <input type="hidden" id="@cptCoderClaim" value="@coderCptcodes[0]^@modVal^@coderCptcodes[2]^@linkAllVal" />
+                        <input type="hidden" id="@cptCoderClaim" value="@coderCptcodes[0]^@modVal^@coderCptcodes[2]^@linkAllVal" />
                     </div>
                 }
-
-
-
-
                 @{ Show = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
                 <div title="" class="col-md-2 input-group" style="@Show">
                     <input type="text" class="form-control QARemarks" value="@dictQACptRemarks?.ElementAt(i).Value" />
