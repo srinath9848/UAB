@@ -98,7 +98,11 @@
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-md-3 lessWidth m-t-15">Provider</label>
-                                                <div class="col-md-3 input-group">
+                                                @{int len = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText) ? 10 : 20); }
+                                                @{string ProviderText = (Model.FirstOrDefault().ProviderText?.Length > len) ? Model.FirstOrDefault().ProviderText.Substring(0, len) + ".." : Model.FirstOrDefault().ProviderText;}
+                                                @{string QAProviderText = (Model.FirstOrDefault().QAProviderText?.Length > len) ? "/" + Model.FirstOrDefault().QAProviderText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAProviderText;}
+                                                @{string title = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText) ? Model.FirstOrDefault().ProviderText + "/" + Model.FirstOrDefault().QAProviderText : Model.FirstOrDefault().ProviderText);}
+                                                <div title="@title" class="col-md-3 input-group">
                                                     @{string Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                                                     @{string Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
@@ -115,14 +119,18 @@
                                                     @Html.ValidationMessageFor(model => model.FirstOrDefault().QAProviderID, null, new { @class = "text-danger errMsg" })
                                                 </div>
                                                 @{string Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "display:none" : "display:flex");}
-                                                <div class="col-md-3 input-group">
+                                                <div title="model.FirstOrDefault().QAProviderRemarks" class="col-md-3 input-group">
                                                     @Html.TextBoxFor(model => model.FirstOrDefault().QAProviderRemarks, new { @title = Model.FirstOrDefault().QAProviderRemarks, @style = Show, @class = "form-control QARevised ControlHeight", @id = "ProviderID2" })
                                                     @Html.ValidationMessageFor(model => model.FirstOrDefault().QAProviderRemarks, null, new { @class = "text-danger errMsg" })
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-md-3 lessWidth m-t-15">Payor</label>
-                                                <div class="col-md-3 input-group">
+                                                @{len = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) ? 10 : 20); }
+                                                @{string PayorText = (Model.FirstOrDefault().PayorText?.Length > len) ? Model.FirstOrDefault().PayorText.Substring(0, len) + ".." : Model.FirstOrDefault().PayorText;}
+                                                @{string QAPayorText = (Model.FirstOrDefault().QAPayorText?.Length > len) ? "/" + Model.FirstOrDefault().QAPayorText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAPayorText;}
+                                                @{title = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) ? Model.FirstOrDefault().PayorText + "/" + Model.FirstOrDefault().QAPayorText : Model.FirstOrDefault().PayorText);}
+                                                <div title="@title" class="col-md-3 input-group">
                                                     @{Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                                                     @{Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
@@ -146,7 +154,7 @@
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-md-3 lessWidth m-t-15">Note Title</label>
-                                                <div class="col-md-3">
+                                                <div title="@Model.FirstOrDefault().NoteTitle" class="col-md-3">
                                                     @Html.TextBoxFor(model => model.FirstOrDefault().NoteTitle, new { @class = "form-control CoderDetails ControlHeight" })
                                                 </div>
                                             </div>
@@ -166,7 +174,7 @@
                                                             {
                                                                 <label class="col-md-3 lessWidth m-t-15"></label>
                                                             }
-                                                            <div class="col-md-3 input-group">
+                                                            <div title="@item" class="col-md-3 input-group">
                                                                 <div class="input-group-prepend ControlHeight">
                                                                     <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
                                                                 </div>
@@ -235,8 +243,8 @@
                                                             {
                                                                 <label class="col-md-3 lessWidth m-t-15"></label>
                                                             }
-
-                                                            <div class="col-md-3 CptlessWidth input-group">
+                                                            @{string link = !string.IsNullOrEmpty(@linkAllVal) || @linkAllVal != "null" || @linkAllVal != "" ? @linkAllVal : "Link All"; }
+                                                            <div title="Code : @cptVal, Mod : @modVal, Quantity : @qtyVal, Links : @link" class="col-md-3 CptlessWidth input-group">
                                                                 <div class="input-group-prepend ControlHeight">
                                                                     <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
                                                                 </div>
@@ -298,7 +306,11 @@
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-md-3 lessWidth m-t-15">Provider Feedback</label>
-                                                <div class="col-md-3 input-group">
+                                                @{len = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText) ? 10 : 20); }
+                                                @{string ProviderFeedbackText = (Model.FirstOrDefault().ProviderFeedbackText?.Length > len) ? Model.FirstOrDefault().ProviderFeedbackText.Substring(0, len) + ".." : Model.FirstOrDefault().ProviderFeedbackText;}
+                                                @{string QAProviderFeedbackText = (Model.FirstOrDefault().QAProviderFeedbackText?.Length > len) ? "/" + Model.FirstOrDefault().QAProviderFeedbackText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAProviderFeedbackText;}
+                                                @{title = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText) ? Model.FirstOrDefault().ProviderFeedbackText + "/" + Model.FirstOrDefault().QAProviderFeedbackText : Model.FirstOrDefault().ProviderFeedbackText);}
+                                                <div title="@title" class="col-md-3 input-group">
                                                     @{ Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                                                     @{ Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 

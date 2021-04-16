@@ -731,6 +731,9 @@ namespace UAB.DAL
                             // chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
                             if (reader["ProviderFeedbackId"] != DBNull.Value)
                                 chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
+                            chartSummaryDTO.ProviderText = Convert.ToString(reader["ProviderText"]);
+                            chartSummaryDTO.PayorText = Convert.ToString(reader["PayorText"]);
+                            chartSummaryDTO.ProviderFeedbackText = Convert.ToString(reader["ProviderFeedbackText"]);
                         }
                         else if (Role == "Coder" && ChartType == "Incorrect")
                         {
