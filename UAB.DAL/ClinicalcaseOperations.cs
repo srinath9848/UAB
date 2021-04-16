@@ -298,6 +298,9 @@ namespace UAB.DAL
                             if (reader["PayorId"] != DBNull.Value)
                                 chartSummaryDTO.PayorID = Convert.ToInt32(reader["PayorId"]);
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
+                            chartSummaryDTO.ProviderText = Convert.ToString(reader["ProviderText"]);
+                            chartSummaryDTO.PayorText = Convert.ToString(reader["PayorText"]);
+                            chartSummaryDTO.ProviderFeedbackText = Convert.ToString(reader["ProviderFeedbackText"]);
                             chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
                             // chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
@@ -731,6 +734,9 @@ namespace UAB.DAL
                             // chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
                             if (reader["ProviderFeedbackId"] != DBNull.Value)
                                 chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
+                            chartSummaryDTO.ProviderText = Convert.ToString(reader["ProviderText"]);
+                            chartSummaryDTO.PayorText = Convert.ToString(reader["PayorText"]);
+                            chartSummaryDTO.ProviderFeedbackText = Convert.ToString(reader["ProviderFeedbackText"]);
                         }
                         else if (Role == "Coder" && ChartType == "Incorrect")
                         {
@@ -1196,6 +1202,12 @@ namespace UAB.DAL
                     SqlDbType = System.Data.SqlDbType.Bit,
                      Direction = System.Data.ParameterDirection.Input,
                      Value = chartSummaryDTO.IsAuditRequired
+                 },
+                  new SqlParameter() {
+                    ParameterName = "@SubmitAndPostAlso",
+                    SqlDbType = System.Data.SqlDbType.Bit,
+                     Direction = System.Data.ParameterDirection.Input,
+                     Value = chartSummaryDTO.SubmitAndPostAlso
                  }
                 };
 

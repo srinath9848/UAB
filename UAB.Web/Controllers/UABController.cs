@@ -242,7 +242,6 @@ namespace UAB.Controllers
                 dtCPT.Rows.Add(rno, lstcptrow[0], lstcptrow[1], lstcptrow[2], lstcptrow[3]);
             }
         }
-
         private void PrepareCptCodes(string cpt, DataTable dtCPT, int claimId)
         {
             string[] lstcpts = cpt.Split("|");
@@ -263,9 +262,24 @@ namespace UAB.Controllers
             }
         }
 
-        [HttpPost]
-        public IActionResult SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO, string codingSubmitAndGetNext)
+        public IActionResult SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO, string codingSubmitAndGetNext, string submitAndPost, string submitOnly)
         {
+            string submitType = Request.Form["hdnSubmitAndPost"];
+            string hdnIsAuditRequired = Request.Form["hdnIsAuditRequired"];
+
+            if (submitType == "submitAndPost")
+                chartSummaryDTO.SubmitAndPostAlso = true;
+            else
+                chartSummaryDTO.SubmitAndPostAlso = false;
+
+            if (hdnIsAuditRequired == "true")
+                chartSummaryDTO.IsAuditRequired = true;
+            else
+                chartSummaryDTO.IsAuditRequired = false;
+
+            if (string.IsNullOrEmpty(codingSubmitAndGetNext))
+                codingSubmitAndGetNext = Request.Form["hdnButtonType"];
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             string hdnDxCodes = Request.Form["hdnDxCodes"].ToString();
@@ -307,10 +321,7 @@ namespace UAB.Controllers
             if (!string.IsNullOrEmpty(hdnClaim3))
                 PrepareClaim(hdnClaim3, hdnDxClaim3, hdnCptClaim3, 3, ref dtClaim, ref dtCpt);
 
-            bool audit = IsAuditRequired("Coding");
-            chartSummaryDTO.IsAuditRequired = audit;
-
-            if (string.IsNullOrEmpty(codingSubmitAndGetNext))
+            if (codingSubmitAndGetNext == "codingSubmit")
                 clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDTO, dtClaim, dtCpt);
             else
             {
@@ -321,9 +332,18 @@ namespace UAB.Controllers
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("CodingSummary", lstDto);
         }
-        bool IsAuditRequired(string chartType)
+        public IActionResult codingSubmitPopup(ChartSummaryDTO chartSummaryDTO, string buttonType)
         {
-            int projectId = Convert.ToInt16(Request.Form["ProjectID"]);
+            ViewBag.buttonType = buttonType;
+            return PartialView("_CodingSubmitPopup", chartSummaryDTO);
+        }
+        public IActionResult GetAuditDetails(string chartType, int projectId)
+        {
+            bool auditFlag = IsAuditRequired(chartType, projectId);
+            return new JsonResult(auditFlag);
+        }
+        public bool IsAuditRequired(string chartType, int projectId)
+        {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
             int samplePercentage = clinicalcaseOperations.GetSamplingPercentage(mUserId, chartType, projectId);
 
@@ -753,7 +773,7 @@ namespace UAB.Controllers
             chartSummaryDTO.QACPTCode = hdnQACptCodes;
             chartSummaryDTO.QACPTCodeRemarks = hdnQACptRemarks;
 
-            bool audit = IsAuditRequired("QA");
+            bool audit = IsAuditRequired("QA", chartSummaryDTO.ProjectID);
             chartSummaryDTO.IsAuditRequired = audit;
 
             if (string.IsNullOrEmpty(SubmitAndGetNext))
