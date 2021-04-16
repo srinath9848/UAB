@@ -56,7 +56,10 @@
                         <br />
                         <div class="form-group row">
                             <label class="col-md-3 m-t-15 AlignControl">Provider</label>
-                            <div class="col-md-3" style="display:inherit;">
+                            @{int len = (!string.IsNullOrEmpty(Model.ProviderText) ? 10 : 20); }
+                            @{string ProviderText = (Model.ProviderText?.Length > len) ? Model.ProviderText.Substring(0, len) + ".." : Model.ProviderText;}
+                            @{string title = Model.ProviderText;}
+                            <div title="@title" class="col-md-3" style="display:inherit;">
                                 @if (@Model.ProviderID != 0)
                                 {
                                     @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @style = "pointer-events:none;background-color:#e9ecef" })
@@ -71,14 +74,17 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 m-t-15 AlignControl">Payor</label>
-                            <div class="col-md-3" style="display:inherit;">
+                            @{len = (!string.IsNullOrEmpty(Model.PayorText) ? 10 : 20); }
+                            @{string PayorText = (Model.PayorText?.Length > len) ? Model.PayorText.Substring(0, len) + ".." : Model.PayorText;}
+                            @{title = Model.PayorText;}
+                            <div title="@title" class="col-md-3" style="display:inherit;">
                                 @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight" })
                                 @Html.ValidationMessageFor(model => model.PayorID, null, new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 m-t-15 AlignControl">Note Title</label>
-                            <div class="col-md-3">
+                            <div title="@Model.NoteTitle" class="col-md-3">
                                 @Html.TextBoxFor(model => model.NoteTitle, new { @class = "form-control CoderDetails ControlHeight", @autocomplete = "off" })
                                 @Html.ValidationMessageFor(model => model.NoteTitle, null, new { @class = "text-danger" })
                             </div>
@@ -125,7 +131,7 @@
                                     {
                                         <label class="col-md-3 m-t-15 AlignControl"></label>
                                     }
-                                    <div class="col-md-3 input-group">
+                                    <div title="@item" class="col-md-3 input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1">@i</span>
                                         </div>
@@ -143,6 +149,7 @@
                                 string[] coderCptcodes = item.Split("^");
                                 string mod = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
                                 string linkAll = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
+                                string links = !string.IsNullOrEmpty(@linkAll) || @linkAll != "" ? @linkAll : "Link All";
                                 <div class="form-group row">
                                     @if (i == 1)
                                     {
@@ -152,7 +159,7 @@
                                     {
                                         <label class="col-md-3 m-t-15 AlignControl"></label>
                                     }
-                                    <div class="col-md-3 lessWidth input-group" style="max-width:20% !important;">
+                                    <div title="Code : @coderCptcodes[0], Mod : @mod, Quantity : @coderCptcodes[2], Links : @links" class="col-md-3 lessWidth input-group" style="max-width:20% !important;">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1">@i</span>
                                         </div>
@@ -165,13 +172,16 @@
                                 i = i + 1;
                             }
                         }
-                        <div class="form-group row">
-                            <label class="col-md-3 m-t-15 AlignControl">Provider Feedback</label>
-                            <div class="col-md-3">
-                                @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight" })
-                                @Html.ValidationMessageFor(model => model.ProviderFeedbackID, null, new { @class = "text-danger" })
-                            </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 m-t-15 AlignControl">Provider Feedback</label>
+                        @{len = (!string.IsNullOrEmpty(Model.ProviderFeedbackText) ? 10 : 20); }
+                        @{string ProviderFeedbackText = (Model.ProviderFeedbackText?.Length > len) ? Model.ProviderFeedbackText.Substring(0, len) + ".." : Model.ProviderFeedbackText;}
+                        @{title = Model.ProviderFeedbackText;}
+                        <div title="@title" class="col-md-3">
+                            @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight" })
+                            @Html.ValidationMessageFor(model => model.ProviderFeedbackID, null, new { @class = "text-danger" })
                         </div>
+                    </div>
                     </div>
                 </div>
                 <div class="tab-pane" id="cliam2" role="tabpanel">

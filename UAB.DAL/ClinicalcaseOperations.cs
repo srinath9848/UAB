@@ -298,6 +298,9 @@ namespace UAB.DAL
                             if (reader["PayorId"] != DBNull.Value)
                                 chartSummaryDTO.PayorID = Convert.ToInt32(reader["PayorId"]);
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
+                            chartSummaryDTO.ProviderText = Convert.ToString(reader["ProviderText"]);
+                            chartSummaryDTO.PayorText = Convert.ToString(reader["PayorText"]);
+                            chartSummaryDTO.ProviderFeedbackText = Convert.ToString(reader["ProviderFeedbackText"]);
                             chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
                             // chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
