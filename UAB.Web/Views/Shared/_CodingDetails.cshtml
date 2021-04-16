@@ -45,8 +45,12 @@
         @Html.Hidden("hdnClaim4")
         @Html.Hidden("hdnDxCodes3")
         @Html.Hidden("hdnCptCodes3")
+        @Html.Hidden("hdnButtonType");
+        @Html.Hidden("hdnSubmitAndPost");
+        @Html.Hidden("hdnIsAuditRequired");
 
         <!-- Tabs -->
+        <div id="modalContent"></div>
         <div class="card">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item tabDiv1"> <a class="nav-link active tab" data-toggle="tab" id="1" alt="tabDiv1" href="#cliam1" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick">Cliam 1</span></a> </li>
@@ -63,11 +67,11 @@
                             <div class="col-md-3" style="display:inherit;">
                                 @if (@Model.ProviderID != 0)
                                 {
-                                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @style = "pointer-events:none;background-color:#e9ecef" })
+                                @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @style = "pointer-events:none;background-color:#e9ecef" })
                                 }
                                 else
                                 {
-                                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight" })
+                                @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight" })
                                 }
 
                                 @Html.ValidationMessageFor(model => model.ProviderID, null, new { @class = "text-danger" })
@@ -143,8 +147,8 @@
                         <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.Coder, ChartType= "Block", ProjectID=@Model.ProjectID, ProjectName=Model.ProjectName,ccid=Model.CodingDTO.ClinicalCaseID,plusorminus="Next"})" class="btn btn-success Available" id="btnNext" style="display:none">Next</a>
                         <button id="btnBlock" type="button" class="btn btn-danger" onclick="Block()">Block</button>
                         <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger" onclick="BlockHistory()">Block History</button>
-                        <button id="codingSubmit" name="codingSubmit" type="submit" class="btn btn-success Available" disabled>Save</button>
-                        <button id="codingSubmitAndGetNext" name="codingSubmitAndGetNext" type="submit" value="codingSubmitAndGetNext" class="btn btn-success Available" disabled>Save And GetNext</button>
+                        <button id="codingSubmit" name="codingSubmit" type="button" class="btn btn-success Available" disabled>Save</button>
+                        <button id="codingSubmitAndGetNext" name="codingSubmitAndGetNext" type="button" value="codingSubmitAndGetNext" class="btn btn-success Available" disabled>Save And GetNext</button>
                         <button type="submit" class="btn btn-success Approved">Posting Completed</button>
                         <button id="postingSubmitAndGetNext" name="postingSubmitAndGetNext" type="submit" value="postingSubmitAndGetNext" class="btn btn-success Approved">Post And GetNext</button>
                         <a href="@Url.Action("CodingSummary","UAB")" class="btn btn-danger Approved">Close</a>
