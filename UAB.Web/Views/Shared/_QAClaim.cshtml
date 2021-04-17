@@ -26,7 +26,7 @@
         @{string Accepted = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
         @{string Rejected = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-        @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("ProviderID_{0}", Model.TabIndex) })
+        @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight"})
         <div class="input-group-append QACorrections ControlHeight">
             <span class="input-group-text AcceptRejectWidth">
                 &nbsp;<i id="ProviderID_@Model.TabIndex" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
@@ -54,7 +54,7 @@
         @{Accepted = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
         @{Rejected = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-        @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("PayorID_{0}", Model.TabIndex) })
+        @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight"})
         <div class="input-group-append QACorrections ControlHeight">
             <span class="input-group-text AcceptRejectWidth">
                 &nbsp;<i id="PayorID_@Model.TabIndex" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>

@@ -1224,7 +1224,7 @@ namespace UAB.DAL
                 }
             }
         }
-        public CodingDTO SubmitQAAvailableChart(ChartSummaryDTO chartSummaryDTO)
+        public CodingDTO SubmitQAAvailableChart(ChartSummaryDTO chartSummaryDTO, DataTable dtAudit)
         {
             CodingDTO dto = new CodingDTO();
 
@@ -1329,6 +1329,13 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Bit,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = chartSummaryDTO.IsAuditRequired
+                        },
+                          new SqlParameter() {
+                            ParameterName = "@utAudit",
+                            SqlDbType =  System.Data.SqlDbType.Structured,
+                            Direction = System.Data.ParameterDirection.Input,
+                            TypeName = "utAudit",
+                            Value = dtAudit
                         }
                 };
 
