@@ -421,37 +421,17 @@ namespace UAB.Controllers
         }
         public IActionResult SubmitCodingIncorrectChart(ChartSummaryDTO chartSummaryDTO)
         {
-            var hdnPayorID = Request.Form["hdnPayorID"].ToString();
-            var hdnProviderID = Request.Form["hdnProviderID"].ToString();
-            var hdnProviderFeedbackID = Request.Form["hdnProviderFeedbackID"].ToString();
             var hdnStatusId = Request.Form["hdnStatusId"].ToString();
 
+            string hdnClaim1 = Request.Form["hdnClaim1"].ToString();
             string hdnClaim2 = Request.Form["hdnClaim2"].ToString();
             string hdnClaim3 = Request.Form["hdnClaim3"].ToString();
             string hdnClaim4 = Request.Form["hdnClaim4"].ToString();
 
+            string hdnAcceptedClaim1 = Request.Form["hdnAcceptedClaim1"].ToString();
             string hdnAcceptedClaim2 = Request.Form["hdnAcceptedClaim2"].ToString();
             string hdnAcceptedClaim3 = Request.Form["hdnAcceptedClaim3"].ToString();
             string hdnAcceptedClaim4 = Request.Form["hdnAcceptedClaim4"].ToString();
-
-            // Default Claim 
-
-            var hdnRejectedDxRemarks = Request.Form["hdnRejectedDxRemarks"].ToString();
-            chartSummaryDTO.RevisedDXRemarks = hdnRejectedDxRemarks;
-
-            var hdnRejectedDxCodes = Request.Form["hdnRejectedDxCodes"].ToString();
-            chartSummaryDTO.RejectedDx = hdnRejectedDxCodes;
-
-            var hdnDxCodes = Request.Form["hdnDxCodes"].ToString();
-            chartSummaryDTO.Dx = hdnDxCodes;
-
-            var hdnCptCodes = Request.Form["hdnCptCodes"].ToString();
-
-            var hdnRejectedCptRemarks = Request.Form["hdnRejectedCptRemarks"].ToString();
-            chartSummaryDTO.RevisedCPTRemarks = hdnRejectedCptRemarks;
-
-            var hdnRejectedCptCodes = Request.Form["hdnRejectedCptCodes"].ToString();
-            chartSummaryDTO.RejectedCpt = hdnRejectedCptCodes;
 
             DataTable dtAudit = new DataTable();
             dtAudit.Columns.Add("FieldName", typeof(string));
@@ -475,6 +455,16 @@ namespace UAB.Controllers
             DataTable dtDx = new DataTable();
             dtDx.Columns.Add("DxCode", typeof(string));
             dtDx.Columns.Add("ClaimId", typeof(int));
+
+            // Default Claim 
+
+            var hdnDxCodes = Request.Form["hdnDxCodes"].ToString();
+            var hdnRejectedDxRemarks = Request.Form["hdnRejectedDxRemarks"].ToString();
+            var hdnRejectedDxCodes = Request.Form["hdnRejectedDxCodes"].ToString();
+
+            var hdnCptCodes = Request.Form["hdnCptCodes"].ToString();
+            var hdnRejectedCptRemarks = Request.Form["hdnRejectedCptRemarks"].ToString();
+            var hdnRejectedCptCodes = Request.Form["hdnRejectedCptCodes"].ToString();
 
             // Claim 1
 
@@ -506,11 +496,15 @@ namespace UAB.Controllers
             var hdnRejectedCptRemarks3 = Request.Form["hdnRejectedCptRemarks3"].ToString();
             var hdnRejectedCptCodes3 = Request.Form["hdnRejectedCptCodes3"].ToString();
 
+            var hdnClaimId1 = Request.Form["hdnClaimId1"].ToString();
             var hdnClaimId2 = Request.Form["hdnClaimId2"].ToString();
             var hdnClaimId3 = Request.Form["hdnClaimId3"].ToString();
             var hdnClaimId4 = Request.Form["hdnClaimId4"].ToString();
 
             // Rejected basic Params
+
+            if (!string.IsNullOrEmpty(hdnClaim1))
+                PrepareAudit(hdnClaim1, dtAudit);
 
             if (!string.IsNullOrEmpty(hdnClaim2))
                 PrepareAudit(hdnClaim2, dtAudit);
@@ -523,6 +517,9 @@ namespace UAB.Controllers
 
             // Rejected Dx Codes
 
+            if (!string.IsNullOrEmpty(hdnRejectedDxCodes))
+                dtAudit.Rows.Add("Dx", hdnRejectedDxCodes, hdnRejectedDxRemarks, Convert.ToInt32(hdnClaimId1));
+
             if (!string.IsNullOrEmpty(hdnRejectedDxCodes1))
                 dtAudit.Rows.Add("Dx", hdnRejectedDxCodes1, hdnRejectedDxRemarks1, Convert.ToInt32(hdnClaimId2));
 
@@ -533,6 +530,8 @@ namespace UAB.Controllers
                 dtAudit.Rows.Add("Dx", hdnRejectedDxCodes3, hdnRejectedDxRemarks3, Convert.ToInt32(hdnClaimId4));
 
             // Rejected CPT Codes
+            if (!string.IsNullOrEmpty(hdnRejectedCptCodes))
+                dtAudit.Rows.Add("CPTCode", hdnRejectedCptCodes, hdnRejectedCptRemarks, Convert.ToInt32(hdnClaimId1));
 
             if (!string.IsNullOrEmpty(hdnRejectedCptCodes1))
                 dtAudit.Rows.Add("CPTCode", hdnRejectedCptCodes1, hdnRejectedCptRemarks1, Convert.ToInt32(hdnClaimId2));
@@ -545,6 +544,12 @@ namespace UAB.Controllers
 
             // Accepetd basic Params
 
+            if (!string.IsNullOrEmpty(hdnAcceptedClaim1))
+                PrepareBasicParams(hdnAcceptedClaim1, dtbasicParams);
+
+            if (!string.IsNullOrEmpty(hdnAcceptedClaim2))
+                PrepareBasicParams(hdnAcceptedClaim2, dtbasicParams);
+
             if (!string.IsNullOrEmpty(hdnAcceptedClaim2))
                 PrepareBasicParams(hdnAcceptedClaim2, dtbasicParams);
 
@@ -555,6 +560,9 @@ namespace UAB.Controllers
                 PrepareBasicParams(hdnAcceptedClaim4, dtbasicParams);
 
             // Accepetd Dx Codes
+
+            if (!string.IsNullOrEmpty(hdnDxCodes))
+                PrepareDxCodes(hdnDxCodes, dtDx, Convert.ToInt32(hdnClaimId1));
 
             if (!string.IsNullOrEmpty(hdnDxCodes1))
                 PrepareDxCodes(hdnDxCodes1, dtDx, Convert.ToInt32(hdnClaimId2));
@@ -567,6 +575,9 @@ namespace UAB.Controllers
 
             // Accepetd CPT Codes
 
+            if (!string.IsNullOrEmpty(hdnCptCodes))
+                PrepareCptCodes(hdnCptCodes, dtCpt, Convert.ToInt32(hdnClaimId1));
+
             if (!string.IsNullOrEmpty(hdnCptCodes1))
                 PrepareCptCodes(hdnCptCodes1, dtCpt, Convert.ToInt32(hdnClaimId2));
 
@@ -576,25 +587,9 @@ namespace UAB.Controllers
             if (!string.IsNullOrEmpty(hdnCptCodes3))
                 PrepareCptCodes(hdnCptCodes3, dtCpt, Convert.ToInt32(hdnClaimId4));
 
-
-            if (!string.IsNullOrEmpty(hdnPayorID))
-                chartSummaryDTO.PayorID = Convert.ToInt32(hdnPayorID);
-
-            if (!string.IsNullOrEmpty(hdnProviderID))
-                chartSummaryDTO.ProviderID = Convert.ToInt32(hdnProviderID);
-
-            if (!string.IsNullOrEmpty(hdnCptCodes))
-                chartSummaryDTO.CPTCode = hdnCptCodes;
-
-            //if (!string.IsNullOrEmpty(hdnDx))
-            //    chartSummaryDTO.Dx = hdnDx;
-
-            if (!string.IsNullOrEmpty(hdnProviderFeedbackID))
-                chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(hdnProviderFeedbackID);
-
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
-            clinicalcaseOperations.SubmitCodingIncorrectChart(chartSummaryDTO, Convert.ToInt16(hdnStatusId), dtAudit, dtbasicParams,dtDx,dtCpt);
+            clinicalcaseOperations.SubmitCodingIncorrectChart(chartSummaryDTO, Convert.ToInt16(hdnStatusId), dtAudit, dtbasicParams, dtDx, dtCpt);
 
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
 
