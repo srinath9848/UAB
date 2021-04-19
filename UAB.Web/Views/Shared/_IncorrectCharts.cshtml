@@ -2,34 +2,10 @@
 @using UAB.enums
 <div class="col-md-12">
     <div class="card">
-        @*<div class="card-body">
-                <h4 class="card-title">
-                    <span>Chart ID : <label style="color: black;">@Model.FirstOrDefault().CodingDTO.ClinicalCaseID&nbsp;&nbsp;&nbsp;&nbsp;</label></span>
-                    @if (Model.FirstOrDefault().CodedBy != null)
-                    {
-                        <span>Coded by : <label style="color:black;">@Model.FirstOrDefault().CodedBy&nbsp;&nbsp;&nbsp;&nbsp;</label></span>
-                    }
-                    @if (Model.FirstOrDefault().QABy != null)
-                    {
-                        <span>
-                            QA by : <label style="color:black;"> @Model.FirstOrDefault().QABy&nbsp;&nbsp;&nbsp;&nbsp; </label>
-                        </span>
-                    }
-                    @if (Model.FirstOrDefault().ShadowQABy != null)
-                    {
-                        <span>
-                            ShadowQA by : <label style="color:black;"> @Model.FirstOrDefault().ShadowQABy &nbsp;&nbsp;&nbsp;&nbsp;</label>
-                        </span>
-                    }
-
-                </h4>
-            </div>*@
         @Html.HiddenFor(model => model.FirstOrDefault().CodingDTO.ClinicalCaseID, new { @class = "form-control" })
-        @Html.Hidden("hdnPayorID")
-        @Html.Hidden("hdnProviderID")
-        @Html.Hidden("hdnProviderFeedbackID")
-        @Html.Hidden("hdnRejectedDxRemarks")
         @Html.Hidden("hdnStatusId")
+
+        @Html.Hidden("hdnRejectedDxRemarks")
         @Html.Hidden("hdnRejectedDxCodes")
         @Html.Hidden("hdnDxCodes")
         @Html.Hidden("hdnRejectedCptCodes")
@@ -57,13 +33,20 @@
         @Html.Hidden("hdnRejectedCptRemarks3")
         @Html.Hidden("hdnCptCodes3")
 
+        @Html.Hidden("hdnClaim1")
         @Html.Hidden("hdnClaim2")
         @Html.Hidden("hdnClaim3")
         @Html.Hidden("hdnClaim4")
 
+        @Html.Hidden("hdnClaimId1")
         @Html.Hidden("hdnClaimId2")
         @Html.Hidden("hdnClaimId3")
         @Html.Hidden("hdnClaimId4")
+
+        @Html.Hidden("hdnAcceptedClaim1")
+        @Html.Hidden("hdnAcceptedClaim2")
+        @Html.Hidden("hdnAcceptedClaim3")
+        @Html.Hidden("hdnAcceptedClaim4")
 
         <ul class="nav nav-tabs" role="tablist">
             @{
@@ -71,12 +54,15 @@
                 foreach (var tabitem in Model)
                 {
                     if (tabitem.ClaimId == null)
+                        tabitem.ClaimId = 0;
+
+                    var claimId = string.Format("tabIndex_{0}_ClaimId_{1}", tabIndex, tabitem.ClaimId);
+                    if (tabitem.ClaimId == 0)
                     {
-                        <li class="nav-item tabDiv1"> <a class="nav-link tab active show" data-toggle="tab" id="@tabIndex" alt="tabDiv1" href="#cliam1" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick">Cliam @tabIndex</span></a> </li>
+                        <li class="nav-item tabDiv1"> <a class="nav-link tab active show" data-toggle="tab" id="@claimId" alt="tabDiv1" href="#cliam1" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick">Cliam @tabIndex</span></a> </li>
                     }
                     else
                     {
-                        var claimId = string.Format("tabIndex_{0}_ClaimId_{1}", tabIndex, tabitem.ClaimId);
                         <li class="@string.Format("nav-item tabDiv{0}", tabIndex)" style="display:inherit;"> <a class="nav-link tab" data-toggle="tab" id="@claimId" alt="tabDiv2" href="@string.Format("#cliam{0}", tabIndex)" role="tab"> <span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick">Cliam @tabIndex</span></a></li>
                     }
                     tabIndex = tabIndex + 1;
@@ -90,6 +76,9 @@
                 {
                     tabitem.TabIndex = tabIndex;
                     if (tabitem.ClaimId == null)
+                        tabitem.ClaimId = 0;
+
+                    if (tabitem.ClaimId == 0)
                     {
                         <div class="tab-pane active" id="cliam1" role="tabpanel">
                             <div class="p-20" id="tabDiv1">
@@ -112,7 +101,8 @@
                                     @{string ProviderText = (Model.FirstOrDefault().ProviderText?.Length > len) ? Model.FirstOrDefault().ProviderText.Substring(0, len) + ".." : Model.FirstOrDefault().ProviderText;}
                                     @{string QAProviderText = (Model.FirstOrDefault().QAProviderText?.Length > len) ? "/" + Model.FirstOrDefault().QAProviderText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAProviderText;}
                                     @{string title = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText) ? Model.FirstOrDefault().ProviderText + "/" + Model.FirstOrDefault().QAProviderText : Model.FirstOrDefault().ProviderText);}
-                                    @Html.DropDownListFor(model => model.FirstOrDefault().ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @style = "display:none", @class = "form-control CoderDetails" })
+                                    @{ var ProviderID = string.Format("ProviderID_{0}", @Model.FirstOrDefault().TabIndex);}
+                                    @Html.DropDownListFor(model => model.FirstOrDefault().ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @style = "display:none", @class = "form-control CoderDetails", @id = ProviderID })
 
                                     <div title="@title" class="col-md-3 lessWidth input-group ControlWidth">
                                         <div class="form-control CoderDetails" style="line-height:2.2;overflow:hidden;height:32px;">
@@ -130,19 +120,20 @@
                                             </span>
                                         </div>
                                     </div>
+                                    @{ var QAProviderID = string.Format("QAProviderID_{0}", @Model.FirstOrDefault().TabIndex);}
                                     @{string Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "visibility:hidden" : "display:flex");}
                                     <div title="@Model.FirstOrDefault().QAProviderRemarks" class="col-md-2 input-group" style="@Show">
                                         <input type="text" class="form-control QARemarks ControlHeight" value="@Model.FirstOrDefault().QAProviderRemarks" />
                                     </div>
-                                    @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @id = "ProviderID1", @class = "form-control QARevised", @style = "display:none" })
+                                    @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @id = QAProviderID, @class = "form-control QARevised", @style = "display:none" })
                                     <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
                                         <span class="input-group-text ControlHeight" style="margin-left:-12px;">
-                                            &nbsp;<i id="Provider" title="ProviderID1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                                            &nbsp;<i id="Provider" title="ProviderID1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                            &nbsp;<i id="Provider" title="ProviderID1_@Model.FirstOrDefault().TabIndex" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                            &nbsp;<i id="Provider" title="ProviderID1_@Model.FirstOrDefault().TabIndex" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                                         </span>
                                     </div>
                                     <div class="col-md-3 input-group CoderCorrections">
-                                        @Html.TextBoxFor(model => model.FirstOrDefault().RevisedProviderRemarks, new { @class = "form-control Revised", @id = "RevisedProviderRemarks", @style = @Show })
+                                        @Html.TextBoxFor(model => model.FirstOrDefault().RevisedProviderRemarks, new { @class = string.Format("form-control Revised RevisedProvider_{0}", @Model.FirstOrDefault().TabIndex), @id = "RevisedProviderRemarks", @style = @Show })
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -151,7 +142,8 @@
                                     @{string PayorText = (Model.FirstOrDefault().PayorText?.Length > len) ? Model.FirstOrDefault().PayorText.Substring(0, len) + ".." : Model.FirstOrDefault().PayorText;}
                                     @{string QAPayorText = (Model.FirstOrDefault().QAPayorText?.Length > len) ? "/" + Model.FirstOrDefault().QAPayorText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAPayorText;}
                                     @{title = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) ? Model.FirstOrDefault().PayorText + "/" + Model.FirstOrDefault().QAPayorText : Model.FirstOrDefault().PayorText);}
-                                    @Html.DropDownListFor(model => model.FirstOrDefault().PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @style = "display:none", @class = "form-control CoderDetails" })
+                                    @{ var PayorID = string.Format("PayorID_{0}", @Model.FirstOrDefault().TabIndex);}
+                                    @Html.DropDownListFor(model => model.FirstOrDefault().PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @style = "display:none", @class = "form-control CoderDetails", @id = PayorID })
                                     <div title="@title" class="col-md-3 lessWidth input-group ControlWidth">
                                         <div name="PayorText" class="form-control CoderDetails" style="line-height:2.2;overflow:hidden;height:32px;">
                                             <span style="white-space:nowrap">
@@ -171,15 +163,16 @@
                                     <div title="@Model.FirstOrDefault().QAPayorRemarks" class="col-md-2 input-group" style="@Show">
                                         <input type="text" class="form-control QARemarks" value="@Model.FirstOrDefault().QAPayorRemarks" />
                                     </div>
-                                    @Html.DropDownListFor(model => model.FirstOrDefault().QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @id = "PayorID1", @class = "form-control QARevised", @style = "display:none" })
+                                    @{ var QAPayorID = string.Format("QAPayorID_{0}", @Model.FirstOrDefault().TabIndex);}
+                                    @Html.DropDownListFor(model => model.FirstOrDefault().QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @id = QAPayorID, @class = "form-control QARevised", @style = "display:none" })
                                     <div class="input-group-append CoderCorrections" style="@Show">
                                         <span class="input-group-text ControlHeight" style="margin-left:-12px;">
-                                            &nbsp;<i id="Payor" title="PayorID1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                                            &nbsp;<i id="Payor" title="PayorID1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                            &nbsp;<i id="Payor" title="PayorID1_@Model.FirstOrDefault().TabIndex" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                            &nbsp;<i id="Payor" title="PayorID1_@Model.FirstOrDefault().TabIndex" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                                         </span>
                                     </div>
                                     <div class="col-md-3 input-group CoderCorrections">
-                                        @Html.TextBoxFor(model => model.FirstOrDefault().RevisedPayorRemarks, new { @class = "form-control Revised", @id = "RevisedPayorRemarks", @style = @Show })
+                                        @Html.TextBoxFor(model => model.FirstOrDefault().RevisedPayorRemarks, new { @class = string.Format("form-control Revised RevisedPayor_{0}", @Model.FirstOrDefault().TabIndex), @style = @Show })
                                     </div>
                                 </div>
 
@@ -228,6 +221,10 @@
                                                 @{string QADx = (dictQADxCodes?.ElementAt(i).Value?.Length > len) ? "/" + dictQADxCodes?.ElementAt(i).Value.Substring(0, len) + ".." : "/" + dictQADxCodes?.ElementAt(i).Value;}
                                                 @{title = (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? dictDxCodes.ElementAt(i).Value + "/" + dictQADxCodes?.ElementAt(i).Value : dictDxCodes.ElementAt(i).Value);}
 
+                                                @{
+                                                    var DxClaimRemarks = string.Format("form-control DxClaim_{0}_Remarks_{1}", @Model.FirstOrDefault().TabIndex, @j);
+                                                    var DxClaim = string.Format("DxClaim_{0}_{1}", @Model.FirstOrDefault().TabIndex, @j);
+                                                }
 
                                                 @if (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value))
                                                 {
@@ -257,21 +254,24 @@
                                                     </div>
                                                 }
 
+
+
                                                 @{ Show = (string.IsNullOrEmpty(dictQADxRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
-                                                <div title="@dictQADxRemarks?.ElementAt(i).Value" class="col-md-2 input-group ControlHeight" style="@Show">
+                                                <div title="" class="col-md-2 input-group ControlHeight" style="@Show">
                                                     <input type="text" class="form-control QARemarks" value="@dictQADxRemarks?.ElementAt(i).Value" />
                                                 </div>
 
-                                                @Html.HiddenFor(model => dictDxCodes.ElementAt(i).Value, new { @class = "form-control", @id = string.Format("DxCoder_{0}", @j) })
-                                                @Html.HiddenFor(model => dictQADxCodes.ElementAt(i).Value, new { @class = "form-control", @id = string.Format("DxQA_{0}", @j) })
+                                                @Html.HiddenFor(model => dictDxCodes.ElementAt(i).Value, new { @class = "form-control", @id = string.Format("DxClaim_{0}_Coder_{1}", Model.FirstOrDefault().TabIndex, @j) })
+                                                @Html.HiddenFor(model => dictQADxCodes.ElementAt(i).Value, new { @class = "form-control", @id = string.Format("DxClaim_{0}_QA_{1}", Model.FirstOrDefault().TabIndex, @j) })
                                                 <div class="input-group-append CoderCorrections" style="@Show">
                                                     <span class="input-group-text ControlHeight" style="margin-left:-12px;">
-                                                        &nbsp;<i id="Dx_@j" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                                                        &nbsp;<i id="Dx_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                                        &nbsp;<i id="@DxClaim" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                                        &nbsp;<i id="@DxClaim" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                                                     </span>
                                                 </div>
+
                                                 <div class="col-md-3 input-group CoderCorrections">
-                                                    <input type="text" id="Dx_@j" class="form-control DxRemarks_@j" style="@Show" />
+                                                    <input type="text" id="@DxClaim" class="@DxClaimRemarks" style="@Show" />
                                                 </div>
                                             </div>
 
@@ -300,7 +300,6 @@
                                         j = 1;
                                         for (i = 0; i < Cptcount; i++)
                                         {
-
                                             <div class="form-group row" id="DivCptRow_@j">
                                                 @if (i == 0)
                                                 {
@@ -312,6 +311,13 @@
                                                 }
                                                 @{ string[] coderCptcodes = dictCptCodes?.ElementAt(i).Value.Split("^");}
                                                 @{ string[] qaCptcodes = dictQACptCodes?.ElementAt(i).Value.Split("^");}
+
+                                                @{
+                                                    var CptClaimRemarks = string.Format("form-control CptClaim_{0}_Remarks_{1}", @Model.FirstOrDefault().TabIndex, @j);
+                                                    var CptClaim = string.Format("CptClaim_{0}_{1}", @Model.FirstOrDefault().TabIndex, @j);
+                                                    var cptCoderClaim = string.Format("CptClaim_{0}_Coder_{1}", Model.FirstOrDefault().TabIndex, @j);
+                                                    var cptQAClaim = string.Format("CptClaim_{0}_QA_{1}", Model.FirstOrDefault().TabIndex, @j);
+                                                }
 
                                                 @if (!string.IsNullOrEmpty(dictQACptCodes?.ElementAt(i).Value))
                                                 {
@@ -342,25 +348,13 @@
                                                         <div class="input-group-prepend ControlHeight">
                                                             <span class="input-group-text" id="basic-addon1">@j</span>
                                                         </div>
-
-
                                                         <input type="text" class="form-control QARemarks" value="@qacptCode" style="width:17px;@color" />
-
-
                                                         <input type="text" class="form-control QARemarks" value="@qaMod" style="@color" />
-
-
                                                         <input type="text" class="form-control QARemarks" value="@qaQty" style="@color" />
-
-
                                                         <input type="text" class="form-control QARemarks" value="@qaLinks" style="@color" />
-                                                        <input type="hidden" id="hdnCoderCptCodes_@j" value="@codercpt^@coderMod^@coderQty^@coderLinks" />
-                                                        <input type="hidden" id="hdnQaCptCodes_@j" value="@qaCptcodes[0]^@qaCptcodes[1]^@qaCptcodes[2]^@qaCptcodes[3]" />
-
+                                                        <input type="hidden" id="@cptCoderClaim" value="@codercpt^@coderMod^@coderQty^@coderLinks" />
+                                                        <input type="hidden" id="@cptQAClaim" value="@qaCptcodes[0]^@qaCptcodes[1]^@qaCptcodes[2]^@qaCptcodes[3]" />
                                                     </div>
-
-
-
                                                 }
                                                 else
                                                 {
@@ -371,27 +365,26 @@
                                                         <div class="input-group-prepend ControlHeight">
                                                             <span class="input-group-text" id="basic-addon1">@j</span>
                                                         </div>
-
-                                                        <input type="text" class="form-control QARemarks ControlHeight" style="color: green;width: 17px;" placeholder="Code" value="@coderCptcodes[0]" style="width:17px;" />
+                                                        <input type="text" class="form-control QARemarks ControlHeight" style="color: green;width: 17px;" placeholder="Code" value="@coderCptcodes[0]" />
                                                         <input type="text" class="form-control QARemarks ControlHeight" style="color:green;" placeholder="Mod" value="@modVal" />
                                                         <input type="text" class="form-control QARemarks ControlHeight" style="color:green;" placeholder="1" value="@coderCptcodes[2]" />
                                                         <input type="text" class="form-control QARemarks ControlHeight" style="color: green;" placeholder="Link All" value="@linkAllVal" />
-
+                                                        <input type="hidden" id="@cptCoderClaim" value="@coderCptcodes[0]^@modVal^@coderCptcodes[2]^@linkAllVal" />
+                                                        <input type="hidden" id="@cptQAClaim" value="@coderCptcodes[0]^@modVal^@coderCptcodes[2]^@linkAllVal" />
                                                     </div>
                                                 }
-
                                                 @{ Show = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
-                                                <div title="" class="col-md-2 input-group ControlHeight" style="@Show">
+                                                <div title="" class="col-md-2 input-group" style="@Show">
                                                     <input type="text" class="form-control QARemarks" value="@dictQACptRemarks?.ElementAt(i).Value" />
                                                 </div>
                                                 <div class="input-group-append CoderCorrections" style="@Show">
                                                     <span class="input-group-text ControlHeight" style="margin-left:-12px;">
-                                                        &nbsp;<i id="Cpt_@j" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                                                        &nbsp;<i id="Cpt_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                                        &nbsp;<i id="@CptClaim" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                                        &nbsp;<i id="@CptClaim" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                                                     </span>
                                                 </div>
-                                                <div class="col-md-3 input-group">
-                                                    <input type="text" id="Cpt_@j" class="form-control CptRemarks_@j" style="@Show" />
+                                                <div class="col-md-3 lessWidth input-group">
+                                                    <input type="text" id="@CptClaim" class="@CptClaimRemarks" style="@Show" />
                                                 </div>
                                             </div>
                                             j = j + 1;
@@ -405,7 +398,8 @@
                                     @{string ProviderFeedbackText = (Model.FirstOrDefault().ProviderFeedbackText?.Length > len) ? Model.FirstOrDefault().ProviderFeedbackText.Substring(0, len) + ".." : Model.FirstOrDefault().ProviderFeedbackText;}
                                     @{string QAProviderFeedbackText = (Model.FirstOrDefault().QAProviderFeedbackText?.Length > len) ? "/" + Model.FirstOrDefault().QAProviderFeedbackText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAProviderFeedbackText;}
                                     @{title = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText) ? Model.FirstOrDefault().ProviderFeedbackText + "/" + Model.FirstOrDefault().QAProviderFeedbackText : Model.FirstOrDefault().ProviderFeedbackText);}
-                                    @Html.DropDownListFor(model => model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @style = "display:none", @class = "form-control CoderDetails" })
+                                    @{ var ProviderFeedbackID = string.Format("ProviderFeedbackID_{0}", @Model.FirstOrDefault().TabIndex);}
+                                    @Html.DropDownListFor(model => model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @style = "display:none", @class = "form-control CoderDetails", @id = ProviderFeedbackID })
 
                                     <div title="@title" class="col-md-3 lessWidth input-group ControlWidth">
                                         <div class="form-control CoderDetails" style="line-height:2.2;overflow:hidden;height:32px;">
@@ -429,15 +423,17 @@
                                     </div>
                                     <div class="input-group-append CoderCorrections" style="@Show">
                                         <span class="input-group-text ControlHeight" style="margin-left:-12px;">
-                                            &nbsp;<i id="ProviderFeedback" title="Feedback1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                                            &nbsp;<i id="ProviderFeedback" title="Feedback1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                            &nbsp;<i id="ProviderFeedback" title="Feedback1_@Model.FirstOrDefault().TabIndex" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                            &nbsp;<i id="ProviderFeedback" title="Feedback1_@Model.FirstOrDefault().TabIndex" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                                         </span>
                                     </div>
-                                    @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @style = "display:none", @class = "form-control QARevised", @id = "Feedback1" })
+                                    @{ var QAProviderFeedbackID = string.Format("QAProviderFeedbackID_{0}", @Model.FirstOrDefault().TabIndex);}
+                                    @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @style = "display:none", @class = "form-control QARevised", @id = QAProviderFeedbackID })
                                     <div class="col-md-3 input-group CoderCorrections">
-                                        @Html.TextBoxFor(model => model.FirstOrDefault().RevisedProviderFeedbackRemarks, new { @class = "form-control Revised", @id = "RevisedProviderFeedbackRemarks", @style = @Show })
+                                        @Html.TextBoxFor(model => model.FirstOrDefault().RevisedProviderFeedbackRemarks, new { @class = string.Format("form-control Revised RevisedProviderFeedback_{0}", @Model.FirstOrDefault().TabIndex), @id = "RevisedProviderFeedbackRemarks", @style = @Show })
                                     </div>
                                 </div>
+
                             </div>
                         </div>
 
