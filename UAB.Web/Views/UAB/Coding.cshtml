@@ -23,6 +23,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
+    $("#PayorID").focus();
 
     $('#codingSubmit,#codingSubmitAndGetNext').click(function (e) {
         var claimArray = [];
@@ -175,13 +176,15 @@
                     //$("#hdnDxCodes").val(dxArray);
                     var text = "'" + "txt_" + id + "'";
                     var deleteDx = "'" + "DivDxRow_" + id + "'";
-                    $("#DivDx").append('<div id="DivDxRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text dxindex" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxFunction(' + text + ')" class="form-control CoderDetails txtDx" id="txtDx_' + id + '" /><button type="button" id="DeleteDxCodes_' + id +'" class="btn btn-sm" style="max-width:23px;margin-left:-5px;" onclick="DeleteDxCodes(' + deleteDx +')"><i class="fa fa-times"></i></button></div></div>');
+                    $("#DivDx").append('<div id="DivDxRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text dxindex" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="DxFunction(' + text + ')" class="form-control CoderDetails txtDx" id="txtDx_' + id + '" /><button type="button" id="DeleteDxCodes_' + id + '" class="btn btn-sm" style="max-width:23px;margin-left:-5px;" onclick="DeleteDxCodes(' + deleteDx + ')"><i class="fa fa-times"></i></button></div></div>');
                     $("#txtDx_" + currId).removeAttr("onfocusout", "");
                     $("#txtDx_1").removeAttr("onfocusout", "");
                     $("#txtDx_" + id).focus();
                 } else {
                     $("#txtDx_" + currId).addClass('text-danger');
                 }
+            } else {
+                $("#txtCpt_1").focus();
             }
         }
     }
@@ -208,6 +211,9 @@
                         $("#txtDx2Cliam_" + id).focus();
                     }
                 }
+                else {
+                    $("#txt2Cpt_1").focus();
+                }
             }
         }
         if (cliamid == 3) {
@@ -225,6 +231,8 @@
                         $("#txtDx3Cliam_1").removeAttr("onfocusout", "");
                         $("#txtDx3Cliam_" + id).focus();
                     }
+                } else {
+                    $("#txt3Cpt_1").focus();
                 }
             }
         }
@@ -243,6 +251,8 @@
                         $("#txtDx4Cliam_1").removeAttr("onfocusout", "");
                         $("#txtDx4Cliam_" + id).focus();
                     }
+                } else {
+                    $("#txt4Cpt_1").focus();
                 }
             }
         }
@@ -269,7 +279,7 @@
 
             if (val1 !== "") {
                 if ($.inArray(val1, cptArray) == -1) {
-                    cptArray.push(val1+"^"+val2 +"^"+val3 +"^"+ val4);
+                    cptArray.push(val1 + "^" + val2 + "^" + val3 + "^" + val4);
                     //$("#hdnCptCodes").val(cptArray);
                     var count = id + parseInt(1);
                     var txtLinks = "'" + "txtLinks_" + id + "'";
@@ -278,11 +288,13 @@
                     var tabindex2 = parseInt(10) + parseInt(id) + parseInt(count) + parseInt(val1);
                     var tabindex3 = parseInt(11) + parseInt(id) + parseInt(count) + parseInt(val1);
                     var tabindex4 = parseInt(12) + parseInt(id) + parseInt(count) + parseInt(val1);
-                    $("#DivCpt").append('<div id="DivCptRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text cptindex" id="basic-addon1">' + id + '</span></div><input tabindex = "' + tabindex1 + '" type = "text" placeholder = "Code" style="max-width:55px;" class= "form-control CoderDetails txtCpt" id = "txtCpt_' + id + '" /><input tabindex="' + tabindex2 + '" type="text" class="form-control CoderDetails" style="max-width:50px;" placeholder="Mod" id="txtMod_' + id + '"/><input tabindex="' + tabindex3 + '" type="text" class="form-control CoderDetails" style="max-width:30px;" placeholder="1" value="1" id="txtQty_' + id + '"/><input tabindex="' + tabindex4 + '" type="text" class="form-control CoderDetails txtLinks" placeholder="Link All" onfocusout="CptFunction(' + txtLinks + ')" id="txtLinks_' + id + '"/><button type="button" class="btn btn-sm" style="max-width:23px;margin-left:-5px;" onclick="DeleteCptCodes(' + deleteCpt+')"><i class="fa fa-times"></i></button></div></div>');
+                    $("#DivCpt").append('<div id="DivCptRow_' + id + '" class="form-group row"><label class= "col-md-3 m-t-15" style="margin-right: -115px;" ></label><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text cptindex" id="basic-addon1">' + id + '</span></div><input tabindex = "' + tabindex1 + '" type = "text" placeholder = "Code" style="max-width:55px;" class= "form-control CoderDetails txtCpt" id = "txtCpt_' + id + '" /><input tabindex="' + tabindex2 + '" type="text" class="form-control CoderDetails" style="max-width:50px;" placeholder="Mod" id="txtMod_' + id + '"/><input tabindex="' + tabindex3 + '" type="text" class="form-control CoderDetails" style="max-width:30px;" placeholder="1" value="1" id="txtQty_' + id + '"/><input tabindex="' + tabindex4 + '" type="text" class="form-control CoderDetails txtLinks" placeholder="Link All" onfocusout="CptFunction(' + txtLinks + ')" id="txtLinks_' + id + '"/><button type="button" class="btn btn-sm" style="max-width:23px;margin-left:-5px;" onclick="DeleteCptCodes(' + deleteCpt + ')"><i class="fa fa-times"></i></button></div></div>');
                     $("#txtLinks_" + id1).removeAttr("onfocusout", "");
                     $("#txtLinks_1").removeAttr("onfocusout", "");
                     $("#txtCpt_" + id).focus();
                 }
+            } else {
+                $("#ProviderFeedbackID").focus();
             }
         }
     }
@@ -331,6 +343,9 @@
                         }
                     }
                 }
+                else {
+                    $("#ProviderFeedbacks_" + id).focus();
+                }
             }
         }
 
@@ -371,6 +386,9 @@
                             $("#txt3Cpt_" + id).focus();
                         }
                     }
+                }
+                else {
+                    $("#ProviderFeedbacks_" + id).focus();
                 }
             }
         }
@@ -413,6 +431,9 @@
                         }
                     }
                 }
+                else {
+                    $("#ProviderFeedbacks_" + id).focus();
+                }
             }
         }
     }
@@ -426,7 +447,6 @@
         var nexttab = parseInt(id) + parseInt(1);
         $("#htxt" + id).text('Cliam ' + id);
         $("#deletecliam" + id).show();
-        deletecliam2
         if (title != "" && id != "") {
             if (id == "1" && title == "tabDiv1") {
               $("#" + title).show();
@@ -454,6 +474,7 @@
                         success: function (response) {
                             tabArray.push(id);
                             $("#" + title).html(response);
+                            $("#Providers_" + id).focus();
                         }
                     });
                 };
