@@ -1,4 +1,4 @@
-﻿@model UAB.DTO.ChartSummaryDTO
+﻿@model List<UAB.DTO.ChartSummaryDTO>
 @{
     ViewData["Title"] = "ApprovedCharts";
 }
@@ -6,7 +6,7 @@
 <form asp-action="SubmitCodingReadyForPostingChart" asp-controller="UAB" method="POST">
     <div class="container-fluid">
         <div class="row">
-            <partial name="_InitialData" model=Model />
+            <partial name="_InitialData" model=Model.FirstOrDefault() />
             <partial name="_ReadyForPosting" model=Model />
         </div>
     </div>
