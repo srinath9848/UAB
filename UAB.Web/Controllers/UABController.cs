@@ -208,17 +208,16 @@ namespace UAB.Controllers
         public IActionResult GetCodingReadyForPostingChart(string Role, string ChartType, int ProjectID, string ProjectName)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
-            chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
-            chartSummaryDTO.ProjectName = ProjectName;
-
+            List<ChartSummaryDTO> chartSummaryDTO = new List<ChartSummaryDTO>();
+            chartSummaryDTO = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
+            chartSummaryDTO.FirstOrDefault().ProjectName = ProjectName;
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
             ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
-            if (chartSummaryDTO.CodingDTO.ClinicalCaseID == 0)
+            if (chartSummaryDTO.FirstOrDefault().CodingDTO.ClinicalCaseID == 0)
             {
                 TempData["Toast"] = "There are no charts available";
                 return RedirectToAction("CodingSummary");
