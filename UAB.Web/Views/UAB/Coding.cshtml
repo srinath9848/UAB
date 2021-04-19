@@ -48,7 +48,6 @@
         }
 
         //Claim2
-        $("#hdnDxCodes1")
         DxCodes = $("[id*=txtDx2Cliam_]");
         $("#hdnDxCodes1").val("");
         for (var i = 0; i < DxCodes.length; i++) {
@@ -62,7 +61,6 @@
         }
 
         //Claim3
-        $("#hdnDxCodes2")
         DxCodes = $("[id*=txtDx3Cliam_]");
         $("#hdnDxCodes2").val("");
         for (var i = 0; i < DxCodes.length; i++) {
@@ -76,7 +74,6 @@
         }
 
         //Claim4
-        $("#hdnDxCodes3")
         DxCodes = $("[id*=txtDx4Cliam_]");
         $("#hdnDxCodes3").val("");
         for (var i = 0; i < DxCodes.length; i++) {
@@ -89,7 +86,7 @@
             }
         }
 
-
+        //Default CPT
         $("#hdnCptCodes").val("");
         var CptCodes = $("[id*=DivCptRow_]");
         for (var i = 1; i <= CptCodes.length; i++) {
@@ -110,6 +107,38 @@
                 }
             }
         }
+
+        //CPT2 to CPT4
+        for (var j = 2; j <= 4; j++)
+        {
+            $("#hdnCptCodes" + (j-1)).val("");
+
+            var CptClaimCodes = $("[id*=Div" + j + "CptRow_]");
+                                         
+
+            for (var i = 1; i <= CptClaimCodes.length; i++) {
+
+                if ($("#hdnCptCodes" + (j-1)).val() == "") {
+                    if ($("#txt"+ j +"Cpt_" + i).val() != "") {
+                        var mod = $("#txt" + j + "mod_" + i).val() != "" ? $("#txt" + j +"mod_" + i).val() : null;
+                        var qty = $("#txt" + j + "qty_" + i).val() != "" ? $("#txt" + j +"qty_" + i).val() : null;
+                        var links = $("#txt" + j + "links_" + i).val() != "" ? $("#txt" + j +"links_" + i).val() : null;
+                        $("#hdnCptCodes" + (j-1)).val($("#txt" + j +"Cpt_" + i).val() + "^" + mod + "^" + qty + "^" + links);
+                    }
+                } else {
+                    if ($("#txt" + j +"Cpt_" + i).val() != "") {
+                        var mod = $("#txt" + j + "mod_" + i).val() != "" ? $("#txt" + j +"mod_" + i).val() : null;
+                        var qty = $("#txt" + j + "qty_" + i).val() != "" ? $("#txt" + j +"qty_" + i).val() : null;
+                        var links = $("#txt" + j + "links_" + i).val() != "" ? $("#txt" + j +"links_" + i).val() : null;
+                        $("#hdnCptCodes" + (j-1)).val($("#hdnCptCodes" + (j-1)).val() + "|" + $("#txt" + j +"Cpt_" + i).val() + "^" + mod + "^" + qty + "^" + links);
+                    }
+                }
+            }
+        }
+
+
+
+
         var buttonType = $(this).attr("name");
         var isAuditRequired;
          $.ajax({
@@ -325,12 +354,7 @@
                 if (val1 !== "") {
                     if ($.inArray(val1, cptArray2) == -1) {
                         if (val1 !== undefined) {
-                            if ($("#hdnCptCodes1").val() == "") {
-                                $("#hdnCptCodes1").val(val1 + "^" + val2 + "^" + val3 + "^" + val4);
-                            }
-                            else {
-                                $("#hdnCptCodes1").val($("#hdnCptCodes1").val() + "|" + val1 + "^" + val2 + "^" + val3 + "^" + val4);
-                            }
+
                            // cptArray2.push(val1 + "^" + val2 + "^" + val3 + "^" + val4 + "|");
                             //cptArray2.join(',').replace(',', '');
                             //$("#hdnCptCodes1").val(cptArray2);
@@ -369,12 +393,7 @@
                 if (val1 !== "") {
                     if ($.inArray(val1, cptArray3) == -1) {
                         if (val1 !== undefined) {
-                            if ($("#hdnCptCodes2").val() == "") {
-                                $("#hdnCptCodes2").val(val1 + "^" + val2 + "^" + val3 + "^" + val4);
-                            }
-                            else {
-                                $("#hdnCptCodes2").val($("#hdnCptCodes2").val() + "|" + val1 + "^" + val2 + "^" + val3 + "^" + val4);
-                            }
+
                             //cptArray3.push(val1 + "^" + val2 + "^" + val3 + "^" + val4);
                             //$("#hdnCptCodes2").val(cptArray3);
                             //cptArray3.join(',').replace(',', '');
@@ -413,12 +432,7 @@
                 if (val1 !== "") {
                     if ($.inArray(val1, cptArray4) == -1) {
                         if (val1 !== undefined) {
-                            if ($("#hdnCptCodes3").val() == "") {
-                                $("#hdnCptCodes3").val(val1 + "^" + val2 + "^" + val3 + "^" + val4);
-                            }
-                            else {
-                                $("#hdnCptCodes3").val($("#hdnCptCodes3").val() + "|" + val1 + "^" + val2 + "^" + val3 + "^" + val4);
-                            }
+
                             //cptArray4.push(val1 + "^" + val2 + "^" + val3 + "^" + val4);
                             //$("#hdnCptCodes3").val(cptArray4);
                             //cptArray3.join(',').replace(',', '');
@@ -653,7 +667,7 @@
         var index = id.split('_')[1];
         var val = $("#" + index).val();
         cptArray.splice($.inArray(val, cptArray), 1);
-        $("#hdnCptCodes").val(cptArray);
+        //$("#hdnCptCodes").val(cptArray);
         $('#' + id).remove();
         $(".cptindex").each(function () {
             if (iCnt <= 100) {
@@ -679,11 +693,11 @@
         var cliamId = id.split('_')[2];
         var val = $("#txtDx" + cliamId+"Cliam_" + index).val();
         dxArray2.splice($.inArray(val, dxArray2), 1);
-        $("#hdnDxCodes1").val(dxArray2);
+        //$("#hdnDxCodes1").val(dxArray2);
         dxArray3.splice($.inArray(val, dxArray3), 1);
-        $("#hdndxcodes2").val(dxArray3);
+        //$("#hdndxcodes2").val(dxArray3);
         dxArray4.splice($.inArray(val, dxArray4), 1);
-        $("#hdndxcodes3").val(dxArray4);
+        //$("#hdndxcodes3").val(dxArray4);
         $('#' + id).remove();
         $(".dx" + cliamId+"index").each(function () {
             if (iCnt <= 100) {
@@ -713,11 +727,11 @@
         var links = $("#txt" + cliamId + "links_" + index).val();
         var val = cpt + "^" + mod + "^" + qty + "^" + links;
         cptArray2.splice($.inArray(val, cptArray2), 1);
-        $("#hdnCptCodes1").val(cptArray2);
+        //$("#hdnCptCodes1").val(cptArray2);
         cptArray3.splice($.inArray(val, cptArray3), 1);
-        $("#hdnCptCodes2").val(cptArray3);
+        //$("#hdnCptCodes2").val(cptArray3);
         cptArray4.splice($.inArray(val, cptArray4), 1);
-        $("#hdnCptCodes3").val(cptArray4);
+        //$("#hdnCptCodes3").val(cptArray4);
         $('#' + id).remove();
         $(".cpt" + cliamId + "index").each(function () {
             if (iCnt <= 100) {
