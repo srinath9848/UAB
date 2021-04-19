@@ -849,6 +849,7 @@ namespace UAB.Controllers
         }
         public IActionResult SubmitQARebuttalChartsOfCoder(ChartSummaryDTO chartSummaryDTO, string SubmitAndGetNext)
         {
+            var hdnRejected = Request.Form["hdnRejected"].ToString();
             var hdnPayorID = Request.Form["hdnPayorID"].ToString();
             var hdnProviderID = Request.Form["hdnProviderID"].ToString();
             var hdnCpt = Request.Form["hdnCpt"].ToString();
@@ -890,13 +891,71 @@ namespace UAB.Controllers
             else
                 chartSummaryDTO.ProviderFeedbackID = 0;
 
+            //Starting of fetching Dx,CPT in Claim2 to Claim4 
+            DataTable dtAudit = new DataTable();
+            dtAudit.Columns.Add("FieldName", typeof(string));
+            dtAudit.Columns.Add("FieldValue", typeof(string));
+            dtAudit.Columns.Add("Remark", typeof(string));
+            dtAudit.Columns.Add("ClaimId", typeof(int));
+
+            var hdnClaimId2 = Request.Form["hdnClaimId2"].ToString();
+            var hdnClaimId3 = Request.Form["hdnClaimId3"].ToString();
+            var hdnClaimId4 = Request.Form["hdnClaimId4"].ToString();
+
+            string hdnClaimData2 = Request.Form["hdnClaimData2"].ToString();
+            string hdnClaimData3 = Request.Form["hdnClaimData3"].ToString();
+            string hdnClaimData4 = Request.Form["hdnClaimData4"].ToString();
+
+            if (!string.IsNullOrEmpty(hdnClaimData2))
+                PrepareAudit(hdnClaimData2, dtAudit);
+
+            if (!string.IsNullOrEmpty(hdnClaimData3))
+                PrepareAudit(hdnClaimData3, dtAudit);
+
+            if (!string.IsNullOrEmpty(hdnClaimData4))
+                PrepareAudit(hdnClaimData4, dtAudit);
+
+            string hdnDx2 = Request.Form["hdnDx2"].ToString();
+            string hdnDxRemarks2 = Request.Form["hdnDxRemarks2"].ToString();
+            string hdnDx3 = Request.Form["hdnDx3"].ToString();
+            string hdnDxRemarks3 = Request.Form["hdnDxRemarks3"].ToString();
+            string hdnDx4 = Request.Form["hdnDx4"].ToString();
+            string hdnDxRemarks4 = Request.Form["hdnDxRemarks4"].ToString();
+
+            if (!string.IsNullOrEmpty(hdnDx2))
+                dtAudit.Rows.Add("Dx", hdnDx2, hdnDxRemarks2, Convert.ToInt32(hdnClaimId2));
+
+            if (!string.IsNullOrEmpty(hdnDx3))
+                dtAudit.Rows.Add("Dx", hdnDx3, hdnDxRemarks3, Convert.ToInt32(hdnClaimId3));
+
+            if (!string.IsNullOrEmpty(hdnDx4))
+                dtAudit.Rows.Add("Dx", hdnDx4, hdnDxRemarks4, Convert.ToInt32(hdnClaimId4));
+
+            string hdnCpt2 = Request.Form["hdnCpt2"].ToString();
+            string hdnCptRemarks2 = Request.Form["hdnCptRemarks2"].ToString();
+            string hdnCpt3 = Request.Form["hdnCpt3"].ToString();
+            string hdnCptRemarks3 = Request.Form["hdnCptRemarks3"].ToString();
+            string hdnCpt4 = Request.Form["hdnCpt4"].ToString();
+            string hdnCptRemarks4 = Request.Form["hdnCptRemarks4"].ToString();
+
+            if (!string.IsNullOrEmpty(hdnCpt2))
+                dtAudit.Rows.Add("CPTCode", hdnCpt2, hdnCptRemarks2, Convert.ToInt32(hdnClaimId2));
+
+            if (!string.IsNullOrEmpty(hdnCpt3))
+                dtAudit.Rows.Add("CPTCode", hdnCpt3, hdnCptRemarks3, Convert.ToInt32(hdnClaimId3));
+
+            if (!string.IsNullOrEmpty(hdnCpt4))
+                dtAudit.Rows.Add("CPTCode", hdnCpt4, hdnCptRemarks4, Convert.ToInt32(hdnClaimId4));
+
+            //Ending of fetching Dx,CPT in Claim2 to Claim4 
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             if (string.IsNullOrEmpty(SubmitAndGetNext))
-                clinicalcaseOperations.SubmitQARebuttalChartsOfCoder(chartSummaryDTO);
+                clinicalcaseOperations.SubmitQARebuttalChartsOfCoder(chartSummaryDTO, dtAudit, hdnRejected);
             else
             {
-                clinicalcaseOperations.SubmitQARebuttalChartsOfCoder(chartSummaryDTO);
+                clinicalcaseOperations.SubmitQARebuttalChartsOfCoder(chartSummaryDTO, dtAudit, hdnRejected);
                 return RedirectToAction("GetQARebuttalChartsOfCoder", new { Role = Roles.QA.ToString(), ChartType = "RebuttalOfCoder", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName });
             }
 
