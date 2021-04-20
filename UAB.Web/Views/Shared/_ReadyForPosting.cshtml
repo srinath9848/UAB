@@ -48,17 +48,17 @@
                 int tabIndex = 1;
                 foreach (var tabitem in Model)
                 {
-                    if (tabitem.ClaimId == null)
-                    {
+                        if (tabitem.ClaimId == null)
+                        {
                         <li class="nav-item tabDiv1"> <a class="nav-link active tab" data-toggle="tab" id="@tabIndex" alt="tabDiv1" href="#cliam1" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick">Cliam @tabIndex</span></a> </li>
-                    }
-                    else
-                    {
+                        }
+                        else
+                        {
                         <li class="@string.Format("nav-item tabDiv{0}", tabIndex)" style="display:inherit;"> <a class="nav-link tab" data-toggle="tab" id="@tabIndex" alt="tabDiv2" href="@string.Format("#cliam{0}", tabIndex)" role="tab"> <span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick">Cliam @tabIndex</span></a></li>
+                            }
+                            tabIndex = tabIndex + 1;
+                        }
                     }
-                    tabIndex = tabIndex + 1;
-                }
-            }
         </ul>
         <div class="tab-content tabcontent-border">
             @{
@@ -313,19 +313,9 @@
 
     <div class="border-top">
         <div class="card-body" style="text-align:right">
-            <button type="submit" onclick="PostRecord()" class="btn btn-success Approved">Posting Completed</button>
-            <button id="postingSubmitAndGetNext" name="postingSubmitAndGetNext" type="submit" value="postingSubmitAndGetNext" class="btn btn-success Approved">Post And GetNext</button>
+            <button type="button" id="postingSubmit" class="btn btn-success Approved">Posting Completed</button>
+            <button id="postingSubmitAndGetNext" name="postingSubmitAndGetNext" type="button" value="postingSubmitAndGetNext" class="btn btn-success Approved">Post And GetNext</button>
             <a href="@Url.Action("CodingSummary","UAB")" class="btn btn-danger Approved">Close</a>
         </div>
     </div>
 </div>
-
-<script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
-<script src="~/dashboardassets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
-<script src="~/dashboardassets/extra-libs/DataTables/datatables.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-
-    }
-</script>
