@@ -663,8 +663,8 @@ namespace UAB.DAL
                     {
                         chartSummaryDTO = new ChartSummaryDTO();
                         chartSummaryDTO.CodingDTO.ClinicalCaseID = Convert.ToInt32(reader["ClinicalCaseID"]);
-                        //chartSummaryDTO.CodingDTO.ListName = Convert.ToString(reader["ListName"]);
-                        chartSummaryDTO.CodingDTO.ListName = "PK-Card APP Consult";
+                        if (reader["ListName"] != DBNull.Value)
+                            chartSummaryDTO.CodingDTO.ListName = Convert.ToString(reader["ListName"]);
                         chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
                         chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
                         chartSummaryDTO.CodingDTO.DateOfService = Convert.ToString(reader["DateOfService"]);
