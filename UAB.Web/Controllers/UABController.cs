@@ -614,6 +614,11 @@ namespace UAB.Controllers
             return View("CodingSummary", lstDto);
         }
 
+        [HttpGet]
+        public IActionResult GetReadyforPostingPopup()
+        {
+            return PartialView("_ReadyForPostingSubmitPopup");
+        }
 
         [HttpGet]
         public IActionResult AddNewCliam(int cliamID)

@@ -3,12 +3,15 @@
     ViewData["Title"] = "ApprovedCharts";
 }
 
-<form asp-action="SubmitCodingReadyForPostingChart" asp-controller="UAB" method="POST">
+<form asp-action="SubmitCodingReadyForPostingChart" id="SubmitCodingReadyForPostingChart" asp-controller="UAB" method="POST">
     <div class="container-fluid">
         <div class="row">
             <partial name="_InitialData" model=Model.FirstOrDefault() />
             <partial name="_ReadyForPosting" model=Model />
         </div>
+    </div>
+    <div id="modalContent">
+
     </div>
 </form>
 <style>
@@ -24,4 +27,29 @@
     $('.Available').hide();
     $(".CoderDetails").css("pointer-events", "none");
     $(".CoderDetails").css("background-color", "#e9ecef");
+
+    $(document).ready(function () {
+        $("#postingSubmit,#postingSubmitAndGetNext").click(function (e) {
+            var claims = $('.tab').length;
+            if (claims > 1) {
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("GetReadyforPostingPopup", "UAB")",
+                    data: {
+
+                    },
+                    success: function (response) {
+                        $("#modalContent").html(response);
+                    }
+                });
+            }
+            else {
+                $("#SubmitCodingReadyForPostingChart").submit();
+            }
+        });
+
+        ModalClose1 = function () {
+            $("#modalContent").html('');
+        }
+    });
 </script>
