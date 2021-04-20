@@ -110,23 +110,20 @@
             </div>
         </div>
     </div>
-    <div>
-
-    </div>
     <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript">
     $(document).ready(function () {
         $("#coding").addClass('selected');
         setTimeout('$(".autohide").hide()', 5000);
 
-        BlockedChartsList = function (ProjectId) {
+        BlockedChartsList = function (ProjectId,ProjectName) {
             $.ajax({
                 type: "GET",
                 url: "@Url.Action("GetBlockedChartsList", "UAB")",
                 data: {
                     "Role": "@Roles.Coder",
                     "ChartType": "Block",
-                    "ProjectID": ProjectId
+                    "ProjectID": ProjectId 
                 },
                 success: function (response) {
                     $("#modalContent").html(response);
