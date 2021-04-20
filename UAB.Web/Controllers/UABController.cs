@@ -71,7 +71,9 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             lst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);
+            var projects = clinicalcaseOperations.GetProjects();
             ViewBag.Role = Role;
+            ViewBag.Project = projects.Where(a => a.ProjectId.Equals(ProjectID)).FirstOrDefault().Name;
             return PartialView("_BlockedList", lst);
         }
 
