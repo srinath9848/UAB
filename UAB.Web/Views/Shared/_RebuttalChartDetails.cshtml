@@ -338,7 +338,7 @@
                                         @{ Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                                         @{ Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-                                        @Html.DropDownListFor(model => model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight" })
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"),"--Select--", new { @class = "form-control CoderDetails ControlHeight" })
                                         <div class="input-group-append ControlHeight">
                                             <span class="input-group-text AcceptRejectWidth QACorrections">
                                                 &nbsp;<i id="Feedback" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
