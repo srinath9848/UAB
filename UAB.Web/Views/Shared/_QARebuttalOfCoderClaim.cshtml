@@ -120,7 +120,7 @@
         int i;
         for (i = 0; i < count; i++)
         {
-            <div class="form-group row">
+            <div class="form-group row" id="@string.Format("DivDxRow_{0}_{1}", Model.TabIndex,j)">
                 @if (i == 0)
                 {
                     <label class="col-md-3 lessWidth m-t-15">Dx</label>
@@ -140,20 +140,21 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-md-3 input-group">
+                @{ Show = (string.IsNullOrEmpty(dictRevisedDxRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
+                <div class="col-md-3 input-group" style="@Show">
                     <div class="input-group-prepend ControlHeight">
                         <span class="input-group-text" id="basic-addon1">@j</span>
                     </div>
-                    <input id="txtDxCode_@j" type="text" class="form-control ControlHeight" autocomplete="off" tabindex="@j" placeholder="Code" value="@dictQADxCodes.ElementAt(i).Value" />
+                    <input id="@string.Format("txtDxCode_{0}_{1}", Model.TabIndex,j)" type="text" class="form-control ControlHeight" autocomplete="off" tabindex="@j" placeholder="Code" value="@dictQADxCodes.ElementAt(i).Value" />
                 </div>
-                @{ Show = (string.IsNullOrEmpty(dictRevisedDxRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
+
                 <div title="" class="col-md-2 input-group">
-                    <input type="text" id="DxRemarks_@j" style="@Show" class="form-control QARevised ControlHeight" value="@dictQADxRemarks?.ElementAt(i).Value" />
+                    <input type="text" id="@string.Format("DxRemarks_{0}_{1}", Model.TabIndex,j)" style="@Show" class="form-control QARevised ControlHeight" value="@dictQADxRemarks?.ElementAt(i).Value" />
                 </div>
                 <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
                     <span class="input-group-text ControlHeight" style="margin-left:-12px;">
-                        &nbsp;<i id="Dx_@j" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                        &nbsp;<i id="Dx_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,j)" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,j)" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                     </span>
                 </div>
 
@@ -194,7 +195,7 @@
         for (i = 0; i < count; i++)
         {
 
-            <div class="form-group row" id="DivCptRow_@j">
+            <div class="form-group row" id="@string.Format("DivCptRow_{0}_{1}", Model.TabIndex,j)">
                 @if (i == 0)
                 {
                     <label class="col-md-3 lessWidth m-t-15">CPT</label>
@@ -205,7 +206,7 @@
                 }
                 @{ string[] coderCptcodes = dictCptCodes?.ElementAt(i).Value.Split("^");}
                 @{ string[] qaCptcodes = dictQACptCodes?.ElementAt(i).Value.Split("^");}
-
+                @{ Show = (string.IsNullOrEmpty(dictRevisedCptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
                 @if (!string.IsNullOrEmpty(dictQACptCodes?.ElementAt(i).Value))
                 {
                     string codercptCode = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[0]);
@@ -221,10 +222,10 @@
                         <div class="input-group-prepend ControlHeight">
                             <span class="input-group-text" id="basic-addon1">@j</span>
                         </div>
-                        <input type="text" class="form-control QARemarks ControlHeight" value="@qacptCode" style="width: 17px;color: green;" />
-                        <input type="text" class="form-control QARemarks ControlHeight" value="@qaMod" style="color: green;" />
-                        <input type="text" class="form-control QARemarks ControlHeight" value="@qaQty" style="color: green; " />
-                        <input type="text" class="form-control QARemarks ControlHeight" value="@qaLinks" style="color: green; " />
+                        <input type="text" class="form-control CoderDetails ControlHeight" value="@qacptCode" style="width: 17px;color: green;" />
+                        <input type="text" class="form-control CoderDetails ControlHeight" value="@qaMod" style="color: green;" />
+                        <input type="text" class="form-control CoderDetails ControlHeight" value="@qaQty" style="color: green; " />
+                        <input type="text" class="form-control CoderDetails ControlHeight" value="@qaLinks" style="color: green; " />
                     </div>
                 }
                 else
@@ -236,10 +237,10 @@
                         <div class="input-group-prepend ControlHeight">
                             <span class="input-group-text" id="basic-addon1">@j</span>
                         </div>
-                        <input type="text" class="form-control QARemarks ControlHeight" style="color: green;width: 17px;" placeholder="Code" value="@coderCptcodes[0]" />
-                        <input type="text" class="form-control QARemarks ControlHeight" style="color:green;" placeholder="Mod" value="@coderModVal" />
-                        <input type="text" class="form-control QARemarks ControlHeight" style="color:green;" placeholder="1" value="@coderCptcodes[2]" />
-                        <input type="text" class="form-control QARemarks ControlHeight" style="color: green;" placeholder="Link All" value="@coderLinkAllVal" />
+                        <input type="text" class="form-control CoderDetails ControlHeight" style="color: green;width: 17px;" placeholder="Code" value="@coderCptcodes[0]" />
+                        <input type="text" class="form-control CoderDetails ControlHeight" style="color:green;" placeholder="Mod" value="@coderModVal" />
+                        <input type="text" class="form-control CoderDetails ControlHeight" style="color:green;" placeholder="1" value="@coderCptcodes[2]" />
+                        <input type="text" class="form-control CoderDetails ControlHeight" style="color: green;" placeholder="Link All" value="@coderLinkAllVal" />
                     </div>
                 }
 
@@ -248,7 +249,7 @@
 
 
 
-                <div class="col-md-3 CptlessWidth input-group">
+                <div class="col-md-3 CptlessWidth input-group" style="@Show">
                     <div class="input-group-prepend ControlHeight">
                         <span class="input-group-text" id="basic-addon1">@j</span>
                     </div>
@@ -279,19 +280,19 @@
                             }
                         }
                     }
-                    <input type="text" class="form-control QARemarks ControlHeight" id="txtCpt_@j" autocomplete="off" placeholder="Code" value="@ShadowQaCptVal" />
-                    <input type="text" class="form-control QARemarks ControlHeight" id="txtMod_@j" autocomplete="off" placeholder="Mod" value="@ShadowQaModVal" />
-                    <input type="text" id="txtQty_@j" class="form-control QARemarks ControlHeight" autocomplete="off" placeholder="1" value="@ShadowQaQtyVal" />
-                    <input type="text" id="txtLinks_@j" class="form-control QARemarks ControlHeight" autocomplete="off" placeholder="Link All" value="@ShadowQaLinkAllVal" />
+                    <input type="text" class="form-control QARemarks ControlHeight" id="@string.Format("txtCpt_{0}_{1}", Model.TabIndex,j)" autocomplete="off" placeholder="Code" value="@ShadowQaCptVal" />
+                    <input type="text" class="form-control QARemarks ControlHeight" id="@string.Format("txtMod_{0}_{1}", Model.TabIndex,j)" autocomplete="off" placeholder="Mod" value="@ShadowQaModVal" />
+                    <input type="text" id="@string.Format("txtQty_{0}_{1}", Model.TabIndex,j)" class="form-control QARemarks ControlHeight" autocomplete="off" placeholder="1" value="@ShadowQaQtyVal" />
+                    <input type="text" id="@string.Format("txtLinks_{0}_{1}", Model.TabIndex,j)" class="form-control QARemarks ControlHeight" autocomplete="off" placeholder="Link All" value="@ShadowQaLinkAllVal" />
                 </div>
-                @{ Show = (string.IsNullOrEmpty(dictRevisedCptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
+
                 <div title="" class="col-md-2 input-group" style="@Show">
-                    <input type="text" id="CptRemarks_@j" class="form-control ControlHeight" value="@dictQACptRemarks?.ElementAt(i).Value" />
+                    <input type="text" id="@string.Format("CptRemarks_{0}_{1}", Model.TabIndex,j)" class="form-control ControlHeight" value="@dictQACptRemarks?.ElementAt(i).Value" />
                 </div>
                 <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
                     <span class="input-group-text ControlHeight" style="margin-left:-12px;">
-                        &nbsp;<i id="Cpt_@j" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                        &nbsp;<i id="Cpt_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,j)" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                        &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,j)" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                     </span>
                 </div>
                 <div title="@dictRevisedCptRemarks?.ElementAt(i).Value" class="col-md-2 input-group CoderCorrections" style="@Show">

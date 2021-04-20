@@ -43,7 +43,7 @@
                 <div class="col-md-2">
                     @Html.TextBoxFor(model => model.CodingDTO.PatientMRN, new { @class = "form-control", @readonly = "readonly" })
                 </div>
-                @if (@Model.CodingDTO.ListName != null)
+                @if (@Model.CodingDTO.ListName != null && Model.CodingDTO.ListName !="")
                 {
                     <label for="fname">List Name</label>
                     <div class="col-md-2">

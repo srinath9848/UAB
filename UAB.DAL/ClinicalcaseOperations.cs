@@ -1467,7 +1467,7 @@ namespace UAB.DAL
             return dto;
         }
 
-        public CodingDTO SubmitQARebuttalChartsOfCoder(ChartSummaryDTO chartSummaryDTO)
+        public CodingDTO SubmitQARebuttalChartsOfCoder(ChartSummaryDTO chartSummaryDTO, DataTable dtAudit, string hdnRejected)
         {
             CodingDTO dto = new CodingDTO();
 
@@ -1561,6 +1561,18 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = chartSummaryDTO.QADTO.ErrorType
+                        },
+                          new SqlParameter() {
+                            ParameterName = "@utAudit",
+                            SqlDbType =  System.Data.SqlDbType.Structured,
+                            Direction = System.Data.ParameterDirection.Input,
+                            TypeName = "utAudit",
+                            Value = dtAudit
+                        },   new SqlParameter() {
+                            ParameterName = "@hdnRejected",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = hdnRejected
                         }
                 };
 
