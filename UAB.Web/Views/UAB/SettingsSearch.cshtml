@@ -32,10 +32,10 @@
         <table style="margin-left:10px">
             <tr>
                 <td>
-                    <div class="form-group">
+                    @*<div class="form-group">
                         @Html.TextBoxFor(model => model.ClinicalCaseId, new { @class = "form-control", @autofocus = "autofocus", @id = "txtClinicalCaseId", @autocomplete = "off", @placeholder = "Enter Chart Id" })
                         @Html.ValidationMessageFor(model => model.ClinicalCaseId, null, new { @class = "text-danger" })
-                    </div>
+                    </div>*@
                     <div class="form-group">
                         @Html.DropDownListFor(model => model.ProjectName, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select a Project--", new { @class = "form-control", @id = "projectdd" })
                         @Html.ValidationMessageFor(model => model.ProjectName, null, new { @class = "text-danger" })
