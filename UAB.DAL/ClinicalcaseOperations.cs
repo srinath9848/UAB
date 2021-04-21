@@ -129,7 +129,8 @@ namespace UAB.DAL
                         chartSummaryDTO.CodingDTO.ListName = Convert.ToString(reader["ListName"]);
                         chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
                         chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
-                        chartSummaryDTO.CodingDTO.DateOfService = Convert.ToString(reader["DateOfService"]);
+                        var dos= Convert.ToDateTime(reader["DateOfService"]);
+                        chartSummaryDTO.CodingDTO.DateOfService = dos.ToString("MM/dd/yyyy");
                         chartSummaryDTO.ProjectID = projectID;
                         if (reader["ProviderId"] != DBNull.Value)
                         chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
