@@ -16,6 +16,7 @@ using ExcelDataReader;
 using System.Data;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Microsoft.Extensions.Configuration;
 
 namespace UAB.Controllers
 {
@@ -350,53 +351,52 @@ namespace UAB.Controllers
 
             if (samplePercentage > 0)
             {
-                string auditCookie = _httpContextAccessor.HttpContext.Request.Cookies[chartType + mUserId];
+                var configurationBuilder = new ConfigurationBuilder();
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
+                configurationBuilder.AddJsonFile(path, false);
 
-                if (auditCookie == null || auditCookie.Split(",")[0] != DateTime.Now.ToString("MM/dd/yyyy"))
+                var root = configurationBuilder.Build();
+                string filePath = root.GetSection("AuditInfoFilePath").Value + "\\" + chartType + "-" + mUserId + "-" + projectId + ".txt";
+                string content = "";
+
+                if (System.IO.File.Exists(filePath))
+                    content = System.IO.File.ReadAllText(filePath);
+
+                if (content == "" || content.Split(",")[0] != DateTime.Now.ToString("MM/dd/yyyy"))
                 {
-                    CookieOptions option = new CookieOptions();
-                    option.Expires = new DateTimeOffset(DateTime.Now.AddYears(10));
-                    Response.Cookies.Append(chartType + mUserId, DateTime.Now.ToString("MM/dd/yyyy") + ",1-10:1~11-20:0~21-30:0~31-40:0~41-50:0~51-60:0~61-70:0,1", option);
+                    System.IO.File.WriteAllText(filePath, DateTime.Now.ToString("MM/dd/yyyy") + ",1-10:1~11-20:0~21-30:0~31-40:0~41-50:0~51-60:0~61-70:0,1");
                     return true;
                 }
                 else
                 {
-                    if (auditCookie.Split(",")[0] == DateTime.Now.ToString("MM/dd/yyyy"))
+                    int currentChart = Convert.ToInt32(content.Split(",")[2]) + 1;
+
+                    string[] arrAuditDetails = content.Split(",")[1].Split("~");
+
+                    foreach (var item in arrAuditDetails)
                     {
-                        int currentChart = Convert.ToInt32(auditCookie.Split(",")[2]) + 1;
+                        int auditedCharts = Convert.ToInt32(item.Substring(item.IndexOf(":") + 1));
+                        int startIndex = Convert.ToInt32(item.Substring(0, item.IndexOf("-")));
+                        int lastIndex = Convert.ToInt32(item.Substring(item.IndexOf("-") + 1, item.IndexOf(":") - item.IndexOf("-") - 1));
 
-                        string[] arrAuditDetails = auditCookie.Split(",")[1].Split("~");
-
-                        foreach (var item in arrAuditDetails)
+                        if (currentChart >= startIndex && currentChart <= lastIndex)
                         {
-                            int auditedCharts = Convert.ToInt32(item.Substring(item.IndexOf(":") + 1));
-                            int startIndex = Convert.ToInt32(item.Substring(0, item.IndexOf("-")));
-                            int lastIndex = Convert.ToInt32(item.Substring(item.IndexOf("-") + 1, item.IndexOf(":") - item.IndexOf("-") - 1));
-
-                            if (currentChart >= startIndex && currentChart <= lastIndex)
+                            if (samplePercentage / 10 > auditedCharts)
                             {
-                                if (samplePercentage / 10 > auditedCharts)
+                                Random r = new Random();
+                                int genRand = r.Next(startIndex, lastIndex);
+                                if (currentChart >= genRand || ((samplePercentage / 10) > (lastIndex - currentChart)))
                                 {
-                                    Random r = new Random();
-                                    int genRand = r.Next(startIndex, lastIndex);
-                                    if (currentChart >= genRand)
-                                    {
-                                        //1-10:1
-                                        string cookieValue = auditCookie.Split(",")[1].Replace(startIndex + "-" + lastIndex + ":" + auditedCharts, startIndex + "-" + lastIndex + ":" + auditedCharts + 1);
+                                    //1-10:1
+                                    int newAuditChartCnt = auditedCharts + 1;
+                                    string newContent = content.Split(",")[1].Replace(startIndex + "-" + lastIndex + ":" + auditedCharts, startIndex + "-" + lastIndex + ":" + newAuditChartCnt);
 
-                                        CookieOptions option = new CookieOptions();
-                                        int nextChart = currentChart;
-                                        option.Expires = new DateTimeOffset(DateTime.Now.AddYears(10));
-                                        Response.Cookies.Append(chartType + mUserId, DateTime.Now.ToString("MM/dd/yyyy") + "," + cookieValue + "," + nextChart, option);
-                                        return true;
-                                    }
+                                    System.IO.File.WriteAllText(filePath, DateTime.Now.ToString("MM/dd/yyyy") + "," + newContent + "," + currentChart);
+                                    return true;
                                 }
-                                CookieOptions option1 = new CookieOptions();
-                                int nextChart1 = currentChart;
-                                option1.Expires = new DateTimeOffset(DateTime.Now.AddYears(10));
-                                Response.Cookies.Append(chartType + mUserId, DateTime.Now.ToString("MM/dd/yyyy") + "," + auditCookie.Split(",")[1] + "," + nextChart1, option1);
-                                return false;
                             }
+                            System.IO.File.WriteAllText(filePath, DateTime.Now.ToString("MM/dd/yyyy") + "," + content.Split(",")[1] + "," + currentChart);
+                            return false;
                         }
                     }
                 }
