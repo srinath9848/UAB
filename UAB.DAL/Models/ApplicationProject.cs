@@ -21,5 +21,6 @@ namespace UAB.DAL.Models
         public string InputFileFormat { get; set; }
         public string ClientName { get; set; }
         public string ProjectTypeName { get; set; }
+        public int SLAInDays { get; set; }
     }
 }

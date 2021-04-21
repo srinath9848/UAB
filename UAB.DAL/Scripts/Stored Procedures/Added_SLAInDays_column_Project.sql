@@ -1,0 +1,2 @@
+ALTER TABLE Project
+ADD SLAInDays int NOT NULL DEFAULT(0)
