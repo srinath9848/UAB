@@ -24,6 +24,10 @@
     .AlignControl {
         margin-right: -115px;
     }
+    .AdjustSerialNumber {
+        max-width: 25px;
+        padding-left: 5px;
+    }
 </style>
 <div class="col-md-12">
     <div class="card">
@@ -96,7 +100,7 @@
                                 <label class="col-md-3 m-t-15 AlignControl">Dx</label>
                                 <div class="col-md-3 input-group">
                                     <div class="input-group-prepend ControlHeight">
-                                        <span class="input-group-text dxindex" id="basic-addon1">1</span>
+                                        <span class="input-group-text dxindex AdjustSerialNumber" id="basic-addon1">1</span>
                                     </div>
                                     @Html.TextBoxFor(model => model.Dx, new { @class = "form-control CoderDetails txtDx ControlHeight", @autocomplete = "off", @id = "txtDx_1", @placeholder = "Code", @onfocusout = "DxFunction('txtDx_1')" })
                                     @Html.ValidationMessageFor(model => model.Dx, null, new { @class = "text-danger Dxerror" })
@@ -109,12 +113,12 @@
                                 <label class="col-md-3 m-t-15 AlignControl">CPT</label>
                                 <div class="col-md-3 CptlessWidth input-group">
                                     <div class="input-group-prepend ControlHeight">
-                                        <span class="input-group-text cptindex" id="basic-addon1">1</span>
+                                        <span class="input-group-text cptindex AdjustSerialNumber" id="basic-addon1">1</span>
                                     </div>
                                     @Html.TextBoxFor(model => model.CPTCode, new { @class = "form-control CoderDetails txtCpt ControlHeight", @autocomplete = "off", @placeholder = "Code", @id = "txtCpt_1", @tabindex = "5", @style = "max-width:55px;" })
                                     <input type="text" class="form-control CoderDetails txtMod" id="txtMod_1" autocomplete="off" placeholder="Mod" tabindex="6" style="max-width:50px;" />
-                                    <input type="text" id="txtQty_1" class="form-control CoderDetails txtQty" autocomplete="off" placeholder="1" value="1" tabindex="7" style="max-width:30px;" />
-                                    <input type="text" id="txtLinks_1" onfocusout="CptFunction('txtLinks_1')" class="form-control CoderDetails txtLinks" autocomplete="off" placeholder="Link All" tabindex="8" />
+                                    <input type="text" id="txtQty_1" class="form-control CoderDetails txtQty" autocomplete="off" placeholder="1" value="1" tabindex="7" style="max-width:25px;" />
+                                    <input type="text" id="txtLinks_1" onfocusout="CptFunction('txtLinks_1')" class="form-control CoderDetails txtLinks" autocomplete="off" placeholder="Link All" tabindex="8" style="min-width:63px;" />
                                     @Html.ValidationMessageFor(model => model.CPTCode, null, new { @class = "text-danger Dxerror" })
                                     @*<button type="button" class="btn btn-sm" onclick="DeleteCptCodes('txtLinks_1')"><i class="fa fa-times"></i></button>*@
                                 </div>
