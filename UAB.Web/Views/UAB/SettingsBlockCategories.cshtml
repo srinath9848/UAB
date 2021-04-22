@@ -48,18 +48,20 @@
                                 <tr>
                                     <th style="width: 100px; font-weight:900;">Action</th>
                                     <th style="width: 250px; font-weight:900;">Name</th>
+                                    <th style="width: 250px; font-weight:900;">Type</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in result)
                                 {
-                                    <tr>
-                                        <td>
-                                            <button type="button" style="cursor: pointer" class="btn btn-sm btn-info btn-fill" onclick="Edit('@item.BlockCategoryId')"><i class="fa fa-edit"></i>Edit</button>
-                                            <button type="button" style="cursor: pointer" class="btn btn-sm btn-danger btn-fill" onclick="Delete('@item.BlockCategoryId')"><i class="fa fa-times"></i>Delete</button>
-                                        </td>
-                                        <td>@item.Name</td>
-                                    </tr>
+                                <tr>
+                                    <td>
+                                        <button type="button" style="cursor: pointer" class="btn btn-sm btn-info btn-fill" onclick="Edit('@item.BlockCategoryId')"><i class="fa fa-edit"></i>Edit</button>
+                                        <button type="button" style="cursor: pointer" class="btn btn-sm btn-danger btn-fill" onclick="Delete('@item.BlockCategoryId')"><i class="fa fa-times"></i>Delete</button>
+                                    </td>
+                                    <td>@item.Name</td>
+                                    <td>@item.BlockType</td>
+                                </tr>
                                 }
                             </tbody>
                         </table>
