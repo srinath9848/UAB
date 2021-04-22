@@ -114,7 +114,7 @@
             $("#hdnCptCodes" + (j-1)).val("");
 
             var CptClaimCodes = $("[id*=Div" + j + "CptRow_]");
-                                         
+
 
             for (var i = 1; i <= CptClaimCodes.length; i++) {
 
@@ -137,7 +137,11 @@
         }
 
 
-
+        var currentdate = new Date();
+        //Format: DD/MM/YYYY
+        var datetime = currentdate.getDate() + "/"
+            + (currentdate.getMonth() + 1) + "/"
+            + currentdate.getFullYear();
 
         var buttonType = $(this).attr("name");
         var isAuditRequired;
@@ -146,7 +150,9 @@
                 url: "@Url.Action("GetAuditDetails", "UAB")",
                 data: {
                     "chartType": "Coding",
-                    "projectId": $("#ProjectID").val()
+                    "projectId": $("#ProjectID").val(),
+                    "dt": datetime
+
                 },
              success: function (response) {
 

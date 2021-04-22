@@ -107,6 +107,7 @@ namespace UAB.Controllers
 
             chartSummaryDTOlst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);
 
+            List<ChartSummaryDTO> lstChartSummaryDTO = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             switch (plusorminus)
             {
@@ -140,12 +141,14 @@ namespace UAB.Controllers
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
 
+            lstChartSummaryDTO.Add(chartSummaryDTO);
+
             if (Role == Roles.QA.ToString())
-                return View("QA", chartSummaryDTO);
+                return View("QA", lstChartSummaryDTO);
             else if (Role == "ShadowQA")
                 return View("ShadowQA", chartSummaryDTO);
             else
-                return View("Coding", chartSummaryDTO);
+                return View("Coding", lstChartSummaryDTO);
 
         }
 
@@ -163,12 +166,16 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
+
+            List<ChartSummaryDTO> lstChartSummaryDTO = new List<ChartSummaryDTO>();
+            lstChartSummaryDTO.Add(chartSummaryDTO);
+
             if (Role == "QA")
-                return View("QA", chartSummaryDTO);
+                return View("QA", lstChartSummaryDTO);
             else if (Role == "ShadowQA")
                 return View("ShadowQA", chartSummaryDTO);
             else
-                return View("Coding", chartSummaryDTO);
+                return View("Coding", lstChartSummaryDTO);
 
         }
         [HttpGet]
@@ -339,12 +346,12 @@ namespace UAB.Controllers
             ViewBag.buttonType = buttonType;
             return PartialView("_CodingSubmitPopup", chartSummaryDTO);
         }
-        public IActionResult GetAuditDetails(string chartType, int projectId)
+        public IActionResult GetAuditDetails(string chartType, int projectId, string dt)
         {
-            bool auditFlag = IsAuditRequired(chartType, projectId);
+            bool auditFlag = IsAuditRequired(chartType, projectId, dt);
             return new JsonResult(auditFlag);
         }
-        public bool IsAuditRequired(string chartType, int projectId)
+        public bool IsAuditRequired(string chartType, int projectId, string currDate)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
             int samplePercentage = clinicalcaseOperations.GetSamplingPercentage(mUserId, chartType, projectId);
@@ -359,12 +366,15 @@ namespace UAB.Controllers
                 string filePath = root.GetSection("AuditInfoFilePath").Value + "\\" + chartType + "-" + mUserId + "-" + projectId + ".txt";
                 string content = "";
 
+                if (!Directory.Exists(root.GetSection("AuditInfoFilePath").Value))
+                    Directory.CreateDirectory(root.GetSection("AuditInfoFilePath").Value);
+
                 if (System.IO.File.Exists(filePath))
                     content = System.IO.File.ReadAllText(filePath);
 
-                if (content == "" || content.Split(",")[0] != DateTime.Now.ToString("MM/dd/yyyy"))
+                if (content == "" || content.Split(",")[0] != currDate)
                 {
-                    System.IO.File.WriteAllText(filePath, DateTime.Now.ToString("MM/dd/yyyy") + ",1-10:1~11-20:0~21-30:0~31-40:0~41-50:0~51-60:0~61-70:0,1");
+                    System.IO.File.WriteAllText(filePath, currDate + ",1-10:1~11-20:0~21-30:0~31-40:0~41-50:0~51-60:0~61-70:0,1");
                     return true;
                 }
                 else
@@ -391,11 +401,11 @@ namespace UAB.Controllers
                                     int newAuditChartCnt = auditedCharts + 1;
                                     string newContent = content.Split(",")[1].Replace(startIndex + "-" + lastIndex + ":" + auditedCharts, startIndex + "-" + lastIndex + ":" + newAuditChartCnt);
 
-                                    System.IO.File.WriteAllText(filePath, DateTime.Now.ToString("MM/dd/yyyy") + "," + newContent + "," + currentChart);
+                                    System.IO.File.WriteAllText(filePath, currDate + "," + newContent + "," + currentChart);
                                     return true;
                                 }
                             }
-                            System.IO.File.WriteAllText(filePath, DateTime.Now.ToString("MM/dd/yyyy") + "," + content.Split(",")[1] + "," + currentChart);
+                            System.IO.File.WriteAllText(filePath, currDate + "," + content.Split(",")[1] + "," + currentChart);
                             return false;
                         }
                     }
@@ -839,7 +849,8 @@ namespace UAB.Controllers
             chartSummaryDTO.QACPTCode = hdnQACptCodes;
             chartSummaryDTO.QACPTCodeRemarks = hdnQACptRemarks;
 
-            bool audit = IsAuditRequired("QA", chartSummaryDTO.ProjectID);
+            string currDt = Request.Form["hdnCurrDate"].ToString();
+            bool audit = IsAuditRequired("QA", chartSummaryDTO.ProjectID, currDt);
             chartSummaryDTO.IsAuditRequired = audit;
 
             if (string.IsNullOrEmpty(SubmitAndGetNext))
