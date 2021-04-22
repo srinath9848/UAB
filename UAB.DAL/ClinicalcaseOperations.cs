@@ -2811,6 +2811,7 @@ namespace UAB.DAL
                 if (existingcategory != null)
                 {
                     existingcategory.Name = blockCategory.Name;
+                    existingcategory.BlockType = blockCategory.BlockType;
                     context.Entry(existingcategory).State = EntityState.Modified;
                     context.SaveChanges();
                 }
