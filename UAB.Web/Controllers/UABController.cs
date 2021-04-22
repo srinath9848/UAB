@@ -708,7 +708,8 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<ChartSummaryDTO> lstchartSummary = new List<ChartSummaryDTO>();
             lstchartSummary = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
-            lstchartSummary.FirstOrDefault().ProjectName = ProjectName;
+            if (lstchartSummary.Count > 0)
+                lstchartSummary.FirstOrDefault().ProjectName = ProjectName;
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -716,7 +717,7 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
-            if (lstchartSummary.FirstOrDefault().CodingDTO.ClinicalCaseID == 0)
+            if (lstchartSummary.Count == 0)
             {
                 TempData["Toast"] = "There are no charts available";
                 return RedirectToAction("QASummary");
@@ -729,7 +730,8 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<ChartSummaryDTO> lstchartSummary = new List<ChartSummaryDTO>();
             lstchartSummary = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
-            lstchartSummary.FirstOrDefault().ProjectName = ProjectName;
+            if (lstchartSummary.Count > 0)
+                lstchartSummary.FirstOrDefault().ProjectName = ProjectName;
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
