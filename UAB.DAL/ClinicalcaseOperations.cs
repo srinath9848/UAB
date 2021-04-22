@@ -129,8 +129,11 @@ namespace UAB.DAL
                         chartSummaryDTO.CodingDTO.ListName = Convert.ToString(reader["ListName"]);
                         chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
                         chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
-                        chartSummaryDTO.CodingDTO.DateOfService = Convert.ToString(reader["DateOfService"]);
+                        var dos= Convert.ToDateTime(reader["DateOfService"]);
+                        chartSummaryDTO.CodingDTO.DateOfService = dos.ToString("MM/dd/yyyy");
                         chartSummaryDTO.ProjectID = projectID;
+                        if (reader["ProviderId"] != DBNull.Value)
+                        chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                         if (Role == "Coder" && ChartType == "Block")
                         {
                             chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
@@ -3359,6 +3362,7 @@ namespace UAB.DAL
                         project.ClientName = Convert.ToString(reader["ClientName"]);
                         project.ProjectTypeId = Convert.ToInt32(reader["ProjectTypeId"]);
                         project.ProjectTypeName = Convert.ToString(reader["ProjectTypeName"]);
+                        project.SLAInDays = Convert.ToInt32(reader["SLAInDays"]);
 
                         lstProject.Add(project);
                     }
@@ -3379,6 +3383,7 @@ namespace UAB.DAL
                 mdl.InputFileLocation = project.InputFileLocation;
                 mdl.InputFileFormat = project.InputFileFormat;
                 mdl.ProjectTypeId = project.ProjectTypeId;
+                mdl.SLAInDays = project.SLAInDays;
 
                 context.Project.Add(mdl);
                 context.SaveChanges();
@@ -3400,6 +3405,7 @@ namespace UAB.DAL
                 mdl.InputFileFormat = project.InputFileFormat;
                 mdl.ProjectTypeId = project.ProjectTypeId;
                 mdl.CreatedDate = project.CreatedDate;
+                mdl.SLAInDays = project.SLAInDays;
 
                 context.Entry(mdl).State = EntityState.Modified;
                 context.SaveChanges();

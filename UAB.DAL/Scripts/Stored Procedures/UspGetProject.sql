@@ -1,24 +1,24 @@
-CREATE procedure [dbo].[UspGetProject]
-AS
-BEGIN
-
-select 
-p.ProjectId
-,p.Name ProjectName
-,p.IsActive ActiveProject
-,p.CreatedDate
-,p.InputFileLocation
-,p.InputFileFormat
-,c.ClientId
-,c.Name ClientName
-,c.IsActive ActiveClient
-,pt.ProjectTypeId
+Create procedure [dbo].[UspGetProject]  
+AS  
+BEGIN  
+  
+select   
+p.ProjectId  
+,p.Name ProjectName  
+,p.IsActive ActiveProject  
+,p.CreatedDate  
+,p.InputFileLocation  
+,p.InputFileFormat  
+,c.ClientId  
+,c.Name ClientName  
+,c.IsActive ActiveClient  
+,pt.ProjectTypeId  
 ,pt.ProjectTypeName
-from Project p 
-join Client c on p.ClientId=c.ClientId
-join ProjectType pt on p.ProjectTypeId=pt.ProjectTypeId
-order by p.ProjectId
+,p.SLAInDays  
+from Project p   
+join Client c on p.ClientId=c.ClientId  
+join ProjectType pt on p.ProjectTypeId=pt.ProjectTypeId  
+order by p.ProjectId  
 END
-GO
 
 

@@ -1368,8 +1368,6 @@ namespace UAB.Controllers
             return View();
         }
 
-
-
         [HttpGet]
         public ActionResult Add_EditProvider(int id = 0)
         {
@@ -1415,7 +1413,6 @@ namespace UAB.Controllers
             }
             return RedirectToAction("SettingsProvider");
         }
-
 
         [HttpPost]
         public IActionResult AddSettingsPayor(Payor payor)
