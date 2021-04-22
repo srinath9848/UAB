@@ -175,7 +175,7 @@ namespace UAB.Controllers
             else if (Role == "ShadowQA")
                 return View("ShadowQA", chartSummaryDTO);
             else
-                return View("Coding", lstChartSummaryDTO);
+                return View("Coding", chartSummaryDTO);
 
         }
         [HttpGet]
