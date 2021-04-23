@@ -132,8 +132,8 @@ namespace UAB.DAL
                         var dos= Convert.ToDateTime(reader["DateOfService"]);
                         chartSummaryDTO.CodingDTO.DateOfService = dos.ToString("MM/dd/yyyy");
                         chartSummaryDTO.ProjectID = projectID;
-                        if (reader["ProviderId"] != DBNull.Value)
-                        chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
+                        //if (reader["ProviderId"] != DBNull.Value)
+                        //    chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                         if (Role == "Coder" && ChartType == "Block")
                         {
                             chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);

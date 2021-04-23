@@ -116,6 +116,7 @@ namespace UAB.Controllers
                     if (chartSummaryDTO == null)
                     {
                         chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
+                        chartSummaryDTO.ProjectName = ProjectName;
                     }
                     break;
                 case "Previous":
@@ -123,17 +124,19 @@ namespace UAB.Controllers
                     if (chartSummaryDTO == null)
                     {
                         chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
+                        chartSummaryDTO.ProjectName = ProjectName;
                     }
                     break;
 
                 default:
                     chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
+                    chartSummaryDTO.ProjectName = ProjectName;
                     break;
             }
 
             ViewBag.IsBlocked = "1";
             ViewBag.Postionindex = 0;
-
+            
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
             ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
@@ -148,7 +151,7 @@ namespace UAB.Controllers
             else if (Role == "ShadowQA")
                 return View("ShadowQA", chartSummaryDTO);
             else
-                return View("Coding", lstChartSummaryDTO);
+                return View("Coding", chartSummaryDTO);
 
         }
 
