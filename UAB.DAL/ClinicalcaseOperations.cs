@@ -1097,6 +1097,66 @@ namespace UAB.DAL
             }
         }
 
+        public List<LelvellingReportDTO> GetLevellingReport(int projectID, DateTime startDate, DateTime endDate)
+        {
+            List<LelvellingReportDTO> lstLelvellingReportDTO = new List<LelvellingReportDTO>();
+            using (var context = new UABContext())
+            {
+                var param = new SqlParameter[] {
+                     new SqlParameter() {
+                            ParameterName = "@ProjectId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = projectID
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@DoSStart",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = startDate
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@DoSEnd",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = endDate
+                        }
+                };
+
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[Rpt_GenerateEMLevellingReport]";
+                    cmd.Parameters.AddRange(param);
+                    cmd.Connection = con;
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+                    var columns = new List<string>();
+                    while (reader.Read())
+                    {
+                        LelvellingReportDTO lelvellingReportDTO = new LelvellingReportDTO();
+                        if (columns.Count == 0)
+                        {
+                            for (int i = 1; i < reader.FieldCount; i++)
+                            {
+                                columns.Add(reader.GetName(i));
+                            }
+                            lelvellingReportDTO.columns = columns;
+                        }
+
+                        lelvellingReportDTO.EmLevel = reader[0].ToString();
+                        lelvellingReportDTO.EmCode = reader[1].ToString();
+                        lelvellingReportDTO.Date1 = reader[2].ToString() != "" ? reader[2].ToString() : "0";
+                        lelvellingReportDTO.Date2 = reader[3].ToString() != "" ? reader[3].ToString() : "0";
+                        lstLelvellingReportDTO.Add(lelvellingReportDTO);
+                    }
+                }
+            }
+            return lstLelvellingReportDTO;
+        }
+
+
         public int? ClaimId { get; set; }
 
         private DataTable GetCpt(string cpt)
