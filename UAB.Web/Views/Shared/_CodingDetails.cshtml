@@ -24,6 +24,7 @@
     .AlignControl {
         margin-right: -115px;
     }
+
     .AdjustSerialNumber {
         max-width: 25px;
         padding-left: 5px;
@@ -52,6 +53,7 @@
         @Html.Hidden("hdnButtonType")
         @Html.Hidden("hdnSubmitAndPost")
         @Html.Hidden("hdnIsAuditRequired")
+        @Html.Hidden("hdnProviderPosted")
 
         <!-- Tabs -->
         <div id="modalContent"></div>
@@ -71,11 +73,11 @@
                             <div class="col-md-3" style="display:inherit;">
                                 @if (@Model.ProviderID != 0)
                                 {
-                                @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @style = "pointer-events:none;background-color:#e9ecef" })
+                                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @style = "pointer-events:none;background-color:#e9ecef" })
                                 }
                                 else
                                 {
-                                @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight" })
+                                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight" })
                                 }
 
                                 @Html.ValidationMessageFor(model => model.ProviderID, null, new { @class = "text-danger" })
@@ -149,6 +151,7 @@
                     <div class="card-body" style="text-align:right">
                         <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.Coder, ChartType= "Block", ProjectID=@Model.ProjectID, ProjectName=Model.ProjectName,ccid=Model.CodingDTO.ClinicalCaseID,plusorminus="Previous"})" class="btn btn-success Available" id="btnPrevious" style="display:none">Previous</a>
                         <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.Coder, ChartType= "Block", ProjectID=@Model.ProjectID, ProjectName=Model.ProjectName,ccid=Model.CodingDTO.ClinicalCaseID,plusorminus="Next"})" class="btn btn-success Available" id="btnNext" style="display:none">Next</a>
+                        <button id="btnProviderPosted" type="button" class="btn btn-danger">Provider Posted</button>
                         <button id="btnBlock" type="button" class="btn btn-danger" onclick="Block()">Block</button>
                         <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger" onclick="BlockHistory()">Block History</button>
                         <button id="codingSubmit" name="codingSubmit" type="button" class="btn btn-success Available" disabled>Save</button>
