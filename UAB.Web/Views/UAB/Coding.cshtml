@@ -24,6 +24,14 @@
 
 <script type="text/javascript">
     $("#PayorID").focus();
+    $("#hdnProviderPosted").val('');
+
+    $('#btnProviderPosted').click(function (e) {
+
+        $("#hdnProviderPosted").val('1');
+        $("#frmSubmitCodingAvailableChart").submit();
+
+    });
 
     $('#codingSubmit,#codingSubmitAndGetNext').click(function (e) {
         var claimArray = [];
@@ -193,6 +201,7 @@
         $("#btnBlockHistory").show();
         $("#btnPrevious").show();
         $("#btnNext").show();
+        $("#btnProviderPosted").hide();
     }
 
     $("#coding").addClass('selected');
