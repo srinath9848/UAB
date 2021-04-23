@@ -116,5 +116,22 @@ namespace UAB.DTO
         public int TabIndex { get; set; }
         public bool IsAuditRequired { get; set; }
         public bool SubmitAndPostAlso { get; set; }
+
+    }
+
+    public class LelvellingReportDTO
+    {
+        public List<string> columns { get; set; }
+        [Required(ErrorMessage = "*")]
+        public int ProjectID { get; set; }
+        [Required(ErrorMessage = "*")]
+        public DateTime StartDate { get; set; }
+        [Required(ErrorMessage = "*")]
+        public DateTime EndDate { get; set; }
+
+        public string EmLevel { get; set; }
+        public string EmCode { get; set; }
+        public string Date1 { get; set; }
+        public string Date2 { get; set; }
     }
 }

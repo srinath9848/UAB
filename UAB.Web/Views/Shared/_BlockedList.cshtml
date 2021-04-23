@@ -5,70 +5,60 @@
     .modal-content {
         margin-top: 90px;
     }
-
-    .errorTxt {
-        color: red;
-        min-height: 20px;
-    }
-
-    .tableresponsiveforroles {
-        max-height: 200px;
-    }
-
-    .roledddwith {
-        width: 215px;
+    .table-bordered td, .table-bordered th {
+        padding: 5px;
     }
 </style>
 <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
     <div class="modal-dialog">
-        <div class="modal-content" style="width:1000px;max-height:500px;margin-left:-190px;">
-            <div class="modal-header"style="background-color:teal;color: white;">
-                <h5 class="modal-title" id="exampleModalLongTitle">@ViewBag.Project List of Blocked Charts</h5>
+        <div class="modal-content" style="width:1270px;max-height:500px;margin-left:-290px;">
+            <div class="modal-header" style="background-color:teal;color: white;">
+                <h5 class="modal-title" id="exampleModalLongTitle">List of Blocked Charts [ @ViewBag.Project ]</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ModalClose1()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="table-responsive" style="max-height:400px;overflow-y:scroll">
-                <table id="Users" class="table table-striped table-bordered table-md">
-                    <thead>
+                <table id="BlockedList" class="table table-striped table-bordered table-md">
+                    <thead style="background-color:burlywood">
                         <tr>
-                            <th style="width: 100px; font-weight:900;">Action</th>
-                            <th style="width: 450px; font-weight:900;">Name</th>
-                            <th style="width: 450px; font-weight:900;">DOS</th>
-                            <th style="width: 250px; font-weight:900;">MRN</th>
+                            <th style="width: 50px; font-weight:900;">Action</th>
+                            <th style="width: 150px; font-weight:900;">Name</th>
+                            <th style="width: 100px; font-weight:900;">DOS</th>
+                            <th style="width: 100px; font-weight:900;">MRN</th>
                             @if (@Model.FirstOrDefault().CodingDTO.ListName != null && Model.FirstOrDefault().CodingDTO.ListName != "")
                             {
-                                <th style="width: 250px; font-weight:900;">ListName</th>
+                                <th style="width: 250px; font-weight:900;">List Name</th>
                             }
+                            <th style="width: 250px; font-weight:900;">Category</th>
                             <th style="width: 250px; font-weight:900;">Remarks</th>
-                            <th style="width: 250px; font-weight:900;">Blocked By</th>
-                            <th style="width: 250px; font-weight:900;">Blocked On</th>
+                            <th style="width: 150px; font-weight:900;">Blocked On</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
-                        <tr>
-                            <td>
-                                @switch (@ViewBag.Role)
+                            <tr>
+                                <td>
+                                    @switch (@ViewBag.Role)
+                                    {
+                                        case "QA":
+                                            <a href="@Url.Action("GetCodingBlockedCharts", "UAB", new { Role = Roles.QA, ChartType = "Block", ProjectID =item.ProjectID, ProjectName =item.ProjectName,ccid=item.CodingDTO.ClinicalCaseID,plusorminus="Current"})" class="btn btn-info btn-sm">Open</a>
+                                            break;
+                                        default:
+                                            <a href="@Url.Action("GetCodingBlockedCharts", "UAB", new { Role = Roles.Coder, ChartType = "Block", ProjectID =item.ProjectID, ProjectName =item.ProjectName,ccid=item.CodingDTO.ClinicalCaseID,plusorminus="Current"})" class="btn btn-info btn-sm">Open</a>
+                                            break;
+                                    }
+                                </td>
+                                <td>@item.CodingDTO.Name</td>
+                                <td>@item.CodingDTO.DateOfService</td>
+                                <td>@item.CodingDTO.PatientMRN</td>
+                                @if (@item.CodingDTO.ListName != null && item.CodingDTO.ListName != "")
                                 {
-                                    case "QA":
-                                        <a href="@Url.Action("GetCodingBlockedCharts", "UAB", new { Role = Roles.QA, ChartType = "Block", ProjectID =item.ProjectID, ProjectName =item.ProjectName,ccid=item.CodingDTO.ClinicalCaseID,plusorminus="Current"})" class="btn btn-info btn-sm">Open</a>
-                                        break;
-                                    default:
-                                        <a href="@Url.Action("GetCodingBlockedCharts", "UAB", new { Role = Roles.Coder, ChartType = "Block", ProjectID =item.ProjectID, ProjectName =item.ProjectName,ccid=item.CodingDTO.ClinicalCaseID,plusorminus="Current"})" class="btn btn-info btn-sm">Open</a>
-                                        break;
+                                    <td>@item.CodingDTO.ListName</td>
                                 }
-                            </td>
-                            <td>@item.CodingDTO.Name</td>
-                            <td>@item.CodingDTO.DateOfService</td>
-                            <td>@item.CodingDTO.PatientMRN</td>
-                            @if (@item.CodingDTO.ListName != null && item.CodingDTO.ListName != "")
-                            { 
-                        <td>@item.CodingDTO.ListName</td>
-                            }
-                                <td>@item.BlockCategory</td>
-                                <td>@item.BlockRemarks</td>
+                                <td>@item.BlockCategory.ToUpper()</td>
+                                <td>@item.BlockRemarks.ToUpper()</td>
                                 <td>@item.BlockedDate.ToString("MM/dd/yyyy")</td>
                             </tr>
                         }
@@ -87,6 +77,9 @@
 <script src="~/dashboardassets/extra-libs/DataTables/datatables.js"></script>
 
 <script type="text/javascript">
+
+   
+
 
     $(document).ready(function () {
         ModalClose1 = function () {

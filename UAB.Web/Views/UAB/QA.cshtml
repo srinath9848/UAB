@@ -103,6 +103,14 @@
 
     $('#btnsubmit,#SubmitAndGetNext').click(function (e) {
 
+        var currentdate = new Date();
+        //Format: DD/MM/YYYY
+        var datetime = currentdate.getDate() + "/"
+            + (currentdate.getMonth() + 1) + "/"
+            + currentdate.getFullYear();
+
+        $("#hdnCurrDate").val(datetime);
+
         //Starting of reading Claim2 to Claim4 Data
         $(".tab").each(function () {
             var id = $(this).attr('id');

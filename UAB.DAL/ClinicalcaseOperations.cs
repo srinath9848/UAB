@@ -129,8 +129,11 @@ namespace UAB.DAL
                         chartSummaryDTO.CodingDTO.ListName = Convert.ToString(reader["ListName"]);
                         chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
                         chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
-                        chartSummaryDTO.CodingDTO.DateOfService = Convert.ToString(reader["DateOfService"]);
+                        var dos = Convert.ToDateTime(reader["DateOfService"]);
+                        chartSummaryDTO.CodingDTO.DateOfService = dos.ToString("MM/dd/yyyy");
                         chartSummaryDTO.ProjectID = projectID;
+                        //if (reader["ProviderId"] != DBNull.Value)
+                        //    chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                         if (Role == "Coder" && ChartType == "Block")
                         {
                             chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
@@ -1094,6 +1097,66 @@ namespace UAB.DAL
             }
         }
 
+        public List<LelvellingReportDTO> GetLevellingReport(int projectID, DateTime startDate, DateTime endDate)
+        {
+            List<LelvellingReportDTO> lstLelvellingReportDTO = new List<LelvellingReportDTO>();
+            using (var context = new UABContext())
+            {
+                var param = new SqlParameter[] {
+                     new SqlParameter() {
+                            ParameterName = "@ProjectId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = projectID
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@DoSStart",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = startDate
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@DoSEnd",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = endDate
+                        }
+                };
+
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[Rpt_GenerateEMLevellingReport]";
+                    cmd.Parameters.AddRange(param);
+                    cmd.Connection = con;
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+                    var columns = new List<string>();
+                    while (reader.Read())
+                    {
+                        LelvellingReportDTO lelvellingReportDTO = new LelvellingReportDTO();
+                        if (columns.Count == 0)
+                        {
+                            for (int i = 1; i < reader.FieldCount; i++)
+                            {
+                                columns.Add(reader.GetName(i));
+                            }
+                            lelvellingReportDTO.columns = columns;
+                        }
+
+                        lelvellingReportDTO.EmLevel = reader[0].ToString();
+                        lelvellingReportDTO.EmCode = reader[1].ToString();
+                        lelvellingReportDTO.Date1 = reader[2].ToString() != "" ? reader[2].ToString() : "0";
+                        lelvellingReportDTO.Date2 = reader[3].ToString() != "" ? reader[3].ToString() : "0";
+                        lstLelvellingReportDTO.Add(lelvellingReportDTO);
+                    }
+                }
+            }
+            return lstLelvellingReportDTO;
+        }
+
+
         public int? ClaimId { get; set; }
 
         private DataTable GetCpt(string cpt)
@@ -1221,6 +1284,36 @@ namespace UAB.DAL
                     var cmd = con.CreateCommand();
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.CommandText = "[dbo].[UspSubmitCoding]";
+                    cmd.Parameters.AddRange(param);
+                    cmd.Connection = con;
+                    con.Open();
+
+                    int res = cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public void SubmitProviderPosted(int ClinicalcaseId, int UserID)
+        {
+            using (var context = new UABContext())
+            {
+                var param = new SqlParameter[] {
+                     new SqlParameter() {
+                            ParameterName = "@ClinicalcaseId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = ClinicalcaseId
+                        },  new SqlParameter() {
+                            ParameterName = "@UserId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = UserID
+                        } };
+
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[UspSubmitProviderPosted]";
                     cmd.Parameters.AddRange(param);
                     cmd.Connection = con;
                     con.Open();
@@ -2808,6 +2901,7 @@ namespace UAB.DAL
                 if (existingcategory != null)
                 {
                     existingcategory.Name = blockCategory.Name;
+                    existingcategory.BlockType = blockCategory.BlockType;
                     context.Entry(existingcategory).State = EntityState.Modified;
                     context.SaveChanges();
                 }
@@ -3359,6 +3453,7 @@ namespace UAB.DAL
                         project.ClientName = Convert.ToString(reader["ClientName"]);
                         project.ProjectTypeId = Convert.ToInt32(reader["ProjectTypeId"]);
                         project.ProjectTypeName = Convert.ToString(reader["ProjectTypeName"]);
+                        project.SLAInDays = Convert.ToInt32(reader["SLAInDays"]);
 
                         lstProject.Add(project);
                     }
@@ -3379,6 +3474,7 @@ namespace UAB.DAL
                 mdl.InputFileLocation = project.InputFileLocation;
                 mdl.InputFileFormat = project.InputFileFormat;
                 mdl.ProjectTypeId = project.ProjectTypeId;
+                mdl.SLAInDays = project.SLAInDays;
 
                 context.Project.Add(mdl);
                 context.SaveChanges();
@@ -3400,6 +3496,7 @@ namespace UAB.DAL
                 mdl.InputFileFormat = project.InputFileFormat;
                 mdl.ProjectTypeId = project.ProjectTypeId;
                 mdl.CreatedDate = project.CreatedDate;
+                mdl.SLAInDays = project.SLAInDays;
 
                 context.Entry(mdl).State = EntityState.Modified;
                 context.SaveChanges();

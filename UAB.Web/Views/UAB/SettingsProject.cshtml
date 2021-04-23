@@ -54,6 +54,7 @@
                                     <th style="font-weight:900;">File Format</th>
                                     <th style="font-weight:900;">Client</th>
                                     <th style="font-weight:900;">Type</th>
+                                    <th style="font-weight:900;">SLA in Days</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -66,20 +67,21 @@
                                     </td>
                                     <td>@item.Name</td>
                                     <td>
-                                    @if (item.IsActive==true)
-                                    {
-                                        <span>Active</span>
-                                    }
-                                    else
-                                    {
-                                    <span>Inactive</span>
-                                    }
+                                        @if (item.IsActive == true)
+                                        {
+                                            <span>Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Inactive</span>
+                                        }
                                     </td>
                                     <td>@item.CreatedDate</td>
                                     <td>@item.InputFileLocation</td>
                                     <td>@item.InputFileFormat</td>
                                     <td>@item.ClientName</td>
                                     <td>@item.ProjectTypeName</td>
+                                    <td>@item.SLAInDays</td>
                                 </tr>
                                 }
                             </tbody>

@@ -24,6 +24,14 @@
 
 <script type="text/javascript">
     $("#PayorID").focus();
+    $("#hdnProviderPosted").val('');
+
+    $('#btnProviderPosted').click(function (e) {
+
+        $("#hdnProviderPosted").val('1');
+        $("#frmSubmitCodingAvailableChart").submit();
+
+    });
 
     $('#codingSubmit,#codingSubmitAndGetNext').click(function (e) {
         var claimArray = [];
@@ -114,7 +122,7 @@
             $("#hdnCptCodes" + (j-1)).val("");
 
             var CptClaimCodes = $("[id*=Div" + j + "CptRow_]");
-                                         
+
 
             for (var i = 1; i <= CptClaimCodes.length; i++) {
 
@@ -137,7 +145,11 @@
         }
 
 
-
+        var currentdate = new Date();
+        //Format: DD/MM/YYYY
+        var datetime = currentdate.getDate() + "/"
+            + (currentdate.getMonth() + 1) + "/"
+            + currentdate.getFullYear();
 
         var buttonType = $(this).attr("name");
         var isAuditRequired;
@@ -146,7 +158,9 @@
                 url: "@Url.Action("GetAuditDetails", "UAB")",
                 data: {
                     "chartType": "Coding",
-                    "projectId": $("#ProjectID").val()
+                    "projectId": $("#ProjectID").val(),
+                    "dt": datetime
+
                 },
              success: function (response) {
 
@@ -187,6 +201,7 @@
         $("#btnBlockHistory").show();
         $("#btnPrevious").show();
         $("#btnNext").show();
+        $("#btnProviderPosted").hide();
     }
 
     $("#coding").addClass('selected');
