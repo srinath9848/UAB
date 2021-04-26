@@ -1097,9 +1097,10 @@ namespace UAB.DAL
             }
         }
 
-        public List<LelvellingReportDTO> GetLevellingReport(int projectID, DateTime startDate, DateTime endDate)
+        public DataSet GetLevellingReport(int projectID, DateTime startDate, DateTime endDate)
         {
-            List<LelvellingReportDTO> lstLelvellingReportDTO = new List<LelvellingReportDTO>();
+            DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
             using (var context = new UABContext())
             {
                 var param = new SqlParameter[] {
@@ -1132,28 +1133,11 @@ namespace UAB.DAL
                     cmd.Connection = con;
                     con.Open();
                     var reader = cmd.ExecuteReader();
-                    var columns = new List<string>();
-                    while (reader.Read())
-                    {
-                        LelvellingReportDTO lelvellingReportDTO = new LelvellingReportDTO();
-                        if (columns.Count == 0)
-                        {
-                            for (int i = 1; i < reader.FieldCount; i++)
-                            {
-                                columns.Add(reader.GetName(i));
-                            }
-                            lelvellingReportDTO.columns = columns;
-                        }
-
-                        lelvellingReportDTO.EmLevel = reader[0].ToString();
-                        lelvellingReportDTO.EmCode = reader[1].ToString();
-                        lelvellingReportDTO.Date1 = reader[2].ToString() != "" ? reader[2].ToString() : "0";
-                        lelvellingReportDTO.Date2 = reader[3].ToString() != "" ? reader[3].ToString() : "0";
-                        lstLelvellingReportDTO.Add(lelvellingReportDTO);
-                    }
+                    dt.Load(reader);
+                    ds.Tables.Add(dt);
                 }
             }
-            return lstLelvellingReportDTO;
+            return ds;
         }
 
 

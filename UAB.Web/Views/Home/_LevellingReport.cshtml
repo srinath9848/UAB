@@ -1,4 +1,5 @@
-﻿@model List<UAB.DTO.LelvellingReportDTO>
+﻿@using System.Data
+@model DataSet
 @{
     ViewData["Title"] = "Payor";
 }
@@ -32,40 +33,38 @@
                     <div class="table-responsive col-8">
                         <table id="Reports" class="table table-striped table-bordered">
                             <thead>
-                                @if (Model.Count != 0)
-                                {
-                                    @foreach (var item in Model)
+                                <tr>
+                                    @foreach (DataColumn clmn in Model.Tables[0].Columns)
                                     {
-                                        if (item.columns != null)
+                                        if (clmn.ColumnName != "EMLevel")
                                         {
-                                            <tr>
-                                                @for (int i = 0; i < item.columns.Count; i++)
-                                                {
-                                                    <th style="width: 250px; font-weight:900;">@item.columns[i]</th>
-                                                }
-                                            </tr>
+                                            <th style="width: 250px; font-weight:900;">@clmn.ColumnName</th>
                                         }
                                     }
-                                }
-                                else
-                                {
-                                    <tr>
-                                        <th colspan="3">No data found !</th>
-                                    </tr>
-                                }
+                                </tr>
                             </thead>
                             <tbody>
-                                @if (Model.Count != 0)
-                                {
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr class="body" data="@item.EmLevel">
-                                            <td>@item.EmCode</td>
-                                            <td>@item.Date1</td>
-                                            <td>@item.Date2</td>
-                                        </tr>
-                                    }
+                                @{ List<int> i = new List<int>();
+                                    List<int> j = new List<int>();
                                 }
+                                @foreach (DataRow row in Model.Tables[0].Rows)
+                                {
+
+                                    int row1 = row.ItemArray[2].ToString() != "" ? Convert.ToInt32(row.ItemArray[2]) : 0;
+                                    i.Add(row1);
+                                    int row2 = row.ItemArray[3].ToString() != "" ? Convert.ToInt32(row.ItemArray[3]) : 0;
+                                    j.Add(row2);
+                                    <tr class="body" data="@row[0]">
+                                        <td>@row[1]</td>
+                                        <td>@row1</td>
+                                        <td>@row2</td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td>TOTALS</td>
+                                    <td>@i.Sum()</td>
+                                    <td>@j.Sum()</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
