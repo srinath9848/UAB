@@ -36,7 +36,6 @@ namespace UAB.Controllers
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ViewBag.Projects = clinicalcaseOperations.GetProjects();
-
             return View();
         }
 
