@@ -136,7 +136,7 @@ namespace UAB.Controllers
 
             ViewBag.IsBlocked = "1";
             ViewBag.Postionindex = 0;
-            
+
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
             ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
@@ -257,10 +257,10 @@ namespace UAB.Controllers
         private void PrepareCptCodes(string cpt, DataTable dtCPT, int claimId)
         {
             string[] lstcpts = cpt.Split("|");
-            foreach (var item in lstcpts)
+            foreach (var item in lstcpts.OrderBy(a => a.Split("^")[0]).ToList())
             {
                 string[] lstcptrow = item.Split("^");
-                dtCPT.Rows.Add(lstcptrow[0], lstcptrow[1], lstcptrow[2], lstcptrow[3], claimId);
+                dtCPT.Rows.Add(lstcptrow[1], lstcptrow[2], lstcptrow[3], lstcptrow[4], claimId);
             }
         }
 
@@ -572,9 +572,6 @@ namespace UAB.Controllers
             if (!string.IsNullOrEmpty(hdnAcceptedClaim2))
                 PrepareBasicParams(hdnAcceptedClaim2, dtbasicParams);
 
-            if (!string.IsNullOrEmpty(hdnAcceptedClaim2))
-                PrepareBasicParams(hdnAcceptedClaim2, dtbasicParams);
-
             if (!string.IsNullOrEmpty(hdnAcceptedClaim3))
                 PrepareBasicParams(hdnAcceptedClaim3, dtbasicParams);
 
@@ -608,6 +605,8 @@ namespace UAB.Controllers
 
             if (!string.IsNullOrEmpty(hdnCptCodes3))
                 PrepareCptCodes(hdnCptCodes3, dtCpt, Convert.ToInt32(hdnClaimId4));
+
+
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
