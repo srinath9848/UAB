@@ -621,7 +621,8 @@ namespace UAB.Controllers
         public IActionResult SubmitCodingReadyForPostingChart(ChartSummaryDTO chartSummaryDTO, string postingSubmitAndGetNext)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-
+            if (string.IsNullOrEmpty(postingSubmitAndGetNext))
+                postingSubmitAndGetNext = Request.Form["hdnButtonType"];
             if (string.IsNullOrEmpty(postingSubmitAndGetNext))
                 clinicalcaseOperations.SubmitCodingReadyForPostingChart(chartSummaryDTO);
             else
@@ -636,8 +637,9 @@ namespace UAB.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetReadyforPostingPopup()
+        public IActionResult GetReadyforPostingPopup(string buttonType)
         {
+            ViewBag.buttonType = buttonType;
             return PartialView("_ReadyForPostingSubmitPopup");
         }
 
