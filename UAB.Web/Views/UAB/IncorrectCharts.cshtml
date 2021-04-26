@@ -317,7 +317,7 @@
         var acceptedCptCodes = $('[class*=CptClaim_2_Remarks_][style="visibility:hidden"]');
         $("#hdnCptCodes1").val('');
         for (var i = 0; i < acceptedCptCodes.length; i++) {
-            var id = parseInt($(acceptedCptCodes[i]).attr("id").split("1_")[1]);
+            var id = parseInt($(acceptedCptCodes[i]).attr("id").split("2_")[1]);
             var res1 = $("[id='CptClaim_2_" + id + "']:eq(0)").attr('class');
             if (res1.includes('accept') || !res1.includes('reject')) {
                 if ($("#hdnCptCodes1").val() == "")
@@ -420,7 +420,7 @@
         var acceptedCptCodes = $('[class*=CptClaim_3_Remarks_][style="visibility:hidden"]');
         $("#hdnCptCodes2").val('');
         for (var i = 0; i < acceptedCptCodes.length; i++) {
-            var id = parseInt($(acceptedCptCodes[i]).attr("id").split("1_")[1]);
+            var id = parseInt($(acceptedCptCodes[i]).attr("id").split("3_")[1]);
             var res1 = $("[id='CptClaim_3_" + id + "']:eq(0)").attr('class');
             if (res1.includes('accept') || !res1.includes('reject')) {
                 if ($("#hdnCptCodes2").val() == "")
@@ -524,7 +524,7 @@
         var acceptedCptCodes = $('[class*=CptClaim_4_Remarks_][style="visibility:hidden"]');
         $("#hdnCptCodes3").val('');
         for (var i = 0; i < acceptedCptCodes.length; i++) {
-            var id = parseInt($(acceptedCptCodes[i]).attr("id").split("1_")[1]);
+            var id = parseInt($(acceptedCptCodes[i]).attr("id").split("4_")[1]);
             var res1 = $("[id='CptClaim_4_" + id + "']:eq(0)").attr('class');
             if (res1.includes('accept') || !res1.includes('reject')) {
                 if ($("#hdnCptCodes3").val() == "")
