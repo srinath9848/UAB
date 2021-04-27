@@ -46,6 +46,12 @@ namespace UAB.Controllers
             var lstLelvellingReportDTO = clinicalcaseOperations.GetLevellingReport(ProjectId, StartDate, EndDate);
             return PartialView("_LevellingReport", lstLelvellingReportDTO);
         }
+        public IActionResult GetReceivedChartsReport(int ProjectId, string range)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var lstReceivedChartReport = clinicalcaseOperations.GetReceivedChartsReport(ProjectId, range);
+            return PartialView("_ReceivedChartReport", lstReceivedChartReport);
+        }
 
 
         public IActionResult Privacy()
