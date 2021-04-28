@@ -196,7 +196,7 @@ namespace UAB
                     }
                 }
 
-                dictCptCodes.Add(Convert.ToInt16(strItem[0]), strItem[1] + '^' + strItem[2] + '^' + strItem[3] + '^' + strItem[4] + '^');
+                dictCptCodes.Add(Convert.ToInt16(strItem[0]), strItem[1] + '^' + strItem[2] + '^' + strItem[3] + '^' + strItem[4]);
                 rno += 1;
             }
 
