@@ -68,7 +68,7 @@
                                 <label class="control-label1 col-form-label">Range</label>
                                 <div class="col-sm-2">
                                     @{var listItems = new List<SelectListItem>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {
           new SelectListItem { Text = "Per Day", Value="PerDay" },
           new SelectListItem { Text = "Per Week", Value="PerWeek" },
           new SelectListItem { Text = "Per Month", Value="PerMonth" }
@@ -117,33 +117,66 @@
                     </form>
                 </div>
                 <div class="Report" id="PostedChartsReport" style="display:none;">
-                            <form id="postReport" asp-action="GetPostedChartsReport" asp-controller="Home"
-                                  data-ajax="true"
-                                  data-ajax-method="POST"
-                                  data-ajax-mode="replace"
-                                  data-ajax-update="#modalContent">
-
-                                <label for="fname">Select Project</label>
-                                <div class="col-md-10">
-                                    @Html.DropDownListFor(model => model.ProjectID, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select--", new { @class = "form-control", @id = "ProjectID2" })
+                    <form class="form-horizontal" id="frmReport" asp-action="GetPostedChartsReport" asp-controller="Home"
+                          data-ajax="true"
+                          data-ajax-method="POST"
+                          data-ajax-mode="replace"
+                          data-ajax-update="#modalContent">
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="control-label col-form-label">Select Project</label>
+                                <div class="col-sm-2">
+                                    @Html.DropDownListFor(model => model.ProjectID, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select--", new { @class = "form-control", @id = "ProjectID1" })
+                                    @Html.ValidationMessageFor(model => model.ProjectID, null, new { @class = "text-danger" })
                                 </div>
-                                <label for="fname">Range</label>
-                                <div class="col-md-10">
+
+                                <label class="control-label1 col-form-label">Range</label>
+                                <div class="col-sm-2">
                                     @{var listItems1 = new List<SelectListItem>
-                                                                                                                                                                                                                                                                                                                                                    {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {
           new SelectListItem { Text = "Per Day", Value="PerDay" },
           new SelectListItem { Text = "Per Week", Value="PerWeek" },
           new SelectListItem { Text = "Per Month", Value="PerMonth" }
     };
                                     }
-                                    @Html.DropDownList("range", new SelectList(listItems1, "Value", "Text"), new { @id = "rangeType1" })
+                                    @Html.DropDownList("range", new SelectList(listItems1, "Value", "Text"), new { @class = "form-control", @id = "rangeType1" })
                                 </div>
                                 <div class="clearfix"></div><br />
                                 <div class="col-md-3">
-                                    <button type="button" onclick="PostedChartsList()" id="submitPostedChartReport" class="btn btn-success">Submit</button>
+                                    <button type="submit" class="btn btn-success">Submit</button>
                                 </div>
-                            </form>
+                            </div>
                         </div>
+                    </form>
+                </div>
+                @*<div class="Report" id="PostedChartsReport" style="display:none;">
+                        <form id="postReport" asp-action="GetPostedChartsReport" asp-controller="Home"
+                              data-ajax="true"
+                              data-ajax-method="POST"
+                              data-ajax-mode="replace"
+                              data-ajax-update="#modalContent">
+
+                            <label for="fname">Select Project</label>
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(model => model.ProjectID, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select--", new { @class = "form-control", @id = "ProjectID2" })
+                            </div>
+                            <label for="fname">Range</label>
+                            <div class="col-md-10">
+                                @{var listItems1 = new List<SelectListItem>
+                                                                                                                                                                                                                                                                                                                                                                            {
+              new SelectListItem { Text = "Per Day", Value="PerDay" },
+              new SelectListItem { Text = "Per Week", Value="PerWeek" },
+              new SelectListItem { Text = "Per Month", Value="PerMonth" }
+        };
+                                }
+                                @Html.DropDownList("range", new SelectList(listItems1, "Value", "Text"), new { @id = "rangeType1" })
+                            </div>
+                            <div class="clearfix"></div><br />
+                            <div class="col-md-3">
+                                <button type="button" onclick="PostedChartsList()" id="submitPostedChartReport" class="btn btn-success">Submit</button>
+                            </div>
+                        </form>
+                    </div>*@
             </div>
         </div>
         <div class="col-md-12">
@@ -159,7 +192,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        PostedChartsList = function () {
+        @*PostedChartsList = function () {
 
         var rangeType = $("#rangeType1 option:selected").val();
         var projectId = $("#ProjectID2 option:selected").val();
@@ -181,7 +214,7 @@
                     alert(response);
                 }
             });
-        };
+        };*@
 
         $("#reportType").change(function () {
 
