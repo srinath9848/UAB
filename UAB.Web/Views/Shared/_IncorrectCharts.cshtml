@@ -291,9 +291,9 @@
 
                                     int totalCptCount = count + 1;
 
-                                    Utility.AddEmptyRows(dictCptCodes, count, "NA");
-                                    Utility.AddEmptyRows(dictQACptCodes, count, "");
-                                    Utility.AddEmptyRows(dictQACptRemarks, count, "");
+                                    Utility.AddEmptyRows(dictCptCodes, Cptcount, "NA");
+                                    Utility.AddEmptyRows(dictQACptCodes, Cptcount, "");
+                                    Utility.AddEmptyRows(dictQACptRemarks, Cptcount, "");
                                 }
                                 <div id="DivCpt">
                                     @{
@@ -310,7 +310,7 @@
                                                     <label class="col-md-3 lessWidth m-t-15"></label>
                                                 }
                                                 @{ string[] coderCptcodes = dictCptCodes?.ElementAt(i).Value.Split("^");}
-                                                @{ string[] qaCptcodes = dictQACptCodes?.ElementAt(i).Value.Split("^");}
+                                                @{ string[] qaCptcodes = dictQACptCodes?.ElementAt(i).Value == "" ? coderCptcodes : dictQACptCodes?.ElementAt(i).Value.Split("^");}
 
                                                 @{
                                                     var CptClaimRemarks = string.Format("form-control CptClaim_{0}_Remarks_{1}", @Model.FirstOrDefault().TabIndex, @j);
