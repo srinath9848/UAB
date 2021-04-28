@@ -2,6 +2,8 @@
 @model DataSet
 @{
     ViewData["Title"] = "Payor";
+    List<int> i = new List<int>();
+    List<int> j = new List<int>();
 }
 
 <style>
@@ -32,70 +34,72 @@
                     <div id="modalContent"></div>
                     <div class="table-responsive col-8">
                         <table id="Reports" class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    @foreach (DataColumn clmn in Model.Tables[0].Columns)
-                                    {
-                                        if (clmn.ColumnName != "EMLevel")
-                                        {
-                                            <th style="font-weight:900;">@clmn.ColumnName</th>
-                                        }
-                                    }
-                                    <th style="font-weight:900;">Total</th>
-                                </tr>
-                            </thead>
-                            @{ List<int> i = new List<int>();
-                                List<int> j = new List<int>();
-                            }
-                            @for (int x = 0; x < Model.Tables[0].Rows.Count; x++)
+                            @if (Model.Tables[0].Rows.Count != 0)
                             {
-                                var index = Model.Tables[0].Rows[x][0];
-                                <tr class="body" data="@index">
-                                    @for (int y = 1; y < Model.Tables[0].Columns.Count; y++)
-                                    {
-                                        int row = Model.Tables[0].Rows[x][y].ToString() != "" ? Convert.ToInt32(Model.Tables[0].Rows[x][y]) : 0;
-                                        <td>@row</td>
-                                    }
-                                    @{
-                                        int row1 = Model.Tables[0].Rows[x][2].ToString() != "" ? Convert.ToInt32(Model.Tables[0].Rows[x][2]) : 0;
-                                        i.Add(row1);
+                                <thead>
+                                    <tr>
+                                        @foreach (DataColumn clmn in Model.Tables[0].Columns)
+                                        {
+                                            if (clmn.ColumnName != "EMLevel")
+                                            {
+                                                <th style="font-weight:900;">@clmn.ColumnName</th>
+                                            }
+                                        }
+                                        <th style="font-weight:900;">Total</th>
+                                    </tr>
+                                </thead>
 
-                                        int row2 = Model.Tables[0].Rows[x][3].ToString() != "" ? Convert.ToInt32(Model.Tables[0].Rows[x][3]) : 0;
-                                        j.Add(row2);
-                                        int subtotal = (row1 + row2);
+                                @for (int x = 0; x < Model.Tables[0].Rows.Count; x++)
+                                {
+                                    int subtotal = 0;
+                                    <tr class="body" data="@Model.Tables[0].Rows[x][0]">
+                                        @for (int y = 1; y < Model.Tables[0].Columns.Count; y++)
+                                        {
+                                            int row = Model.Tables[0].Rows[x][y].ToString() != "" ? Convert.ToInt32(Model.Tables[0].Rows[x][y]) : 0;
+                                            string test = row.ToString();
+                                            if (y != 1)
+                                                subtotal = subtotal + row;
+
+                                            <td class="td_@y">@row</td>
+                                        }
+                                        <td>@subtotal</td>
+                                    </tr>
+                                }
+                                <tr style="font-weight:900;">
+                                    <td>TOTALS</td>
+                                    @for (int y = 2; y < Model.Tables[0].Columns.Count; y++)
+                                    {
+                                        <td id="footer_@y"></td>
                                     }
-                                    <td>@subtotal</td>
+                                    <td id="total"></td>
                                 </tr>
                             }
-                            <tr style="font-weight:900;">
-                                <td>TOTALS</td>
-                                <td>@i.Sum()</td>
-                                <td>@j.Sum()</td>
-                                <td>
-                                    @{
-                                        int total = (i.Sum() + j.Sum());
-                                    }
-                                    @total
-                                </td>
-                            </tr>
+                            else
+                            {
+                                <tbody>
+                                    <tr>No Data Found !</tr>
+                                </tbody>
+                            }
                         </table>
                     </div>
                     <br />
                     <h5 class="card">Levelling Detailed Report</h5>
                     <div class="table-responsive col-8">
                         <table id="Reports" class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    @foreach (DataColumn clmn in Model.Tables[0].Columns)
-                                    {
-                                        if (clmn.ColumnName != "EMLevel")
+                            @if (Model.Tables[0].Rows.Count != 0)
+                            {
+                                <thead>
+                                    <tr>
+                                        @foreach (DataColumn clmn in Model.Tables[0].Columns)
                                         {
-                                            <th style="font-weight:900;">@clmn.ColumnName</th>
+                                            if (clmn.ColumnName != "EMLevel")
+                                            {
+                                                <th style="font-weight:900;">@clmn.ColumnName</th>
+                                            }
                                         }
-                                    }
-                                </tr>
-                            </thead>
-                            @{
+                                    </tr>
+                                </thead>
+
                                 i.Clear();
                                 j.Clear();
                                 int per = 100;
@@ -104,89 +108,95 @@
                                 List<int> lstc = new List<int>();
                                 List<int> lstc1 = new List<int>();
 
-                            }
-                            @for (int x = 0; x < Model.Tables[0].Rows.Count; x++)
-                            {
-                                var index = Convert.ToInt32(Model.Tables[0].Rows[x][0].ToString());
-                                if (index != 1 && !lstc.Contains(index))
+                                @for (int x = 0; x < Model.Tables[0].Rows.Count; x++)
                                 {
-                                    lstc.Add(index);
-                                    lstc1.Add(index);
-                                    i.Clear();
-                                    j.Clear();
-                                }
-                                var eMLevel = Model.Tables[0].Select("EMLevel=" + index);
-                                if (eMLevel.Length > 0 && j.Count <= 0)
-                                {
-                                    res2 = 0;
-                                    for (int k = 0; k < eMLevel.Length; k++)
+                                    var index = Convert.ToInt32(Model.Tables[0].Rows[x][0].ToString());
+                                    if (index != 1 && !lstc.Contains(index))
                                     {
-                                        int row11 = Model.Tables[0].Select("EMLevel=" + index)[k].ItemArray[2].ToString() != "" ? Convert.ToInt32(Model.Tables[0].Select("EMLevel=" + index)[k].ItemArray[2].ToString()) : 0;
-                                        if (row11 != 0)
-                                            j.Add(row11);
+                                        lstc.Add(index);
+                                        lstc1.Add(index);
+                                        i.Clear();
+                                        j.Clear();
                                     }
-                                    if (j.Count != 0)
+                                    var eMLevel = Model.Tables[0].Select("EMLevel=" + index);
+                                    if (eMLevel.Length > 0 && j.Count <= 0)
                                     {
-                                        int sum = j.Sum();
-                                        res2 = per / sum;
+                                        res2 = 0;
+                                        for (int k = 0; k < eMLevel.Length; k++)
+                                        {
+                                            int row11 = Model.Tables[0].Select("EMLevel=" + index)[k].ItemArray[2].ToString() != "" ? Convert.ToInt32(Model.Tables[0].Select("EMLevel=" + index)[k].ItemArray[2].ToString()) : 0;
+                                            if (row11 != 0)
+                                                j.Add(row11);
+                                        }
+                                        if (j.Count != 0)
+                                        {
+                                            int sum = j.Sum();
+                                            res2 = per / sum;
+                                        }
                                     }
-                                }
-                                if (eMLevel.Length > 0 && i.Count <= 0)
-                                {
-                                    res1 = 0;
-                                    for (int k = 0; k < eMLevel.Length; k++)
+                                    if (eMLevel.Length > 0 && i.Count <= 0)
                                     {
-                                        int row11 = Model.Tables[0].Select("EMLevel=" + index)[k].ItemArray[3].ToString() != "" ? Convert.ToInt32(Model.Tables[0].Select("EMLevel=" + index)[k].ItemArray[3].ToString()) : 0;
-                                        if (row11 != 0)
-                                            i.Add(row11);
+                                        res1 = 0;
+                                        for (int k = 0; k < eMLevel.Length; k++)
+                                        {
+                                            int row11 = Model.Tables[0].Select("EMLevel=" + index)[k].ItemArray[3].ToString() != "" ? Convert.ToInt32(Model.Tables[0].Select("EMLevel=" + index)[k].ItemArray[3].ToString()) : 0;
+                                            if (row11 != 0)
+                                                i.Add(row11);
+                                        }
+                                        if (i.Count != 0)
+                                        {
+                                            int sum = i.Sum();
+                                            res1 = per / sum;
+                                        }
                                     }
-                                    if (i.Count != 0)
-                                    {
-                                        int sum = i.Sum();
-                                        res1 = per / sum;
-                                    }
-                                }
-                                <tr class="body" data="@index">
-                                    @for (int y = 1; y < Model.Tables[0].Columns.Count; y++)
-                                    {
-                                        var Emcode = Model.Tables[0].Rows[x][y].ToString();
-                                        int row = Model.Tables[0].Rows[x][y].ToString() != "" ? Convert.ToInt32(Model.Tables[0].Rows[x][y]) : 0;
+                                    <tr class="body" data="@index">
+                                        @for (int y = 1; y < Model.Tables[0].Columns.Count; y++)
+                                        {
+                                            var Emcode = Model.Tables[0].Rows[x][y].ToString();
+                                            int row = Model.Tables[0].Rows[x][y].ToString() != "" ? Convert.ToInt32(Model.Tables[0].Rows[x][y]) : 0;
 
-                                        <td>
-                                            @if (Emcode.Contains("99"))
-                                            {
-                                                @row
-                                            }
-                                            else
-                                            {
-                                                if (row == 0)
+                                            <td>
+                                                @if (Emcode.Contains("99"))
                                                 {
-                                                    <span class="count">0%</span>
+                                                    @row
                                                 }
                                                 else
                                                 {
-                                                    if (res1 != 0)
+                                                    if (row == 0)
                                                     {
-                                                        var count = res1 * row;
-                                                        <span class="count">@count%</span>
+                                                        <span class="count">0%</span>
                                                     }
                                                     else
                                                     {
-                                                        if (res2 != 0)
+                                                        if (res1 != 0)
                                                         {
-                                                            var count = res2 * row;
+                                                            var count = res1 * row;
                                                             <span class="count">@count%</span>
                                                         }
                                                         else
                                                         {
-                                                            <span class="count">0%</span>
+                                                            if (res2 != 0)
+                                                            {
+                                                                var count = res2 * row;
+                                                                <span class="count">@count%</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="count">0%</span>
+                                                            }
                                                         }
                                                     }
                                                 }
-                                            }
-                                        </td>
-                                    }
-                                </tr>
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tbody>
+                                    <tr>No Data Found !</tr>
+                                </tbody>
                             }
                         </table>
                     </div>
@@ -195,6 +205,7 @@
         </div>
     </div>
 </div>
+
 <script type="text/javascript">
     var reportsArray = [];
     var reportscolor = ['', 'odd', 'even', 'odd', 'even'];
@@ -210,5 +221,17 @@
             $(this).css("background-color", backgroundcolor[id]);
         }
     });
+
+    var sum = 0;
+    var total = 0;
+    for (var y = 2; y < @Model.Tables[0].Columns.Count; y++) {
+        $(".td_" + y).each(function () {
+            sum += Number($(this).text());
+            total += Number($(this).text());
+        });
+        $("#footer_" + y).text(sum);
+        sum = 0;
+    }
+    $("#total").text(total);
 </script>
 
