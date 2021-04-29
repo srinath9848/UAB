@@ -959,6 +959,11 @@ namespace UAB.DAL
                             chartSummaryDTO.CodedBy = Convert.ToString(reader["CodedBy"]);
                             chartSummaryDTO.QABy = Convert.ToString(reader["QABy"]);
 
+                            if (reader["ClaimId"] != DBNull.Value)
+                                chartSummaryDTO.ClaimId = Convert.ToInt32(reader["ClaimId"]);
+                            else
+                                chartSummaryDTO.ClaimId = null;
+
                             chartSummaryDTO.PayorText = Convert.ToString(reader["PayorText"]);
                             chartSummaryDTO.QAPayorText = Convert.ToString(reader["QAPayorText"]);
                             chartSummaryDTO.QAPayorRemarks = Convert.ToString(reader["QAPayorIdRemark"]);

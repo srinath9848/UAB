@@ -75,7 +75,8 @@ namespace UAB.Controllers
             {
                 lst = clinicalcaseOperations.DisplayBlockCharts(Role, ProjectID);
             }
-            else{
+            else
+            {
                 lst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);
             }
             var projects = clinicalcaseOperations.GetProjects();
@@ -114,8 +115,8 @@ namespace UAB.Controllers
             List<ChartSummaryDTO> chartSummaryDTOlst = new List<ChartSummaryDTO>();                 //coding,ShadowQA
             List<ChartSummaryDTO> qadto = new List<ChartSummaryDTO>();                              //QA
 
-            
-            if (ProjectName == null|| ProjectID == 0)
+
+            if (ProjectName == null || ProjectID == 0)
             {
                 var projects = clinicalcaseOperations.GetProjects();
                 if (ProjectName == null)
@@ -130,9 +131,9 @@ namespace UAB.Controllers
             if (Role == Roles.QA.ToString())
             {
                 var res = clinicalcaseOperations.DisplayBlockCharts(Role, ProjectID);
-                List<int> ccids = res.Select(a => a.CodingDTO.ClinicalCaseID).ToList(); 
+                List<int> ccids = res.Select(a => a.CodingDTO.ClinicalCaseID).ToList();
 
-                
+
                 int searchcid = Convert.ToInt32(ccid);
                 if (ccids.Count != 0)
                 {
@@ -1085,9 +1086,10 @@ namespace UAB.Controllers
         public IActionResult GetShadowQAAvailableChart(string Role, string ChartType, int ProjectID, string ProjectName)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
-            chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
-            chartSummaryDTO.ProjectName = ProjectName;
+            List<ChartSummaryDTO> lstchartSummary = new List<ChartSummaryDTO>();
+            lstchartSummary = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
+            if (lstchartSummary.Count > 0)
+                lstchartSummary.FirstOrDefault().ProjectName = ProjectName;
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -1096,12 +1098,12 @@ namespace UAB.Controllers
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
 
-            if (chartSummaryDTO.CodingDTO.ClinicalCaseID == 0)
+            if (lstchartSummary.Count == 0)
             {
                 TempData["Toast"] = "There are no charts available";
                 return RedirectToAction("ShadowQASummary");
             }
-            return View("ShadowQA", chartSummaryDTO);
+            return View("ShadowQA", lstchartSummary.OrderBy(a => a.ClaimId).ToList());
         }
 
         public IActionResult GetShadowQARebuttalChartsOfQA(string Role, string ChartType, int ProjectID, string ProjectName)
