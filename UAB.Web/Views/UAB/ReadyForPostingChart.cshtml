@@ -24,19 +24,20 @@
     $("#btnDelete").hide();
     $("#btnBlock").hide();
     $("#coding").addClass('selected');
-    $('.Available').hide();
     $(".CoderDetails").css("pointer-events", "none");
     $(".CoderDetails").css("background-color", "#e9ecef");
 
     $(document).ready(function () {
         $("#postingSubmit,#postingSubmitAndGetNext").click(function (e) {
+            var buttonType = $(this).attr("name");
             var claims = $('.tab').length;
             if (claims > 1) {
                 $.ajax({
                     type: "GET",
                     url: "@Url.Action("GetReadyforPostingPopup", "UAB")",
                     data: {
-
+                        "chartSummaryDTO": "@Model",
+                             "buttonType": buttonType
                     },
                     success: function (response) {
                         $("#modalContent").html(response);
@@ -44,6 +45,7 @@
                 });
             }
             else {
+                $("#hdnButtonType").val(buttonType);
                 $("#SubmitCodingReadyForPostingChart").submit();
             }
         });

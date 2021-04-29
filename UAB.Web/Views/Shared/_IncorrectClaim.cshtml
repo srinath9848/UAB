@@ -96,7 +96,7 @@
 
 <div class="form-group row">
     <label class="col-md-3 lessWidth m-t-15">Note Title</label>
-    <div class="col-md-3 lessWidth ControlWidth">
+    <div title="@Model.NoteTitle" class="col-md-3 lessWidth ControlWidth">
         @Html.TextBoxFor(model => model.NoteTitle, new { @class = "form-control CoderDetails ControlHeight" })
     </div>
 </div>
@@ -175,7 +175,7 @@
 
 
                 @{ Show = (string.IsNullOrEmpty(dictQADxRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
-                <div title="" class="col-md-2 input-group ControlHeight" style="@Show">
+                <div title="@dictQADxRemarks?.ElementAt(i).Value" class="col-md-2 input-group ControlHeight" style="@Show">
                     <input type="text" class="form-control QARemarks" value="@dictQADxRemarks?.ElementAt(i).Value" />
                 </div>
 
@@ -209,9 +209,9 @@
 
     int totalCptCount = count + 1;
 
-    Utility.AddEmptyRows(dictCptCodes, count, "NA");
-    Utility.AddEmptyRows(dictQACptCodes, count, "");
-    Utility.AddEmptyRows(dictQACptRemarks, count, "");
+    Utility.AddEmptyRows(dictCptCodes, Cptcount, "NA");
+    Utility.AddEmptyRows(dictQACptCodes, Cptcount, "");
+    Utility.AddEmptyRows(dictQACptRemarks, Cptcount, "");
 }
 <div id="DivCpt">
     @{
@@ -228,7 +228,7 @@
                     <label class="col-md-3 lessWidth m-t-15"></label>
                 }
                 @{ string[] coderCptcodes = dictCptCodes?.ElementAt(i).Value.Split("^");}
-                @{ string[] qaCptcodes = dictQACptCodes?.ElementAt(i).Value.Split("^");}
+                @{ string[] qaCptcodes = dictQACptCodes?.ElementAt(i).Value == "" ? coderCptcodes : dictQACptCodes?.ElementAt(i).Value.Split("^");}
 
                 @{
                     var CptClaimRemarks = string.Format("form-control CptClaim_{0}_Remarks_{1}", @Model.TabIndex, @j);
@@ -244,25 +244,33 @@
                     string qacptCode = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[0]);
                     string color = (codercptCode != qacptCode) ? "color:blue;" : "";
                     string codercpt = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[0] : coderCptcodes[0]);
+                    string cptCode = !string.IsNullOrEmpty(codercptCode) ? codercptCode : "";
+                    cptCode = cptCode == qacptCode ? "" : codercptCode + "/";
 
                     string coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[1]);
                     string qaMod = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[1]);
                     color = (coderMod != qaMod) ? "color:blue;" : "";
                     coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[1] : coderCptcodes[1]);
+                    string cptMod = !string.IsNullOrEmpty(coderMod) ? coderMod : "";
+                    cptMod = cptMod == qaMod ? "" : coderMod + "/";
 
                     string coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[2]);
                     string qaQty = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[2]);
                     color = (coderQty != qaQty) ? "color:blue;" : "";
                     coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[2] : coderCptcodes[2]);
+                    string cptQty = !string.IsNullOrEmpty(coderQty) ? coderQty : "";
+                    cptQty = cptQty == qaQty ? "" : coderQty + "/";
 
                     string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
                     string qaLinks = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[3]);
                     color = (coderLinks != qaLinks) ? "color:blue;" : "";
                     coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[3] : coderCptcodes[3]);
+                    string cptLinks = !string.IsNullOrEmpty(coderLinks) ? coderLinks : "";
 
                     string link = !string.IsNullOrEmpty(@qaLinks) || @qaLinks != "null" ? @qaLinks : "Link All";
+                    cptLinks = cptLinks == link ? "" : coderLinks + "/";
 
-                    <div title="Code : @qacptCode, Mod : @qaMod, Quantity : @qaQty, Links : @link" class="col-md-3 lessWidth input-group ControlWidth">
+                    <div title="Code : @cptCode@qacptCode, Mod : @cptMod@qaMod, Quantity : @cptQty@qaQty, Links : @cptLinks@link" class="col-md-3 lessWidth input-group ControlWidth">
                         <div class="input-group-prepend ControlHeight">
                             <span class="input-group-text" id="basic-addon1">@j</span>
                         </div>
@@ -292,7 +300,7 @@
                     </div>
                 }
                 @{ Show = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
-                <div title="" class="col-md-2 input-group" style="@Show">
+                <div title="@dictQACptRemarks?.ElementAt(i).Value" class="col-md-2 input-group" style="@Show">
                     <input type="text" class="form-control QARemarks" value="@dictQACptRemarks?.ElementAt(i).Value" />
                 </div>
                 <div class="input-group-append CoderCorrections" style="@Show">
@@ -301,7 +309,7 @@
                         &nbsp;<i id="@CptClaim" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                     </span>
                 </div>
-                <div class="col-md-3 lessWidth input-group">
+                <div class="col-md-3 input-group CoderCorrections">
                     <input type="text" id="@CptClaim" class="@CptClaimRemarks" style="@Show" />
                 </div>
             </div>

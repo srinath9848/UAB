@@ -315,10 +315,10 @@ namespace UAB.Controllers
         private void PrepareCptCodes(string cpt, DataTable dtCPT, int claimId)
         {
             string[] lstcpts = cpt.Split("|");
-            foreach (var item in lstcpts)
+            foreach (var item in lstcpts.OrderBy(a => a.Split("^")[0]).ToList())
             {
                 string[] lstcptrow = item.Split("^");
-                dtCPT.Rows.Add(lstcptrow[0], lstcptrow[1], lstcptrow[2], lstcptrow[3], claimId);
+                dtCPT.Rows.Add(lstcptrow[1], lstcptrow[2], lstcptrow[3], lstcptrow[4], claimId);
             }
         }
 
@@ -630,9 +630,6 @@ namespace UAB.Controllers
             if (!string.IsNullOrEmpty(hdnAcceptedClaim2))
                 PrepareBasicParams(hdnAcceptedClaim2, dtbasicParams);
 
-            if (!string.IsNullOrEmpty(hdnAcceptedClaim2))
-                PrepareBasicParams(hdnAcceptedClaim2, dtbasicParams);
-
             if (!string.IsNullOrEmpty(hdnAcceptedClaim3))
                 PrepareBasicParams(hdnAcceptedClaim3, dtbasicParams);
 
@@ -667,6 +664,8 @@ namespace UAB.Controllers
             if (!string.IsNullOrEmpty(hdnCptCodes3))
                 PrepareCptCodes(hdnCptCodes3, dtCpt, Convert.ToInt32(hdnClaimId4));
 
+
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             clinicalcaseOperations.SubmitCodingIncorrectChart(chartSummaryDTO, Convert.ToInt16(hdnStatusId), dtAudit, dtbasicParams, dtDx, dtCpt);
@@ -679,7 +678,8 @@ namespace UAB.Controllers
         public IActionResult SubmitCodingReadyForPostingChart(ChartSummaryDTO chartSummaryDTO, string postingSubmitAndGetNext)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-
+            if (string.IsNullOrEmpty(postingSubmitAndGetNext))
+                postingSubmitAndGetNext = Request.Form["hdnButtonType"];
             if (string.IsNullOrEmpty(postingSubmitAndGetNext))
                 clinicalcaseOperations.SubmitCodingReadyForPostingChart(chartSummaryDTO);
             else
@@ -694,8 +694,9 @@ namespace UAB.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetReadyforPostingPopup()
+        public IActionResult GetReadyforPostingPopup(string buttonType)
         {
+            ViewBag.buttonType = buttonType;
             return PartialView("_ReadyForPostingSubmitPopup");
         }
 
@@ -707,55 +708,6 @@ namespace UAB.Controllers
             ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.CliamId = cliamID;
-            if (cliamID == 2)
-            {
-                ViewBag.DxCliam = "txtDx2Cliam" + "_1";
-                ViewBag.CptCliam = "txt2Cpt" + "_1";
-                ViewBag.CptModCliam = "txt2mod" + "_1";
-                ViewBag.CptQtyCliam = "txt2qty" + "_1";
-                ViewBag.CptLinksCliam = "txt2links" + "_1";
-
-                ViewBag.dx2index = "dx2index";
-                ViewBag.Dx2Cliam = "txt2Dx";
-                ViewBag.Div2DxRow = "Div2DxRow_1";
-
-                ViewBag.cpt2index = "cpt2index";
-                ViewBag.Cpt2Link = "txt2Link";
-                ViewBag.Div2CptRow = "Div2CptRow_1";
-            }
-            if (cliamID == 3)
-            {
-                ViewBag.DxCliam = "txtDx3Cliam" + "_1";
-                ViewBag.CptCliam = "txt3Cpt" + "_1";
-                ViewBag.CptModCliam = "txt3mod" + "_1";
-                ViewBag.CptQtyCliam = "txt3qty" + "_1";
-                ViewBag.CptLinksCliam = "txt3links" + "_1";
-
-                ViewBag.dx2index = "dx3index";
-                ViewBag.Dx2Cliam = "txt3Dx";
-                ViewBag.Div2DxRow = "Div3DxRow_1";
-
-                ViewBag.cpt2index = "cpt3index";
-                ViewBag.Cpt2Link = "txt3Link";
-                ViewBag.Div2CptRow = "Div3CptRow_1";
-            }
-            if (cliamID == 4)
-            {
-                ViewBag.DxCliam = "txtDx4Cliam" + "_1";
-                ViewBag.CptCliam = "txt4Cpt" + "_1";
-                ViewBag.CptModCliam = "txt4mod" + "_1";
-                ViewBag.CptQtyCliam = "txt4qty" + "_1";
-                ViewBag.CptLinksCliam = "txt4links" + "_1";
-
-                ViewBag.dx2index = "dx4index";
-                ViewBag.Dx2Cliam = "txt4Dx";
-                ViewBag.Div2DxRow = "Div4DxRow_1";
-
-                ViewBag.cpt2index = "cpt4index";
-                ViewBag.Cpt2Link = "txt4Link";
-                ViewBag.Div2CptRow = "Div4CptRow_1";
-            }
-
             return PartialView("_CodingCliam");
         }
         #endregion

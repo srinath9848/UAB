@@ -36,6 +36,7 @@
 </style>
 <div class="col-md-12">
     <div class="card">
+        @Html.Hidden("hdnButtonType")
         @Html.HiddenFor(Model => Model.FirstOrDefault().Dx)
         @Html.HiddenFor(Model => Model.FirstOrDefault().CPTCode)
         @Html.HiddenFor(Model => Model.FirstOrDefault().Links)
@@ -108,34 +109,34 @@
                                         </div>
                                     </div>
                                     <!--<div id="DivDx">
-                            <div class="form-group row" id="DivDxRow_1">
-                                <label class="col-md-3 m-t-15 AlignControl">Dx</label>
-                                <div class="col-md-3 input-group">
-                                    <div class="input-group-prepend ControlHeight">
-                                        <span class="input-group-text dxindex" id="basic-addon1">1</span>
-                                    </div>
-                                    @Html.TextBoxFor(Model => Model.FirstOrDefault().Dx, new { @class = "form-control CoderDetails txtDx ControlHeight", @autocomplete = "off", @id = "txtDx_1", @placeholder = "Code", @onfocusout = "DxFunction('txtDx_1')" })
-                                    @Html.ValidationMessageFor(Model => Model.FirstOrDefault().Dx, null, new { @class = "text-danger Dxerror" })-->
+                                <div class="form-group row" id="DivDxRow_1">
+                                    <label class="col-md-3 m-t-15 AlignControl">Dx</label>
+                                    <div class="col-md-3 input-group">
+                                        <div class="input-group-prepend ControlHeight">
+                                            <span class="input-group-text dxindex" id="basic-addon1">1</span>
+                                        </div>
+                                        @Html.TextBoxFor(Model => Model.FirstOrDefault().Dx, new { @class = "form-control CoderDetails txtDx ControlHeight", @autocomplete = "off", @id = "txtDx_1", @placeholder = "Code", @onfocusout = "DxFunction('txtDx_1')" })
+                                        @Html.ValidationMessageFor(Model => Model.FirstOrDefault().Dx, null, new { @class = "text-danger Dxerror" })-->
                                     @*<button type="button" class="btn btn-sm" onclick="DeleteDxCodes('DivDxRow_1')"><i class="fa fa-times"></i></button>*@
                                     <!--</div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div id="DivCpt">
-                                <div class="form-group row" id="DivCptRow_1">
-                                    <label class="col-md-3 m-t-15 AlignControl">CPT</label>
-                                    <div class="col-md-3 CptlessWidth input-group">
-                                        <div class="input-group-prepend ControlHeight">
-                                            <span class="input-group-text cptindex" id="basic-addon1">1</span>
-                                        </div>
-                                        @Html.TextBoxFor(Model => Model.FirstOrDefault().CPTCode, new { @class = "form-control CoderDetails txtCpt ControlHeight", @autocomplete = "off", @placeholder = "Code", @id = "txtCpt_1", @tabindex = "5" })
-                                        <input type="text" class="form-control CoderDetails txtMod" id="txtMod_1" autocomplete="off" placeholder="Mod" tabindex="6" />
-                                        <input type="text" id="txtQty_1" class="form-control CoderDetails txtQty" autocomplete="off" placeholder="1" value="1" tabindex="7" />
-                                        <input type="text" id="txtLinks_1" onfocusout="CptFunction('txtLinks_1')" class="form-control CoderDetails txtLinks" autocomplete="off" placeholder="Link All" tabindex="8" />
-                                        @Html.ValidationMessageFor(Model => Model.FirstOrDefault().CPTCode, null, new { @class = "text-danger Dxerror" })-->
+                                <div id="DivCpt">
+                                    <div class="form-group row" id="DivCptRow_1">
+                                        <label class="col-md-3 m-t-15 AlignControl">CPT</label>
+                                        <div class="col-md-3 CptlessWidth input-group">
+                                            <div class="input-group-prepend ControlHeight">
+                                                <span class="input-group-text cptindex" id="basic-addon1">1</span>
+                                            </div>
+                                            @Html.TextBoxFor(Model => Model.FirstOrDefault().CPTCode, new { @class = "form-control CoderDetails txtCpt ControlHeight", @autocomplete = "off", @placeholder = "Code", @id = "txtCpt_1", @tabindex = "5" })
+                                            <input type="text" class="form-control CoderDetails txtMod" id="txtMod_1" autocomplete="off" placeholder="Mod" tabindex="6" />
+                                            <input type="text" id="txtQty_1" class="form-control CoderDetails txtQty" autocomplete="off" placeholder="1" value="1" tabindex="7" />
+                                            <input type="text" id="txtLinks_1" onfocusout="CptFunction('txtLinks_1')" class="form-control CoderDetails txtLinks" autocomplete="off" placeholder="Link All" tabindex="8" />
+                                            @Html.ValidationMessageFor(Model => Model.FirstOrDefault().CPTCode, null, new { @class = "text-danger Dxerror" })-->
                                     @*<button type="button" class="btn btn-sm" onclick="DeleteCptCodes('txtLinks_1')"><i class="fa fa-times"></i></button>*@
                                     <!--</div>
-                                </div>
-                            </div>-->
+                                    </div>
+                                </div>-->
                                     @{
                                         int i = 1;
                                         foreach (var item in Model.FirstOrDefault().Dx.Split(','))
@@ -231,84 +232,84 @@
 
         <!-- Tabs -->
         @*<div class="card">
-                <div class="form-group row">
-                    <label class="col-md-3 m-t-15">Provider</label>
-                    <div class="col-md-3">
-                        @Html.DropDownListFor(Model.FirstOrDefault() => Model.FirstOrDefault().ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @class = "form-control CoderDetails" })
-                        @Html.ValidationMessageFor(Model.FirstOrDefault() => Model.FirstOrDefault().ProviderID, null, new { @class = "text-danger" })
-                    </div>
-                    <label class="col-md-3 m-t-15">Payor</label>
-                    <div class="col-md-3">
-                        @Html.DropDownListFor(Model.FirstOrDefault() => Model.FirstOrDefault().PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails" })
-                        @Html.ValidationMessageFor(Model.FirstOrDefault() => Model.FirstOrDefault().PayorID, null, new { @class = "text-danger" })
-                    </div>
+            <div class="form-group row">
+                <label class="col-md-3 m-t-15">Provider</label>
+                <div class="col-md-3">
+                    @Html.DropDownListFor(Model.FirstOrDefault() => Model.FirstOrDefault().ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @class = "form-control CoderDetails" })
+                    @Html.ValidationMessageFor(Model.FirstOrDefault() => Model.FirstOrDefault().ProviderID, null, new { @class = "text-danger" })
                 </div>
-                <div class="form-group row">
-                    <label class="col-md-3 m-t-15"> Provider Feedback</label>
-                    <div class="col-md-3">
-                        @Html.DropDownListFor(Model.FirstOrDefault() => Model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails" })
-                        @Html.ValidationMessageFor(Model.FirstOrDefault() => Model.FirstOrDefault().ProviderFeedbackID, null, new { @class = "text-danger" })
-                    </div>
-                    <label class="col-md-3 m-t-15">Note Title</label>
-                    <div class="col-md-3">
-                        @Html.TextAreaFor(Model.FirstOrDefault() => Model.FirstOrDefault().NoteTitle, new { @class = "form-control CoderDetails", @autocomplete = "off" })
-                        @Html.ValidationMessageFor(Model.FirstOrDefault() => Model.FirstOrDefault().NoteTitle, null, new { @class = "text-danger" })
-                    </div>
+                <label class="col-md-3 m-t-15">Payor</label>
+                <div class="col-md-3">
+                    @Html.DropDownListFor(Model.FirstOrDefault() => Model.FirstOrDefault().PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails" })
+                    @Html.ValidationMessageFor(Model.FirstOrDefault() => Model.FirstOrDefault().PayorID, null, new { @class = "text-danger" })
                 </div>
-                @{
-                    int i = 1;
-                    foreach (var item in Model.FirstOrDefault().Dx.Split(','))
-                    {
-                        <div class="form-group row">
-                            @if (i == 1)
-                            {
-                                <label class="col-md-3 m-t-15">Dx</label>
-                            }
-                            else
-                            {
-                                <label class="col-md-3 m-t-15"></label>
-                            }
-                            <div class="col-md-3 input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1">@i</span>
-                                </div>
-                                <input class="form-control CoderDetails valid" type="text" value="@item">
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 m-t-15"> Provider Feedback</label>
+                <div class="col-md-3">
+                    @Html.DropDownListFor(Model.FirstOrDefault() => Model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails" })
+                    @Html.ValidationMessageFor(Model.FirstOrDefault() => Model.FirstOrDefault().ProviderFeedbackID, null, new { @class = "text-danger" })
+                </div>
+                <label class="col-md-3 m-t-15">Note Title</label>
+                <div class="col-md-3">
+                    @Html.TextAreaFor(Model.FirstOrDefault() => Model.FirstOrDefault().NoteTitle, new { @class = "form-control CoderDetails", @autocomplete = "off" })
+                    @Html.ValidationMessageFor(Model.FirstOrDefault() => Model.FirstOrDefault().NoteTitle, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            @{
+                int i = 1;
+                foreach (var item in Model.FirstOrDefault().Dx.Split(','))
+                {
+                    <div class="form-group row">
+                        @if (i == 1)
+                        {
+                            <label class="col-md-3 m-t-15">Dx</label>
+                        }
+                        else
+                        {
+                            <label class="col-md-3 m-t-15"></label>
+                        }
+                        <div class="col-md-3 input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">@i</span>
                             </div>
+                            <input class="form-control CoderDetails valid" type="text" value="@item">
                         </div>
-                        i = i + 1;
-                    }
+                    </div>
+                    i = i + 1;
                 }
+            }
 
-                @{
-                    i = 1;
-                    foreach (var item in Model.FirstOrDefault().CPTCode.Split('|'))
-                    {
-                        string[] coderCptcodes = item.Split("^");
-                        string mod = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
-                        string linkAll = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
-                        <div class="form-group row">
-                            @if (i == 1)
-                            {
-                                <label class="col-md-3 m-t-15">CPT</label>
-                            }
-                            else
-                            {
-                                <label class="col-md-3 m-t-15"></label>
-                            }
-                            <div class="col-md-3 lessWidth input-group" style="max-width:20% !important;">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1">@i</span>
-                                </div>
-                                <input type="text" class="form-control CoderDetails" placeholder="Code" value="@coderCptcodes[0]" style="width:17px;" />
-                                <input type="text" class="form-control CoderDetails" placeholder="Mod" value="@mod" />
-                                <input type="text" class="form-control CoderDetails" placeholder="1" value="@coderCptcodes[2]" />
-                                <input type="text" class="form-control CoderDetails" placeholder="Link All" value="@linkAll" />
+            @{
+                i = 1;
+                foreach (var item in Model.FirstOrDefault().CPTCode.Split('|'))
+                {
+                    string[] coderCptcodes = item.Split("^");
+                    string mod = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
+                    string linkAll = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
+                    <div class="form-group row">
+                        @if (i == 1)
+                        {
+                            <label class="col-md-3 m-t-15">CPT</label>
+                        }
+                        else
+                        {
+                            <label class="col-md-3 m-t-15"></label>
+                        }
+                        <div class="col-md-3 lessWidth input-group" style="max-width:20% !important;">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">@i</span>
                             </div>
+                            <input type="text" class="form-control CoderDetails" placeholder="Code" value="@coderCptcodes[0]" style="width:17px;" />
+                            <input type="text" class="form-control CoderDetails" placeholder="Mod" value="@mod" />
+                            <input type="text" class="form-control CoderDetails" placeholder="1" value="@coderCptcodes[2]" />
+                            <input type="text" class="form-control CoderDetails" placeholder="Link All" value="@linkAll" />
                         </div>
-                        i = i + 1;
-                    }
+                    </div>
+                    i = i + 1;
                 }
-            </div>*@
+            }
+        </div>*@
     </div>
 
     <div class="border-top">

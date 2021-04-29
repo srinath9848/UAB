@@ -1,11 +1,19 @@
 ﻿@model UAB.DTO.ChartSummaryDTO
 @{
-    int cliamID = ViewBag.cliamID;
-    string dxCliam = ViewBag.DxCliam;
-    string cptCliam = ViewBag.CptCliam;
-    string cptModCliam = ViewBag.CptModCliam;
-    string cptQtyCliam = ViewBag.CptQtyCliam;
-    string cptLinksCliam = ViewBag.CptLinksCliam;
+    int cliamID = ViewBag.CliamId;
+    string dxCliam = "txtDx" + cliamID + "Cliam" + "_1";
+    string cptCliam = "txt" + cliamID + "Cpt" + "_1";
+    string cptModCliam = "txt" + cliamID + "mod" + "_1";
+    string cptQtyCliam = "txt" + cliamID + "qty" + "_1";
+    string cptLinksCliam = "txt" + cliamID + "links" + "_1";
+
+    string dx2index = "dx" + cliamID + "index";
+    string Dx2Cliam = "txt" + cliamID + "Dx";
+    string Div2DxRow = "Div" + cliamID + "DxRow_1";
+
+    string cpt2index = "cpt" + cliamID + "index";
+    string Cpt2Link = "txt" + cliamID + "Link";
+    string Div2CptRow = "Div" + cliamID + "CptRow_1";
 
 }
 <style>
@@ -40,28 +48,28 @@
     </div>
 </div>
 <div id="DivDx_@cliamID">
-    <div class="form-group row" id="@ViewBag.Div2DxRow">
+    <div class="form-group row" id="@Div2DxRow">
         <label class="col-md-3 m-t-15 AlignControl">Dx</label>
         <div class="col-md-3 input-group">
             <div class="input-group-prepend ControlHeight">
-                <span class="input-group-text AdjustSerialNumber @ViewBag.dx2index" id="basic-addon1">1</span>
+                <span class="input-group-text AdjustSerialNumber @dx2index" id="basic-addon1">1</span>
             </div>
-            <input type="text" id="@dxCliam" onfocusout="DxCliams('txtDx_1_@cliamID')" class="form-control CoderDetails @ViewBag.Dx2Cliam Dxcliam_@cliamID" autocomplete="off" placeholder="Code" />
+            <input type="text" id="@dxCliam" onfocusout="DxCliams('txtDx_1_@cliamID')" class="form-control CoderDetails @Dx2Cliam Dxcliam_@cliamID" autocomplete="off" placeholder="Code" />
             @Html.ValidationMessageFor(model => model.Dx, null, new { @class = "text-danger Dxerror" })
         </div>
     </div>
 </div>
 <div id="DivCpt_@cliamID">
-    <div class="form-group row" id="@ViewBag.Div2CptRow">
+    <div class="form-group row" id="@Div2CptRow">
         <label class="col-md-3 m-t-15 AlignControl">CPT</label>
         <div class="col-md-3 CptlessWidth input-group">
             <div class="input-group-prepend ControlHeight">
-                <span class="input-group-text AdjustSerialNumber @ViewBag.cpt2index" id="basic-addon1">1</span>
+                <span class="input-group-text AdjustSerialNumber @cpt2index" id="basic-addon1">1</span>
             </div>
-            <input type="text" id="@cptCliam" style="max-width:55px;" class="form-control CoderDetails ControlHeight Cptcliam_@cliamID" autocomplete="off" placeholder="Code" tabindex="5" />
+            <input type="text" maxlength="5" id="@cptCliam" style="max-width:55px;" class="form-control CoderDetails ControlHeight Cptcliam_@cliamID" autocomplete="off" placeholder="Code" tabindex="5" />
             <input type="text" id="@cptModCliam" style="max-width:50px;" class="form-control CoderDetails ControlHeight Cptcliam_@cliamID" autocomplete="off" placeholder="Mod" tabindex="6" />
-            <input type="text" id="@cptQtyCliam" style="max-width:30px;" class="form-control CoderDetails ControlHeight Cptcliam_@cliamID" autocomplete="off" style="max-width:25px;" placeholder="1" value="1" tabindex="7" />
-            <input type="text" id="@cptLinksCliam" class="form-control CoderDetails ControlHeight @ViewBag.Cpt2Link Cptcliam_@cliamID" onfocusout="CptCliams('txtLinks_1_@cliamID')" autocomplete="off" placeholder="Link All" tabindex="8" style="min-width:63px;" />
+            <input type="text" id="@cptQtyCliam" style="max-width:30px;" class="form-control CoderDetails ControlHeight Cptcliam_@cliamID" autocomplete="off" placeholder="1" value="1" tabindex="7" />
+            <input type="text" id="@cptLinksCliam" class="form-control CoderDetails ControlHeight @Cpt2Link Cptcliam_@cliamID" onfocusout="CptCliams('txtLinks_1_@cliamID')" autocomplete="off" placeholder="Link All" tabindex="8" style="min-width:63px;" />
         </div>
     </div>
 </div>

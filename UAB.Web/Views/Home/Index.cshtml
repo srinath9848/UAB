@@ -5,51 +5,176 @@
 
 <div class="container-fluid">
     <div class="row">
-        <br /><br />
-        <h4>
-            Dashboard will show backlog status, Codig status, QA status, Shadow QA Status, and
-            date of service currently coding
-        </h4>
-        <div class="col-md-12 form-horizontal">
+        <div class="col-md-12">
             <div class="card">
-                <div class="card-body">
-                    <div class="form-group row">
-                        <form asp-action="GetLevellingReport" asp-controller="Home"
-                              data-ajax="true"
-                              data-ajax-method="POST"
-                              data-ajax-mode="replace"
-                              data-ajax-update="#modalContent">
+                <div class="col-md-3">
+                    <br />
+                    <label>Select Report Type</label>
+                    <select id="reportType" class="form-control ControlHeight">
+                        <option value="--Select--">--Select--</option>
+                        <option value="LevellingSummaryReport">Levelling Report </option>
+                        <option value="ReceivedChartsReport">Received Charts Report </option>
+                        <option value="ChartSummaryReport">Chart Summary Report </option>
+                        <option value="PostedChartsReport">Posted Charts Report </option>
+                    </select>
+                </div>
+                <br />
+                <div class="Report" id="LevellingSummaryReport" style="display:none;">
+                    <form class="form-horizontal" asp-action="GetLevellingReport" asp-controller="Home"
+                          data-ajax="true"
+                          data-ajax-method="POST"
+                          data-ajax-mode="replace"
+                          data-ajax-update="#modalContent">
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="control-label col-form-label">Select Project</label>
+                                <div class="col-sm-2">
+                                    @Html.DropDownListFor(model => model.ProjectID, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select--", new { @class = "form-control ControlHeight" })
+                                    @Html.ValidationMessageFor(model => model.ProjectID, null, new { @class = "text-danger" })
+                                </div>
+                                <label class="col-sm-1 control-label col-form-label">Start Date</label>
+                                <div class="col-sm-2">
+                                    @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control ControlHeight", @autocomplete = "off", @type = "date" })
+                                    @Html.ValidationMessageFor(model => model.StartDate, null, new { @class = "text-danger" })
+                                </div>
+                                <label class="col-sm-1 control-label col-form-label">End Date </label>
+                                <div class="col-sm-2">
+                                    @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control ControlHeight", @autocomplete = "off", @type = "date" })
+                                    @Html.ValidationMessageFor(model => model.EndDate, null, new { @class = "text-danger" })
+                                </div>
+                                <div class="clearfix"></div><br />
+                                <div class="col-sm-2">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
-                            <label for="fname">Select Project</label>
-                            <div class="col-md-10">
-                                @Html.DropDownListFor(model => model.ProjectID, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select--", new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.ProjectID, null, new { @class = "text-danger" })
+                <div class="Report" id="ReceivedChartsReport" style="display:none;">
+                    <form class="form-horizontal" id="frmReport" asp-action="GetReceivedChartsReport" asp-controller="Home"
+                          data-ajax="true"
+                          data-ajax-method="POST"
+                          data-ajax-mode="replace"
+                          data-ajax-update="#modalContent">
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="control-label col-form-label">Select Project</label>
+                                <div class="col-sm-2">
+                                    @Html.DropDownListFor(model => model.ProjectID, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select--", new { @class = "form-control ControlHeight", @id = "ProjectID1" })
+                                    @Html.ValidationMessageFor(model => model.ProjectID, null, new { @class = "text-danger" })
+                                </div>
+
+                                <label class="control-label1 col-form-label">Range</label>
+                                <div class="col-sm-2">
+                                    @{var listItems = new List<SelectListItem>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {
+          new SelectListItem { Text = "Per Day", Value="PerDay" },
+          new SelectListItem { Text = "Per Week", Value="PerWeek" },
+          new SelectListItem { Text = "Per Month", Value="PerMonth" }
+    };
+                                    }
+                                    @Html.DropDownList("range", new SelectList(listItems, "Value", "Text"), new { @class = "form-control ControlHeight", @id = "rangeType" })
+                                </div>
+                                <div class="clearfix"></div><br />
+                                <div class="col-md-3">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
                             </div>
-                            <label for="fname">Start Date</label>
-                            <div class="col-md-10">
-                                @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control", @autocomplete = "off", @type = "date" })
-                                @Html.ValidationMessageFor(model => model.ProjectID, null, new { @class = "text-danger" })
+                        </div>
+                    </form>
+                </div>
+
+                <div class="Report" id="ChartSummaryReport" style="display:none;">
+                    <form class="form-horizontal" asp-action="GetChartSummaryReport" asp-controller="Home"
+                          data-ajax="true"
+                          data-ajax-method="POST"
+                          data-ajax-mode="replace"
+                          data-ajax-update="#modalContent">
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="control-label col-form-label">Select Project</label>
+                                <div class="col-sm-2">
+                                    @Html.DropDownListFor(model => model.ProjectID, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select--", new { @class = "form-control ControlHeight" })
+                                    @Html.ValidationMessageFor(model => model.ProjectID, null, new { @class = "text-danger" })
+                                </div>
+                                <label class="col-sm-1 control-label col-form-label">Start Date</label>
+                                <div class="col-sm-2">
+                                    @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control ControlHeight", @autocomplete = "off", @type = "date" })
+                                    @Html.ValidationMessageFor(model => model.StartDate, null, new { @class = "text-danger" })
+                                </div>
+                                <label class="col-sm-1 control-label col-form-label">End Date </label>
+                                <div class="col-sm-2">
+                                    @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control ControlHeight", @autocomplete = "off", @type = "date" })
+                                    @Html.ValidationMessageFor(model => model.EndDate, null, new { @class = "text-danger" })
+                                </div>
+                                <div class="clearfix"></div><br />
+                                <div class="col-sm-2">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
                             </div>
-                            <label for="fname">End Date </label>
-                            <div class="col-md-10">
-                                @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control", @autocomplete = "off", @type = "date" })
-                                @Html.ValidationMessageFor(model => model.ProjectID, null, new { @class = "text-danger" })
+                        </div>
+                    </form>
+                </div>
+                <div class="Report" id="PostedChartsReport" style="display:none;">
+                    <form class="form-horizontal" id="frmReport" asp-action="GetPostedChartsReport" asp-controller="Home"
+                          data-ajax="true"
+                          data-ajax-method="POST"
+                          data-ajax-mode="replace"
+                          data-ajax-update="#modalContent">
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="control-label col-form-label">Select Project</label>
+                                <div class="col-sm-2">
+                                    @Html.DropDownListFor(model => model.ProjectID, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select--", new { @class = "form-control ControlHeight", @id = "ProjectID1" })
+                                    @Html.ValidationMessageFor(model => model.ProjectID, null, new { @class = "text-danger" })
+                                </div>
+
+                                <label class="control-label1 col-form-label">Range</label>
+                                <div class="col-sm-2">
+                                    @{var listItems1 = new List<SelectListItem>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {
+          new SelectListItem { Text = "Per Day", Value="PerDay" },
+          new SelectListItem { Text = "Per Week", Value="PerWeek" },
+          new SelectListItem { Text = "Per Month", Value="PerMonth" }
+    };
+                                    }
+                                    @Html.DropDownList("range", new SelectList(listItems1, "Value", "Text"), new { @class = "form-control ControlHeight", @id = "rangeType1" })
+                                </div>
+                                <div class="clearfix"></div><br />
+                                <div class="col-md-3">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
                             </div>
-                            <div class="clearfix"></div><br />
-                            <div class="col-md-3">
-                                <button type="submit" class="btn btn-success">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                    <br /><br />
-                    <div id="modalContent"></div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+        <div class="col-md-12">
+            <div id="modalContent"></div>
+        </div>
     </div>
 </div>
+<style>
+    .ControlHeight{
+        height: 32px !important;
+    }
+</style>
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
 <script src="~/dashboardassets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#reportType").change(function () {
+
+            var type = $("#reportType option:selected").val();
+
+            $(".Report").hide();
+            $("#modalContent").html('');
+            $("#" + type).show();
+        });
+    });
+</script>
 
