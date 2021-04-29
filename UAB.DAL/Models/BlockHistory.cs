@@ -12,5 +12,6 @@ namespace UAB.DAL.Models
         public string Remarks  { get; set; }
         public DateTime? CreateDate { get; set; }
         public int ClinicalCaseId { get; set; }
+        public string BlockedInQueueKind  { get; set; }
     }
 }

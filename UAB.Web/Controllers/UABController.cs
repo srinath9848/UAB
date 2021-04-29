@@ -71,7 +71,13 @@ namespace UAB.Controllers
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
-            lst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);
+            if (Role == Roles.QA.ToString())
+            {
+                lst = clinicalcaseOperations.DisplayBlockCharts(Role, ProjectID);
+            }
+            else{
+                lst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);
+            }
             var projects = clinicalcaseOperations.GetProjects();
             ViewBag.Role = Role;
             ViewBag.Project = projects.Where(a => a.ProjectId.Equals(ProjectID)).FirstOrDefault().Name;
@@ -103,40 +109,82 @@ namespace UAB.Controllers
         public IActionResult GetCodingBlockedCharts(string Role, string ChartType, int ProjectID, string ProjectName, string ccid, string plusorminus)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            List<ChartSummaryDTO> chartSummaryDTOlst = new List<ChartSummaryDTO>();
 
-            chartSummaryDTOlst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);
+            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();                                //coding,ShadowQA
+            List<ChartSummaryDTO> chartSummaryDTOlst = new List<ChartSummaryDTO>();                 //coding,ShadowQA
+            List<ChartSummaryDTO> qadto = new List<ChartSummaryDTO>();                              //QA
 
-            List<ChartSummaryDTO> lstChartSummaryDTO = new List<ChartSummaryDTO>();
-            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
-            switch (plusorminus)
+            
+            if (ProjectName == null|| ProjectID == 0)
             {
-                case "Next":
-                    chartSummaryDTO = chartSummaryDTOlst.SkipWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).FirstOrDefault();
-                    if (chartSummaryDTO == null)
-                    {
-                        chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
-                        chartSummaryDTO.ProjectName = ProjectName;
-                    }
-                    break;
-                case "Previous":
-                    chartSummaryDTO = chartSummaryDTOlst.TakeWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).LastOrDefault();
-                    if (chartSummaryDTO == null)
-                    {
-                        chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
-                        chartSummaryDTO.ProjectName = ProjectName;
-                    }
-                    break;
+                var projects = clinicalcaseOperations.GetProjects();
+                if (ProjectName == null)
+                {
+                    ProjectName = projects.Where(a => a.ProjectId == ProjectID).Select(a => a.Name).FirstOrDefault();
+                }
+                else if (ProjectID == 0)
+                {
+                    ProjectID = projects.Where(a => a.Name == ProjectName).Select(a => a.ProjectId).FirstOrDefault();
+                }
+            }
+            if (Role == Roles.QA.ToString())
+            {
+                var res = clinicalcaseOperations.DisplayBlockCharts(Role, ProjectID);
+                List<int> ccids = res.Select(a => a.CodingDTO.ClinicalCaseID).ToList(); 
 
-                default:
-                    chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
-                    chartSummaryDTO.ProjectName = ProjectName;
-                    break;
+                
+                int searchcid = Convert.ToInt32(ccid);
+                if (ccids.Count != 0)
+                {
+                    switch (plusorminus)
+                    {
+                        case "Next":
+                            searchcid = ccids[(ccids.IndexOf(Convert.ToInt32(ccid)) + 1) % ccids.Count];
+                            break;
+                        case "Previous":
+                            searchcid = ccids[(ccids.IndexOf(Convert.ToInt32(ccid)) - 1 + ccids.Count) % ccids.Count];
+                            break;
+                        default:
+                            searchcid = Convert.ToInt32(ccid);
+                            break;
+                    }
+                }
+                qadto = clinicalcaseOperations.GetQABlockedChart(Role, ChartType, ProjectID, searchcid);
+                qadto.FirstOrDefault().ProjectName = ProjectName;
+
+            }
+            else
+            {
+                chartSummaryDTOlst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);  //total block charts
+                switch (plusorminus)
+                {
+                    case "Next":
+                        chartSummaryDTO = chartSummaryDTOlst.SkipWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).FirstOrDefault();
+                        if (chartSummaryDTO == null)
+                        {
+                            chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
+                            chartSummaryDTO.ProjectName = ProjectName;
+                        }
+                        break;
+                    case "Previous":
+                        chartSummaryDTO = chartSummaryDTOlst.TakeWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).LastOrDefault();
+                        if (chartSummaryDTO == null)
+                        {
+                            chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
+                            chartSummaryDTO.ProjectName = ProjectName;
+                        }
+                        break;
+
+                    default:
+                        chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
+                        chartSummaryDTO.ProjectName = ProjectName;
+                        break;
+                }
             }
 
             ViewBag.IsBlocked = "1";
             ViewBag.Postionindex = 0;
-            
+
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
             ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
@@ -144,10 +192,8 @@ namespace UAB.Controllers
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
 
-            lstChartSummaryDTO.Add(chartSummaryDTO);
-
             if (Role == Roles.QA.ToString())
-                return View("QA", lstChartSummaryDTO);
+                return View("QA", qadto);
             else if (Role == "ShadowQA")
                 return View("ShadowQA", chartSummaryDTO);
             else
@@ -159,22 +205,34 @@ namespace UAB.Controllers
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
-            chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
-            chartSummaryDTO.ProjectName = ProjectName;
-            ViewBag.IsBlocked = "1";
+            List<ChartSummaryDTO> lstChartSummaryDTO = new List<ChartSummaryDTO>();
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
             ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
+            ViewBag.IsBlocked = "1";
             #endregion
 
-            List<ChartSummaryDTO> lstChartSummaryDTO = new List<ChartSummaryDTO>();
-            lstChartSummaryDTO.Add(chartSummaryDTO);
+            chartSummaryDTO.ProjectName = ProjectName;
 
+            switch (Role)
+            {
+                case "Coder":
+                    chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
+                    break;
+                case "QA":
+                    lstChartSummaryDTO = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
+                    if (lstChartSummaryDTO.Count > 0)
+                        lstChartSummaryDTO.FirstOrDefault().ProjectName = ProjectName;
+                    break;
+                case "ShadowQa":
+                    chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
+                    break;
+            }
             if (Role == "QA")
-                return View("QA", lstChartSummaryDTO);
+                return View("QA", lstChartSummaryDTO.OrderBy(a => a.ClaimId).ToList());
             else if (Role == "ShadowQA")
                 return View("ShadowQA", chartSummaryDTO);
             else

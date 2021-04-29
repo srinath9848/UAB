@@ -14,5 +14,8 @@ namespace UAB.DAL.Models
         public string NoteTitle { get; set; }
         public int IsPriority  { get; set; }
         public int IsBlocked { get; set; }
+        public int? QABy { get; set; }
+        public int? ShadowQABy  { get; set; }
+        public int ProjectId { get; set; }
     }
 }

@@ -80,6 +80,149 @@ namespace UAB.DAL
             return lstDto;
         }
 
+        public List<ChartSummaryDTO> DisplayBlockCharts(string Role, int projectID)
+        {
+            List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
+            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
+            using (var context = new UABContext())
+            {
+                var param = new SqlParameter[] {
+                     new SqlParameter() {
+                            ParameterName = "@ProjectID",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = projectID
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@Role",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = Role
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@UserId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = mUserId
+                        }
+                };
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[USPDisplayBlockCharts]";
+                    cmd.Parameters.AddRange(param);
+                    cmd.Connection = con;
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        chartSummaryDTO = new ChartSummaryDTO();
+                        chartSummaryDTO.CodingDTO.ClinicalCaseID = Convert.ToInt32(reader["ClinicalCaseID"]);
+                        chartSummaryDTO.CodingDTO.ListName = Convert.ToString(reader["ListName"]);
+                        chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
+                        chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
+                        var dos = Convert.ToDateTime(reader["DateOfService"]);
+                        chartSummaryDTO.CodingDTO.DateOfService = dos.ToString("MM/dd/yyyy");
+                        chartSummaryDTO.ProjectID = projectID;
+                        chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
+                        chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
+                        chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate();
+                        lst.Add(chartSummaryDTO);
+                    }
+                }
+            }
+            return lst;
+        }
+        public List<ChartSummaryDTO> GetQABlockedChart(string Role, string ChartType, int projectID, int ccid)
+        {
+            List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
+            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
+            using (var context = new UABContext())
+            {
+                var param = new SqlParameter[] {
+                     new SqlParameter() {
+                            ParameterName = "@ProjectID",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = projectID
+                        },
+
+                        new SqlParameter() {
+                            ParameterName = "@Role",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = Role
+                        }
+                        ,   new SqlParameter() {
+                            ParameterName = "@ChartType",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = ChartType
+                        }
+                         ,   new SqlParameter() {
+                            ParameterName = "@UserId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = mUserId
+                         },new SqlParameter()
+                         {
+                             ParameterName="@ClinicalCaseId",
+                             SqlDbType=System.Data.SqlDbType.Int,
+                             Direction=System.Data.ParameterDirection.Input,
+                             Value=ccid
+                         }
+                };
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[UspGetQAchartbychartId]";
+                    cmd.Parameters.AddRange(param);
+                    cmd.Connection = con;
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        chartSummaryDTO = new ChartSummaryDTO();
+                        chartSummaryDTO.CodingDTO.ClinicalCaseID = Convert.ToInt32(reader["ClinicalCaseID"]);
+                        chartSummaryDTO.CodingDTO.ListName = Convert.ToString(reader["ListName"]);
+                        chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
+                        chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
+                        var dos = Convert.ToDateTime(reader["DateOfService"]);
+                        chartSummaryDTO.CodingDTO.DateOfService = dos.ToString("MM/dd/yyyy");
+                        chartSummaryDTO.ProjectID = projectID;
+
+                        if (Role == "QA" && ChartType == "Block")
+                        {
+                            chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
+                            chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
+                            chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate();
+
+                            chartSummaryDTO.CodedBy = Convert.ToString(reader["CodedBy"]);
+                            if (reader["ClaimId"] != DBNull.Value)
+                                chartSummaryDTO.ClaimId = Convert.ToInt32(reader["ClaimId"]);
+                            else
+                                chartSummaryDTO.ClaimId = null;
+                            if (reader["ProviderId"] != DBNull.Value)
+                                chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
+                            if (reader["PayorId"] != DBNull.Value)
+                                chartSummaryDTO.PayorID = Convert.ToInt32(reader["PayorId"]);
+                            chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
+                            chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
+                            chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
+                            if (reader["ProviderFeedbackId"] != DBNull.Value)
+                                chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
+                        }
+                        lst.Add(chartSummaryDTO);
+                    }
+                }
+            }
+
+            return lst;
+        }
         public List<ChartSummaryDTO> GetBlockNext(string Role, string ChartType, int projectID)
         {
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
@@ -132,13 +275,12 @@ namespace UAB.DAL
                         var dos = Convert.ToDateTime(reader["DateOfService"]);
                         chartSummaryDTO.CodingDTO.DateOfService = dos.ToString("MM/dd/yyyy");
                         chartSummaryDTO.ProjectID = projectID;
-                        //if (reader["ProviderId"] != DBNull.Value)
-                        //    chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                         if (Role == "Coder" && ChartType == "Block")
                         {
                             chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
                             chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
                             chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate();
+                            chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                         }
                         else if (Role == "ShadowQA" && ChartType == "Block")
                         {
@@ -190,7 +332,10 @@ namespace UAB.DAL
                             chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate();
 
                             chartSummaryDTO.CodedBy = Convert.ToString(reader["CodedBy"]);
-
+                            if (reader["ClaimId"] != DBNull.Value)
+                                chartSummaryDTO.ClaimId = Convert.ToInt32(reader["ClaimId"]);
+                            else
+                                chartSummaryDTO.ClaimId = null;
                             if (reader["ProviderId"] != DBNull.Value)
                                 chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                             if (reader["PayorId"] != DBNull.Value)
@@ -198,7 +343,6 @@ namespace UAB.DAL
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
                             chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
-                            // chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
                             if (reader["ProviderFeedbackId"] != DBNull.Value)
                                 chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
                         }
@@ -271,6 +415,7 @@ namespace UAB.DAL
                             chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
                             chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
                             chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate();
+                            chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                         }
                         else if (Role == "QA" && ChartType == "Block")
                         {
@@ -690,7 +835,10 @@ namespace UAB.DAL
                             chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate();
 
                             chartSummaryDTO.CodedBy = Convert.ToString(reader["CodedBy"]);
-
+                            if (reader["ClaimId"] != DBNull.Value)
+                                chartSummaryDTO.ClaimId = Convert.ToInt32(reader["ClaimId"]);
+                            else
+                                chartSummaryDTO.ClaimId = null;
                             if (reader["ProviderId"] != DBNull.Value)
                                 chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                             if (reader["PayorId"] != DBNull.Value)
@@ -698,7 +846,6 @@ namespace UAB.DAL
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
                             chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
-                            // chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
                             if (reader["ProviderFeedbackId"] != DBNull.Value)
                                 chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
                         }
@@ -2373,13 +2520,29 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
+                int statusid = context.WorkItem.Where(a => a.ClinicalCaseId == Convert.ToInt32(ccid)).Select(a => a.StatusId).FirstOrDefault();
+                string BlockedInQueueKind = null;
+                if (statusid == 2)
+                {
+                    BlockedInQueueKind = "Coding";
+                }
+                else if (statusid == 5)
+                {
+                    BlockedInQueueKind = "QA";
+                }
+                else if (statusid == 9)
+                {
+                    BlockedInQueueKind = "ShadowQA";
+                }
+
                 BlockHistory mdl = new BlockHistory()
                 {
                     BlockCategoryId = Convert.ToInt32(bid),
                     BlockedByUserId = mUserId,
                     Remarks = remarks,
                     CreateDate = DateTime.Now,
-                    ClinicalCaseId = Convert.ToInt32(ccid)
+                    ClinicalCaseId = Convert.ToInt32(ccid),
+                    BlockedInQueueKind = BlockedInQueueKind
                 };
                 context.BlockHistory.Add(mdl);//adding to blockhistory table
 
