@@ -75,6 +75,12 @@ namespace UAB.Controllers
             var lstReceivedChartReport = clinicalcaseOperations.GetCodedChartsReport(ProjectId, range);
             return PartialView("_CodedChartReport", lstReceivedChartReport);
         }
+        public IActionResult GetPendingChartsReport(int ProjectId, string range)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var lstPendingChartReport = clinicalcaseOperations.GetPendingChartsReport(ProjectId, range);
+            return PartialView("_PendingChartsReport", lstPendingChartReport);
+        }
 
         public IActionResult Privacy()
         {
