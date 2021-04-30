@@ -271,7 +271,8 @@
                                                 </div>
 
                                                 <div class="col-md-3 input-group CoderCorrections">
-                                                    <input type="text" id="@DxClaim" class="@DxClaimRemarks" style="@Show" />
+                                                    <input type="text" id="@DxClaim" class="@DxClaimRemarks" style="@Show" onchange="removevalid('@DxClaimRemarks')" />
+                                                    <span id="valid_@DxClaim" class="text-danger txtdanger" style="display:none">*</span>
                                                 </div>
                                             </div>
 
@@ -392,7 +393,8 @@
                                                     </span>
                                                 </div>
                                                 <div class="col-md-3 input-group CoderCorrections">
-                                                    <input type="text" id="@CptClaim" class="@CptClaimRemarks" style="@Show" />
+                                                    <input type="text" id="@CptClaim" class="@CptClaimRemarks" style="@Show" onchange="removevalid('@CptClaimRemarks')" />
+                                                    <span id="valid_@CptClaim" class="text-danger txtdanger" style="display:none">*</span>
                                                 </div>
                                             </div>
                                             j = j + 1;
