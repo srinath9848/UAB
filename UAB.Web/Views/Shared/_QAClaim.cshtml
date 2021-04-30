@@ -130,7 +130,9 @@
                     <input type="text" id="@string.Format("txtDx_{0}_{1}", Model.TabIndex,i)" class="form-control ControlHeight txtDx @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" autocomplete="off" tabindex="@i" placeholder="Code" value="" style="display:none" />
                 </div>
                 <div class="col-md-3 input-group">
-                    <input type="text" id="@string.Format("DxRemarks_{0}_{1}", Model.TabIndex,i)" class="form-control QARevised ControlHeight @string.Format("DxRemarks_{0}_{1}", Model.TabIndex,i) @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" style="display:none" />
+                    @{ var dxRemarks = string.Format("DxRemarks_{0}_{1}", Model.TabIndex, i);}
+                    <input type="text" id="@dxRemarks" onchange="removeClaimValid('@dxRemarks')" class="form-control QARevised ControlHeight @string.Format("DxRemarks_{0}_{1}", Model.TabIndex,i) @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" style="display:none" />
+                    <span id="validDxRemarksClaim_@i" class="text-danger txtdanger" style="display:none">*</span>
                 </div>
             </div>
 
@@ -207,7 +209,8 @@
                 </div>
 
                 <div class="col-md-3 input-group">
-                    <input type="text" id="@string.Format("CptRemarks_{0}_{1}", Model.TabIndex,i)" class="form-control QARevised ControlHeight @string.Format("CptRemarks_{0}_{1}", Model.TabIndex,i) @string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" style="display:none" />
+                    <input type="text" id="@string.Format("CptRemarks_{0}_{1}", Model.TabIndex,i)" onchange="removeClaimValid('CptRemarks_@i')" class="form-control QARevised ControlHeight @string.Format("CptRemarks_{0}_{1}", Model.TabIndex,i) @string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" style="display:none" />
+                    <span id="validCptRemarksClaim_@i" class="text-danger txtdanger" style="display:none">*</span>
                 </div>
             </div>
             i = i + 1;
