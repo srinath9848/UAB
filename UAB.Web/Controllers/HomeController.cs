@@ -68,6 +68,12 @@ namespace UAB.Controllers
             var lstReceivedChartReport = clinicalcaseOperations.GetPostedChartsReport(ProjectId, range);
             return PartialView("_PostedChartReport", lstReceivedChartReport);
         }
+        public IActionResult GetBackLogChartsReport(int ProjectId, string range)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var lstBacklogChartReport = clinicalcaseOperations.GetBacklogChartsReport (ProjectId, range);
+            return PartialView("_BacklogChartReport",lstBacklogChartReport);
+        }
 
         public IActionResult GetCodedChartsReport(int ProjectId, string range)
         {

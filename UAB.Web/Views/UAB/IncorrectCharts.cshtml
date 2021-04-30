@@ -130,9 +130,9 @@
         $("#hdnRejectedDxCodes").val("");
         $("#hdnRejectedDxRemarks").val("");
         for (var i = 0; i < DxClaim1remarks.length; i++) {
-
             var id = $(DxClaim1remarks[i]).attr("id");
             var rowNumber = parseInt(id.split("1_")[1]);
+            $("#valid_" + id).hide();
 
             var res1 = $("[id=" + id + "]:eq(0)").attr('class');
             var res2 = $("[id=" + id + "]:eq(1)").attr('class');
@@ -155,6 +155,12 @@
                     $("#hdnRejectedDxRemarks").val(rowNumber + "^" + $(DxClaim1remarks[i]).val());
                 else
                     $("#hdnRejectedDxRemarks").val($("#hdnRejectedDxRemarks").val() + "|" + rowNumber + "^" + $(DxClaim1remarks[i]).val());
+            }
+            else {
+                if ($(DxClaim1remarks[i]).val() == "") {
+                    $(DxClaim1remarks[i]).focus();
+                    $("#valid_" + id).show();
+                }
             }
         }
 
@@ -184,9 +190,9 @@
         $("#hdnRejectedCptCodes").val("");
         $("#hdnRejectedCptRemarks").val("");
         for (var i = 0; i < Cptremarks.length; i++) {
-
             var id = $(Cptremarks[i]).attr("id");
             var rowNumber = parseInt(id.split("1_")[1]);
+            $("#valid_" + id).hide();
 
             var res1 = $("[id=" + id + "]:eq(0)").attr('class');
             var res2 = $("[id=" + id + "]:eq(1)").attr('class');
@@ -214,6 +220,12 @@
                 //    $("#hdnRejectedCptRemarks").val(rowNumber + "^" + $(Cptremarks[i]).val());
                 //else
                 //    $("#hdnRejectedCptRemarks").val($("#hdnRejectedCptRemarks").val() + "|" + rowNumber + "^" + $(Cptremarks[i]).val());
+            }
+            else {
+                if ($(Cptremarks[i]).val() == "") {
+                    $(Cptremarks[i]).focus();
+                    $("#valid_" + id).show();
+                }
             }
         }
 
@@ -244,9 +256,9 @@
         $("#hdnRejectedDxCodes1").val("");
         $("#hdnRejectedDxRemarks1").val("");
         for (var i = 0; i < DxClaim2remarks.length; i++) {
-
             var id = $(DxClaim2remarks[i]).attr("id");
             var rowNumber = parseInt(id.split("2_")[1]);
+            $("#valid_" + id).hide();
 
             var res1 = $("[id=" + id + "]:eq(0)").attr('class');
             var res2 = $("[id=" + id + "]:eq(1)").attr('class');
@@ -263,18 +275,21 @@
                 else
                     $("#hdnRejectedDxRemarks1").val($("#hdnRejectedDxRemarks1").val() + "|" + rowNumber + "^" + $(DxClaim2remarks[i]).val());
             }
-
             if (res1.includes('accept') && $(DxClaim2remarks[i]).val() != "") {
                 if ($("#hdnRejectedDxRemarks1").val() == "")
                     $("#hdnRejectedDxRemarks1").val(rowNumber + "^" + $(DxClaim2remarks[i]).val());
                 else
                     $("#hdnRejectedDxRemarks1").val($("#hdnRejectedDxRemarks1").val() + "|" + rowNumber + "^" + $(DxClaim2remarks[i]).val());
+            } else {
+                if ($(DxClaim2remarks[i]).val() == "") {
+                    $(DxClaim2remarks[i]).focus();
+                    $("#valid_" + id).show();
+                }
             }
         }
 
         var CoderDxClaimcodes = $("[id*=DxClaim_2_Coder_]");
         for (var i = 0; i < CoderDxClaimcodes.length; i++) {
-
             var id = parseInt($(CoderDxClaimcodes[i]).attr("id").split("Coder_")[1]);
 
             var res1 = $("[id='DxClaim_2_" + id + "']:eq(0)").attr('class');
@@ -298,9 +313,9 @@
         $("#hdnRejectedCptCodes1").val("");
         $("#hdnRejectedCptRemarks1").val("");
         for (var i = 0; i < Cptremarks.length; i++) {
-
             var id = $(Cptremarks[i]).attr("id");
             var rowNumber = parseInt(id.split("2_")[1]);
+            $("#valid_" + id).hide();
 
             var res1 = $("[id=" + id + "]:eq(0)").attr('class');
             var res2 = $("[id=" + id + "]:eq(1)").attr('class');
@@ -328,6 +343,11 @@
                 //    $("#hdnRejectedCptRemarks1").val(rowNumber + "^" + $(Cptremarks[i]).val());
                 //else
                 //    $("#hdnRejectedCptRemarks1").val($("#hdnRejectedCptRemarks1").val() + "|" + rowNumber + "^" + $(Cptremarks[i]).val());
+            } else {
+                if ($(Cptremarks[i]).val() == "") {
+                    $(Cptremarks[i]).focus();
+                    $("#valid_" + id).show();
+                }
             }
         }
 
@@ -360,6 +380,7 @@
 
             var id = $(DxClaim3remarks[i]).attr("id");
             var rowNumber = parseInt(id.split("3_")[1]);
+            $("#valid_" + id).hide();
 
             var res1 = $("[id=" + id + "]:eq(0)").attr('class');
             var res2 = $("[id=" + id + "]:eq(1)").attr('class');
@@ -381,6 +402,11 @@
                     $("#hdnRejectedDxRemarks2").val(rowNumber + "^" + $(DxClaim3remarks[i]).val());
                 else
                     $("#hdnRejectedDxRemarks2").val($("#hdnRejectedDxRemarks2").val() + "|" + rowNumber + "^" + $(DxClaim3remarks[i]).val());
+            } else {
+                if ($(DxClaim3remarks[i]).val() == "") {
+                    $(DxClaim3remarks[i]).focus();
+                    $("#valid_" + id).show();
+                }
             }
         }
 
@@ -412,6 +438,7 @@
 
             var id = $(Cliam3Cptremarks[i]).attr("id");
             var rowNumber = parseInt(id.split("3_")[1]);
+            $("#valid_" + id).hide();
 
             var res1 = $("[id=" + id + "]:eq(0)").attr('class');
             var res2 = $("[id=" + id + "]:eq(1)").attr('class');
@@ -440,6 +467,11 @@
                 //else
                 //    $("#hdnRejectedCptRemarks2").val($("#hdnRejectedCptRemarks2").val() + "|" + rowNumber + "^" + $(Cliam3Cptremarks[i]).val());
 
+            } else {
+                if ($(Cliam3Cptremarks[i]).val() == "") {
+                    $(Cliam3Cptremarks[i]).focus();
+                    $("#valid_" + id).show();
+                }
             }
         }
 
@@ -472,6 +504,7 @@
 
             var id = $(DxClaim4remarks[i]).attr("id");
             var rowNumber = parseInt(id.split("4_")[1]);
+            $("#valid_" + id).hide();
 
             var res1 = $("[id=" + id + "]:eq(0)").attr('class');
             var res2 = $("[id=" + id + "]:eq(1)").attr('class');
@@ -494,6 +527,11 @@
                 else
                     $("#hdnRejectedDxRemarks3").val($("#hdnRejectedDxRemarks3").val() + "|" + rowNumber + "^" + $(DxClaim4remarks[i]).val());
 
+            } else {
+                if ($(DxClaim4remarks[i]).val() == "") {
+                    $(DxClaim4remarks[i]).focus();
+                    $("#valid_" + id).show();
+                }
             }
         }
 
@@ -526,6 +564,7 @@
 
             var id = $(Cptremarks[i]).attr("id");
             var rowNumber = parseInt(id.split("4_")[1]);
+            $("#valid_" + id).hide();
 
             var res1 = $("[id=" + id + "]:eq(0)").attr('class');
             var res2 = $("[id=" + id + "]:eq(1)").attr('class');
@@ -553,6 +592,12 @@
                 //    $("#hdnRejectedCptRemarks3").val(rowNumber + "^" + $(Cptremarks[i]).val());
                 //else
                 //    $("#hdnRejectedCptRemarks3").val($("#hdnRejectedCptRemarks3").val() + "|" + rowNumber + "^" + $(Cptremarks[i]).val());
+            }
+            else {
+                if ($(Cptremarks[i]).val() == "") {
+                    $(Cptremarks[i]).focus();
+                    $("#valid_" + id).show();
+                }
             }
         }
 
@@ -604,12 +649,26 @@
                 e.preventDefault();
             }
         }
+
+        var txtdanger = $('[class*=txtdanger][style=""]');
+        if (txtdanger.length > 0)
+            e.preventDefault();
+
     });
 
     validationPopUp = function () {
         $("#validationPopUp").hide();
     };
-
+    removevalid = function (id) {
+        var id1 = id.split(" ")[1];
+        var id2 = id1.split("_");
+        var id3 = "DxClaim_" + id2[1] + "_" + id2[3];
+        if ($("." + id1).val() != "") {
+            $("#valid_" + id3).hide();
+        } else {
+            $("#valid_" + id3).show();
+        }
+    };
 </script>
 
 

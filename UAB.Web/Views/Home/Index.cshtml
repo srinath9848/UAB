@@ -18,6 +18,7 @@
                         <option value="CodedChartsReport">Coded Charts Report </option>
                         <option value="PostedChartsReport">Posted Charts Report </option>
                         <option value="PendingChartsReport">Pending Charts Report </option>
+                        <option value="BacklogChartsReport">Backlog Charts Report </option>
                     </select>
                 </div>
                 <br />
@@ -118,6 +119,40 @@
                         </div>
                     </form>
                 </div>
+                <div class="Report" id="BacklogChartsReport" style="display:none;">
+                    <form class="form-horizontal" id="frmReport" asp-action="GetBackLogChartsReport" asp-controller="Home"
+                          data-ajax="true"
+                          data-ajax-method="POST"
+                          data-ajax-mode="replace"
+                          data-ajax-update="#modalContent">
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="control-label col-form-label">Select Project</label>
+                                <div class="col-sm-2">
+                                    @Html.DropDownListFor(model => model.ProjectID, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select--", new { @class = "form-control ControlHeight", @id = "ProjectID2" })
+                                    @Html.ValidationMessageFor(model => model.ProjectID, null, new { @class = "text-danger" })
+                                </div>
+
+                                <label class="control-label1 col-form-label">Range</label>
+                                <div class="col-sm-2">
+                                    @{var listItems12 = new List<SelectListItem>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    {
+          new SelectListItem { Text = "Per Day", Value="PerDay" },
+          new SelectListItem { Text = "Per Week", Value="PerWeek" },
+          new SelectListItem { Text = "Per Month", Value="PerMonth" },
+          new SelectListItem { Text = "More than Month", Value="MorethanMonth" }
+    };
+                                    }
+                                    @Html.DropDownList("range", new SelectList(listItems12, "Value", "Text"), new { @class = "form-control ControlHeight", @id = "rangeType2" })
+                                </div>
+                                <div class="clearfix"></div><br />
+                                <div class="col-md-3">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 <div class="Report" id="PostedChartsReport" style="display:none;">
                     <form class="form-horizontal" id="frmReport" asp-action="GetPostedChartsReport" asp-controller="Home"
                           data-ajax="true"
@@ -168,7 +203,7 @@
                                 <label class="control-label1 col-form-label">Range</label>
                                 <div class="col-sm-2">
                                     @{var listItems2 = new List<SelectListItem>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    {
           new SelectListItem { Text = "Per Day", Value="PerDay" },
           new SelectListItem { Text = "Per Week", Value="PerWeek" },
           new SelectListItem { Text = "Per Month", Value="PerMonth" }

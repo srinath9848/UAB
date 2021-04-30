@@ -220,7 +220,8 @@
                                                     <input type="text" id="txtDx_@i" class="form-control ControlHeight txtDx Dx_@i" autocomplete="off" tabindex="@i" placeholder="Code" value="" style="display:none" />
                                                 </div>
                                                 <div class="col-md-3 input-group">
-                                                    <input type="text" id="DxRemarks_@i" class="form-control QARevised ControlHeight DxRemarks_@i Dx_@i" style="display:none" />
+                                                    <input type="text" id="DxRemarks_@i" class="form-control QARevised ControlHeight DxRemarks_@i Dx_@i" onchange="removevalid('Dx_@i')" style="display:none" />
+                                                    <span id="validDx_@i" class="text-danger txtdanger" style="display:none">*</span>
                                                 </div>
                                             </div>
 
@@ -297,7 +298,8 @@
                                                 </div>
 
                                                 <div class="col-md-3 input-group">
-                                                    <input type="text" id="CptRemarks_@i" class="form-control QARevised ControlHeight CptRemarks_@i Cpt_@i" style="display:none" />
+                                                    <input type="text" id="CptRemarks_@i" class="form-control QARevised ControlHeight CptRemarks_@i Cpt_@i" onchange="removevalid('Cpt_@i')" style="display:none" />
+                                                    <span id="validCpt_@i" class="text-danger txtdanger" style="display:none">*</span>
                                                 </div>
                                             </div>
                                             i = i + 1;
