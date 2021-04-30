@@ -10,6 +10,7 @@ using UAB.DAL.LoginDTO;
 using System.Linq;
 using System.IO;
 using ExcelDataReader;
+using System.Data.Entity.Infrastructure;
 
 namespace UAB.DAL
 {
@@ -1254,7 +1255,6 @@ namespace UAB.DAL
 
         public DataSet GetLevellingReport(int projectID, DateTime startDate, DateTime endDate)
         {
-            DataTable dt = new DataTable();
             DataSet ds = new DataSet();
             using (var context = new UABContext())
             {
@@ -1279,17 +1279,14 @@ namespace UAB.DAL
                         }
                 };
 
-                using (var con = context.Database.GetDbConnection())
+                using var con = context.Database.GetDbConnection();
+                using SqlConnection conn = new SqlConnection(con.ConnectionString);
+                using (SqlDataAdapter da = new SqlDataAdapter())
                 {
-                    var cmd = con.CreateCommand();
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.CommandText = "[dbo].[Rpt_GenerateEMLevellingReport]";
-                    cmd.Parameters.AddRange(param);
-                    cmd.Connection = con;
-                    con.Open();
-                    var reader = cmd.ExecuteReader();
-                    dt.Load(reader);
-                    ds.Tables.Add(dt);
+                    da.SelectCommand = new SqlCommand("[dbo].[Rpt_GenerateEMLevellingReport]", conn);
+                    da.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    da.SelectCommand.Parameters.AddRange(param);
+                    da.Fill(ds);
                 }
             }
             return ds;
@@ -1473,6 +1470,43 @@ namespace UAB.DAL
                     var cmd = con.CreateCommand();
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.CommandText = "[dbo].[UspCodedChartReport]";
+                    cmd.Parameters.AddRange(param);
+                    cmd.Connection = con;
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+                    dt.Load(reader);
+                    ds.Tables.Add(dt);
+                }
+            }
+            return ds;
+        }
+
+        public DataSet GetPendingChartsReport(int projectID, string rangeType)
+        {
+            DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
+            using (var context = new UABContext())
+            {
+                var param = new SqlParameter[] {
+                     new SqlParameter() {
+                            ParameterName = "@ProjectId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = projectID
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@RangeType",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = rangeType
+                        }
+                };
+
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[UspPendingChartReport]";
                     cmd.Parameters.AddRange(param);
                     cmd.Connection = con;
                     con.Open();
