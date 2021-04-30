@@ -1091,6 +1091,10 @@ namespace UAB.DAL
                         }
                         else if (Role == "QA" && ChartType == "ShadowQARejected")
                         {
+                            if (reader["ClaimId"] != DBNull.Value)
+                                chartSummaryDTO.ClaimId = Convert.ToInt32(reader["ClaimId"]);
+                            else
+                                chartSummaryDTO.ClaimId = null;
                             chartSummaryDTO.CodedBy = Convert.ToString(reader["CodedBy"]);
                             chartSummaryDTO.QABy = Convert.ToString(reader["QABy"]);
                             chartSummaryDTO.ShadowQABy = Convert.ToString(reader["ShadowQABy"]);
@@ -1232,19 +1236,6 @@ namespace UAB.DAL
                             chartSummaryDTO.QAProviderFeedbackRemarks = Convert.ToString(reader["QAProviderFeedbackIDRemark"]);
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
                         }
-
-                        //chartSummaryDTO = new ChartSummaryDTO();
-                        //chartSummaryDTO.ClaimId = 1;
-                        //chartSummaryDTO.CodedBy = Convert.ToString(reader["CodedBy"]);
-                        //chartSummaryDTO.ProviderID = 3;// Convert.ToInt32(reader["ProviderId"]);
-                        //chartSummaryDTO.PayorID = 3;// Convert.ToInt32(reader["PayorId"]);
-                        //chartSummaryDTO.NoteTitle = "My Note Title";// Convert.ToString(reader["NoteTitle"]);
-                        //chartSummaryDTO.Dx = "R56,R59";// Convert.ToString(reader["DxCode"]);
-                        //chartSummaryDTO.CPTCode = "71049^RT^1^2";// Convert.ToString(reader["CPTCode"]);
-                        //chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
-                        //chartSummaryDTO.ProviderText = "My Provider Text";// Convert.ToString(reader["ProviderText"]);
-                        //chartSummaryDTO.PayorText = "My Payor Text";// Convert.ToString(reader["PayorText"]);
-                        //chartSummaryDTO.ProviderFeedbackText = "My ProviderFeedbackText";// Convert.ToString(reader["ProviderFeedbackText"]);
                         lstchartSummaryDTO.Add(chartSummaryDTO);
                     }
                 }
