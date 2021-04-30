@@ -91,7 +91,7 @@
                                         <label class="lblCharts">@item.BlockedCharts</label>
                                         <b>&nbsp;</b>
                                         <a href="@Url.Action("GetCodingBlockedChart", "UAB")" style="pointer-events: none;" class="btn btn-info btn-sm">Get Next</a>
-                                        <button id="btnBlocklist" type="button" class="btn btn-info btn-sm" onclick="BlockedChartsList(@item.ProjectID)" disabled>Show All </button>
+                                        <button id="btnBlocklist" type="button" class="btn btn-info btn-sm" onclick="BlockedChartsList(@item.ProjectID)" style="pointer-events: none;">Show All </button>
                                     }
                                     else
                                     {
