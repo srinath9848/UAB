@@ -767,9 +767,9 @@ namespace UAB.Controllers
         public IActionResult GetQARejectedChartsOfShadowQA(string Role, string ChartType, int ProjectID, string ProjectName)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
-            chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
-            chartSummaryDTO.ProjectName = ProjectName;
+            List<ChartSummaryDTO> lstChartSummaryDTO = new List<ChartSummaryDTO>();
+            lstChartSummaryDTO = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
+            lstChartSummaryDTO.FirstOrDefault().ProjectName = ProjectName;
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -777,7 +777,7 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
-            return View("QARejectedChartsOfShadowQA", chartSummaryDTO);
+            return View("QARejectedChartsOfShadowQA", lstChartSummaryDTO);
         }
         //public IActionResult GetQAOnHoldChart(string Role, string ChartType, int ProjectID, string ProjectName)
         //{
