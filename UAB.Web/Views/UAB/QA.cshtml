@@ -17,11 +17,10 @@
 
     $(".CoderDetails").css("pointer-events", "none");
     $(".CoderDetails").css("background-color", "#e9ecef");
+    $('.CoderDetails').attr('disabled', true);
     $(".QADetails").attr("readonly", false);
     $("#qa").addClass('selected');
     $(".accept").removeClass('accept');
-
-
 
     var isBlocked = @(ViewBag.IsBlocked == null ? "0": "1");
 
@@ -103,7 +102,7 @@
     });
 
     $('#btnsubmit,#SubmitAndGetNext').click(function (e) {
-
+        $('.CoderDetails').removeAttr('disabled')
         var currentdate = new Date();
         //Format: DD/MM/YYYY
         var datetime = currentdate.getDate() + "/"
