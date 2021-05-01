@@ -2,27 +2,27 @@
 @using UAB.enums
 @{
 
-    int cliamID = Model.TabIndex;
-    string dxCliam = "txtDx" + cliamID + "Cliam" + "_1";
-    string cptCliam = "txt" + cliamID + "Cpt" + "_1";
-    string cptModCliam = "txt" + cliamID + "mod" + "_1";
-    string cptQtyCliam = "txt" + cliamID + "qty" + "_1";
-    string cptLinksCliam = "txt" + cliamID + "links" + "_1";
+    int tabIndex = Model.TabIndex;
+    string dxCliam = "txtDx" + tabIndex + "Cliam" + "_1";
+    string cptCliam = "txt" + tabIndex + "Cpt" + "_1";
+    string cptModCliam = "txt" + tabIndex + "mod" + "_1";
+    string cptQtyCliam = "txt" + tabIndex + "qty" + "_1";
+    string cptLinksCliam = "txt" + tabIndex + "links" + "_1";
 
-    string dx2index = "dx" + cliamID + "index";
-    string Dx2Cliam = "txt" + cliamID + "Dx";
-    string Div2DxRow = "Div" + cliamID + "DxRow_1";
+    string dx2index = "dx" + tabIndex + "index";
+    string Dx2Cliam = "txt" + tabIndex + "Dx";
+    string Div2DxRow = "Div" + tabIndex + "DxRow_1";
 
-    string cpt2index = "cpt" + cliamID + "index";
-    string Cpt2Link = "txt" + cliamID + "Link";
-    string Div2CptRow = "Div" + cliamID + "CptRow_1";
+    string cpt2index = "cpt" + tabIndex + "index";
+    string Cpt2Link = "txt" + tabIndex + "Link";
+    string Div2CptRow = "Div" + tabIndex + "CptRow_1";
 }
 <br />
 <div class="form-group row">
     <label class="col-md-2 m-t-15"></label>
-    <div class="custom-control custom-checkbox mr-sm-2" id="divChkAll">
-        <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll">
-        <label class="custom-control-label" for="chkAll">Accept All</label>
+    <div class="custom-control custom-checkbox mr-sm-2" id="divChkAll_@tabIndex">
+        <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll_@tabIndex" onclick="CheckAllboxes('chkAll_@tabIndex')">
+        <label class="custom-control-label" for="chkAll_@tabIndex">Accept All</label>
     </div>
     <label class="col-md-3 lessWidth m-t-15"></label>
     <div class="custom-control mr-sm-2 QACorrectionsComments">
@@ -45,19 +45,19 @@
 
         @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight" })
         <div class="input-group-append QACorrections ControlHeight">
-            <span class="input-group-text AcceptRejectWidth">
-                &nbsp;<i id="ProviderID_@Model.TabIndex" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
-                &nbsp;<i id="ProviderID_@Model.TabIndex" class="@Rejected" aria-hidden="true"></i>
+            <span class="input-group-text AcceptRejectWidth_@tabIndex">
+                &nbsp;<i id="ProviderID_@Model.TabIndex" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                &nbsp;<i id="ProviderID_@Model.TabIndex" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
             </span>
         </div>
     </div>
     <div class="col-md-3 input-group">
-        @Html.DropDownListFor(model => model.QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = string.Format("ProviderID_{0}1", Model.TabIndex), @class = "form-control QARevised ControlHeight", @style = (Model.QAProviderID == 0 ? "display:none" : "display:flex") })
+        @Html.DropDownListFor(model => model.QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = string.Format("ProviderID_{0}1", Model.TabIndex), @class = string.Format("form-control QARevised_{0} ControlHeight", Model.TabIndex), @style = (Model.QAProviderID == 0 ? "display:none" : "display:flex") })
         @Html.ValidationMessageFor(model => model.QAProviderID, null, new { @class = "text-danger errMsg" })
     </div>
     @{string Show = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "display:none" : "display:flex");}
     <div class="col-md-3 input-group">
-        @Html.TextBoxFor(model => model.QAProviderRemarks, new { @title = Model.QAProviderRemarks, @style = Show, @class = "form-control QARevised ControlHeight", @id = string.Format("ProviderID_{0}2", Model.TabIndex) })
+        @Html.TextBoxFor(model => model.QAProviderRemarks, new { @title = Model.QAProviderRemarks, @style = Show, @class = string.Format("form-control QARevised_{0} ControlHeight", Model.TabIndex), @id = string.Format("ProviderID_{0}2", Model.TabIndex) })
         @Html.ValidationMessageFor(model => model.QAProviderRemarks, null, new { @class = "text-danger errMsg" })
     </div>
 </div>
@@ -73,19 +73,19 @@
 
         @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight" })
         <div class="input-group-append QACorrections ControlHeight">
-            <span class="input-group-text AcceptRejectWidth">
-                &nbsp;<i id="PayorID_@Model.TabIndex" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
-                &nbsp;<i id="PayorID_@Model.TabIndex" class="@Rejected" aria-hidden="true"></i>
+            <span class="input-group-text AcceptRejectWidth_@tabIndex">
+                &nbsp;<i id="PayorID_@Model.TabIndex" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                &nbsp;<i id="PayorID_@Model.TabIndex" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
             </span>
         </div>
     </div>
     <div class="col-md-3 input-group">
-        @Html.DropDownListFor(model => model.QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = string.Format("PayorID_{0}1", Model.TabIndex), @class = "form-control QARevised ControlHeight", @style = (Model.QAPayorID == 0 ? "display:none" : "display:flex") })
+        @Html.DropDownListFor(model => model.QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = string.Format("PayorID_{0}1", Model.TabIndex), @class = string.Format("form-control QARevised_{0} ControlHeight", Model.TabIndex), @style = (Model.QAPayorID == 0 ? "display:none" : "display:flex") })
         @Html.ValidationMessageFor(model => model.QAPayorID, null, new { @class = "text-danger errMsg" })
     </div>
     @{Show = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "display:none" : "display:flex");}
     <div class="col-md-3 input-group">
-        @Html.TextBoxFor(model => model.QAPayorRemarks, new { @title = Model.QAPayorRemarks, @style = Show, @class = "form-control QARevised ControlHeight", @id = string.Format("PayorID_{0}2", Model.TabIndex) })
+        @Html.TextBoxFor(model => model.QAPayorRemarks, new { @title = Model.QAPayorRemarks, @style = Show, @class = string.Format("form-control QARevised_{0} ControlHeight", Model.TabIndex), @id = string.Format("PayorID_{0}2", Model.TabIndex) })
         @Html.ValidationMessageFor(model => model.QAPayorRemarks, null, new { @class = "text-danger errMsg" })
     </div>
 </div>
@@ -95,7 +95,8 @@
         @Html.TextBoxFor(model => model.NoteTitle, new { @class = "form-control CoderDetails ControlHeight" })
     </div>
 </div>
-<div id="DivDx_@cliamID">
+@{string QARevised = string.Format("QARevised_{0}", Model.TabIndex);}
+<div id="DivDx_@tabIndex">
     @{
         int i = 1;
 
@@ -117,21 +118,22 @@
                     </div>
                     <input class="form-control CoderDetails ControlHeight valid" type="text" value="@item">
                     <div class="input-group-append ControlHeight">
-                        <span class="input-group-text AcceptRejectWidth QACorrections">
-                            &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
-                            &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                        <span class="input-group-text AcceptRejectWidth_@tabIndex QACorrections">
+                            &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                            &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                         </span>
                     </div>
                 </div>
-                <div class="col-md-3 input-group @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" style="display:none">
+
+                <div class="col-md-3 @QARevised input-group @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" style="display:none">
                     <div class="input-group-prepend ControlHeight">
                         <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
                     </div>
-                    <input type="text" id="@string.Format("txtDx_{0}_{1}", Model.TabIndex,i)" class="form-control ControlHeight txtDx @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" autocomplete="off" tabindex="@i" placeholder="Code" value="" style="display:none" />
+                    <input type="text" id="@string.Format("txtDx_{0}_{1}", Model.TabIndex,i)" class="form-control ControlHeight txtDx @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" autocomplete="off" tabindex="@i" placeholder="Code" value="@item" style="display:none" />
                 </div>
                 <div class="col-md-3 input-group">
                     @{ var dxRemarks = string.Format("DxRemarks_{0}_{1}", Model.TabIndex, i);}
-                    <input type="text" id="@dxRemarks" onchange="removeClaimValid('@dxRemarks')" class="form-control QARevised ControlHeight @string.Format("DxRemarks_{0}_{1}", Model.TabIndex,i) @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" style="display:none" />
+                    <input type="text" id="@dxRemarks" onchange="removeClaimValid('@dxRemarks')" class="form-control @QARevised ControlHeight @string.Format("DxRemarks_{0}_{1}", Model.TabIndex,i) @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" style="display:none" />
                     <span id="validDxRemarksClaim_@i" class="text-danger txtdanger" style="display:none">*</span>
                 </div>
             </div>
@@ -139,7 +141,7 @@
             i = i + 1;
         }
     }
-    <input type="hidden" id="@string.Format("txtDx_1_{0}", cliamID)" value="@totalDxCount" />
+    <input type="hidden" id="@string.Format("txtDx_1_{0}", tabIndex)" value="@totalDxCount" />
     <div class="form-group row">
         <label class="col-md-3 lessWidth m-t-15"></label>
         <div class="col-md-3 input-group">
@@ -148,8 +150,8 @@
             </div>
             <input class="form-control CoderDetails ControlHeight valid" type="text" value="">
             <div class="input-group-append ControlHeight">
-                <span class="input-group-text AcceptRejectWidth QACorrections">
-                    &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,totalDxCount)" class="fa fa-edit fa-lg AdjustAcceptReject" aria-hidden="true" style="visibility:hidden"></i>
+                <span class="input-group-text AcceptRejectWidth_@tabIndex QACorrections">
+                    &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,totalDxCount)" class="fa fa-edit fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true" style="visibility:hidden"></i>
                     &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,totalDxCount)" class="fa fa-times-circle fa-lg ignore" aria-hidden="true"></i>
                 </span>
             </div>
@@ -158,11 +160,11 @@
             <div class="input-group-prepend ControlHeight">
                 <span class="input-group-text AdjustSerialNumber @dx2index" id="basic-addon1">@totalDxCount</span>
             </div>
-            <input type="text" id="@dxCliam" onfocusout="DxCliams('txtDx_1_@cliamID')" class="form-control ControlHeight @Dx2Cliam Dxcliam_@cliamID" autocomplete="off" placeholder="Code" />
+            <input type="text" id="@dxCliam" onfocusout="DxCliams('txtDx_1_@tabIndex')" class="form-control ControlHeight @Dx2Cliam Dxcliam_@tabIndex" autocomplete="off" placeholder="Code" />
         </div>
     </div>
 </div>
-<div id="DivCpt_@cliamID">
+<div id="DivCpt_@tabIndex">
     @{
         i = 1;
         int totalCptCount = Model.CPTCode.Split("|").Count() + 1;
@@ -192,13 +194,13 @@
                     <input type="text" style="max-width:23px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="1" value="@qtyVal" />
                     <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="@linkAllVal" />
                     <div class="input-group-append ControlHeight">
-                        <span class="input-group-text AcceptRejectWidth">
-                            &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
-                            &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                        <span class="input-group-text AcceptRejectWidth_@tabIndex">
+                            &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                            &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                         </span>
                     </div>
                 </div>
-                <div class="col-md-3 CptlessWidth input-group @string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" style="display:none">
+                <div class="col-md-3 @QARevised CptlessWidth input-group @string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" style="display:none">
                     <div class="input-group-prepend ControlHeight">
                         <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
                     </div>
@@ -209,14 +211,14 @@
                 </div>
 
                 <div class="col-md-3 input-group">
-                    <input type="text" id="@string.Format("CptRemarks_{0}_{1}", Model.TabIndex,i)" onchange="removeClaimValid('CptRemarks_@i')" class="form-control QARevised ControlHeight @string.Format("CptRemarks_{0}_{1}", Model.TabIndex,i) @string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" style="display:none" />
+                    <input type="text" id="@string.Format("CptRemarks_{0}_{1}", Model.TabIndex,i)" onchange="removeClaimValid('CptRemarks_@i')" class="form-control @QARevised ControlHeight @string.Format("CptRemarks_{0}_{1}", Model.TabIndex,i) @string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" style="display:none" />
                     <span id="validCptRemarksClaim_@i" class="text-danger txtdanger" style="display:none">*</span>
                 </div>
             </div>
             i = i + 1;
         }
     }
-    <input type="hidden" id="@string.Format("txtLinks_1_{0}", cliamID)" value="@totalCptCount" />
+    <input type="hidden" id="@string.Format("txtLinks_1_{0}", tabIndex)" value="@totalCptCount" />
     <div class="form-group row">
         <label class="col-md-3 lessWidth m-t-15"></label>
         <div class="col-md-3 CptlessWidth input-group">
@@ -228,8 +230,8 @@
             <input type="text" style="max-width:23px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="1" value="" />
             <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="" />
             <div class="input-group-append ControlHeight">
-                <span class="input-group-text AcceptRejectWidth">
-                    &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,totalCptCount)" class="fa fa-edit fa-lg AdjustAcceptReject" aria-hidden="true" style="visibility:hidden"></i>
+                <span class="input-group-text AcceptRejectWidth_@tabIndex">
+                    &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,totalCptCount)" class="fa fa-edit fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true" style="visibility:hidden"></i>
                     &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,totalCptCount)" class="fa fa-times-circle fa-lg ignore" aria-hidden="true"></i>
                 </span>
             </div>
@@ -238,10 +240,10 @@
             <div class="input-group-prepend ControlHeight">
                 <span class="input-group-text AdjustSerialNumber @cpt2index" id="basic-addon1">@totalCptCount</span>
             </div>
-            <input type="text" id="@cptCliam" maxlength="5" style="min-width:50px;" class="form-control ControlHeight Cptcliam_@cliamID" autocomplete="off" placeholder="Code" value="" />
-            <input type="text" id="@cptModCliam" style="min-width:42px;" class="form-control ControlHeight Cptcliam_@cliamID" autocomplete="off" placeholder="Mod" value="" />
-            <input type="text" id="@cptQtyCliam" style="max-width:23px;" class="form-control ControlHeight Cptcliam_@cliamID" autocomplete="off" placeholder="1" value="" />
-            <input type="text" id="@cptLinksCliam" class="form-control ControlHeight @Cpt2Link" autocomplete="off" placeholder="Link All" onfocusout="CptCliams('txtLinks_1_@cliamID')" />
+            <input type="text" id="@cptCliam" maxlength="5" style="min-width:50px;" class="form-control ControlHeight Cptcliam_@tabIndex" autocomplete="off" placeholder="Code" value="" />
+            <input type="text" id="@cptModCliam" style="min-width:42px;" class="form-control ControlHeight Cptcliam_@tabIndex" autocomplete="off" placeholder="Mod" value="" />
+            <input type="text" id="@cptQtyCliam" style="max-width:23px;" class="form-control ControlHeight Cptcliam_@tabIndex" autocomplete="off" placeholder="1" value="" />
+            <input type="text" id="@cptLinksCliam" class="form-control ControlHeight @Cpt2Link" autocomplete="off" placeholder="Link All" onfocusout="CptCliams('txtLinks_1_@tabIndex')" />
         </div>
     </div>
 </div>
@@ -257,19 +259,19 @@
 
         @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("Feedback_{0}", Model.TabIndex) })
         <div class="input-group-append ControlHeight">
-            <span class="input-group-text AcceptRejectWidth QACorrections">
-                &nbsp;<i id="Feedback_@Model.TabIndex" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
-                &nbsp;<i id="Feedback_@Model.TabIndex" class="@Rejected" aria-hidden="true"></i>
+            <span class="input-group-text AcceptRejectWidth_@tabIndex QACorrections">
+                &nbsp;<i id="Feedback_@Model.TabIndex" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                &nbsp;<i id="Feedback_@Model.TabIndex" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
             </span>
         </div>
     </div>
     @{Show = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "display:none" : "display:flex");}
     <div class="col-md-3 input-group">
-        @Html.DropDownListFor(model => model.QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = Show, @class = "form-control QARevised ControlHeight", @id = string.Format("Feedback_{0}1", Model.TabIndex) })
+        @Html.DropDownListFor(model => model.QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = Show, @class = string.Format("form-control QARevised_{0} ControlHeight", Model.TabIndex), @id = string.Format("Feedback_{0}1", Model.TabIndex) })
         @Html.ValidationMessageFor(model => model.QAProviderFeedbackID, null, new { @class = "text-danger errMsg" })
     </div>
     <div class="col-md-3 input-group">
-        @Html.TextBoxFor(model => model.QAProviderFeedbackRemarks, new { @title = Model.QAProviderFeedbackRemarks, @style = Show, @class = "form-control QARevised ControlHeight", @id = string.Format("Feedback_{0}2", Model.TabIndex) })
+        @Html.TextBoxFor(model => model.QAProviderFeedbackRemarks, new { @title = Model.QAProviderFeedbackRemarks, @style = Show, @class = string.Format("form-control QARevised_{0} ControlHeight", Model.TabIndex), @id = string.Format("Feedback_{0}2", Model.TabIndex) })
         @Html.ValidationMessageFor(model => model.QAProviderFeedbackRemarks, null, new { @class = "text-danger errMsg" })
     </div>
 </div>
@@ -287,8 +289,8 @@
                             Error Type
                         </label>
                         <div class="col-md-7">
-                            @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight" })
-                            @Html.ValidationMessageFor(model => model.QADTO.ErrorType, null, new { @class = "text-danger ErrorType" })
+                            @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight", @id = string.Format("ErrorType_{0}", Model.TabIndex), @onchange = "ErrorType('" + tabIndex + "')" })
+                            @Html.ValidationMessageFor(model => model.QADTO.ErrorType, null, new { @class = "text-danger ErrorType", @id = string.Format("ErrorTypeError_{0}", Model.TabIndex) })
                         </div>
                     </div>
                 </div>

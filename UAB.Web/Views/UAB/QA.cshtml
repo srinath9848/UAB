@@ -31,75 +31,108 @@
         $("#btnNext").show();
     }
 
-
-    $('#chkAll').change(function () {
-        if ($(this).is(':checked')) {
+    CheckAllboxes = function (chkAll) {
+        var chk = $("#" + chkAll).is(':checked');
+        var id = chkAll.split("_")[1];
+        if (chk) {
             $(".txtdanger").hide();
-            $('.fa-check-circle').addClass('accept');
-            $('.fa-times-circle').removeClass('reject')
-            $('.QARevised').css("display", "none");
-            $(".QARevised").val('');
+            if (id == "1") {
+                $('.QARevised').css("display", "none");
+                $(".QARevised").val('');
+                $(".QADxRevised_" + id).css("display", "none");
+                $(".QACptRevised_" + id).css("display", "none");
+            } else {
+                $(".QARevised_" + id).css("display", "none");                
+            }
 
-            $("[class*=DxRemarks_]").val('');
-            $("[class*=DxRemarks_]").hide();
-
-            $("[class*=Dx_]").val('');
-            $("[class*=Dx_]").hide();
-
-            $("[class*=Cpt_]").val('');
-            $("[class*=Cpt_]").hide();
+            $("[class*=AdjustReject_" + id + "]").removeClass('reject');
+            $("[class*=AdjustAcceptReject_" + id +"]").addClass('accept');
 
             $(".CodingDetails").hide();
             $(".errMsg").text('');
-            $("#QADTO_ErrorType").css("pointer-events", "none");
-            $(".ErrorType").text('');
+            $("#ErrorType_" + id).css("pointer-events", "none");
+            $("#ErrorTypeError_" + id).text('');
             $(".QACorrectionsComments").hide();
         }
         else {
-            $('.fa-check-circle').removeClass('accept');
-            $("#QADTO_ErrorType").css("pointer-events", "auto");
+            $("[class*=AdjustAcceptReject_" + id +"]").removeClass('accept');
+            $("#ErrorType_" + id).css("pointer-events", "auto");
         }
-    });
+    }
 
     $('span i').click(function () {
         var id = $(this).attr('id');
-        if ($(this).hasClass('fa-check-circle')) {
-            $(this).toggleClass('accept');
-            $(this).siblings().removeClass('reject');
-            $("." + id).css("display", "none");
-            $("#" + id + "1").css("display", "none");
-            $("#" + id + "2").css("display", "none");
-            $("#" + id + "1").val('');
-            $("." + id).val('');
-            $("#" + id + "2").val('');
-            var total = $(".lessWidth").find(".fa-check-circle").length;
-            var accept = $(".lessWidth").find(".accept").length;
-            if (total == accept) {
-                $("#chkAll").prop('checked', true);
-                $("#QADTO_ErrorType").val('');
-                $("#QADTO_ErrorType").css("pointer-events", "none");
-                $(".ErrorType").text('');
-                $(".errMsg").text('');
-                $(".QACorrectionsComments").hide();
+        var iconid = id.split("_")[1];
+        if (iconid == undefined) {
+            if ($(this).hasClass('fa-check-circle')) {
+                $(this).toggleClass('accept');
+                $(this).siblings().removeClass('reject');
+                $("." + id).css("display", "none");
+                $("#" + id + "1").css("display", "none");
+                $("#" + id + "2").css("display", "none");
+                $("#" + id + "1").val('');
+                $("." + id).val('');
+                $("#" + id + "2").val('');
+                var total = $(".AcceptRejectWidth_1").find(".fa-check-circle").length;
+                var accept = $(".AcceptRejectWidth_1").find(".accept").length;
+                if (total == accept) {
+                    $("#chkAll_1").prop('checked', true);
+                    $("#ErrorTypeError_1").val('');
+                    $("#ErrorType_1").css("pointer-events", "none");
+                    $(".ErrorType").text('');
+                    $(".errMsg").text('');
+                    $(".QACorrectionsComments").hide();
+                }
             }
-        }
-        else if ($(this).hasClass('fa-times-circle')) {
-            $(this).toggleClass('reject');
-            $(this).siblings().removeClass('accept');
-            $("." + id).css("display", "flex");
-            $("#" + id + "1").css("display", "flex");
-            $("#" + id + "2").css("display", "flex");
-            $("#chkAll").prop('checked', false);
-            $("#QADTO_ErrorType").css("pointer-events", "auto");
-            $(".QACorrectionsComments").show();
+            else if ($(this).hasClass('fa-times-circle')) {
+                $(this).toggleClass('reject');
+                $(this).siblings().removeClass('accept');
+                $("." + id).css("display", "flex");
+                $("#" + id + "1").css("display", "flex");
+                $("#" + id + "2").css("display", "flex");
+                $("#chkAll_1").prop('checked', false);
+                $("#ErrorType_1").css("pointer-events", "auto");
+                $(".QACorrectionsComments").show();
+            }
+        } else {
+            if ($(this).hasClass('fa-check-circle')) {
+                $(this).toggleClass('accept');
+                $(this).siblings().removeClass('reject');
+                $("." + id).css("display", "none");
+                $("#" + id + "1").css("display", "none");
+                $("#" + id + "2").css("display", "none");
+                $("#" + id + "1").val('');
+                $("." + id).val('');
+                $("#" + id + "2").val('');
+                var total = $(".AcceptRejectWidth_" + iconid).find(".fa-check-circle").length;
+                var accept = $(".AcceptRejectWidth_" + iconid).find(".accept").length;
+                if (total == accept) {
+                    $("#chkAll_" + iconid).prop('checked', true);
+                    $("#ErrorTypeError_" + iconid).val('');
+                    $("#ErrorType_" + iconid).css("pointer-events", "none");
+                    $(".ErrorType_" + iconid).text('');
+                    $(".errMsg").text('');
+                    $(".QACorrectionsComments").hide();
+                }
+            }
+            else if ($(this).hasClass('fa-times-circle')) {
+                $(this).toggleClass('reject');
+                $(this).siblings().removeClass('accept');
+                $("." + id).css("display", "flex");
+                $("#" + id + "1").css("display", "flex");
+                $("#" + id + "2").css("display", "flex");
+                $("#chkAll_" + iconid).prop('checked', false);
+                $("#ErrorType_" + iconid).css("pointer-events", "auto");
+                $(".QACorrectionsComments").show();
+            }
         }
     });
 
-    $("#QADTO_ErrorType").change(function () {
-        if ($(this).val() != "") {
-            $(".ErrorType").text('');
+    ErrorType = function (id) {
+        if ($("#ErrorType_" + id).val() != "") {
+            $("#ErrorTypeError_"+id).text('');
         }
-    });
+    }
 
     $('#btnsubmit,#SubmitAndGetNext').click(function (e) {
         $('.CoderDetails').removeAttr('disabled')
