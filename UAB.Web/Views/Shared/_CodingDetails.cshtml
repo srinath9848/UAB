@@ -73,11 +73,11 @@
                             <div class="col-md-3" style="display:inherit;">
                                 @if (@Model.ProviderID != 0)
                                 {
-                                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @style = "pointer-events:none;background-color:#e9ecef" })
+                                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id="pr1",@class = "form-control CoderDetails ControlHeight", @style = "pointer-events:none;background-color:#e9ecef" })
                                 }
                                 else
                                 {
-                                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight" })
+                                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = "pr1", @class = "form-control CoderDetails ControlHeight" })
                                 }
 
                                 @Html.ValidationMessageFor(model => model.ProviderID, null, new { @class = "text-danger" })

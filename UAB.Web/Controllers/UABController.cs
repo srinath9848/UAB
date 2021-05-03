@@ -702,11 +702,14 @@ namespace UAB.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddNewCliam(int cliamID)
+        public IActionResult AddNewCliam(int cliamID ,int pid1,int pid2,int pid3,int pid4 )
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var prlst= clinicalcaseOperations.GetProvidersList();
+            prlst.RemoveAll(x => x.ID == pid1 ||x.ID==pid2 ||x.ID==pid3||x.ID==pid4);
+            ViewBag.Providers = prlst;
+            //ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
-            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.CliamId = cliamID;
             return PartialView("_CodingCliam");
