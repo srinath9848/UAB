@@ -105,7 +105,10 @@
                 }
             }
             if ($("[title =Feedback1_" + tabid + "].accept").length > 0 || ($("[title =Feedback_" + tabid + "].reject").length == 0 && $("[title =Feedback_" + tabid + "].accept").length == 0)) {
-                ProviderFeedbackID = $("#ProviderFeedbackID_" + tabid).val();
+                if ($("#ProviderFeedbackText_" + tabid).val() != "")
+                    ProviderFeedbackID = $("#ProviderFeedbackID_" + tabid).val();
+                else
+                    ProviderFeedbackID = 0;
 
             } else {
                 ProviderFeedbackID = $("#ProviderFeedbackID_" + tabid).val();

@@ -328,7 +328,7 @@
     @{title = (!string.IsNullOrEmpty(Model.QAProviderFeedbackText) ? Model.ProviderFeedbackText + "/" + Model.QAProviderFeedbackText : Model.ProviderFeedbackText);}
     @{ var ProviderFeedbackID = string.Format("ProviderFeedbackID_{0}", @Model.TabIndex);}
     @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @style = "display:none", @class = "form-control CoderDetails", @id = ProviderFeedbackID })
-
+    <input type="hidden" id="ProviderFeedbackText_@Model.TabIndex" value="@ProviderFeedbackText" />
     <div title="@title" class="col-md-3 lessWidth input-group ControlWidth">
         <div class="form-control CoderDetails" style="line-height:2.2;overflow:hidden;height:32px;">
             <span style="white-space:nowrap">
