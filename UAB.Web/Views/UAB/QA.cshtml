@@ -475,16 +475,23 @@
             $(".tab").each(function () {
                 var id = $(this).attr('id');
                 if (id == "1") {
-                    if ($("#ErrorType_" + id).val() == "") {
-                        $("#ErrorTypeError_" + id).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                    var chk = $("#chkAll_" + id).is(':checked');
+                    if (!chk) {
+                        if ($("#ErrorType_" + id).val() == "") {
+                            $("#ErrorTypeError_" + id).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                            e.preventDefault();
+                        }
                     }
                 } else {
                     var tabid = id.split("tabIndex_")[1].split("_ClaimId_")[0];
-                    if ($("#ErrorType_" + tabid).val() == "") {
-                        $("#ErrorTypeError_" + tabid).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                    var chk = $("#chkAll_" + tabid).is(':checked');
+                    if (!chk) {
+                        if ($("#ErrorType_" + tabid).val() == "") {
+                            $("#ErrorTypeError_" + tabid).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                            e.preventDefault();
+                        }
                     }
                 }
-                e.preventDefault();
             });
         }
         if (total != accept + reject) {
