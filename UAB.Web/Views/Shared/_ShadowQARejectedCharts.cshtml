@@ -1,28 +1,6 @@
 ﻿@model List<UAB.DTO.ChartSummaryDTO>
 <div class="col-md-12">
     <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">
-                <span>Chart ID : <label style="color: black;">@Model.FirstOrDefault().CodingDTO.ClinicalCaseID &nbsp;&nbsp;&nbsp;&nbsp;</label></span>
-                @if (Model.FirstOrDefault().CodedBy != null)
-                {
-                    <span>Coded by :  <label style="color:black;">@Model.FirstOrDefault().CodedBy&nbsp;&nbsp;&nbsp;&nbsp;</label></span>
-                }
-                @if (Model.FirstOrDefault().QABy != null)
-                {
-                    <span>
-                        QA by : <label style="color:black;"> @Model.FirstOrDefault().QABy &nbsp;&nbsp;&nbsp;&nbsp;</label>
-                    </span>
-                }
-                @if (Model.FirstOrDefault().ShadowQABy != null)
-                {
-                    <span>
-                        ShadowQA by : <label style="color:black;"> @Model.FirstOrDefault().ShadowQABy </label>
-                    </span>
-                }
-
-            </h4>
-        </div>
         @Html.HiddenFor(model => Model.FirstOrDefault().CodingDTO.ClinicalCaseID, new { })
         @Html.Hidden("hdnPayorID")
         @Html.Hidden("hdnProviderID")
