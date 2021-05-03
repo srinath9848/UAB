@@ -471,9 +471,21 @@
         var reject = $(".reject:not(.ignore)").length;
         var accept = $(".accept").length;
 
-        if (total != accept && $("#QADTO_ErrorType").val() == "") {
-            $(".ErrorType").html('<span id="projectdd-error" class="">ErrorType is required.</span>');
-            e.preventDefault();
+        if (total != accept) {
+            $(".tab").each(function () {
+                var id = $(this).attr('id');
+                if (id == "1") {
+                    if ($("#ErrorType_" + id).val() == "") {
+                        $("#ErrorTypeError_" + id).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                    }
+                } else {
+                    var tabid = id.split("tabIndex_")[1].split("_ClaimId_")[0];
+                    if ($("#ErrorType_" + tabid).val() == "") {
+                        $("#ErrorTypeError_" + tabid).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                    }
+                }
+                e.preventDefault();
+            });
         }
         if (total != accept + reject) {
             $("#validationPopUp").show();
