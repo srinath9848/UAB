@@ -29,12 +29,6 @@
         @Html.HiddenFor(model => model.FirstOrDefault().ProjectName)
         @Html.HiddenFor(model => model.FirstOrDefault().Dx)
         @Html.HiddenFor(model => model.FirstOrDefault().CPTCode)
-        @Html.Hidden("hdnPayorID")
-        @Html.Hidden("hdnProviderID")
-        @Html.Hidden("hdnCpt")
-        @Html.Hidden("hdnMod")
-        @Html.Hidden("hdnDx")
-        @Html.Hidden("hdnProviderFeedbackID")
 
         @Html.Hidden("hdnPayorIDReject")
         @Html.Hidden("hdnProviderIDReject")
@@ -110,9 +104,9 @@
                                 <br />
                                 <div class="form-group row">
                                     <label class="col-md-2 m-t-15"></label>
-                                    <div class="custom-control custom-checkbox mr-sm-2" id="divChkAll">
-                                        <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll">
-                                        <label class="custom-control-label" for="chkAll">Accept All</label>
+                                    <div class="custom-control custom-checkbox mr-sm-2" id="divChkAll_@tabIndex">
+                                        <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll_@tabIndex" onclick="CheckAllboxes('chkAll_@tabIndex')">
+                                        <label class="custom-control-label" for="chkAll_@tabIndex">Accept All</label>
                                     </div>
                                     <label class="col-md-3 lessWidth m-t-15"></label>
                                     <div class="custom-control mr-sm-2 QACorrectionsComments">
@@ -135,9 +129,9 @@
 
                                         @Html.DropDownListFor(model => model.FirstOrDefault().ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight" })
                                         <div class="input-group-append QACorrections ControlHeight">
-                                            <span class="input-group-text AcceptRejectWidth">
-                                                &nbsp;<i id="ProviderID" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
-                                                &nbsp;<i id="ProviderID" class="@Rejected" aria-hidden="true"></i>
+                                            <span class="input-group-text AcceptRejectWidth_@tabIndex">
+                                                &nbsp;<i id="ProviderID" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                                &nbsp;<i id="ProviderID" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
                                             </span>
                                         </div>
                                     </div>
@@ -163,9 +157,9 @@
 
                                         @Html.DropDownListFor(model => model.FirstOrDefault().PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight" })
                                         <div class="input-group-append QACorrections ControlHeight">
-                                            <span class="input-group-text AcceptRejectWidth">
-                                                &nbsp;<i id="PayorID" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
-                                                &nbsp;<i id="PayorID" class="@Rejected" aria-hidden="true"></i>
+                                            <span class="input-group-text AcceptRejectWidth_@tabIndex">
+                                                &nbsp;<i id="PayorID" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                                &nbsp;<i id="PayorID" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
                                             </span>
                                         </div>
                                     </div>
@@ -207,20 +201,20 @@
                                                     </div>
                                                     <input class="form-control CoderDetails ControlHeight valid" type="text" value="@item">
                                                     <div class="input-group-append">
-                                                        <span class="input-group-text AcceptRejectWidth QACorrections ControlHeight">
-                                                            &nbsp;<i id="Dx_@i" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
-                                                            &nbsp;<i id="Dx_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                                        <span class="input-group-text AcceptRejectWidth_@tabIndex QACorrections ControlHeight">
+                                                            &nbsp;<i id="Dx_@i" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                                            &nbsp;<i id="Dx_@i" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3 input-group Dx_@i" style="display:none">
+                                                <div class="col-md-3 QADxRevised_@i input-group Dx_@i" style="display:none">
                                                     <div class="input-group-prepend ControlHeight">
                                                         <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
                                                     </div>
-                                                    <input type="text" id="txtDx_@i" class="form-control ControlHeight txtDx Dx_@i" autocomplete="off" tabindex="@i" placeholder="Code" value="" style="display:none" />
+                                                    <input type="text" id="txtDx_@i" class="form-control ControlHeight txtDx Dx_@i" autocomplete="off" tabindex="@i" placeholder="Code" value="@item" style="display:none" />
                                                 </div>
                                                 <div class="col-md-3 input-group">
-                                                    <input type="text" id="DxRemarks_@i" class="form-control QARevised ControlHeight DxRemarks_@i Dx_@i" onchange="removevalid('Dx_@i')" style="display:none" />
+                                                    <input type="text" id="DxRemarks_@i" class="form-control QADxRevised_@i ControlHeight DxRemarks_@i Dx_@i" onchange="removevalid('Dx_@i')" style="display:none" />
                                                     <span id="validDx_@i" class="text-danger txtdanger" style="display:none">*</span>
                                                 </div>
                                             </div>
@@ -237,9 +231,9 @@
                                             </div>
                                             <input class="form-control CoderDetails ControlHeight valid" type="text" value="">
                                             <div class="input-group-append">
-                                                <span class="input-group-text QACorrections ControlHeight AcceptRejectWidth">
+                                                <span class="input-group-text QACorrections ControlHeight AcceptRejectWidth_@tabIndex">
                                                     &nbsp;<i id="Dx_@totalDxCount" class="fa fa-edit fa-lg AdjustAcceptReject" aria-hidden="true" style="visibility:hidden"></i>
-                                                    &nbsp;<i id="Dx_@totalDxCount" class="fa fa-times-circle fa-lg ignore" aria-hidden="true"></i>
+                                                    &nbsp;<i id="Dx_@totalDxCount" class="fa fa-times-circle fa-lg ignore " aria-hidden="true"></i>
                                                 </span>
                                             </div>
                                         </div>
@@ -281,13 +275,13 @@
                                                     <input type="text" style="max-width:23px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="1" value="@qtyVal" />
                                                     <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="@linkAllVal" />
                                                     <div class="input-group-append ControlHeight">
-                                                        <span class="input-group-text AcceptRejectWidth">
-                                                            &nbsp;<i id="Cpt_@i" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
-                                                            &nbsp;<i id="Cpt_@i" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                                        <span class="input-group-text AcceptRejectWidth_@tabIndex">
+                                                            &nbsp;<i id="Cpt_@i" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                                            &nbsp;<i id="Cpt_@i" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3 CptlessWidth input-group Cpt_@i" style="display:none">
+                                                <div class="col-md-3 QACptRevised_@i CptlessWidth input-group Cpt_@i" style="display:none">
                                                     <div class="input-group-prepend ControlHeight">
                                                         <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
                                                     </div>
@@ -298,7 +292,7 @@
                                                 </div>
 
                                                 <div class="col-md-3 input-group">
-                                                    <input type="text" id="CptRemarks_@i" class="form-control QARevised ControlHeight CptRemarks_@i Cpt_@i" onchange="removevalid('Cpt_@i')" style="display:none" />
+                                                    <input type="text" id="CptRemarks_@i" class="form-control QACptRevised_@i ControlHeight CptRemarks_@i Cpt_@i" onchange="removevalid('Cpt_@i')" style="display:none" />
                                                     <span id="validCpt_@i" class="text-danger txtdanger" style="display:none">*</span>
                                                 </div>
                                             </div>
@@ -316,7 +310,7 @@
                                             <input type="text" style="max-width:23px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="1" value="" />
                                             <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="" />
                                             <div class="input-group-append ControlHeight">
-                                                <span class="input-group-text AcceptRejectWidth">
+                                                <span class="input-group-text AcceptRejectWidth_@tabIndex">
                                                     &nbsp;<i id="Cpt_@totalCptCount" class="fa fa-edit fa-lg AdjustAcceptReject" aria-hidden="true" style="visibility:hidden"></i>
                                                     &nbsp;<i id="Cpt_@totalCptCount" class="fa fa-times-circle fa-lg ignore" aria-hidden="true"></i>
                                                 </span>
@@ -345,9 +339,9 @@
 
                                         @Html.DropDownListFor(model => model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight" })
                                         <div class="input-group-append ControlHeight">
-                                            <span class="input-group-text AcceptRejectWidth QACorrections">
-                                                &nbsp;<i id="Feedback" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
-                                                &nbsp;<i id="Feedback" class="@Rejected" aria-hidden="true"></i>
+                                            <span class="input-group-text AcceptRejectWidth_@tabIndex QACorrections">
+                                                &nbsp;<i id="Feedback" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                                &nbsp;<i id="Feedback" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
                                             </span>
                                         </div>
                                     </div>
@@ -377,8 +371,8 @@
                                                         Error Type
                                                     </label>
                                                     <div class="col-md-7">
-                                                        @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight" })
-                                                        @Html.ValidationMessageFor(model => model.FirstOrDefault().QADTO.ErrorType, null, new { @class = "text-danger ErrorType" })
+                                                        @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight", @id = string.Format("ErrorType_{0}", tabIndex), @onchange = "ErrorType('" + tabIndex + "')" })
+                                                        @Html.ValidationMessageFor(model => model.FirstOrDefault().QADTO.ErrorType, null, new { @class = "text-danger ErrorType", @id = string.Format("ErrorTypeError_{0}", tabIndex) })
                                                     </div>
                                                 </div>
                                             </div>
@@ -463,11 +457,11 @@
         height: 32px !important;
     }
 
-    .AcceptRejectWidth {
+    .AcceptRejectWidth_@tabIndex {
         max-width: 50px;
     }
 
-    .AdjustAcceptReject {
+    .AdjustAcceptReject_@tabIndex {
         margin-left: -13px;
     }
 
