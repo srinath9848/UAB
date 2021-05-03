@@ -11,7 +11,7 @@
                     <br />
                     <label>Select Report Type</label>
                     <select id="reportType" class="form-control ControlHeight">
-                        <option value="--Select--">--Select--</option>
+                        @*<option value="--Select--">--Select--</option>*@
                         <option value="AgeingReport">Ageing Charts Report </option>
                         <option value="LevellingSummaryReport">Levelling Report </option>
                         <option value="ReceivedChartsReport">Received Charts Report </option>
@@ -272,17 +272,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.min.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        GetAgeingReport = function () {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetAgeingReport", "Home")",
+                success: function (response) {
+                    $("#modalContent").html(response);
+                    $(".Report").hide();
+                }
+            });
+        };
+        GetAgeingReport();
         $("#reportType").change(function () {
             var type = $("#reportType option:selected").val();
             if (type == "AgeingReport"){
-                 $.ajax({
-                        type: "GET",
-                        url: "@Url.Action("GetAgeingReport", "Home")",
-                     success: function (response) {
-                         $("#modalContent").html(response);
-                         $(".Report").hide();
-                        }
-                    });
+                GetAgeingReport();
             } else {
                 $(".Report").hide();
                 $("#modalContent").html('');
@@ -290,6 +294,8 @@
             }
 
         });
+
+
     });
 </script>
 
