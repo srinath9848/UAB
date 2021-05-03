@@ -2,28 +2,6 @@
 @using UAB.enums
 <div class="col-md-12">
     <div class="card">
-        @*<div class="card-body">
-                <h4 class="card-title">
-                    <span>Chart ID : <label style="color: black;">@Model.FirstOrDefault().CodingDTO.ClinicalCaseID&nbsp;&nbsp;&nbsp;&nbsp;</label></span>
-                    @if (Model.FirstOrDefault().CodedBy != null)
-                    {
-                        <span>Coded by : <label style="color: black;">@Model.FirstOrDefault().CodedBy&nbsp;&nbsp;&nbsp;&nbsp;</label></span>
-                    }
-                    @if (Model.FirstOrDefault().QABy != null)
-                    {
-                        <span>
-                            QA by : <label style="color:black;"> @Model.FirstOrDefault().QABy &nbsp;&nbsp;&nbsp;&nbsp;</label>
-                        </span>
-                    }
-                    @if (Model.FirstOrDefault().ShadowQABy != null)
-                    {
-                        <span>
-                            ShadowQA by : <label style="color:black;"> @Model.FirstOrDefault().ShadowQABy </label>
-                        </span>
-                    }
-
-                </h4>
-            </div>*@
         @Html.HiddenFor(model => model.FirstOrDefault().CodingDTO.ClinicalCaseID, new { @class = "form-control" })
         @Html.HiddenFor(model => model.FirstOrDefault().ProjectID)
         @Html.HiddenFor(model => model.FirstOrDefault().ProjectName)
@@ -63,10 +41,7 @@
         @Html.Hidden("hdnQADxCodes4")
         @Html.Hidden("hdnQACptRemarks4")
         @Html.Hidden("hdnQACptCodes4")
-
         @Html.Hidden("hdnCurrDate")
-
-
 
         <ul class="nav nav-tabs" role="tablist">
             @{
@@ -85,11 +60,6 @@
                     tabIndex = tabIndex + 1;
                 }
             }
-
-            @*<li class="nav-item tabDiv1"> <a class="nav-link active tab" data-toggle="tab" id="1" alt="tabDiv1" href="#cliam1" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick">Cliam 1</span></a> </li>
-                <li class="nav-item tabDiv2" style="display:inherit;"> <a class="nav-link tab" data-toggle="tab" id="2" alt="tabDiv2" href="#cliam2" role="tab"> <span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick" id="htxt2">+</span></a><a id="deletecliam2" style="display:none;"><span class="btn btn-sm" onclick="Deletetabcliam('tabDiv_2')"><i class="fa fa-times"></i></span></a></li>
-                <li class="nav-item tabDiv3" style="display:none;"> <a class="nav-link tab" data-toggle="tab" id="3" alt="tabDiv3" href="#cliam3" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick" id="htxt3">+</span></a><a id="deletecliam3" style="display:none;"><span class="btn btn-sm" onclick="Deletetabcliam('tabDiv_3')"><i class="fa fa-times"></i></span></a> </li>
-                <li class="nav-item tabDiv4" style="display:none;"> <a class="nav-link tab" data-toggle="tab" id="4" alt="tabDiv4" href="#cliam4" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick" id="htxt4">+</span></a><a id="deletecliam4" style="display:none;"><span class="btn btn-sm" onclick="Deletetabcliam('tabDiv_4')"><i class="fa fa-times"></i></span></a> </li>*@
         </ul>
         <div class="tab-content tabcontent-border">
             @{
@@ -109,11 +79,11 @@
                                         <label class="custom-control-label" for="chkAll_@tabIndex">Accept All</label>
                                     </div>
                                     <label class="col-md-3 lessWidth m-t-15"></label>
-                                    <div class="custom-control mr-sm-2 QACorrectionsComments">
+                                    <div class="custom-control mr-sm-2 QACorrectionsComments" style="display:none;">
                                         <label class="">QA Corrections</label>
                                     </div>
                                     <label class="col-md-3 lessWidth m-t-15"></label>
-                                    <div class="custom-control mr-sm-2 QACorrectionsComments" style="display:none" ;>
+                                    <div class="custom-control mr-sm-2 QACorrectionsComments" style="display:none;">
                                         <label class="">QA Comments</label>
                                     </div>
                                 </div>
@@ -130,8 +100,8 @@
                                         @Html.DropDownListFor(model => model.FirstOrDefault().ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight" })
                                         <div class="input-group-append QACorrections ControlHeight">
                                             <span class="input-group-text AcceptRejectWidth_@tabIndex">
-                                                &nbsp;<i id="ProviderID" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
-                                                &nbsp;<i id="ProviderID" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
+                                                &nbsp;<i id="ProviderID" data="@tabIndex" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                                &nbsp;<i id="ProviderID" data="@tabIndex" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
                                             </span>
                                         </div>
                                     </div>
@@ -158,8 +128,8 @@
                                         @Html.DropDownListFor(model => model.FirstOrDefault().PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight" })
                                         <div class="input-group-append QACorrections ControlHeight">
                                             <span class="input-group-text AcceptRejectWidth_@tabIndex">
-                                                &nbsp;<i id="PayorID" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
-                                                &nbsp;<i id="PayorID" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
+                                                &nbsp;<i id="PayorID" data="@tabIndex" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                                &nbsp;<i id="PayorID" data="@tabIndex" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
                                             </span>
                                         </div>
                                     </div>
@@ -202,8 +172,8 @@
                                                     <input class="form-control CoderDetails ControlHeight valid" type="text" value="@item">
                                                     <div class="input-group-append">
                                                         <span class="input-group-text AcceptRejectWidth_@tabIndex QACorrections ControlHeight">
-                                                            &nbsp;<i id="Dx_@i" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
-                                                            &nbsp;<i id="Dx_@i" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
+                                                            &nbsp;<i id="Dx_@i" data="@tabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                                            &nbsp;<i id="Dx_@i" data="@tabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -232,12 +202,12 @@
                                             <input class="form-control CoderDetails ControlHeight valid" type="text" value="">
                                             <div class="input-group-append">
                                                 <span class="input-group-text QACorrections ControlHeight AcceptRejectWidth_@tabIndex">
-                                                    &nbsp;<i id="Dx_@totalDxCount" class="fa fa-edit fa-lg AdjustAcceptReject" aria-hidden="true" style="visibility:hidden"></i>
-                                                    &nbsp;<i id="Dx_@totalDxCount" class="fa fa-times-circle fa-lg ignore " aria-hidden="true"></i>
+                                                    &nbsp;<i data="@tabIndex" class="fa fa-edit fa-lg AdjustAcceptReject" aria-hidden="true" style="visibility:hidden"></i>
+                                                    &nbsp;<i id="Dx_@totalDxCount" data="@tabIndex" class="fa fa-times-circle fa-lg ignore " aria-hidden="true"></i>
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 input-group Dx_@totalDxCount" style="display:none">
+                                        <div class="col-md-3 newlyDxCpt_@tabIndex input-group Dx_@totalDxCount" style="display:none">
                                             <div class="input-group-prepend ControlHeight">
                                                 <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@totalDxCount</span>
                                             </div>
@@ -276,8 +246,8 @@
                                                     <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="@linkAllVal" />
                                                     <div class="input-group-append ControlHeight">
                                                         <span class="input-group-text AcceptRejectWidth_@tabIndex">
-                                                            &nbsp;<i id="Cpt_@i" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
-                                                            &nbsp;<i id="Cpt_@i" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
+                                                            &nbsp;<i id="Cpt_@i" data="@tabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                                            &nbsp;<i id="Cpt_@i" data="@tabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -311,12 +281,12 @@
                                             <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="" />
                                             <div class="input-group-append ControlHeight">
                                                 <span class="input-group-text AcceptRejectWidth_@tabIndex">
-                                                    &nbsp;<i id="Cpt_@totalCptCount" class="fa fa-edit fa-lg AdjustAcceptReject" aria-hidden="true" style="visibility:hidden"></i>
-                                                    &nbsp;<i id="Cpt_@totalCptCount" class="fa fa-times-circle fa-lg ignore" aria-hidden="true"></i>
+                                                    &nbsp;<i data="@tabIndex" class="fa fa-edit fa-lg AdjustAcceptReject" aria-hidden="true" style="visibility:hidden"></i>
+                                                    &nbsp;<i id="Cpt_@totalCptCount" data="@tabIndex" class="fa fa-times-circle fa-lg ignore" aria-hidden="true"></i>
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 CptlessWidth input-group Cpt_@totalCptCount" style="display:none">
+                                        <div class="col-md-3 newlyDxCpt_@tabIndex CptlessWidth input-group Cpt_@totalCptCount" style="display:none">
                                             <div class="input-group-prepend ControlHeight">
                                                 <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@totalCptCount</span>
                                             </div>
@@ -340,8 +310,8 @@
                                         @Html.DropDownListFor(model => model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight" })
                                         <div class="input-group-append ControlHeight">
                                             <span class="input-group-text AcceptRejectWidth_@tabIndex QACorrections">
-                                                &nbsp;<i id="Feedback" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
-                                                &nbsp;<i id="Feedback" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
+                                                &nbsp;<i id="Feedback" data="@tabIndex" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                                &nbsp;<i id="Feedback" data="@tabIndex" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
                                             </span>
                                         </div>
                                     </div>

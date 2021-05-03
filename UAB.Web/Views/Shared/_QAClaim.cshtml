@@ -25,11 +25,11 @@
         <label class="custom-control-label" for="chkAll_@tabIndex">Accept All</label>
     </div>
     <label class="col-md-3 lessWidth m-t-15"></label>
-    <div class="custom-control mr-sm-2 QACorrectionsComments">
+    <div class="custom-control mr-sm-2 QACorrectionsComments_@tabIndex" style="display:none;">
         <label class="">QA Corrections</label>
     </div>
     <label class="col-md-3 lessWidth m-t-15"></label>
-    <div class="custom-control mr-sm-2 QACorrectionsComments" style="display:none" ;>
+    <div class="custom-control mr-sm-2 QACorrectionsComments_@tabIndex" style="display:none;">
         <label class="">QA Comments</label>
     </div>
 </div>
@@ -46,8 +46,8 @@
         @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight" })
         <div class="input-group-append QACorrections ControlHeight">
             <span class="input-group-text AcceptRejectWidth_@tabIndex">
-                &nbsp;<i id="ProviderID_@Model.TabIndex" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
-                &nbsp;<i id="ProviderID_@Model.TabIndex" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
+                &nbsp;<i id="ProviderID_@Model.TabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                &nbsp;<i id="ProviderID_@Model.TabIndex" data="@tabIndex" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
             </span>
         </div>
     </div>
@@ -74,8 +74,8 @@
         @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight" })
         <div class="input-group-append QACorrections ControlHeight">
             <span class="input-group-text AcceptRejectWidth_@tabIndex">
-                &nbsp;<i id="PayorID_@Model.TabIndex" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
-                &nbsp;<i id="PayorID_@Model.TabIndex" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
+                &nbsp;<i id="PayorID_@Model.TabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                &nbsp;<i id="PayorID_@Model.TabIndex" data="@tabIndex" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
             </span>
         </div>
     </div>
@@ -119,8 +119,8 @@
                     <input class="form-control CoderDetails ControlHeight valid" type="text" value="@item">
                     <div class="input-group-append ControlHeight">
                         <span class="input-group-text AcceptRejectWidth_@tabIndex QACorrections">
-                            &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
-                            &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
+                            &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" data="@tabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                            &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" data="@tabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                         </span>
                     </div>
                 </div>
@@ -151,12 +151,12 @@
             <input class="form-control CoderDetails ControlHeight valid" type="text" value="">
             <div class="input-group-append ControlHeight">
                 <span class="input-group-text AcceptRejectWidth_@tabIndex QACorrections">
-                    &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,totalDxCount)" class="fa fa-edit fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true" style="visibility:hidden"></i>
-                    &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,totalDxCount)" class="fa fa-times-circle fa-lg ignore" aria-hidden="true"></i>
+                    &nbsp;<i data="@tabIndex" class="fa fa-edit fa-lg AdjustAcceptReject" aria-hidden="true" style="visibility:hidden"></i>
+                    &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,totalDxCount)" data="@tabIndex" class="fa fa-times-circle fa-lg ignore" aria-hidden="true"></i>
                 </span>
             </div>
         </div>
-        <div class="col-md-3 input-group @string.Format("DxClaim_{0}_{1}", Model.TabIndex,totalDxCount)" id="@Div2DxRow" style="display:none">
+        <div class="col-md-3 newlyDxCpt_@tabIndex input-group @string.Format("DxClaim_{0}_{1}", Model.TabIndex,totalDxCount)" id="@Div2DxRow" style="display:none">
             <div class="input-group-prepend ControlHeight">
                 <span class="input-group-text AdjustSerialNumber @dx2index" id="basic-addon1">@totalDxCount</span>
             </div>
@@ -195,8 +195,8 @@
                     <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="@linkAllVal" />
                     <div class="input-group-append ControlHeight">
                         <span class="input-group-text AcceptRejectWidth_@tabIndex">
-                            &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
-                            &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
+                            &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" data="@tabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                            &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" data="@tabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                         </span>
                     </div>
                 </div>
@@ -231,12 +231,12 @@
             <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="" />
             <div class="input-group-append ControlHeight">
                 <span class="input-group-text AcceptRejectWidth_@tabIndex">
-                    &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,totalCptCount)" class="fa fa-edit fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true" style="visibility:hidden"></i>
-                    &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,totalCptCount)" class="fa fa-times-circle fa-lg ignore" aria-hidden="true"></i>
+                    &nbsp;<i data="@tabIndex" class="fa fa-edit fa-lg AdjustAcceptReject" aria-hidden="true" style="visibility:hidden"></i>
+                    &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,totalCptCount)" data="@tabIndex" class="fa fa-times-circle fa-lg ignore" aria-hidden="true"></i>
                 </span>
             </div>
         </div>
-        <div id="@Div2CptRow" class="col-md-3 CptlessWidth input-group @string.Format("Cpt_{0}_{1}", Model.TabIndex,totalCptCount)" style="display:none">
+        <div id="@Div2CptRow" class="col-md-3 newlyDxCpt_@tabIndex CptlessWidth input-group @string.Format("Cpt_{0}_{1}", Model.TabIndex,totalCptCount)" style="display:none">
             <div class="input-group-prepend ControlHeight">
                 <span class="input-group-text AdjustSerialNumber @cpt2index" id="basic-addon1">@totalCptCount</span>
             </div>
@@ -260,8 +260,8 @@
         @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("Feedback_{0}", Model.TabIndex) })
         <div class="input-group-append ControlHeight">
             <span class="input-group-text AcceptRejectWidth_@tabIndex QACorrections">
-                &nbsp;<i id="Feedback_@Model.TabIndex" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
-                &nbsp;<i id="Feedback_@Model.TabIndex" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
+                &nbsp;<i id="Feedback_@Model.TabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                &nbsp;<i id="Feedback_@Model.TabIndex" data="@tabIndex" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
             </span>
         </div>
     </div>
