@@ -1,20 +1,20 @@
 ﻿@model UAB.DTO.ChartSummaryDTO
 @using UAB.enums
 @{
-    int cliamID = Model.TabIndex;
-    string dxCliam = "txtDx" + cliamID + "Cliam" + "_1";
-    string cptCliam = "txt" + cliamID + "Cpt" + "_1";
-    string cptModCliam = "txt" + cliamID + "mod" + "_1";
-    string cptQtyCliam = "txt" + cliamID + "qty" + "_1";
-    string cptLinksCliam = "txt" + cliamID + "links" + "_1";
+    int tabIndex = Model.TabIndex;
+    string dxCliam = "txtDx" + tabIndex + "Cliam" + "_1";
+    string cptCliam = "txt" + tabIndex + "Cpt" + "_1";
+    string cptModCliam = "txt" + tabIndex + "mod" + "_1";
+    string cptQtyCliam = "txt" + tabIndex + "qty" + "_1";
+    string cptLinksCliam = "txt" + tabIndex + "links" + "_1";
 
-    string dx2index = "dx" + cliamID + "index";
-    string Dx2Cliam = "txt" + cliamID + "Dx";
-    string Div2DxRow = "Div" + cliamID + "DxRow_1";
+    string dx2index = "dx" + tabIndex + "index";
+    string Dx2Cliam = "txt" + tabIndex + "Dx";
+    string Div2DxRow = "Div" + tabIndex + "DxRow_1";
 
-    string cpt2index = "cpt" + cliamID + "index";
-    string Cpt2Link = "txt" + cliamID + "Link";
-    string Div2CptRow = "Div" + cliamID + "CptRow_1";
+    string cpt2index = "cpt" + tabIndex + "index";
+    string Cpt2Link = "txt" + tabIndex + "Link";
+    string Div2CptRow = "Div" + tabIndex + "CptRow_1";
 }
 
 @{
@@ -41,9 +41,12 @@
         <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll">
         <label class="custom-control-label" for="chkAll">Accept All</label>
     </div>
-    <div class="custom-control col-md-3 input-group QAComments" style="@Show;margin-left:-27px !important;">
-        <label class="">QA Comments</label>
-    </div>
+    @if (Show == "visibility:hidden")
+    {
+        <div class="custom-control col-md-3 input-group QAComments" style="display:none;margin-left:-27px !important">
+            <label class="">QA Comments</label>
+        </div>
+    }
     <div class="custom-control col-md-3 input-group ShadowQACorrectionsComments" style="display:none;margin-left:-54px;">
         <label class="">ShadowQA Corrections</label>
     </div>
@@ -159,7 +162,7 @@
     Utility.AddEmptyRows(dictQADxCodes, count, "");
     Utility.AddEmptyRows(dictQADxRemarks, count, "");
 }
-<div id="DivDx_@cliamID">
+<div id="DivDx_@tabIndex">
     @{
         int j = 1;
         int i;
@@ -213,7 +216,7 @@
                 <div title="" class="col-md-3 input-group" style="@Show">
                     <input type="text" id="@DxClaim" class="@DxClaimRemarks ControlHeight" value="@dictQADxRemarks?.ElementAt(i).Value" />
                 </div>
-                <div class="col-md-3 input-group">
+                <div class="col-md-3 input-group" style="@Show">
                     <div class="input-group-prepend ControlHeight">
                         <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                     </div>
@@ -228,7 +231,7 @@
                     }
                     <input type="text" id="@DxClaim_QA" class="form-control txtDx ControlHeight" autocomplete="off" tabindex="@j" placeholder="Code" value="@QaDxVal" />
                 </div>
-                <div class="col-md-3 input-group">
+                <div class="col-md-3 input-group" style="@Show">
                     <input type="text" id="@DxClaim" class="@DxClaimShadowQARemarks ControlHeight" style="display:none" />
                 </div>
             </div>
@@ -236,24 +239,26 @@
             j = j + 1;
         }
     }
-    <input type="hidden" id="@string.Format("txtDx_1_{0}", cliamID)" value="@totalDxCount" />
+    <input type="hidden" id="@string.Format("txtDx_1_{0}", tabIndex)" value="@totalDxCount" />
     <div class="form-group row">
         <label class="col-md-3 lessWidth m-t-15"></label>
         <div class="col-md-3 input-group">
-        </div>
-        <div class="col-md-3 input-group" style="visibility:hidden;">
-            <div class="input-group-append" style="height: 38px;">
-                <span class="input-group-text">
-                    &nbsp;<i class="fa fa-edit fa-lg" aria-hidden="true"></i>
-                    &nbsp;<i class="fa fa-edit fa-lg" aria-hidden="true"></i>
+            <div class="input-group-prepend ControlHeight">
+                <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@totalDxCount</span>
+            </div>
+            <input class="form-control CoderDetails ControlHeight valid" type="text" value="">
+            <div class="input-group-append ControlHeight">
+                <span class="input-group-text AcceptRejectWidth_@tabIndex QACorrections">
+                    &nbsp;<i data="@tabIndex" class="fa fa-edit fa-lg AdjustAcceptReject" aria-hidden="true" style="visibility:hidden"></i>
+                    &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,totalDxCount)" data="@tabIndex" class="fa fa-times-circle fa-lg ignore" aria-hidden="true"></i>
                 </span>
             </div>
         </div>
-        <div class="col-md-3 input-group @string.Format("DxClaim_{0}_{1}", Model.TabIndex,totalDxCount)" id="@Div2DxRow">
+        <div class="col-md-3 newlyDxCpt_@tabIndex input-group @string.Format("DxClaim_{0}_{1}", Model.TabIndex,totalDxCount)" id="@Div2DxRow" style="display:none">
             <div class="input-group-prepend ControlHeight">
                 <span class="input-group-text AdjustSerialNumber @dx2index" id="basic-addon1">@totalDxCount</span>
             </div>
-            <input type="text" id="@dxCliam" onfocusout="DxCliams('txtDx_1_@cliamID')" class="form-control ControlHeight @Dx2Cliam Dxcliam_@cliamID" autofocus="autofocus" autocomplete="off" placeholder="Code" />
+            <input type="text" id="@dxCliam" onfocusout="DxCliams('txtDx_1_@tabIndex')" class="form-control ControlHeight @Dx2Cliam Dxcliam_@tabIndex" autocomplete="off" placeholder="Code" />
         </div>
     </div>
 </div>
@@ -273,7 +278,7 @@
     Utility.AddEmptyRows(dictQACptCodes, count, "");
     Utility.AddEmptyRows(dictQACptRemarks, count, "");
 }
-<div id="DivCpt_@cliamID">
+<div id="DivCpt_@tabIndex">
     @{
         j = 1;
         for (i = 0; i < Cptcount; i++)
@@ -371,71 +376,11 @@
                     </div>
                 }
 
-
-
-                @*<div class="col-md-3 input-group">
-                        <div class="input-group-prepend ControlHeight">
-                            <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
-                        </div>
-
-                        @if (!string.IsNullOrEmpty(dictQACptCodes?.ElementAt(i).Value))
-                        {
-                            string codercptCode = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[0]);
-                            string qacptCode = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[0]);
-                            string color = (codercptCode != qacptCode) ? "color:blue;" : "";
-                            if (codercptCode == "NA")
-                                color = "color:fuchsia;";
-                            <input type="text" class="form-control CoderDetails ControlHeight" value="@qacptCode" style="width:17px;@color" />
-
-                            string coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[1]);
-                            string qaMod = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[1]);
-                            string mod = qaMod == "null" ? "" : qaMod;
-                            color = (coderMod != qaMod) ? "color:blue;" : "";
-                            if (coderMod == "NA")
-                                color = "color:fuchsia;";
-                            <input type="text" class="form-control CoderDetails ControlHeight" value="@mod" style="@color" />
-
-                            string coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[2]);
-                            string qaQty = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[2]);
-                            color = (coderQty != qaQty) ? "color:blue;" : "";
-                            if (coderQty == "NA")
-                                color = "color:fuchsia;";
-                            <input type="text" class="form-control CoderDetails ControlHeight" value="@qaQty" style="@color" />
-
-                            string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
-                            string qaLinks = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[3]);
-                            string linkAll = qaLinks == "null" ? "" : qaLinks;
-                            color = (coderLinks != qaLinks) ? "color:blue;" : "";
-                            if (coderLinks == "NA")
-                                color = "color:fuchsia;";
-                            <input type="text" class="form-control CoderDetails ControlHeight" value="@linkAll" style="@color" />
-                        }
-                        else
-                        {
-                            string cptVal = coderCptcodes[0] == "NA" ? "" : coderCptcodes[0];
-                            string modVal1 = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
-                            string qtyVal = coderCptcodes[2];
-                            string linkAllVal1 = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
-
-                            <input type="text" class="form-control CoderDetails ControlHeight" style="color: green;width: 17px;" placeholder="Code" value="@cptVal" />
-                            <input type="text" class="form-control CoderDetails ControlHeight" style="color:green;" placeholder="Mod" value="@modVal1" />
-                            <input type="text" class="form-control CoderDetails ControlHeight" style="color:green;" placeholder="1" value="@qtyVal" />
-                            <input type="text" class="form-control CoderDetails ControlHeight" style="color: green;" placeholder="Link All" value="@linkAllVal1" />
-
-                        }
-                        <div class="input-group-append ControlHeight" style="height: 45px;">
-                            <span class="input-group-text AcceptRejectWidth">
-                                &nbsp;<i id="Cpt_@j" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
-                                &nbsp;<i id="Cpt_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                            </span>
-                        </div>
-                    </div>*@
-
                 @{ Show = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
                 <div title="" class="col-md-3 input-group" style="@Show">
                     <input type="text" class="form-control QARemarks ControlHeight" value="@dictQACptRemarks?.ElementAt(i).Value" />
                 </div>
-                <div class="col-md-3 input-group">
+                <div class="col-md-3 input-group" style="@Show">
                     <div class="input-group-prepend ControlHeight">
                         <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                     </div>
@@ -456,34 +401,40 @@
                     <input type="text" id="txtQty_@j" class="form-control ControlHeight" autocomplete="off" placeholder="1" value="@qaQty1" />
                     <input type="text" id="txtLinks_@j" class="form-control ControlHeight" autocomplete="off" placeholder="Link All" value="@linkAllVal" />
                 </div>
-                <div class="col-md-3 input-group">
+                <div class="col-md-3 input-group" style="@Show">
                     <input type="text" id="CptRemarks_@j" class="form-control ControlHeight CptRemarks_@j Cpt_@j" style="display:none" />
                 </div>
             </div>
             j = j + 1;
         }
     }
-    <input type="hidden" id="@string.Format("txtLinks_1_{0}", cliamID)" value="@totalCptCount" />
+    <input type="hidden" id="@string.Format("txtLinks_1_{0}", tabIndex)" value="@totalCptCount" />
+    <input type="hidden" id="@string.Format("txtLinks_1_{0}", tabIndex)" value="@totalCptCount" />
     <div class="form-group row">
         <label class="col-md-3 lessWidth m-t-15"></label>
-        <div class="col-md-3 input-group" style="visibility:hidden;">
-            <div class="input-group-append ControlHeight" style="height: 38px;">
-                <span class="input-group-text">
-                    &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,totalCptCount)" class="fa fa-edit fa-lg" aria-hidden="true"></i>
-                    &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,totalCptCount)" class="fa fa-edit fa-lg" aria-hidden="true"></i>
+        <div class="col-md-3 CptlessWidth input-group">
+            <div class="input-group-prepend ControlHeight">
+                <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@totalCptCount</span>
+            </div>
+            <input type="text" maxlength="5" style="min-width:50px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Code" value="" />
+            <input type="text" style="min-width:42px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Mod" value="" />
+            <input type="text" style="max-width:23px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="1" value="" />
+            <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="" />
+            <div class="input-group-append ControlHeight">
+                <span class="input-group-text AcceptRejectWidth_@tabIndex">
+                    &nbsp;<i data="@tabIndex" class="fa fa-edit fa-lg AdjustAcceptReject" aria-hidden="true" style="visibility:hidden"></i>
+                    &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,totalCptCount)" data="@tabIndex" class="fa fa-times-circle fa-lg ignore" aria-hidden="true"></i>
                 </span>
             </div>
         </div>
-        <div class="col-md-3 input-group">
-        </div>
-        <div id="@Div2CptRow" class="col-md-3 input-group @string.Format("Cpt_{0}_{1}", Model.TabIndex,totalCptCount)">
+        <div id="@Div2CptRow" class="col-md-3 newlyDxCpt_@tabIndex CptlessWidth input-group @string.Format("Cpt_{0}_{1}", Model.TabIndex,totalCptCount)" style="display:none">
             <div class="input-group-prepend ControlHeight">
                 <span class="input-group-text AdjustSerialNumber @cpt2index" id="basic-addon1">@totalCptCount</span>
             </div>
-            <input type="text" id="@cptCliam" maxlength="5" class="form-control ControlHeight Cptcliam_@cliamID" autofocus="autofocus" autocomplete="off" placeholder="Code" />
-            <input type="text" id="@cptModCliam" class="form-control ControlHeight Cptcliam_@cliamID" autocomplete="off" placeholder="Mod" />
-            <input type="text" id="@cptQtyCliam" class="form-control ControlHeight Cptcliam_@cliamID" autocomplete="off" placeholder="1" />
-            <input type="text" id="@cptLinksCliam" class="form-control ControlHeight @Cpt2Link" onfocusout="CptCliams('txtLinks_1_@cliamID')" autocomplete="off" placeholder="Link All" />
+            <input type="text" id="@cptCliam" maxlength="5" style="min-width:50px;" class="form-control ControlHeight Cptcliam_@tabIndex" autocomplete="off" placeholder="Code" value="" />
+            <input type="text" id="@cptModCliam" style="min-width:42px;" class="form-control ControlHeight Cptcliam_@tabIndex" autocomplete="off" placeholder="Mod" value="" />
+            <input type="text" id="@cptQtyCliam" style="max-width:23px;" class="form-control ControlHeight Cptcliam_@tabIndex" autocomplete="off" placeholder="1" value="" />
+            <input type="text" id="@cptLinksCliam" class="form-control ControlHeight @Cpt2Link" autocomplete="off" placeholder="Link All" onfocusout="CptCliams('txtLinks_1_@tabIndex')" />
         </div>
     </div>
 </div>
