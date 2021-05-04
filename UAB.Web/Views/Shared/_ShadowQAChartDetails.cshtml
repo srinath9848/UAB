@@ -503,66 +503,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="clearfix"></div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title">QA Details</h4>
-                                </div>
-                                <div class="card-body">
-                                    <div class="col-12">
-                                        <div class="row mb-3">
-                                            <div class="col-lg-6">
-                                                <div class="form-group row">
-                                                    <label class="col-md-5 m-t-15">
-                                                        Error Type
-                                                    </label>
-                                                    <div class="col-md-7">
-                                                        @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;" })
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title">Shadow QA Details</h4>
-                                </div>
-                                <div class="card-body">
-                                    <div class="col-12">
-                                        <div class="row mb-3">
-                                            <div class="col-lg-12">
-                                                <div class="form-group row">
-                                                    <label class="col-md-5 m-t-15">
-                                                        Error Type
-                                                    </label>
-                                                    <div class="col-md-7">
-                                                        @Html.DropDownListFor(model => model.FirstOrDefault().ShadowQADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control" })
-                                                        @Html.ValidationMessageFor(model => model.FirstOrDefault().ShadowQADTO.ErrorType, null, new { @class = "text-danger ErrorType" })
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="form-group row">
-                                                    <div class="col-md-12">
-                                                        <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.ShadowQA, ChartType= "Block", ProjectID=@Model.FirstOrDefault().ProjectID, ProjectName=Model.FirstOrDefault().ProjectName,ccid=Model.FirstOrDefault().CodingDTO.ClinicalCaseID,plusorminus="Previous"})" class="btn btn-success Available" id="btnPrevious" style="display:none">Previous</a>
-                                                        <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.ShadowQA, ChartType= "Block", ProjectID=@Model.FirstOrDefault().ProjectID, ProjectName=Model.FirstOrDefault().ProjectName,ccid=Model.FirstOrDefault().CodingDTO.ClinicalCaseID,plusorminus="Next"})" class="btn btn-success Available" id="btnNext" style="display:none">Next</a>
-                                                        <button id="btnBlock" type="button" class="btn btn-danger" onclick="Block()">Block</button>
-                                                        <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger" onclick="BlockHistory()">Block History</button>
-                                                        <button type="submit" id="btnsubmit" class="btn btn-success">Save</button>
-                                                        <button id="SubmitAndGetNext" name="SubmitAndGetNext" type="submit" value="SubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 }
                 else
@@ -576,6 +516,66 @@
                 tabIndex = tabIndex + 1;
             }
         }
+        <div class="clearfix"></div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">QA Details</h4>
+                </div>
+                <div class="card-body">
+                    <div class="col-12">
+                        <div class="row mb-3">
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-5 m-t-15">
+                                        Error Type
+                                    </label>
+                                    <div class="col-md-7">
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Shadow QA Details</h4>
+                </div>
+                <div class="card-body">
+                    <div class="col-12">
+                        <div class="row mb-3">
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <label class="col-md-3 m-t-15">
+                                        Error Type
+                                    </label>
+                                    <div class="col-md-7">
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().ShadowQADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight" })
+                                        @Html.ValidationMessageFor(model => model.FirstOrDefault().ShadowQADTO.ErrorType, null, new { @class = "text-danger ErrorType" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.ShadowQA, ChartType= "Block", ProjectID=@Model.FirstOrDefault().ProjectID, ProjectName=Model.FirstOrDefault().ProjectName,ccid=Model.FirstOrDefault().CodingDTO.ClinicalCaseID,plusorminus="Previous"})" class="btn btn-success Available" id="btnPrevious" style="display:none">Previous</a>
+                                        <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.ShadowQA, ChartType= "Block", ProjectID=@Model.FirstOrDefault().ProjectID, ProjectName=Model.FirstOrDefault().ProjectName,ccid=Model.FirstOrDefault().CodingDTO.ClinicalCaseID,plusorminus="Next"})" class="btn btn-success Available" id="btnNext" style="display:none">Next</a>
+                                        <button id="btnBlock" type="button" class="btn btn-danger" onclick="Block()">Block</button>
+                                        <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger" onclick="BlockHistory()">Block History</button>
+                                        <button type="submit" id="btnsubmit" class="btn btn-success">Save</button>
+                                        <button id="SubmitAndGetNext" name="SubmitAndGetNext" type="submit" value="SubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <style>
