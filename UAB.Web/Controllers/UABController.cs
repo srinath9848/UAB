@@ -870,11 +870,15 @@ namespace UAB.Controllers
             var hdnQADxRemarks = Request.Form["hdnQADxRemarks"].ToString();
             chartSummaryDTO.QADx = hdnQADx;
             chartSummaryDTO.QADxRemarks = hdnQADxRemarks;
+            if (!string.IsNullOrEmpty(hdnQADxCodes2))
+                dtAudit.Rows.Add("Dx", hdnQADx, hdnQADxRemarks, Convert.ToInt32(0));
 
             var hdnQACptCodes = Request.Form["hdnQACptCodes"].ToString();
             var hdnQACptRemarks = Request.Form["hdnQACptRemarks"].ToString();
             chartSummaryDTO.QACPTCode = hdnQACptCodes;
             chartSummaryDTO.QACPTCodeRemarks = hdnQACptRemarks;
+            if (!string.IsNullOrEmpty(hdnQACptCodes))
+                dtAudit.Rows.Add("CPTCode", hdnQACptCodes, hdnQACptRemarks, Convert.ToInt32(0));
 
             string currDt = Request.Form["hdnCurrDate"].ToString();
             bool audit = IsAuditRequired("QA", chartSummaryDTO.ProjectID, currDt);
@@ -1112,9 +1116,9 @@ namespace UAB.Controllers
         public IActionResult GetShadowQARebuttalChartsOfQA(string Role, string ChartType, int ProjectID, string ProjectName)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
-            chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
-            chartSummaryDTO.ProjectName = ProjectName;
+            List<ChartSummaryDTO> lstChartSummaryDTO = new List<ChartSummaryDTO>();
+            lstChartSummaryDTO = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
+            lstChartSummaryDTO.FirstOrDefault().ProjectName = ProjectName;
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -1122,7 +1126,7 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
-            return View("ShadowQARebuttalChartsOfQA", chartSummaryDTO);
+            return View("ShadowQARebuttalChartsOfQA", lstChartSummaryDTO);
         }
 
         [HttpPost]
