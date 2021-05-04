@@ -47,6 +47,14 @@ namespace UAB.Controllers
             return PartialView("_LevellingReport", lstLelvellingReportDTO);
         }
 
+        [HttpGet]
+        public IActionResult GetAgeingReport ()
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var lstageingtDTO = clinicalcaseOperations.GetAgeingReport();
+            return PartialView("_AgeingReport", lstageingtDTO);
+        }
+
         [HttpPost]
         public IActionResult GetReceivedChartsReport(int ProjectId, string range)
         {

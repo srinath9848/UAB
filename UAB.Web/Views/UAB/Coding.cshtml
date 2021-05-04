@@ -448,7 +448,13 @@
                     $.ajax({
                         type: "GET",
                         url: "@Url.Action("AddNewCliam", "UAB")",
-                        data: { "cliamID": id },
+                        data: {
+                            "cliamID": id,
+                            "pid1": $("#pr1").val(),
+                            "pid2": $('#Providers_2').val(),
+                            "pid3": $('#Providers_3').val(),
+                            "pid4": $('#Providers_4').val()
+                        },
                         success: function (response) {
                             tabArray.push(id);
                             $("#" + title).html(response);

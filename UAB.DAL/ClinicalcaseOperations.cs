@@ -1374,6 +1374,23 @@ namespace UAB.DAL
             }
         }
 
+        public DataSet GetAgeingReport()
+        {
+            DataSet ds = new DataSet();
+            using (var context = new UABContext())
+            {
+                using var con = context.Database.GetDbConnection();
+                using SqlConnection conn = new SqlConnection(con.ConnectionString);
+                conn.Open();
+                using (SqlDataAdapter da = new SqlDataAdapter())
+                {
+                    da.SelectCommand = new SqlCommand("[dbo].[UspAgingDashboard]", conn);
+                    da.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    da.Fill(ds);
+                }
+            }
+            return ds;
+        }
         public DataSet GetLevellingReport(int projectID, DateTime startDate, DateTime endDate)
         {
             DataSet ds = new DataSet();
