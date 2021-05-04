@@ -15,7 +15,7 @@
 
     string cpt2index = "cpt" + tabIndex + "index";
     string Cpt2Link = "txt" + tabIndex + "Link";
-    string Div2CptRow = "Div" + tabIndex + "CptRoww_1";
+    string Div2CptRow = "Div" + tabIndex + "CptRow_1";
 }
 <br />
 <div class="form-group row">
@@ -164,6 +164,7 @@
         </div>
         <div class="col-md-3 input-group @string.Format("DxClaim_{0}_{1}", Model.TabIndex,totalDxCount)" id="@Div2DxRow" style="display:none">
             <input type="text" id="@string.Format("DxRemarkss_{0}_{1}", Model.TabIndex, i)" class="form-control ControlHeight" style="display:flex;" />
+            <span id="validDxRemarksClaim_@i" class="text-danger txtdanger" style="display:none">*</span>
         </div>
     </div>
 </div>
@@ -250,6 +251,7 @@
         </div>
         <div class="col-md-3 input-group @string.Format("Cpt_{0}_{1}", Model.TabIndex,totalCptCount)" id="@Div2CptRow" style="display:none">
             <input type="text" id="@string.Format("CptRemarkss_{0}_{1}", Model.TabIndex,i)" class="form-control ControlHeight" style="display:flex;" />
+            <span id="validCptRemarksClaim_@i" class="text-danger txtdanger" style="display:none">*</span>
         </div>
     </div>
 </div>
