@@ -15,7 +15,7 @@
 
     string cpt2index = "cpt" + tabIndex + "index";
     string Cpt2Link = "txt" + tabIndex + "Link";
-    string Div2CptRow = "Div" + tabIndex + "CptRow_1";
+    string Div2CptRow = "Div" + tabIndex + "CptRoww_1";
 }
 <br />
 <div class="form-group row">
@@ -160,7 +160,10 @@
             <div class="input-group-prepend ControlHeight">
                 <span class="input-group-text AdjustSerialNumber @dx2index" id="basic-addon1">@totalDxCount</span>
             </div>
-            <input type="text" id="@dxCliam" onfocusout="DxCliams('txtDx_1_@tabIndex')" class="form-control ControlHeight @Dx2Cliam Dxcliam_@tabIndex" autocomplete="off" placeholder="Code" />
+            <input type="text" id="@string.Format("txtDx{0}Cliam_{1}", Model.TabIndex,totalDxCount)" onfocusout="DxCliams('txtDx_1_@tabIndex')" class="form-control ControlHeight @Dx2Cliam Dxcliam_@tabIndex" autocomplete="off" placeholder="Code" />
+        </div>
+        <div class="col-md-3 input-group @string.Format("DxClaim_{0}_{1}", Model.TabIndex,totalDxCount)" id="@Div2DxRow" style="display:none">
+            <input type="text" id="@string.Format("DxRemarkss_{0}_{1}", Model.TabIndex, i)" class="form-control ControlHeight" style="display:flex;" />
         </div>
     </div>
 </div>
@@ -244,6 +247,9 @@
             <input type="text" id="@cptModCliam" style="min-width:42px;" class="form-control ControlHeight Cptcliam_@tabIndex" autocomplete="off" placeholder="Mod" value="" />
             <input type="text" id="@cptQtyCliam" style="max-width:23px;" class="form-control ControlHeight Cptcliam_@tabIndex" autocomplete="off" placeholder="1" value="" />
             <input type="text" id="@cptLinksCliam" class="form-control ControlHeight @Cpt2Link" autocomplete="off" placeholder="Link All" onfocusout="CptCliams('txtLinks_1_@tabIndex')" />
+        </div>
+        <div class="col-md-3 input-group @string.Format("Cpt_{0}_{1}", Model.TabIndex,totalCptCount)" id="@Div2CptRow" style="display:none">
+            <input type="text" id="@string.Format("CptRemarkss_{0}_{1}", Model.TabIndex,i)" class="form-control ControlHeight" style="display:flex;" />
         </div>
     </div>
 </div>
