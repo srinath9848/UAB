@@ -63,6 +63,13 @@
 <script src="~/dashboardassets/extra-libs/DataTables/datatables.js"></script>
 <script type="text/javascript">
     $('#Reports').DataTable();
+   
+    $('#Reports').dataTable({
+        "oLanguage": {
+            "sLengthMenu": "Show Entries _MENU_ "
+        },
+        "bDestroy": true
+    });
   
     var reportsArray = [];
     var reportscolor = ['', 'odd', 'even', 'odd', 'even'];

@@ -31,7 +31,7 @@
                     <h5 class="card">Backlog Chart Report</h5>
                     <div id="modalContent"></div>
                     <div class="table-responsive col-8">
-                        <table id="Posts" class="table table-striped table-bordered">
+                        <table id="Backlogcharts" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     @foreach (DataColumn clmn in Model.Tables[0].Columns)
@@ -62,7 +62,15 @@
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
 <script src="~/dashboardassets/extra-libs/DataTables/datatables.js"></script>
 <script type="text/javascript">
-    $('#Posts').DataTable();
+    $('#Backlogcharts').DataTable();
+
+    $('#Backlogcharts').dataTable({
+        "oLanguage": {
+            "sLengthMenu": "Show Entries _MENU_ "
+        },
+        "bDestroy": true
+    });
+
 
     var postsArray = [];
     var postscolor = ['', 'odd', 'even', 'odd', 'even'];

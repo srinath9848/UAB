@@ -140,6 +140,14 @@
 </div>
 
 <script type="text/javascript">
+    $('#Reports').DataTable();
+
+    $('#Reports').dataTable({
+        "oLanguage": {
+            "sLengthMenu": "Show Entries _MENU_ "
+        },
+        "bDestroy": true
+    });
     var reportsArray = [];
     var reportscolor = ['', 'odd', 'even', 'odd', 'even'];
     var backgroundcolor = ['', "rgba(0, 0, 0, 0.05)", "rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 0.05)", "rgba(0, 0, 0, 0)"];
