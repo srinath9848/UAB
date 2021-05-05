@@ -870,15 +870,11 @@ namespace UAB.Controllers
             var hdnQADxRemarks = Request.Form["hdnQADxRemarks"].ToString();
             chartSummaryDTO.QADx = hdnQADx;
             chartSummaryDTO.QADxRemarks = hdnQADxRemarks;
-            if (!string.IsNullOrEmpty(hdnQADxCodes2))
-                dtAudit.Rows.Add("Dx", hdnQADx, hdnQADxRemarks, Convert.ToInt32(0));
 
             var hdnQACptCodes = Request.Form["hdnQACptCodes"].ToString();
             var hdnQACptRemarks = Request.Form["hdnQACptRemarks"].ToString();
             chartSummaryDTO.QACPTCode = hdnQACptCodes;
             chartSummaryDTO.QACPTCodeRemarks = hdnQACptRemarks;
-            if (!string.IsNullOrEmpty(hdnQACptCodes))
-                dtAudit.Rows.Add("CPTCode", hdnQACptCodes, hdnQACptRemarks, Convert.ToInt32(0));
 
             string currDt = Request.Form["hdnCurrDate"].ToString();
             bool audit = IsAuditRequired("QA", chartSummaryDTO.ProjectID, currDt);

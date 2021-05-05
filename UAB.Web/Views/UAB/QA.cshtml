@@ -243,8 +243,11 @@
                         }
                         else {
                             if ($(DxClaimremarks[i]).val() == "") {
-                                $(DxClaimremarks[i]).focus();
-                                $("#validDxRemarksClaim_" + id).show();
+                                var chk = $("#chkAll_" + tabid).is(':checked');
+                                if (!chk) {
+                                    $(DxClaimremarks[i]).focus();
+                                    $("#validDxRemarksClaim_" + id).show();
+                                }
                             }
                         }
                     }
@@ -325,8 +328,11 @@
                         }
                         else {
                             if ($(DxNewClaimremarks[i]).val() == "") {
-                                $(DxNewClaimremarks[i]).focus();
-                                $("#validDxRemarksClaim_" + id).show();
+                                var chk = $("#chkAll_" + tabid).is(':checked');
+                                if (!chk) {
+                                    $(DxNewClaimremarks[i]).focus();
+                                    $("#validDxRemarksClaim_" + id).show();
+                                }
                             }
                         }
                     }
@@ -348,8 +354,11 @@
                         }
                         else {
                             if ($(CptClaimRemarks[i]).val() == "") {
-                                $(CptClaimRemarks[i]).focus();
-                                $("#validCptRemarksClaim_" + id).show();
+                                var chk = $("#chkAll_" + tabid).is(':checked');
+                                if (!chk) {
+                                    $(CptClaimRemarks[i]).focus();
+                                    $("#validCptRemarksClaim_" + id).show();
+                                }
                             }
                         }
                     }
@@ -434,8 +443,11 @@
                         }
                         else {
                             if ($(CptNewClaimRemarks[i]).val() == "") {
-                                $(CptNewClaimRemarks[i]).focus();
-                                $("#validCptRemarksClaim_" + id).show();
+                                var chk = $("#chkAll_" + tabid).is(':checked');
+                                if (!chk) {
+                                    $(CptNewClaimRemarks[i]).focus();
+                                    $("#validCptRemarksClaim_" + id).show();
+                                }
                             }
                         }
                     }
@@ -464,8 +476,11 @@
                 }
                 else {
                     if ($(Dxremarks[i]).val() == "") {
-                        $(Dxremarks[i]).focus();
-                        $("#validDx_" + id).show();
+                        var chk = $("#chkAll_1").is(':checked');
+                        if (!chk) {
+                            $(Dxremarks[i]).focus();
+                            $("#validDx_" + id).show();
+                        }
                     }
                 }
             }
@@ -516,8 +531,11 @@
                 }
                 else {
                     if ($(CptRemarks[i]).val() == "") {
-                        $(CptRemarks[i]).focus();
-                        $("#validCpt_" + id).show();
+                        var chk = $("#chkAll_1").is(':checked');
+                        if (!chk) {
+                            $(CptRemarks[i]).focus();
+                            $("#validCpt_" + id).show();
+                        }
                     }
                 }
             }
@@ -601,6 +619,34 @@
         var txtdanger = $('[class*=txtdanger][style=""]');
         if (txtdanger.length > 0)
             e.preventDefault();
+
+        var Dx = $("[id*=DxRemarks_]").last().attr('id');
+        if (Dx != "") {
+            var dddd = Dx.split('_')[1];
+            $("#validDx_" + dddd).remove();
+        }
+        var Cpt = $("[id*=CptRemarks_]").last().attr('id');
+        if (Cpt != "") {
+            var dddd = Cpt.split('_')[1];
+            $("#validCpt_" + dddd).remove();
+        }
+        $(".tab").each(function () {
+            var id = $(this).attr('id');
+            if (id != "1") {
+                var tabid = id.split("tabIndex_")[1].split("_ClaimId_")[0];
+                var Dxtab = $("[id*=DxRemarkss_" + tabid + "_]").last().attr('id');
+                if (Dxtab != "") {
+                    var dddd = Dxtab.split('_')[2];
+                    $("#validDxRemarksClaim_" + dddd).remove();
+                }
+
+                var Cpttab = $("[id*=CptRemarkss_" + tabid + "_]").last().attr('id');
+                if (Cpttab != "") {
+                    var dddd = Cpttab.split('_')[2];
+                    $("#validCptRemarksClaim_" + dddd).remove();
+                }
+            }
+        });
     });
 
     validationPopUp = function () {
