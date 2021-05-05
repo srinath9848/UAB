@@ -51,11 +51,11 @@
                 {
                     if (tabitem.ClaimId == null)
                     {
-                        <li class="nav-item tabDiv1"> <a class="nav-link active tab" data-toggle="tab" id="@tabIndex" alt="tabDiv1" href="#cliam1" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick">Claim @tabIndex</span></a> </li>
+                        <li class="nav-item tabDiv1"> <a class="nav-link active tab" data-toggle="tab" id="@tabIndex" alt="tabDiv1" href="#claim1" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick">Claim @tabIndex</span></a> </li>
                     }
                     else
                     {
-                        <li class="@string.Format("nav-item tabDiv{0}", tabIndex)" style="display:inherit;"> <a class="nav-link tab" data-toggle="tab" id="@tabIndex" alt="tabDiv2" href="@string.Format("#cliam{0}", tabIndex)" role="tab"> <span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick">Claim @tabIndex</span></a></li>
+                        <li class="@string.Format("nav-item tabDiv{0}", tabIndex)" style="display:inherit;"> <a class="nav-link tab" data-toggle="tab" id="@tabIndex" alt="tabDiv2" href="@string.Format("#claim{0}", tabIndex)" role="tab"> <span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick">Claim @tabIndex</span></a></li>
                     }
                     tabIndex = tabIndex + 1;
                 }
@@ -69,7 +69,7 @@
                     tabitem.TabIndex = tabIndex;
                     if (tabitem.ClaimId == null)
                     {
-                        <div class="tab-pane active" id="cliam1" role="tabpanel">
+                        <div class="tab-pane active" id="claim1" role="tabpanel">
                             <div class="p-20" id="tabDiv1">
                                 <br />
                                 <div class="card">
@@ -203,15 +203,15 @@
                                     </div>
                                 </div>
                             </div>
-                            @*<div class="tab-pane" id="cliam2" role="tabpanel">
+                            @*<div class="tab-pane" id="claim2" role="tabpanel">
                                 <div class="p-20" id="tabDiv2">
                                 </div>
                             </div>
-                            <div class="tab-pane" id="cliam3" role="tabpanel">
+                            <div class="tab-pane" id="claim3" role="tabpanel">
                                 <div class="p-20" id="tabDiv3">
                                 </div>
                             </div>
-                            <div class="tab-pane" id="cliam4" role="tabpanel">
+                            <div class="tab-pane" id="claim4" role="tabpanel">
                                 <div class="p-20" id="tabDiv4">
                                 </div>
                             </div>*@
@@ -219,7 +219,7 @@
                     }
                     else
                     {
-                        <div class="tab-pane" id="@string.Format("cliam{0}", tabIndex)" role="tabpanel">
+                        <div class="tab-pane" id="@string.Format("claim{0}", tabIndex)" role="tabpanel">
                             <div class="p-20" id="@string.Format("tabDiv{0}", tabIndex)">
                                 <partial name="_ReadyForPostingClaim" model=tabitem />
                             </div>

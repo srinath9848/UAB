@@ -702,7 +702,7 @@ namespace UAB.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddNewCliam(int cliamID ,int pid1,int pid2,int pid3,int pid4 )
+        public IActionResult AddNewClaim(int claimID ,int pid1,int pid2,int pid3,int pid4 )
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var prlst= clinicalcaseOperations.GetProvidersList();
@@ -711,8 +711,8 @@ namespace UAB.Controllers
             //ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
-            ViewBag.CliamId = cliamID;
-            return PartialView("_CodingCliam");
+            ViewBag.ClaimId = claimID;
+            return PartialView("_CodingClaim");
         }
         #endregion
 
