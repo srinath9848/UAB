@@ -1318,6 +1318,7 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
             ViewBag.Status = clinicalcaseOperations.GetStatusList();
+            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
 
             return View();
         }

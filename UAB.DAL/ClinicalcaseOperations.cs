@@ -2226,27 +2226,22 @@ namespace UAB.DAL
             if (!mUserRole.Contains("Manager"))
                 lstDto = lstDto.Where(a => a.Assigneduser.Equals(Convert.ToString(mUserId))).ToList();
 
-            if (!string.IsNullOrWhiteSpace(searchParametersDTO.ClinicalCaseId))
-            {
-                lstDto = lstDto.Where(s => s.ClinicalCaseId == searchParametersDTO.ClinicalCaseId).ToList();
-            }
-            else
-            {
+                if (!string.IsNullOrWhiteSpace(searchParametersDTO.MRN))
+                    lstDto = lstDto.Where(a => a.MRN == searchParametersDTO.MRN).ToList();
+                
                 if (!string.IsNullOrWhiteSpace(searchParametersDTO.FirstName))
                     lstDto = lstDto.Where(s => s.FirstName.Contains(searchParametersDTO.FirstName.ToUpper())).ToList();
                 if (!string.IsNullOrWhiteSpace(searchParametersDTO.LastName))
                     lstDto = lstDto.Where(s => s.LastName.Contains(searchParametersDTO.LastName.ToUpper())).ToList();
                 if (!string.IsNullOrWhiteSpace(searchParametersDTO.MRN))
-                    lstDto = lstDto.Where(a => a.MRN == searchParametersDTO.MRN).ToList();
                 if (searchParametersDTO.DoSFrom != default(DateTime) && searchParametersDTO.DoSTo != default(DateTime))
                 {
                     var DoSFrom = searchParametersDTO.DoSFrom.Value;
                     var DoSTo = searchParametersDTO.DoSTo.Value;
                     lstDto = lstDto.Where(s => s.DoS >= DoSFrom && s.DoS <= DoSTo).ToList();
                 }
-                if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProviderName))
+                if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProviderName) && searchParametersDTO.ProviderName != "--Select a Provider--")
                     lstDto = lstDto.Where(a => a.ProviderName == searchParametersDTO.ProviderName).ToList();
-
                 if (!string.IsNullOrWhiteSpace(searchParametersDTO.StatusName) && searchParametersDTO.StatusName != "--Select a Status--")
                 {
                     if (searchParametersDTO.IncludeBlocked)
@@ -2264,8 +2259,7 @@ namespace UAB.DAL
                 {
                     lstDto = lstDto.Where(a => a.IncludeBlocked == "1").ToList();
                 }
-
-            }
+            
             return lstDto;
         }
 
