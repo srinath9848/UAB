@@ -161,12 +161,22 @@
     });
 
     var isBlocked = @(ViewBag.IsBlocked == null ? "0": "1");
+     var currentindex = @ViewBag.currentindex;
+    var lastindex =@ViewBag.lastindex;
 
     if (isBlocked == 1) {
         $("#btnBlock").hide();
         $("#btnBlockHistory").show();
-        $("#btnPrevious").show();
-        $("#btnNext").show();
+        if (currentindex == 0) {
+            $("#btnPrevious").hide();
+        } else {
+            $("#btnPrevious").show();
+        }
+        if (currentindex == lastindex) {
+            $("#btnNext").hide();
+        } else {
+            $("#btnNext").show();
+        }
     }
 
     var dxArray = [];
