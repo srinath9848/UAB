@@ -318,8 +318,11 @@ namespace UAB.Controllers
             string[] lstcpts = cpt.Split("|");
             foreach (var item in lstcpts.OrderBy(a => a.Split("^")[0]).ToList())
             {
-                string[] lstcptrow = item.Split("^");
-                dtCPT.Rows.Add(lstcptrow[1], lstcptrow[2], lstcptrow[3], lstcptrow[4], claimId);
+                if (item != "")
+                {
+                    string[] lstcptrow = item.Split("^");
+                    dtCPT.Rows.Add(lstcptrow[1], lstcptrow[2], lstcptrow[3], lstcptrow[4], claimId);
+                }
             }
         }
 
@@ -702,11 +705,11 @@ namespace UAB.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddNewClaim(int claimID ,int pid1,int pid2,int pid3,int pid4 )
+        public IActionResult AddNewClaim(int claimID, int pid1, int pid2, int pid3, int pid4)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var prlst= clinicalcaseOperations.GetProvidersList();
-            prlst.RemoveAll(x => x.ID == pid1 ||x.ID==pid2 ||x.ID==pid3||x.ID==pid4);
+            var prlst = clinicalcaseOperations.GetProvidersList();
+            prlst.RemoveAll(x => x.ID == pid1 || x.ID == pid2 || x.ID == pid3 || x.ID == pid4);
             ViewBag.Providers = prlst;
             //ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
