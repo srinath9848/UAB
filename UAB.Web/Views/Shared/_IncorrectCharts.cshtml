@@ -445,6 +445,37 @@
                                 </div>
 
                             </div>
+                            <div class="clearfix"></div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">QA Details</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="col-12">
+                                        <div class="row mb-3">
+                                            <div class="col-lg-6">
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 m-t-15">
+                                                        Error Type
+                                                    </label>
+                                                    <div class="col-md-7">
+                                                        @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight CoderDetails" })
+                                                        @Html.ValidationMessageFor(model => model.FirstOrDefault().QADTO.ErrorType, null, new { @class = "text-danger ErrorType" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group row">
+                                                    <label class="col-md-5 m-t-15"></label>
+                                                    <div class="col-md-7">
+                                                        <button id="btnsubmit" type="submit" class="btn btn-success">Submit</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                     }
@@ -459,37 +490,7 @@
                     tabIndex = tabIndex + 1;
                 }
             }
-            <div class="clearfix"></div>
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">QA Details</h4>
-                </div>
-                <div class="card-body">
-                    <div class="col-12">
-                        <div class="row mb-3">
-                            <div class="col-lg-6">
-                                <div class="form-group row">
-                                    <label class="col-md-3 m-t-15">
-                                        Error Type
-                                    </label>
-                                    <div class="col-md-7">
-                                        @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight" })
-                                        @Html.ValidationMessageFor(model => model.FirstOrDefault().QADTO.ErrorType, null, new { @class = "text-danger ErrorType" })
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group row">
-                                    <label class="col-md-5 m-t-15"></label>
-                                    <div class="col-md-7">
-                                        <button id="btnsubmit" type="submit" class="btn btn-success">Submit</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 </div>

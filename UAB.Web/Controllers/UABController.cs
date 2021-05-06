@@ -318,8 +318,11 @@ namespace UAB.Controllers
             string[] lstcpts = cpt.Split("|");
             foreach (var item in lstcpts.OrderBy(a => a.Split("^")[0]).ToList())
             {
-                string[] lstcptrow = item.Split("^");
-                dtCPT.Rows.Add(lstcptrow[1], lstcptrow[2], lstcptrow[3], lstcptrow[4], claimId);
+                if (!string.IsNullOrEmpty(item))
+                {
+                    string[] lstcptrow = item.Split("^");
+                    dtCPT.Rows.Add(lstcptrow[1], lstcptrow[2], lstcptrow[3], lstcptrow[4], claimId);
+                }
             }
         }
 
@@ -702,11 +705,11 @@ namespace UAB.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddNewCliam(int cliamID ,int pid1,int pid2,int pid3,int pid4 )
+        public IActionResult AddNewCliam(int cliamID, int pid1, int pid2, int pid3, int pid4)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var prlst= clinicalcaseOperations.GetProvidersList();
-            prlst.RemoveAll(x => x.ID == pid1 ||x.ID==pid2 ||x.ID==pid3||x.ID==pid4);
+            var prlst = clinicalcaseOperations.GetProvidersList();
+            prlst.RemoveAll(x => x.ID == pid1 || x.ID == pid2 || x.ID == pid3 || x.ID == pid4);
             ViewBag.Providers = prlst;
             //ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -813,6 +816,7 @@ namespace UAB.Controllers
             dtAudit.Columns.Add("FieldName", typeof(string));
             dtAudit.Columns.Add("FieldValue", typeof(string));
             dtAudit.Columns.Add("Remark", typeof(string));
+            dtAudit.Columns.Add("ErrorTypeId", typeof(int));
             dtAudit.Columns.Add("ClaimId", typeof(int));
 
             var hdnClaimId2 = Request.Form["hdnClaimId2"].ToString();
@@ -839,14 +843,18 @@ namespace UAB.Controllers
             string hdnQADxRemarks4 = Request.Form["hdnQADxRemarks4"].ToString();
             string hdnQADxCodes4 = Request.Form["hdnQADxCodes4"].ToString();
 
+            string hdnhdnQAErrorTypeID2 = Request.Form["hdnQAErrorTypeID2"].ToString();
+            string hdnhdnQAErrorTypeID3 = Request.Form["hdnQAErrorTypeID3"].ToString();
+            string hdnhdnQAErrorTypeID4 = Request.Form["hdnQAErrorTypeID4"].ToString();
+
             if (!string.IsNullOrEmpty(hdnQADxCodes2))
-                dtAudit.Rows.Add("Dx", hdnQADxCodes2, hdnQADxRemarks2, Convert.ToInt32(hdnClaimId2));
+                dtAudit.Rows.Add("Dx", hdnQADxCodes2, hdnQADxRemarks2, hdnhdnQAErrorTypeID2, Convert.ToInt32(hdnClaimId2));
 
             if (!string.IsNullOrEmpty(hdnQADxCodes3))
-                dtAudit.Rows.Add("Dx", hdnQADxCodes3, hdnQADxRemarks3, Convert.ToInt32(hdnClaimId3));
+                dtAudit.Rows.Add("Dx", hdnQADxCodes3, hdnQADxRemarks3, hdnhdnQAErrorTypeID3, Convert.ToInt32(hdnClaimId3));
 
             if (!string.IsNullOrEmpty(hdnQADxCodes4))
-                dtAudit.Rows.Add("Dx", hdnQADxCodes4, hdnQADxRemarks4, Convert.ToInt32(hdnClaimId4));
+                dtAudit.Rows.Add("Dx", hdnQADxCodes4, hdnQADxRemarks4, hdnhdnQAErrorTypeID4, Convert.ToInt32(hdnClaimId4));
 
             string hdnQACptRemarks2 = Request.Form["hdnQACptRemarks2"].ToString();
             string hdnQACptCodes2 = Request.Form["hdnQACptCodes2"].ToString();
@@ -856,13 +864,13 @@ namespace UAB.Controllers
             string hdnQACptCodes4 = Request.Form["hdnQACptCodes4"].ToString();
 
             if (!string.IsNullOrEmpty(hdnQACptCodes2))
-                dtAudit.Rows.Add("CPTCode", hdnQACptCodes2, hdnQACptRemarks2, Convert.ToInt32(hdnClaimId2));
+                dtAudit.Rows.Add("CPTCode", hdnQACptCodes2, hdnQACptRemarks2, hdnhdnQAErrorTypeID2, Convert.ToInt32(hdnClaimId2));
 
             if (!string.IsNullOrEmpty(hdnQACptCodes3))
-                dtAudit.Rows.Add("CPTCode", hdnQACptCodes3, hdnQACptRemarks3, Convert.ToInt32(hdnClaimId3));
+                dtAudit.Rows.Add("CPTCode", hdnQACptCodes3, hdnQACptRemarks3, hdnhdnQAErrorTypeID3, Convert.ToInt32(hdnClaimId3));
 
             if (!string.IsNullOrEmpty(hdnQACptCodes4))
-                dtAudit.Rows.Add("CPTCode", hdnQACptCodes4, hdnQACptRemarks4, Convert.ToInt32(hdnClaimId4));
+                dtAudit.Rows.Add("CPTCode", hdnQACptCodes4, hdnQACptRemarks4, hdnhdnQAErrorTypeID4, Convert.ToInt32(hdnClaimId4));
 
             //Ending of Reading Claim2 to Claim4 Data
 

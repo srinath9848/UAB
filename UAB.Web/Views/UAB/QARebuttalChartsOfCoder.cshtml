@@ -15,6 +15,7 @@
 
     $(".CoderDetails").css("pointer-events", "none");
     $(".CoderDetails").css("background-color", "#e9ecef");
+    $('.CoderDetails').attr('disabled', true);
 
     $(".reject").removeClass("reject")
     $(".accept").removeClass("accept")
@@ -79,6 +80,7 @@
     });
 
     $('#btnsubmit').click(function (e) {
+        $('.CoderDetails').removeAttr('disabled');
 
         $("#hdnRejected").val('');
 

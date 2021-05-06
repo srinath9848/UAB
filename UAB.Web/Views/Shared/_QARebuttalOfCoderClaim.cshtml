@@ -209,13 +209,13 @@
                 @{ Show = (string.IsNullOrEmpty(dictRevisedCptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
                 @if (!string.IsNullOrEmpty(dictQACptCodes?.ElementAt(i).Value))
                 {
-                    string codercptCode = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[0]);
+                    //string codercptCode = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[0]);
                     string qacptCode = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[0]);
-                    string coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[1]);
+                    //string coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[1]);
                     string qaMod = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[1]);
-                    string coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[2]);
+                    //string coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[2]);
                     string qaQty = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[2]);
-                    string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
+                    //string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
                     string qaLinks = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[3]);
                     string link = !string.IsNullOrEmpty(@qaLinks) || @qaLinks != "null" ? @qaLinks : "Link All";
                     <div title="Code : @qacptCode, Mod : @qaMod, Quantity : @qaQty, Links : @link" class="col-md-3 input-group" @*style="max-width:26% !important;"*@>
@@ -356,7 +356,7 @@
                             Error Type
                         </label>
                         <div class="col-md-7">
-                            @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight" })
+                            @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight CoderDetails" })
                             @Html.ValidationMessageFor(model => model.QADTO.ErrorType, null, new { @class = "text-danger ErrorType" })
                         </div>
                     </div>

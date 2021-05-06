@@ -29,6 +29,7 @@
     $("#coding").addClass('selected');
     $('#divChkAll').hide();
     $('.QACorrections').hide();
+    $('.CoderDetails').attr('disabled', true);
 
     $('span i').click(function () {
         var id = $(this).attr('id');
@@ -47,7 +48,7 @@
     });
 
     $('#btnsubmit').click(function (e) {
-
+        $('.CoderDetails').removeAttr('disabled');
         $(".tab").each(function () {
             var id = $(this).attr('id');
             var tabid = id.split("tabIndex_")[1].split("_ClaimId_")[0];

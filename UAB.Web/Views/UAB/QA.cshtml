@@ -175,7 +175,7 @@
     }
 
     $('#btnsubmit,#SubmitAndGetNext').click(function (e) {
-        $('.CoderDetails').removeAttr('disabled')
+        $('.CoderDetails').removeAttr('disabled');
         var currentdate = new Date();
         //Format: DD/MM/YYYY
         var datetime = currentdate.getDate() + "/"
@@ -197,12 +197,13 @@
                 var ProviderRemarks = "";
                 var payorRemarks = "";
                 var FeedbackRemarks = "";
+                var ErrorTypeID = $("#ErrorType_" + tabid).val();
                 $("#hdnClaim" + tabid).val('');
                 if ($("#ProviderID_" + tabid + ".reject").length > 0) {
                     ProviderID = $("#ProviderID_" + tabid+"1").val();
                     ProviderRemarks = $("#ProviderID_" + tabid + "2").val();
                     if ($("#hdnClaim" + tabid).val() == "") {
-                        $("#hdnClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderID" + "," + ProviderID + "," + ProviderRemarks);
+                        $("#hdnClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderID" + "," + ProviderID + "," + ProviderRemarks + "^" + "ErrorTypeId" + "," + ErrorTypeID);
                     }
                 }
 
@@ -210,9 +211,9 @@
                     PayorID = $("#PayorID_" + tabid+"1").val();
                     payorRemarks = $('#PayorID_' + tabid+"2").val();
                     if ($("#hdnClaim" + tabid).val() == "") {
-                        $("#hdnClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "PayorID" + "," + PayorID + "," + payorRemarks);
+                        $("#hdnClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "PayorID" + "," + PayorID + "," + payorRemarks + "^" + "ErrorTypeId" + "," + ErrorTypeID);
                     } else {
-                        $("#hdnClaim" + tabid).val($("#hdnClaim" + tabid).val() + "^" + "PayorID" + "," + PayorID + "," + payorRemarks);
+                        $("#hdnClaim" + tabid).val($("#hdnClaim" + tabid).val() + "^" + "PayorID" + "," + PayorID + "," + payorRemarks + "^" + "ErrorTypeId" + "," + ErrorTypeID);
                     }
                 }
 
@@ -220,9 +221,9 @@
                     ProviderFeedbackID = $("#Feedback_" + tabid+"1").val();
                     FeedbackRemarks = $('#Feedback_' + tabid+"2").val();
                     if ($("#hdnClaim" + tabid).val() == "") {
-                        $("#hdnClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID + "," + FeedbackRemarks);
+                        $("#hdnClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID + "," + FeedbackRemarks + "^" + "ErrorTypeId" + "," + ErrorTypeID);
                     } else {
-                        $("#hdnClaim" + tabid).val($("#hdnClaim" + tabid).val() + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID + "," + FeedbackRemarks);
+                        $("#hdnClaim" + tabid).val($("#hdnClaim" + tabid).val() + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID + "," + FeedbackRemarks + "^" + "ErrorTypeId" + "," + ErrorTypeID);
                     }
                 }
 
@@ -264,8 +265,10 @@
                         if ($("#" + $(DxClaimcodes[i]).attr("id")).val() != "" &&
                             $(".DxClaim_" + tabid+"_" + id).css("display") == "flex") {
 
-                            if ($("#hdnQADxCodes" + tabid).val() == "")
+                            if ($("#hdnQADxCodes" + tabid).val() == "") {
                                 $("#hdnQADxCodes" + tabid).val(id + "^" + $(DxClaimcodes[i]).val());
+                                $("#hdnQAErrorTypeID" + tabid).val(ErrorTypeID);
+                            }
                             else
                                 $("#hdnQADxCodes" + tabid).val($("#hdnQADxCodes" + tabid).val() + "|" + id + "^" + $(DxClaimcodes[i]).val());
                         }
@@ -273,8 +276,10 @@
                     else {
                         if ($("#" + $(DxClaimcodes[i]).attr("id")).val() != "") {
 
-                            if ($("#hdnQADxCodes" + tabid).val() == "")
+                            if ($("#hdnQADxCodes" + tabid).val() == "") {
                                 $("#hdnQADxCodes" + tabid).val(id + "^" + $(DxClaimcodes[i]).val());
+                                $("#hdnQAErrorTypeID" + tabid).val(ErrorTypeID);
+                            }
                             else
                                 $("#hdnQADxCodes" + tabid).val($("#hdnQADxCodes" + tabid).val() + "|" + id + "^" + $(DxClaimcodes[i]).val());
                         }
@@ -291,8 +296,10 @@
 
                         if ($("#" + $(DxNewClaimcodes[i]).attr("id")).val() != "") {
 
-                            if ($("#hdnQADxCodes" + tabid).val() == "")
+                            if ($("#hdnQADxCodes" + tabid).val() == "") {
                                 $("#hdnQADxCodes" + tabid).val(id + "^" + $(DxNewClaimcodes[i]).val());
+                                $("#hdnQAErrorTypeID" + tabid).val(ErrorTypeID);
+                            }
                             else
                                 $("#hdnQADxCodes" + tabid).val($("#hdnQADxCodes" + tabid).val() + "|" + id + "^" + $(DxNewClaimcodes[i]).val());
                         }
@@ -300,8 +307,10 @@
                     else {
                         if ($("#" + $(DxNewClaimcodes[i]).attr("id")).val() != "") {
 
-                            if ($("#hdnQADxCodes" + tabid).val() == "")
+                            if ($("#hdnQADxCodes" + tabid).val() == "") {
                                 $("#hdnQADxCodes" + tabid).val(id + "^" + $(DxNewClaimcodes[i]).val());
+                                $("#hdnQAErrorTypeID" + tabid).val(ErrorTypeID);
+                            }
                             else
                                 $("#hdnQADxCodes" + tabid).val($("#hdnQADxCodes" + tabid).val() + "|" + id + "^" + $(DxNewClaimcodes[i]).val());
                         }
@@ -347,8 +356,10 @@
                     $("#validCptRemarksClaim_" + id).hide();
                     if ($(CptClaimRemarks[i]).css("display") == "flex") {
                         if ($(CptClaimRemarks[i]).val() != "") {
-                            if ($("#hdnQACptRemarks" + tabid).val() == "")
+                            if ($("#hdnQACptRemarks" + tabid).val() == "") {
                                 $("#hdnQACptRemarks" + tabid).val(id + "^" + $(CptClaimRemarks[i]).val());
+                                $("#hdnQAErrorTypeID" + tabid).val(ErrorTypeID);
+                            }
                             else
                                 $("#hdnQACptRemarks" + tabid).val($("#hdnQACptRemarks" + tabid).val() + "|" + id + "^" + $(CptClaimRemarks[i]).val());
                         }
@@ -376,6 +387,7 @@
                                     var qty = $("#txtQty_" + tabid +"_" + i).val() != "" ? $("#txtQty_" + tabid +"_" + i).val() : null;
                                     var links = $("#txtLinks_" + tabid +"_" + i).val() != "" ? $("#txtLinks_" + tabid +"_" + i).val() : null;
                                     $("#hdnQACptCodes" + tabid).val(id + "^" + $("#txtCpt_" + tabid +"_" + i).val() + "^" + mod + "^" + qty + "^" + links);
+                                    $("#hdnQAErrorTypeID" + tabid).val(ErrorTypeID);
                                 }
                             }
                             else {
@@ -384,6 +396,7 @@
                                     var qty = $("#txtQty_" + tabid +"_" + i).val() != "" ? $("#txtQty_" + tabid +"_" + i).val() : null;
                                     var links = $("#txtLinks_" + tabid +"_" + i).val() != "" ? $("#txtLinks_" + tabid +"_" + i).val() : null;
                                     $("#hdnQACptCodes" + tabid).val($("#hdnQACptCodes" + tabid).val() + "|" + id + "^" + $("#txtCpt_" + tabid +"_" + i).val() + "^" + mod + "^" + qty + "^" + links);
+                                    $("#hdnQAErrorTypeID" + tabid).val(ErrorTypeID);
                                 }
                             }
                         }
@@ -395,12 +408,14 @@
                                 var qty = $("#txtQty_" + tabid +"_" + i).val() != "" ? $("#txtQty_" + tabid +"_" + i).val() : null;
                                 var links = $("#txtLinks_" + i).val() != "" ? $("#txtLinks_" + i).val() : null;
                                 $("#hdnQACptCodes" + tabid).val(id + "^" + $("#txtCpt_" + tabid +"_" + i).val() + "^" + mod + "^" + qty + "^" + links);
+                                $("#hdnQAErrorTypeID" + tabid).val(ErrorTypeID);
                             }
                             else {
                                 var mod = $("#txtMod_" + tabid +"_" + i).val() != "" ? $("#txtMod_" + tabid +"_" + i).val() : null;
                                 var qty = $("#txtQty_" + tabid +"_" + i).val() != "" ? $("#txtQty_" + tabid +"_" + i).val() : null;
                                 var links = $("#txtLinks_" + tabid +"_" + i).val() != "" ? $("#txtLinks_" + tabid +"_" + i).val() : null;
                                 $("#hdnQACptCodes" + tabid).val($("#hdnQACptCodes" + tabid).val() + "|" + id + "^" + $("#txtCpt_" + tabid +"_" + i).val() + "^" + mod + "^" + qty + "^" + links);
+                                $("#hdnQAErrorTypeID" + tabid).val(ErrorTypeID);
                             }
                         }
                     }
@@ -422,14 +437,17 @@
                                 var qty = $("#txt" + tabid + "qty_" + index).val() != "" ? $("#txt" + tabid + "qty_" + index).val() : null;
                                 var links = $("#txt" + tabid + "links_" + index).val() != "" ? $("#txt" + tabid + "links_" + index).val() : null;
                                 $("#hdnQACptCodes" + tabid).val(id + "^" + $("#txt" + tabid + "Cpt_" + index).val() + "^" + mod + "^" + qty + "^" + links);
+                                $("#hdnQAErrorTypeID" + tabid).val(ErrorTypeID);
                             }
                         }
                         else {
-                            if ($("#txt" + tabid + "Cpt_" + index).val() != undefined) {
+
+                            if ($("#txt" + tabid + "Cpt_" + index).val() != undefined && $("#txt" + tabid + "Cpt_" + index).val() != "") {
                                 var mod = $("#txt" + tabid + "mod_" + index).val() != "" ? $("#txt" + tabid + "mod_" + index).val() : null;
                                 var qty = $("#txt" + tabid + "qty_" + index).val() != "" ? $("#txt" + tabid + "qty_" + index).val() : null;
                                 var links = $("#txt" + tabid + "links_" + index).val() != "" ? $("#txt" + tabid + "links_" + index).val() : null;
                                 $("#hdnQACptCodes" + tabid).val($("#hdnQACptCodes" + tabid).val() + "|" + id + "^" + $("#txt" + tabid + "Cpt_" + index).val() + "^" + mod + "^" + qty + "^" + links);
+                                $("#hdnQAErrorTypeID" + tabid).val(ErrorTypeID);
                             }
                         }
 
