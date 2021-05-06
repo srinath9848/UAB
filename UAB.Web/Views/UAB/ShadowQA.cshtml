@@ -45,13 +45,13 @@
 
             $(".CodingDetails").hide();
             $(".errMsg").text('');
-            $("#ErrorType_" + id).css("pointer-events", "none");
-            $("#ErrorTypeError_" + id).text('');
+            $("#ShadowQAErrorType_" + id).css("pointer-events", "none");
+            $("#ShadowQAErrorTypeError_" + id).text('');
             $(".ShadowQACorrectionsComments").hide();
         }
         else {
             $("[class*=AdjustAcceptReject_" + id + "]").removeClass('accept');
-            $("#ErrorType_" + id).css("pointer-events", "auto");
+            $("#ShadowQAErrorType_" + id).css("pointer-events", "auto");
         }
     }
 
@@ -75,8 +75,8 @@
                     var idclass = $(".newlyDxCpt_" + tabIndex).css("display") == "flex";
                     if (idclass == false) {
                         $("#chkAll_1").prop('checked', true);
-                        $("#ErrorTypeError_1").val('');
-                        $("#ErrorType_1").css("pointer-events", "none");
+                        $("#ShadowQAErrorTypeError_1").val('');
+                        $("#ShadowQAErrorType_1").css("pointer-events", "none");
                         $(".ErrorType").text('');
                         $(".errMsg").text('');
                         $(".ShadowQACorrectionsComments").hide();
@@ -93,8 +93,8 @@
                     var accept = $(".AcceptRejectWidth_1").find(".accept").length;
                     if (total == accept) {
                         $("#chkAll_1").prop('checked', true);
-                        $("#ErrorTypeError_1").val('');
-                        $("#ErrorType_1").css("pointer-events", "none");
+                        $("#ShadowQAErrorTypeError_1").val('');
+                        $("#ShadowQAErrorType_1").css("pointer-events", "none");
                         $(".ErrorType").text('');
                         $(".errMsg").text('');
                         $(".ShadowQACorrectionsComments").hide();
@@ -105,7 +105,7 @@
                     $("#" + id + "1").css("display", "flex");
                     $("#" + id + "2").css("display", "flex");
                     $("#chkAll_1").prop('checked', false);
-                    $("#ErrorType_1").css("pointer-events", "auto");
+                    $("#ShadowQAErrorType_1").css("pointer-events", "auto");
                     $(".ShadowQACorrectionsComments").show();
                 }
             }
@@ -125,8 +125,8 @@
                     var idclass = $(".newlyDxCpt_" + tabIndex).css("display") == "flex";
                     if (idclass == false) {
                         $("#chkAll_" + iconid).prop('checked', true);
-                        $("#ErrorTypeError_" + iconid).val('');
-                        $("#ErrorType_" + iconid).css("pointer-events", "none");
+                        $("#ShadowQAErrorTypeError_" + iconid).val('');
+                        $("#ShadowQAErrorType_" + iconid).css("pointer-events", "none");
                         $(".ErrorType_" + iconid).text('');
                         $(".errMsg").text('');
                         $(".ShadowQACorrectionsComments_" + iconid).hide();
@@ -143,8 +143,8 @@
                     var accept = $(".AcceptRejectWidth_" + iconid).find(".accept").length;
                     if (total == accept) {
                         $("#chkAll_" + iconid).prop('checked', true);
-                        $("#ErrorTypeError_" + iconid).val('');
-                        $("#ErrorType_" + iconid).css("pointer-events", "none");
+                        $("#ShadowQAErrorTypeError_" + iconid).val('');
+                        $("#ShadowQAErrorType_" + iconid).css("pointer-events", "none");
                         $(".ErrorType_" + iconid).text('');
                         $(".errMsg").text('');
                         $(".ShadowQACorrectionsComments_" + iconid).hide();
@@ -155,7 +155,7 @@
                     $("#" + id + "1").css("display", "flex");
                     $("#" + id + "2").css("display", "flex");
                     $("#chkAll_" + iconid).prop('checked', false);
-                    $("#ErrorType_" + iconid).css("pointer-events", "auto");
+                    $("#ShadowQAErrorType_" + iconid).css("pointer-events", "auto");
                     $(".ShadowQACorrectionsComments_" + iconid).show();
                 }
             }
@@ -180,7 +180,7 @@
         } else {
             $("#btnNext").show();
         }
-    }
+    }*@
 
     var dxArray = [];
     function DxFunction(txt_0) {
@@ -414,7 +414,6 @@
 
     $('#btnsubmit,#SubmitAndGetNext').click(function (e) {
 
-
         var Dxremarks = $("[class*=DxRemarks_]");
         $("#hdnShadowQADxRemarks").val("");
         for (var i = 0; i < Dxremarks.length; i++) {
@@ -523,9 +522,28 @@
         var total = $(".fa-check-circle").length;
         var reject = $(".reject").length;
         var accept = $(".accept").length;
-        if (total != accept && $("#ShadowQADTO_ErrorType").val() == "") {
-            $(".ErrorType").html('<span id="projectdd-error" class="">ErrorType is required.</span>');
-            e.preventDefault();
+        if (total != accept) {
+            $(".tab").each(function () {
+                var id = $(this).attr('id');
+                if (id == "1") {
+                    var chk = $("#chkAll_" + id).is(':checked');
+                    if (!chk) {
+                        if ($("#ShadowQAErrorType_" + id).val() == "") {
+                            $("#ShadowQAErrorTypeError_" + id).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                            e.preventDefault();
+                        }
+                    }
+                } else {
+                    var tabid = id.split("tabIndex_")[1].split("_ClaimId_")[0];
+                    var chk = $("#chkAll_" + tabid).is(':checked');
+                    if (!chk) {
+                        if ($("#ShadowQAErrorType_" + tabid).val() == "") {
+                            $("#ShadowQAErrorTypeError_" + tabid).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                            e.preventDefault();
+                        }
+                    }
+                }
+            });
         }
         if (total != accept + reject) {
             $("#validationPopUp").show();
