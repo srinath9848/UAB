@@ -988,6 +988,9 @@ namespace UAB.DAL
                             chartSummaryDTO.QAProviderFeedbackText = Convert.ToString(reader["QAProviderFeedbackText"]);
                             chartSummaryDTO.QAProviderFeedbackRemarks = Convert.ToString(reader["QAProviderFeedbackIDRemark"]);
 
+                            if (reader["QAErrorTypeId"] != DBNull.Value)
+                                chartSummaryDTO.QADTO.ErrorType = Convert.ToInt32(reader["QAErrorTypeId"]);
+
                             //if (reader["ProviderId"] != DBNull.Value)
                             //    chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                             //if (reader["PayorId"] != DBNull.Value)

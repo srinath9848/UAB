@@ -242,7 +242,7 @@
                                             <div title="" class="col-md-3 input-group" style="@Show">
                                                 <input type="text" class="form-control QARemarks ControlHeight" value="@dictQADxRemarks?.ElementAt(i).Value" />
                                             </div>
-                                            <div class="col-md-3 input-group" style="@Show">
+                                            <div class="col-md-3 input-group QADxRevised_@i Dx_@i" style="display: none">
                                                 <div class="input-group-prepend ControlHeight">
                                                     <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                                                 </div>
@@ -256,8 +256,8 @@
                                                 }
                                                 <input type="text" id="txtDx_@j" class="form-control txtDx ControlHeight" autocomplete="off" tabindex="@j" placeholder="Code" value="@QaDxVal" />
                                             </div>
-                                            <div class="col-md-3 input-group" style="@Show">
-                                                <input type="text" id="DxRemarks_@j" class="form-control ControlHeight DxRemarks_@j Dx_@j" style="display:none" />
+                                            <div class="col-md-3 input-group QADxRevised_@i Dx_@i" style="display: none">
+                                                <input type="text" id="DxRemarks_@j" class="form-control ControlHeight DxRemarks_@j Dx_@j" />
                                             </div>
                                         </div>
 
@@ -274,16 +274,21 @@
                                         <input class="form-control CoderDetails ControlHeight valid" type="text" value="">
                                         <div class="input-group-append">
                                             <span class="input-group-text QACorrections ControlHeight AcceptRejectWidth_@tabIndex">
-                                                &nbsp;<i id="Dx_@i" data="@tabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
-                                                &nbsp;<i id="Dx_@i" data="@tabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
+                                                &nbsp;<i data="@tabIndex" class="fa fa-edit fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true" style="visibility:hidden"></i>
+                                                &nbsp;<i id="Dx_@totalDxCount" data="@tabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                                             </span>
                                         </div>
                                     </div>
+                                    <div title="" class="col-md-3 input-group" style="display:flex"></div>
                                     <div class="col-md-3 newlyDxCpt_@tabIndex input-group Dx_@totalDxCount" style="display:none">
                                         <div class="input-group-prepend ControlHeight">
                                             <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@totalDxCount</span>
                                         </div>
                                         <input type="text" id="txtDx_@totalDxCount" onfocusout="DxFunction('txtDx_@totalDxCount')" class="form-control ControlHeight txtDx" tabindex="@totalDxCount" autofocus="autofocus" autocomplete="off" placeholder="Code" />
+                                    </div>
+                                    <div class="col-md-3 input-group Dx_@totalDxCount" style="display:none">
+                                        <input type="text" id="DxRemarks_@i" class="form-control QADxRevised_@i ControlHeight DxRemarks_@i Dx_@i" onchange="removevalid('Dx_@i')"/>
+                                        <span id="validDx_@i" class="text-danger txtdanger" style="display:none">*</span>
                                     </div>
                                 </div>
                             </div>
@@ -404,7 +409,7 @@
                                             <div title="" class="col-md-3 input-group" style="@Show">
                                                 <input type="text" class="form-control QARemarks ControlHeight" value="@dictQACptRemarks?.ElementAt(i).Value" />
                                             </div>
-                                            <div class="col-md-3 CptlessWidth input-group" style="@Show">
+                                            <div class="col-md-3 CptlessWidth QACptRevised_@j input-group Cpt_@j" style="display:none">
                                                 <div class="input-group-prepend ControlHeight">
                                                     <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                                                 </div>
@@ -425,8 +430,8 @@
                                                 <input type="text" id="txtQty_@j" class="form-control ControlHeight" autocomplete="off" placeholder="1" value="@qaQty1" />
                                                 <input type="text" id="txtLinks_@j" class="form-control ControlHeight" autocomplete="off" placeholder="Link All" value="@linkAllVal" />
                                             </div>
-                                            <div class="col-md-3 input-group" style="@Show">
-                                                <input type="text" id="CptRemarks_@j" class="form-control ControlHeight CptRemarks_@j Cpt_@j" style="display:none" />
+                                            <div class="col-md-3 input-group Cpt_@j" style="display:none">
+                                                <input type="text" id="CptRemarks_@j" class="form-control ControlHeight QACptRevised_@j CptRemarks_@j Cpt_@j" />
                                             </div>
                                         </div>
                                         j = j + 1;
@@ -448,7 +453,7 @@
                                                 &nbsp;<i id="Cpt_@totalCptCount" data="@tabIndex" class="fa fa-times-circle fa-lg ignore" aria-hidden="true"></i>
                                             </span>
                                         </div>
-                                    </div>
+                                    </div><div title="" class="col-md-3 input-group" style="display:flex"></div>
                                     <div class="col-md-3 newlyDxCpt_@tabIndex CptlessWidth input-group Cpt_@totalCptCount" style="display:none">
                                         <div class="input-group-prepend ControlHeight">
                                             <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@totalCptCount</span>
@@ -457,6 +462,10 @@
                                         <input type="text" style="min-width:42px;" class="form-control ControlHeight" id="txtMod_@totalCptCount" autocomplete="off" placeholder="Mod" value="" />
                                         <input type="text" style="max-width:23px;" class="form-control ControlHeight" id="txtQty_@totalCptCount" autocomplete="off" placeholder="1" value="" />
                                         <input type="text" class="form-control ControlHeight" id="txtLinks_@totalCptCount" autocomplete="off" placeholder="Link All" onfocusout="CptFunction('txtLinks_@totalCptCount+')" />
+                                    </div>
+                                    <div class="col-md-3 input-group Cpt_@totalCptCount" id="CptRemarks_@i" style="display:none">
+                                        <input type="text" id="CptRemarks_@i" class="form-control QACptRevised_@i ControlHeight CptRemarks_@i Cpt_@i" style="display:none" />
+                                        <span id="validCpt_@i" class="text-danger txtdanger" style="display:none">*</span>
                                     </div>
                                 </div>
                             </div>
@@ -502,6 +511,67 @@
                                     @Html.ValidationMessageFor(model => model.FirstOrDefault().ShadowQAProviderFeedbackRemarks, null, new { @class = "text-danger errMsg" })
                                 </div>
                             </div>
+
+                            <div class="clearfix"></div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">QA Details</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="col-12">
+                                            <div class="row mb-3">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group row">
+                                                        <label class="col-md-5 m-t-15">
+                                                            Error Type
+                                                        </label>
+                                                        <div class="col-md-7">
+                                                            @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Shadow QA Details</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="col-12">
+                                            <div class="row mb-3">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group row">
+                                                        <label class="col-md-3 m-t-15">
+                                                            Error Type
+                                                        </label>
+                                                        <div class="col-md-7">
+                                                            @Html.DropDownListFor(model => model.FirstOrDefault().ShadowQADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight", @id = string.Format("ShadowQAErrorType_{0}", tabIndex), @onchange = "ShadowQAErrorType('" + tabIndex + "')" })
+                                                            @Html.ValidationMessageFor(model => model.FirstOrDefault().ShadowQADTO.ErrorType, null, new { @class = "text-danger ErrorType", @id = string.Format("ShadowQAErrorTypeError_{0}", tabIndex) })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group row">
+                                                        <div class="col-md-12">
+                                                            <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.ShadowQA, ChartType= "Block", ProjectID=@Model.FirstOrDefault().ProjectID, ProjectName=Model.FirstOrDefault().ProjectName,ccid=Model.FirstOrDefault().CodingDTO.ClinicalCaseID,plusorminus="Previous"})" class="btn btn-success Available" id="btnPrevious" style="display:none">Previous</a>
+                                                            <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.ShadowQA, ChartType= "Block", ProjectID=@Model.FirstOrDefault().ProjectID, ProjectName=Model.FirstOrDefault().ProjectName,ccid=Model.FirstOrDefault().CodingDTO.ClinicalCaseID,plusorminus="Next"})" class="btn btn-success Available" id="btnNext" style="display:none">Next</a>
+                                                            <button id="btnBlock" type="button" class="btn btn-danger" onclick="Block()">Block</button>
+                                                            <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger" onclick="BlockHistory()">Block History</button>
+                                                            <button type="submit" id="btnsubmit" class="btn btn-success">Save</button>
+                                                            <button id="SubmitAndGetNext" name="SubmitAndGetNext" type="submit" value="SubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 }
@@ -516,66 +586,7 @@
                 tabIndex = tabIndex + 1;
             }
         }
-        <div class="clearfix"></div>
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">QA Details</h4>
-                </div>
-                <div class="card-body">
-                    <div class="col-12">
-                        <div class="row mb-3">
-                            <div class="col-lg-6">
-                                <div class="form-group row">
-                                    <label class="col-md-5 m-t-15">
-                                        Error Type
-                                    </label>
-                                    <div class="col-md-7">
-                                        @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;" })
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Shadow QA Details</h4>
-                </div>
-                <div class="card-body">
-                    <div class="col-12">
-                        <div class="row mb-3">
-                            <div class="col-lg-6">
-                                <div class="form-group row">
-                                    <label class="col-md-3 m-t-15">
-                                        Error Type
-                                    </label>
-                                    <div class="col-md-7">
-                                        @Html.DropDownListFor(model => model.FirstOrDefault().ShadowQADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight", @id = string.Format("ErrorType_{0}", tabIndex), @onchange = "ErrorType('" + tabIndex + "')" })
-                                        @Html.ValidationMessageFor(model => model.FirstOrDefault().ShadowQADTO.ErrorType, null, new { @class = "text-danger ErrorType", @id = string.Format("ErrorTypeError_{0}", tabIndex) })
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group row">
-                                    <div class="col-md-12">
-                                        <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.ShadowQA, ChartType= "Block", ProjectID=@Model.FirstOrDefault().ProjectID, ProjectName=Model.FirstOrDefault().ProjectName,ccid=Model.FirstOrDefault().CodingDTO.ClinicalCaseID,plusorminus="Previous"})" class="btn btn-success Available" id="btnPrevious" style="display:none">Previous</a>
-                                        <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.ShadowQA, ChartType= "Block", ProjectID=@Model.FirstOrDefault().ProjectID, ProjectName=Model.FirstOrDefault().ProjectName,ccid=Model.FirstOrDefault().CodingDTO.ClinicalCaseID,plusorminus="Next"})" class="btn btn-success Available" id="btnNext" style="display:none">Next</a>
-                                        <button id="btnBlock" type="button" class="btn btn-danger" onclick="Block()">Block</button>
-                                        <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger" onclick="BlockHistory()">Block History</button>
-                                        <button type="submit" id="btnsubmit" class="btn btn-success">Save</button>
-                                        <button id="SubmitAndGetNext" name="SubmitAndGetNext" type="submit" value="SubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
 </div>
 <style>
