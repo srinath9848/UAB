@@ -153,7 +153,6 @@ namespace UAB.Controllers
                 }
                 qadto = clinicalcaseOperations.GetQABlockedChart(Role, ChartType, ProjectID, searchcid);
                 qadto.FirstOrDefault().ProjectName = ProjectName;
-
             }
             else if (Role == Roles.Coder.ToString())
             {
@@ -193,6 +192,7 @@ namespace UAB.Controllers
             else if (Role == Roles.ShadowQA.ToString())
             {
                 chartSummaryDTOlst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);  //total block charts
+                List<int> cidslst = chartSummaryDTOlst.Select(x => x.CodingDTO.ClinicalCaseID).ToList();
                 switch (plusorminus)
                 {
                     case "Next":
@@ -204,7 +204,9 @@ namespace UAB.Controllers
                         }
                         break;
                     case "Previous":
-                        chartSummaryDTO = chartSummaryDTOlst.TakeWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).LastOrDefault();
+                        var x = chartSummaryDTOlst;
+                        x.Reverse();
+                        chartSummaryDTO = x.SkipWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).FirstOrDefault();
                         if (chartSummaryDTO == null)
                         {
                             chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
@@ -217,10 +219,13 @@ namespace UAB.Controllers
                         chartSummaryDTO.ProjectName = ProjectName;
                         break;
                 }
+                int indcid = chartSummaryDTO.CodingDTO.ClinicalCaseID;
+                int currentindex = cidslst.IndexOf(indcid);
+                ViewBag.currentindex = currentindex;
+                ViewBag.lastindex = cidslst.Count - 1;
             }
 
             ViewBag.IsBlocked = "1";
-            ViewBag.Postionindex = 0;
 
             #region binding data
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
@@ -266,7 +271,6 @@ namespace UAB.Controllers
                     lst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);
                     List<int> codercidslst=lst.Select(x => x.CodingDTO.ClinicalCaseID).ToList();
                     ViewBag.lastindex = codercidslst.Count-1;
-
                     break;
                 case "QA":
                     lstChartSummaryDTO = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
@@ -279,6 +283,10 @@ namespace UAB.Controllers
                     break;
                 case "ShadowQa":
                     chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
+                    //for prenxt button disblenable operation
+                    lst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);
+                    List<int> shadowqacidslst = lst.Select(x => x.CodingDTO.ClinicalCaseID).ToList();
+                    ViewBag.lastindex = shadowqacidslst.Count - 1;
                     break;
             }
             if (Role == "QA")
