@@ -48,11 +48,11 @@ namespace UAB.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAgeingReport ()
+        public IActionResult GetAgingReport ()
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstageingtDTO = clinicalcaseOperations.GetAgeingReport();
-            return PartialView("_AgeingReport", lstageingtDTO);
+            var lstagingtDTO = clinicalcaseOperations.GetAgingReport();
+            return PartialView("_AgingReport", lstagingtDTO);
         }
 
         [HttpPost]

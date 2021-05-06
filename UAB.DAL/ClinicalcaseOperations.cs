@@ -1380,7 +1380,7 @@ namespace UAB.DAL
             }
         }
 
-        public DataSet GetAgeingReport()
+        public DataSet GetAgingReport()
         {
             DataSet ds = new DataSet();
             using (var context = new UABContext())
