@@ -127,24 +127,24 @@
     var dxArray2 = [];
     var dxArray3 = [];
     var dxArray4 = [];
-    function DxCliams(txt_0) {
+    function DxClaims(txt_0) {
         var id = parseInt(txt_0.split("_")[1]) + parseInt(1);
-        var cliamid = parseInt(txt_0.split("_")[2]);
+        var claimid = parseInt(txt_0.split("_")[2]);
         var seqno = parseInt($("#" + txt_0).val()) + parseInt(1);
-        if (cliamid == 2) {
+        if (claimid == 2) {
             if (txt_0.split("_")[1] !== undefined) {
                 var currId = parseInt(id) - parseInt(1);
-                var val = $("#txtDx2Cliam_" + currId).val();
+                var val = $("#txtDx2Claim_" + currId).val();
                 if (val !== "" && val !== null) {
                     if ($.inArray(val, dxArray2) == -1) {
                         dxArray2.push(val);
                         //$("#hdnDxCodes1").val(dxArray2);
-                        var text = "'" + "txt" + cliamid + "Dx_" + seqno + "_" + parseInt(2) + "'";
-                        var deleteDx = "'" + "Div2DxRow_" + id + "_" + cliamid + "'";
-                        $("#DivDx_2").append('<div id="Div2DxRow_' + id + "_" + cliamid + '" class="form-group row"><label class="col-md-3 lessWidth m-t-15"></label><div class="col-md-3 input-group" style="visibility: hidden;"><input type="hidden" id=' + text + ' value=' + seqno + ' /><div class="input-group-prepend ControlHeight"><span class="input-group-text AdjustSerialNumber" id="basic-addon1"></span></div><input class="form-control CoderDetails ControlHeight valid" type="text" value="" style="pointer-events: none; background-color: rgb(233, 236, 239);"><div class="input-group-append ControlHeight"><span class="input-group-text AcceptRejectWidth QACorrections"></span></div></div><div title="" class="col-md-3 input-group" style="visibility: hidden;"><input type="text" id="" class="form-control ControlHeight" value="" aria-invalid="false"></div><div class="col-md-3 input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text dx2index AdjustSerialNumber" id="basic-addon1">' + seqno + '</span></div><input type="text" placeholder="Code" onfocusout="DxCliams(' + text + ')" class="form-control CoderDetails cliam_' + cliamid + '" id="txtDx2Cliam_' + id + '" /></div></div>');
-                        $("#txtDx2Cliam_" + currId).removeAttr("onfocusout", "");
-                        $("#txtDx2Cliam_1").removeAttr("onfocusout", "");
-                        $("#txtDx2Cliam_" + id).focus();
+                        var text = "'" + "txt" + claimid + "Dx_" + seqno + "_" + parseInt(2) + "'";
+                        var deleteDx = "'" + "Div2DxRow_" + id + "_" + claimid + "'";
+                        $("#DivDx_2").append('<div id="Div2DxRow_' + id + "_" + claimid + '" class="form-group row"><label class="col-md-3 lessWidth m-t-15"></label><div class="col-md-3 input-group" style="visibility: hidden;"><input type="hidden" id=' + text + ' value=' + seqno + ' /><div class="input-group-prepend ControlHeight"><span class="input-group-text AdjustSerialNumber" id="basic-addon1"></span></div><input class="form-control CoderDetails ControlHeight valid" type="text" value="" style="pointer-events: none; background-color: rgb(233, 236, 239);"><div class="input-group-append ControlHeight"><span class="input-group-text AcceptRejectWidth QACorrections"></span></div></div><div title="" class="col-md-3 input-group" style="visibility: hidden;"><input type="text" id="" class="form-control ControlHeight" value="" aria-invalid="false"></div><div class="col-md-3 input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text dx2index AdjustSerialNumber" id="basic-addon1">' + seqno + '</span></div><input type="text" placeholder="Code" onfocusout="DxClaims(' + text + ')" class="form-control CoderDetails claim_' + claimid + '" id="txtDx2Claim_' + id + '" /></div></div>');
+                        $("#txtDx2Claim_" + currId).removeAttr("onfocusout", "");
+                        $("#txtDx2Claim_1").removeAttr("onfocusout", "");
+                        $("#txtDx2Claim_" + id).focus();
                     }
                 }
                 else {
@@ -152,40 +152,40 @@
                 }
             }
         }
-        if (cliamid == 3) {
+        if (claimid == 3) {
             if (txt_0.split("_")[1] !== undefined) {
                 var currId = parseInt(id) - parseInt(1);
-                var val = $("#txtDx3Cliam_" + currId).val();
+                var val = $("#txtDx3Claim_" + currId).val();
                 if (val !== "" && val !== null) {
                     if ($.inArray(val, dxArray3) == -1) {
                         dxArray3.push(val);
                         //$("#hdnDxCodes2").val(dxArray3);
-                        var text = "'" + "txt" + cliamid + "Dx_" + seqno + "_" + parseInt(3) + "'";
-                        var deleteDx = "'" + "Div3DxRow_" + id + "_" + cliamid + "'";
-                        $("#DivDx_3").append('<div id="Div3DxRow_' + id + "_" + cliamid + '" class="form-group row"><label class="col-md-2 lessWidth m-t-15"></label><div class="col-md-2 input-group" style="visibility: hidden;"><input type="hidden" id=' + text + ' value=' + seqno + ' /><div class="input-group-prepend ControlHeight"><span class="input-group-text AdjustSerialNumber" id="basic-addon1"></span></div><input class="form-control CoderDetails ControlHeight valid" type="text" value="" style="pointer-events: none; background-color: rgb(233, 236, 239);"><div class="input-group-append ControlHeight"><span class="input-group-text AcceptRejectWidth QACorrections"></span></div></div><div title="" class="col-md-2 input-group" style="visibility: hidden;"><input type="text" id="" class="form-control" value="" aria-invalid="false"></div><div class="col-md-3 input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text dx3index AdjustSerialNumber" id="basic-addon1">' + seqno + '</span></div><input type="text" placeholder="Code" onfocusout="DxCliams(' + text + ')" class="form-control CoderDetails cliam_' + cliamid + '" id="txtDx3Cliam_' + id + '" /></div></div>');
-                        $("#txtDx3Cliam_" + currId).removeAttr("onfocusout", "");
-                        $("#txtDx3Cliam_1").removeAttr("onfocusout", "");
-                        $("#txtDx3Cliam_" + id).focus();
+                        var text = "'" + "txt" + claimid + "Dx_" + seqno + "_" + parseInt(3) + "'";
+                        var deleteDx = "'" + "Div3DxRow_" + id + "_" + claimid + "'";
+                        $("#DivDx_3").append('<div id="Div3DxRow_' + id + "_" + claimid + '" class="form-group row"><label class="col-md-2 lessWidth m-t-15"></label><div class="col-md-2 input-group" style="visibility: hidden;"><input type="hidden" id=' + text + ' value=' + seqno + ' /><div class="input-group-prepend ControlHeight"><span class="input-group-text AdjustSerialNumber" id="basic-addon1"></span></div><input class="form-control CoderDetails ControlHeight valid" type="text" value="" style="pointer-events: none; background-color: rgb(233, 236, 239);"><div class="input-group-append ControlHeight"><span class="input-group-text AcceptRejectWidth QACorrections"></span></div></div><div title="" class="col-md-2 input-group" style="visibility: hidden;"><input type="text" id="" class="form-control" value="" aria-invalid="false"></div><div class="col-md-3 input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text dx3index AdjustSerialNumber" id="basic-addon1">' + seqno + '</span></div><input type="text" placeholder="Code" onfocusout="DxClaims(' + text + ')" class="form-control CoderDetails claim_' + claimid + '" id="txtDx3Claim_' + id + '" /></div></div>');
+                        $("#txtDx3Claim_" + currId).removeAttr("onfocusout", "");
+                        $("#txtDx3Claim_1").removeAttr("onfocusout", "");
+                        $("#txtDx3Claim_" + id).focus();
                     }
                 } else {
                     $("#txt3Cpt_1").focus();
                 }
             }
         }
-        if (cliamid == 4) {
+        if (claimid == 4) {
             if (txt_0.split("_")[1] !== undefined) {
                 var currId = parseInt(id) - parseInt(1);
-                var val = $("#txtDx4Cliam_" + currId).val();
+                var val = $("#txtDx4Claim_" + currId).val();
                 if (val !== "" && val !== null) {
                     if ($.inArray(val, dxArray4) == -1) {
                         dxArray4.push(val);
                         //$("#hdnDxCodes3").val(dxArray4);
-                        var text = "'" + "txt" + cliamid + "Dx_" + seqno + "_" + parseInt(4) + "'";
-                        var deleteDx = "'" + "Div4DxRow_" + id + "_" + cliamid + "'";
-                        $("#DivDx_4").append('<div id="Div4DxRow_' + id + "_" + cliamid + '" class="form-group row"><label class="col-md-2 lessWidth m-t-15"></label><div class="col-md-2 input-group" style="visibility: hidden;"><input type="hidden" id=' + text + ' value=' + seqno + ' /><div class="input-group-prepend ControlHeight"><span class="input-group-text AdjustSerialNumber" id="basic-addon1"></span></div><input class="form-control CoderDetails ControlHeight valid" type="text" value="" style="pointer-events: none; background-color: rgb(233, 236, 239);"><div class="input-group-append ControlHeight"><span class="input-group-text AcceptRejectWidth QACorrections"></span></div></div><div title="" class="col-md-2 input-group" style="visibility: hidden;"><input type="text" id="" class="form-control" value="" aria-invalid="false"></div><div class="col-md-3 input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text dx4index AdjustSerialNumber" id="basic-addon1">' + seqno + '</span></div><input type="text" placeholder="Code" onfocusout="DxCliams(' + text + ')" class="form-control CoderDetails cliam_' + cliamid + '" id="txtDx4Cliam_' + id + '" /></div></div>');
-                        $("#txtDx4Cliam_" + currId).removeAttr("onfocusout", "");
-                        $("#txtDx4Cliam_1").removeAttr("onfocusout", "");
-                        $("#txtDx4Cliam_" + id).focus();
+                        var text = "'" + "txt" + claimid + "Dx_" + seqno + "_" + parseInt(4) + "'";
+                        var deleteDx = "'" + "Div4DxRow_" + id + "_" + claimid + "'";
+                        $("#DivDx_4").append('<div id="Div4DxRow_' + id + "_" + claimid + '" class="form-group row"><label class="col-md-2 lessWidth m-t-15"></label><div class="col-md-2 input-group" style="visibility: hidden;"><input type="hidden" id=' + text + ' value=' + seqno + ' /><div class="input-group-prepend ControlHeight"><span class="input-group-text AdjustSerialNumber" id="basic-addon1"></span></div><input class="form-control CoderDetails ControlHeight valid" type="text" value="" style="pointer-events: none; background-color: rgb(233, 236, 239);"><div class="input-group-append ControlHeight"><span class="input-group-text AcceptRejectWidth QACorrections"></span></div></div><div title="" class="col-md-2 input-group" style="visibility: hidden;"><input type="text" id="" class="form-control" value="" aria-invalid="false"></div><div class="col-md-3 input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text dx4index AdjustSerialNumber" id="basic-addon1">' + seqno + '</span></div><input type="text" placeholder="Code" onfocusout="DxClaims(' + text + ')" class="form-control CoderDetails claim_' + claimid + '" id="txtDx4Claim_' + id + '" /></div></div>');
+                        $("#txtDx4Claim_" + currId).removeAttr("onfocusout", "");
+                        $("#txtDx4Claim_1").removeAttr("onfocusout", "");
+                        $("#txtDx4Claim_" + id).focus();
                     }
                 } else {
                     $("#txt4Cpt_1").focus();
@@ -246,20 +246,20 @@
     var cptArray2 = [];
     var cptArray3 = [];
     var cptArray4 = [];
-    function CptCliams(txtCpt_0) {
+    function CptClaims(txtCpt_0) {
         var id = parseInt(txtCpt_0.split("_")[1]) + parseInt(1);
-        var cliamid = parseInt(txtCpt_0.split("_")[2]);
+        var claimid = parseInt(txtCpt_0.split("_")[2]);
         var seqno = parseInt($("#" + txtCpt_0).val()) + parseInt(1);
-        if (cliamid == 2) {
+        if (claimid == 2) {
             if (txtCpt_0.split("_")[1] !== undefined) {
                 var id1 = parseInt(id) - parseInt(1);
                 var val1 = $("#txt2Cpt_" + id).val();
                 if (val1 !== "") {
                     if ($.inArray(val1, cptArray2) == -1) {
                         //if (val1 !== undefined) {
-                        var txtLinks = "'" + "txt" + cliamid + "links_" + seqno + "_" + parseInt(2) + "'";
-                        var deleteCpt = "'" + "Div2CptRow_" + id + "_" + cliamid + "'";
-                        $("#DivCpt_2").append('<div id="Div2CptRow_' + id + "_" + cliamid + '" class="form-group row"><label class="col-md-3 lessWidth m-t-15"></label><div class="col-md-3 CptlessWidth input-group" style="visibility: hidden;"><input type="hidden" id=' + txtLinks + ' value=' + seqno + ' /><div class="input-group-prepend ControlHeight"><span class="input-group-text AdjustSerialNumber" id="basic-addon1"></span></div><input type="text" maxlength="5" style="min-width: 50px; pointer-events: none; background-color: rgb(233, 236, 239);" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Code" value=""><input type="text" style="min-width: 42px; pointer-events: none; background-color: rgb(233, 236, 239);" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Mod" value=""><input type="text" style="max-width: 23px; pointer-events: none; background-color: rgb(233, 236, 239);" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="1" value=""><input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="" style="pointer-events: none; background-color: rgb(233, 236, 239);"><div class="input-group-append ControlHeight"><span class="input-group-text AcceptRejectWidth"></span></div></div><div title="" class="col-md-3 input-group" style="visibility: hidden;"><input type="text" id="" class="form-control" value="" aria-invalid="false"></div><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text cpt2index AdjustSerialNumber" id="basic-addon1">' + seqno + '</span></div><input type = "text" placeholder = "Code" style="max-width:55px;" maxlength="5" class= "form-control CoderDetails Cptcliam_' + cliamid + '" id = "txt2Cpt_' + id + '" /><input type="text" style="max-width:50px;" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="Mod" id="txt2mod_' + id + '"/><input type="text" style="max-width:30px;" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="1" value="1" id="txt2qty_' + id + '"/><input type="text" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="Link All" onfocusout="CptCliams(' + txtLinks + ')" id="txt2links_' + id + '"/></div></div>');
+                        var txtLinks = "'" + "txt" + claimid + "links_" + seqno + "_" + parseInt(2) + "'";
+                        var deleteCpt = "'" + "Div2CptRow_" + id + "_" + claimid + "'";
+                        $("#DivCpt_2").append('<div id="Div2CptRow_' + id + "_" + claimid + '" class="form-group row"><label class="col-md-3 lessWidth m-t-15"></label><div class="col-md-3 CptlessWidth input-group" style="visibility: hidden;"><input type="hidden" id=' + txtLinks + ' value=' + seqno + ' /><div class="input-group-prepend ControlHeight"><span class="input-group-text AdjustSerialNumber" id="basic-addon1"></span></div><input type="text" maxlength="5" style="min-width: 50px; pointer-events: none; background-color: rgb(233, 236, 239);" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Code" value=""><input type="text" style="min-width: 42px; pointer-events: none; background-color: rgb(233, 236, 239);" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Mod" value=""><input type="text" style="max-width: 23px; pointer-events: none; background-color: rgb(233, 236, 239);" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="1" value=""><input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="" style="pointer-events: none; background-color: rgb(233, 236, 239);"><div class="input-group-append ControlHeight"><span class="input-group-text AcceptRejectWidth"></span></div></div><div title="" class="col-md-3 input-group" style="visibility: hidden;"><input type="text" id="" class="form-control" value="" aria-invalid="false"></div><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text cpt2index AdjustSerialNumber" id="basic-addon1">' + seqno + '</span></div><input type = "text" placeholder = "Code" style="max-width:55px;" maxlength="5" class= "form-control CoderDetails Cptclaim_' + claimid + '" id = "txt2Cpt_' + id + '" /><input type="text" style="max-width:50px;" class="form-control CoderDetails Cptclaim_' + claimid + '" placeholder="Mod" id="txt2mod_' + id + '"/><input type="text" style="max-width:30px;" class="form-control CoderDetails Cptclaim_' + claimid + '" placeholder="1" value="1" id="txt2qty_' + id + '"/><input type="text" class="form-control CoderDetails Cptclaim_' + claimid + '" placeholder="Link All" onfocusout="CptClaims(' + txtLinks + ')" id="txt2links_' + id + '"/></div></div>');
                         $("#txt2links_" + id1).removeAttr("onfocusout", "");
                         $("#txt2links_1").removeAttr("onfocusout", "");
                        // alert(id);
@@ -273,16 +273,16 @@
             }
         }
 
-        if (cliamid == 3) {
+        if (claimid == 3) {
             if (txtCpt_0.split("_")[1] !== undefined) {
                 var id1 = parseInt(id) - parseInt(1);
                 var val1 = $("#txt3Cpt_" + id1).val();
                 if (val1 !== "") {
                     if ($.inArray(val1, cptArray3) == -1) {
                         //if (val1 !== undefined) {
-                        var txtLinks = "'" + "txt" + cliamid + "links_" + seqno + "_" + parseInt(3) + "'";
-                        var deleteCpt = "'" + "Div3CptRow_" + id + "_" + cliamid + "'";
-                        $("#DivCpt_3").append('<div id="Div3CptRow_' + id + "_" + cliamid + '" class="form-group row"><label class="col-md-3 lessWidth m-t-15"></label><div class="col-md-3 CptlessWidth input-group" style="visibility: hidden;"><input type="hidden" id=' + txtLinks + ' value=' + seqno + ' /><div class="input-group-prepend ControlHeight"><span class="input-group-text AdjustSerialNumber" id="basic-addon1"></span></div><input type="text" maxlength="5" style="min-width: 50px; pointer-events: none; background-color: rgb(233, 236, 239);" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Code" value=""><input type="text" style="min-width: 42px; pointer-events: none; background-color: rgb(233, 236, 239);" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Mod" value=""><input type="text" style="max-width: 23px; pointer-events: none; background-color: rgb(233, 236, 239);" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="1" value=""><input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="" style="pointer-events: none; background-color: rgb(233, 236, 239);"><div class="input-group-append ControlHeight"><span class="input-group-text AcceptRejectWidth"></span></div></div><div title="" class="col-md-3 input-group" style="visibility: hidden;"><input type="text" id="" class="form-control" value="" aria-invalid="false"></div><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text cpt2index AdjustSerialNumber" id="basic-addon1">' + seqno + '</span></div><input type = "text" placeholder = "Code" style="max-width:55px;" maxlength="5" class= "form-control CoderDetails Cptcliam_' + cliamid + '" id = "txt3Cpt_' + id + '" /><input type="text" style="max-width:50px;" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="Mod" id="txt3mod_' + id + '"/><input type="text" style="max-width:30px;" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="1" value="1" id="txt3qty_' + id + '"/><input type="text" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="Link All" onfocusout="CptCliams(' + txtLinks + ')" id="txt3links_' + id + '"/></div></div>');
+                        var txtLinks = "'" + "txt" + claimid + "links_" + seqno + "_" + parseInt(3) + "'";
+                        var deleteCpt = "'" + "Div3CptRow_" + id + "_" + claimid + "'";
+                        $("#DivCpt_3").append('<div id="Div3CptRow_' + id + "_" + claimid + '" class="form-group row"><label class="col-md-3 lessWidth m-t-15"></label><div class="col-md-3 CptlessWidth input-group" style="visibility: hidden;"><input type="hidden" id=' + txtLinks + ' value=' + seqno + ' /><div class="input-group-prepend ControlHeight"><span class="input-group-text AdjustSerialNumber" id="basic-addon1"></span></div><input type="text" maxlength="5" style="min-width: 50px; pointer-events: none; background-color: rgb(233, 236, 239);" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Code" value=""><input type="text" style="min-width: 42px; pointer-events: none; background-color: rgb(233, 236, 239);" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Mod" value=""><input type="text" style="max-width: 23px; pointer-events: none; background-color: rgb(233, 236, 239);" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="1" value=""><input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="" style="pointer-events: none; background-color: rgb(233, 236, 239);"><div class="input-group-append ControlHeight"><span class="input-group-text AcceptRejectWidth"></span></div></div><div title="" class="col-md-3 input-group" style="visibility: hidden;"><input type="text" id="" class="form-control" value="" aria-invalid="false"></div><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text cpt2index AdjustSerialNumber" id="basic-addon1">' + seqno + '</span></div><input type = "text" placeholder = "Code" style="max-width:55px;" maxlength="5" class= "form-control CoderDetails Cptclaim_' + claimid + '" id = "txt3Cpt_' + id + '" /><input type="text" style="max-width:50px;" class="form-control CoderDetails Cptclaim_' + claimid + '" placeholder="Mod" id="txt3mod_' + id + '"/><input type="text" style="max-width:30px;" class="form-control CoderDetails Cptclaim_' + claimid + '" placeholder="1" value="1" id="txt3qty_' + id + '"/><input type="text" class="form-control CoderDetails Cptclaim_' + claimid + '" placeholder="Link All" onfocusout="CptClaims(' + txtLinks + ')" id="txt3links_' + id + '"/></div></div>');
                         $("#txt3links_" + id1).removeAttr("onfocusout", "");
                         $("#txt3links_1").removeAttr("onfocusout", "");
                         $("#txt3Cpt_" + id).focus();
@@ -295,16 +295,16 @@
             }
         }
 
-        if (cliamid == 4) {
+        if (claimid == 4) {
             if (txtCpt_0.split("_")[1] !== undefined) {
                 var id1 = parseInt(id) - parseInt(1);
                 var val1 = $("#txt4Cpt_" + id1).val();
                 if (val1 !== "") {
                     if ($.inArray(val1, cptArray4) == -1) {
                         //if (val1 !== undefined) {
-                        var txtLinks = "'" + "txt" + cliamid + "links_" + seqno + "_" + parseInt(4) + "'";
-                        var deleteCpt = "'" + "Div4CptRow_" + id + "_" + cliamid + "'";
-                        $("#DivCpt_4").append('<div id="Div4CptRow_' + id + "_" + cliamid + '" class="form-group row"><label class="col-md-3 lessWidth m-t-15"></label><div class="col-md-3 CptlessWidth input-group" style="visibility: hidden;"><input type="hidden" id=' + txtLinks + ' value=' + seqno + ' /><div class="input-group-prepend ControlHeight"><span class="input-group-text AdjustSerialNumber" id="basic-addon1"></span></div><input type="text" maxlength="5" style="min-width: 50px; pointer-events: none; background-color: rgb(233, 236, 239);" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Code" value=""><input type="text" style="min-width: 42px; pointer-events: none; background-color: rgb(233, 236, 239);" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Mod" value=""><input type="text" style="max-width: 23px; pointer-events: none; background-color: rgb(233, 236, 239);" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="1" value=""><input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="" style="pointer-events: none; background-color: rgb(233, 236, 239);"><div class="input-group-append ControlHeight"><span class="input-group-text AcceptRejectWidth"></span></div></div><div title="" class="col-md-3 input-group" style="visibility: hidden;"><input type="text" id="" class="form-control" value="" aria-invalid="false"></div><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text cpt2index AdjustSerialNumber" id="basic-addon1">' + seqno + '</span></div><input type = "text" placeholder = "Code" style="max-width:55px;" maxlength="5" class= "form-control CoderDetails Cptcliam_' + cliamid + '" id = "txt4Cpt_' + id + '" /><input type="text" style="max-width:50px;" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="Mod" id="txt4mod_' + id + '"/><input type="text" style="max-width:30px;" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="1" value="1" id="txt4qty_' + id + '"/><input type="text" class="form-control CoderDetails Cptcliam_' + cliamid + '" placeholder="Link All" onfocusout="CptCliams(' + txtLinks + ')" id="txt4links_' + id + '"/></div></div>');
+                        var txtLinks = "'" + "txt" + claimid + "links_" + seqno + "_" + parseInt(4) + "'";
+                        var deleteCpt = "'" + "Div4CptRow_" + id + "_" + claimid + "'";
+                        $("#DivCpt_4").append('<div id="Div4CptRow_' + id + "_" + claimid + '" class="form-group row"><label class="col-md-3 lessWidth m-t-15"></label><div class="col-md-3 CptlessWidth input-group" style="visibility: hidden;"><input type="hidden" id=' + txtLinks + ' value=' + seqno + ' /><div class="input-group-prepend ControlHeight"><span class="input-group-text AdjustSerialNumber" id="basic-addon1"></span></div><input type="text" maxlength="5" style="min-width: 50px; pointer-events: none; background-color: rgb(233, 236, 239);" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Code" value=""><input type="text" style="min-width: 42px; pointer-events: none; background-color: rgb(233, 236, 239);" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Mod" value=""><input type="text" style="max-width: 23px; pointer-events: none; background-color: rgb(233, 236, 239);" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="1" value=""><input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="" style="pointer-events: none; background-color: rgb(233, 236, 239);"><div class="input-group-append ControlHeight"><span class="input-group-text AcceptRejectWidth"></span></div></div><div title="" class="col-md-3 input-group" style="visibility: hidden;"><input type="text" id="" class="form-control" value="" aria-invalid="false"></div><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text cpt2index AdjustSerialNumber" id="basic-addon1">' + seqno + '</span></div><input type = "text" placeholder = "Code" style="max-width:55px;" maxlength="5" class= "form-control CoderDetails Cptclaim_' + claimid + '" id = "txt4Cpt_' + id + '" /><input type="text" style="max-width:50px;" class="form-control CoderDetails Cptclaim_' + claimid + '" placeholder="Mod" id="txt4mod_' + id + '"/><input type="text" style="max-width:30px;" class="form-control CoderDetails Cptclaim_' + claimid + '" placeholder="1" value="1" id="txt4qty_' + id + '"/><input type="text" class="form-control CoderDetails Cptclaim_' + claimid + '" placeholder="Link All" onfocusout="CptClaims(' + txtLinks + ')" id="txt4links_' + id + '"/></div></div>');
                         $("#txt4links_" + id1).removeAttr("onfocusout", "");
                         $("#txt4links_1").removeAttr("onfocusout", "");
                         $("#txt4Cpt_" + id).focus();

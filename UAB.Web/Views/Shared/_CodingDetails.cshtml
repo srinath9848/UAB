@@ -59,13 +59,13 @@
         <div id="modalContent"></div>
         <div class="card">
             <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item tabDiv1"> <a class="nav-link active tab" data-toggle="tab" id="1" alt="tabDiv1" href="#cliam1" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick">Cliam 1</span></a> </li>
-                <li class="nav-item tabDiv2" style="display:inherit;"> <a class="nav-link tab" data-toggle="tab" id="2" alt="tabDiv2" href="#cliam2" role="tab"> <span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick" id="htxt2">+</span></a><a class="nav-link" id="deletecliam2" style="display:none;"><span class="btn btn-sm" onclick="Deletetabcliam('tabDiv_2')"><i class="fa fa-times"></i></span></a></li>
-                <li class="nav-item tabDiv3" style="display:none;"> <a class="nav-link tab" style="height:46px" data-toggle="tab" id="3" alt="tabDiv3" href="#cliam3" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick" id="htxt3">+</span></a><a class="nav-link" id="deletecliam3" style="display:none;"><span class="btn btn-sm" onclick="Deletetabcliam('tabDiv_3')"><i class="fa fa-times"></i></span></a> </li>
-                <li class="nav-item tabDiv4" style="display:none;"> <a class="nav-link tab" style="height:46px" data-toggle="tab" id="4" alt="tabDiv4" href="#cliam4" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick" id="htxt4">+</span></a><a class="nav-link" id="deletecliam4" style="display:none;"><span class="btn btn-sm" onclick="Deletetabcliam('tabDiv_4')"><i class="fa fa-times"></i></span></a> </li>
+                <li class="nav-item tabDiv1"> <a class="nav-link active tab" data-toggle="tab" id="1" alt="tabDiv1" href="#claim1" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick">Claim 1</span></a> </li>
+                <li class="nav-item tabDiv2" style="display:inherit;"> <a class="nav-link tab" data-toggle="tab" id="2" alt="tabDiv2" href="#claim2" role="tab"> <span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick" id="htxt2">+</span></a><a class="nav-link" id="deleteclaim2" style="display:none;"><span class="btn btn-sm" onclick="Deletetabclaim('tabDiv_2')"><i class="fa fa-times"></i></span></a></li>
+                <li class="nav-item tabDiv3" style="display:none;"> <a class="nav-link tab" style="height:46px" data-toggle="tab" id="3" alt="tabDiv3" href="#claim3" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick" id="htxt3">+</span></a><a class="nav-link" id="deleteclaim3" style="display:none;"><span class="btn btn-sm" onclick="Deletetabclaim('tabDiv_3')"><i class="fa fa-times"></i></span></a> </li>
+                <li class="nav-item tabDiv4" style="display:none;"> <a class="nav-link tab" style="height:46px" data-toggle="tab" id="4" alt="tabDiv4" href="#claim4" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick" id="htxt4">+</span></a><a class="nav-link" id="deleteclaim4" style="display:none;"><span class="btn btn-sm" onclick="Deletetabclaim('tabDiv_4')"><i class="fa fa-times"></i></span></a> </li>
             </ul>
             <div class="tab-content tabcontent-border">
-                <div class="tab-pane active" id="cliam1" role="tabpanel">
+                <div class="tab-pane active" id="claim1" role="tabpanel">
                     <div class="p-20" id="tabDiv1">
                         <br />
                         <div class="form-group row">
@@ -135,15 +135,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane" id="cliam2" role="tabpanel">
+                <div class="tab-pane" id="claim2" role="tabpanel">
                     <div class="p-20" id="tabDiv2">
                     </div>
                 </div>
-                <div class="tab-pane" id="cliam3" role="tabpanel">
+                <div class="tab-pane" id="claim3" role="tabpanel">
                     <div class="p-20" id="tabDiv3">
                     </div>
                 </div>
-                <div class="tab-pane" id="cliam4" role="tabpanel">
+                <div class="tab-pane" id="claim4" role="tabpanel">
                     <div class="p-20" id="tabDiv4">
                     </div>
                 </div>
@@ -230,7 +230,7 @@
         $('#Payors_2').change(function () {
             EnableButtonForClaim2();
         });
-        $('#txtDx2Cliam_1').change(function () {
+        $('#txtDx2Claim_1').change(function () {
             EnableButtonForClaim2();
         });
         $('#txt2Cpt_1').change(function () {
@@ -239,7 +239,7 @@
 
         EnableButtonForClaim2 = function () {
             if ($('#PayorID').val() !== "" && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== ""
-                && $('#Providers_2').val() !== "" && $('#Payors_2').val() !== "" && $('#txtDx2Cliam_1').val() !== "" && $('#txt2Cpt_1').val() !== "" && $('#Providers_3').val() === undefined && $('#Providers_4').val() === undefined) {
+                && $('#Providers_2').val() !== "" && $('#Payors_2').val() !== "" && $('#txtDx2Claim_1').val() !== "" && $('#txt2Cpt_1').val() !== "" && $('#Providers_3').val() === undefined && $('#Providers_4').val() === undefined) {
                 $('#codingSubmit').prop('disabled', false);
                 $('#codingSubmitAndGetNext').prop('disabled', false);
             }

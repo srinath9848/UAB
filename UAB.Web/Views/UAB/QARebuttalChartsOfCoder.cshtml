@@ -184,7 +184,7 @@
         //Ending of Reading Dx,CPT in Claim2 to Claim4
 
         //Reading Dx,CPT in Default Claim is Started
-        var Dxcodes = $("#cliam1 [id*=DxRemarks_]");
+        var Dxcodes = $("#claim1 [id*=DxRemarks_]");
         $("#hdnDx").val('');
         $("#hdnDxRemarks").val('');
         for (var i = 0; i < Dxcodes.length; i++) {
@@ -206,7 +206,7 @@
             }
         }
 
-        var CPTcodes = $("#cliam1 [id*=CptRemarks_]");
+        var CPTcodes = $("#claim1 [id*=CptRemarks_]");
         $("#hdnCpt").val('');
         $("#hdnCptRemarks").val('');
         for (var i = 0; i < CPTcodes.length; i++) {

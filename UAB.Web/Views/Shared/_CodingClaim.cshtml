@@ -1,0 +1,82 @@
+﻿@model UAB.DTO.ChartSummaryDTO
+@{
+    int claimID = ViewBag.ClaimId;
+    string dxClaim = "txtDx" + claimID + "Claim" + "_1";
+    string cptClaim = "txt" + claimID + "Cpt" + "_1";
+    string cptModClaim = "txt" + claimID + "mod" + "_1";
+    string cptQtyClaim = "txt" + claimID + "qty" + "_1";
+    string cptLinksClaim = "txt" + claimID + "links" + "_1";
+
+    string dx2index = "dx" + claimID + "index";
+    string Dx2Claim = "txt" + claimID + "Dx";
+    string Div2DxRow = "Div" + claimID + "DxRow_1";
+
+    string cpt2index = "cpt" + claimID + "index";
+    string Cpt2Link = "txt" + claimID + "Link";
+    string Div2CptRow = "Div" + claimID + "CptRow_1";
+
+}
+<style>
+    .ControlHeight {
+        height: 32px !important;
+    }
+
+    .AlignControl {
+        margin-right: -115px;
+    }
+</style>
+<br />
+<div class="form-group row">
+    <label class="col-md-3 m-t-15 AlignControl">Provider</label>
+    <div class="col-md-3" style="display:inherit;">
+        @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("Providers_{0}", claimID) })
+        @Html.ValidationMessageFor(model => model.ProviderID, null, new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-md-3 m-t-15 AlignControl">Payor</label>
+    <div class="col-md-3" style="display:inherit;">
+        @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("Payors_{0}", claimID) })
+        @Html.ValidationMessageFor(model => model.PayorID, null, new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-md-3 m-t-15 AlignControl">Note Title</label>
+    <div class="col-md-3">
+        @Html.TextBoxFor(model => model.NoteTitle, new { @class = "form-control CoderDetails ControlHeight", @autocomplete = "off", @id = string.Format("NoteTitle_{0}", claimID) })
+        @Html.ValidationMessageFor(model => model.NoteTitle, null, new { @class = "text-danger" })
+    </div>
+</div>
+<div id="DivDx_@claimID">
+    <div class="form-group row" id="@Div2DxRow">
+        <label class="col-md-3 m-t-15 AlignControl">Dx</label>
+        <div class="col-md-3 input-group">
+            <div class="input-group-prepend ControlHeight">
+                <span class="input-group-text AdjustSerialNumber @dx2index" id="basic-addon1">1</span>
+            </div>
+            <input type="text" id="@dxClaim" onfocusout="DxClaims('txtDx_1_@claimID')" class="form-control CoderDetails @Dx2Claim Dxclaim_@claimID" autocomplete="off" placeholder="Code" />
+            @Html.ValidationMessageFor(model => model.Dx, null, new { @class = "text-danger Dxerror" })
+        </div>
+    </div>
+</div>
+<div id="DivCpt_@claimID">
+    <div class="form-group row" id="@Div2CptRow">
+        <label class="col-md-3 m-t-15 AlignControl">CPT</label>
+        <div class="col-md-3 CptlessWidth input-group">
+            <div class="input-group-prepend ControlHeight">
+                <span class="input-group-text AdjustSerialNumber @cpt2index" id="basic-addon1">1</span>
+            </div>
+            <input type="text" maxlength="5" id="@cptClaim" style="max-width:55px;" class="form-control CoderDetails ControlHeight Cptclaim_@claimID" autocomplete="off" placeholder="Code" tabindex="5" />
+            <input type="text" id="@cptModClaim" style="max-width:50px;" class="form-control CoderDetails ControlHeight Cptclaim_@claimID" autocomplete="off" placeholder="Mod" tabindex="6" />
+            <input type="text" id="@cptQtyClaim" style="max-width:30px;" class="form-control CoderDetails ControlHeight Cptclaim_@claimID" autocomplete="off" placeholder="1" value="1" tabindex="7" />
+            <input type="text" id="@cptLinksClaim" class="form-control CoderDetails ControlHeight @Cpt2Link Cptclaim_@claimID" onfocusout="CptClaims('txtLinks_1_@claimID')" autocomplete="off" placeholder="Link All" tabindex="8" style="min-width:63px;" />
+        </div>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-md-3 m-t-15 AlignControl">Provider Feedback</label>
+    <div class="col-md-3">
+        @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("ProviderFeedbacks_{0}", claimID) })
+        @Html.ValidationMessageFor(model => model.ProviderFeedbackID, null, new { @class = "text-danger" })
+    </div>
+</div>
