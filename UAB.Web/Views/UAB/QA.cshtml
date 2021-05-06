@@ -22,7 +22,7 @@
     $("#qa").addClass('selected');
     $(".accept").removeClass('accept');
 
-    var isBlocked = @(ViewBag.IsBlocked == null ? "0": "1");
+    @*var isBlocked = @(ViewBag.IsBlocked == null ? "0": "1");
     var currentindex = @ViewBag.currentindex;
     var lastindex =@ViewBag.lastindex;
 
@@ -39,7 +39,7 @@
         } else {
             $("#btnNext").show();
         }
-    }
+    }*@
 
     CheckAllboxes = function (chkAll) {
         var chk = $("#" + chkAll).is(':checked');

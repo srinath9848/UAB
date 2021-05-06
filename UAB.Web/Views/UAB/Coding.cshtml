@@ -194,7 +194,7 @@
          });
 
     });
-    var isBlocked = @(ViewBag.IsBlocked == null ? "0": "1");
+    @*var isBlocked = @(ViewBag.IsBlocked == null ? "0": "1");
     var currentindex = @ViewBag.currentindex;
     var lastindex =@ViewBag.lastindex;
     if (isBlocked == 1) {
@@ -211,7 +211,7 @@
         } else {
             $("#btnNext").show();
         }
-    }
+    }*@
 
     $("#coding").addClass('selected');
     $('.Approved').hide();
