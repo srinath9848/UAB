@@ -2,6 +2,8 @@
 @{
     ViewData["Title"] = "Shadow QA";
 }
+<input type="hidden" id="currentindex" value="@ViewBag.currentindex" />
+<input type="hidden" id="lastindex" value=@ViewBag.lastindex />
 <form asp-action="SubmitShadowQAAvailableChart" asp-controller="UAB" method="POST">
     <div class="container-fluid">
         <div class="row">
@@ -160,13 +162,14 @@
         }
     });
 
-    @*var isBlocked = @(ViewBag.IsBlocked == null ? "0": "1");
-     var currentindex = @ViewBag.currentindex;
-    var lastindex =@ViewBag.lastindex;
+    var isBlocked = @(ViewBag.IsBlocked == null ? "0": "1");
+      
 
     if (isBlocked == 1) {
         $("#btnBlock").hide();
         $("#btnBlockHistory").show();
+        var currentindex = $("#currentindex").val();
+        var lastindex = $("#lastindex").val();
         if (currentindex == 0) {
             $("#btnPrevious").hide();
         } else {
@@ -177,7 +180,7 @@
         } else {
             $("#btnNext").show();
         }
-    }*@
+    }
 
     var dxArray = [];
     function DxFunction(txt_0) {
