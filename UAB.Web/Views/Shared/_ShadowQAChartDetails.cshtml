@@ -69,16 +69,13 @@
                             <br />
                             <div class="form-group row" style="margin-top:10px;">
                                 <label class="col-md-3 m-t-15"></label>
-                                <div class="custom-control custom-checkbox col-md-3 input-group" style="margin-left:-50px !important;" id="divChkAll">
-                                    <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll">
-                                    <label class="custom-control-label" for="chkAll">Accept All</label>
+                                <div class="custom-control custom-checkbox col-md-3 input-group" style="margin-left:-50px !important;" id="divChkAll_@tabIndex">
+                                    <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll_@tabIndex" onclick="CheckAllboxes('chkAll_@tabIndex')">
+                                    <label class="custom-control-label" for="chkAll_@tabIndex">Accept All</label>
                                 </div>
-                                @if (Show == "visibility:hidden")
-                                {
-                                    <div class="custom-control col-md-3 input-group QAComments" style="display:none;margin-left:-27px !important">
-                                        <label class="">QA Comments</label>
-                                    </div>
-                                }
+                                <div class="custom-control col-md-3 input-group QAComments" style="@Show margin-left:-27px !important">
+                                    <label class="">QA Comments</label>
+                                </div>
                                 <div class="custom-control col-md-3 input-group ShadowQACorrectionsComments" style="display:none;margin-left:-54px;">
                                     <label class="">ShadowQA Corrections</label>
                                 </div>
@@ -94,6 +91,9 @@
                                 @{string title = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText) ? Model.FirstOrDefault().ProviderText + "/" + Model.FirstOrDefault().QAProviderText : Model.FirstOrDefault().ProviderText);}
 
                                 <div title="@title" class="col-md-3 input-group">
+                                    @{string Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                                    @{string Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+
                                     <div class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
                                         <span style="white-space:nowrap">
                                             @if (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText))
@@ -108,9 +108,9 @@
                                         </span>
                                     </div>
                                     <div class="input-group-append ControlHeight">
-                                        <span class="input-group-text AcceptRejectWidth">
-                                            &nbsp;<i id="ProviderID" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
-                                            &nbsp;<i id="ProviderID" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                        <span class="input-group-text AcceptRejectWidth_@tabIndex">
+                                            &nbsp;<i id="ProviderID" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                            &nbsp;<i id="ProviderID" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -151,9 +151,9 @@
                                         </span>
                                     </div>
                                     <div class="input-group-append ControlHeight">
-                                        <span class="input-group-text AcceptRejectWidth">
-                                            &nbsp;<i id="PayorID" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
-                                            &nbsp;<i id="PayorID" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                        <span class="input-group-text AcceptRejectWidth_@tabIndex">
+                                            &nbsp;<i id="PayorID" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                            &nbsp;<i id="PayorID" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -232,9 +232,9 @@
                                                     </span>
                                                 </div>
                                                 <div class="input-group-append ControlHeight">
-                                                    <span class="input-group-text ControlHeight AcceptRejectWidth">
-                                                        &nbsp;<i id="Dx_@j" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
-                                                        &nbsp;<i id="Dx_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                                    <span class="input-group-text ControlHeight AcceptRejectWidth_@tabIndex">
+                                                        &nbsp;<i id="Dx_@i" data="@tabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                                        &nbsp;<i id="Dx_@i" data="@tabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                                                     </span>
                                                 </div>
                                             </div>
@@ -274,8 +274,8 @@
                                         <input class="form-control CoderDetails ControlHeight valid" type="text" value="">
                                         <div class="input-group-append">
                                             <span class="input-group-text QACorrections ControlHeight AcceptRejectWidth_@tabIndex">
-                                                &nbsp;<i data="@tabIndex" class="fa fa-edit fa-lg AdjustAcceptReject" aria-hidden="true" style="visibility:hidden"></i>
-                                                &nbsp;<i id="Dx_@totalDxCount" data="@tabIndex" class="fa fa-times-circle fa-lg ignore " aria-hidden="true"></i>
+                                                &nbsp;<i id="Dx_@i" data="@tabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                                &nbsp;<i id="Dx_@i" data="@tabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                                             </span>
                                         </div>
                                     </div>
@@ -368,9 +368,9 @@
                                                     }
 
                                                     <div class="input-group-append ControlHeight">
-                                                        <span class="input-group-text ControlHeight AcceptRejectWidth">
-                                                            &nbsp;<i id="Cpt_@j" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
-                                                            &nbsp;<i id="Cpt_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                                        <span class="input-group-text ControlHeight AcceptRejectWidth_@tabIndex">
+                                                            &nbsp;<i id="Cpt_@j" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                                            &nbsp;<i id="Cpt_@j" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -392,9 +392,9 @@
                                                     <input type="text" class="form-control CoderDetails ControlHeight" style="color: green;" placeholder="Link All" value="@linkAllVal1" />
 
                                                     <div class="input-group-append ControlHeight">
-                                                        <span class="input-group-text ControlHeight AcceptRejectWidth">
-                                                            &nbsp;<i id="Cpt_@j" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
-                                                            &nbsp;<i id="Cpt_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                                        <span class="input-group-text ControlHeight AcceptRejectWidth_@tabIndex">
+                                                            &nbsp;<i id="Cpt_@j" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                                            &nbsp;<i id="Cpt_@j" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -444,7 +444,7 @@
                                         <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="" />
                                         <div class="input-group-append ControlHeight">
                                             <span class="input-group-text AcceptRejectWidth_@tabIndex">
-                                                &nbsp;<i data="@tabIndex" class="fa fa-edit fa-lg AdjustAcceptReject" aria-hidden="true" style="visibility:hidden"></i>
+                                                &nbsp;<i data="@tabIndex" class="fa fa-edit fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true" style="visibility:hidden"></i>
                                                 &nbsp;<i id="Cpt_@totalCptCount" data="@tabIndex" class="fa fa-times-circle fa-lg ignore" aria-hidden="true"></i>
                                             </span>
                                         </div>
@@ -483,9 +483,9 @@
                                         </span>
                                     </div>
                                     <div class="input-group-append ControlHeight">
-                                        <span class="input-group-text AcceptRejectWidth">
-                                            &nbsp;<i id="Feedback" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
-                                            &nbsp;<i id="Feedback" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                        <span class="input-group-text AcceptRejectWidth_@tabIndex">
+                                            &nbsp;<i id="Feedback" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                            &nbsp;<i id="Feedback" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -554,8 +554,8 @@
                                         Error Type
                                     </label>
                                     <div class="col-md-7">
-                                        @Html.DropDownListFor(model => model.FirstOrDefault().ShadowQADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight" })
-                                        @Html.ValidationMessageFor(model => model.FirstOrDefault().ShadowQADTO.ErrorType, null, new { @class = "text-danger ErrorType" })
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().ShadowQADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight", @id = string.Format("ErrorType_{0}", tabIndex), @onchange = "ErrorType('" + tabIndex + "')" })
+                                        @Html.ValidationMessageFor(model => model.FirstOrDefault().ShadowQADTO.ErrorType, null, new { @class = "text-danger ErrorType", @id = string.Format("ErrorTypeError_{0}", tabIndex) })
                                     </div>
                                 </div>
                             </div>

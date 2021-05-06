@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Rebuttal Charts";
 }
-<form asp-action="SubmitQARebuttalChartsOfCoder" id="form1" asp-controller="UAB" method="POST">
+<form asp-action="SubmitQARebuttalChartsOfCoder" id="formSubmitQARebuttalChartsOfCoder" asp-controller="UAB" method="POST">
     <div class="container-fluid">
         <div class="row">
             <partial name="_InitialData" model=Model.FirstOrDefault() />
@@ -15,6 +15,7 @@
 
     $(".CoderDetails").css("pointer-events", "none");
     $(".CoderDetails").css("background-color", "#e9ecef");
+    $('.CoderDetails').attr('disabled', true);
 
     $(".reject").removeClass("reject")
     $(".accept").removeClass("accept")
@@ -78,7 +79,8 @@
         }
     });
 
-    $('#btnsubmit').click(function (e) {
+    $(document).on('click', '#btnsubmit,#SubmitAndGetNext', function (e) {
+        $('.CoderDetails').removeAttr('disabled');
 
         $("#hdnRejected").val('');
 
@@ -248,6 +250,8 @@
                 $("#validationPopUp").show();
                 e.preventDefault();
             }
+            else
+                $("#formSubmitQARebuttalChartsOfCoder").submit();
         }
     });
 

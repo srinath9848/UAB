@@ -37,20 +37,17 @@
 
 <div class="form-group row" style="margin-top:10px;">
     <label class="col-md-3 m-t-15"></label>
-    <div class="custom-control custom-checkbox col-md-3 input-group" style="margin-left:-50px !important;" id="divChkAll">
-        <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll">
-        <label class="custom-control-label" for="chkAll">Accept All</label>
+    <div class="custom-control custom-checkbox col-md-3 input-group" style="margin-left:-50px !important;" id="divChkAll_@tabIndex">
+        <input type="checkbox" class="custom-control-input ShadowQADetails" id="chkAll_@tabIndex" onclick="CheckAllboxes('chkAll_@tabIndex')">
+        <label class="custom-control-label" for="chkAll_@tabIndex">Accept All</label>
     </div>
-    @if (Show == "visibility:hidden")
-    {
-        <div class="custom-control col-md-3 input-group QAComments" style="display:none;margin-left:-27px !important">
-            <label class="">QA Comments</label>
-        </div>
-    }
-    <div class="custom-control col-md-3 input-group ShadowQACorrectionsComments" style="display:none;margin-left:-54px;">
+    <div class="custom-control col-md-3 input-group QAComments" style="@Show margin-left:-27px !important">
+        <label class="">QA Comments</label>
+    </div>
+    <div class="custom-control col-md-3 input-group ShadowQACorrectionsComments_@tabIndex" style="display:none;margin-left:-54px;">
         <label class="">ShadowQA Corrections</label>
     </div>
-    <div class="custom-control col-md-3 input-group ShadowQACorrectionsComments" style="display:none;">
+    <div class="custom-control col-md-3 input-group ShadowQACorrectionsComments_@tabIndex" style="display:none;">
         <label class="">ShadowQA Comments</label>
     </div>
 </div>
@@ -76,9 +73,9 @@
             </span>
         </div>
         <div class="input-group-append ControlHeight">
-            <span class="input-group-text AcceptRejectWidth">
-                &nbsp;<i id="ProviderID_@Model.TabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
-                &nbsp;<i id="ProviderID_@Model.TabIndex" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+            <span class="input-group-text AcceptRejectWidth_@tabIndex">
+                &nbsp;<i id="ProviderID_@Model.TabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                &nbsp;<i id="ProviderID_@Model.TabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
             </span>
         </div>
     </div>
@@ -119,9 +116,9 @@
             </span>
         </div>
         <div class="input-group-append ControlHeight">
-            <span class="input-group-text AcceptRejectWidth">
-                &nbsp;<i id="PayorID_@Model.TabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
-                &nbsp;<i id="PayorID_@Model.TabIndex" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+            <span class="input-group-text AcceptRejectWidth_@tabIndex">
+                &nbsp;<i id="PayorID_@Model.TabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                &nbsp;<i id="PayorID_@Model.TabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
             </span>
         </div>
     </div>
@@ -206,9 +203,9 @@
                         </span>
                     </div>
                     <div class="input-group-append ControlHeight" style="height: 45px;">
-                        <span class="input-group-text AcceptRejectWidth">
-                            &nbsp;<i id="@DxClaim" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
-                            &nbsp;<i id="@DxClaim" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                        <span class="input-group-text AcceptRejectWidth_@tabIndex">
+                            &nbsp;<i id="@DxClaim" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                            &nbsp;<i id="@DxClaim" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                         </span>
                     </div>
                 </div>
@@ -344,9 +341,9 @@
                         }
 
                         <div class="input-group-append ControlHeight">
-                            <span class="input-group-text ControlHeight AcceptRejectWidth">
-                                &nbsp;<i id="Cpt_@j" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
-                                &nbsp;<i id="Cpt_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                            <span class="input-group-text ControlHeight AcceptRejectWidth_@tabIndex">
+                                &nbsp;<i id="Cpt_@j" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                &nbsp;<i id="Cpt_@j" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                             </span>
                         </div>
                     </div>
@@ -368,9 +365,9 @@
                         <input type="text" class="form-control CoderDetails ControlHeight" style="color: green;" placeholder="Link All" value="@linkAllVal1" />
 
                         <div class="input-group-append ControlHeight">
-                            <span class="input-group-text ControlHeight AcceptRejectWidth">
-                                &nbsp;<i id="Cpt_@j" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
-                                &nbsp;<i id="Cpt_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                            <span class="input-group-text ControlHeight AcceptRejectWidth_@tabIndex">
+                                &nbsp;<i id="Cpt_@j" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                &nbsp;<i id="Cpt_@j" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                             </span>
                         </div>
                     </div>
@@ -461,9 +458,9 @@
             </span>
         </div>
         <div class="input-group-append ControlHeight" style="height: 38px;">
-            <span class="input-group-text AcceptRejectWidth">
-                &nbsp;<i id="Feedback_@Model.TabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
-                &nbsp;<i id="Feedback_@Model.TabIndex" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+            <span class="input-group-text AcceptRejectWidth_@tabIndex">
+                &nbsp;<i id="Feedback_@Model.TabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                &nbsp;<i id="Feedback_@Model.TabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
             </span>
         </div>
     </div>
@@ -479,5 +476,66 @@
     <div class="col-md-3 input-group">
         @Html.TextBoxFor(model => model.ShadowQAProviderFeedbackRemarks, new { @style = "display:none", @class = string.Format("form-control ControlHeight QARevised RevisedPayor_{0}", @Model.TabIndex), @id = "Feedback2" })
         @Html.ValidationMessageFor(model => model.ShadowQAProviderFeedbackRemarks, null, new { @class = "text-danger errMsg" })
+    </div>
+</div>
+
+<div class="clearfix"></div>
+<div class="col-md-6">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">QA Details</h4>
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <div class="row mb-3">
+                    <div class="col-lg-6">
+                        <div class="form-group row">
+                            <label class="col-md-5 m-t-15">
+                                Error Type
+                            </label>
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Shadow QA Details</h4>
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <div class="row mb-3">
+                    <div class="col-lg-6">
+                        <div class="form-group row">
+                            <label class="col-md-3 m-t-15">
+                                Error Type
+                            </label>
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(model => model.ShadowQADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight", @id = string.Format("ErrorType_{0}", tabIndex), @onchange = "ErrorType('" + tabIndex + "')" })
+                                @Html.ValidationMessageFor(model => model.ShadowQADTO.ErrorType, null, new { @class = "text-danger ErrorType", @id = string.Format("ErrorTypeError_{0}", tabIndex) })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.ShadowQA, ChartType= "Block", ProjectID=@Model.ProjectID, ProjectName=Model.ProjectName,ccid=Model.CodingDTO.ClinicalCaseID,plusorminus="Previous"})" class="btn btn-success Available" id="btnPrevious" style="display:none">Previous</a>
+                                <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.ShadowQA, ChartType= "Block", ProjectID=@Model.ProjectID, ProjectName=Model.ProjectName,ccid=Model.CodingDTO.ClinicalCaseID,plusorminus="Next"})" class="btn btn-success Available" id="btnNext" style="display:none">Next</a>
+                                <button id="btnBlock" type="button" class="btn btn-danger" onclick="Block()">Block</button>
+                                <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger" onclick="BlockHistory()">Block History</button>
+                                <button type="submit" id="btnsubmit" class="btn btn-success">Save</button>
+                                <button id="SubmitAndGetNext" name="SubmitAndGetNext" type="submit" value="SubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

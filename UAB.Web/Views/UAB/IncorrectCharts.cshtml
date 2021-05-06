@@ -7,7 +7,7 @@
         padding-left: 0rem;
     }
 </style>
-<form asp-action="SubmitCodingIncorrectChart" asp-controller="UAB" method="POST">
+<form asp-action="SubmitCodingIncorrectChart" id="FormSubmitCodingIncorrectChart" asp-controller="UAB" method="POST">
     <div class="container-fluid">
         <div class="row">
             <partial name="_InitialData" model=Model.FirstOrDefault() />
@@ -29,6 +29,7 @@
     $("#coding").addClass('selected');
     $('#divChkAll').hide();
     $('.QACorrections').hide();
+    $('.CoderDetails').attr('disabled', true);
 
     $('span i').click(function () {
         var id = $(this).attr('id');
@@ -46,7 +47,13 @@
         }
     });
 
-    $('#btnsubmit').click(function (e) {
+    $(document).on('click', '#btnsubmit', function (e) {
+        $('.CoderDetails').removeAttr('disabled');
+
+        if ($('.CoderCorrections[style="display:flex"] .reject').length > 0)
+            $("#hdnStatusId").val('12');
+        else
+            $("#hdnStatusId").val('15');
 
         $(".tab").each(function () {
             var id = $(this).attr('id');
@@ -120,11 +127,6 @@
             }
 
         });
-
-        if ($('.CoderCorrections[style="display:flex"] .reject').length > 0)
-            $("#hdnStatusId").val('12');
-        else
-            $("#hdnStatusId").val('15');
 
         // Default Claim Dx & Cpt Start
 
@@ -656,6 +658,8 @@
         var txtdanger = $('[class*=txtdanger][style=""]');
         if (txtdanger.length > 0)
             e.preventDefault();
+        else
+            $("#FormSubmitCodingIncorrectChart").submit();
 
     });
 
