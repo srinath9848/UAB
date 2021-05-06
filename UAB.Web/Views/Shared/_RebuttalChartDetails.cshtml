@@ -54,12 +54,12 @@
                 {
                     if (tabitem.ClaimId == null)
                     {
-                        <li class="nav-item tabDiv1"> <a class="nav-link active tab" data-toggle="tab" id="@tabIndex" alt="tabDiv1" href="#cliam1" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick">Claim @tabIndex</span></a> </li>
+                        <li class="nav-item tabDiv1"> <a class="nav-link active tab" data-toggle="tab" id="@tabIndex" alt="tabDiv1" href="#claim1" role="tab"><span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick">Claim @tabIndex</span></a> </li>
                     }
                     else
                     {
                         var claimId = string.Format("tabIndex_{0}_ClaimId_{1}", tabIndex, tabitem.ClaimId);
-                        <li class="@string.Format("nav-item tabDiv{0}", tabIndex)" style="display:inherit;"> <a class="nav-link tab" data-toggle="tab" id="@claimId" alt="tabDiv2" href="@string.Format("#cliam{0}", tabIndex)" role="tab"> <span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick">Claim @tabIndex</span></a></li>
+                        <li class="@string.Format("nav-item tabDiv{0}", tabIndex)" style="display:inherit;"> <a class="nav-link tab" data-toggle="tab" id="@claimId" alt="tabDiv2" href="@string.Format("#claim{0}", tabIndex)" role="tab"> <span class="hidden-sm-up"></span> <span class="hidden-xs-down tabclick">Claim @tabIndex</span></a></li>
                     }
                     tabIndex = tabIndex + 1;
                 }
@@ -73,7 +73,7 @@
                     tabitem.TabIndex = tabIndex;
                     if (tabitem.ClaimId == null)
                     {
-                        <div class="tab-pane active" id="cliam1" role="tabpanel">
+                        <div class="tab-pane active" id="claim1" role="tabpanel">
                             <div class="p-20" id="tabDiv1">
                                 <br />
                                 <div class="form-group row">
@@ -379,7 +379,7 @@
                     }
                     else
                     {
-                        <div class="tab-pane" id="@string.Format("cliam{0}", tabIndex)" role="tabpanel">
+                        <div class="tab-pane" id="@string.Format("claim{0}", tabIndex)" role="tabpanel">
                             <div class="p-20" id="@string.Format("tabDiv{0}", tabIndex)">
                                 <partial name="_QAClaim" model=tabitem />
                             </div>
