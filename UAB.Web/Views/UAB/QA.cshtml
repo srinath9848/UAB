@@ -184,7 +184,9 @@
         }
     }
 
-    $('#btnsubmit,#SubmitAndGetNext').click(function (e) {
+
+    $(document).on('click', '#btnsubmit,#SubmitAndGetNext', function (e) {
+
         $('.CoderDetails').removeAttr('disabled');
         var currentdate = new Date();
         //Format: DD/MM/YYYY
