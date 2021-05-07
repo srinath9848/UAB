@@ -241,6 +241,15 @@ namespace UAB.Controllers
 
         }
         [HttpGet]
+        public IActionResult ProviderPostedClinicalcase(string ccid)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            ViewBag.ccid = Convert.ToInt32(ccid);
+            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
+            return PartialView("_ProviderPosted");
+        }
+
+        [HttpGet]
         public IActionResult BlockClinicalcase(string ccid)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
@@ -336,72 +345,72 @@ namespace UAB.Controllers
             }
         }
 
-        public IActionResult SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO, string codingSubmitAndGetNext, string submitAndPost, string submitOnly)
+        public IActionResult SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO, string codingSubmitAndGetNext, string submitAndPost, string submitOnly, int providerId, DateTime txtPostingDate, string txtCoderComment)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             string providerPosted = Request.Form["hdnProviderPosted"].ToString();
 
+            string submitType = Request.Form["hdnSubmitAndPost"];
+            string hdnIsAuditRequired = Request.Form["hdnIsAuditRequired"];
+
+            if (submitType == "submitAndPost")
+                chartSummaryDTO.SubmitAndPostAlso = true;
+            else
+                chartSummaryDTO.SubmitAndPostAlso = false;
+
+            if (hdnIsAuditRequired == "true")
+                chartSummaryDTO.IsAuditRequired = true;
+            else
+                chartSummaryDTO.IsAuditRequired = false;
+
+            if (string.IsNullOrEmpty(codingSubmitAndGetNext))
+                codingSubmitAndGetNext = Request.Form["hdnButtonType"];
+
+            string hdnDxCodes = Request.Form["hdnDxCodes"].ToString();
+            chartSummaryDTO.Dx = hdnDxCodes;
+            string hdnCptCodes = Request.Form["hdnCptCodes"].ToString();
+            chartSummaryDTO.CPTCode = hdnCptCodes;
+
+            string hdnClaim1 = Request.Form["hdnClaim2"].ToString();
+            string hdnDxClaim1 = Request.Form["hdnDxCodes1"].ToString();
+            string hdnCptClaim1 = Request.Form["hdnCptCodes1"].ToString();
+
+            DataTable dtClaim = new DataTable();
+            dtClaim.Columns.Add("RNO", typeof(int));
+            dtClaim.Columns.Add("ProviderId", typeof(int));
+            dtClaim.Columns.Add("PayorId", typeof(int));
+            dtClaim.Columns.Add("NoteTitle", typeof(string));
+            dtClaim.Columns.Add("ProviderFeedbackId", typeof(string));
+            dtClaim.Columns.Add("Dx", typeof(string));
+
+            DataTable dtCpt = new DataTable();
+            dtCpt.Columns.Add("RNO", typeof(int));
+            dtCpt.Columns.Add("CPTCode", typeof(string));
+            dtCpt.Columns.Add("Mod", typeof(string));
+            dtCpt.Columns.Add("Qty", typeof(string));
+            dtCpt.Columns.Add("Links", typeof(string));
+            if (!string.IsNullOrEmpty(hdnClaim1))
+                PrepareClaim(hdnClaim1, hdnDxClaim1, hdnCptClaim1, 1, ref dtClaim, ref dtCpt);
+
+            string hdnClaim2 = Request.Form["hdnClaim3"].ToString();
+            string hdnDxClaim2 = Request.Form["hdnDxCodes2"].ToString();
+            string hdnCptClaim2 = Request.Form["hdnCptCodes2"].ToString();
+
+            if (!string.IsNullOrEmpty(hdnClaim2))
+                PrepareClaim(hdnClaim2, hdnDxClaim2, hdnCptClaim2, 2, ref dtClaim, ref dtCpt);
+
+            string hdnClaim3 = Request.Form["hdnClaim4"].ToString();
+            string hdnDxClaim3 = Request.Form["hdnDxCodes3"].ToString();
+            string hdnCptClaim3 = Request.Form["hdnCptCodes3"].ToString();
+            if (!string.IsNullOrEmpty(hdnClaim3))
+                PrepareClaim(hdnClaim3, hdnDxClaim3, hdnCptClaim3, 3, ref dtClaim, ref dtCpt);
+
             if (providerPosted != "")
             {
-                clinicalcaseOperations.SubmitProviderPosted(chartSummaryDTO.CodingDTO.ClinicalCaseID, mUserId);
+                clinicalcaseOperations.SubmitProviderPostedChart(chartSummaryDTO, dtClaim, dtCpt,providerId,txtPostingDate,txtCoderComment);
             }
             else
             {
-                string submitType = Request.Form["hdnSubmitAndPost"];
-                string hdnIsAuditRequired = Request.Form["hdnIsAuditRequired"];
-
-                if (submitType == "submitAndPost")
-                    chartSummaryDTO.SubmitAndPostAlso = true;
-                else
-                    chartSummaryDTO.SubmitAndPostAlso = false;
-
-                if (hdnIsAuditRequired == "true")
-                    chartSummaryDTO.IsAuditRequired = true;
-                else
-                    chartSummaryDTO.IsAuditRequired = false;
-
-                if (string.IsNullOrEmpty(codingSubmitAndGetNext))
-                    codingSubmitAndGetNext = Request.Form["hdnButtonType"];
-
-                string hdnDxCodes = Request.Form["hdnDxCodes"].ToString();
-                chartSummaryDTO.Dx = hdnDxCodes;
-                string hdnCptCodes = Request.Form["hdnCptCodes"].ToString();
-                chartSummaryDTO.CPTCode = hdnCptCodes;
-
-                string hdnClaim1 = Request.Form["hdnClaim2"].ToString();
-                string hdnDxClaim1 = Request.Form["hdnDxCodes1"].ToString();
-                string hdnCptClaim1 = Request.Form["hdnCptCodes1"].ToString();
-
-                DataTable dtClaim = new DataTable();
-                dtClaim.Columns.Add("RNO", typeof(int));
-                dtClaim.Columns.Add("ProviderId", typeof(int));
-                dtClaim.Columns.Add("PayorId", typeof(int));
-                dtClaim.Columns.Add("NoteTitle", typeof(string));
-                dtClaim.Columns.Add("ProviderFeedbackId", typeof(string));
-                dtClaim.Columns.Add("Dx", typeof(string));
-
-                DataTable dtCpt = new DataTable();
-                dtCpt.Columns.Add("RNO", typeof(int));
-                dtCpt.Columns.Add("CPTCode", typeof(string));
-                dtCpt.Columns.Add("Mod", typeof(string));
-                dtCpt.Columns.Add("Qty", typeof(string));
-                dtCpt.Columns.Add("Links", typeof(string));
-                if (!string.IsNullOrEmpty(hdnClaim1))
-                    PrepareClaim(hdnClaim1, hdnDxClaim1, hdnCptClaim1, 1, ref dtClaim, ref dtCpt);
-
-                string hdnClaim2 = Request.Form["hdnClaim3"].ToString();
-                string hdnDxClaim2 = Request.Form["hdnDxCodes2"].ToString();
-                string hdnCptClaim2 = Request.Form["hdnCptCodes2"].ToString();
-
-                if (!string.IsNullOrEmpty(hdnClaim2))
-                    PrepareClaim(hdnClaim2, hdnDxClaim2, hdnCptClaim2, 2, ref dtClaim, ref dtCpt);
-
-                string hdnClaim3 = Request.Form["hdnClaim4"].ToString();
-                string hdnDxClaim3 = Request.Form["hdnDxCodes3"].ToString();
-                string hdnCptClaim3 = Request.Form["hdnCptCodes3"].ToString();
-                if (!string.IsNullOrEmpty(hdnClaim3))
-                    PrepareClaim(hdnClaim3, hdnDxClaim3, hdnCptClaim3, 3, ref dtClaim, ref dtCpt);
-
                 if (codingSubmitAndGetNext == "codingSubmit")
                     clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDTO, dtClaim, dtCpt);
                 else

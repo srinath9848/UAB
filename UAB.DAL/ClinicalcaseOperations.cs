@@ -1681,6 +1681,121 @@ namespace UAB.DAL
             }
             return dtCPT;
         }
+        public void SubmitProviderPostedChart(ChartSummaryDTO chartSummaryDTO, DataTable dtClaim, DataTable dtCpt1, int postedProviderId, DateTime postedDate, string coderComment)
+        {
+            using (var context = new UABContext())
+            {
+                DataTable dtCPT = GetCpt(chartSummaryDTO.CPTCode);
+
+                var param = new SqlParameter[] {
+                     new SqlParameter() {
+                            ParameterName = "@PayorID",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.PayorID
+                        },
+                      new SqlParameter() {
+                            ParameterName = "@NoteTitle",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.NoteTitle
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@ProviderID",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = postedProviderId
+                        },
+                         new SqlParameter() {
+                            ParameterName = "@utCpt",
+                            SqlDbType =  System.Data.SqlDbType.Structured,
+                            Direction = System.Data.ParameterDirection.Input,
+                            TypeName = "utCpt",
+                            Value = dtCPT
+                        },
+
+                new SqlParameter()
+                {
+                    ParameterName = "@Mod",
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    Direction = System.Data.ParameterDirection.Input,
+                    Value = chartSummaryDTO.Mod
+                }
+                ,  new SqlParameter()
+                 {
+                     ParameterName = "@Dx",
+                     SqlDbType = System.Data.SqlDbType.VarChar,
+                     Direction = System.Data.ParameterDirection.Input,
+                     Value = chartSummaryDTO.Dx
+                 } , new SqlParameter()
+                 {
+                     ParameterName = "@ProviderFeedbackID",
+                     SqlDbType = System.Data.SqlDbType.Int,
+                     Direction = System.Data.ParameterDirection.Input,
+                     Value = chartSummaryDTO.ProviderFeedbackID
+                 }, new SqlParameter()
+                 {
+                     ParameterName = "@CoderQuestion",
+                     SqlDbType = System.Data.SqlDbType.VarChar,
+                     Direction = System.Data.ParameterDirection.Input,
+                     Value = chartSummaryDTO.CoderQuestion
+                 } ,   new SqlParameter()
+                 {
+                     ParameterName = "@ClinicalcaseID",
+                     SqlDbType = System.Data.SqlDbType.Int,
+                     Direction = System.Data.ParameterDirection.Input,
+                     Value = chartSummaryDTO.CodingDTO.ClinicalCaseID
+                 }
+                ,   new SqlParameter()
+                 {
+                     ParameterName = "@UserId",
+                     SqlDbType = System.Data.SqlDbType.Int,
+                     Direction = System.Data.ParameterDirection.Input,
+                     Value = mUserId
+                 }
+                ,
+                 new SqlParameter() {
+                    ParameterName = "@utClaim1",
+                    SqlDbType =  System.Data.SqlDbType.Structured,
+                    Direction = System.Data.ParameterDirection.Input,
+                    TypeName = "utClaim",
+                    Value = dtClaim
+                 },
+
+                 new SqlParameter() {
+                    ParameterName = "@utCpt1",
+                    SqlDbType =  System.Data.SqlDbType.Structured,
+                    Direction = System.Data.ParameterDirection.Input,
+                    TypeName = "utCpt",
+                    Value = dtCpt1
+                 },
+                  new SqlParameter() {
+                    ParameterName = "@PostedDate",
+                    SqlDbType = System.Data.SqlDbType.DateTime2,
+                     Direction = System.Data.ParameterDirection.Input,
+                     Value = postedDate
+                 },
+                  new SqlParameter() {
+                    ParameterName = "@CoderComment",
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                     Direction = System.Data.ParameterDirection.Input,
+                     Value = coderComment
+                 }
+                };
+
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[UspSubmitProviderPostedChart]";
+                    cmd.Parameters.AddRange(param);
+                    cmd.Connection = con;
+                    con.Open();
+
+                    int res = cmd.ExecuteNonQuery();
+                }
+            }
+        }
         public void SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO, DataTable dtClaim, DataTable dtCpt1)
         {
             using (var context = new UABContext())

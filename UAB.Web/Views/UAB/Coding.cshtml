@@ -7,6 +7,9 @@
         <div class="row">
             <partial name="_InitialData" model=Model />
             <partial name="_CodingDetails" model=Model />
+            <input type="hidden" id="_providerId" name="providerId" />
+            <input type="hidden" id="_txtPostingDate" name="txtPostingDate" />
+            <input type="hidden" id="_txtCoderComment" name="txtCoderComment" />
         </div>
     </div>
 </form>
@@ -26,14 +29,21 @@
     $("#PayorID").focus();
     $("#hdnProviderPosted").val('');
 
-    $('#btnProviderPosted').click(function (e) {
 
-        $("#hdnProviderPosted").val('1');
-        $("#frmSubmitCodingAvailableChart").submit();
+   $(document).ready(function () {
+        ProviderPostedClinicalcase = function () {
+            $("#_providerId").val($("#providerId").val());
+            $("#_txtPostingDate").val($("#txtPostingDate").val());
+            $("#_txtCoderComment").val($("#txtCoderComment").val());
+            $("#frmSubmitCodingAvailableChart").submit();
+        }
+        ModalClose1 = function () {
+            $("#modalContent").html('');
+        }
+});
 
-    });
 
-    $('#codingSubmit,#codingSubmitAndGetNext').click(function (e) {
+    $('#codingSubmit,#codingSubmitAndGetNext,#btnProviderPosted').click(function (e) {
         var claimArray = [];
         $(".AlignCross .tab").each(function () {
             var tabid = $(this).attr('id');
@@ -152,6 +162,27 @@
             + currentdate.getFullYear();
 
         var buttonType = $(this).attr("name");
+        if (buttonType === "btnProviderPosted") {
+            $("#hdnProviderPosted").val('1');
+            $.ajax({
+                         type: "GET",
+                         url: "@Url.Action("ProviderPostedClinicalcase", "UAB")",
+                         data: {
+                             "chartSummaryDTO": "@Model",
+                             "providerId": $("#providerId").val(),
+                             "txtPostingDate": $("#txtPostingDate").val(),
+                             "txtCoderComment": $("#txtCoderComment").val(),
+                             "buttonType": buttonType
+                         },
+                         success: function (response) {
+                             $("#modalContent").html(response);
+                         },
+                         failure: function (response) {
+                             alert(response);
+                         }
+                     });
+        }
+        else {
         var isAuditRequired;
          $.ajax({
                 type: "GET",
@@ -192,7 +223,7 @@
                     alert(response);
                 }
          });
-
+        }
     });
     var isBlocked = @(ViewBag.IsBlocked == null ? "0": "1");
 
@@ -746,10 +777,12 @@
                 && $('#Providers_3').val() === undefined && $('#Providers_4').val() === undefined) {
                 $('#codingSubmit').prop('disabled', false);
                 $('#codingSubmitAndGetNext').prop('disabled', false);
+                $('#btnProviderPosted').prop('disabled', false);
             }
             else {
                 $('#codingSubmit').prop('disabled', true);
                 $('#codingSubmitAndGetNext').prop('disabled', true);
+                $('#btnProviderPosted').prop('disabled', true);
             }
     }
 
@@ -773,10 +806,12 @@
             && $('#Providers_4').val() === undefined) {
             $('#codingSubmit').prop('disabled', false);
             $('#codingSubmitAndGetNext').prop('disabled', false);
+            $('#btnProviderPosted').prop('disabled', false);
         }
         else {
             $('#codingSubmit').prop('disabled', true);
             $('#codingSubmitAndGetNext').prop('disabled', true);
+            $('#btnProviderPosted').prop('disabled', true);
         }
     }
 
@@ -800,10 +835,12 @@
             && $('#Providers_4').val() !== "" && $('#Payors_4').val() !== "" && $('.Dxclaim_4').val() !== "" && $('#txt4Cpt_1').val() !== "") {
             $('#codingSubmit').prop('disabled', false);
             $('#codingSubmitAndGetNext').prop('disabled', false);
+            $('#btnProviderPosted').prop('disabled', false);
         }
         else {
             $('#codingSubmit').prop('disabled', true);
             $('#codingSubmitAndGetNext').prop('disabled', true);
+            $('#btnProviderPosted').prop('disabled', true);
         }
     }
 </script>
