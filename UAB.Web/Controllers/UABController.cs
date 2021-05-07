@@ -1220,6 +1220,11 @@ namespace UAB.Controllers
             string hdnClaim3 = Request.Form["hdnClaim3"].ToString();
             string hdnClaim4 = Request.Form["hdnClaim4"].ToString();
 
+            string hdnShadowQAQAErrorTypeID1 = Request.Form["hdnShadowQAQAErrorTypeID1"].ToString();
+            string hdnShadowQAQAErrorTypeID2 = Request.Form["hdnShadowQAQAErrorTypeID2"].ToString();
+            string hdnShadowQAQAErrorTypeID3 = Request.Form["hdnShadowQAQAErrorTypeID3"].ToString();
+            string hdnShadowQAQAErrorTypeID4 = Request.Form["hdnShadowQAQAErrorTypeID4"].ToString();
+
             DataTable dtAudit = new DataTable();
             dtAudit.Columns.Add("FieldName", typeof(string));
             dtAudit.Columns.Add("FieldValue", typeof(string));
@@ -1281,29 +1286,29 @@ namespace UAB.Controllers
             // Rejected Dx Codes
 
             if (!string.IsNullOrEmpty(hdnRejectedDxCodes))
-                dtAudit.Rows.Add("Dx", hdnRejectedDxCodes, hdnRejectedDxRemarks, Convert.ToInt32(hdnClaimId1));
+                dtAudit.Rows.Add("Dx", hdnRejectedDxCodes, hdnRejectedDxRemarks, Convert.ToInt32(hdnShadowQAQAErrorTypeID1), Convert.ToInt32(hdnClaimId1));
 
             if (!string.IsNullOrEmpty(hdnRejectedDxCodes1))
-                dtAudit.Rows.Add("Dx", hdnRejectedDxCodes1, hdnRejectedDxRemarks1, Convert.ToInt32(hdnClaimId2));
+                dtAudit.Rows.Add("Dx", hdnRejectedDxCodes1, hdnRejectedDxRemarks1, Convert.ToInt32(hdnShadowQAQAErrorTypeID2), Convert.ToInt32(hdnClaimId2));
 
             if (!string.IsNullOrEmpty(hdnRejectedDxCodes2))
-                dtAudit.Rows.Add("Dx", hdnRejectedDxCodes2, hdnRejectedDxRemarks2, Convert.ToInt32(hdnClaimId3));
+                dtAudit.Rows.Add("Dx", hdnRejectedDxCodes2, hdnRejectedDxRemarks2, Convert.ToInt32(hdnShadowQAQAErrorTypeID3), Convert.ToInt32(hdnClaimId3));
 
             if (!string.IsNullOrEmpty(hdnRejectedDxCodes3))
-                dtAudit.Rows.Add("Dx", hdnRejectedDxCodes3, hdnRejectedDxRemarks3, Convert.ToInt32(hdnClaimId4));
+                dtAudit.Rows.Add("Dx", hdnRejectedDxCodes3, hdnRejectedDxRemarks3, Convert.ToInt32(hdnShadowQAQAErrorTypeID4), Convert.ToInt32(hdnClaimId4));
 
             // Rejected CPT Codes
             if (!string.IsNullOrEmpty(hdnRejectedCptCodes))
-                dtAudit.Rows.Add("CPTCode", hdnRejectedCptCodes, hdnRejectedCptRemarks, Convert.ToInt32(hdnClaimId1));
+                dtAudit.Rows.Add("CPTCode", hdnRejectedCptCodes, hdnRejectedCptRemarks, Convert.ToInt32(hdnShadowQAQAErrorTypeID1), Convert.ToInt32(hdnClaimId1));
 
             if (!string.IsNullOrEmpty(hdnRejectedCptCodes1))
-                dtAudit.Rows.Add("CPTCode", hdnRejectedCptCodes1, hdnRejectedCptRemarks1, Convert.ToInt32(hdnClaimId2));
+                dtAudit.Rows.Add("CPTCode", hdnRejectedCptCodes1, hdnRejectedCptRemarks1, Convert.ToInt32(hdnShadowQAQAErrorTypeID2), Convert.ToInt32(hdnClaimId2));
 
             if (!string.IsNullOrEmpty(hdnRejectedCptCodes2))
-                dtAudit.Rows.Add("CPTCode", hdnRejectedCptCodes2, hdnRejectedCptRemarks2, Convert.ToInt32(hdnClaimId3));
+                dtAudit.Rows.Add("CPTCode", hdnRejectedCptCodes2, hdnRejectedCptRemarks2, Convert.ToInt32(hdnShadowQAQAErrorTypeID3), Convert.ToInt32(hdnClaimId3));
 
             if (!string.IsNullOrEmpty(hdnRejectedCptCodes3))
-                dtAudit.Rows.Add("CPTCode", hdnRejectedCptCodes3, hdnRejectedCptRemarks3, Convert.ToInt32(hdnClaimId4));
+                dtAudit.Rows.Add("CPTCode", hdnRejectedCptCodes3, hdnRejectedCptRemarks3, Convert.ToInt32(hdnShadowQAQAErrorTypeID4), Convert.ToInt32(hdnClaimId4));
 
 
             bool isQAAgreed = hdnIsQAAgreed;// Convert.ToBoolean(Request.Form["hdnIsQAAgreed"]);

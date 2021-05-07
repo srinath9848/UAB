@@ -24,9 +24,10 @@
         @Html.Hidden("hdnClaimId3")
         @Html.Hidden("hdnClaimId4")
 
-        @Html.Hidden("hdnQAErrorTypeID2")
-        @Html.Hidden("hdnQAErrorTypeID3")
-        @Html.Hidden("hdnQAErrorTypeID4")
+        @Html.Hidden("hdnShadowQAErrorTypeID1")
+        @Html.Hidden("hdnShadowQAErrorTypeID2")
+        @Html.Hidden("hdnShadowQAErrorTypeID3")
+        @Html.Hidden("hdnShadowQAErrorTypeID4")
 
         @{
             bool isQAAgreed = false;
@@ -516,7 +517,7 @@
                                         <input type="text" class="form-control QARemarks ControlHeight" value="@Model.FirstOrDefault().QAProviderFeedbackRemarks" />
                                     </div>
                                     <div class="col-md-3 input-group">
-                                        @Html.DropDownListFor(model => model.FirstOrDefault().ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = "display:none", @class = "form-control QARevised ControlHeight", @id = string.Format("Feedback_{0}1", @tabIndex)  })
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = "display:none", @class = "form-control QARevised ControlHeight", @id = string.Format("Feedback_{0}1", @tabIndex) })
                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().ShadowQAProviderFeedbackID, null, new { @class = "text-danger errMsg" })
                                     </div>
                                     <div class="col-md-3 input-group">
