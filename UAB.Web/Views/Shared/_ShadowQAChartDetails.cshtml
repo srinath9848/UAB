@@ -9,6 +9,7 @@
         @Html.HiddenFor(model => model.FirstOrDefault().Dx)
         @Html.HiddenFor(model => model.FirstOrDefault().QADx)
         @Html.HiddenFor(model => model.FirstOrDefault().CodingDTO.ClinicalCaseID, new { @id = "ccid" })
+
         @Html.Hidden("hdnShadowQADxRemarks")
         @Html.Hidden("hdnShadowQADxCodes")
         @Html.Hidden("hdnShadowQACptRemarks")
@@ -271,7 +272,7 @@
                                                     <input type="text" id="txtDx_@j" class="form-control txtDx ControlHeight" autocomplete="off" tabindex="@j" placeholder="Code" value="@QaDxVal" />
                                                 </div>
                                                 <div class="col-md-3 input-group QADxRevised_@i Dx_@i" style="display: none">
-                                                    <input type="text" id="DxRemarks_@j" class="form-control ControlHeight DxRemarks_@j Dx_@j" />
+                                                    <input type="text" id="DxRemarks_@j" class="form-control ControlHeight DxRemarks_@j Dx_@j" style="display:flex;" />
                                                 </div>
                                             </div>
 
@@ -289,7 +290,7 @@
                                             <div class="input-group-append">
                                                 <span class="input-group-text QACorrections ControlHeight AcceptRejectWidth_@tabIndex">
                                                     &nbsp;<i data="@tabIndex" class="fa fa-edit fa-lg AdjustAcceptReject" aria-hidden="true" style="visibility:hidden"></i>
-                                                    &nbsp;<i id="Dx_@totalDxCount" data="@tabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
+                                                    &nbsp;<i id="Dx_@totalDxCount" data="@tabIndex" class="fa fa-times-circle fa-lg ignore" aria-hidden="true"></i>
                                                 </span>
                                             </div>
                                         </div>
@@ -301,7 +302,7 @@
                                             <input type="text" id="txtDx_@totalDxCount" onfocusout="DxFunction('txtDx_@totalDxCount')" class="form-control ControlHeight txtDx" tabindex="@totalDxCount" autofocus="autofocus" autocomplete="off" placeholder="Code" />
                                         </div>
                                         <div class="col-md-3 input-group Dx_@totalDxCount" style="display:none">
-                                            <input type="text" id="DxRemarks_@i" class="form-control QADxRevised_@i ControlHeight DxRemarks_@i Dx_@i" onchange="removevalid('Dx_@i')" />
+                                            <input type="text" id="DxRemarks_@totalDxCount" class="form-control QADxRevised_@i ControlHeight DxRemarks_@totalDxCount Dx_@i" onchange="removevalid('Dx_@i')" style="display:flex;" />
                                             <span id="validDx_@i" class="text-danger txtdanger" style="display:none">*</span>
                                         </div>
                                     </div>
@@ -478,7 +479,7 @@
                                             <input type="text" class="form-control ControlHeight" id="txtLinks_@totalCptCount" autocomplete="off" placeholder="Link All" onfocusout="CptFunction('txtLinks_@totalCptCount+')" />
                                         </div>
                                         <div class="col-md-3 input-group Cpt_@totalCptCount" id="CptRemarks_@i" style="display:none">
-                                            <input type="text" id="CptRemarks_@i" class="form-control QACptRevised_@i ControlHeight CptRemarks_@i Cpt_@i" style="display:none" />
+                                            <input type="text" id="CptRemarks_@totalCptCount" class="form-control QACptRevised_@i ControlHeight CptRemarks_@totalCptCount Cpt_@i" style="display:none" />
                                             <span id="validCpt_@i" class="text-danger txtdanger" style="display:none">*</span>
                                         </div>
                                     </div>

@@ -659,6 +659,8 @@
                         var txtdanger = $('[class*=txtdanger][style=""]');
                         if (txtdanger.length > 0)
                             e.preventDefault();
+                        else
+                            e.preventDefault();
                     }
                 }
             } else {
@@ -670,10 +672,14 @@
                         var txtdanger = $('[class*=txtdanger][style=""]');
                         if (txtdanger.length > 0)
                             e.preventDefault();
+                        else
+                            e.preventDefault();
                     }
                 }
             }
         });
+
+
 
         var Dx = $("[id*=DxRemarks_]").last().attr('id');
         if (Dx != "") {
