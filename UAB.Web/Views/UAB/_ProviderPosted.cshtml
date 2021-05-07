@@ -1,0 +1,79 @@
+﻿@model UAB.DTO.ChartSummaryDTO
+
+<style>
+    .modal-content {
+        margin-top: 90px;
+    }
+
+    .errorTxt {
+        color: red;
+        min-height: 20px;
+    }
+
+    .tableresponsiveforroles {
+        max-height: 200px;
+    }
+
+    .roledddwith {
+        width: 215px;
+    }
+</style>
+<div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 500px;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Provider Posted Clinical case</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ModalClose1()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="ccid" value="@ViewBag.ccid" />
+                <input type="hidden" id="statusid" value="@ViewBag.statusid" />
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select a Provider--", new { @id = "providerId", @class = "form-control CoderDetails" })
+                    @Html.ValidationMessageFor(model => model.ProviderID, null, new { @class = "text-danger" })
+                </div>
+                <br />
+                <div class="col-md-10 form-group">
+                    @Html.TextBoxFor(model => model.PostingDate, new { @class = "form-control", @type = "text", @autofocus = "autofocus", @id = "txtPostingDate", @autocomplete = "off", @placeholder = "Enter Posting Date", @onfocus = "(this.type='date')", @onblur = "(this.type='text')", @style = "padding: 0.375rem 0.75rem!important;" })
+                    @Html.ValidationMessageFor(model => model.PostingDate, null, new { @class = "text-danger" })
+                </div>
+                <br />
+                <div class="col-md-10 form-group">
+                    @Html.TextAreaFor(model => model.CoderComment, new { @id = "txtCoderComment", @placeholder = "Enter a Coder Comments here", @class = "form-control CoderDetails", @autocomplete = "off", @style = "padding: 0.375rem 0.75rem!important;" })
+                    @Html.ValidationMessageFor(model => model.CoderComment, null, new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div id="assignerror" style="color:red"></div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit" name="btnsubmit" onclick="ProviderPostedClinicalcase()">Post</button>
+                <button type="button" class="btn btn-sm btn-danger btn-fill" onclick="ModalClose1()">Close</button>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
+<script src="~/dashboardassets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
+<script src="~/dashboardassets/extra-libs/DataTables/datatables.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#btnsubmit").click(function (e) {
+            $("#hdnSubmitAndPost").val($(this).attr("id"));
+        });
+
+        ModalClose1 = function () {
+            $("#modalContent").html('');
+        }
+    });
+
+
+    
+
+</script>

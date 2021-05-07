@@ -117,6 +117,9 @@ namespace UAB.DTO
         public bool IsAuditRequired { get; set; }
         public bool SubmitAndPostAlso { get; set; }
 
+        public DateTime PostingDate { get; set; }
+        public string CoderComment { get; set; }
+
     }
 
     public class LelvellingReportDTO
