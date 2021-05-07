@@ -32,10 +32,11 @@
         <table style="margin-left:10px">
             <tr>
                 <td>
-                    @*<div class="form-group">
-                        @Html.TextBoxFor(model => model.ClinicalCaseId, new { @class = "form-control", @autofocus = "autofocus", @id = "txtClinicalCaseId", @autocomplete = "off", @placeholder = "Enter Chart Id" })
-                        @Html.ValidationMessageFor(model => model.ClinicalCaseId, null, new { @class = "text-danger" })
-                    </div>*@
+                    <div class="form-group">
+                        @Html.TextBoxFor(model => model.MRN, new { @class = "form-control", @autofocus = "autofocus", @id = "txtMRN", @autocomplete = "off", @placeholder = "Enter MRN" })
+                        @Html.ValidationMessageFor(model => model.MRN, null, new { @class = "text-danger" })
+
+                    </div>
                     <div class="form-group">
                         @Html.DropDownListFor(model => model.ProjectName, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select a Project--", new { @class = "form-control", @id = "projectdd" })
                         @Html.ValidationMessageFor(model => model.ProjectName, null, new { @class = "text-danger" })
@@ -52,15 +53,9 @@
                         @Html.ValidationMessageFor(model => model.LastName, null, new { @class = "text-danger" })
 
                     </div>
-
                     <div class="form-group">
-                        @Html.TextBoxFor(model => model.ProviderName, new { @class = "form-control", @autofocus = "autofocus", @id = "txtProvidername", @autocomplete = "off", @placeholder = "Enter Provider" })
+                        @Html.DropDownListFor(model => model.ProviderName, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select a Provider--", new { @class = "form-control", @id = "providerdd" })
                         @Html.ValidationMessageFor(model => model.ProviderName, null, new { @class = "text-danger" })
-
-                    </div>
-                    <div class="form-group">
-                        @Html.TextBoxFor(model => model.MRN, new { @class = "form-control", @autofocus = "autofocus", @id = "txtMRN", @autocomplete = "off", @placeholder = "Enter MRN" })
-                        @Html.ValidationMessageFor(model => model.MRN, null, new { @class = "text-danger" })
 
                     </div>
 
@@ -117,6 +112,7 @@
             $("#txtDoSTo").val('');
             $("#statusdd").find('option:selected').text("--Select a Status--");
             $("#projectdd").find('option:selected').text("--Select a Project--");
+            $("#providerdd").find('option:selected').text("--Select a Provider--");
             $("#txtProvidername").val('');
             $("#customControlAutosizing1").prop("checked", false);
                 }
@@ -131,7 +127,7 @@
                     var dosto = $("#txtDoSTo").val();
                     var statusname = $("#statusdd").find('option:selected').text();
                     var projectname = $("#projectdd").find('option:selected').text();
-                    var providername = $("#txtProvidername").val();
+                    var providername = $("#providerdd").find('option:selected').text();
                     var includeblocked = $("#customControlAutosizing1").prop("checked");
                     if (ccid !== "" || fname !=="" || lname !=="" || mrn !=="" || dosfrom !=="" || dosto !=="" || providername !=="" ||
                         projectname !== "--Select a Project--" || statusname !== "--Select a Status--" || includeblocked!==false) {
@@ -148,7 +144,7 @@
                         "dosto": $("#txtDoSTo").val(),
                         "statusname": $("#statusdd").find('option:selected').text(),
                         "projectname": $("#projectdd").find('option:selected').text(),
-                        "providername": $("#txtProvidername").val(),
+                        "providername": $("#providerdd").find('option:selected').text(),
                         "includeblocked": $("#customControlAutosizing1").prop("checked")
 
                     },

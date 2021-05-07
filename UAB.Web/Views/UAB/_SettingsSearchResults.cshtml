@@ -25,6 +25,7 @@
 
     .pagination {
         margin-left: 200px;
+        margin-left: -60px;
     }
 
     .alert {
@@ -46,8 +47,14 @@
                         <table id="searchresults" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th style="width: 100px; font-weight:900;">Action</th>
-                                    <th style="width: 100px; font-weight:900;">ClinicalCaseID</th>
+                                    @if (roles.Split(',').ToList().Contains(Roles.Manager.ToString()))
+                                    {
+                                        <th style="min-width: 165px; font-weight:900;">Action</th>
+                                    }
+                                    else
+                                    {
+                                        <th style="width: 100px; font-weight: 900;">Action</th>
+                                    }
                                     <th style="width: 100px; font-weight:900;">MRN</th>
                                     <th style="width: 100px; font-weight:900;">First Name</th>
                                     <th style="width: 100px; font-weight:900;">Last Name</th>
@@ -67,11 +74,11 @@
                                                 @if (!@item.Status.Contains("Ready for Posting") && !@item.Status.Contains("Posting Completed"))
                                                 {
                                                     <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit" onclick="Assign('@item.ClinicalCaseId')">Assign</button>
+
                                                 }
                                             }
-                                                <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit" onclick="ViewHistory('@item.ClinicalCaseId')">History</button>
+                                             <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit" onclick="ViewHistory('@item.ClinicalCaseId')">History</button>
                                             </td>
-                                        <td>@item.ClinicalCaseId</td>
                                         <td>@item.MRN</td>
                                         <td>@item.FirstName</td>
                                         <td>@item.LastName</td>
