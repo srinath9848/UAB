@@ -2609,28 +2609,7 @@ namespace UAB.DAL
             using (var context = new UABContext())
             {
                 var param = new SqlParameter[] {
-                         new SqlParameter() {
-                            ParameterName = "@ShadowQACPTCode",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.ShadowQACPTCode
-                        },
-                         new SqlParameter() {
-                            ParameterName = "@ShadowQACPTCodeRemarks",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.ShadowQACPTCodeRemarks
-                        },  new SqlParameter() {
-                            ParameterName = "@ShadowQADx",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.ShadowQADx
-                        },  new SqlParameter() {
-                            ParameterName = "@ShadowQADxRemarks",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.ShadowQADxRemarks
-                        },   new SqlParameter() {
+                        new SqlParameter() {
                             ParameterName = "@ClinicalcaseID",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,

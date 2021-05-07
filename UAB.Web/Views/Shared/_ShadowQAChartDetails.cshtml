@@ -25,6 +25,21 @@
         @Html.Hidden("hdnClaimId3")
         @Html.Hidden("hdnClaimId4")
 
+        @Html.Hidden("hdnShadowQADxRemarks2")
+        @Html.Hidden("hdnShadowQADxCodes2")
+        @Html.Hidden("hdnShadowQACptRemarks2")
+        @Html.Hidden("hdnShadowQACptCodes2")
+
+        @Html.Hidden("hdnShadowQADxRemarks3")
+        @Html.Hidden("hdnShadowQADxCodes3")
+        @Html.Hidden("hdnShadowQACptRemarks3")
+        @Html.Hidden("hdnShadowQACptCodes3")
+
+        @Html.Hidden("hdnShadowQADxRemarks4")
+        @Html.Hidden("hdnShadowQADxCodes4")
+        @Html.Hidden("hdnShadowQACptRemarks4")
+        @Html.Hidden("hdnShadowQACptCodes4")
+
         @Html.Hidden("hdnShadowQAErrorTypeID1")
         @Html.Hidden("hdnShadowQAErrorTypeID2")
         @Html.Hidden("hdnShadowQAErrorTypeID3")
@@ -32,7 +47,7 @@
 
         @{
             bool isQAAgreed = false;
-            string Show = "visibility:hidden";
+            string Show = "display:none;";
 
             if (string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) && string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText)
             && string.IsNullOrEmpty(Model.FirstOrDefault().QACPTCode) && string.IsNullOrEmpty(Model.FirstOrDefault().QADx) &&
@@ -42,7 +57,7 @@
             if (!string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) || !string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText)
             || !string.IsNullOrEmpty(Model.FirstOrDefault().QACPTCode) || !string.IsNullOrEmpty(Model.FirstOrDefault().QADx) ||
             !string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText))
-                Show = "display:flex";
+                Show = "display:flex;";
 
         }
         @Html.Hidden("hdnIsQAAgreed", isQAAgreed)
@@ -302,7 +317,7 @@
                                             <input type="text" id="txtDx_@totalDxCount" onfocusout="DxFunction('txtDx_@totalDxCount')" class="form-control ControlHeight txtDx" tabindex="@totalDxCount" autofocus="autofocus" autocomplete="off" placeholder="Code" />
                                         </div>
                                         <div class="col-md-3 input-group Dx_@totalDxCount" style="display:none">
-                                            <input type="text" id="DxRemarks_@totalDxCount" class="form-control QADxRevised_@i ControlHeight DxRemarks_@totalDxCount Dx_@i" onchange="removevalid('Dx_@i')" style="display:flex;" />
+                                            <input type="text" id="DxRemarks_@totalDxCount" class="form-control QADxRevised_@i ControlHeight DxRemarks_@totalDxCount Dx_@totalDxCount" onchange="removevalid('Dx_@i')" style="display:flex;" />
                                             <span id="validDx_@i" class="text-danger txtdanger" style="display:none">*</span>
                                         </div>
                                     </div>
