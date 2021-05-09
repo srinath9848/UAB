@@ -522,7 +522,7 @@
                     }
                 }
 
-               
+
                 // CptNewClaimRemarks
 
                 var CptNewClaimRemarks = $("[id*=CptRemarkss_" + tabid + "_]");
@@ -578,16 +578,25 @@
             }
         });
 
-
         var Dxremarks = $("#claim1 [class*=DxRemarks_]");
         $("#hdnShadowQADxRemarks").val("");
         for (var i = 0; i < Dxremarks.length; i++) {
-            if ($(Dxremarks[i]).css("display") == "flex") {
+            if ($(Dxremarks[i]).css("display") == "flex" && $(Dxremarks[i]).val() != "") {
+                $("#validDx_" + id).hide();
                 var id = parseInt($(Dxremarks[i]).attr("id").split("_")[1]);
                 if ($("#hdnShadowQADxRemarks").val() == "")
                     $("#hdnShadowQADxRemarks").val(id + "^" + $(Dxremarks[i]).val());
                 else
                     $("#hdnShadowQADxRemarks").val($("#hdnShadowQADxRemarks").val() + "|" + id + "^" + $(Dxremarks[i]).val());
+            }
+            else {
+                if ($(Dxremarks[i]).val() == "") {
+                    var chk = $("#chkAll_1").is(':checked');
+                    if (!chk) {
+                        $(Dxremarks[i]).focus();
+                        $("#validDx_" + id).show();
+                    }
+                }
             }
         }
 
@@ -595,14 +604,18 @@
         $("#hdnShadowQADxCodes").val("");
         for (var i = 0; i < DxCodes.length; i++) {
             var id = parseInt($(DxCodes[i]).attr("id").split("_")[1]);
-            if ($(".DxRemarks_" + id).length) {
-                if ($(Dxremarks[i]).val() != "" && $(Dxremarks[i]).css("display") == "flex") {
-                    if ($("#hdnShadowQADxCodes").val() == "")
-                        $("#hdnShadowQADxCodes").val(id + "^" + $(DxCodes[i]).val());
-                    else
-                        $("#hdnShadowQADxCodes").val($("#hdnShadowQADxCodes").val() + "|" + id + "^" + $(DxCodes[i]).val());
-                } else {
-
+            if ($(Dxremarks[i]).val() != "" && $(Dxremarks[i]).css("display") == "flex") {
+                $("#validDx_" + id).hide();
+            if ($("#hdnShadowQADxCodes").val() == "")
+                $("#hdnShadowQADxCodes").val(id + "^" + $(DxCodes[i]).val());
+            else
+                $("#hdnShadowQADxCodes").val($("#hdnShadowQADxCodes").val() + "|" + id + "^" + $(DxCodes[i]).val());
+            }
+            if ($(Dxremarks[i]).val() == "") {
+                var chk = $("#chkAll_1").is(':checked');
+                if (!chk) {
+                    $(Dxremarks[i]).focus();
+                    $("#validDx_" + id).show();
                 }
             }
         }
@@ -612,11 +625,21 @@
         $("#hdnShadowQACptRemarks").val("");
         for (var i = 0; i < CptRemarks.length; i++) {
             var id = parseInt($(CptRemarks[i]).attr("id").split("_")[1]);
-            if ($(CptRemarks[i]).css("display") == "flex") {
+            if ($(CptRemarks[i]).css("display") == "flex" && $(CptRemarks[i]).val() != "") {
+                $("#validCpt_" + id).hide();
                 if ($("#hdnShadowQACptRemarks").val() == "")
                     $("#hdnShadowQACptRemarks").val(id + "^" + $(CptRemarks[i]).val());
                 else
                     $("#hdnShadowQACptRemarks").val($("#hdnShadowQACptRemarks").val() + "|" + id + "^" + $(CptRemarks[i]).val());
+            }
+            else {
+                if ($(CptRemarks[i]).val() == "") {
+                    var chk = $("#chkAll_1").is(':checked');
+                    if (!chk) {
+                        $(CptRemarks[i]).focus();
+                        $("#validCpt_" + id).show();
+                    }
+                }
             }
         }
 
@@ -624,8 +647,8 @@
         $("#hdnShadowQACptCodes").val("");
         for (var i = 1; i <= CptCodes.length; i++) {
             var id = parseInt($("#txtCpt_" + i).attr("id").split("_")[1]);
-            if ($(".CptRemarks_" + id).length) {
-                if ($("#txtCpt_" + i).val() != "" && $(".Cpt_" + id).css("display") == "flex") {
+            if ($("#txtCpt_" + i).val() != "" && $(".CptRemarks_" + id).css("display") == "flex") {
+                $("#validCpt_" + i).val('');
                     if ($("#hdnShadowQACptCodes").val() == "") {
                         if ($("#txtCpt_" + i).val() != "") {
                             var mod = $("#txtMod_" + i).val() != "" ? $("#txtMod_" + i).val() : null;
@@ -642,21 +665,13 @@
                             $("#hdnShadowQACptCodes").val($("#hdnShadowQACptCodes").val() + "|" + id + "^" + $("#txtCpt_" + i).val() + "^" + mod + "^" + qty + "^" + links);
                         }
                     }
-                }
             }
             else {
-                if ($("#txtCpt_" + i).val() != "") {
-                    if ($("#hdnShadowQACptCodes").val() == "") {
-                        var mod = $("#txtMod_" + i).val() != "" ? $("#txtMod_" + i).val() : null;
-                        var qty = $("#txtQty_" + i).val() != "" ? $("#txtQty_" + i).val() : null;
-                        var links = $("#txtLinks_" + i).val() != "" ? $("#txtLinks_" + i).val() : null;
-                        $("#hdnShadowQACptCodes").val(id + "^" + $("#txtCpt_" + i).val() + "^" + mod + "^" + qty + "^" + links);
-                    }
-                    else {
-                        var mod = $("#txtMod_" + i).val() != "" ? $("#txtMod_" + i).val() : null;
-                        var qty = $("#txtQty_" + i).val() != "" ? $("#txtQty_" + i).val() : null;
-                        var links = $("#txtLinks_" + i).val() != "" ? $("#txtLinks_" + i).val() : null;
-                        $("#hdnShadowQACptCodes").val($("#hdnShadowQACptCodes").val() + "|" + id + "^" + $("#txtCpt_" + i).val() + "^" + mod + "^" + qty + "^" + links);
+                if ($("#txtCpt_" + i).val() == "") {
+                    var chk = $("#chkAll_1").is(':checked');
+                    if (!chk) {
+                        $("#txtCpt_" + i).focus();
+                        $("#validCpt_" + id).show();
                     }
                 }
             }
