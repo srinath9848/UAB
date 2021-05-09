@@ -151,7 +151,7 @@
                     <div class="card-body" style="text-align:right">
                         <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.Coder, ChartType= "Block", ProjectID=@Model.ProjectID, ProjectName=Model.ProjectName,ccid=Model.CodingDTO.ClinicalCaseID,plusorminus="Previous"})" class="btn btn-success Available" id="btnPrevious" style="display:none">Previous</a>
                         <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.Coder, ChartType= "Block", ProjectID=@Model.ProjectID, ProjectName=Model.ProjectName,ccid=Model.CodingDTO.ClinicalCaseID,plusorminus="Next"})" class="btn btn-success Available" id="btnNext" style="display:none">Next</a>
-                        <button id="btnProviderPosted" type="button" class="btn btn-danger">Provider Posted</button>
+                        <button id="btnProviderPosted" name="btnProviderPosted" type="button" class="btn btn-danger" disabled onclick="">Provider Posted</button>
                         <button id="btnBlock" type="button" class="btn btn-danger" onclick="Block()">Block</button>
                         <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger" onclick="BlockHistory()">Block History</button>
                         <button id="codingSubmit" name="codingSubmit" type="button" class="btn btn-success Available" disabled>Save</button>
@@ -172,6 +172,20 @@
 <script src="~/dashboardassets/extra-libs/DataTables/datatables.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        PostedByProvider = function () {
+
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("ProviderPostedClinicalcase", "UAB")",
+                data: {"ccid": $("#ccid").val()},
+                success: function (response) {
+                    $("#modalContent").html(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        };
         Block = function () {
 
             $.ajax({
@@ -217,10 +231,12 @@
             if ($('#PayorID').val() !== "" && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== "" && $('#Providers_2').val() === undefined && $('#Providers_3').val() === undefined && $('#Providers_4').val() === undefined) {
                 $('#codingSubmit').prop('disabled', false);
                 $('#codingSubmitAndGetNext').prop('disabled', false);
+                $('#btnProviderPosted').prop('disabled', false);
             }
             else {
                 $('#codingSubmit').prop('disabled', true);
                 $('#codingSubmitAndGetNext').prop('disabled', true);
+                $('#btnProviderPosted').prop('disabled', true);
             }
         }
 
@@ -242,10 +258,12 @@
                 && $('#Providers_2').val() !== "" && $('#Payors_2').val() !== "" && $('#txtDx2Claim_1').val() !== "" && $('#txt2Cpt_1').val() !== "" && $('#Providers_3').val() === undefined && $('#Providers_4').val() === undefined) {
                 $('#codingSubmit').prop('disabled', false);
                 $('#codingSubmitAndGetNext').prop('disabled', false);
+                $('#btnProviderPosted').prop('disabled', false);
             }
             else {
                 $('#codingSubmit').prop('disabled', true);
                 $('#codingSubmitAndGetNext').prop('disabled', true);
+                $('#btnProviderPosted').prop('disabled', true);
             }
         }
 });

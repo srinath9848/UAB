@@ -257,7 +257,7 @@ namespace UAB.Controllers
             ViewBag.IsBlocked = "1";
 
             ViewBag.currentindex = 0;            //always first will open from here so currentindex is zero
-            
+
             #endregion
 
             chartSummaryDTO.ProjectName = ProjectName;
@@ -269,8 +269,8 @@ namespace UAB.Controllers
                     chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
                     //for prenxt button disblenable operation
                     lst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);
-                    List<int> codercidslst=lst.Select(x => x.CodingDTO.ClinicalCaseID).ToList();
-                    ViewBag.lastindex = codercidslst.Count-1;
+                    List<int> codercidslst = lst.Select(x => x.CodingDTO.ClinicalCaseID).ToList();
+                    ViewBag.lastindex = codercidslst.Count - 1;
                     break;
                 case "QA":
                     lstChartSummaryDTO = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
@@ -297,6 +297,15 @@ namespace UAB.Controllers
                 return View("Coding", chartSummaryDTO);
 
         }
+        [HttpGet]
+        public IActionResult ProviderPostedClinicalcase(string ccid)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            ViewBag.ccid = Convert.ToInt32(ccid);
+            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
+            return PartialView("_ProviderPosted");
+        }
+
         [HttpGet]
         public IActionResult BlockClinicalcase(string ccid)
         {
@@ -393,72 +402,72 @@ namespace UAB.Controllers
             }
         }
 
-        public IActionResult SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO, string codingSubmitAndGetNext, string submitAndPost, string submitOnly)
+        public IActionResult SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO, string codingSubmitAndGetNext, string submitAndPost, string submitOnly, int providerId, DateTime txtPostingDate, string txtCoderComment)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             string providerPosted = Request.Form["hdnProviderPosted"].ToString();
 
+            string submitType = Request.Form["hdnSubmitAndPost"];
+            string hdnIsAuditRequired = Request.Form["hdnIsAuditRequired"];
+
+            if (submitType == "submitAndPost")
+                chartSummaryDTO.SubmitAndPostAlso = true;
+            else
+                chartSummaryDTO.SubmitAndPostAlso = false;
+
+            if (hdnIsAuditRequired == "true")
+                chartSummaryDTO.IsAuditRequired = true;
+            else
+                chartSummaryDTO.IsAuditRequired = false;
+
+            if (string.IsNullOrEmpty(codingSubmitAndGetNext))
+                codingSubmitAndGetNext = Request.Form["hdnButtonType"];
+
+            string hdnDxCodes = Request.Form["hdnDxCodes"].ToString();
+            chartSummaryDTO.Dx = hdnDxCodes;
+            string hdnCptCodes = Request.Form["hdnCptCodes"].ToString();
+            chartSummaryDTO.CPTCode = hdnCptCodes;
+
+            string hdnClaim1 = Request.Form["hdnClaim2"].ToString();
+            string hdnDxClaim1 = Request.Form["hdnDxCodes1"].ToString();
+            string hdnCptClaim1 = Request.Form["hdnCptCodes1"].ToString();
+
+            DataTable dtClaim = new DataTable();
+            dtClaim.Columns.Add("RNO", typeof(int));
+            dtClaim.Columns.Add("ProviderId", typeof(int));
+            dtClaim.Columns.Add("PayorId", typeof(int));
+            dtClaim.Columns.Add("NoteTitle", typeof(string));
+            dtClaim.Columns.Add("ProviderFeedbackId", typeof(string));
+            dtClaim.Columns.Add("Dx", typeof(string));
+
+            DataTable dtCpt = new DataTable();
+            dtCpt.Columns.Add("RNO", typeof(int));
+            dtCpt.Columns.Add("CPTCode", typeof(string));
+            dtCpt.Columns.Add("Mod", typeof(string));
+            dtCpt.Columns.Add("Qty", typeof(string));
+            dtCpt.Columns.Add("Links", typeof(string));
+            if (!string.IsNullOrEmpty(hdnClaim1))
+                PrepareClaim(hdnClaim1, hdnDxClaim1, hdnCptClaim1, 1, ref dtClaim, ref dtCpt);
+
+            string hdnClaim2 = Request.Form["hdnClaim3"].ToString();
+            string hdnDxClaim2 = Request.Form["hdnDxCodes2"].ToString();
+            string hdnCptClaim2 = Request.Form["hdnCptCodes2"].ToString();
+
+            if (!string.IsNullOrEmpty(hdnClaim2))
+                PrepareClaim(hdnClaim2, hdnDxClaim2, hdnCptClaim2, 2, ref dtClaim, ref dtCpt);
+
+            string hdnClaim3 = Request.Form["hdnClaim4"].ToString();
+            string hdnDxClaim3 = Request.Form["hdnDxCodes3"].ToString();
+            string hdnCptClaim3 = Request.Form["hdnCptCodes3"].ToString();
+            if (!string.IsNullOrEmpty(hdnClaim3))
+                PrepareClaim(hdnClaim3, hdnDxClaim3, hdnCptClaim3, 3, ref dtClaim, ref dtCpt);
+
             if (providerPosted != "")
             {
-                clinicalcaseOperations.SubmitProviderPosted(chartSummaryDTO.CodingDTO.ClinicalCaseID, mUserId);
+                clinicalcaseOperations.SubmitProviderPostedChart(chartSummaryDTO, dtClaim, dtCpt,providerId,txtPostingDate,txtCoderComment);
             }
             else
             {
-                string submitType = Request.Form["hdnSubmitAndPost"];
-                string hdnIsAuditRequired = Request.Form["hdnIsAuditRequired"];
-
-                if (submitType == "submitAndPost")
-                    chartSummaryDTO.SubmitAndPostAlso = true;
-                else
-                    chartSummaryDTO.SubmitAndPostAlso = false;
-
-                if (hdnIsAuditRequired == "true")
-                    chartSummaryDTO.IsAuditRequired = true;
-                else
-                    chartSummaryDTO.IsAuditRequired = false;
-
-                if (string.IsNullOrEmpty(codingSubmitAndGetNext))
-                    codingSubmitAndGetNext = Request.Form["hdnButtonType"];
-
-                string hdnDxCodes = Request.Form["hdnDxCodes"].ToString();
-                chartSummaryDTO.Dx = hdnDxCodes;
-                string hdnCptCodes = Request.Form["hdnCptCodes"].ToString();
-                chartSummaryDTO.CPTCode = hdnCptCodes;
-
-                string hdnClaim1 = Request.Form["hdnClaim2"].ToString();
-                string hdnDxClaim1 = Request.Form["hdnDxCodes1"].ToString();
-                string hdnCptClaim1 = Request.Form["hdnCptCodes1"].ToString();
-
-                DataTable dtClaim = new DataTable();
-                dtClaim.Columns.Add("RNO", typeof(int));
-                dtClaim.Columns.Add("ProviderId", typeof(int));
-                dtClaim.Columns.Add("PayorId", typeof(int));
-                dtClaim.Columns.Add("NoteTitle", typeof(string));
-                dtClaim.Columns.Add("ProviderFeedbackId", typeof(string));
-                dtClaim.Columns.Add("Dx", typeof(string));
-
-                DataTable dtCpt = new DataTable();
-                dtCpt.Columns.Add("RNO", typeof(int));
-                dtCpt.Columns.Add("CPTCode", typeof(string));
-                dtCpt.Columns.Add("Mod", typeof(string));
-                dtCpt.Columns.Add("Qty", typeof(string));
-                dtCpt.Columns.Add("Links", typeof(string));
-                if (!string.IsNullOrEmpty(hdnClaim1))
-                    PrepareClaim(hdnClaim1, hdnDxClaim1, hdnCptClaim1, 1, ref dtClaim, ref dtCpt);
-
-                string hdnClaim2 = Request.Form["hdnClaim3"].ToString();
-                string hdnDxClaim2 = Request.Form["hdnDxCodes2"].ToString();
-                string hdnCptClaim2 = Request.Form["hdnCptCodes2"].ToString();
-
-                if (!string.IsNullOrEmpty(hdnClaim2))
-                    PrepareClaim(hdnClaim2, hdnDxClaim2, hdnCptClaim2, 2, ref dtClaim, ref dtCpt);
-
-                string hdnClaim3 = Request.Form["hdnClaim4"].ToString();
-                string hdnDxClaim3 = Request.Form["hdnDxCodes3"].ToString();
-                string hdnCptClaim3 = Request.Form["hdnCptCodes3"].ToString();
-                if (!string.IsNullOrEmpty(hdnClaim3))
-                    PrepareClaim(hdnClaim3, hdnDxClaim3, hdnCptClaim3, 3, ref dtClaim, ref dtCpt);
-
                 if (codingSubmitAndGetNext == "codingSubmit")
                     clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDTO, dtClaim, dtCpt);
                 else
@@ -552,8 +561,18 @@ namespace UAB.Controllers
             {
                 dtAudit.Rows.Add(items[i].Split(",")[0], items[i].Split(",")[1], items[i].Split(",")[2], claimId);
             }
-
         }
+
+        void PrepareAudit1(string rejectedFields, DataTable dtAudit)
+        {
+            string[] items = rejectedFields.Split("^");
+            int claimId = Convert.ToInt32(items[0].Split(",")[1]);
+            for (int i = 1; i < items.Count(); i++)
+            {
+                dtAudit.Rows.Add(items[i].Split(",")[0], items[i].Split(",")[1], items[i].Split(",")[2], Convert.ToInt32(items[i].Split(",")[3]), claimId);
+            }
+        }
+
         void PrepareBasicParams(string basicFields, DataTable dtbasicParams)
         {
             string[] items = basicFields.Split("^");
@@ -900,18 +919,18 @@ namespace UAB.Controllers
             string hdnQADxRemarks4 = Request.Form["hdnQADxRemarks4"].ToString();
             string hdnQADxCodes4 = Request.Form["hdnQADxCodes4"].ToString();
 
-            string hdnhdnQAErrorTypeID2 = Request.Form["hdnQAErrorTypeID2"].ToString();
-            string hdnhdnQAErrorTypeID3 = Request.Form["hdnQAErrorTypeID3"].ToString();
-            string hdnhdnQAErrorTypeID4 = Request.Form["hdnQAErrorTypeID4"].ToString();
+            string hdnQAErrorTypeID2 = Request.Form["hdnQAErrorTypeID2"].ToString();
+            string hdnQAErrorTypeID3 = Request.Form["hdnQAErrorTypeID3"].ToString();
+            string hdnQAErrorTypeID4 = Request.Form["hdnQAErrorTypeID4"].ToString();
 
             if (!string.IsNullOrEmpty(hdnQADxCodes2))
-                dtAudit.Rows.Add("Dx", hdnQADxCodes2, hdnQADxRemarks2, hdnhdnQAErrorTypeID2, Convert.ToInt32(hdnClaimId2));
+                dtAudit.Rows.Add("Dx", hdnQADxCodes2, hdnQADxRemarks2, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2));
 
             if (!string.IsNullOrEmpty(hdnQADxCodes3))
-                dtAudit.Rows.Add("Dx", hdnQADxCodes3, hdnQADxRemarks3, hdnhdnQAErrorTypeID3, Convert.ToInt32(hdnClaimId3));
+                dtAudit.Rows.Add("Dx", hdnQADxCodes3, hdnQADxRemarks3, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3));
 
             if (!string.IsNullOrEmpty(hdnQADxCodes4))
-                dtAudit.Rows.Add("Dx", hdnQADxCodes4, hdnQADxRemarks4, hdnhdnQAErrorTypeID4, Convert.ToInt32(hdnClaimId4));
+                dtAudit.Rows.Add("Dx", hdnQADxCodes4, hdnQADxRemarks4, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4));
 
             string hdnQACptRemarks2 = Request.Form["hdnQACptRemarks2"].ToString();
             string hdnQACptCodes2 = Request.Form["hdnQACptCodes2"].ToString();
@@ -921,13 +940,13 @@ namespace UAB.Controllers
             string hdnQACptCodes4 = Request.Form["hdnQACptCodes4"].ToString();
 
             if (!string.IsNullOrEmpty(hdnQACptCodes2))
-                dtAudit.Rows.Add("CPTCode", hdnQACptCodes2, hdnQACptRemarks2, hdnhdnQAErrorTypeID2, Convert.ToInt32(hdnClaimId2));
+                dtAudit.Rows.Add("CPTCode", hdnQACptCodes2, hdnQACptRemarks2, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2));
 
             if (!string.IsNullOrEmpty(hdnQACptCodes3))
-                dtAudit.Rows.Add("CPTCode", hdnQACptCodes3, hdnQACptRemarks3, hdnhdnQAErrorTypeID3, Convert.ToInt32(hdnClaimId3));
+                dtAudit.Rows.Add("CPTCode", hdnQACptCodes3, hdnQACptRemarks3, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3));
 
             if (!string.IsNullOrEmpty(hdnQACptCodes4))
-                dtAudit.Rows.Add("CPTCode", hdnQACptCodes4, hdnQACptRemarks4, hdnhdnQAErrorTypeID4, Convert.ToInt32(hdnClaimId4));
+                dtAudit.Rows.Add("CPTCode", hdnQACptCodes4, hdnQACptRemarks4, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4));
 
             //Ending of Reading Claim2 to Claim4 Data
 
@@ -1195,24 +1214,98 @@ namespace UAB.Controllers
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
+            DataTable dtAudit = new DataTable();
+            dtAudit.Columns.Add("FieldName", typeof(string));
+            dtAudit.Columns.Add("FieldValue", typeof(string));
+            dtAudit.Columns.Add("Remark", typeof(string));
+            dtAudit.Columns.Add("ErrorTypeId", typeof(int));
+            dtAudit.Columns.Add("ClaimId", typeof(int));
+
             var hdnShadowQADxCodes = Request.Form["hdnShadowQADxCodes"].ToString();
             var hdnShadowQADxRemarks = Request.Form["hdnShadowQADxRemarks"].ToString();
-            chartSummaryDTO.ShadowQADx = hdnShadowQADxCodes;
-            chartSummaryDTO.ShadowQADxRemarks = hdnShadowQADxRemarks;
-
             var hdnShadowQACptCodes = Request.Form["hdnShadowQACptCodes"].ToString();
             var hdnShadowQACptRemarks = Request.Form["hdnShadowQACptRemarks"].ToString();
-            chartSummaryDTO.ShadowQACPTCode = hdnShadowQACptCodes;
-            chartSummaryDTO.ShadowQACPTCodeRemarks = hdnShadowQACptRemarks;
+
+            var hdnShadowQADxCodes2 = Request.Form["hdnShadowQADxCodes2"].ToString();
+            var hdnShadowQADxRemarks2 = Request.Form["hdnShadowQADxRemarks2"].ToString();
+            var hdnShadowQACptCodes2 = Request.Form["hdnShadowQACptCodes2"].ToString();
+            var hdnShadowQACptRemarks2 = Request.Form["hdnShadowQACptRemarks2"].ToString();
+
+            var hdnShadowQADxCodes3 = Request.Form["hdnShadowQADxCodes3"].ToString();
+            var hdnShadowQADxRemarks3 = Request.Form["hdnShadowQADxRemarks3"].ToString();
+            var hdnShadowQACptCodes3 = Request.Form["hdnShadowQACptCodes3"].ToString();
+            var hdnShadowQACptRemarks3 = Request.Form["hdnShadowQACptRemarks3"].ToString();
+
+            var hdnShadowQADxCodes4 = Request.Form["hdnShadowQADxCodes4"].ToString();
+            var hdnShadowQADxRemarks4 = Request.Form["hdnShadowQADxRemarks4"].ToString();
+            var hdnShadowQACptCodes4 = Request.Form["hdnShadowQACptCodes4"].ToString();
+            var hdnShadowQACptRemarks4 = Request.Form["hdnShadowQACptRemarks4"].ToString();
+
+            string hdnClaim1 = Request.Form["hdnClaim1"].ToString();
+            string hdnClaim2 = Request.Form["hdnClaim2"].ToString();
+            string hdnClaim3 = Request.Form["hdnClaim3"].ToString();
+            string hdnClaim4 = Request.Form["hdnClaim4"].ToString();
+
+            var hdnClaimId1 = Request.Form["hdnClaimId1"].ToString();
+            var hdnClaimId2 = Request.Form["hdnClaimId2"].ToString();
+            var hdnClaimId3 = Request.Form["hdnClaimId3"].ToString();
+            var hdnClaimId4 = Request.Form["hdnClaimId4"].ToString();
+
+            string hdnShadowQAErrorTypeID1 = Request.Form["hdnShadowQAErrorTypeID1"].ToString();
+            string hdnShadowQAErrorTypeID2 = Request.Form["hdnShadowQAErrorTypeID2"].ToString();
+            string hdnShadowQAErrorTypeID3 = Request.Form["hdnShadowQAErrorTypeID3"].ToString();
+            string hdnShadowQAErrorTypeID4 = Request.Form["hdnShadowQAErrorTypeID4"].ToString();
+
+            // basic Params fro Claim 1 - Claim 2
+
+            if (!string.IsNullOrEmpty(hdnClaim1))
+                PrepareAudit1(hdnClaim1, dtAudit);
+
+            if (!string.IsNullOrEmpty(hdnClaim2))
+                PrepareAudit1(hdnClaim2, dtAudit);
+
+            if (!string.IsNullOrEmpty(hdnClaim3))
+                PrepareAudit1(hdnClaim3, dtAudit);
+
+            if (!string.IsNullOrEmpty(hdnClaim4))
+                PrepareAudit1(hdnClaim4, dtAudit);
+
+            // Claim 1 Dx & CPT
+            if (!string.IsNullOrEmpty(hdnShadowQADxCodes) && !string.IsNullOrEmpty(hdnShadowQADxRemarks))
+                dtAudit.Rows.Add("Dx", hdnShadowQADxCodes, hdnShadowQADxRemarks, Convert.ToInt32(hdnShadowQAErrorTypeID1), Convert.ToInt32(hdnClaimId1));
+
+            if (!string.IsNullOrEmpty(hdnShadowQACptCodes) && !string.IsNullOrEmpty(hdnShadowQACptRemarks))
+                dtAudit.Rows.Add("CPTCode", hdnShadowQACptCodes, hdnShadowQACptRemarks, Convert.ToInt32(hdnShadowQAErrorTypeID1), Convert.ToInt32(hdnClaimId1));
+
+            // Claim 2 Dx & CPT
+            if (!string.IsNullOrEmpty(hdnShadowQADxCodes2) && !string.IsNullOrEmpty(hdnShadowQADxRemarks2))
+                dtAudit.Rows.Add("Dx", hdnShadowQADxCodes2, hdnShadowQADxRemarks2, Convert.ToInt32(hdnShadowQAErrorTypeID2), Convert.ToInt32(hdnClaimId2));
+
+            if (!string.IsNullOrEmpty(hdnShadowQACptCodes2) && !string.IsNullOrEmpty(hdnShadowQACptRemarks2))
+                dtAudit.Rows.Add("CPTCode", hdnShadowQACptCodes2, hdnShadowQACptRemarks2, Convert.ToInt32(hdnShadowQAErrorTypeID2), Convert.ToInt32(hdnClaimId2));
+
+            // Claim 3 Dx & CPT
+            if (!string.IsNullOrEmpty(hdnShadowQADxCodes3) && !string.IsNullOrEmpty(hdnShadowQADxRemarks3))
+                dtAudit.Rows.Add("Dx", hdnShadowQADxCodes3, hdnShadowQADxRemarks3, Convert.ToInt32(hdnShadowQAErrorTypeID3), Convert.ToInt32(hdnClaimId3));
+
+            if (!string.IsNullOrEmpty(hdnShadowQACptCodes3) && !string.IsNullOrEmpty(hdnShadowQACptRemarks3))
+                dtAudit.Rows.Add("CPTCode", hdnShadowQACptCodes3, hdnShadowQACptRemarks3, Convert.ToInt32(hdnShadowQAErrorTypeID3), Convert.ToInt32(hdnClaimId3));
+
+            // Claim 4 Dx & CPT
+            if (!string.IsNullOrEmpty(hdnShadowQADxCodes4) && !string.IsNullOrEmpty(hdnShadowQADxRemarks4))
+                dtAudit.Rows.Add("Dx", hdnShadowQADxCodes4, hdnShadowQADxRemarks4, Convert.ToInt32(hdnShadowQAErrorTypeID4), Convert.ToInt32(hdnClaimId4));
+
+            if (!string.IsNullOrEmpty(hdnShadowQACptCodes4) && !string.IsNullOrEmpty(hdnShadowQACptRemarks4))
+                dtAudit.Rows.Add("CPTCode", hdnShadowQACptCodes4, hdnShadowQACptRemarks4, Convert.ToInt32(hdnShadowQAErrorTypeID4), Convert.ToInt32(hdnClaimId4));
 
 
             bool isQAAgreed = hdnIsQAAgreed;// Convert.ToBoolean(Request.Form["hdnIsQAAgreed"]);
 
             if (string.IsNullOrEmpty(SubmitAndGetNext))
-                clinicalcaseOperations.SubmitShadowQAAvailableChart(chartSummaryDTO, isQAAgreed);
+                clinicalcaseOperations.SubmitShadowQAAvailableChart(chartSummaryDTO, isQAAgreed, dtAudit);
             else
             {
-                clinicalcaseOperations.SubmitShadowQAAvailableChart(chartSummaryDTO, isQAAgreed);
+                clinicalcaseOperations.SubmitShadowQAAvailableChart(chartSummaryDTO, isQAAgreed, dtAudit);
                 return RedirectToAction("GetShadowQAAvailableChart", new { Role = Roles.ShadowQA.ToString(), ChartType = "Available", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName });
             }
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.ShadowQA.ToString());

@@ -187,7 +187,9 @@
         }
     }
 
-    $('#btnsubmit,#SubmitAndGetNext').click(function (e) {
+
+    $(document).on('click', '#btnsubmit,#SubmitAndGetNext', function (e) {
+
         $('.CoderDetails').removeAttr('disabled');
         var currentdate = new Date();
         //Format: DD/MM/YYYY
@@ -647,9 +649,37 @@
             e.preventDefault();
         }
 
-        var txtdanger = $('[class*=txtdanger][style=""]');
-        if (txtdanger.length > 0)
-            e.preventDefault();
+        $(".tab").each(function () {
+            var id = $(this).attr('id');
+            if (id == "1") {
+                var chk = $("#chkAll_" + id).is(':checked');
+                if (!chk) {
+                    if ($("#ErrorType_" + id).val() == "") {
+                        $("#ErrorTypeError_" + id).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                        var txtdanger = $('[class*=txtdanger][style=""]');
+                        if (txtdanger.length > 0)
+                            e.preventDefault();
+                        else
+                            e.preventDefault();
+                    }
+                }
+            } else {
+                var tabid = id.split("tabIndex_")[1].split("_ClaimId_")[0];
+                var chk = $("#chkAll_" + tabid).is(':checked');
+                if (!chk) {
+                    if ($("#ErrorType_" + tabid).val() == "") {
+                        $("#ErrorTypeError_" + tabid).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                        var txtdanger = $('[class*=txtdanger][style=""]');
+                        if (txtdanger.length > 0)
+                            e.preventDefault();
+                        else
+                            e.preventDefault();
+                    }
+                }
+            }
+        });
+
+
 
         var Dx = $("[id*=DxRemarks_]").last().attr('id');
         if (Dx != "") {
