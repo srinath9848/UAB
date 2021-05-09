@@ -1425,6 +1425,163 @@ namespace UAB.Controllers
             }
             return RedirectToAction("SettingsBlockCategories");
         }
+
+        [HttpGet]
+        public IActionResult ManageEMCodeLevels ()
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var eMCodeLevels = clinicalcaseOperations.GetManageEMCodeLevels();
+            ViewBag.eMCodeLevels = eMCodeLevels;
+            return View();
+        }
+        [HttpGet]
+        [Route("UAB/EMLevelDetails")]
+        [Route("EMLevelDetails/{eMLevel}")]
+        public ActionResult EMLevelDetails(int eMLevel)
+        {
+            if (eMLevel != 0)
+            {
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                var emleveldetails = clinicalcaseOperations.GetEMCodeLevelDetails(eMLevel); 
+                ViewBag.emleveldetails = emleveldetails;
+                return View("EMLevelDetails", emleveldetails );
+            }
+            return RedirectToAction("ManageEMCodeLevels");
+        }
+        [HttpGet]
+        public IActionResult UpdateEMCode (int Id) 
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var emcode  = clinicalcaseOperations.GetEMCodeById(Id);
+            return PartialView("_UpdateEMCode", emcode);
+        }
+        [HttpPost]
+        public IActionResult UpdateEMCode (EMCodeLevel model)
+        {
+            if (model.Id != 0 && !string.IsNullOrWhiteSpace(model.EMCode))
+            {
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                clinicalcaseOperations.UpdateEMCode(model);
+                TempData["Success"] = "Successfully EM Code Updated";
+                return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
+            }
+            else
+            {
+                TempData["Warning"] = "Unable to  update  EM Code :you havent Changed anything";
+                return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
+            }
+        }
+        [HttpGet]
+        public ActionResult AddEMCode(int eMlevel) 
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            EMCodeLevel model = new EMCodeLevel();
+            model.EMLevel = eMlevel;
+            return PartialView("_AddEMCode", model);
+        }
+
+        [HttpPost]
+        public ActionResult AddEMCode (EMCodeLevel model)
+        {
+
+            if (model.EMLevel != 0 && !string.IsNullOrEmpty(model.EMCode))
+            {
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+
+                try
+                {
+                    clinicalcaseOperations.AddEMCode(model);
+                    TempData["Success"] = "Successfully EM Code Added User";
+                    return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
+                }
+                catch (Exception ex)
+                {
+                    TempData["Error"] = ex.Message;
+                }
+                return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
+            }
+            return RedirectToAction("ManageEMCodeLevels");
+        }
+        [HttpGet]
+        public IActionResult DeleteEMCode (int Id )
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var emcode = clinicalcaseOperations.GetEMCodeById(Id);
+            return PartialView("_DeleteEMCode", emcode);
+        }
+        [HttpPost]
+        public IActionResult DeleteEMCode (EMCodeLevel model)
+        {
+
+            try
+            {
+                if (model.Id != 0)
+                {
+                    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                    clinicalcaseOperations.DeletetEMCode(model);
+                    TempData["Success"] = "Successfully EM Code  Deleted";
+                    return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
+                }
+                return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+            return RedirectToAction("ManageEMCodeLevels");
+        }
+        [HttpGet]
+        public IActionResult DeleteEMLevel(int emlevel)
+        {
+            EMCodeLevel eml = new EMCodeLevel
+            {
+                EMLevel = emlevel
+            };
+            return PartialView("_DeleteEMLevel", eml);
+        }
+        [HttpPost]
+        public IActionResult DeleteEMLevel (int emlevel,string emcode=null)
+        {
+            try
+            {
+                if (emlevel != 0)
+                {
+                    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                    clinicalcaseOperations.DeletetEMCode(emlevel);
+                    TempData["Success"] = "Successfully EM Level  Deleted";
+                    return RedirectToAction("ManageEMCodeLevels");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+            return RedirectToAction("ManageEMCodeLevels");
+        }
+        [HttpGet]
+        public ActionResult AddEMLevel ()
+        {
+            return PartialView("_AddEMLevel");
+        }
+        [HttpPost]
+        public ActionResult AddEMLevel(EMCodeLevel model)
+        {
+            if (model.EMLevel != 0 && !string.IsNullOrEmpty(model.EMCode))
+            {
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                try
+                {
+                    clinicalcaseOperations.AddEMLevel(model);
+                    TempData["Success"] = "Successfully EM Level Added";
+                    return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
+                }
+                catch (Exception ex)
+                {
+                    TempData["Error"] = ex.Message;
+                }
+            }
+            return RedirectToAction("ManageEMCodeLevels");
+        }
         public IActionResult AddSettingsProvider(Provider provider)
         {
             if (ModelState.IsValid)

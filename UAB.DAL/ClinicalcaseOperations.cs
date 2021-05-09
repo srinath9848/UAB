@@ -1159,7 +1159,7 @@ namespace UAB.DAL
                             //if (reader["ClaimId"] != DBNull.Value)
                             //    chartSummaryDTO.ClaimId = Convert.ToInt32(reader["ClaimId"]);
                             //else
-                                chartSummaryDTO.ClaimId = null;
+                            chartSummaryDTO.ClaimId = null;
                             chartSummaryDTO.CodedBy = Convert.ToString(reader["CodedBy"]);
                             chartSummaryDTO.QABy = Convert.ToString(reader["QABy"]);
                             chartSummaryDTO.ShadowQABy = Convert.ToString(reader["ShadowQABy"]);
@@ -2229,40 +2229,40 @@ namespace UAB.DAL
             if (!mUserRole.Contains("Manager"))
                 lstDto = lstDto.Where(a => a.Assigneduser.Equals(Convert.ToString(mUserId))).ToList();
 
-                if (!string.IsNullOrWhiteSpace(searchParametersDTO.MRN))
-                    lstDto = lstDto.Where(a => a.MRN == searchParametersDTO.MRN).ToList();
-                
-                if (!string.IsNullOrWhiteSpace(searchParametersDTO.FirstName))
-                    lstDto = lstDto.Where(s => s.FirstName.Contains(searchParametersDTO.FirstName.ToUpper())).ToList();
-                if (!string.IsNullOrWhiteSpace(searchParametersDTO.LastName))
-                    lstDto = lstDto.Where(s => s.LastName.Contains(searchParametersDTO.LastName.ToUpper())).ToList();
-                if (!string.IsNullOrWhiteSpace(searchParametersDTO.MRN))
+            if (!string.IsNullOrWhiteSpace(searchParametersDTO.MRN))
+                lstDto = lstDto.Where(a => a.MRN == searchParametersDTO.MRN).ToList();
+
+            if (!string.IsNullOrWhiteSpace(searchParametersDTO.FirstName))
+                lstDto = lstDto.Where(s => s.FirstName.Contains(searchParametersDTO.FirstName.ToUpper())).ToList();
+            if (!string.IsNullOrWhiteSpace(searchParametersDTO.LastName))
+                lstDto = lstDto.Where(s => s.LastName.Contains(searchParametersDTO.LastName.ToUpper())).ToList();
+            if (!string.IsNullOrWhiteSpace(searchParametersDTO.MRN))
                 if (searchParametersDTO.DoSFrom != default(DateTime) && searchParametersDTO.DoSTo != default(DateTime))
                 {
                     var DoSFrom = searchParametersDTO.DoSFrom.Value;
                     var DoSTo = searchParametersDTO.DoSTo.Value;
                     lstDto = lstDto.Where(s => s.DoS >= DoSFrom && s.DoS <= DoSTo).ToList();
                 }
-                if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProviderName) && searchParametersDTO.ProviderName != "--Select a Provider--")
-                    lstDto = lstDto.Where(a => a.ProviderName == searchParametersDTO.ProviderName).ToList();
-                if (!string.IsNullOrWhiteSpace(searchParametersDTO.StatusName) && searchParametersDTO.StatusName != "--Select a Status--")
+            if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProviderName) && searchParametersDTO.ProviderName != "--Select a Provider--")
+                lstDto = lstDto.Where(a => a.ProviderName == searchParametersDTO.ProviderName).ToList();
+            if (!string.IsNullOrWhiteSpace(searchParametersDTO.StatusName) && searchParametersDTO.StatusName != "--Select a Status--")
+            {
+                if (searchParametersDTO.IncludeBlocked)
                 {
-                    if (searchParametersDTO.IncludeBlocked)
-                    {
-                        lstDto = lstDto.Where(a => a.Status == searchParametersDTO.StatusName || a.IncludeBlocked == "1").ToList();
-                    }
-                    else
-                    {
-                        lstDto = lstDto.Where(a => a.Status == searchParametersDTO.StatusName).ToList();
-                    }
+                    lstDto = lstDto.Where(a => a.Status == searchParametersDTO.StatusName || a.IncludeBlocked == "1").ToList();
                 }
-                if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProjectName) && searchParametersDTO.ProjectName != "--Select a Project--")
-                    lstDto = lstDto.Where(a => a.ProjectName == searchParametersDTO.ProjectName).ToList();
-                if (searchParametersDTO.IncludeBlocked && (searchParametersDTO.StatusName == null || searchParametersDTO.StatusName == "--Select a Status--"))
+                else
                 {
-                    lstDto = lstDto.Where(a => a.IncludeBlocked == "1").ToList();
+                    lstDto = lstDto.Where(a => a.Status == searchParametersDTO.StatusName).ToList();
                 }
-            
+            }
+            if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProjectName) && searchParametersDTO.ProjectName != "--Select a Project--")
+                lstDto = lstDto.Where(a => a.ProjectName == searchParametersDTO.ProjectName).ToList();
+            if (searchParametersDTO.IncludeBlocked && (searchParametersDTO.StatusName == null || searchParametersDTO.StatusName == "--Select a Status--"))
+            {
+                lstDto = lstDto.Where(a => a.IncludeBlocked == "1").ToList();
+            }
+
             return lstDto;
         }
 
@@ -3034,7 +3034,129 @@ namespace UAB.DAL
                 return context.User.ToList();
             }
         }
+        public List<int> GetManageEMCodeLevels ()
+        {
+            using (var context = new UABContext())
+            {
+                return context.EMCodeLevel.Select(x => x.EMLevel).Distinct().ToList();
+            }
+        }
+        public List<EMCodeLevel> GetEMCodeLevelDetails(int eMLevel)
+        {
+            using (var context = new UABContext())
+            {
+                return context.EMCodeLevel.Where(x => x.EMLevel == eMLevel).ToList();
+            }
+        }
+        public EMCodeLevel GetEMCodeById (int Id )
+        {
+            using (var context = new UABContext())
+            {
+                return context.EMCodeLevel.Where(x => x.Id == Id).FirstOrDefault();
+            }
+        }
+        public void UpdateEMCode (EMCodeLevel eMCodeLevel) 
+        {
+            using (var context = new UABContext())
+            {
+                var existingcode = context.EMCodeLevel.Where(a => a.Id == eMCodeLevel.Id).FirstOrDefault();
 
+                if (existingcode != null)
+                {
+                    existingcode.EMCode = eMCodeLevel.EMCode;
+                    context.Entry(existingcode).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
+            }
+        }
+        public void AddEMCode(EMCodeLevel  eMCodeLevel) 
+        {
+            using (var context = new UABContext())
+            {
+                var isexistingcode  = context.EMCodeLevel.Where(a => a.EMCode ==eMCodeLevel.EMCode &&a.EMLevel==eMCodeLevel.EMLevel).FirstOrDefault();
+                EMCodeLevel emc = new EMCodeLevel()
+                {
+                    EMCode = eMCodeLevel.EMCode,
+                    EMLevel = eMCodeLevel.EMLevel
+                };
+                if (isexistingcode == null)
+                {
+                    context.EMCodeLevel.Add(emc);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable To Add EM Code : THis EM Code Alreday There  in EM Level");
+                }
+            }
+        }
+        public void DeletetEMCode (EMCodeLevel eMCodeLevel)
+        {
+            using (var context = new UABContext())
+            {
+                var exsitingCode  = context.EMCodeLevel.Where(a => a.Id == eMCodeLevel.Id).FirstOrDefault();
+
+                if (exsitingCode  != null)
+                {
+                    context.EMCodeLevel.Remove(exsitingCode);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable To Delete EM Code : EM Code Not there in UAB");
+                }
+
+            }
+        }
+        public void DeletetEMCode(int eMLevel)
+        {
+            using (var context = new UABContext())
+            {
+                var exsitingEMLevel = context.EMCodeLevel.Where(a =>a.EMLevel == eMLevel).ToList();
+
+                if (exsitingEMLevel.Count != 0)
+                {
+                    context.EMCodeLevel.RemoveRange(exsitingEMLevel);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable To Delete EM Level : EM Level Not there in UAB");
+                }
+
+            }
+        }
+        public void AddEMLevel(EMCodeLevel eMCodeLevel)
+        {
+            using (var context = new UABContext())
+            {
+                var isexisting   = context.EMCodeLevel.ToList();
+                var iscodeexist = isexisting.Where(x => x.EMCode == eMCodeLevel.EMCode).FirstOrDefault();
+                var islevelexist = isexisting.Where(x => x.EMLevel == eMCodeLevel.EMLevel).FirstOrDefault();
+                EMCodeLevel emc = new EMCodeLevel()
+                {
+                    EMCode = eMCodeLevel.EMCode,
+                    EMLevel = eMCodeLevel.EMLevel
+                };
+                if (iscodeexist == null && islevelexist==null)
+                {
+                    context.EMCodeLevel.Add(emc);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    if (iscodeexist!=null)
+                    {
+                        throw new Exception("Unable To Add EM Level or Code : THis EM Code Alreday There  in EM Level");
+                    }
+                    else if (islevelexist != null)
+                    {
+                        throw new Exception("Unable To Add EM Level or Code : THis EM Level Alreday There  in EM Level");
+                    }
+                    
+                }
+            }
+        }
         public List<User> GetAssignedToUsers(string ccid)
         {
             using (var context = new UABContext())
