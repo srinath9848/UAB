@@ -73,8 +73,8 @@
             </span>
         </div>
         <div class="input-group-append ControlHeight">
-            <span class="input-group-text AcceptRejectWidth_@tabIndex">
-                &nbsp;<i id="ProviderID_@Model.TabIndex" data="@tabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+            <span class="input-group-text AcceptRejectWidth AcceptRejectWidth_@tabIndex">
+                &nbsp;<i id="ProviderID_@Model.TabIndex" data="@tabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
                 &nbsp;<i id="ProviderID_@Model.TabIndex" data="@tabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
             </span>
         </div>
@@ -115,8 +115,8 @@
             </span>
         </div>
         <div class="input-group-append ControlHeight">
-            <span class="input-group-text AcceptRejectWidth_@tabIndex">
-                &nbsp;<i id="PayorID_@Model.TabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+            <span class="input-group-text AcceptRejectWidth AcceptRejectWidth_@tabIndex">
+                &nbsp;<i id="PayorID_@Model.TabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
                 &nbsp;<i id="PayorID_@Model.TabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
             </span>
         </div>
@@ -203,8 +203,8 @@
                         </span>
                     </div>
                     <div class="input-group-append ControlHeight" style="height: 45px;">
-                        <span class="input-group-text AcceptRejectWidth_@tabIndex">
-                            &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex, j)" data="@tabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                        <span class="input-group-text AcceptRejectWidth AcceptRejectWidth_@tabIndex">
+                            &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex, j)" data="@tabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
                             &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex, j)" data="@tabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                         </span>
                     </div>
@@ -247,7 +247,7 @@
             </div>
             <input class="form-control CoderDetails ControlHeight valid" type="text" value="">
             <div class="input-group-append ControlHeight">
-                <span class="input-group-text AcceptRejectWidth_@tabIndex QACorrections">
+                <span class="input-group-text AcceptRejectWidth AcceptRejectWidth_@tabIndex QACorrections">
                     &nbsp;<i data="@tabIndex" class="fa fa-edit fa-lg AdjustAcceptReject" aria-hidden="true" style="visibility:hidden"></i>
                     &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex, totalDxCount)" data="@tabIndex" class="fa fa-times-circle fa-lg ignore" aria-hidden="true"></i>
                 </span>
@@ -309,50 +309,80 @@
                     string codercptCode = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[0]);
                     string qacptCode = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[0]);
                     string color = (codercptCode != qacptCode) ? "color:blue;" : "";
-                    string cptCode = !string.IsNullOrEmpty(codercptCode) ? codercptCode + "/" : "";
+                    string cptCode = !string.IsNullOrEmpty(codercptCode) ? codercptCode : "";
+                    string cptCode1 = cptCode == qacptCode ? "" : codercptCode + "/";
+                    cptCode = cptCode == qacptCode ? "" : codercptCode;
 
                     string coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[1]);
                     string qaMod = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[1]);
                     string mod = qaMod == "null" ? "" : qaMod;
-                    string cptMod = !string.IsNullOrEmpty(coderMod) ? coderMod + "/" : "";
+                    string cptMod = !string.IsNullOrEmpty(coderMod) ? coderMod : "";
+                    string cptMod1 = cptMod == qaMod ? "" : coderMod + "/";
+                    cptMod = cptMod == qaMod ? "" : coderMod;
 
                     string coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[2]);
                     string qaQty = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[2]);
-                    string cptQty = !string.IsNullOrEmpty(coderQty) ? coderQty + "/" : "";
+                    string cptQty = !string.IsNullOrEmpty(coderQty) ? coderQty : "";
+                    string cptQty1 = cptQty == qaQty ? "" : coderQty + "/";
+                    cptQty = cptQty == qaQty ? "" : coderQty;
 
                     string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
                     string qaLinks = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[3]);
                     string linkAll = qaLinks == "null" ? "" : qaLinks;
-                    string cptLinks = !string.IsNullOrEmpty(coderLinks) ? coderLinks + "/" : "";
-                    <div title="Code : @cptCode@qacptCode, Mod : @cptMod@mod, Quantity : @cptQty@qaQty, Link : @cptLinks@linkAll" class="col-md-3 input-group">
-                        <div class="input-group-prepend ControlHeight">
+                    string cptLinks = !string.IsNullOrEmpty(coderLinks) ? coderLinks : "";
+                    string cptLinks1 = !string.IsNullOrEmpty(coderLinks) ? coderLinks + "/" : "";
+
+                    string link = !string.IsNullOrEmpty(@qaLinks) || @qaLinks != "null" ? @qaLinks : "Link All";
+                    cptLinks1 = cptLinks == link ? "" : coderLinks + "/";
+                    cptLinks = cptLinks == link ? "" : coderLinks;
+                    <div title="Code : @cptCode1@qacptCode, Mod : @cptMod1@mod, Quantity : @cptQty1@qaQty, Link : @cptLinks1@link" class="col-md-3 input-group">
+                        <div class="input-group-prepend">
                             <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                         </div>
                         @{
                             if (codercptCode == "NA")
                                 color = "color:fuchsia;";
-                            <input type="text" class="form-control CoderDetails ControlHeight" value="@qacptCode" style="width:17px;@color" />
-
+                            @*<input type="text" class="form-control CoderDetails ControlHeight" value="@qacptCode" style="width:17px;@color" />*@
+                            <div class="form-control CoderDetails" style="min-width:60px;">
+                                <span style="color:red">@cptCode</span>
+                                <br />
+                                <span style="color:green">@qacptCode</span>
+                            </div>
                             color = (coderMod != qaMod) ? "color:blue;" : "";
                             if (coderMod == "NA")
                                 color = "color:fuchsia;";
-                            <input type="text" class="form-control CoderDetails ControlHeight" value="@mod" style="@color" />
+                            @*<input type="text" class="form-control CoderDetails" value="@mod" style="@color" />*@
+                            <div class="form-control CoderDetails">
+                                <span style="color:red">@cptMod</span>
+                                <br />
+                                <span style="color:green">@mod</span>
+                            </div>
 
                             color = (coderQty != qaQty) ? "color:blue;" : "";
                             if (coderQty == "NA")
                                 color = "color:fuchsia;";
-                            <input type="text" class="form-control CoderDetails ControlHeight" value="@qaQty" style="@color" />
+                            @*<input type="text" class="form-control CoderDetails" value="@qaQty" style="@color;max-width:20px;" />*@
+                            <div class="form-control CoderDetails">
+                                <span style="color:red">@cptQty</span>
+                                <br />
+                                <span style="color:green">@qaQty</span>
+                            </div>
 
                             color = (coderLinks != qaLinks) ? "color:blue;" : "";
                             if (coderLinks == "NA")
                                 color = "color:fuchsia;";
-                            <input type="text" class="form-control CoderDetails ControlHeight" value="@linkAll" style="@color" />
+                            @*<input type="text" class="form-control CoderDetails" value="@linkAll" style="@color" />*@
+                            <div class="form-control CoderDetails">
+                                <span style="color:red">@cptLinks</span>
+                                <br />
+                                <span style="color:green">@linkAll</span>
+                            </div>
                         }
 
-                        <div class="input-group-append ControlHeight">
-                            <span class="input-group-text ControlHeight AcceptRejectWidth_@tabIndex">
-                                &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,j)" data="@tabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
-                                &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,j)" data="@tabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
+                        <div class="input-group-append">
+                            <span class="input-group-text AcceptRejectWidth AcceptRejectWidth_@tabIndex">
+                                &nbsp;<i id="Cpt_@j" class="fa fa-check-circle fa-lg AdjustAcceptReject AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                &nbsp;<i id="Cpt_@j" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                             </span>
                         </div>
                     </div>
@@ -374,8 +404,8 @@
                         <input type="text" class="form-control CoderDetails ControlHeight" style="color: green;" placeholder="Link All" value="@linkAllVal1" />
 
                         <div class="input-group-append ControlHeight">
-                            <span class="input-group-text ControlHeight AcceptRejectWidth_@tabIndex">
-                                &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,j)" data="@tabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                            <span class="input-group-text ControlHeight AcceptRejectWidth AcceptRejectWidth_@tabIndex">
+                                &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,j)" data="@tabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
                                 &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,j)" data="@tabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                             </span>
                         </div>
@@ -427,7 +457,7 @@
             <input type="text" style="max-width:23px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="1" value="" />
             <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="" />
             <div class="input-group-append ControlHeight">
-                <span class="input-group-text AcceptRejectWidth_@tabIndex">
+                <span class="input-group-tex AcceptRejectWidth AcceptRejectWidth_@tabIndex">
                     &nbsp;<i data="@tabIndex" class="fa fa-edit fa-lg AdjustAcceptReject" aria-hidden="true" style="visibility:hidden"></i>
                     &nbsp;<i id="@string.Format("Cpt_{0}_{1}", tabIndex,totalCptCount)" data="@tabIndex" class="fa fa-times-circle fa-lg ignore" aria-hidden="true"></i>
                 </span>
@@ -478,8 +508,8 @@
             </span>
         </div>
         <div class="input-group-append ControlHeight" style="height: 38px;">
-            <span class="input-group-text AcceptRejectWidth_@tabIndex">
-                &nbsp;<i id="Feedback_@Model.TabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+            <span class="input-group-text AcceptRejectWidth AcceptRejectWidth_@tabIndex">
+                &nbsp;<i id="Feedback_@Model.TabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
                 &nbsp;<i id="Feedback_@Model.TabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
             </span>
         </div>
