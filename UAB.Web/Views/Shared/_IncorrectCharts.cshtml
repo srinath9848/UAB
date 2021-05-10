@@ -230,7 +230,7 @@
                                                 {
                                                     <div title="@Dx@QADx" class="col-md-3 lessWidth input-group ControlWidth">
                                                         <div class="input-group-prepend ControlHeight">
-                                                            <span class="input-group-text" id="basic-addon1">@j</span>
+                                                            <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                                                         </div>
                                                         <div class="form-control CoderDetails" style="line-height:2.2;overflow:hidden;height:32px;">
                                                             <span style="white-space:nowrap">
@@ -244,7 +244,7 @@
                                                 {
                                                     <div title="@Dx" class="col-md-3 lessWidth input-group ControlWidth">
                                                         <div class="input-group-prepend ControlHeight">
-                                                            <span class="input-group-text" id="basic-addon1">@j</span>
+                                                            <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                                                         </div>
                                                         <div class="form-control CoderDetails" style="line-height:2.2;overflow:hidden;height:32px;">
                                                             <span style="white-space:nowrap">
@@ -328,21 +328,24 @@
                                                     string color = (codercptCode != qacptCode) ? "color:blue;" : "";
                                                     string codercpt = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[0] : coderCptcodes[0]);
                                                     string cptCode = !string.IsNullOrEmpty(codercptCode) ? codercptCode : "";
-                                                    cptCode = cptCode == qacptCode ? "" : codercptCode + "/";
+                                                    string cptCode1 = cptCode == qacptCode ? "" : codercptCode + "/";
+                                                    cptCode = cptCode == qacptCode ? "" : codercptCode;
 
                                                     string coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[1]);
                                                     string qaMod = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[1]);
                                                     color = (coderMod != qaMod) ? "color:blue;" : "";
                                                     coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[1] : coderCptcodes[1]);
                                                     string cptMod = !string.IsNullOrEmpty(coderMod) ? coderMod : "";
-                                                    cptMod = cptMod == qaMod ? "" : coderMod + "/";
+                                                    string cptMod1 = cptMod == qaMod ? "" : coderMod + "/";
+                                                    cptMod = cptMod == qaMod ? "" : coderMod;
 
                                                     string coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[2]);
                                                     string qaQty = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[2]);
                                                     color = (coderQty != qaQty) ? "color:blue;" : "";
                                                     coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[2] : coderCptcodes[2]);
                                                     string cptQty = !string.IsNullOrEmpty(coderQty) ? coderQty : "";
-                                                    cptQty = cptQty == qaQty ? "" : coderQty + "/";
+                                                    string cptQty1 = cptQty == qaQty ? "" : coderQty + "/";
+                                                    cptQty = cptQty == qaQty ? "" : coderQty;
 
                                                     string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
                                                     string qaLinks = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[3]);
@@ -351,16 +354,37 @@
                                                     string cptLinks = !string.IsNullOrEmpty(coderLinks) ? coderLinks : "";
 
                                                     string link = !string.IsNullOrEmpty(@qaLinks) || @qaLinks != "null" ? @qaLinks : "Link All";
-                                                    cptLinks = cptLinks == link ? "" : coderLinks + "/";
+                                                    string cptLinks1 = cptLinks == link ? "" : coderLinks + "/";
+                                                    cptLinks = cptLinks == link ? "" : coderLinks;
 
-                                                    <div title="Code : @cptCode@qacptCode, Mod : @cptMod@qaMod, Quantity : @cptQty@qaQty, Links : @cptLinks@link" class="col-md-3 lessWidth input-group ControlWidth">
-                                                        <div class="input-group-prepend ControlHeight">
-                                                            <span class="input-group-text" id="basic-addon1">@j</span>
+                                                    <div title="Code : @cptCode1@qacptCode, Mod : @cptMod1@qaMod, Quantity : @cptQty1@qaQty, Links : @cptLinks1@link" class="col-md-3 lessWidth input-group ControlWidth">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                                                         </div>
-                                                        <input type="text" class="form-control QARemarks" value="@qacptCode" style="width:17px;@color" />
-                                                        <input type="text" class="form-control QARemarks" value="@qaMod" style="@color" />
-                                                        <input type="text" class="form-control QARemarks" value="@qaQty" style="@color" />
-                                                        <input type="text" class="form-control QARemarks" value="@qaLinks" style="@color" />
+                                                        @*<input type="text" class="form-control QARemarks" value="@cptCode@qacptCode" style="width:17px;@color" />*@
+                                                        <div class="form-control CoderDetails" style="min-width:60px;">
+                                                            <span style="color:red">@cptCode</span>
+                                                            <br />
+                                                            <span style="color:green">@qacptCode</span>
+                                                        </div>
+                                                        @*<input type="text" class="form-control QARemarks" value="@cptMod@qaMod" style="@color" />*@
+                                                        <div class="form-control CoderDetails">
+                                                            <span style="color:red">@cptMod</span>
+                                                            <br />
+                                                            <span style="color:green">@qaMod</span>
+                                                        </div>
+                                                        @*<input type="text" class="form-control QARemarks" value="@cptQty@qaQty" style="@color;max-width:20px;" />*@
+                                                        <div class="form-control CoderDetails">
+                                                            <span style="color:red">@cptQty</span>
+                                                            <br />
+                                                            <span style="color:green">@qaQty</span>
+                                                        </div>
+                                                        @*<input type="text" class="form-control QARemarks" value="@cptLinks@link" style="@color" />*@
+                                                        <div class="form-control CoderDetails">
+                                                            <span style="color:red">@cptLinks</span>
+                                                            <br />
+                                                            <span style="color:green">@link</span>
+                                                        </div>
                                                         <input type="hidden" id="@cptCoderClaim" value="@codercpt^@coderMod^@coderQty^@coderLinks" />
                                                         <input type="hidden" id="@cptQAClaim" value="@qaCptcodes[0]^@qaCptcodes[1]^@qaCptcodes[2]^@qaCptcodes[3]" />
                                                     </div>
@@ -372,7 +396,7 @@
                                                     string links = !string.IsNullOrEmpty(@linkAllVal) || @linkAllVal != "null" ? @linkAllVal : "Link All";
                                                     <div title="Code : @coderCptcodes[0], Mod : @modVal, Quantity : @coderCptcodes[2], Links : @links" class="col-md-3 lessWidth input-group ControlWidth">
                                                         <div class="input-group-prepend ControlHeight">
-                                                            <span class="input-group-text" id="basic-addon1">@j</span>
+                                                            <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                                                         </div>
                                                         <input type="text" class="form-control QARemarks ControlHeight" style="color: green;width: 17px;" placeholder="Code" value="@coderCptcodes[0]" />
                                                         <input type="text" class="form-control QARemarks ControlHeight" style="color:green;" placeholder="Mod" value="@modVal" />
@@ -383,17 +407,17 @@
                                                     </div>
                                                 }
                                                 @{ Show = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
-                                                <div title="@dictQACptRemarks?.ElementAt(i).Value" class="col-md-2 input-group" style="@Show">
-                                                    <input type="text" class="form-control QARemarks" value="@dictQACptRemarks?.ElementAt(i).Value" />
+                                                <div title="@dictQACptRemarks?.ElementAt(i).Value" class="col-md-2 input-group ControlHeight" style="@Show">
+                                                    <input type="text" class="form-control QARemarks ControlHeight" value="@dictQACptRemarks?.ElementAt(i).Value" />
                                                 </div>
-                                                <div class="input-group-append CoderCorrections" style="@Show">
+                                                <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
                                                     <span class="input-group-text ControlHeight" style="margin-left:-12px;">
                                                         &nbsp;<i id="@CptClaim" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
                                                         &nbsp;<i id="@CptClaim" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                                                     </span>
                                                 </div>
-                                                <div class="col-md-3 input-group CoderCorrections">
-                                                    <input type="text" id="@CptClaim" class="@CptClaimRemarks" style="@Show" onchange="removevalid('@CptClaimRemarks')" />
+                                                <div class="col-md-3 input-group CoderCorrections ControlHeight">
+                                                    <input type="text" id="@CptClaim" class="@CptClaimRemarks ControlHeight" style="@Show" onchange="removevalid('@CptClaimRemarks')" />
                                                     <span id="valid_@CptClaim" class="text-danger txtdanger" style="display:none">*</span>
                                                 </div>
                                             </div>
@@ -546,6 +570,19 @@
 
     .ControlWidth {
         min-width: 262px;
+    }
+
+    .AdjustSerialNumber {
+        max-width: 25px;
+        padding-left: 5px;
+    }
+
+    .AcceptRejectWidth {
+        max-width: 50px;
+    }
+
+    .AdjustAcceptReject {
+        margin-left: -13px;
     }
 </style>
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>

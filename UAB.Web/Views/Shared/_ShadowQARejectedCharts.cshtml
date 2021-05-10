@@ -416,7 +416,9 @@
                                                     string color = (codercptCode != qacptCode) ? "color:blue;" : "";
                                                     if (codercptCode == "NA")
                                                         color = "color:fuchsia;";
-                                                    string cptCode = !string.IsNullOrEmpty(codercptCode) ? codercptCode + "/" : "";
+                                                    string cptCode = !string.IsNullOrEmpty(codercptCode) ? codercptCode : "";
+                                                    string cptCode1 = cptCode == qacptCode ? "" : codercptCode + "/";
+                                                    cptCode = cptCode == qacptCode ? "" : codercptCode;
 
                                                     string coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[1]);
                                                     string qaMod = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[1]);
@@ -424,14 +426,18 @@
                                                     color = (coderMod != qaMod) ? "color:blue;" : "";
                                                     if (coderMod == "NA")
                                                         color = "color:fuchsia;";
-                                                    string cptMod = !string.IsNullOrEmpty(coderMod) ? coderMod + "/" : "";
+                                                    string cptMod = !string.IsNullOrEmpty(coderMod) ? coderMod : "";
+                                                    string cptMod1 = cptMod == qaMod ? "" : coderMod + "/";
+                                                    cptMod = cptMod == qaMod ? "" : coderMod;
 
                                                     string coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[2]);
                                                     string qaQty = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[2]);
                                                     color = (coderQty != qaQty) ? "color:blue;" : "";
                                                     if (coderQty == "NA")
                                                         color = "color:fuchsia;";
-                                                    string cptQty = !string.IsNullOrEmpty(coderQty) ? coderQty + "/" : "";
+                                                    string cptQty = !string.IsNullOrEmpty(coderQty) ? coderQty : "";
+                                                    string cptQty1 = cptQty == qaQty ? "" : coderQty + "/";
+                                                    cptQty = cptQty == qaQty ? "" : coderQty;
 
                                                     string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
                                                     string qaLinks = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[3]);
@@ -440,37 +446,62 @@
                                                         color = "color:fuchsia;";
                                                     string linkAll = qaLinks == "null" ? "" : qaLinks;
                                                     string cptLinks = !string.IsNullOrEmpty(coderLinks) ? coderLinks + "/" : "";
-                                                    <div title="Code : @cptCode@qacptCode, Mod : @cptMod@mod, Quantity : @cptQty@qaQty, Link : @cptLinks@linkAll" class="col-md-3 input-group">
-                                                        <div class="input-group-prepend ControlHeight">
+                                                    string cptLinks1 = !string.IsNullOrEmpty(coderLinks) ? coderLinks + "/" : "";
+
+                                                    string link = !string.IsNullOrEmpty(@qaLinks) || @qaLinks != "null" ? @qaLinks : "Link All";
+                                                    cptLinks1 = cptLinks == link ? "" : coderLinks + "/";
+                                                    cptLinks = cptLinks == link ? "" : coderLinks;
+                                                    <div title="Code : @cptCode1@qacptCode, Mod : @cptMod1@mod, Quantity : @cptQty1@qaQty, Link : @cptLinks1@linkAll" class="col-md-3 input-group">
+                                                        <div class="input-group-prepend">
                                                             <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                                                         </div>
-                                                        <input type="text" class="form-control QARemarks ControlHeight" value="@qacptCode" style="width:17px;@color" />
+                                                        @*<input type="text" class="form-control QARemarks ControlHeight" value="@qacptCode" style="width:17px;@color" />*@
+                                                        <div class="form-control CoderDetails" style="min-width:60px;">
+                                                            <span style="color:red">@cptCode</span>
+                                                            <br />
+                                                            <span style="color:green">@qacptCode</span>
+                                                        </div>
 
-                                                        <input type="text" class="form-control QARemarks ControlHeight" value="@qaMod" style="@color" />
+                                                        @*<input type="text" class="form-control QARemarks ControlHeight" value="@qaMod" style="@color" />*@
+                                                        <div class="form-control CoderDetails">
+                                                            <span style="color:red">@cptMod</span>
+                                                            <br />
+                                                            <span style="color:green">@mod</span>
+                                                        </div>
 
-                                                        <input type="text" class="form-control QARemarks ControlHeight" value="@qaQty" style="@color" />
+                                                        @*<input type="text" class="form-control QARemarks ControlHeight" value="@qaQty" style="@color" />*@
+                                                        <div class="form-control CoderDetails">
+                                                            <span style="color:red">@cptQty</span>
+                                                            <br />
+                                                            <span style="color:green">@qaQty</span>
+                                                        </div>
 
-                                                        <input type="text" class="form-control QARemarks ControlHeight" value="@qaLinks" style="@color" />
+                                                        @*<input type="text" class="form-control QARemarks ControlHeight" value="@qaLinks" style="@color" />*@
+                                                        <div class="form-control CoderDetails">
+                                                            <span style="color:red">@cptLinks</span>
+                                                            <br />
+                                                            <span style="color:green">@linkAll</span>
+                                                        </div>
 
                                                         <input type="hidden" id="txtCPTCode_@j" value="@qacptCode^@qaMod^@qaQty^@qaLinks" />
 
                                                         @{ Show = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
-                                                        <div class="input-group-append CoderCorrections ControlHeight" style="height: 45px;@Show">
+                                                        <div class="input-group-append CoderCorrections" style="height: 45px;@Show">
                                                             <span class="input-group-text AcceptRejectWidth">
                                                                 &nbsp;<i id="Cpt_@j" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
                                                                 &nbsp;<i id="Cpt_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
                                                             </span>
                                                         </div>
                                                     </div>
-                                                            }
-                                                            else
-                                                            {
-                                                                string coderModVal = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
-                                                                string coderLinkAllVal = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
-                                                                string cptVal = coderCptcodes[0] == "NA" ? "" : coderCptcodes[0];
-                                                                string modVal1 = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
-                                                                string qtyVal = coderCptcodes[2];
-                                                                string linkAllVal1 = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
+                                                }
+                                                else
+                                                {
+                                                    string coderModVal = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
+                                                    string coderLinkAllVal = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
+                                                    string cptVal = coderCptcodes[0] == "NA" ? "" : coderCptcodes[0];
+                                                    string modVal1 = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
+                                                    string qtyVal = coderCptcodes[2];
+                                                    string linkAllVal1 = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
 
                                                     <div title="Code : @cptVal, Mod : @modVal1, Quantity : @qtyVal, Link : @linkAllVal1" class="col-md-3 input-group">
                                                         <div class="input-group-prepend ControlHeight">
