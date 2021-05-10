@@ -1,5 +1,9 @@
 ﻿@model UAB.DTO.ChartSummaryDTO
 @using UAB.enums
+@{
+    int tabIndex = Model.TabIndex;
+
+}
 <br />
 <div class="form-group row">
     <label class="col-md-3 lessWidth m-t-15"></label>
@@ -452,65 +456,6 @@
                     </div>
                 }
 
-
-
-                @*<div class="col-md-3 input-group">
-                        <div class="input-group-prepend ControlHeight">
-                            <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
-                        </div>
-
-                        @if (!string.IsNullOrEmpty(dictQACptCodes?.ElementAt(i).Value))
-                        {
-                            string codercptCode = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[0]);
-                            string qacptCode = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[0]);
-                            string color = (codercptCode != qacptCode) ? "color:blue;" : "";
-                            if (codercptCode == "NA")
-                                color = "color:fuchsia;";
-                            <input type="text" class="form-control QARemarks ControlHeight" value="@qacptCode" style="width:17px;@color" />
-
-                            string coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[1]);
-                            string qaMod = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[1]);
-                            color = (coderMod != qaMod) ? "color:blue;" : "";
-                            if (coderMod == "NA")
-                                color = "color:fuchsia;";
-                            <input type="text" class="form-control QARemarks ControlHeight" value="@qaMod" style="@color" />
-
-                            string coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[2]);
-                            string qaQty = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[2]);
-                            color = (coderQty != qaQty) ? "color:blue;" : "";
-                            if (coderQty == "NA")
-                                color = "color:fuchsia;";
-                            <input type="text" class="form-control QARemarks ControlHeight" value="@qaQty" style="@color" />
-
-                            string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
-                            string qaLinks = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[3]);
-                            color = (coderLinks != qaLinks) ? "color:blue;" : "color:Red;";
-                            if (coderLinks == "NA")
-                                color = "color:fuchsia;";
-                            <input type="text" class="form-control QARemarks ControlHeight" value="@qaLinks" style="@color" />
-
-                            <input type="hidden" id="txtCPTCode_@j" value="@qacptCode^@qaMod^@qaQty^@qaLinks" />
-                        }
-                        else
-                        {
-                            string coderModVal = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
-                            string coderLinkAllVal = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
-
-                            <input type="text" class="form-control QARemarks ControlHeight" style="color: green;width: 17px;" placeholder="Code" value="@coderCptcodes[0]" />
-                            <input type="text" class="form-control QARemarks ControlHeight" style="color:green;" placeholder="Mod" value="@coderModVal" />
-                            <input type="text" class="form-control QARemarks ControlHeight" style="color:green;" placeholder="1" value="@coderCptcodes[2]" />
-                            <input type="text" class="form-control QARemarks ControlHeight" style="color: green;" placeholder="Link All" value="@coderLinkAllVal" />
-                            <input type="hidden" id="txtCPTCode_@j" value="@@coderCptcodes[0]^@coderModVal^@coderCptcodes[2]^@coderLinkAllVal" />
-                        }
-                        @{ Show = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
-                        <div class="input-group-append CoderCorrections ControlHeight" style="height: 45px;@Show">
-                            <span class="input-group-text AcceptRejectWidth">
-                                &nbsp;<i id="Cpt_@j" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
-                                &nbsp;<i id="Cpt_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                            </span>
-                        </div>
-                    </div>*@
-
                 <div title="" class="col-md-3 input-group" style="@Show">
                     <input type="text" id="QACptRemarks_@j" class="form-control ControlHeight" value="@dictQACptRemarks?.ElementAt(i).Value" />
                 </div>
@@ -568,9 +513,6 @@
     @{string QAProviderFeedbackText = (Model.QAProviderFeedbackText?.Length > len) ? "/" + Model.QAProviderFeedbackText.Substring(0, len) + ".." : "/" + Model.QAProviderFeedbackText;}
     @{title = (!string.IsNullOrEmpty(Model.QAProviderFeedbackText) ? Model.ProviderFeedbackText + "/" + Model.QAProviderFeedbackText : Model.ProviderFeedbackText);}
     @Html.DropDownListFor(model => Model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @style = "display:none", @class = "form-control CoderDetails" })
-
-
-
     <div title="@title" class="col-md-3 input-group">
         <div class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
             <span style="white-space:nowrap">
@@ -593,32 +535,6 @@
             </span>
         </div>
     </div>
-
-
-
-    @*<div title="@title" class="col-md-3 lessWidth input-group">
-            <div class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
-                <span style="white-space:nowrap">
-
-                    @if (!string.IsNullOrEmpty(Model.QAProviderFeedbackText))
-                    {
-                        <label style="color: red;">@ProviderFeedbackText</label>
-                        <label style="color:green">@QAProviderFeedbackText</label>
-                    }
-                    else
-                    {
-                        <label style="color: green;">@ProviderFeedbackText</label>
-                    }
-                </span>
-            </div>
-        </div>
-        @{Show = (!string.IsNullOrEmpty(Model.ShadowQAProviderFeedbackRemarks) || !string.IsNullOrEmpty(Model.QAPayorText) ? "display:flex" : "visibility:hidden");}
-        <div class="input-group-append CoderCorrections ControlHeight" style="@Show;margin-left:-15px;">
-            <span class="input-group-text AcceptRejectWidth">
-                &nbsp;<i id="Feedback" title="Feedback1" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
-                &nbsp;<i id="Feedback" title="Feedback1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-            </span>
-        </div>*@
     <div class="col-md-3 input-group CoderCorrections Feedback" style="@Show">
         @Html.TextBoxFor(model => Model.QAProviderFeedbackRemarks, new { @class = "form-control ControlHeight", @data_val = "false" })
         @Html.ValidationMessageFor(model => Model.QAProviderFeedbackRemarks, null, new { @class = "text-danger errMsg" })
@@ -630,5 +546,59 @@
     </div>
     <div title="@Model.ShadowQAProviderFeedbackRemarks" class="col-md-3 input-group" style="@Show">
         <input type="text" class="form-control QARemarks ControlHeight" value="@Model.ShadowQAProviderFeedbackRemarks" />
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="col-md-6">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">QA Details</h4>
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <div class="row mb-3">
+                    <div class="col-lg-6">
+                        <div class="form-group row">
+                            <label class="col-md-5 m-t-15">
+                                Error Type
+                            </label>
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Shadow QA Details</h4>
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <div class="row mb-3">
+                    <div class="col-lg-6">
+                        <div class="form-group row">
+                            <label class="col-md-3 m-t-15">
+                                Error Type
+                            </label>
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(model => model.ShadowQADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight", @readonly = "readonly", @id = string.Format("ShadowQAErrorType_{0}", tabIndex), @onchange = "ShadowQAErrorType('" + tabIndex + "')" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <button id="btnsubmit" type="submit" class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
