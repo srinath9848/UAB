@@ -1627,7 +1627,7 @@ namespace UAB.DAL
             }
             return ds;
         }
-        public DataSet GetQAChartsReport (int projectID, string rangeType)
+        public DataSet GetQAChartsReport(int projectID, string rangeType)
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
@@ -1653,6 +1653,42 @@ namespace UAB.DAL
                     var cmd = con.CreateCommand();
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.CommandText = "[dbo].[UspQAChartReport]";
+                    cmd.Parameters.AddRange(param);
+                    cmd.Connection = con;
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+                    dt.Load(reader);
+                    ds.Tables.Add(dt);
+                }
+            }
+            return ds;
+        }
+        public DataSet GetProvidedpostedchartsChartsReport(int projectID, string rangeType)
+        {
+            DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
+            using (var context = new UABContext())
+            {
+                var param = new SqlParameter[] {
+                     new SqlParameter() {
+                            ParameterName = "@ProjectId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = projectID
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@RangeType",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = rangeType
+                        }
+                };
+
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[UspProvidedpostedChartReport]";
                     cmd.Parameters.AddRange(param);
                     cmd.Connection = con;
                     con.Open();
