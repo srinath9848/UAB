@@ -228,23 +228,23 @@
                 @{ Show = (string.IsNullOrEmpty(dictRevisedCptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
                 @if (!string.IsNullOrEmpty(dictQACptCodes?.ElementAt(i).Value))
                 {
-                    //string codercptCode = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[0]);
+                    string codercptCode = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[0]);
                     string qacptCode = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[0]);
-                    //string coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[1]);
+                    string coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[1]);
                     string qaMod = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[1]);
-                    //string coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[2]);
+                    string coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[2]);
                     string qaQty = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[2]);
-                    //string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
+                    string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
                     string qaLinks = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[3]);
                     string link = !string.IsNullOrEmpty(@qaLinks) || @qaLinks != "null" ? @qaLinks : "Link All";
-                    <div title="Code : @qacptCode, Mod : @qaMod, Quantity : @qaQty, Links : @link" class="col-md-3 input-group" @*style="max-width:26% !important;"*@>
+                    <div title="Code : @codercptCode, Mod : @coderMod, Quantity : @coderQty, Links : @link" class="col-md-3 input-group" @*style="max-width:26% !important;"*@>
                         <div class="input-group-prepend ControlHeight">
                             <span class="input-group-text" id="basic-addon1">@j</span>
                         </div>
-                        <input type="text" class="form-control CoderDetails ControlHeight" value="@qacptCode" style="width: 17px;color: green;" />
-                        <input type="text" class="form-control CoderDetails ControlHeight" value="@qaMod" style="color: green;" />
-                        <input type="text" class="form-control CoderDetails ControlHeight" value="@qaQty" style="color: green; " />
-                        <input type="text" class="form-control CoderDetails ControlHeight" value="@qaLinks" style="color: green; " />
+                        <input type="text" class="form-control CoderDetails ControlHeight" value="@codercptCode" style="width: 17px;color: green;" />
+                        <input type="text" class="form-control CoderDetails ControlHeight" value="@coderMod" style="color: green;" />
+                        <input type="text" class="form-control CoderDetails ControlHeight" value="@coderQty" style="color: green; " />
+                        <input type="text" class="form-control CoderDetails ControlHeight" value="@coderLinks" style="color: green; " />
                     </div>
                 }
                 else
