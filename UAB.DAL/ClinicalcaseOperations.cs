@@ -1627,6 +1627,42 @@ namespace UAB.DAL
             }
             return ds;
         }
+        public DataSet GetQAChartsReport (int projectID, string rangeType)
+        {
+            DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
+            using (var context = new UABContext())
+            {
+                var param = new SqlParameter[] {
+                     new SqlParameter() {
+                            ParameterName = "@ProjectId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = projectID
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@RangeType",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = rangeType
+                        }
+                };
+
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[UspQAChartReport]";
+                    cmd.Parameters.AddRange(param);
+                    cmd.Connection = con;
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+                    dt.Load(reader);
+                    ds.Tables.Add(dt);
+                }
+            }
+            return ds;
+        }
 
         public DataSet GetPendingChartsReport(int projectID, string rangeType)
         {
@@ -2724,28 +2760,7 @@ namespace UAB.DAL
             using (var context = new UABContext())
             {
                 var param = new SqlParameter[] {
-                         new SqlParameter() {
-                            ParameterName = "@ShadowQACPTCode",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.ShadowQACPTCode
-                        },
-                         new SqlParameter() {
-                            ParameterName = "@ShadowQACPTCodeRemarks",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.ShadowQACPTCodeRemarks
-                        },  new SqlParameter() {
-                            ParameterName = "@ShadowQADx",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.ShadowQADx
-                        },  new SqlParameter() {
-                            ParameterName = "@ShadowQADxRemarks",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.ShadowQADxRemarks
-                        },   new SqlParameter() {
+                        new SqlParameter() {
                             ParameterName = "@ClinicalcaseID",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
@@ -3066,7 +3081,129 @@ namespace UAB.DAL
                 return context.User.ToList();
             }
         }
+        public List<int> GetManageEMCodeLevels ()
+        {
+            using (var context = new UABContext())
+            {
+                return context.EMCodeLevel.Select(x => x.EMLevel).Distinct().ToList();
+            }
+        }
+        public List<EMCodeLevel> GetEMCodeLevelDetails(int eMLevel)
+        {
+            using (var context = new UABContext())
+            {
+                return context.EMCodeLevel.Where(x => x.EMLevel == eMLevel).ToList();
+            }
+        }
+        public EMCodeLevel GetEMCodeById (int Id )
+        {
+            using (var context = new UABContext())
+            {
+                return context.EMCodeLevel.Where(x => x.Id == Id).FirstOrDefault();
+            }
+        }
+        public void UpdateEMCode (EMCodeLevel eMCodeLevel) 
+        {
+            using (var context = new UABContext())
+            {
+                var existingcode = context.EMCodeLevel.Where(a => a.Id == eMCodeLevel.Id).FirstOrDefault();
 
+                if (existingcode != null)
+                {
+                    existingcode.EMCode = eMCodeLevel.EMCode;
+                    context.Entry(existingcode).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
+            }
+        }
+        public void AddEMCode(EMCodeLevel  eMCodeLevel) 
+        {
+            using (var context = new UABContext())
+            {
+                var isexistingcode  = context.EMCodeLevel.Where(a => a.EMCode ==eMCodeLevel.EMCode &&a.EMLevel==eMCodeLevel.EMLevel).FirstOrDefault();
+                EMCodeLevel emc = new EMCodeLevel()
+                {
+                    EMCode = eMCodeLevel.EMCode,
+                    EMLevel = eMCodeLevel.EMLevel
+                };
+                if (isexistingcode == null)
+                {
+                    context.EMCodeLevel.Add(emc);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable To Add EM Code : THis EM Code Alreday There  in EM Level");
+                }
+            }
+        }
+        public void DeletetEMCode (EMCodeLevel eMCodeLevel)
+        {
+            using (var context = new UABContext())
+            {
+                var exsitingCode  = context.EMCodeLevel.Where(a => a.Id == eMCodeLevel.Id).FirstOrDefault();
+
+                if (exsitingCode  != null)
+                {
+                    context.EMCodeLevel.Remove(exsitingCode);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable To Delete EM Code : EM Code Not there in UAB");
+                }
+
+            }
+        }
+        public void DeletetEMCode(int eMLevel)
+        {
+            using (var context = new UABContext())
+            {
+                var exsitingEMLevel = context.EMCodeLevel.Where(a =>a.EMLevel == eMLevel).ToList();
+
+                if (exsitingEMLevel.Count != 0)
+                {
+                    context.EMCodeLevel.RemoveRange(exsitingEMLevel);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable To Delete EM Level : EM Level Not there in UAB");
+                }
+
+            }
+        }
+        public void AddEMLevel(EMCodeLevel eMCodeLevel)
+        {
+            using (var context = new UABContext())
+            {
+                var isexisting   = context.EMCodeLevel.ToList();
+                var iscodeexist = isexisting.Where(x => x.EMCode == eMCodeLevel.EMCode).FirstOrDefault();
+                var islevelexist = isexisting.Where(x => x.EMLevel == eMCodeLevel.EMLevel).FirstOrDefault();
+                EMCodeLevel emc = new EMCodeLevel()
+                {
+                    EMCode = eMCodeLevel.EMCode,
+                    EMLevel = eMCodeLevel.EMLevel
+                };
+                if (iscodeexist == null && islevelexist==null)
+                {
+                    context.EMCodeLevel.Add(emc);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    if (iscodeexist!=null)
+                    {
+                        throw new Exception("Unable To Add EM Level or Code : THis EM Code Alreday There  in EM Level");
+                    }
+                    else if (islevelexist != null)
+                    {
+                        throw new Exception("Unable To Add EM Level or Code : THis EM Level Alreday There  in EM Level");
+                    }
+                    
+                }
+            }
+        }
         public List<User> GetAssignedToUsers(string ccid)
         {
             using (var context = new UABContext())

@@ -1223,10 +1223,24 @@ namespace UAB.Controllers
 
             var hdnShadowQADxCodes = Request.Form["hdnShadowQADxCodes"].ToString();
             var hdnShadowQADxRemarks = Request.Form["hdnShadowQADxRemarks"].ToString();
-
             var hdnShadowQACptCodes = Request.Form["hdnShadowQACptCodes"].ToString();
             var hdnShadowQACptRemarks = Request.Form["hdnShadowQACptRemarks"].ToString();
-          
+
+            var hdnShadowQADxCodes2 = Request.Form["hdnShadowQADxCodes2"].ToString();
+            var hdnShadowQADxRemarks2 = Request.Form["hdnShadowQADxRemarks2"].ToString();
+            var hdnShadowQACptCodes2 = Request.Form["hdnShadowQACptCodes2"].ToString();
+            var hdnShadowQACptRemarks2 = Request.Form["hdnShadowQACptRemarks2"].ToString();
+
+            var hdnShadowQADxCodes3 = Request.Form["hdnShadowQADxCodes3"].ToString();
+            var hdnShadowQADxRemarks3 = Request.Form["hdnShadowQADxRemarks3"].ToString();
+            var hdnShadowQACptCodes3 = Request.Form["hdnShadowQACptCodes3"].ToString();
+            var hdnShadowQACptRemarks3 = Request.Form["hdnShadowQACptRemarks3"].ToString();
+
+            var hdnShadowQADxCodes4 = Request.Form["hdnShadowQADxCodes4"].ToString();
+            var hdnShadowQADxRemarks4 = Request.Form["hdnShadowQADxRemarks4"].ToString();
+            var hdnShadowQACptCodes4 = Request.Form["hdnShadowQACptCodes4"].ToString();
+            var hdnShadowQACptRemarks4 = Request.Form["hdnShadowQACptRemarks4"].ToString();
+
             string hdnClaim1 = Request.Form["hdnClaim1"].ToString();
             string hdnClaim2 = Request.Form["hdnClaim2"].ToString();
             string hdnClaim3 = Request.Form["hdnClaim3"].ToString();
@@ -1260,9 +1274,30 @@ namespace UAB.Controllers
             if (!string.IsNullOrEmpty(hdnShadowQADxCodes) && !string.IsNullOrEmpty(hdnShadowQADxRemarks))
                 dtAudit.Rows.Add("Dx", hdnShadowQADxCodes, hdnShadowQADxRemarks, Convert.ToInt32(hdnShadowQAErrorTypeID1), Convert.ToInt32(hdnClaimId1));
 
-
             if (!string.IsNullOrEmpty(hdnShadowQACptCodes) && !string.IsNullOrEmpty(hdnShadowQACptRemarks))
                 dtAudit.Rows.Add("CPTCode", hdnShadowQACptCodes, hdnShadowQACptRemarks, Convert.ToInt32(hdnShadowQAErrorTypeID1), Convert.ToInt32(hdnClaimId1));
+
+            // Claim 2 Dx & CPT
+            if (!string.IsNullOrEmpty(hdnShadowQADxCodes2) && !string.IsNullOrEmpty(hdnShadowQADxRemarks2))
+                dtAudit.Rows.Add("Dx", hdnShadowQADxCodes2, hdnShadowQADxRemarks2, Convert.ToInt32(hdnShadowQAErrorTypeID2), Convert.ToInt32(hdnClaimId2));
+
+            if (!string.IsNullOrEmpty(hdnShadowQACptCodes2) && !string.IsNullOrEmpty(hdnShadowQACptRemarks2))
+                dtAudit.Rows.Add("CPTCode", hdnShadowQACptCodes2, hdnShadowQACptRemarks2, Convert.ToInt32(hdnShadowQAErrorTypeID2), Convert.ToInt32(hdnClaimId2));
+
+            // Claim 3 Dx & CPT
+            if (!string.IsNullOrEmpty(hdnShadowQADxCodes3) && !string.IsNullOrEmpty(hdnShadowQADxRemarks3))
+                dtAudit.Rows.Add("Dx", hdnShadowQADxCodes3, hdnShadowQADxRemarks3, Convert.ToInt32(hdnShadowQAErrorTypeID3), Convert.ToInt32(hdnClaimId3));
+
+            if (!string.IsNullOrEmpty(hdnShadowQACptCodes3) && !string.IsNullOrEmpty(hdnShadowQACptRemarks3))
+                dtAudit.Rows.Add("CPTCode", hdnShadowQACptCodes3, hdnShadowQACptRemarks3, Convert.ToInt32(hdnShadowQAErrorTypeID3), Convert.ToInt32(hdnClaimId3));
+
+            // Claim 4 Dx & CPT
+            if (!string.IsNullOrEmpty(hdnShadowQADxCodes4) && !string.IsNullOrEmpty(hdnShadowQADxRemarks4))
+                dtAudit.Rows.Add("Dx", hdnShadowQADxCodes4, hdnShadowQADxRemarks4, Convert.ToInt32(hdnShadowQAErrorTypeID4), Convert.ToInt32(hdnClaimId4));
+
+            if (!string.IsNullOrEmpty(hdnShadowQACptCodes4) && !string.IsNullOrEmpty(hdnShadowQACptRemarks4))
+                dtAudit.Rows.Add("CPTCode", hdnShadowQACptCodes4, hdnShadowQACptRemarks4, Convert.ToInt32(hdnShadowQAErrorTypeID4), Convert.ToInt32(hdnClaimId4));
+
 
             bool isQAAgreed = hdnIsQAAgreed;// Convert.ToBoolean(Request.Form["hdnIsQAAgreed"]);
 
@@ -1482,6 +1517,163 @@ namespace UAB.Controllers
                 TempData["error"] = ex.Message;
             }
             return RedirectToAction("SettingsBlockCategories");
+        }
+
+        [HttpGet]
+        public IActionResult ManageEMCodeLevels ()
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var eMCodeLevels = clinicalcaseOperations.GetManageEMCodeLevels();
+            ViewBag.eMCodeLevels = eMCodeLevels;
+            return View();
+        }
+        [HttpGet]
+        [Route("UAB/EMLevelDetails")]
+        [Route("EMLevelDetails/{eMLevel}")]
+        public ActionResult EMLevelDetails(int eMLevel)
+        {
+            if (eMLevel != 0)
+            {
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                var emleveldetails = clinicalcaseOperations.GetEMCodeLevelDetails(eMLevel); 
+                ViewBag.emleveldetails = emleveldetails;
+                return View("EMLevelDetails", emleveldetails );
+            }
+            return RedirectToAction("ManageEMCodeLevels");
+        }
+        [HttpGet]
+        public IActionResult UpdateEMCode (int Id) 
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var emcode  = clinicalcaseOperations.GetEMCodeById(Id);
+            return PartialView("_UpdateEMCode", emcode);
+        }
+        [HttpPost]
+        public IActionResult UpdateEMCode (EMCodeLevel model)
+        {
+            if (model.Id != 0 && !string.IsNullOrWhiteSpace(model.EMCode))
+            {
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                clinicalcaseOperations.UpdateEMCode(model);
+                TempData["Success"] = "Successfully EM Code Updated";
+                return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
+            }
+            else
+            {
+                TempData["Warning"] = "Unable to  update  EM Code :you havent Changed anything";
+                return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
+            }
+        }
+        [HttpGet]
+        public ActionResult AddEMCode(int eMlevel) 
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            EMCodeLevel model = new EMCodeLevel();
+            model.EMLevel = eMlevel;
+            return PartialView("_AddEMCode", model);
+        }
+
+        [HttpPost]
+        public ActionResult AddEMCode (EMCodeLevel model)
+        {
+
+            if (model.EMLevel != 0 && !string.IsNullOrEmpty(model.EMCode))
+            {
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+
+                try
+                {
+                    clinicalcaseOperations.AddEMCode(model);
+                    TempData["Success"] = "Successfully EM Code Added User";
+                    return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
+                }
+                catch (Exception ex)
+                {
+                    TempData["Error"] = ex.Message;
+                }
+                return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
+            }
+            return RedirectToAction("ManageEMCodeLevels");
+        }
+        [HttpGet]
+        public IActionResult DeleteEMCode (int Id )
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var emcode = clinicalcaseOperations.GetEMCodeById(Id);
+            return PartialView("_DeleteEMCode", emcode);
+        }
+        [HttpPost]
+        public IActionResult DeleteEMCode (EMCodeLevel model)
+        {
+
+            try
+            {
+                if (model.Id != 0)
+                {
+                    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                    clinicalcaseOperations.DeletetEMCode(model);
+                    TempData["Success"] = "Successfully EM Code  Deleted";
+                    return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
+                }
+                return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+            return RedirectToAction("ManageEMCodeLevels");
+        }
+        [HttpGet]
+        public IActionResult DeleteEMLevel(int emlevel)
+        {
+            EMCodeLevel eml = new EMCodeLevel
+            {
+                EMLevel = emlevel
+            };
+            return PartialView("_DeleteEMLevel", eml);
+        }
+        [HttpPost]
+        public IActionResult DeleteEMLevel (int emlevel,string emcode=null)
+        {
+            try
+            {
+                if (emlevel != 0)
+                {
+                    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                    clinicalcaseOperations.DeletetEMCode(emlevel);
+                    TempData["Success"] = "Successfully EM Level  Deleted";
+                    return RedirectToAction("ManageEMCodeLevels");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+            return RedirectToAction("ManageEMCodeLevels");
+        }
+        [HttpGet]
+        public ActionResult AddEMLevel ()
+        {
+            return PartialView("_AddEMLevel");
+        }
+        [HttpPost]
+        public ActionResult AddEMLevel(EMCodeLevel model)
+        {
+            if (model.EMLevel != 0 && !string.IsNullOrEmpty(model.EMCode))
+            {
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                try
+                {
+                    clinicalcaseOperations.AddEMLevel(model);
+                    TempData["Success"] = "Successfully EM Level Added";
+                    return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
+                }
+                catch (Exception ex)
+                {
+                    TempData["Error"] = ex.Message;
+                }
+            }
+            return RedirectToAction("ManageEMCodeLevels");
         }
         public IActionResult AddSettingsProvider(Provider provider)
         {
