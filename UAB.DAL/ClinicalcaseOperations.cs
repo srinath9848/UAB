@@ -1156,10 +1156,10 @@ namespace UAB.DAL
                         }
                         else if (Role == "QA" && ChartType == "ShadowQARejected")
                         {
-                            //if (reader["ClaimId"] != DBNull.Value)
-                            //    chartSummaryDTO.ClaimId = Convert.ToInt32(reader["ClaimId"]);
-                            //else
-                            chartSummaryDTO.ClaimId = null;
+                            if (reader["ClaimId"] != DBNull.Value)
+                                chartSummaryDTO.ClaimId = Convert.ToInt32(reader["ClaimId"]);
+                            else
+                                chartSummaryDTO.ClaimId = null;
                             chartSummaryDTO.CodedBy = Convert.ToString(reader["CodedBy"]);
                             chartSummaryDTO.QABy = Convert.ToString(reader["QABy"]);
                             chartSummaryDTO.ShadowQABy = Convert.ToString(reader["ShadowQABy"]);
@@ -1214,75 +1214,11 @@ namespace UAB.DAL
                             chartSummaryDTO.ShadowQACPTCode = Convert.ToString(reader["ShadowQACPTCode"]);
                             chartSummaryDTO.ShadowQACPTCodeRemarks = Convert.ToString(reader["ShadowQACPTCodeRemark"]);
 
-                            if (reader["ShadowQAProviderFeedbackID"] != DBNull.Value)
-                                chartSummaryDTO.ShadowQAProviderFeedbackID = Convert.ToInt32(reader["ShadowQAProviderFeedbackID"]);
-                            chartSummaryDTO.ShadowQAProviderFeedbackRemarks = Convert.ToString(reader["ShadowQAProviderFeedbackIDRemark"]);
+                            if (reader["QAErrorTypeId"] != DBNull.Value)
+                                chartSummaryDTO.QADTO.ErrorType = Convert.ToInt32(reader["QAErrorTypeId"]);
 
-                            chartSummaryDTO.RevisedPayorRemarks = Convert.ToString(reader["RebuttedPayorIdRemark"]);
-                            chartSummaryDTO.RevisedProviderRemarks = Convert.ToString(reader["RebuttedProviderIDRemark"]);
-                            chartSummaryDTO.RevisedCPTRemarks = Convert.ToString(reader["RebuttedCPTCodeRemark"]);
-                            chartSummaryDTO.RevisedModRemarks = Convert.ToString(reader["RebuttedModRemark"]);
-                            chartSummaryDTO.RevisedDXRemarks = Convert.ToString(reader["RebuttedDxRemark"]);
-                            chartSummaryDTO.RevisedProviderFeedbackRemarks = Convert.ToString(reader["RebuttedProviderFeedbackIDRemark"]);
-
-
-                            lstchartSummaryDTO.Add(chartSummaryDTO);
-
-                            chartSummaryDTO = new ChartSummaryDTO();
-                            chartSummaryDTO.ClaimId = 1;
-                            chartSummaryDTO.CodedBy = Convert.ToString(reader["CodedBy"]);
-                            chartSummaryDTO.QABy = Convert.ToString(reader["QABy"]);
-                            chartSummaryDTO.ShadowQABy = Convert.ToString(reader["ShadowQABy"]);
-
-                            chartSummaryDTO.PayorText = Convert.ToString(reader["PayorText"]);
-                            chartSummaryDTO.QAPayorText = Convert.ToString(reader["QAPayorText"]);
-
-                            chartSummaryDTO.ProviderText = Convert.ToString(reader["ProviderText"]);
-                            chartSummaryDTO.QAProviderText = Convert.ToString(reader["QAProviderText"]);
-
-                            chartSummaryDTO.ProviderFeedbackText = Convert.ToString(reader["FeedbackText"]);
-                            chartSummaryDTO.QAProviderFeedbackText = Convert.ToString(reader["QAFeedbackText"]);
-
-                            chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
-                            if (reader["QAProviderID"] != DBNull.Value)
-                                chartSummaryDTO.QAProviderID = Convert.ToInt32(reader["QAProviderID"]);
-                            chartSummaryDTO.QAProviderRemarks = Convert.ToString(reader["QAProviderIDRemark"]);
-                            chartSummaryDTO.PayorID = Convert.ToInt32(reader["PayorId"]);
-                            if (reader["QAPayorID"] != DBNull.Value)
-                                chartSummaryDTO.QAPayorID = Convert.ToInt32(reader["QAPayorID"]);
-                            chartSummaryDTO.QAPayorRemarks = Convert.ToString(reader["QAPayorIdRemark"]);
-                            chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
-                            chartSummaryDTO.QADx = Convert.ToString(reader["QADx"]);
-                            chartSummaryDTO.QADxRemarks = Convert.ToString(reader["QADxRemark"]);
-                            chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
-                            chartSummaryDTO.QACPTCode = Convert.ToString(reader["QACPTCode"]);
-                            chartSummaryDTO.QACPTCodeRemarks = Convert.ToString(reader["QACPTCodeRemark"]);
-                            //chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
-                            chartSummaryDTO.QAMod = Convert.ToString(reader["QAMod"]);
-                            chartSummaryDTO.QAModRemarks = Convert.ToString(reader["QAModRemark"]);
-                            if (reader["ProviderFeedbackID"] != DBNull.Value)
-                                chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackID"]);
-                            if (reader["QAProviderFeedbackID"] != DBNull.Value)
-                                chartSummaryDTO.QAProviderFeedbackID = Convert.ToInt32(reader["QAProviderFeedbackID"]);
-                            chartSummaryDTO.QAProviderFeedbackRemarks = Convert.ToString(reader["QAProviderFeedbackIDRemark"]);
-                            chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
-
-                            if (reader["ShadowQAPayorID"] != DBNull.Value)
-                                chartSummaryDTO.ShadowQAPayorID = Convert.ToInt32(reader["ShadowQAPayorID"]);
-                            chartSummaryDTO.ShadowQAPayorRemarks = Convert.ToString(reader["ShadowQAPayorIdRemark"]);
-
-                            if (reader["ShadowQAProviderID"] != DBNull.Value)
-                                chartSummaryDTO.ShadowQAProviderID = Convert.ToInt32(reader["ShadowQAProviderID"]);
-                            chartSummaryDTO.ShadowQAProviderRemarks = Convert.ToString(reader["ShadowQAProviderIDRemark"]);
-
-                            chartSummaryDTO.ShadowQADx = Convert.ToString(reader["ShadowQADx"]);
-                            chartSummaryDTO.ShadowQADxRemarks = Convert.ToString(reader["ShadowQADxRemark"]);
-
-                            chartSummaryDTO.ShadowQAMod = Convert.ToString(reader["ShadowQAMod"]);
-                            chartSummaryDTO.ShadowQAModRemarks = Convert.ToString(reader["ShadowQAModRemark"]);
-
-                            chartSummaryDTO.ShadowQACPTCode = Convert.ToString(reader["ShadowQACPTCode"]);
-                            chartSummaryDTO.ShadowQACPTCodeRemarks = Convert.ToString(reader["ShadowQACPTCodeRemark"]);
+                            if (reader["ShadowQAErrorTypeId"] != DBNull.Value)
+                                chartSummaryDTO.ShadowQADTO.ErrorType = Convert.ToInt32(reader["ShadowQAErrorTypeId"]);
 
                             if (reader["ShadowQAProviderFeedbackID"] != DBNull.Value)
                                 chartSummaryDTO.ShadowQAProviderFeedbackID = Convert.ToInt32(reader["ShadowQAProviderFeedbackID"]);
@@ -3117,7 +3053,7 @@ namespace UAB.DAL
                 return context.User.ToList();
             }
         }
-        public List<int> GetManageEMCodeLevels ()
+        public List<int> GetManageEMCodeLevels()
         {
             using (var context = new UABContext())
             {
@@ -3131,14 +3067,14 @@ namespace UAB.DAL
                 return context.EMCodeLevel.Where(x => x.EMLevel == eMLevel).ToList();
             }
         }
-        public EMCodeLevel GetEMCodeById (int Id )
+        public EMCodeLevel GetEMCodeById(int Id)
         {
             using (var context = new UABContext())
             {
                 return context.EMCodeLevel.Where(x => x.Id == Id).FirstOrDefault();
             }
         }
-        public void UpdateEMCode (EMCodeLevel eMCodeLevel) 
+        public void UpdateEMCode(EMCodeLevel eMCodeLevel)
         {
             using (var context = new UABContext())
             {
@@ -3152,11 +3088,11 @@ namespace UAB.DAL
                 }
             }
         }
-        public void AddEMCode(EMCodeLevel  eMCodeLevel) 
+        public void AddEMCode(EMCodeLevel eMCodeLevel)
         {
             using (var context = new UABContext())
             {
-                var isexistingcode  = context.EMCodeLevel.Where(a => a.EMCode ==eMCodeLevel.EMCode &&a.EMLevel==eMCodeLevel.EMLevel).FirstOrDefault();
+                var isexistingcode = context.EMCodeLevel.Where(a => a.EMCode == eMCodeLevel.EMCode && a.EMLevel == eMCodeLevel.EMLevel).FirstOrDefault();
                 EMCodeLevel emc = new EMCodeLevel()
                 {
                     EMCode = eMCodeLevel.EMCode,
@@ -3173,13 +3109,13 @@ namespace UAB.DAL
                 }
             }
         }
-        public void DeletetEMCode (EMCodeLevel eMCodeLevel)
+        public void DeletetEMCode(EMCodeLevel eMCodeLevel)
         {
             using (var context = new UABContext())
             {
-                var exsitingCode  = context.EMCodeLevel.Where(a => a.Id == eMCodeLevel.Id).FirstOrDefault();
+                var exsitingCode = context.EMCodeLevel.Where(a => a.Id == eMCodeLevel.Id).FirstOrDefault();
 
-                if (exsitingCode  != null)
+                if (exsitingCode != null)
                 {
                     context.EMCodeLevel.Remove(exsitingCode);
                     context.SaveChanges();
@@ -3195,7 +3131,7 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                var exsitingEMLevel = context.EMCodeLevel.Where(a =>a.EMLevel == eMLevel).ToList();
+                var exsitingEMLevel = context.EMCodeLevel.Where(a => a.EMLevel == eMLevel).ToList();
 
                 if (exsitingEMLevel.Count != 0)
                 {
@@ -3213,7 +3149,7 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                var isexisting   = context.EMCodeLevel.ToList();
+                var isexisting = context.EMCodeLevel.ToList();
                 var iscodeexist = isexisting.Where(x => x.EMCode == eMCodeLevel.EMCode).FirstOrDefault();
                 var islevelexist = isexisting.Where(x => x.EMLevel == eMCodeLevel.EMLevel).FirstOrDefault();
                 EMCodeLevel emc = new EMCodeLevel()
@@ -3221,14 +3157,14 @@ namespace UAB.DAL
                     EMCode = eMCodeLevel.EMCode,
                     EMLevel = eMCodeLevel.EMLevel
                 };
-                if (iscodeexist == null && islevelexist==null)
+                if (iscodeexist == null && islevelexist == null)
                 {
                     context.EMCodeLevel.Add(emc);
                     context.SaveChanges();
                 }
                 else
                 {
-                    if (iscodeexist!=null)
+                    if (iscodeexist != null)
                     {
                         throw new Exception("Unable To Add EM Level or Code : THis EM Code Alreday There  in EM Level");
                     }
@@ -3236,7 +3172,7 @@ namespace UAB.DAL
                     {
                         throw new Exception("Unable To Add EM Level or Code : THis EM Level Alreday There  in EM Level");
                     }
-                    
+
                 }
             }
         }
