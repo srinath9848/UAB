@@ -843,6 +843,11 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
+            if (lstchartSummary.Count == 0)
+            {
+                TempData["Toast"] = "There are no charts available";
+                return RedirectToAction("QASummary");
+            }
             return View("QARebuttalChartsOfCoder", lstchartSummary.OrderBy(a => a.ClaimId).ToList());
         }
 
