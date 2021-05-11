@@ -402,7 +402,7 @@ namespace UAB.Controllers
             }
         }
 
-        public IActionResult SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO, string codingSubmitAndGetNext, string submitAndPost, string submitOnly, int providerId, DateTime txtPostingDate, string txtCoderComment)
+        public IActionResult SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO, string codingSubmitAndGetNext, string submitAndPost, string submitOnly, int providerPostedId, DateTime txtPostingDate, string txtCoderComment)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             string providerPosted = Request.Form["hdnProviderPosted"].ToString();
@@ -464,7 +464,7 @@ namespace UAB.Controllers
 
             if (providerPosted != "")
             {
-                clinicalcaseOperations.SubmitProviderPostedChart(chartSummaryDTO, dtClaim, dtCpt,providerId,txtPostingDate,txtCoderComment);
+                clinicalcaseOperations.SubmitProviderPostedChart(chartSummaryDTO, dtClaim, dtCpt,providerPostedId,txtPostingDate,txtCoderComment);
             }
             else
             {
