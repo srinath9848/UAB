@@ -635,6 +635,9 @@
                 $("#tabDiv3").show();
                 $("#htxt3").show();
                 $("#deleteclaim3").addClass('active');
+                EnableButton();
+                EnableButtonForClaim2();
+                EnableButtonForClaim3();
             }
             if ($("#htxt4").text() != "+") {
                 $("#4").addClass('active show');
@@ -642,6 +645,9 @@
                 $("#tabDiv4").show();
                 $("#htxt4").show();
                 $("#deleteclaim4").addClass('active');
+                EnableButton();
+                EnableButtonForClaim2();
+                EnableButtonForClaim3();
             }
         }
         if (tabid == 3) {
@@ -651,6 +657,9 @@
             $("#htxt2").show();
             $("#htxt4").hide();
             $("#deleteclaim2").addClass('active');
+            EnableButton();
+            EnableButtonForClaim2();
+            EnableButtonForClaim3();
         }
         if (tabid == 4) {
             $("#3").addClass('active show');
@@ -658,6 +667,9 @@
             $("#tabDiv3").show();
             $("#htxt3").show();
             $("#deleteclaim3").addClass('active');
+            EnableButton();
+            EnableButtonForClaim2();
+            EnableButtonForClaim3();
         }
         if ($("#htxt2").text() == "+" && $("#htxt3").text() == "+" && $("#htxt4").text() == "+") {
             $("#1").addClass('active show');
@@ -666,6 +678,9 @@
             $("#htxt2").show();
             $("#htxt3").hide();
             $("#htxt4").hide();
+            EnableButton();
+            EnableButtonForClaim2();
+            EnableButtonForClaim3();
         }
     };
 
