@@ -320,7 +320,7 @@
                     <input type="hidden" id="@string.Format("txt{0}Cpt_{1}", Model.TabIndex,j)" value="@qacptCode^@qaMod^@qaQty^@qaLinks" />
 
                     @{ Show = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
-                    <div class="input-group-append CoderCorrections ControlHeight" style="height: 45px;@Show">
+                    <div class="input-group-append CoderCorrections ControlHeight" style="height: 45px;">
                         <span class="input-group-text AcceptRejectWidth">
                             &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,j)" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
                             &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,j)" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
@@ -348,7 +348,7 @@
                     <input type="hidden" id="@string.Format("txt{0}Cpt_{1}", Model.TabIndex,j)" value="@coderCptcodes[0]^@coderModVal^@coderCptcodes[2]^@coderLinkAllVal" />
 
                     @{ Show = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
-                    <div class="input-group-append CoderCorrections ControlHeight" style="height: 45px;@Show">
+                    <div class="input-group-append CoderCorrections ControlHeight" style="height: 45px;">
                         <span class="input-group-text AcceptRejectWidth">
                             &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,j)" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
                             &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,j)" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
@@ -362,6 +362,8 @@
             <div title="" class="col-md-3 input-group">
                 <input type="text" id="@string.Format("QACptRemarkss_{0}_{1}", Model.TabIndex,j)" style="@Show" class="form-control ControlHeight" value="@dictQACptRemarks?.ElementAt(i).Value" />
             </div>
+            @{ Show = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
+
             <div class="col-md-3 CptlessWidth input-group" style="@Show">
                 <div class="input-group-prepend ControlHeight">
                     <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
@@ -398,7 +400,6 @@
                 <input type="text" id="txtQty_@j" class="form-control QARemarks ControlHeight" autocomplete="off" placeholder="1" value="@ShadowQaQtyVal" />
                 <input type="text" id="txtLinks_@j" class="form-control QARemarks ControlHeight" autocomplete="off" placeholder="Link All" value="@ShadowQaLinkAllVal" />
             </div>
-            @{ Show = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
 
             <div title="" class="col-md-3 input-group" style="@Show">
                 <input type="text" class="form-control QARemarks ControlHeight" value="@dictShadowQACptRemarks?.ElementAt(i).Value" />

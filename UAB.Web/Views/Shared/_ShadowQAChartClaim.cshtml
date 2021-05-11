@@ -381,8 +381,8 @@
 
                         <div class="input-group-append">
                             <span class="input-group-text AcceptRejectWidth AcceptRejectWidth_@tabIndex">
-                                &nbsp;<i id="Cpt_@j" class="fa fa-check-circle fa-lg AdjustAcceptReject AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
-                                &nbsp;<i id="Cpt_@j" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
+                                &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,j)" data="@tabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,j)" data="@tabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                             </span>
                         </div>
                     </div>

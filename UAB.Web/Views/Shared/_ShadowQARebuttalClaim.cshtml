@@ -1,5 +1,21 @@
 ﻿@model UAB.DTO.ChartSummaryDTO
 @using UAB.enums
+@{
+    int tabIndex = Model.TabIndex;
+    string dxClaim = "txtDx" + tabIndex + "Claim" + "_1";
+    string cptClaim = "txt" + tabIndex + "Cpt" + "_1";
+    string cptModClaim = "txt" + tabIndex + "mod" + "_1";
+    string cptQtyClaim = "txt" + tabIndex + "qty" + "_1";
+    string cptLinksClaim = "txt" + tabIndex + "links" + "_1";
+
+    string dx2index = "dx" + tabIndex + "index";
+    string Dx2Claim = "txt" + tabIndex + "Dx";
+    string Div2DxRow = "Div" + tabIndex + "DxRow_1";
+
+    string cpt2index = "cpt" + tabIndex + "index";
+    string Cpt2Link = "txt" + tabIndex + "Link";
+    string Div2CptRow = "Div" + tabIndex + "CptRow_1";
+}
 <br />
 <div class="form-group row">
     <label class="col-md-3 lessWidth m-t-15"></label>
@@ -216,7 +232,7 @@
                         </span>
                     </div>*@
                 <div title="" class="col-md-3 input-group" style="@Show">
-                    <input type="text" class="form-control QARemarks ControlHeight" value="@dictQADxRemarks?.ElementAt(i).Value" />
+                    <input type="text" class="form-control CoderDetails ControlHeight" value="@dictQADxRemarks?.ElementAt(i).Value" />
                 </div>
 
             </div>
@@ -478,5 +494,59 @@
         </div>*@
     <div class="col-md-3 input-group" style="@Show">
         @Html.TextBoxFor(model => model.QAProviderFeedbackRemarks, new { @style = Show, @class = "form-control ControlHeight", @id = "RevisedProviderFeedbackRemarks" })
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="col-md-6">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">QA Details</h4>
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <div class="row mb-3">
+                    <div class="col-lg-6">
+                        <div class="form-group row">
+                            <label class="col-md-5 m-t-15">
+                                Error Type
+                            </label>
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Shadow QA Details</h4>
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <div class="row mb-3">
+                    <div class="col-lg-6">
+                        <div class="form-group row">
+                            <label class="col-md-3 m-t-15">
+                                Error Type
+                            </label>
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(model => model.ShadowQADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight ShadowQAErroryType", @readonly = "readonly", @id = string.Format("ShadowQAErrorType_{0}", tabIndex), @onchange = "ShadowQAErrorType('" + tabIndex + "')" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <button id="btnsubmit" type="button" class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

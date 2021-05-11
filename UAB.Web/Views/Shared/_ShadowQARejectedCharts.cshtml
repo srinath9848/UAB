@@ -256,6 +256,8 @@
                                                 <div title="" class="col-md-3 input-group">
                                                     <input type="text" id="DxRemarks_@j" style="@Show" class="form-control" value="@dictQADxRemarks?.ElementAt(i).Value" />
                                                 </div>
+                                                @{ Show = (string.IsNullOrEmpty(dictShadowQADxRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex"); }
+
                                                 <div class="col-md-3 input-group" style="@Show">
                                                     <div class="input-group-prepend ControlHeight">
                                                         <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
@@ -273,7 +275,6 @@
                                                     <input type="text" id="Dx_@j" class="form-control QARevised ControlHeight" />
                                                 </div>
 
-                                                @{ Show = (string.IsNullOrEmpty(dictShadowQADxRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex"); }
                                                 <div title="" class="col-md-3 input-group" style="@Show">
                                                     <input type="text" class="form-control QARemarks ControlHeight" value="@dictShadowQADxRemarks?.ElementAt(i).Value" />
                                                 </div>
@@ -446,6 +447,8 @@
                                                 <div title="" class="col-md-3 input-group">
                                                     <input type="text" id="QACptRemarks_@j" style="@Show" class="form-control ControlHeight" value="@dictQACptRemarks?.ElementAt(i).Value" />
                                                 </div>
+                                                @{ Show = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex"); }
+
                                                 <div class="col-md-3 CptlessWidth input-group" style="@Show">
                                                     <div class="input-group-prepend ControlHeight">
                                                         <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
@@ -482,7 +485,6 @@
                                                     <input type="text" id="txtQty_@j" class="form-control QARemarks ControlHeight" autocomplete="off" placeholder="1" value="@ShadowQaQtyVal" />
                                                     <input type="text" id="txtLinks_@j" class="form-control QARemarks ControlHeight" autocomplete="off" placeholder="Link All" value="@ShadowQaLinkAllVal" />
                                                 </div>
-                                                @{ Show = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex"); }
 
                                                 <div title="" class="col-md-3 input-group" style="@Show">
                                                     <input type="text" class="form-control QARemarks ControlHeight" value="@dictShadowQACptRemarks?.ElementAt(i).Value" />
