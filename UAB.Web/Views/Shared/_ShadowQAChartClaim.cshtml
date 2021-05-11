@@ -83,7 +83,6 @@
     <div title="@Model.QAProviderRemarks" class="col-md-3 input-group" style="@Show">
         <input type="text" class="@QARemarks" value="@Model.QAProviderRemarks" />
     </div>
-    @{ var ShadowQAProviderID = string.Format("ShadowQAProviderID_{0}", @Model.TabIndex);}
     <div class="col-md-3 input-group">
         @Html.DropDownListFor(model => model.ShadowQAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = string.Format("ProviderID_{0}1", Model.TabIndex), @class = string.Format("form-control QARevised_{0} ControlHeight", Model.TabIndex), @style = "display:none" })
         @Html.ValidationMessageFor(model => model.ShadowQAProviderID, null, new { @class = "text-danger errMsg" })
@@ -212,7 +211,7 @@
                 </div>
                 @{ Show = (string.IsNullOrEmpty(dictQADxRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
                 <div title="" class="col-md-3 input-group" style="@Show">
-                    <input type="text" id="@DxClaim" class="@DxClaimRemarks ControlHeight" value="@dictQADxRemarks?.ElementAt(i).Value" />
+                    <input type="text" id="@DxClaim" class="@DxClaimRemarks QARemarks ControlHeight" value="@dictQADxRemarks?.ElementAt(i).Value" />
                 </div>
                 <div class="col-md-3 @QARevised input-group @string.Format("DxClaim_{0}_{1}", Model.TabIndex, j)" style="display: none">
                     <div class="input-group-prepend ControlHeight">

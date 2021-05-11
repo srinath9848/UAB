@@ -31,7 +31,7 @@
                 <input type="hidden" id="ccid" value="@ViewBag.ccid" />
                 <input type="hidden" id="statusid" value="@ViewBag.statusid" />
                 <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select a Provider--", new { @id = "providerId", @class = "form-control CoderDetails" })
+                    @Html.DropDownListFor(model => model.ProviderPostedId, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select a Provider--", new { @id = "providerPostedId", @class = "form-control CoderDetails" })
                     @Html.ValidationMessageFor(model => model.ProviderID, null, new { @class = "text-danger" })
                 </div>
                 <br />

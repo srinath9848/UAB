@@ -310,7 +310,7 @@
                             <a href="@Url.Action("GetCodingBlockedCharts", "UAB", new { Role = Roles.QA, ChartType = "Block", ProjectID = @Model.ProjectID, ProjectName = Model.ProjectName, ccid = Model.CodingDTO.ClinicalCaseID, plusorminus = "Next" })" class="btn btn-success Available" id="btnNext" style="display:none">Next</a>
                             <button id="btnBlock" type="button" class="btn btn-danger" onclick="Block()">Block</button>
                             <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger" onclick="BlockHistory()">Block History</button>
-                            <button id="btnsubmit" type="submit" class="btn btn-success">Save</button>
+                            <button id="btnsubmit" type="button" class="btn btn-success">Save</button>
                             <button id="SubmitAndGetNext" name="SubmitAndGetNext" type="submit" value="SubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
                         </div>
                     </div>

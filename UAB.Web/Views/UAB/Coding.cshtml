@@ -9,7 +9,7 @@
         <div class="row">
             <partial name="_InitialData" model=Model />
             <partial name="_CodingDetails" model=Model />
-            <input type="hidden" id="_providerId" name="providerId" />
+            <input type="hidden" id="_providerPostedId" name="providerPostedId" />
             <input type="hidden" id="_txtPostingDate" name="txtPostingDate" />
             <input type="hidden" id="_txtCoderComment" name="txtCoderComment" />
         </div>
@@ -55,7 +55,7 @@
 
    $(document).ready(function () {
         ProviderPostedClinicalcase = function () {
-            $("#_providerId").val($("#providerId").val());
+            $("#_providerPostedId").val($("#providerPostedId").val());
             $("#_txtPostingDate").val($("#txtPostingDate").val());
             $("#_txtCoderComment").val($("#txtCoderComment").val());
             $("#frmSubmitCodingAvailableChart").submit();
