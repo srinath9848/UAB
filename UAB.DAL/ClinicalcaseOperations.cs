@@ -1656,7 +1656,7 @@ namespace UAB.DAL
             }
             return dtCPT;
         }
-        public void SubmitProviderPostedChart(ChartSummaryDTO chartSummaryDTO, DataTable dtClaim, DataTable dtCpt1, int postedProviderId, DateTime postedDate, string coderComment)
+        public void SubmitProviderPostedChart(ChartSummaryDTO chartSummaryDTO, DataTable dtClaim, DataTable dtCpt1, int providerPostedId, DateTime postedDate, string coderComment)
         {
             using (var context = new UABContext())
             {
@@ -1679,7 +1679,7 @@ namespace UAB.DAL
                             ParameterName = "@ProviderID",
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = postedProviderId
+                            Value = chartSummaryDTO.ProviderID
                         },
                          new SqlParameter() {
                             ParameterName = "@utCpt",
@@ -1744,6 +1744,12 @@ namespace UAB.DAL
                     TypeName = "utCpt",
                     Value = dtCpt1
                  },
+                 new SqlParameter() {
+                            ParameterName = "@ProviderPostedId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = providerPostedId
+                        },
                   new SqlParameter() {
                     ParameterName = "@PostedDate",
                     SqlDbType = System.Data.SqlDbType.DateTime2,

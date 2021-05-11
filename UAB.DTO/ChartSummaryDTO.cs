@@ -117,6 +117,7 @@ namespace UAB.DTO
         public bool IsAuditRequired { get; set; }
         public bool SubmitAndPostAlso { get; set; }
 
+        public int ProviderPostedId { get; set; }
         public DateTime PostingDate { get; set; }
         public string CoderComment { get; set; }
 
