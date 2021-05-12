@@ -311,20 +311,17 @@
                     string color = (codercptCode != qacptCode) ? "color:blue;" : "";
                     string cptCode = !string.IsNullOrEmpty(codercptCode) ? codercptCode : "";
                     string cptCode1 = cptCode == qacptCode ? "" : codercptCode + "/";
-                    cptCode = cptCode == qacptCode ? "" : codercptCode;
 
                     string coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[1]);
                     string qaMod = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[1]);
                     string mod = qaMod == "null" ? "" : qaMod;
                     string cptMod = !string.IsNullOrEmpty(coderMod) ? coderMod : "";
                     string cptMod1 = cptMod == qaMod ? "" : coderMod + "/";
-                    cptMod = cptMod == qaMod ? "" : coderMod;
 
                     string coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[2]);
                     string qaQty = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[2]);
                     string cptQty = !string.IsNullOrEmpty(coderQty) ? coderQty : "";
                     string cptQty1 = cptQty == qaQty ? "" : coderQty + "/";
-                    cptQty = cptQty == qaQty ? "" : coderQty;
 
                     string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
                     string qaLinks = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[3]);
@@ -334,7 +331,6 @@
 
                     string link = !string.IsNullOrEmpty(@qaLinks) || @qaLinks != "null" ? @qaLinks : "Link All";
                     cptLinks1 = cptLinks == link ? "" : coderLinks + "/";
-                    cptLinks = cptLinks == link ? "" : coderLinks;
                     <div title="Code : @cptCode1@qacptCode, Mod : @cptMod1@mod, Quantity : @cptQty1@qaQty, Link : @cptLinks1@link" class="col-md-3 input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
@@ -342,18 +338,31 @@
                         @{
                             if (codercptCode == "NA")
                                 color = "color:fuchsia;";
-                            @*<input type="text" class="form-control CoderDetails ControlHeight" value="@qacptCode" style="width:17px;@color" />*@
                             <div class="form-control CoderDetails" style="min-width:60px;">
-                                <span style="color:red">@cptCode</span>
+                                @if (cptCode == qacptCode)
+                                {
+                                    <span style="color:green">@cptCode</span>
+                                }
+                                else
+                                {
+                                    <span style="color:red">@cptCode</span>
+                                }
                                 <br />
                                 <span style="color:green">@qacptCode</span>
                             </div>
+
                             color = (coderMod != qaMod) ? "color:blue;" : "";
                             if (coderMod == "NA")
                                 color = "color:fuchsia;";
-                            @*<input type="text" class="form-control CoderDetails" value="@mod" style="@color" />*@
                             <div class="form-control CoderDetails">
-                                <span style="color:red">@cptMod</span>
+                                @if (cptMod == mod)
+                                {
+                                    <span style="color:green">@cptMod</span>
+                                }
+                                else
+                                {
+                                    <span style="color:red">@cptMod</span>
+                                }
                                 <br />
                                 <span style="color:green">@mod</span>
                             </div>
@@ -361,9 +370,15 @@
                             color = (coderQty != qaQty) ? "color:blue;" : "";
                             if (coderQty == "NA")
                                 color = "color:fuchsia;";
-                            @*<input type="text" class="form-control CoderDetails" value="@qaQty" style="@color;max-width:20px;" />*@
                             <div class="form-control CoderDetails">
-                                <span style="color:red">@cptQty</span>
+                                @if (cptQty == qaQty)
+                                {
+                                    <span style="color:green">@cptQty</span>
+                                }
+                                else
+                                {
+                                    <span style="color:red">@cptQty</span>
+                                }
                                 <br />
                                 <span style="color:green">@qaQty</span>
                             </div>
@@ -371,9 +386,15 @@
                             color = (coderLinks != qaLinks) ? "color:blue;" : "";
                             if (coderLinks == "NA")
                                 color = "color:fuchsia;";
-                            @*<input type="text" class="form-control CoderDetails" value="@linkAll" style="@color" />*@
                             <div class="form-control CoderDetails">
-                                <span style="color:red">@cptLinks</span>
+                                @if (cptLinks == linkAll)
+                                {
+                                    <span style="color:green">@cptLinks</span>
+                                }
+                                else
+                                {
+                                    <span style="color:red">@cptLinks</span>
+                                }
                                 <br />
                                 <span style="color:green">@linkAll</span>
                             </div>
@@ -381,8 +402,8 @@
 
                         <div class="input-group-append">
                             <span class="input-group-text AcceptRejectWidth AcceptRejectWidth_@tabIndex">
-                                &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,j)" data="@tabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
-                                &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,j)" data="@tabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
+                                &nbsp;<i id="Cpt_@j" class="fa fa-check-circle fa-lg AdjustAcceptReject AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                &nbsp;<i id="Cpt_@j" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                             </span>
                         </div>
                     </div>
