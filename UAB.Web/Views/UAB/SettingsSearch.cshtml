@@ -13,11 +13,13 @@
     .txtwidth {
         width: 210px;
     }
+
     .table td, .table th {
         padding: 10px !important;
         vertical-align: top;
         border-top: 1px solid #dee2e6;
     }
+
     .custom-control-label:after {
         background-color: white;
         border: 1px solid #000;
@@ -110,9 +112,9 @@
             $("#txtMRN").val('');
             $("#txtDoSFrom").val('');
             $("#txtDoSTo").val('');
-            $("#statusdd").find('option:selected').text("--Select a Status--");
-            $("#projectdd").find('option:selected').text("--Select a Project--");
-            $("#providerdd").find('option:selected').text("--Select a Provider--");
+            $('#projectdd').val($('#projectdd').prop('defaultSelected'))
+            $('#statusdd').val($('#statusdd').prop('defaultSelected'))
+            $('#providerdd').val($('#providerdd').prop('defaultSelected'))
             $("#txtProvidername").val('');
             $("#customControlAutosizing1").prop("checked", false);
                 }
