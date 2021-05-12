@@ -45,6 +45,9 @@
                                         case "QA":
                                             <a href="@Url.Action("GetCodingBlockedCharts", "UAB", new { Role = Roles.QA, ChartType = "Block", ProjectID =item.ProjectID, ProjectName =item.ProjectName,ccid=item.CodingDTO.ClinicalCaseID,plusorminus="Current"})" class="btn btn-info btn-sm">Open</a>
                                             break;
+                                        case "ShadowQA":
+                                            <a href="@Url.Action("GetCodingBlockedCharts", "UAB", new { Role = Roles.ShadowQA, ChartType = "Block", ProjectID =item.ProjectID, ProjectName =item.ProjectName,ccid=item.CodingDTO.ClinicalCaseID,plusorminus="Current"})" class="btn btn-info btn-sm">Open</a>
+                                            break;
                                         default:
                                             <a href="@Url.Action("GetCodingBlockedCharts", "UAB", new { Role = Roles.Coder, ChartType = "Block", ProjectID =item.ProjectID, ProjectName =item.ProjectName,ccid=item.CodingDTO.ClinicalCaseID,plusorminus="Current"})" class="btn btn-info btn-sm">Open</a>
                                             break;
