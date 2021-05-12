@@ -329,7 +329,6 @@
                                                     string codercpt = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[0] : coderCptcodes[0]);
                                                     string cptCode = !string.IsNullOrEmpty(codercptCode) ? codercptCode : "";
                                                     string cptCode1 = cptCode == qacptCode ? "" : codercptCode + "/";
-                                                    cptCode = cptCode == qacptCode ? "" : codercptCode;
 
                                                     string coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[1]);
                                                     string qaMod = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[1]);
@@ -337,7 +336,6 @@
                                                     coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[1] : coderCptcodes[1]);
                                                     string cptMod = !string.IsNullOrEmpty(coderMod) ? coderMod : "";
                                                     string cptMod1 = cptMod == qaMod ? "" : coderMod + "/";
-                                                    cptMod = cptMod == qaMod ? "" : coderMod;
 
                                                     string coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[2]);
                                                     string qaQty = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[2]);
@@ -345,7 +343,6 @@
                                                     coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[2] : coderCptcodes[2]);
                                                     string cptQty = !string.IsNullOrEmpty(coderQty) ? coderQty : "";
                                                     string cptQty1 = cptQty == qaQty ? "" : coderQty + "/";
-                                                    cptQty = cptQty == qaQty ? "" : coderQty;
 
                                                     string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
                                                     string qaLinks = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[3]);
@@ -355,33 +352,56 @@
 
                                                     string link = !string.IsNullOrEmpty(@qaLinks) || @qaLinks != "null" ? @qaLinks : "Link All";
                                                     string cptLinks1 = cptLinks == link ? "" : coderLinks + "/";
-                                                    cptLinks = cptLinks == link ? "" : coderLinks;
 
                                                     <div title="Code : @cptCode1@qacptCode, Mod : @cptMod1@qaMod, Quantity : @cptQty1@qaQty, Links : @cptLinks1@link" class="col-md-3 lessWidth input-group ControlWidth">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                                                         </div>
-                                                        @*<input type="text" class="form-control QARemarks" value="@cptCode@qacptCode" style="width:17px;@color" />*@
                                                         <div class="form-control CoderDetails" style="min-width:60px;">
-                                                            <span style="color:red">@cptCode</span>
+                                                            @if (cptCode == qacptCode)
+                                                            {
+                                                                <span style="color:green">@cptCode</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span style="color:red">@cptCode</span>
+                                                            }
                                                             <br />
                                                             <span style="color:green">@qacptCode</span>
                                                         </div>
-                                                        @*<input type="text" class="form-control QARemarks" value="@cptMod@qaMod" style="@color" />*@
                                                         <div class="form-control CoderDetails">
-                                                            <span style="color:red">@cptMod</span>
+                                                            @if (cptMod == qaMod)
+                                                            {
+                                                                <span style="color:green">@cptMod</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span style="color:red">@cptMod</span>
+                                                            }
                                                             <br />
                                                             <span style="color:green">@qaMod</span>
                                                         </div>
-                                                        @*<input type="text" class="form-control QARemarks" value="@cptQty@qaQty" style="@color;max-width:20px;" />*@
                                                         <div class="form-control CoderDetails">
-                                                            <span style="color:red">@cptQty</span>
+                                                            @if (cptQty == qaQty)
+                                                            {
+                                                                <span style="color:green">@cptQty</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span style="color:red">@cptQty</span>
+                                                            }
                                                             <br />
                                                             <span style="color:green">@qaQty</span>
                                                         </div>
-                                                        @*<input type="text" class="form-control QARemarks" value="@cptLinks@link" style="@color" />*@
                                                         <div class="form-control CoderDetails">
-                                                            <span style="color:red">@cptLinks</span>
+                                                            @if (cptLinks == link)
+                                                            {
+                                                                <span style="color:green">@cptLinks</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span style="color:red">@cptLinks</span>
+                                                            }
                                                             <br />
                                                             <span style="color:green">@link</span>
                                                         </div>

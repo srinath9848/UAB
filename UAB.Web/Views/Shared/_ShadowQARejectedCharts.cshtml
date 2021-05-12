@@ -108,11 +108,11 @@
                                         </div>
                                         @{string Show = (!string.IsNullOrEmpty(Model.FirstOrDefault().ShadowQAProviderRemarks) || !string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText) ? "display:flex" : "visibility:hidden");}
                                         <div class="input-group-append ControlHeight">
-                                            <span class="input-group-text AcceptRejectWidth_@tabIndex">
+                                            <span class="input-group-text AcceptRejectWidth AcceptRejectWidth_@tabIndex">
                                                 @{string Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                                                 @{string Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-                                                <i id="ProviderID_@tabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject_@tabIndex accept" aria-hidden="true"></i>
+                                                <i id="ProviderID_@tabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject AdjustAcceptReject_@tabIndex accept" aria-hidden="true"></i>
                                                 <i id="ProviderID_@tabIndex" data="@tabIndex" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
                                             </span>
                                         </div>
@@ -155,8 +155,8 @@
                                         @{ Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
                                         <div class="input-group-append ControlHeight">
-                                            <span class="input-group-text AcceptRejectWidth_@tabIndex">
-                                                &nbsp;<i id="PayorID_@tabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                            <span class="input-group-text AcceptRejectWidth AcceptRejectWidth_@tabIndex">
+                                                &nbsp;<i id="PayorID_@tabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
                                                 &nbsp;<i id="PayorID_@tabIndex" data="@tabIndex" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
                                             </span>
                                         </div>
@@ -340,7 +340,6 @@
                                                         color = "color:fuchsia;";
                                                     string cptCode = !string.IsNullOrEmpty(codercptCode) ? codercptCode : "";
                                                     string cptCode1 = cptCode == qacptCode ? "" : codercptCode + "/";
-                                                    cptCode = cptCode == qacptCode ? "" : codercptCode;
 
                                                     string coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[1]);
                                                     string qaMod = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[1]);
@@ -350,7 +349,6 @@
                                                         color = "color:fuchsia;";
                                                     string cptMod = !string.IsNullOrEmpty(coderMod) ? coderMod : "";
                                                     string cptMod1 = cptMod == qaMod ? "" : coderMod + "/";
-                                                    cptMod = cptMod == qaMod ? "" : coderMod;
 
                                                     string coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[2]);
                                                     string qaQty = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[2]);
@@ -359,7 +357,6 @@
                                                         color = "color:fuchsia;";
                                                     string cptQty = !string.IsNullOrEmpty(coderQty) ? coderQty : "";
                                                     string cptQty1 = cptQty == qaQty ? "" : coderQty + "/";
-                                                    cptQty = cptQty == qaQty ? "" : coderQty;
 
                                                     string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
                                                     string qaLinks = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[3]);
@@ -367,51 +364,83 @@
                                                     if (coderLinks == "NA")
                                                         color = "color:fuchsia;";
                                                     string linkAll = qaLinks == "null" ? "" : qaLinks;
-                                                    string cptLinks = !string.IsNullOrEmpty(coderLinks) ? coderLinks + "/" : "";
+                                                    string cptLinks = !string.IsNullOrEmpty(coderLinks) ? coderLinks : "";
                                                     string cptLinks1 = !string.IsNullOrEmpty(coderLinks) ? coderLinks + "/" : "";
 
                                                     string link = !string.IsNullOrEmpty(@qaLinks) || @qaLinks != "null" ? @qaLinks : "Link All";
                                                     cptLinks1 = cptLinks == link ? "" : coderLinks + "/";
-                                                    cptLinks = cptLinks == link ? "" : coderLinks;
-                                                    <div title="Code : @cptCode1@qacptCode, Mod : @cptMod1@mod, Quantity : @cptQty1@qaQty, Link : @cptLinks1@linkAll" class="col-md-3 input-group">
+                                                    <div title="Code : @cptCode1@qacptCode, Mod : @cptMod1@mod, Quantity : @cptQty1@qaQty, Link : @cptLinks1@link" class="col-md-3 input-group">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                                                         </div>
-                                                        @*<input type="text" class="form-control QARemarks ControlHeight" value="@qacptCode" style="width:17px;@color" />*@
-                                                        <div class="form-control CoderDetails" style="min-width:60px;">
-                                                            <span style="color:red">@cptCode</span>
-                                                            <br />
-                                                            <span style="color:green">@qacptCode</span>
-                                                        </div>
+                                                        @{
+                                                            if (codercptCode == "NA")
+                                                                color = "color:fuchsia;";
+                                                            <div class="form-control CoderDetails" style="min-width:60px;">
+                                                                @if (cptCode == qacptCode)
+                                                                {
+                                                                    <span style="color:green">@cptCode</span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span style="color:red">@cptCode</span>
+                                                                }
+                                                                <br />
+                                                                <span style="color:green">@qacptCode</span>
+                                                            </div>
+                                                            color = (coderMod != qaMod) ? "color:blue;" : "";
+                                                            if (coderMod == "NA")
+                                                                color = "color:fuchsia;";
+                                                            <div class="form-control CoderDetails">
+                                                                @if (cptMod == mod)
+                                                                {
+                                                                    <span style="color:green">@cptMod</span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span style="color:red">@cptMod</span>
+                                                                }
+                                                                <br />
+                                                                <span style="color:green">@mod</span>
+                                                            </div>
 
-                                                        @*<input type="text" class="form-control QARemarks ControlHeight" value="@qaMod" style="@color" />*@
-                                                        <div class="form-control CoderDetails">
-                                                            <span style="color:red">@cptMod</span>
-                                                            <br />
-                                                            <span style="color:green">@mod</span>
-                                                        </div>
+                                                            color = (coderQty != qaQty) ? "color:blue;" : "";
+                                                            if (coderQty == "NA")
+                                                                color = "color:fuchsia;";
+                                                            <div class="form-control CoderDetails">
+                                                                @if (cptQty == qaQty)
+                                                                {
+                                                                    <span style="color:green">@cptQty</span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span style="color:red">@cptQty</span>
+                                                                }
+                                                                <br />
+                                                                <span style="color:green">@qaQty</span>
+                                                            </div>
 
-                                                        @*<input type="text" class="form-control QARemarks ControlHeight" value="@qaQty" style="@color" />*@
-                                                        <div class="form-control CoderDetails">
-                                                            <span style="color:red">@cptQty</span>
-                                                            <br />
-                                                            <span style="color:green">@qaQty</span>
-                                                        </div>
+                                                            color = (coderLinks != qaLinks) ? "color:blue;" : "";
+                                                            if (coderLinks == "NA")
+                                                                color = "color:fuchsia;";
+                                                            <div class="form-control CoderDetails">
+                                                                @if (cptLinks == linkAll)
+                                                                {
+                                                                    <span style="color:green">@cptLinks</span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span style="color:red">@cptLinks</span>
+                                                                }
+                                                                <br />
+                                                                <span style="color:green">@linkAll</span>
+                                                            </div>
+                                                        }
 
-                                                        @*<input type="text" class="form-control QARemarks ControlHeight" value="@qaLinks" style="@color" />*@
-                                                        <div class="form-control CoderDetails">
-                                                            <span style="color:red">@cptLinks</span>
-                                                            <br />
-                                                            <span style="color:green">@linkAll</span>
-                                                        </div>
-
-                                                        <input type="hidden" id="txtCPTCode_@j" value="@qacptCode^@qaMod^@qaQty^@qaLinks" />
-
-                                                        @*@{ Show = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex"); }*@
-                                                        <div class="input-group-append CoderCorrections ControlHeight" style="height: 45px;">
-                                                            <span class="input-group-text AcceptRejectWidth">
-                                                                &nbsp;<i id="Cpt_@j" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
-                                                                &nbsp;<i id="Cpt_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text AcceptRejectWidth AcceptRejectWidth_@tabIndex">
+                                                                &nbsp;<i id="Cpt_@j" class="fa fa-check-circle fa-lg AdjustAcceptReject AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                                                &nbsp;<i id="Cpt_@j" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                                                             </span>
                                                         </div>
                                                     </div>
@@ -522,8 +551,8 @@
                                         @{Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
                                         <div class="input-group-append ControlHeight">
-                                            <span class="input-group-text AcceptRejectWidth_@tabIndex">
-                                                &nbsp;<i id="Feedback_@tabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                            <span class="input-group-text AcceptRejectWidth AcceptRejectWidth_@tabIndex">
+                                                &nbsp;<i id="Feedback_@tabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
                                                 &nbsp;<i id="Feedback_@tabIndex" data="@tabIndex" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
                                             </span>
                                         </div>
