@@ -1411,6 +1411,56 @@ namespace UAB.DAL
             }
             return ds;
         }
+        public List<ChartSummaryDTO> GetChartSummaryReportDetails (int projectID, DateTime CurrentDos, string ColumnName)
+        {
+            List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
+            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
+            chartSummaryDTO.ProjectID = projectID;
+            using (var context = new UABContext())
+            {
+                var param = new SqlParameter[] {
+                     new SqlParameter() {
+                            ParameterName = "@ProjectID",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = projectID
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@CurrentDos",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = CurrentDos
+                        }
+                        ,   new SqlParameter() {
+                            ParameterName = "@ColumnName",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = ColumnName
+                        }
+                    };
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[Rpt_GenerateChartSummaryReportDetails]";
+                    cmd.Parameters.AddRange(param);
+                    cmd.Connection = con;
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        chartSummaryDTO = new ChartSummaryDTO();
+                        chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
+                        chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
+                        var dos = Convert.ToDateTime(reader["DateOfService"]);
+                        chartSummaryDTO.CodingDTO.DateOfService = dos.ToString("MM/dd/yyyy");
+                        lst.Add(chartSummaryDTO);
+                    }
+                }
+            }
+            return lst;
+        }
         public DataSet GetChartSummaryReport(int projectID, DateTime StartDate, DateTime EndDate)
         {
             DataTable dt = new DataTable();

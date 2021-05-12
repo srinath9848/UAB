@@ -67,7 +67,17 @@ namespace UAB.Controllers
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var lstReceivedChartReport = clinicalcaseOperations.GetChartSummaryReport(ProjectId, StartDate, EndDate);
+            ViewBag.ProjectId = ProjectId;
             return PartialView("_ChartSummaryReport", lstReceivedChartReport);
+        }
+        [HttpGet]
+        public IActionResult GetChartSummaryReportDetails (string ColumnName,string dos, int ProjectId)
+        {
+            DateTime CurrentDos = Convert.ToDateTime(dos); 
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var lstChartSummaryReportDetails = clinicalcaseOperations.GetChartSummaryReportDetails(ProjectId, CurrentDos,ColumnName);
+            ViewBag.ColumnName = ColumnName;
+            return PartialView("_ChartSummaryReportDetails", lstChartSummaryReportDetails);
         }
 
         public IActionResult GetPostedChartsReport(int ProjectId, string range)
