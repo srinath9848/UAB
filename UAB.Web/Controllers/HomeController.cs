@@ -71,12 +71,15 @@ namespace UAB.Controllers
             return PartialView("_ChartSummaryReport", lstReceivedChartReport);
         }
         [HttpGet]
-        public IActionResult GetChartSummaryReportDetails (string ColumnName,string dos, int ProjectId)
+        public IActionResult GetChartSummaryReportDetails (string ColumnName,DateTime dos, int ProjectId)
         {
-            DateTime CurrentDos = Convert.ToDateTime(dos); 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstChartSummaryReportDetails = clinicalcaseOperations.GetChartSummaryReportDetails(ProjectId, CurrentDos,ColumnName);
+            var lstChartSummaryReportDetails = clinicalcaseOperations.GetChartSummaryReportDetails(ProjectId, dos, ColumnName);
+            string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.Name).FirstOrDefault();
+
             ViewBag.ColumnName = ColumnName;
+            ViewBag.dos = dos.ToString("MM/dd/yyyy");
+            ViewBag.projectname = projectname;
             return PartialView("_ChartSummaryReportDetails", lstChartSummaryReportDetails);
         }
 

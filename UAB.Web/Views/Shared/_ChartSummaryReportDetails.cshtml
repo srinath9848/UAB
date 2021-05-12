@@ -29,10 +29,13 @@
 
             </div>
             <div style="margin-left: 12px;">
+                <h6 class="modal-title" id="exampleModalLongTitle"><span>Project : @ViewBag.projectname</span></h6>
+            </div>
+            <div style="margin-left: 12px;">
                 <h6 class="modal-title" id="exampleModalLongTitle"><span>Type : @ViewBag.ColumnName</span></h6>
             </div>
             <div style="margin-left: 12px;">
-                <h6 class="modal-title" id="exampleModalLongTitle"><span>DOS : @Model.FirstOrDefault().CodingDTO.DateOfService</span></h6>
+                <h6 class="modal-title" id="exampleModalLongTitle"><span>DOS : @ViewBag.dos</span></h6>
             </div>
             <br />
             <div class="table-responsive col-12" style="max-height:400px;overflow-y:scroll">
