@@ -75,6 +75,10 @@ namespace UAB.Controllers
             {
                 lst = clinicalcaseOperations.DisplayBlockCharts(Role, ProjectID);
             }
+            if (Role == Roles.ShadowQA.ToString())
+            {
+                lst = clinicalcaseOperations.DisplayBlockCharts(Role, ProjectID);
+            }
             else
             {
                 lst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);
@@ -114,6 +118,7 @@ namespace UAB.Controllers
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();                                //coding,ShadowQA
             List<ChartSummaryDTO> chartSummaryDTOlst = new List<ChartSummaryDTO>();                 //coding,ShadowQA
             List<ChartSummaryDTO> qadto = new List<ChartSummaryDTO>();                              //QA
+            List<ChartSummaryDTO> shadowQADto = new List<ChartSummaryDTO>();
 
 
             if (ProjectName == null || ProjectID == 0)
@@ -191,38 +196,29 @@ namespace UAB.Controllers
             }
             else if (Role == Roles.ShadowQA.ToString())
             {
-                chartSummaryDTOlst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);  //total block charts
-                List<int> cidslst = chartSummaryDTOlst.Select(x => x.CodingDTO.ClinicalCaseID).ToList();
-                switch (plusorminus)
+                var res = clinicalcaseOperations.DisplayBlockCharts(Role, ProjectID);  //total block charts
+                List<int> ccids = res.Select(x => x.CodingDTO.ClinicalCaseID).ToList();
+                int searchcid = Convert.ToInt32(ccid);
+                if (ccids.Count != 0)
                 {
-                    case "Next":
-                        chartSummaryDTO = chartSummaryDTOlst.SkipWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).FirstOrDefault();
-                        if (chartSummaryDTO == null)
-                        {
-                            chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
-                            chartSummaryDTO.ProjectName = ProjectName;
-                        }
-                        break;
-                    case "Previous":
-                        var x = chartSummaryDTOlst;
-                        x.Reverse();
-                        chartSummaryDTO = x.SkipWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).FirstOrDefault();
-                        if (chartSummaryDTO == null)
-                        {
-                            chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
-                            chartSummaryDTO.ProjectName = ProjectName;
-                        }
-                        break;
-
-                    default:
-                        chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
-                        chartSummaryDTO.ProjectName = ProjectName;
-                        break;
+                    switch (plusorminus)
+                    {
+                        case "Next":
+                            searchcid = ccids[(ccids.IndexOf(Convert.ToInt32(ccid)) + 1) % ccids.Count];
+                            break;
+                        case "Previous":
+                            searchcid = ccids[(ccids.IndexOf(Convert.ToInt32(ccid)) - 1 + ccids.Count) % ccids.Count];
+                            break;
+                        default:
+                            searchcid = Convert.ToInt32(ccid);
+                            break;
+                    }
+                    int currentindex = ccids.IndexOf(searchcid);
+                    ViewBag.currentindex = currentindex;
+                    ViewBag.lastindex = ccids.Count - 1;
                 }
-                int indcid = chartSummaryDTO.CodingDTO.ClinicalCaseID;
-                int currentindex = cidslst.IndexOf(indcid);
-                ViewBag.currentindex = currentindex;
-                ViewBag.lastindex = cidslst.Count - 1;
+                shadowQADto = clinicalcaseOperations.GetShadowQABlockedChart(Role, ChartType, ProjectID, searchcid);
+                shadowQADto.FirstOrDefault().ProjectName = ProjectName;
             }
 
             ViewBag.IsBlocked = "1";
@@ -237,7 +233,7 @@ namespace UAB.Controllers
             if (Role == Roles.QA.ToString())
                 return View("QA", qadto);
             else if (Role == "ShadowQA")
-                return View("ShadowQA", chartSummaryDTO);
+                return View("ShadowQA", shadowQADto);
             else
                 return View("Coding", chartSummaryDTO);
 
@@ -281,8 +277,10 @@ namespace UAB.Controllers
                     List<int> qacidslst = lst.Select(x => x.CodingDTO.ClinicalCaseID).ToList();
                     ViewBag.lastindex = qacidslst.Count - 1;
                     break;
-                case "ShadowQa":
-                    chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
+                case "ShadowQA":
+                    lstChartSummaryDTO = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
+                    if (lstChartSummaryDTO.Count > 0)
+                        lstChartSummaryDTO.FirstOrDefault().ProjectName = ProjectName;
                     //for prenxt button disblenable operation
                     lst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);
                     List<int> shadowqacidslst = lst.Select(x => x.CodingDTO.ClinicalCaseID).ToList();
@@ -292,7 +290,7 @@ namespace UAB.Controllers
             if (Role == "QA")
                 return View("QA", lstChartSummaryDTO.OrderBy(a => a.ClaimId).ToList());
             else if (Role == "ShadowQA")
-                return View("ShadowQA", chartSummaryDTO);
+                return View("ShadowQA", lstChartSummaryDTO.OrderBy(a => a.ClaimId).ToList());
             else
                 return View("Coding", chartSummaryDTO);
 

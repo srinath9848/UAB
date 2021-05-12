@@ -48,7 +48,7 @@
                                     <tr class="body">
                                         @for (int j = 0; j < Model.Tables[0].Columns.Count; j++)
                                         {
-                                            <td onclick="ClickOnCell('@Model.Tables[0].Columns[j].ColumnName','@Model.Tables[0].Rows[i][1]')">@Model.Tables[0].Rows[i][j]</td>
+                                            <td onclick="ClickOnCell('@Model.Tables[0].Columns[j].ColumnName','@Model.Tables[0].Rows[i][1]','@Model.Tables[0].Rows[i][j]')">@Model.Tables[0].Rows[i][j]</td>
                                         }
                                     </tr>
                                 }
@@ -88,8 +88,9 @@
     });
 
     $(document).ready(function () {
-        ClickOnCell = function (p1,p2) {
-            $.ajax({
+        ClickOnCell = function (p1, p2,p3) {
+            if (p3!=0) {
+                 $.ajax({
                 type: "GET",
                 url: "@Url.Action("GetChartSummaryReportDetails", "Home")",
                 data: {
@@ -104,6 +105,7 @@
                     alert(response);
                 }
             });
+            }
         };
     ModalClose1 = function () {
         $("#modalContent").html('');
