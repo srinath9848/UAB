@@ -71,7 +71,7 @@
                                         <td>
                                             @if (roles.Split(',').ToList().Contains(Roles.Manager.ToString()))
                                             {
-                                                @if (!@item.Status.Contains("Ready for Posting") && !@item.Status.Contains("Posting Completed"))
+                                                @if (!@item.Status.Contains("Ready for Posting") && !@item.Status.Contains("Posting Completed") && !@item.Status.Contains("Provider Posted"))
                                                 {
                                                     <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit" onclick="Assign('@item.ClinicalCaseId')">Assign</button>
 
