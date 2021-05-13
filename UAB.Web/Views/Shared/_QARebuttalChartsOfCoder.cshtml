@@ -95,6 +95,7 @@
                                     <div title="@title" class="col-md-3 input-group">
                                         @{string Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                                         @{string Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = "ProviderID1", @class = "form-control QARevised ControlHeight" })
 
                                         <div class="input-group-append QACorrections">
                                             <span class="input-group-text">
@@ -120,11 +121,11 @@
                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().QAProviderRemarks, null, new { @class = "text-danger errMsg" })
                                     </div>
                                     @*<div class="input-group-append CoderCorrections" style="@Show">
-                                        <span class="input-group-text ControlHeight" style="margin-left:-12px;">
-                                            &nbsp;<i id="Provider" title="ProviderID1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                                            &nbsp;<i id="Provider" title="ProviderID1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                                        </span>
-                                    </div>*@
+                                            <span class="input-group-text ControlHeight" style="margin-left:-12px;">
+                                                &nbsp;<i id="Provider" title="ProviderID1" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                                &nbsp;<i id="Provider" title="ProviderID1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                            </span>
+                                        </div>*@
                                     <div title="model.FirstOrDefault().RevisedProviderRemarks" class="col-md-3 input-group CoderCorrections" style="@Show">
                                         @Html.TextBoxFor(model => model.FirstOrDefault().RevisedProviderRemarks, new { @class = "form-control ControlHeight", @id = "RevisedProviderRemarks" })
                                     </div>
@@ -367,11 +368,11 @@
                                                     <input type="text" id="CptRemarks_@j" class="form-control ControlHeight" value="@dictQACptRemarks?.ElementAt(i).Value" />
                                                 </div>
                                                 @*<div class="input-group-append CoderCorrections ControlHeight" style="@Show">
-                                                    <span class="input-group-text" style="margin-left:-12px;">
-                                                        &nbsp;<i id="Cpt_@j" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                                                        &nbsp;<i id="Cpt_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                                                    </span>
-                                                </div>*@
+                                                        <span class="input-group-text" style="margin-left:-12px;">
+                                                            &nbsp;<i id="Cpt_@j" class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                                                            &nbsp;<i id="Cpt_@j" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                                        </span>
+                                                    </div>*@
                                                 <div title="@dictRevisedCptRemarks?.ElementAt(i).Value" class="col-md-3 input-group CoderCorrections" style="@Show">
                                                     <input type="text" class="form-control ControlHeight" value="@dictRevisedCptRemarks?.ElementAt(i).Value" />
                                                 </div>
