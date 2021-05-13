@@ -112,8 +112,25 @@ namespace UAB.Controllers
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var lstPendingChartReport = clinicalcaseOperations.GetPendingChartsReport(ProjectId, range);
+
+            ViewBag.ProjectId = ProjectId;
+            ViewBag.range = range;
             return PartialView("_PendingChartsReport", lstPendingChartReport);
         }
+        [HttpGet]
+        public IActionResult GetPendingReportDetails(string Total, DateTime date,int week,string month,string year, int ProjectId,string range)
+        {
+            //ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            //var lstChartSummaryReportDetails = clinicalcaseOperations.GetChartSummaryReportDetails(ProjectId, dos, ColumnName);
+            //string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.Name).FirstOrDefault();
+
+            ////ViewBag.ColumnName = ColumnName;
+            //ViewBag.dos = dos.ToString("MM/dd/yyyy");
+            //ViewBag.projectname = projectname;
+            //return PartialView("_ChartSummaryReportDetails", lstChartSummaryReportDetails);
+            return View();
+        }
+
         public IActionResult GetProvidedpostedchartsChartsReport(int ProjectId, string range)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
