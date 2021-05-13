@@ -129,7 +129,7 @@
                 <div class="input-group-prepend ControlHeight">
                     <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
                 </div>
-                <input type="text" id="@string.Format("txtDx{0}Claim_{1}", Model.TabIndex,i)" class="form-control ControlHeight txtDx @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" autocomplete="off" tabindex="@i" placeholder="Code" value="@item" style="display:none" />
+                <input type="text" id="@string.Format("txtDx{0}Claim_{1}", Model.TabIndex,i)" class="form-control ControlHeight txtDx @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" autocomplete="off" placeholder="Code" value="@item" style="display:none" />
             </div>
             <div class="col-md-3 input-group">
                 @{ var dxRemarks = string.Format("DxRemarkss_{0}_{1}", Model.TabIndex, i);}
