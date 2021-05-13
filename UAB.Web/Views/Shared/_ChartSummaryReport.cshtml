@@ -89,7 +89,7 @@
 
     $(document).ready(function () {
         ClickOnCell = function (p1, p2,p3) {
-            if (p3!=0) {
+            if (p3 != 0 && p1 != 'ProjectName' && p1 !='DateOfService') {
                  $.ajax({
                 type: "GET",
                 url: "@Url.Action("GetChartSummaryReportDetails", "Home")",

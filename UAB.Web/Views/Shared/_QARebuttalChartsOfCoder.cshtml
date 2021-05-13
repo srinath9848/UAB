@@ -299,7 +299,7 @@
                                                         <div class="input-group-prepend ControlHeight">
                                                             <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                                                         </div>
-                                                        <input type="text" class="form-control CoderDetails ControlHeight" value="@codercptCode" style="width: 17px;color: green;" />
+                                                        <input type="text" maxlength="5" class="form-control CoderDetails ControlHeight" value="@codercptCode" style="width: 17px;color: green;" />
                                                         <input type="text" class="form-control CoderDetails ControlHeight" value="@coderMod" style="color: green;" />
                                                         <input type="text" class="form-control CoderDetails ControlHeight" value="@coderQty" style="color: green; " />
                                                         <input type="text" class="form-control CoderDetails ControlHeight" value="@coderLinks" style="color: green; " />
@@ -314,7 +314,7 @@
                                                         <div class="input-group-prepend ControlHeight">
                                                             <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                                                         </div>
-                                                        <input type="text" class="form-control CoderDetails ControlHeight" style="color: green;width: 17px;" placeholder="Code" value="@coderCptcodes[0]" />
+                                                        <input type="text" maxlength="5" class="form-control CoderDetails ControlHeight" style="color: green;width: 17px;" placeholder="Code" value="@coderCptcodes[0]" />
                                                         <input type="text" class="form-control CoderDetails ControlHeight" style="color:green;" placeholder="Mod" value="@coderModVal" />
                                                         <input type="text" class="form-control CoderDetails ControlHeight" style="color:green;" placeholder="1" value="@coderCptcodes[2]" />
                                                         <input type="text" class="form-control CoderDetails ControlHeight" style="color: green;" placeholder="Link All" value="@coderLinkAllVal" />
@@ -351,7 +351,7 @@
                                                             }
                                                         }
                                                     }
-                                                    <input type="text" class="form-control QARemarks ControlHeight" id="txtCpt_@j" autocomplete="off" placeholder="Code" value="@ShadowQaCptVal" />
+                                                    <input type="text" maxlength="5" class="form-control QARemarks ControlHeight" id="txtCpt_@j" autocomplete="off" placeholder="Code" value="@ShadowQaCptVal" />
                                                     <input type="text" class="form-control QARemarks ControlHeight" id="txtMod_@j" autocomplete="off" placeholder="Mod" value="@ShadowQaModVal" />
                                                     <input type="text" id="txtQty_@j" class="form-control QARemarks ControlHeight" style="max-width:25px;" autocomplete="off" placeholder="1" value="@ShadowQaQtyVal" />
                                                     <input type="text" id="txtLinks_@j" class="form-control QARemarks ControlHeight" autocomplete="off" placeholder="Link All" value="@ShadowQaLinkAllVal" />
