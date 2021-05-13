@@ -529,7 +529,7 @@
         } else {
             var txtdanger = $('[class*=txtdanger][style=""]');
             var errortype = $('[id*=projectdd]').text();
-            if (txtdanger.length > 0 && errortype !="")
+            if (txtdanger.length > 0 || errortype !="")
                 e.preventDefault();
             else
                 $("#form1").submit();

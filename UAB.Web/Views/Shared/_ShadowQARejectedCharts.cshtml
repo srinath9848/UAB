@@ -426,18 +426,20 @@
                                                             color = (coderLinks != qaLinks) ? "color:blue;" : "";
                                                             if (coderLinks == "NA")
                                                                 color = "color:fuchsia;";
-                                                            <div class="form-control CoderDetails">
-                                                                @if (cptLinks == linkAll)
-                                                                {
-                                                                    <span style="color:green">@cptLinks</span>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <span style="color:red">@cptLinks</span>
-                                                                }
-                                                                <br />
-                                                                <span style="color:green">@linkAll</span>
-                                                            </div>
+                                                    <div class="form-control CoderDetails">
+                                                        @if (cptLinks == linkAll)
+                                                        {
+                                                            <span style="color:green">@cptLinks</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span style="color:red">@cptLinks</span>
+                                                        }
+                                                        <br />
+                                                        <span style="color:green">@linkAll</span>
+                                                        <input type="hidden" id="txtCPTCode_@j" value="@qacptCode^@qaMod^@qaQty^@qaLinks" />
+
+                                                    </div>
                                                         }
 
                                                         <div class="input-group-append">
