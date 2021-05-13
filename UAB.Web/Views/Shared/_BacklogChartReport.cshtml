@@ -29,7 +29,8 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card">Backlog Chart Report</h5>
-                    <div id="modalContent"></div>
+                    <div id="modalContent1"></div>
+                    <input type="hidden" id="projectid" value="@ViewBag.ProjectId" />
                     <div class="table-responsive col-8">
                         <table id="Backlogcharts" class="table table-striped table-bordered">
                             <thead>
@@ -47,7 +48,15 @@
                                     <tr class="body">
                                         @for (int j = 0; j < Model.Tables[0].Columns.Count; j++)
                                         {
-                                            <td>@Model.Tables[0].Rows[i][j]</td>
+                                            @if (@Model.Tables[0].Columns[j].ColumnName=="Total")
+                                            {
+                                                <td onclick="ClickOnCell('@Model.Tables[0].Rows[i][1]','@Model.Tables[0].Rows[i][2]')">@Model.Tables[0].Rows[i][j]</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@Model.Tables[0].Rows[i][j]</td>
+                                            }
+
                                         }
                                     </tr>
                                 }
@@ -86,5 +95,31 @@
             $(this).css("background-color", backgroundcolor[id]);
         }
     });
+
+    $(document).ready(function () {
+        ClickOnCell = function (p1, p2) {
+                 $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetBackLogChartsReportDetails", "Home")",
+                data: {
+                    "delaydays": p1,
+                    "status": p2,
+                    "projectid": $("#projectid").val()
+                },
+                success: function (response) {
+                    $("#modalContent1").html(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+
+        };
+    ModalClose1 = function () {
+        $("#modalContent").html('');
+        }
+    });
+
+
 </script>
 
