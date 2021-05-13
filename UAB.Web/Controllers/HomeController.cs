@@ -118,17 +118,15 @@ namespace UAB.Controllers
             return PartialView("_PendingChartsReport", lstPendingChartReport);
         }
         [HttpGet]
-        public IActionResult GetPendingReportDetails(string Total, DateTime date,int week,string month,string year, int ProjectId,string range)
+        public IActionResult GetPendingReportDetails(DateTime date,int week,string month,string year, int ProjectId,string range)
         {
-            //ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            //var lstChartSummaryReportDetails = clinicalcaseOperations.GetChartSummaryReportDetails(ProjectId, dos, ColumnName);
-            //string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.Name).FirstOrDefault();
+            string createdDate = date.ToString();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var lstPendingReportDetails = clinicalcaseOperations.GetPendingReportDetails(date,week,month,year,ProjectId,range);
+            string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.Name).FirstOrDefault();
 
-            ////ViewBag.ColumnName = ColumnName;
-            //ViewBag.dos = dos.ToString("MM/dd/yyyy");
-            //ViewBag.projectname = projectname;
-            //return PartialView("_ChartSummaryReportDetails", lstChartSummaryReportDetails);
-            return View();
+            ViewBag.projectname = projectname;
+            return PartialView("_PendingReportDetails", lstPendingReportDetails);
         }
 
         public IActionResult GetProvidedpostedchartsChartsReport(int ProjectId, string range)
