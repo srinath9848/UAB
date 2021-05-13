@@ -93,7 +93,21 @@ namespace UAB.Controllers
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var lstBacklogChartReport = clinicalcaseOperations.GetBacklogChartsReport (ProjectId, range);
+            ViewBag.ProjectId = ProjectId;
             return PartialView("_BacklogChartReport",lstBacklogChartReport);
+        }
+        [HttpGet] 
+        public IActionResult GetBackLogChartsReportDetails(int delaydays, string status, int projectid)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            int statusid = clinicalcaseOperations.GetStatusList().Where(x => x.Name == status).Select(x => x.StatusId).FirstOrDefault();
+           var lstBackLogChartReportDetails = clinicalcaseOperations.GetBacklogChartsReportDetails(delaydays, statusid, projectid);
+            string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == projectid).Select(x => x.Name).FirstOrDefault();
+            ViewBag.delaydays = delaydays;
+            ViewBag.projectname = projectname;
+            ViewBag.status = status;
+
+            return PartialView("_BackLogChartsReportDetails",lstBackLogChartReportDetails);
         }
 
         public IActionResult GetCodedChartsReport(int ProjectId, string range)
