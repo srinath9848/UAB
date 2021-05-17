@@ -62,7 +62,7 @@
 
     $(document).ready(function () {
         BlockClinicalcase = function () {
-
+            $('#btnBlockClinicalCase').prop('disabled', true);
             if ($("#categorydd").find('option:selected').val() !== "" && $("#txtremarks").val() !== "") {
                 $.ajax({
                     type: "POST",
