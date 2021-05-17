@@ -247,6 +247,9 @@
                 }
          });
         }
+        EnableButton();
+        EnableButtonForClaim2();
+        EnableButtonForClaim3();
     });
 
 
@@ -384,6 +387,9 @@
                     $("#txtLinks_" + id1).removeAttr("onfocusout", "");
                     $("#txtLinks_1").removeAttr("onfocusout", "");
                     $("#txtCpt_" + id).focus();
+                    EnableButton();
+                    EnableButtonForClaim2();
+                    EnableButtonForClaim3();
                 }
             } else {
                 $("#ProviderFeedbackID").focus();
@@ -410,6 +416,9 @@
                             $("#txt2links_" + id1).removeAttr("onfocusout", "");
                             $("#txt2links_1").removeAttr("onfocusout", "");
                             $("#txt2Cpt_" + id).focus();
+                            EnableButton();
+                            EnableButtonForClaim2();
+                            EnableButtonForClaim3();
                         }
                     }
                 }
@@ -432,6 +441,9 @@
                             $("#txt3links_" + id1).removeAttr("onfocusout", "");
                             $("#txt3links_1").removeAttr("onfocusout", "");
                             $("#txt3Cpt_" + id).focus();
+                            EnableButton();
+                            EnableButtonForClaim2();
+                            EnableButtonForClaim3();
                         }
                     }
                 }
@@ -454,6 +466,9 @@
                             $("#txt4links_" + id1).removeAttr("onfocusout", "");
                             $("#txt4links_1").removeAttr("onfocusout", "");
                             $("#txt4Cpt_" + id).focus();
+                            EnableButton();
+                            EnableButtonForClaim2();
+                            EnableButtonForClaim3();
                         }
                     }
                 }
@@ -507,6 +522,9 @@
                             tabArray.push(id);
                             $("#" + title).html(response);
                             $("#Providers_" + id).focus();
+                            EnableButton();
+                            EnableButtonForClaim2();
+                            EnableButtonForClaim3();
                         }
                     });
                 };
@@ -549,6 +567,9 @@
                    $("#deleteclaim4").css("border-color", "");
                    $("#3").removeClass('active');
                    $("#4").removeClass('active');
+                   EnableButton();
+                   EnableButtonForClaim2();
+                   EnableButtonForClaim3();
                }
                if (title == "tabDiv3") {
                    $("#" + title).show();
