@@ -282,7 +282,7 @@ namespace UAB.Controllers
                     if (lstChartSummaryDTO.Count > 0)
                         lstChartSummaryDTO.FirstOrDefault().ProjectName = ProjectName;
                     //for prenxt button disblenable operation
-                    lst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);
+                    lst = clinicalcaseOperations.DisplayBlockCharts(Role, ProjectID);
                     List<int> shadowqacidslst = lst.Select(x => x.CodingDTO.ClinicalCaseID).ToList();
                     ViewBag.lastindex = shadowqacidslst.Count - 1;
                     break;
