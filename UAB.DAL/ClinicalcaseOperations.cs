@@ -1402,6 +1402,78 @@ namespace UAB.DAL
             }
             return ds;
         }
+        public List<ChartSummaryDTO> GetAgingReportDetails(string ColumnName, int projectID)
+        {
+            List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
+            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
+            chartSummaryDTO.ProjectID = projectID;
+            using (var context = new UABContext())
+            {
+                var param = new SqlParameter[] {
+                     new SqlParameter() {
+                            ParameterName = "@ProjectID",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = projectID
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@ColumnName",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = ColumnName
+                        }
+                    };
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[UspAgingDetails]";
+                    cmd.Parameters.AddRange(param);
+                    cmd.Connection = con;
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        chartSummaryDTO = new ChartSummaryDTO();
+                        chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
+                        chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
+                        chartSummaryDTO.CodingDTO.ClinicalCaseID = Convert.ToInt32(reader["ClinicalCaseId"]);
+                        var dos = Convert.ToDateTime(reader["DateOfService"]);
+                        chartSummaryDTO.CodingDTO.DateOfService = dos.ToString("MM/dd/yyyy");
+                        lst.Add(chartSummaryDTO);
+                    }
+                }
+            }
+            return lst;
+        }
+        public void SaveOrUnblockchart(int cid, string responseremarks,string flag)
+        {
+            using (var context = new UABContext())
+            {
+                BlockResponse mdl = new BlockResponse()
+                {
+                    ClinicalCaseId = cid,
+                    ResponseRemarks = responseremarks,
+                    ResponseByUserId = mUserId,
+                    ResponseDate = DateTime.Now
+                };
+                context.BlockResponse.Add(mdl);
+
+                if (flag =="Unblock")
+                {
+                    var existingblockchart = context.WorkItem.Where(a => a.ClinicalCaseId == cid).FirstOrDefault();
+
+                    if (existingblockchart != null)
+                    {
+                        existingblockchart.IsBlocked = 0;
+                        context.Entry(existingblockchart).State = EntityState.Modified;
+                    }
+                }
+               
+                context.SaveChanges();
+            }
+        }
         public DataSet GetLevellingReport(int projectID, DateTime startDate, DateTime endDate)
         {
             DataSet ds = new DataSet();
@@ -1642,7 +1714,7 @@ namespace UAB.DAL
             }
             return ds;
         }
-        public List<ChartSummaryDTO> GetBacklogChartsReportDetails(int delaydays, int statusid, int projectid) 
+        public List<ChartSummaryDTO> GetBacklogChartsReportDetails(int delaydays, int statusid, int projectid)
         {
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();

@@ -54,7 +54,25 @@ namespace UAB.Controllers
             var lstagingtDTO = clinicalcaseOperations.GetAgingReport();
             return PartialView("_AgingReport", lstagingtDTO);
         }
+        [HttpGet]
+        public IActionResult GetAgingReportDetails (string ColumnName,string ProjectName)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            int ProjectId = clinicalcaseOperations.GetProjects().Where(x => x.Name == ProjectName).Select(x => x.ProjectId).FirstOrDefault();
+            var lstAgingReportDetails = clinicalcaseOperations.GetAgingReportDetails(ColumnName,ProjectId);
 
+            ViewBag.ColumnName = ColumnName;
+            ViewBag.projectname = ProjectName;
+            return PartialView("_AgingReportDetails", lstAgingReportDetails);
+        }
+
+        [HttpPost]
+        public IActionResult SaveOrUnblocktheChart(int cid, string ManagerResponse,string flag)
+        {
+            ClinicalcaseOperations clinicalcaseOperations  = new ClinicalcaseOperations(mUserId);
+            clinicalcaseOperations.SaveOrUnblockchart(cid, ManagerResponse,flag);
+            return RedirectToAction("Index", "Home");
+        }
         [HttpPost]
         public IActionResult GetReceivedChartsReport(int ProjectId, string range)
         {
