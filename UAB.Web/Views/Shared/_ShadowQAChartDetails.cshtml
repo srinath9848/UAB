@@ -272,7 +272,7 @@
                                                 <div title="" class="col-md-3 input-group" style="@Show">
                                                     <input type="text" class="form-control QARemarks ControlHeight" value="@dictQADxRemarks?.ElementAt(i).Value" />
                                                 </div>
-                                                <div class="col-md-3 input-group QADxRevised_@tabIndex Dx_@j" style="display: none">
+                                                <div class="col-md-3 input-group QADxRevised_@tabIndex Dx_@j" style="display:none;">
                                                     <div class="input-group-prepend ControlHeight">
                                                         <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                                                     </div>
@@ -286,8 +286,8 @@
                                                     }
                                                     <input type="text" id="txtDx_@j" class="form-control txtDx ControlHeight" autocomplete="off" tabindex="@j" placeholder="Code" value="@QaDxVal" />
                                                 </div>
-                                                <div class="col-md-3 input-group QADxRevised_@tabIndex Dx_@j" style="display: none">
-                                                    <input type="text" id="DxRemarks_@j" class="form-control ControlHeight DxRemarks_@j Dx_@j" style="display:flex;" />
+                                                <div class="col-md-3 input-group QADxRevised_@tabIndex Dx_@j" style="display:none;">
+                                                    <input type="text" id="DxRemarks_@j" class="form-control ControlHeight DxRemarks_@j QADxRevised_@tabIndex Dx_@j" style="display:none;" />
                                                     <span id="validDx_@j" class="text-danger txtdanger" style="display:none">*</span>
                                                 </div>
                                             </div>

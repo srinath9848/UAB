@@ -36,13 +36,6 @@
                 $(".QARevised").val('');
                 $(".QADxRevised_" + id).css("display", "none");
                 $(".QACptRevised_" + id).css("display", "none");
-                //var ignoreDxs = $("#claim1 [class*=ignore]");
-                //for (var i = 0; i < ignoreDxs.length; i++) {
-                //    var id = $(ignoreDxs[i]).attr("id");
-                //    //$("#" + id).removeClass("fa fa-times-circle fa-lg ignore reject");
-                //    //$("#" + id).addClass("fa fa-times-circle fa-lg ignore");
-                //    $("." + id).css("display", "none");
-                //}
             } else {
                 $(".QADxRevised_" + id).css("display", "none");
                 $(".QACptRevised_" + id).css("display", "none");
@@ -59,6 +52,13 @@
             //$(".QAComments").hide();
             $(".ShadowQACorrectionsComments").hide();
             $(".ShadowQACorrectionsComments_" + id).hide();
+
+            var ignoreDxs = $("#claim"+id+ " [class*=ignore]");
+            for (var i = 0; i < ignoreDxs.length; i++) {
+                var id = $(ignoreDxs[i]).attr("id");
+                $("#" + id).removeClass("fa fa-times-circle fa-lg ignore reject");
+                $("#" + id).addClass("fa fa-times-circle fa-lg ignore");
+            }
         }
         else {
             $("[class*=AdjustAcceptReject_" + id + "]").removeClass('accept');
@@ -505,17 +505,7 @@
                 $("#hdnShadowQADxCodes" + tabid).val("");
                 for (var i = 0; i < DxNewClaimcodes.length; i++) {
                     var id = parseInt($(DxNewClaimcodes[i]).attr("id").split("_")[1]);
-                    if ($(".DxRemarkss_" + tabid + "_" + id).length) {
-                        if ($("#" + $(DxNewClaimcodes[i]).attr("id")).val() != "" && $(DxNewClaimcodes[i]).val() !="") {
-                            if ($("#hdnShadowQADxCodes" + tabid).val() == "") {
-                                $("#hdnShadowQADxCodes" + tabid).val(id + "^" + $(DxNewClaimcodes[i]).val());
-                                $("#hdnShadowQAErrorTypeID" + tabid).val(ErrorTypeID);
-                            }
-                            else
-                                $("#hdnShadowQADxCodes" + tabid).val($("#hdnShadowQADxCodes" + tabid).val() + "|" + id + "^" + $(DxNewClaimcodes[i]).val());
-                        }
-                    }
-                    else {
+                    if ($(DxNewClaimremarks[i]).css("display") == "flex") {
                         if ($("#" + $(DxNewClaimcodes[i]).attr("id")).val() != "" && $(DxNewClaimcodes[i]).val() !="") {
                             if ($("#hdnShadowQADxCodes" + tabid).val() == "") {
                                 $("#hdnShadowQADxCodes" + tabid).val(id + "^" + $(DxNewClaimcodes[i]).val());
@@ -588,19 +578,21 @@
         $("#hdnShadowQADxRemarks").val("");
         for (var i = 0; i < Dxremarks.length; i++) {
             var id = parseInt($(Dxremarks[i]).attr("id").split("_")[1]);
-            if ($(Dxremarks[i]).css("display") == "flex" && $(Dxremarks[i]).val() != "") {
-                $("#validDx_" + id).hide();
-                if ($("#hdnShadowQADxRemarks").val() == "")
-                    $("#hdnShadowQADxRemarks").val(id + "^" + $(Dxremarks[i]).val());
-                else
-                    $("#hdnShadowQADxRemarks").val($("#hdnShadowQADxRemarks").val() + "|" + id + "^" + $(Dxremarks[i]).val());
-            }
-            else {
-                if ($(Dxremarks[i]).val() == "") {
-                    var chk = $("#chkAll_1").is(':checked');
-                    if (!chk) {
-                        $(Dxremarks[i]).focus();
-                        $("#validDx_" + id).show();
+            if ($(Dxremarks[i]).css("display") == "flex") {
+                if ($(Dxremarks[i]).val() != "") {
+                    $("#validDx_" + id).hide();
+                    if ($("#hdnShadowQADxRemarks").val() == "")
+                        $("#hdnShadowQADxRemarks").val(id + "^" + $(Dxremarks[i]).val());
+                    else
+                        $("#hdnShadowQADxRemarks").val($("#hdnShadowQADxRemarks").val() + "|" + id + "^" + $(Dxremarks[i]).val());
+                }
+                else {
+                    if ($(Dxremarks[i]).val() == "") {
+                        var chk = $("#chkAll_1").is(':checked');
+                        if (!chk) {
+                            $(Dxremarks[i]).focus();
+                            $("#validDx_" + id).show();
+                        }
                     }
                 }
             }
@@ -623,19 +615,21 @@
         $("#hdnShadowQACptRemarks").val("");
         for (var i = 0; i < CptRemarks.length; i++) {
             var id = parseInt($(CptRemarks[i]).attr("id").split("_")[1]);
-            if ($(CptRemarks[i]).css("display") == "flex" && $(CptRemarks[i]).val() != "") {
-                $("#validCpt_" + id).hide();
-                if ($("#hdnShadowQACptRemarks").val() == "")
-                    $("#hdnShadowQACptRemarks").val(id + "^" + $(CptRemarks[i]).val());
-                else
-                    $("#hdnShadowQACptRemarks").val($("#hdnShadowQACptRemarks").val() + "|" + id + "^" + $(CptRemarks[i]).val());
-            }
-            else {
-                if ($(CptRemarks[i]).val() == "") {
-                    var chk = $("#chkAll_1").is(':checked');
-                    if (!chk) {
-                        $(CptRemarks[i]).focus();
-                        $("#validCpt_" + id).show();
+            if ($(CptRemarks[i]).css("display") == "flex") {
+                if ($(CptRemarks[i]).val() != "") {
+                    $("#validCpt_" + id).hide();
+                    if ($("#hdnShadowQACptRemarks").val() == "")
+                        $("#hdnShadowQACptRemarks").val(id + "^" + $(CptRemarks[i]).val());
+                    else
+                        $("#hdnShadowQACptRemarks").val($("#hdnShadowQACptRemarks").val() + "|" + id + "^" + $(CptRemarks[i]).val());
+                }
+                else {
+                    if ($(CptRemarks[i]).val() == "") {
+                        var chk = $("#chkAll_1").is(':checked');
+                        if (!chk) {
+                            $(CptRemarks[i]).focus();
+                            $("#validCpt_" + id).show();
+                        }
                     }
                 }
             }

@@ -66,6 +66,12 @@
             $("#ErrorType_" + id).css("pointer-events", "none");
             $("#ErrorTypeError_" + id).text('');
             $(".QACorrectionsComments").hide();
+            var ignoreDxs = $("#claim" + id + " [class*=ignore]");
+            for (var i = 0; i < ignoreDxs.length; i++) {
+                var id = $(ignoreDxs[i]).attr("id");
+                $("#" + id).removeClass("fa fa-times-circle fa-lg ignore reject");
+                $("#" + id).addClass("fa fa-times-circle fa-lg ignore");
+            }
         }
         else {
             $("[class*=AdjustAcceptReject_" + id +"]").removeClass('accept');
