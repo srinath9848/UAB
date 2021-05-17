@@ -263,8 +263,8 @@
                                                     </div>
                                                     <div class="input-group-append ControlHeight">
                                                         <span class="input-group-text ControlHeight AcceptRejectWidth AcceptRejectWidth_@tabIndex">
-                                                            &nbsp;<i id="Dx_@i" data="@tabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
-                                                            &nbsp;<i id="Dx_@i" data="@tabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
+                                                            &nbsp;<i id="Dx_@j" data="@tabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                                            &nbsp;<i id="Dx_@j" data="@tabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -272,7 +272,7 @@
                                                 <div title="" class="col-md-3 input-group" style="@Show">
                                                     <input type="text" class="form-control QARemarks ControlHeight" value="@dictQADxRemarks?.ElementAt(i).Value" />
                                                 </div>
-                                                <div class="col-md-3 input-group QADxRevised_@i Dx_@i" style="display: none">
+                                                <div class="col-md-3 input-group QADxRevised_@tabIndex Dx_@j" style="display:none;">
                                                     <div class="input-group-prepend ControlHeight">
                                                         <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                                                     </div>
@@ -286,8 +286,9 @@
                                                     }
                                                     <input type="text" id="txtDx_@j" class="form-control txtDx ControlHeight" autocomplete="off" tabindex="@j" placeholder="Code" value="@QaDxVal" />
                                                 </div>
-                                                <div class="col-md-3 input-group QADxRevised_@i Dx_@i" style="display: none">
-                                                    <input type="text" id="DxRemarks_@j" class="form-control ControlHeight DxRemarks_@j Dx_@j" style="display:flex;" />
+                                                <div class="col-md-3 input-group QADxRevised_@tabIndex Dx_@j" style="display:none;">
+                                                    <input type="text" id="DxRemarks_@j" class="form-control ControlHeight DxRemarks_@j QADxRevised_@tabIndex Dx_@j" style="display:none;" />
+                                                    <span id="validDx_@j" class="text-danger txtdanger" style="display:none">*</span>
                                                 </div>
                                             </div>
 
@@ -310,15 +311,15 @@
                                             </div>
                                         </div>
                                         <div title="" class="col-md-3 input-group" style="display:flex"></div>
-                                        <div class="col-md-3 newlyDxCpt_@tabIndex input-group Dx_@totalDxCount" style="display:none">
+                                        <div class="col-md-3 newlyDxCpt_@tabIndex QADxRevised_@tabIndex input-group Dx_@totalDxCount" style="display:none">
                                             <div class="input-group-prepend ControlHeight">
                                                 <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@totalDxCount</span>
                                             </div>
                                             <input type="text" id="txtDx_@totalDxCount" onfocusout="DxFunction('txtDx_@totalDxCount')" class="form-control ControlHeight txtDx" tabindex="@totalDxCount" autofocus="autofocus" autocomplete="off" placeholder="Code" />
                                         </div>
                                         <div class="col-md-3 input-group Dx_@totalDxCount" style="display:none">
-                                            <input type="text" id="DxRemarks_@totalDxCount" class="form-control QADxRevised_@i ControlHeight DxRemarks_@totalDxCount Dx_@totalDxCount" onchange="removevalid('Dx_@i')" style="display:flex;" />
-                                            <span id="validDx_@i" class="text-danger txtdanger" style="display:none">*</span>
+                                            <input type="text" id="DxRemarks_@totalDxCount" class="form-control QADxRevised_@tabIndex ControlHeight DxRemarks_@totalDxCount Dx_@totalDxCount" onchange="removevalid('Dx_@i')" style="display:flex;" />
+                                            <span id="validDx_@totalDxCount" class="text-danger txtdanger" style="display:none">*</span>
                                         </div>
                                     </div>
                                 </div>
@@ -489,7 +490,7 @@
                                                 <div title="" class="col-md-3 input-group" style="@Show">
                                                     <input type="text" class="form-control QARemarks ControlHeight" value="@dictQACptRemarks?.ElementAt(i).Value" />
                                                 </div>
-                                                <div class="col-md-3 CptlessWidth QACptRevised_@j input-group Cpt_@j" style="display:none">
+                                                <div class="col-md-3 CptlessWidth QACptRevised_@tabIndex input-group Cpt_@j" style="display:none">
                                                     <div class="input-group-prepend ControlHeight">
                                                         <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                                                     </div>
@@ -510,8 +511,9 @@
                                                     <input type="text" id="txtQty_@j" class="form-control ControlHeight" autocomplete="off" placeholder="1" value="@qaQty1" />
                                                     <input type="text" id="txtLinks_@j" class="form-control ControlHeight" autocomplete="off" placeholder="Link All" value="@linkAllVal" />
                                                 </div>
-                                                <div class="col-md-3 input-group Cpt_@j" style="display:none">
-                                                    <input type="text" id="CptRemarks_@j" class="form-control ControlHeight QACptRevised_@j CptRemarks_@j Cpt_@j" />
+                                                <div class="col-md-3 QACptRevised_@tabIndex input-group Cpt_@j" style="display:none">
+                                                    <input type="text" id="CptRemarks_@j" class="form-control ControlHeight CptRemarks_@j Cpt_@j" />
+                                                    <span id="validCpt_@j" class="text-danger txtdanger" style="display:none">*</span>
                                                 </div>
                                             </div>
                                             j = j + 1;
@@ -534,7 +536,7 @@
                                                 </span>
                                             </div>
                                         </div><div title="" class="col-md-3 input-group" style="display:flex"></div>
-                                        <div class="col-md-3 newlyDxCpt_@tabIndex CptlessWidth input-group Cpt_@totalCptCount" style="display:none">
+                                        <div class="col-md-3 QACptRevised_@tabIndex newlyDxCpt_@tabIndex CptlessWidth input-group Cpt_@totalCptCount" style="display:none">
                                             <div class="input-group-prepend ControlHeight">
                                                 <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@totalCptCount</span>
                                             </div>
@@ -543,9 +545,9 @@
                                             <input type="text" style="max-width:23px;" class="form-control ControlHeight" id="txtQty_@totalCptCount" autocomplete="off" placeholder="1" value="" />
                                             <input type="text" class="form-control ControlHeight" id="txtLinks_@totalCptCount" autocomplete="off" placeholder="Link All" onfocusout="CptFunction('txtLinks_@totalCptCount')" />
                                         </div>
-                                        <div class="col-md-3 input-group Cpt_@totalCptCount" id="CptRemarks_@i" style="display:none">
-                                            <input type="text" id="CptRemarks_@totalCptCount" class="form-control QACptRevised_@i ControlHeight CptRemarks_@totalCptCount Cpt_@i" style="display:none" />
-                                            <span id="validCpt_@i" class="text-danger txtdanger" style="display:none">*</span>
+                                        <div class="col-md-3 QACptRevised_@tabIndex input-group Cpt_@totalCptCount" id="CptRemarks_@i" style="display:none">
+                                            <input type="text" id="CptRemarks_@totalCptCount" class="form-control ControlHeight CptRemarks_@totalCptCount Cpt_@totalCptCount" style="display:none" />
+                                            <span id="validCpt_@totalCptCount" class="text-danger txtdanger" style="display:none">*</span>
                                         </div>
                                     </div>
                                 </div>
@@ -642,8 +644,8 @@
                                                                 <a href="@Url.Action("GetCodingBlockedCharts","UAB",new {Role=Roles.ShadowQA, ChartType= "Block", ProjectID=@Model.FirstOrDefault().ProjectID, ProjectName=Model.FirstOrDefault().ProjectName,ccid=Model.FirstOrDefault().CodingDTO.ClinicalCaseID,plusorminus="Next"})" class="btn btn-success Available" id="btnNext" style="display:none">Next</a>
                                                                 <button id="btnBlock" type="button" class="btn btn-danger" onclick="Block()">Block</button>
                                                                 <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger" onclick="BlockHistory()">Block History</button>
-                                                                <button type="submit" id="btnsubmit" class="btn btn-success">Save</button>
-                                                                <button id="SubmitAndGetNext" name="SubmitAndGetNext" type="submit" value="SubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
+                                                                <button type="button" id="btnsubmit" class="btn btn-success">Save</button>
+                                                                <button id="SubmitAndGetNext" name="SubmitAndGetNext" type="button" value="SubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
                                                             </div>
                                                         </div>
                                                     </div>
