@@ -29,7 +29,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card">Aging Break down Report</h5>
-                    <div id="modalContent"></div>
+                    <div id="modalContent1"></div>
                     <div class="table-responsive col-12">
                         <table id="Reports" class="table table-striped table-bordered">
                             @if (Model.Tables[0].Rows.Count != 0)
@@ -83,7 +83,14 @@
                                         <tr class="body">
                                             @for (int j = 0; j < Model.Tables[1].Columns.Count; j++)
                                             {
-                                                <td>@Model.Tables[1].Rows[i][j]</td>
+                                                @if (@Model.Tables[1].Columns[j].ColumnName == "Blocked")
+                                                {
+                                                    <td onclick="ClickOnCell('@Model.Tables[1].Columns[j].ColumnName','@Model.Tables[1].Rows[i][0]')">@Model.Tables[1].Rows[i][j]</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@Model.Tables[1].Rows[i][j]</td>
+                                                }
                                             }
                                         </tr>
                                     }
@@ -104,14 +111,6 @@
 </div>
 
 <script type="text/javascript">
-    //$('#Reports').DataTable();
-
-    //$('#Reports').dataTable({
-    //    "oLanguage": {
-    //        "sLengthMenu": "Show Entries _MENU_ "
-    //    },
-    //    "bDestroy": true
-    //});
 
     var reportsArray = [];
     var reportscolor = ['', 'odd', 'even', 'odd', 'even'];
@@ -139,5 +138,29 @@
         sum = 0;
     }
     $("#total").text(total);
+
+    $(document).ready(function () {
+        ClickOnCell = function (p1,p2) {
+                 $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetAgingReportDetails", "Home")",
+                data: {
+                    "ColumnName": p1,
+                    "ProjectName":p2
+                },
+                success: function (response) {
+                    $("#modalContent1").html(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        };
+    ModalClose1 = function () {
+        $("#modalContent").html('');
+        }
+    });
+
+
 </script>
 
