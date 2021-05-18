@@ -22,6 +22,10 @@
     .alert {
         padding: 0.5rem 1.25rem;
     }
+    .table thead th {
+        vertical-align: top !important;
+        border-bottom: 2px solid #dee2e6;
+    }
 </style>
 <div class="container-fluid">
     <div class="row">
@@ -38,7 +42,26 @@
                                     <tr>
                                         @foreach (DataColumn clmn in Model.Tables[0].Columns)
                                         {
-                                            <th style="font-weight:900;">@clmn.ColumnName</th>
+                                            if (clmn.ColumnName == "0-3 Days")
+                                            {
+                                                <th style="font-weight:900;max-width:60px;">@clmn.ColumnName</th>
+                                            }
+                                            else if (clmn.ColumnName == "4-5 Days")
+                                            {
+                                                <th style="font-weight:900;max-width:60px;">@clmn.ColumnName</th>
+                                            }
+                                            else if (clmn.ColumnName == "6-7 Days")
+                                            {
+                                                <th style="font-weight:900;max-width:60px;">@clmn.ColumnName</th>
+                                            }
+                                            else if (clmn.ColumnName == "8+ Days")
+                                            {
+                                                <th style="font-weight:900;max-width:60px;">@clmn.ColumnName</th>
+                                            }
+                                            else
+                                            {
+                                                <th style="font-weight:900;">@clmn.ColumnName</th>
+                                            }
                                         }
                                     </tr>
                                 </thead>
@@ -73,7 +96,46 @@
                                     <tr>
                                         @foreach (DataColumn clmn in Model.Tables[1].Columns)
                                         {
-                                            <th style="font-weight:900;">@clmn.ColumnName</th>
+                                            if (clmn.ColumnName == "Not Ready For Coding")
+                                            {
+                                                <th style="font-weight:900;max-width:100px;">@clmn.ColumnName</th>
+                                            }
+                                            else if (clmn.ColumnName == "Ready For Coding")
+                                            {
+                                                <th style="font-weight:900;max-width:100px;">@clmn.ColumnName</th>
+                                            }
+                                            else if (clmn.ColumnName == "Ready For Posting")
+                                            {
+                                                <th style="font-weight:900;max-width:100px;">@clmn.ColumnName</th>
+                                            }
+                                            else if (clmn.ColumnName == "In ShadowQA")
+                                            {
+                                                <th style="font-weight:900;max-width:100px;">@clmn.ColumnName</th>
+                                            }
+                                            else if (clmn.ColumnName == "In QA")
+                                            {
+                                                <th style="font-weight:900;max-width:100px;">@clmn.ColumnName</th>
+                                            }
+                                            else if (clmn.ColumnName == "In Coding")
+                                            {
+                                                <th style="font-weight:900;max-width:100px;">@clmn.ColumnName</th>
+                                            }
+                                            else if (clmn.ColumnName == "Due")
+                                            {
+                                                <th style="font-weight:900;max-width:100px;">@clmn.ColumnName</th>
+                                            }
+                                            else if (clmn.ColumnName == "Total")
+                                            {
+                                                <th style="font-weight:900;max-width:100px;">@clmn.ColumnName</th>
+                                            }
+                                            else if (clmn.ColumnName == "Blocked")
+                                            {
+                                                <th style="font-weight:900;max-width:100px;">@clmn.ColumnName</th>
+                                            }
+                                            else
+                                            {
+                                                <th style="font-weight:900;">@clmn.ColumnName</th>
+                                            }
                                         }
                                     </tr>
                                 </thead>
