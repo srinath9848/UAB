@@ -75,7 +75,7 @@ namespace UAB.Controllers
             {
                 lst = clinicalcaseOperations.DisplayBlockCharts(Role, ProjectID);
             }
-            if (Role == Roles.ShadowQA.ToString())
+           else  if (Role == Roles.ShadowQA.ToString())
             {
                 lst = clinicalcaseOperations.DisplayBlockCharts(Role, ProjectID);
             }
