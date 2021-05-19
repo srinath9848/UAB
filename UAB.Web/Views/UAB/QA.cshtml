@@ -259,37 +259,38 @@
                     var id = parseInt($(DxNewClaimremarks[i]).attr("id").split("_")[2]);
                     if ($(DxNewClaimremarks[i]).css("display") == "flex") {
                         if ($(DxNewClaimremarks[i]).val() != "") {
-                            $("#validDxRemarksClaim_" + tabid + "_" + id).hide();
-                            if ($("#hdnQADxCodes" + tabid).val() == "") {
-                                if ($("#txtDx" + tabid + "Claim_" + index).val() != "") {
+                            if ($("#hdnQADxRemarks" + tabid).val() == "")
+                                $("#hdnQADxRemarks" + tabid).val(id + "^" + $(DxNewClaimremarks[i]).val());
+                            else
+                                $("#hdnQADxRemarks" + tabid).val($("#hdnQADxRemarks" + tabid).val() + "|" + id + "^" + $(DxNewClaimremarks[i]).val());
+                            if ($("#txtDx" + tabid + "Claim_" + index).val() != "") {
+                                $("#validDxRemarksClaim_" + tabid + "_" + id).hide();
+
+                                if ($("#hdnQADxCodes" + tabid).val() == "") {
                                     $("#hdnQADxCodes" + tabid).val(id + "^" + $("#txtDx" + tabid + "Claim_" + index).val());
                                     $("#hdnQAErrorTypeID" + tabid).val(ErrorTypeID);
                                 }
-                            }
-                            else {
-                                if ($("#txtDx" + tabid + "Claim_" + index).val() != "") {
+                                else {
                                     $("#hdnQADxCodes" + tabid).val($("#hdnQADxCodes" + tabid).val() + "|" + id + "^" + $("#txtDx" + tabid + "Claim_" + index).val());
                                     $("#hdnQAErrorTypeID" + tabid).val(ErrorTypeID);
                                 }
                             }
-                            if ($(DxNewClaimremarks[i]).val() != "") {
-                                if ($("#hdnQADxRemarks" + tabid).val() == "")
-                                    $("#hdnQADxRemarks" + tabid).val(id + "^" + $(DxNewClaimremarks[i]).val());
-                                else
-                                    $("#hdnQADxRemarks" + tabid).val($("#hdnQADxRemarks" + tabid).val() + "|" + id + "^" + $(DxNewClaimremarks[i]).val());
+                            else {
+                                    var chk = $("#chkAll_" + tabid).is(':checked');
+                                    if (!chk) {
+                                        $("#txtDx" + tabid + "Claim_" + index).focus();
+                                        $("#validDxRemarksClaim_" + tabid + "_" + id).show();
+                                    }
                             }
                         }
                         else {
-                            if ($(DxNewClaimremarks[i]).val() == "") {
                                 var chk = $("#chkAll_" + tabid).is(':checked');
                                 if (!chk) {
                                     $(DxNewClaimremarks[i]).focus();
                                     $("#validDxRemarksClaim_" + tabid + "_" + id).show();
                                 }
-                            }
                         }
                     }
-
                     index = index + parseInt(1);
                 }
 
@@ -305,36 +306,45 @@
 
                     if ($(CptNewClaimRemarks[i]).css("display") == "flex") {
                         if ($(CptNewClaimRemarks[i]).val() != "") {
-                            if ($("#hdnQACptCodes" + tabid).val() == "") {
-                                if ($("#txt" + tabid + "Cpt_" + index).val() != "") {
+                            if ($("#hdnQACptRemarks" + tabid).val() == "")
+                                $("#hdnQACptRemarks" + tabid).val(id + "^" + $(CptNewClaimRemarks[i]).val());
+                            else
+                                $("#hdnQACptRemarks" + tabid).val($("#hdnQACptRemarks" + tabid).val() + "|" + id + "^" + $(CptNewClaimRemarks[i]).val());
+
+                            if ($("#txt" + tabid + "Cpt_" + index).val() != "" && $("#txt" + tabid + "Cpt_" + index).val() != undefined) {
+                                $("#validCptRemarksClaim_" + tabid + "_" + id).hide();
+
+                                if ($("#hdnQACptCodes" + tabid).val() == "") {
                                     var mod = $("#txt" + tabid + "mod_" + index).val() != "" ? $("#txt" + tabid + "mod_" + index).val() : null;
                                     var qty = $("#txt" + tabid + "qty_" + index).val() != "" ? $("#txt" + tabid + "qty_" + index).val() : null;
                                     var links = $("#txt" + tabid + "links_" + index).val() != "" ? $("#txt" + tabid + "links_" + index).val() : null;
                                     $("#hdnQACptCodes" + tabid).val(id + "^" + $("#txt" + tabid + "Cpt_" + index).val() + "^" + mod + "^" + qty + "^" + links);
                                     $("#hdnQAErrorTypeID" + tabid).val(ErrorTypeID);
                                 }
+                                else {
+                                        var mod = $("#txt" + tabid + "mod_" + index).val() != "" ? $("#txt" + tabid + "mod_" + index).val() : null;
+                                        var qty = $("#txt" + tabid + "qty_" + index).val() != "" ? $("#txt" + tabid + "qty_" + index).val() : null;
+                                        var links = $("#txt" + tabid + "links_" + index).val() != "" ? $("#txt" + tabid + "links_" + index).val() : null;
+                                        $("#hdnQACptCodes" + tabid).val($("#hdnQACptCodes" + tabid).val() + "|" + id + "^" + $("#txt" + tabid + "Cpt_" + index).val() + "^" + mod + "^" + qty + "^" + links);
+                                        $("#hdnQAErrorTypeID" + tabid).val(ErrorTypeID);
+                                }
                             }
                             else {
-                                if ($("#txt" + tabid + "Cpt_" + index).val() != undefined && $("#txt" + tabid + "Cpt_" + index).val() != "") {
-                                    var mod = $("#txt" + tabid + "mod_" + index).val() != "" ? $("#txt" + tabid + "mod_" + index).val() : null;
-                                    var qty = $("#txt" + tabid + "qty_" + index).val() != "" ? $("#txt" + tabid + "qty_" + index).val() : null;
-                                    var links = $("#txt" + tabid + "links_" + index).val() != "" ? $("#txt" + tabid + "links_" + index).val() : null;
-                                    $("#hdnQACptCodes" + tabid).val($("#hdnQACptCodes" + tabid).val() + "|" + id + "^" + $("#txt" + tabid + "Cpt_" + index).val() + "^" + mod + "^" + qty + "^" + links);
-                                    $("#hdnQAErrorTypeID" + tabid).val(ErrorTypeID);
+                                var chk = $("#chkAll_" + tabid).is(':checked');
+                                if (!chk) {
+                                    $("#txt" + tabid + "Cpt_" + index).focus();
+                                    $("#validCptRemarksClaim_" + tabid + "_" + id).show();
                                 }
                             }
 
-                            $("#validCptRemarksClaim_" + tabid + "_" + id).hide();
-                            if ($("#hdnQACptRemarks" + tabid).val() == "")
-                                $("#hdnQACptRemarks" + tabid).val(id + "^" + $(CptNewClaimRemarks[i]).val());
-                            else
-                                $("#hdnQACptRemarks" + tabid).val($("#hdnQACptRemarks" + tabid).val() + "|" + id + "^" + $(CptNewClaimRemarks[i]).val());
-                        } else {
+                        }
+                        else {
                             var chk = $("#chkAll_" + tabid).is(':checked');
                             if (!chk) {
                                 $(CptNewClaimRemarks[i]).focus();
                                 $("#validCptRemarksClaim_" + tabid + "_" + id).show();
                             }
+
                         }
                     }
                     index = index + parseInt(1);
@@ -516,13 +526,13 @@
            else {
                 var tabid = id.split("tabIndex_")[1].split("_ClaimId_")[0];
                 var Dxtab = $("[id*=DxRemarkss_" + tabid + "_]").last().attr('id');
-                if (Dxtab != "") {
-                    var id = Dxtab.split('_')[2];
+                var id = Dxtab.split('_')[2];
+                if ($("#" + Dxtab).val() == "" && $("#txtDx" + tabid + "Claim_" + id).val() == "") {
                     $("#validDxRemarksClaim_" + tabid+"_" + id).hide();
                 }
                 var Cpttab = $("[id*=CptRemarkss_" + tabid + "_]").last().attr('id');
-                if (Cpttab != "") {
-                    var id = Cpttab.split('_')[2];
+                var id = Cpttab.split('_')[2];
+                if ($("#" + Cpttab).val() == "" && $("#txt" + tabid + "Cpt_" + id).val() == "") {
                     $("#validCptRemarksClaim_" + tabid + "_" + id).hide();
                 }
             }
@@ -683,15 +693,15 @@
         var seqno = parseInt($("#" + txtCpt_0).val()) + parseInt(1);
         if (claimid == 2) {
             if (txtCpt_0.split("_")[1] !== undefined) {
-                var id1 = parseInt(id) - parseInt(1);
-                var val1 = $("#txt2Cpt_" + id1).val();
-                if (val1 !== "") {
+                var currId = parseInt(id) - parseInt(1);
+                var val = $("#txt2Cpt_" + currId).val();
+                if (val !== "") {
                     if ($.inArray(val1, cptArray2) == -1) {
                         //if (val1 !== undefined) {
                             var txtLinks = "'" + "txt" + claimid + "links_" + seqno + "_" + parseInt(2) + "'";
                             var deleteCpt = "'" + "Div2CptRow_" + id + "_" + claimid + "'";
-                        $("#DivCpt_2").append('<div id="Div2CptRow_' + id + "_" + claimid + '" class="form-group row"><label class="col-md-3 lessWidth m-t-15"></label><div class="col-md-3 CptlessWidth input-group" style="visibility: hidden;"><input type="hidden" id=' + txtLinks + ' value=' + seqno + ' /><div class="input-group-prepend ControlHeight"><span class="input-group-text AdjustSerialNumber" id="basic-addon1"></span></div><input type="text" maxlength="5" style="min-width: 50px; pointer-events: none; background-color: rgb(233, 236, 239);" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Code" value=""><input type="text" style="min-width: 42px; pointer-events: none; background-color: rgb(233, 236, 239);" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Mod" value=""><input type="text" style="max-width: 23px; pointer-events: none; background-color: rgb(233, 236, 239);" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="1" value=""><input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="" style="pointer-events: none; background-color: rgb(233, 236, 239);"><div class="input-group-append ControlHeight"><span class="input-group-text AcceptRejectWidth"></span></div></div><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text cpt2index AdjustSerialNumber" id="basic-addon1">' + seqno + '</span></div><input type = "text" placeholder = "Code" style="max-width:55px;" maxlength="5" class= "form-control CoderDetails Cptclaim_' + claimid + '" id = "txt2Cpt_' + id + '" /><input type="text" style="max-width:50px;" class="form-control CoderDetails Cptclaim_' + claimid + '" placeholder="Mod" id="txt2mod_' + id + '"/><input type="text" style="max-width:30px;" class="form-control CoderDetails Cptclaim_' + claimid + '" placeholder="1" value="1" id="txt2qty_' + id + '"/><input type="text" class="form-control CoderDetails Cptclaim_' + claimid + '" placeholder="Link All" onfocusout="CptClaims(' + txtLinks + ')" id="txt2links_' + id + '"/></div><div class="col-md-3 input-group"><input type="text" style="display: flex;" id="CptRemarkss_2_' + seqno + '" class="form-control ControlHeight" /><span id="validCptRemarksClaim_2_'+seqno+'" class="text-danger txtdanger" style="display:none">*</span></div></div>');
-                            $("#txt2links_" + id1).removeAttr("onfocusout", "");
+                            $("#DivCpt_2").append('<div id="Div2CptRow_' + id + "_" + claimid + '" class="form-group row"><label class="col-md-3 lessWidth m-t-15"></label><div class="col-md-3 CptlessWidth input-group" style="visibility: hidden;"><input type="hidden" id=' + txtLinks + ' value=' + seqno + ' /><div class="input-group-prepend ControlHeight"><span class="input-group-text AdjustSerialNumber" id="basic-addon1"></span></div><input type="text" maxlength="5" style="min-width: 50px; pointer-events: none; background-color: rgb(233, 236, 239);" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Code" value=""><input type="text" style="min-width: 42px; pointer-events: none; background-color: rgb(233, 236, 239);" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Mod" value=""><input type="text" style="max-width: 23px; pointer-events: none; background-color: rgb(233, 236, 239);" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="1" value=""><input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="" style="pointer-events: none; background-color: rgb(233, 236, 239);"><div class="input-group-append ControlHeight"><span class="input-group-text AcceptRejectWidth"></span></div></div><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text cpt2index AdjustSerialNumber" id="basic-addon1">' + seqno + '</span></div><input type = "text" placeholder = "Code" style="max-width:55px;" maxlength="5" class= "form-control CoderDetails Cptclaim_' + claimid + '" id = "txt2Cpt_' + seqno + '" /><input type="text" style="max-width:50px;" class="form-control CoderDetails Cptclaim_' + claimid + '" placeholder="Mod" id="txt2mod_' + seqno + '"/><input type="text" style="max-width:30px;" class="form-control CoderDetails Cptclaim_' + claimid + '" placeholder="1" value="1" id="txt2qty_' + seqno + '"/><input type="text" class="form-control CoderDetails Cptclaim_' + claimid + '" placeholder="Link All" onfocusout="CptClaims(' + txtLinks + ')" id="txt2links_' + seqno + '"/></div><div class="col-md-3 input-group"><input type="text" style="display: flex;" id="CptRemarkss_2_' + seqno + '" class="form-control ControlHeight" /><span id="validCptRemarksClaim_2_'+seqno+'" class="text-danger txtdanger" style="display:none">*</span></div></div>');
+                            $("#txt2links_" + currId).removeAttr("onfocusout", "");
                             $("#txt2links_1").removeAttr("onfocusout", "");
                             $("#txt2Cpt_" + seqno).focus();
                         //}
