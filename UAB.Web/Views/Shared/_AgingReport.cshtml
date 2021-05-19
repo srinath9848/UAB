@@ -22,10 +22,12 @@
     .alert {
         padding: 0.5rem 1.25rem;
     }
+
     .table thead th {
         vertical-align: top !important;
         border-bottom: 2px solid #dee2e6;
     }
+
     td, th {
         text-align: center;
     }
@@ -150,7 +152,10 @@
                                             {
                                                 @if (@Model.Tables[1].Columns[j].ColumnName == "Blocked")
                                                 {
-                                                    <td onclick="ClickOnCell('@Model.Tables[1].Columns[j].ColumnName','@Model.Tables[1].Rows[i][0]')">@Model.Tables[1].Rows[i][j]</td>
+                                                    <td style="cursor:pointer;text-decoration:underline;color:cornflowerblue;"
+                                                        onclick="ClickOnCell('@Model.Tables[1].Columns[j].ColumnName','@Model.Tables[1].Rows[i][0]')">
+                                                        @Model.Tables[1].Rows[i][j]
+                                                    </td>
                                                 }
                                                 else
                                                 {
