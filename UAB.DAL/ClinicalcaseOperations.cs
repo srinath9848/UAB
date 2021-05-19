@@ -1448,10 +1448,16 @@ namespace UAB.DAL
                     {
                         chartSummaryDTO = new ChartSummaryDTO();
                         chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
+                        chartSummaryDTO.ProviderText = Convert.ToString(reader["Provider"]);
+                        chartSummaryDTO.Status = Convert.ToString(reader["Status"]);
                         chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
                         chartSummaryDTO.CodingDTO.ClinicalCaseID = Convert.ToInt32(reader["ClinicalCaseId"]);
                         var dos = Convert.ToDateTime(reader["DateOfService"]);
                         chartSummaryDTO.CodingDTO.DateOfService = dos.ToString("MM/dd/yyyy");
+                        chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
+                        chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
+                        chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate();
+                        chartSummaryDTO.Blockedbyuser= Convert.ToString(reader["Name"]);
                         lst.Add(chartSummaryDTO);
                     }
                 }
@@ -1474,11 +1480,14 @@ namespace UAB.DAL
                 if (flag =="Unblock")
                 {
                     var existingblockchart = context.WorkItem.Where(a => a.ClinicalCaseId == cid).FirstOrDefault();
+                    var existingblockhist  = context.BlockHistory.Where(a => a.ClinicalCaseId == cid).ToList();
 
                     if (existingblockchart != null)
                     {
                         existingblockchart.IsBlocked = 0;
                         context.Entry(existingblockchart).State = EntityState.Modified;
+                        if (existingblockhist.Count!=0)
+                        context.BlockHistory.RemoveRange(existingblockhist);
                     }
                 }
                
@@ -4112,6 +4121,13 @@ namespace UAB.DAL
                     cnn.Open();
                     cmm.ExecuteNonQuery();
                 }
+            }
+        }
+        public string projectname(int pid)
+        {
+            using (var context = new UABContext())
+            {
+                return context.Project.Where(x => x.ProjectId == pid).Select(x => x.Name).FirstOrDefault();
             }
         }
 

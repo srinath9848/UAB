@@ -20,8 +20,9 @@
 </style>
 <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
     <div class="modal-dialog">
-        <div class="modal-content" style="width:800px; margin-left:-100px;">
-            <div class="modal-header">
+
+        <div class="modal-content" style="width: 1100px;max-height: 800px;margin-left: -200px;">
+            <div class="modal-header" style="background-color:teal;color: white;">
                 <h5 class="modal-title" id="exampleModalLongTitle">Aging Chart Report Details</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ModalClose1()">
                     <span aria-hidden="true">&times;</span>
@@ -42,7 +43,12 @@
                             <th style="width: 250px; font-weight:900;">Name</th>
                             <th style="width: 250px; font-weight:900;">MRN</th>
                             <th style="width: 250px; font-weight:900;">DOS</th>
-                            <th style="width: 250px; font-weight:900;">Manager Response</th>
+                            <th style="width: 250px; font-weight:900;">Provider</th>
+                            <th style="width: 250px; font-weight:900;">Category</th>
+                            <th style="width: 250px; font-weight:900;">Remarks</th>
+                            <th style="width: 150px; font-weight:900;">Blocked On</th>
+                            <th style="width: 150px; font-weight:900;">Blocked By</th>
+                            <th style="width: 250px; font-weight:900;">Block Response</th>
                             <th style="width: 320px; font-weight:900;">Action</th>
                         </tr>
                     </thead>
@@ -53,6 +59,11 @@
                                 <td>@item.CodingDTO.Name</td>
                                 <td>@item.CodingDTO.PatientMRN</td>
                                 <td>@item.CodingDTO.DateOfService</td>
+                                <td>@item.ProviderText</td>
+                                <td>@item.BlockCategory</td>
+                                <td>@item.BlockRemarks</td>
+                                <td>@item.BlockedDate.ToString("MM/dd/yyyy")</td>
+                                <td>@item.Blockedbyuser</td>
                                 <td>
                                     @{
                                         int str = item.CodingDTO.ClinicalCaseID;
@@ -61,8 +72,7 @@
 
                                 </td>
                                 <td>
-                                    <button type="button" id="btn1" style="cursor: pointer" class="btn btn-sm btn-success" onclick="SaveOrUnblock('@item.CodingDTO.ClinicalCaseID','Save')">Save</button>
-                                    <button type="button" id="btn2" style="cursor: pointer" class="btn btn-sm btn-danger" onclick="SaveOrUnblock('@item.CodingDTO.ClinicalCaseID','Unblock')">Unblock</button>
+                                    <button type="button" id="btn1" style="cursor: pointer" class="btn btn-sm btn-success" onclick="SaveOrUnblock('@item.CodingDTO.ClinicalCaseID','Unblock')">Unblock</button>
                                 </td>
                             </tr>
                         }
@@ -107,7 +117,6 @@
                 });
             } else {
                 $("#btn1").attr('title', 'Enter response comments');
-                $("#btn2").attr('title', 'Enter response comments');
             }
 
         };

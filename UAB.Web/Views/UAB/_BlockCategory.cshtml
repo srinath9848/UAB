@@ -31,13 +31,14 @@
             <div class="modal-body">
                 <input type="hidden" id="ccid" value="@ViewBag.ccid" />
                 <input type="hidden" id="statusid" value="@ViewBag.statusid" />
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <label>Block Category</label>
                     @Html.DropDownListFor(model => model.BlockCategoryId, new SelectList(@ViewBag.BlockCategories, "BlockCategoryId", "Name"), "--Select a Category--", new { @id = "categorydd", @class = "form-control CoderDetails" })
                     @Html.ValidationMessageFor(model => model.BlockCategoryId, null, new { @class = "text-danger" })
                 </div>
                 <br />
-                <div class="col-md-10">
+                <div class="col-md-12">
+                    <label>Comments</label>
                     @Html.TextAreaFor(model => model.Remarks, new { @id = "txtremarks", @placeholder = "Enter a Block Comments here", @class = "form-control CoderDetails", @autocomplete = "off" })
                     @Html.ValidationMessageFor(model => model.Remarks, null, new { @class = "text-danger" })
                 </div>
@@ -45,8 +46,8 @@
 
             <div id="assignerror" style="color:red"></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-info btn-fill" id="btnBlockClinicalCase" formnovalidate="formnovalidate" onclick="BlockClinicalcase()">Block</button>
-                <button type="button" class="btn btn-sm btn-danger btn-fill" onclick="ModalClose1()">Close</button>
+                <button type="button" class="btn btn-success Available" id="btnBlockClinicalCase" formnovalidate="formnovalidate" onclick="BlockClinicalcase()">Block</button>
+                <button type="button" class="btn btn-danger" onclick="ModalClose1()">Close</button>
             </div>
 
 
