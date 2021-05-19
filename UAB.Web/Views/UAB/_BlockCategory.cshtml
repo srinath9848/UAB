@@ -33,13 +33,13 @@
                 <input type="hidden" id="statusid" value="@ViewBag.statusid" />
                 <div class="col-md-12">
                     <label>Block Category</label>
-                    @Html.DropDownListFor(model => model.BlockCategoryId, new SelectList(@ViewBag.BlockCategories, "BlockCategoryId", "Name"), "--Select a Category--", new { @id = "categorydd", @class = "form-control CoderDetails" })
+                    @Html.DropDownListFor(model => model.BlockCategoryId, new SelectList(@ViewBag.BlockCategories, "BlockCategoryId", "Name"), "--Select a Category--", new { @id = "categorydd", @class = "form-control " })
                     @Html.ValidationMessageFor(model => model.BlockCategoryId, null, new { @class = "text-danger" })
                 </div>
                 <br />
                 <div class="col-md-12">
                     <label>Comments</label>
-                    @Html.TextAreaFor(model => model.Remarks, new { @id = "txtremarks", @placeholder = "Enter a Block Comments here", @class = "form-control CoderDetails", @autocomplete = "off" })
+                    @Html.TextAreaFor(model => model.Remarks, new { @id = "txtremarks", @placeholder = "Enter a Block Comments here", @class = "form-control ", @autocomplete = "off" })
                     @Html.ValidationMessageFor(model => model.Remarks, null, new { @class = "text-danger" })
                 </div>
             </div>
