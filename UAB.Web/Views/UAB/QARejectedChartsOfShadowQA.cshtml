@@ -223,7 +223,7 @@
                     $("#validDx_" + id).show();
                     if ($("#ErrorType_" + id).val() == "") {
                         $("#ErrorType_" + id).attr('readonly', false);
-                        $("#ErrorType_1").css("pointer-events", "auto");
+                        $("#ErrorType_" + id).css("pointer-events", "auto");
                         $("#ErrorTypeError_" + id).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
                     }
                 }
@@ -257,7 +257,7 @@
                     $("#validCpt_" + id).show();
                     if ($("#ErrorType_" + id).val() == "") {
                         $("#ErrorType_" + id).attr('readonly', false);
-                        $("#ErrorType_1").css("pointer-events", "auto");
+                        $("#ErrorType_" + id).css("pointer-events", "auto");
                         $("#ErrorTypeError_" + id).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
                     }
                 }
