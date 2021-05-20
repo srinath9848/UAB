@@ -418,11 +418,11 @@
                             }
                         }
                     }
-                    <input type="text" class="form-control QARemarks ControlHeight" id="@string.Format("txt{0}Cpt_{1}", Model.TabIndex,j)" autocomplete="off" placeholder="Code" value="@ShadowQaCptVal" />
+                    <input type="text" class="form-control QARemarks ControlHeight" style="min-width:48px;" id="@string.Format("txt{0}Cpt_{1}", Model.TabIndex,j)" autocomplete="off" placeholder="Code" value="@ShadowQaCptVal" />
                     <input type="text" class="form-control QARemarks ControlHeight" id="@string.Format("txt{0}mod_{1}", Model.TabIndex,j)" autocomplete="off" placeholder="Mod" value="@ShadowQaModVal" />
-                    <input type="text" id="@string.Format("txt{0}qty_{1}", Model.TabIndex,j)" class="form-control QARemarks ControlHeight" autocomplete="off" placeholder="Qty" value="@ShadowQaQtyVal" />
+                    <input type="text" id="@string.Format("txt{0}qty_{1}", Model.TabIndex,j)" class="form-control QARemarks ControlHeight" style="max-width:22px;" autocomplete="off" placeholder="Qty" value="@ShadowQaQtyVal" />
                     <input type="text" id="@string.Format("txt{0}links_{1}", Model.TabIndex,j)" class="form-control QARemarks ControlHeight" autocomplete="off" placeholder="Link All" value="@ShadowQaLinkAllVal" />
-                    <div class="input-group-append CoderCorrections">
+                    <div class="input-group-append CoderCorrections ControlHeight">
                         <span class="input-group-text AcceptRejectWidth">
                             &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,j)" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
                             &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,j)" class="@Rejected" aria-hidden="true"></i>
