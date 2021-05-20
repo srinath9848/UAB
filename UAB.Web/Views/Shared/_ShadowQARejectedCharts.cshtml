@@ -104,12 +104,12 @@
                                                 }
                                             </span>
                                         </div>
-                                        @{string Show = (!string.IsNullOrEmpty(Model.FirstOrDefault().ShadowQAProviderRemarks) || !string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "display:flex" : "visibility:hidden");}
+                                        @{string Show = (string.IsNullOrEmpty(Model.FirstOrDefault().ShadowQAProviderRemarks) ? "display:none" : "display:flex");}
 
                                         @{string Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                                         @{string Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-                                        <div class="input-group-append ControlHeight">
+                                        <div class="input-group-append ControlHeight" style="@Show">
                                             <span class="input-group-text AcceptRejectWidth AcceptRejectWidth_@tabIndex">
                                                 &nbsp;<i id="ProviderID_@tabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
                                                 &nbsp;<i id="ProviderID_@tabIndex" data="@tabIndex" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
@@ -120,7 +120,6 @@
                                     <div class="col-md-3 input-group CoderCorrections ProviderID" style="@Show">
                                         @Html.TextBoxFor(model => Model.FirstOrDefault().QAProviderRemarks, new { @class = "form-control ControlHeight" })
                                     </div>
-                                    @*@{Show = (string.IsNullOrEmpty(Model.FirstOrDefault().ShadowQAProviderRemarks) ? "display:none" : "display:flex");}*@
                                     <div class="col-md-3 input-group">
                                         @Html.DropDownListFor(model => Model.FirstOrDefault().ShadowQAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @style = @Show, @id = string.Format("ProviderID_{0}1", @tabIndex), @class = "form-control CoderDetails ControlHeight" })
                                     </div>
@@ -150,10 +149,12 @@
                                                 }
                                             </span>
                                         </div>
+                                        @{ Show = (string.IsNullOrEmpty(Model.FirstOrDefault().ShadowQAPayorRemarks) ? "display:none" : "display:flex");}
+
                                         @{ Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                                         @{ Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-                                        <div class="input-group-append ControlHeight">
+                                        <div class="input-group-append ControlHeight" style="@Show">
                                             <span class="input-group-text AcceptRejectWidth AcceptRejectWidth_@tabIndex">
                                                 &nbsp;<i id="PayorID_@tabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
                                                 &nbsp;<i id="PayorID_@tabIndex" data="@tabIndex" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
@@ -161,11 +162,9 @@
                                         </div>
                                     </div>
 
-                                    @{Show = (!string.IsNullOrEmpty(Model.FirstOrDefault().ShadowQAPayorRemarks) || !string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorRemarks) ? "display:flex" : "visibility:hidden");}
                                     <div class="col-md-3 input-group CoderCorrections PayorID" style="@Show">
                                         @Html.TextBoxFor(model => Model.FirstOrDefault().QAPayorRemarks, new { @class = "form-control ControlHeight", @data_val = "false" })
                                     </div>
-                                    @*@{Show = (string.IsNullOrEmpty(Model.FirstOrDefault().ShadowQAPayorRemarks) ? "display:none" : "display:flex");}*@
 
                                     <div class="col-md-3 input-group">
                                         @Html.DropDownListFor(model => Model.FirstOrDefault().ShadowQAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @style = @Show, @id = string.Format("PayorID_{0}1", @tabIndex), @class = "form-control QARevised ControlHeight" })
@@ -244,23 +243,19 @@
                                                         @{string finalVal = string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? Dx : dictQADxCodes?.ElementAt(i).Value;}
                                                         <input type="hidden" id="txtDxCode_@j" value="@finalVal" />
                                                     </div>
+                                                    @{ Show = (string.IsNullOrEmpty(dictShadowQADxRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex"); }
                                                     @{ Accepted = (string.IsNullOrEmpty(dictShadowQADxRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                                                     @{ Rejected = (string.IsNullOrEmpty(dictShadowQADxRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
-                                                    <div class="input-group-append ControlHeight">
+                                                    <div class="input-group-append ControlHeight" style="@Show">
                                                         <span class="input-group-text ControlHeight AcceptRejectWidth">
                                                             &nbsp;<i id="Dx_@j" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
                                                             &nbsp;<i id="Dx_@j" class="@Rejected" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
-                                                @{Show = (!string.IsNullOrEmpty(dictShadowQADxRemarks?.ElementAt(i).Value) ? "display:flex" : "visibility:hidden");}
-
-                                                @*@{ Show = (string.IsNullOrEmpty(dictQADxRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex"); }*@
                                                 <div title="" class="col-md-3 input-group">
                                                     <input type="text" id="DxRemarks_@j" style="@Show" class="form-control" value="@dictQADxRemarks?.ElementAt(i).Value" />
                                                 </div>
-                                                @*@{ Show = (string.IsNullOrEmpty(dictShadowQADxRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex"); }*@
-
                                                 <div class="col-md-3 input-group" style="@Show">
                                                     <div class="input-group-prepend ControlHeight">
                                                         <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
@@ -440,6 +435,8 @@
                                                             </div>
                                                         }
                                                         @{
+                                                            Show = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex");
+
                                                             Accepted = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
                                                             Rejected = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
                                                         }
@@ -468,6 +465,7 @@
                                                         linkAllVal1 = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
 
                                                     }
+                                                    Show = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex");
                                                     Accepted = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
                                                     Rejected = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
 
@@ -481,7 +479,7 @@
                                                         <input type="text" class="form-control QARemarks ControlHeight" style="color: green;" placeholder="Link All" value="@coderLinkAllVal" />
                                                         <input type="hidden" id="txtCPTCode_@j" value="@coderCptcodes[0]^@coderModVal^@qtyVal^@coderLinkAllVal" />
 
-                                                        <div class="input-group-append CoderCorrections ControlHeight" style="height: 45px;">
+                                                        <div class="input-group-append CoderCorrections ControlHeight" style="@Show; height: 45px;">
                                                             <span class="input-group-text AcceptRejectWidth">
                                                                 &nbsp;<i id="Cpt_@j" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
                                                                 &nbsp;<i id="Cpt_@j" class="@Rejected" aria-hidden="true"></i>
@@ -490,13 +488,9 @@
                                                     </div>
 
                                                 }
-                                                @{Show = (!string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "display:flex" : "visibility:hidden");}
-
-                                                @*@{ Show = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) || (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value)) ? "display:none" : "display:flex"); }*@
                                                 <div title="" class="col-md-3 input-group">
                                                     <input type="text" id="QACptRemarks_@j" style="@Show" class="form-control ControlHeight" value="@dictQACptRemarks?.ElementAt(i).Value" />
                                                 </div>
-                                                @*@{ Show = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex"); }*@
 
                                                 <div class="col-md-3 CptlessWidth input-group" style="@Show">
                                                     <div class="input-group-prepend ControlHeight">
@@ -567,21 +561,20 @@
                                                 }
                                             </span>
                                         </div>
+                                        @{ Show = (string.IsNullOrEmpty(Model.FirstOrDefault().ShadowQAProviderFeedbackRemarks) ? "display:none" : "display:flex");}
                                         @{Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                                         @{Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-                                        <div class="input-group-append ControlHeight">
+                                        <div class="input-group-append ControlHeight" style="@Show">
                                             <span class="input-group-text AcceptRejectWidth AcceptRejectWidth_@tabIndex">
                                                 &nbsp;<i id="Feedback_@tabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
                                                 &nbsp;<i id="Feedback_@tabIndex" data="@tabIndex" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
                                             </span>
                                         </div>
                                     </div>
-                                    @{Show = (!string.IsNullOrEmpty(Model.FirstOrDefault().ShadowQAProviderFeedbackRemarks) || !string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "display:flex" : "visibility:hidden");}
                                     <div class="col-md-3 input-group CoderCorrections Feedback" style="@Show">
                                         @Html.TextBoxFor(model => Model.FirstOrDefault().QAProviderFeedbackRemarks, new { @class = "form-control ControlHeight" })
                                     </div>
-                                    @*@{Show = (string.IsNullOrEmpty(Model.FirstOrDefault().ShadowQAProviderFeedbackRemarks) ? "display:none" : "display:flex");}*@
                                     <div class="col-md-3 input-group">
                                         @Html.DropDownListFor(model => Model.FirstOrDefault().ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @style = @Show, @id = string.Format("Feedback_{0}1", @tabIndex), @class = "form-control QARevised ControlHeight" })
                                     </div>

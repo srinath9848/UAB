@@ -188,16 +188,24 @@
                                     Dictionary<int, string> dictQADxCodes = Utility.GetQAOrShadowQADxCodes(Model.FirstOrDefault().QADx);
                                     Dictionary<int, string> dictQADxRemarks = Utility.GetQAOrShadowQADxRemarks(Model.FirstOrDefault().QADxRemarks);
 
+                                    Dictionary<int, string> dictShadowQADxCodes = Utility.GetQAOrShadowQADxRemarks(Model.FirstOrDefault().ShadowQADx);
+                                    Dictionary<int, string> dictShadowQADxRemarks = Utility.GetQAOrShadowQADxRemarks(Model.FirstOrDefault().ShadowQADxRemarks);
+
                                     dictQADxCodes = (dictQADxCodes == null) ? new Dictionary<int, string>() : dictQADxCodes;
                                     dictQADxRemarks = (dictQADxRemarks == null) ? new Dictionary<int, string>() : dictQADxRemarks;
 
-                                    int count = Math.Max(dictDxCodes.Count(), dictQADxCodes.Count());
+                                    dictShadowQADxCodes = (dictShadowQADxCodes == null) ? new Dictionary<int, string>() : dictShadowQADxCodes;
+                                    dictShadowQADxRemarks = (dictShadowQADxRemarks == null) ? new Dictionary<int, string>() : dictShadowQADxRemarks;
+
+                                    int count = Math.Max(dictDxCodes.Count(), Math.Max(dictQADxCodes.Count(), dictShadowQADxCodes.Count()));
 
                                     int totalDxCount = count + 1;
 
                                     Utility.AddEmptyRows(dictDxCodes, count, "NA");
                                     Utility.AddEmptyRows(dictQADxCodes, count, "");
                                     Utility.AddEmptyRows(dictQADxRemarks, count, "");
+                                    Utility.AddEmptyRows(dictShadowQADxCodes, count, "");
+                                    Utility.AddEmptyRows(dictShadowQADxRemarks, count, "");
 
                                 }
                                 <div id="DivDx">
@@ -216,17 +224,22 @@
                                                     <label class="col-md-3 lessWidth m-t-15"></label>
                                                 }
 
-                                                @{len = (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? 10 : 20); }
-                                                @{string Dx = (dictDxCodes.ElementAt(i).Value?.Length > len) ? dictDxCodes.ElementAt(i).Value.Substring(0, len) + ".." : dictDxCodes.ElementAt(i).Value;}
-                                                @{string QADx = (dictQADxCodes?.ElementAt(i).Value?.Length > len) ? "/" + dictQADxCodes?.ElementAt(i).Value.Substring(0, len) + ".." : "/" + dictQADxCodes?.ElementAt(i).Value;}
-                                                @{title = (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? dictDxCodes.ElementAt(i).Value + "/" + dictQADxCodes?.ElementAt(i).Value : dictDxCodes.ElementAt(i).Value);}
+                                                @{
+                                                    string ShadowQaDxVal = !string.IsNullOrEmpty(dictShadowQADxCodes?.ElementAt(i).Value) ? dictShadowQADxCodes?.ElementAt(i).Value : !string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? dictQADxCodes?.ElementAt(i).Value : dictDxCodes?.ElementAt(i).Value;
+                                                    if (dictShadowQADxCodes?.ElementAt(i).Value == "NA" && string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value))
+                                                    {
+                                                        ShadowQaDxVal = dictDxCodes.ElementAt(i).Value;
+                                                    }
+                                                }
+                                                @{string Dx = dictDxCodes.ElementAt(i).Value;}
+                                                @{string QADx = !string.IsNullOrEmpty(ShadowQaDxVal) ? "/" + ShadowQaDxVal : "/" + dictQADxCodes?.ElementAt(i).Value;}
 
                                                 @{
                                                     var DxClaimRemarks = string.Format("form-control DxClaim_{0}_Remarks_{1}", @Model.FirstOrDefault().TabIndex, @j);
                                                     var DxClaim = string.Format("DxClaim_{0}_{1}", @Model.FirstOrDefault().TabIndex, @j);
                                                 }
 
-                                                @if (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value))
+                                                @if (!string.IsNullOrEmpty(QADx))
                                                 {
                                                     <div title="@Dx@QADx" class="col-md-3 lessWidth input-group ControlWidth">
                                                         <div class="input-group-prepend ControlHeight">
@@ -234,31 +247,41 @@
                                                         </div>
                                                         <div class="form-control CoderDetails" style="line-height:2.2;overflow:hidden;height:32px;">
                                                             <span style="white-space:nowrap">
-                                                                <label class="Dx_@j" style="color: red;">@Dx</label>
-                                                                <label style="color:green">@QADx</label>
+                                                                @if ("/" + Dx == QADx)
+                                                                {
+                                                                    <label class="Dx_@j" style="color: green;">@Dx</label>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label class="Dx_@j" style="color: red;">@Dx</label>
+                                                                }
+                                                                @if ("/" + Dx != QADx)
+                                                                {
+                                                                    <label style="color:green">@QADx</label>
+                                                                }
                                                             </span>
                                                         </div>
                                                     </div>
                                                 }
-                                                else
-                                                {
-                                                    <div title="@Dx" class="col-md-3 lessWidth input-group ControlWidth">
-                                                        <div class="input-group-prepend ControlHeight">
-                                                            <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
+                                                @*else
+                                                    {
+                                                        <div title="@Dx" class="col-md-3 lessWidth input-group ControlWidth">
+                                                            <div class="input-group-prepend ControlHeight">
+                                                                <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
+                                                            </div>
+                                                            <div class="form-control CoderDetails" style="line-height:2.2;overflow:hidden;height:32px;">
+                                                                <span style="white-space:nowrap">
+                                                                    <label style="color: green;">@Dx</label>
+                                                                </span>
+                                                            </div>
                                                         </div>
-                                                        <div class="form-control CoderDetails" style="line-height:2.2;overflow:hidden;height:32px;">
-                                                            <span style="white-space:nowrap">
-                                                                <label style="color: green;">@Dx</label>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                }
+                                                    }*@
 
+                                                @{ string Dxremarks = !string.IsNullOrEmpty(dictShadowQADxRemarks?.ElementAt(i).Value) ? dictShadowQADxRemarks?.ElementAt(i).Value : dictQADxRemarks?.ElementAt(i).Value;
 
-
-                                                @{ Show = (string.IsNullOrEmpty(dictQADxRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
-                                                <div title="@dictQADxRemarks?.ElementAt(i).Value" class="col-md-2 input-group ControlHeight" style="@Show">
-                                                    <input type="text" class="form-control QARemarks" value="@dictQADxRemarks?.ElementAt(i).Value" />
+                                                    Show = (string.IsNullOrEmpty(Dxremarks) ? "visibility:hidden" : "display:flex"); }
+                                                <div title="@Dxremarks" class="col-md-2 input-group ControlHeight" style="@Show">
+                                                    <input type="text" class="form-control QARemarks" value="@Dxremarks" />
                                                 </div>
 
                                                 @Html.HiddenFor(model => dictDxCodes.ElementAt(i).Value, new { @class = "form-control", @id = string.Format("DxClaim_{0}_Coder_{1}", Model.FirstOrDefault().TabIndex, @j) })
@@ -285,21 +308,29 @@
                                     Dictionary<int, string> dictQACptCodes = Utility.GetQAOrShadowQACptCodes(Model.FirstOrDefault().QACPTCode);
                                     Dictionary<int, string> dictQACptRemarks = Utility.GetQAOrShadowQACptRemarks(Model.FirstOrDefault().QACPTCodeRemarks);
 
+                                    Dictionary<int, string> dictShadowQACptCodes = Utility.GetQAOrShadowQACptCodes(Model.FirstOrDefault().ShadowQACPTCode);
+                                    Dictionary<int, string> dictShadowQACptRemarks = Utility.GetQAOrShadowQADxRemarks(Model.FirstOrDefault().ShadowQACPTCodeRemarks);
+
                                     dictQACptCodes = (dictQACptCodes == null) ? new Dictionary<int, string>() : dictQACptCodes;
                                     dictQACptRemarks = (dictQACptRemarks == null) ? new Dictionary<int, string>() : dictQACptRemarks;
 
-                                    int Cptcount = Math.Max(dictCptCodes.Count(), dictQACptCodes.Count());
+                                    dictShadowQACptCodes = (dictShadowQACptCodes == null) ? new Dictionary<int, string>() : dictShadowQACptCodes;
+                                    dictShadowQACptRemarks = (dictShadowQACptRemarks == null) ? new Dictionary<int, string>() : dictShadowQACptRemarks;
+
+                                    count = Math.Max(dictCptCodes.Count(), Math.Max(dictQACptCodes.Count(), dictShadowQACptCodes.Count()));
 
                                     int totalCptCount = count + 1;
 
-                                    Utility.AddEmptyRows(dictCptCodes, Cptcount, "NA^NA^NA^NA");
-                                    Utility.AddEmptyRows(dictQACptCodes, Cptcount, "");
-                                    Utility.AddEmptyRows(dictQACptRemarks, Cptcount, "");
+                                    Utility.AddEmptyRows(dictCptCodes, count, "NA");
+                                    Utility.AddEmptyRows(dictQACptCodes, count, "");
+                                    Utility.AddEmptyRows(dictQACptRemarks, count, "");
+                                    Utility.AddEmptyRows(dictShadowQACptCodes, count, "");
+                                    Utility.AddEmptyRows(dictShadowQACptRemarks, count, "");
                                 }
                                 <div id="DivCpt">
                                     @{
                                         j = 1;
-                                        for (i = 0; i < Cptcount; i++)
+                                        for (i = 0; i < count; i++)
                                         {
                                             <div class="form-group row" id="DivCptRow_@j">
                                                 @if (i == 0)
@@ -310,8 +341,9 @@
                                                 {
                                                     <label class="col-md-3 lessWidth m-t-15"></label>
                                                 }
+
                                                 @{ string[] coderCptcodes = dictCptCodes?.ElementAt(i).Value.Split("^");}
-                                                @{ string[] qaCptcodes = dictQACptCodes?.ElementAt(i).Value == "" ? coderCptcodes : dictQACptCodes?.ElementAt(i).Value.Split("^");}
+                                                @{ string[] qaCptcodes = !string.IsNullOrEmpty(dictShadowQACptCodes?.ElementAt(i).Value) ? dictShadowQACptCodes?.ElementAt(i).Value.Split("^") : dictQACptCodes?.ElementAt(i).Value.Split("^");}
 
                                                 @{
                                                     var CptClaimRemarks = string.Format("form-control CptClaim_{0}_Remarks_{1}", @Model.FirstOrDefault().TabIndex, @j);
@@ -411,24 +443,49 @@
                                                 }
                                                 else
                                                 {
-                                                    string modVal = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
-                                                    string linkAllVal = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
-                                                    string links = !string.IsNullOrEmpty(@linkAllVal) || @linkAllVal != "null" ? @linkAllVal : "Link All";
-                                                    <div title="Code : @coderCptcodes[0], Mod : @modVal, Quantity : @coderCptcodes[2], Links : @links" class="col-md-3 lessWidth input-group ControlWidth">
+                                                    string cptVal = coderCptcodes[0] == "NA" ? "" : coderCptcodes[0];
+                                                    string coderModVal = "";
+                                                    string coderLinkAllVal = "";
+                                                    string qtyVal = "";
+                                                    if (cptVal != "")
+                                                    {
+                                                        coderModVal = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
+                                                        coderLinkAllVal = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
+                                                        qtyVal = coderCptcodes[2];
+
+                                                    }
+                                                    else
+                                                    {
+                                                        var ShadowQaCptVal = !string.IsNullOrEmpty(dictShadowQACptCodes?.ElementAt(i).Value) ? dictShadowQACptCodes?.ElementAt(i).Value : !string.IsNullOrEmpty(dictQACptCodes?.ElementAt(i).Value) ? dictQACptCodes?.ElementAt(i).Value : dictCptCodes?.ElementAt(i).Value;
+
+                                                        string[] CptCodes = ShadowQaCptVal.Split("^");
+                                                        cptVal = CptCodes[0] == "NA" ? "" : CptCodes[0];
+                                                        if (cptVal != "")
+                                                        {
+                                                            coderModVal = CptCodes[1] == "null" ? "" : CptCodes[1];
+                                                            qtyVal = CptCodes[2];
+                                                            coderLinkAllVal = CptCodes[3] == "null" ? "" : CptCodes[3];
+                                                        }
+                                                    }
+
+                                                    <div title="Code : @cptVal, Mod : @coderModVal, Quantity : @qtyVal, Links : @coderLinkAllVal" class="col-md-3 lessWidth input-group ControlWidth">
                                                         <div class="input-group-prepend ControlHeight">
                                                             <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                                                         </div>
-                                                        <input type="text" class="form-control QARemarks ControlHeight" style="color: green;width: 17px;" placeholder="Code" value="@coderCptcodes[0]" />
-                                                        <input type="text" class="form-control QARemarks ControlHeight" style="color:green;" placeholder="Mod" value="@modVal" />
-                                                        <input type="text" class="form-control QARemarks ControlHeight" style="color:green;" placeholder="Qty" value="@coderCptcodes[2]" />
-                                                        <input type="text" class="form-control QARemarks ControlHeight" style="color: green;" placeholder="Link All" value="@linkAllVal" />
-                                                        <input type="hidden" id="@cptCoderClaim" value="@coderCptcodes[0]^@coderCptcodes[1]^@coderCptcodes[2]^@coderCptcodes[3]" />
-                                                        <input type="hidden" id="@cptQAClaim" value="@coderCptcodes[0]^@coderCptcodes[1]^@coderCptcodes[2]^@coderCptcodes[3]" />
+                                                        <input type="text" class="form-control QARemarks ControlHeight" style="color: green;width: 17px;" placeholder="Code" value="@cptVal" />
+                                                        <input type="text" class="form-control QARemarks ControlHeight" style="color:green;" placeholder="Mod" value="@coderModVal" />
+                                                        <input type="text" class="form-control QARemarks ControlHeight" style="color:green;" placeholder="Qty" value="@qtyVal" />
+                                                        <input type="text" class="form-control QARemarks ControlHeight" style="color: green;" placeholder="Link All" value="@coderLinkAllVal" />
+                                                        <input type="hidden" id="@cptCoderClaim" value="@cptVal^@coderModVal^@qtyVal^@coderLinkAllVal" />
+                                                        <input type="hidden" id="@cptQAClaim" value="@cptVal^@coderModVal^@qtyVal^@coderLinkAllVal" />
+
                                                     </div>
                                                 }
-                                                @{ Show = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
-                                                <div title="@dictQACptRemarks?.ElementAt(i).Value" class="col-md-2 input-group ControlHeight" style="@Show">
-                                                    <input type="text" class="form-control QARemarks ControlHeight" value="@dictQACptRemarks?.ElementAt(i).Value" />
+                                                @{ string Cptremarks = !string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? dictShadowQACptRemarks?.ElementAt(i).Value : dictQACptRemarks?.ElementAt(i).Value;
+
+                                                    Show = (string.IsNullOrEmpty(Cptremarks) ? "visibility:hidden" : "display:flex"); }
+                                                <div title="@Cptremarks" class="col-md-2 input-group ControlHeight" style="@Show">
+                                                    <input type="text" class="form-control QARemarks ControlHeight" value="@Cptremarks" />
                                                 </div>
                                                 <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
                                                     <span class="input-group-text ControlHeight" style="margin-left:-12px;">

@@ -103,40 +103,40 @@
         int totalDxCount = Model.Dx.Split(",").Count() + 1;
         foreach (var item in Model.Dx.Split(","))
         {
-        <div class="form-group row" id="@string.Format("DivDxRow_{0}_{1}", Model.TabIndex,i)">
-            @if (i == 1)
+            <div class="form-group row" id="@string.Format("DivDxRow_{0}_{1}", Model.TabIndex,i)">
+                @if (i == 1)
                 {
-            <label class="col-md-3 lessWidth m-t-15">Dx</label>
+                    <label class="col-md-3 lessWidth m-t-15">Dx</label>
                 }
                 else
                 {
-            <label class="col-md-3 lessWidth m-t-15"></label>
+                    <label class="col-md-3 lessWidth m-t-15"></label>
                 }
-            <div title="@item" class="col-md-3 input-group">
-                <div class="input-group-prepend ControlHeight">
-                    <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
+                <div title="@item" class="col-md-3 input-group">
+                    <div class="input-group-prepend ControlHeight">
+                        <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
+                    </div>
+                    <input class="form-control CoderDetails ControlHeight valid" type="text" value="@item">
+                    <div class="input-group-append ControlHeight">
+                        <span class="input-group-text AcceptRejectWidth_@tabIndex QACorrections">
+                            &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" data="@tabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                            &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" data="@tabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
+                        </span>
+                    </div>
                 </div>
-                <input class="form-control CoderDetails ControlHeight valid" type="text" value="@item">
-                <div class="input-group-append ControlHeight">
-                    <span class="input-group-text AcceptRejectWidth_@tabIndex QACorrections">
-                        &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" data="@tabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
-                        &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" data="@tabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
-                    </span>
-                </div>
-            </div>
 
-            <div class="col-md-3 @QARevised input-group @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" style="display:none">
-                <div class="input-group-prepend ControlHeight">
-                    <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
+                <div class="col-md-3 @QARevised input-group @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" style="display:none">
+                    <div class="input-group-prepend ControlHeight">
+                        <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
+                    </div>
+                    <input type="text" id="@string.Format("txtDx{0}Claim_{1}", Model.TabIndex,i)" class="form-control ControlHeight txtDx @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" autocomplete="off" placeholder="Code" value="@item" style="display:none" />
                 </div>
-                <input type="text" id="@string.Format("txtDx{0}Claim_{1}", Model.TabIndex,i)" class="form-control ControlHeight txtDx @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" autocomplete="off" placeholder="Code" value="@item" style="display:none" />
+                <div class="col-md-3 input-group">
+                    @{ var dxRemarks = string.Format("DxRemarkss_{0}_{1}", Model.TabIndex, i);}
+                    <input type="text" id="@dxRemarks" onchange="removeClaimValid('@dxRemarks')" class="form-control @QARevised ControlHeight @string.Format("DxRemarks_{0}_{1}", Model.TabIndex,i) @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" style="display:none" />
+                    <span id="@string.Format("validDxRemarksClaim_{0}_{1}", Model.TabIndex, i)" class="text-danger txtdanger" style="display:none">*</span>
+                </div>
             </div>
-            <div class="col-md-3 input-group">
-                @{ var dxRemarks = string.Format("DxRemarkss_{0}_{1}", Model.TabIndex, i);}
-                <input type="text" id="@dxRemarks" onchange="removeClaimValid('@dxRemarks')" class="form-control @QARevised ControlHeight @string.Format("DxRemarks_{0}_{1}", Model.TabIndex,i) @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" style="display:none" />
-                <span id="@string.Format("validDxRemarksClaim_{0}_{1}", Model.TabIndex, i)" class="text-danger txtdanger" style="display:none">*</span>
-            </div>
-        </div>
 
             i = i + 1;
         }
@@ -179,50 +179,51 @@
             string modVal = cptCodes[1] == "null" ? "" : cptCodes[1];
             string qtyVal = cptCodes[2];
             string linkAllVal = cptCodes[3] == "null" ? "" : cptCodes[3];
-        <div class="form-group row" id="@string.Format("DivCptRow_{0}_{1}", Model.TabIndex,i)">
-            @if (i == 1)
+            <div class="form-group row" id="@string.Format("DivCptRow_{0}_{1}", Model.TabIndex,i)">
+                @if (i == 1)
                 {
-            <label class="col-md-3 lessWidth m-t-15">CPT</label>
+                    <label class="col-md-3 lessWidth m-t-15">CPT</label>
                 }
                 else
                 {
-            <label class="col-md-3 lessWidth m-t-15"></label>
+                    <label class="col-md-3 lessWidth m-t-15"></label>
                 }
-            @{string link = !string.IsNullOrEmpty(@linkAllVal) || @linkAllVal != "null" || @linkAllVal != "" ? @linkAllVal : "Link All"; }
-            <div title="Code : @cptVal, Mod : @modVal, Quantity : @qtyVal, Links : @link" class="col-md-3 CptlessWidth input-group">
-                <div class="input-group-prepend ControlHeight">
-                    <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
+                @{string link = !string.IsNullOrEmpty(@linkAllVal) || @linkAllVal != "null" || @linkAllVal != "" ? @linkAllVal : "Link All"; }
+                <div title="Code : @cptVal, Mod : @modVal, Quantity : @qtyVal, Links : @link" class="col-md-3 CptlessWidth input-group">
+                    <div class="input-group-prepend ControlHeight">
+                        <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
+                    </div>
+                    <input type="text" maxlength="5" style="min-width:50px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Code" value="@cptVal" />
+                    <input type="text" style="min-width:42px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Mod" value="@modVal" />
+                    <input type="text" style="max-width:23px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Qty" value="@qtyVal" />
+                    <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="@linkAllVal" />
+                    <div class="input-group-append ControlHeight">
+                        <span class="input-group-text AcceptRejectWidth_@tabIndex">
+                            &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" data="@tabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                            &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" data="@tabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
+                        </span>
+                    </div>
                 </div>
-                <input type="text" maxlength="5" style="min-width:50px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Code" value="@cptVal" />
-                <input type="text" style="min-width:42px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Mod" value="@modVal" />
-                <input type="text" style="max-width:23px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Qty" value="@qtyVal" />
-                <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="@linkAllVal" />
-                <div class="input-group-append ControlHeight">
-                    <span class="input-group-text AcceptRejectWidth_@tabIndex">
-                        &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" data="@tabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
-                        &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" data="@tabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
-                    </span>
+                <div class="col-md-3 @QARevised CptlessWidth input-group @string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" style="display:none">
+                    <div class="input-group-prepend ControlHeight">
+                        <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
+                    </div>
+                    <input type="text" maxlength="5" style="min-width:50px;" class="form-control ControlHeight" id="@string.Format("txt{0}Cpt_{1}", Model.TabIndex,i)" autocomplete="off" placeholder="Code" value="@cptVal" />
+                    <input type="text" style="min-width:42px;" class="form-control ControlHeight" id="@string.Format("txt{0}mod_{1}", Model.TabIndex,i)" autocomplete="off" placeholder="Mod" value="@modVal" />
+                    <input type="text" style="max-width:23px;" class="form-control ControlHeight" id="@string.Format("txt{0}qty_{1}", Model.TabIndex,i)" autocomplete="off" placeholder="Qty" value="@qtyVal" />
+                    <input type="text" class="form-control ControlHeight" id="@string.Format("txt{0}links_{1}", Model.TabIndex,i)" autocomplete="off" placeholder="Link All" value="@linkAllVal" />
                 </div>
-            </div>
-            <div class="col-md-3 @QARevised CptlessWidth input-group @string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" style="display:none">
-                <div class="input-group-prepend ControlHeight">
-                    <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
-                </div>
-                <input type="text" maxlength="5" style="min-width:50px;" class="form-control ControlHeight" id="@string.Format("txt{0}Cpt_{1}", Model.TabIndex,i)" autocomplete="off" placeholder="Code" value="@cptVal" />
-                <input type="text" style="min-width:42px;" class="form-control ControlHeight" id="@string.Format("txt{0}mod_{1}", Model.TabIndex,i)" autocomplete="off" placeholder="Mod" value="@modVal" />
-                <input type="text" style="max-width:23px;" class="form-control ControlHeight" id="@string.Format("txt{0}qty_{1}", Model.TabIndex,i)" autocomplete="off" placeholder="Qty" value="@qtyVal" />
-                <input type="text" class="form-control ControlHeight" id="@string.Format("txt{0}links_{1}", Model.TabIndex,i)" autocomplete="off" placeholder="Link All" value="@linkAllVal" />
-            </div>
 
-            <div class="col-md-3 input-group">
-                <input type="text" id="@string.Format("CptRemarkss_{0}_{1}", Model.TabIndex,i)" onchange="removeClaimValid('CptRemarks_@i')" class="form-control @QARevised ControlHeight @string.Format("CptRemarks_{0}_{1}", Model.TabIndex,i) @string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" style="display:none" />
-                <span id="@string.Format("validCptRemarksClaim_{0}_{1}", Model.TabIndex, i)" class="text-danger txtdanger" style="display:none">*</span>
+                <div class="col-md-3 input-group">
+                    <input type="text" id="@string.Format("CptRemarkss_{0}_{1}", Model.TabIndex,i)" onchange="removeClaimValid('CptRemarks_@i')" class="form-control @QARevised ControlHeight @string.Format("CptRemarks_{0}_{1}", Model.TabIndex,i) @string.Format("Cpt_{0}_{1}", Model.TabIndex,i)" style="display:none" />
+                    <span id="@string.Format("validCptRemarksClaim_{0}_{1}", Model.TabIndex, i)" class="text-danger txtdanger" style="display:none">*</span>
+                </div>
             </div>
-        </div>
             i = i + 1;
         }
     }
-    <input type="hidden" id="@string.Format("txtLinks_1_{0}", tabIndex)" value="@totalCptCount" />
+    @{ string CptLink = string.Format("txt{0}links_{1}_{2}", Model.TabIndex, totalCptCount, Model.TabIndex);}
+    <input type="hidden" id="@CptLink" value="@totalCptCount" />
     <div class="form-group row">
         <label class="col-md-3 lessWidth m-t-15"></label>
         <div class="col-md-3 CptlessWidth input-group">
@@ -247,7 +248,8 @@
             <input type="text" id="@string.Format("txt{0}Cpt_{1}", Model.TabIndex,totalCptCount)" maxlength="5" style="min-width:50px;" class="form-control ControlHeight Cptclaim_@tabIndex" autocomplete="off" placeholder="Code" value="" />
             <input type="text" id="@string.Format("txt{0}mod_{1}", Model.TabIndex,totalCptCount)" style="min-width:42px;" class="form-control ControlHeight Cptclaim_@tabIndex" autocomplete="off" placeholder="Mod" value="" />
             <input type="text" id="@string.Format("txt{0}qty_{1}", Model.TabIndex,totalCptCount)" style="max-width:23px;" class="form-control ControlHeight Cptclaim_@tabIndex" autocomplete="off" placeholder="Qty" value="" />
-            <input type="text" id="@string.Format("txt{0}links_{1}", Model.TabIndex,totalCptCount)" class="form-control ControlHeight @Cpt2Link" autocomplete="off" placeholder="Link All" onfocusout="CptClaims('txtLinks_1_@tabIndex')" />
+
+            <input type="text" id="@string.Format("txt{0}links_{1}", Model.TabIndex,totalCptCount)" class="form-control ControlHeight @Cpt2Link" autocomplete="off" placeholder="Link All" onfocusout="CptClaims('@CptLink')" />
         </div>
         <div class="col-md-3 QARevised_@tabIndex input-group @string.Format("Cpt_{0}_{1}", Model.TabIndex,totalCptCount)" id="@Div2CptRow" style="display:none">
             <input type="text" id="@string.Format("CptRemarkss_{0}_{1}", Model.TabIndex,i)" class="form-control ControlHeight" style="display:flex;" />

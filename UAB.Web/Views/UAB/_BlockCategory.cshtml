@@ -22,7 +22,7 @@
 <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
     <div class="modal-dialog">
         <div class="modal-content" style="width: 500px;">
-            <div class="modal-header">
+            <div class="modal-header" style="background: #27a9e3">
                 <h5 class="modal-title" id="exampleModalLongTitle">Block Clinical case</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ModalClose1()">
                     <span aria-hidden="true">&times;</span>
@@ -31,22 +31,23 @@
             <div class="modal-body">
                 <input type="hidden" id="ccid" value="@ViewBag.ccid" />
                 <input type="hidden" id="statusid" value="@ViewBag.statusid" />
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <label>Block Category</label>
-                    @Html.DropDownListFor(model => model.BlockCategoryId, new SelectList(@ViewBag.BlockCategories, "BlockCategoryId", "Name"), "--Select a Category--", new { @id = "categorydd", @class = "form-control CoderDetails" })
+                    @Html.DropDownListFor(model => model.BlockCategoryId, new SelectList(@ViewBag.BlockCategories, "BlockCategoryId", "Name"), "--Select a Category--", new { @id = "categorydd", @class = "form-control " })
                     @Html.ValidationMessageFor(model => model.BlockCategoryId, null, new { @class = "text-danger" })
                 </div>
                 <br />
-                <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.Remarks, new { @id = "txtremarks", @placeholder = "Enter a Block Comments here", @class = "form-control CoderDetails", @autocomplete = "off" })
+                <div class="col-md-12">
+                    <label>Comments</label>
+                    @Html.TextAreaFor(model => model.Remarks, new { @id = "txtremarks", @placeholder = "Enter a Block Comments here", @class = "form-control ", @autocomplete = "off" })
                     @Html.ValidationMessageFor(model => model.Remarks, null, new { @class = "text-danger" })
                 </div>
             </div>
 
             <div id="assignerror" style="color:red"></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-info btn-fill" id="btnBlockClinicalCase" formnovalidate="formnovalidate" onclick="BlockClinicalcase()">Block</button>
-                <button type="button" class="btn btn-sm btn-danger btn-fill" onclick="ModalClose1()">Close</button>
+                <button type="button" class="btn btn-success Available" id="btnBlockClinicalCase" formnovalidate="formnovalidate" onclick="BlockClinicalcase()">Block</button>
+                <button type="button" class="btn btn-danger" onclick="ModalClose1()">Close</button>
             </div>
 
 

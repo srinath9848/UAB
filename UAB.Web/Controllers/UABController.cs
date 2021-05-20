@@ -75,7 +75,7 @@ namespace UAB.Controllers
             {
                 lst = clinicalcaseOperations.DisplayBlockCharts(Role, ProjectID);
             }
-            if (Role == Roles.ShadowQA.ToString())
+           else  if (Role == Roles.ShadowQA.ToString())
             {
                 lst = clinicalcaseOperations.DisplayBlockCharts(Role, ProjectID);
             }
@@ -83,9 +83,9 @@ namespace UAB.Controllers
             {
                 lst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);
             }
-            var projects = clinicalcaseOperations.GetProjects();
+            var projectname  = clinicalcaseOperations.projectname(ProjectID);
             ViewBag.Role = Role;
-            ViewBag.Project = projects.Where(a => a.ProjectId.Equals(ProjectID)).FirstOrDefault().Name;
+            ViewBag.Project = projectname;
             return PartialView("_BlockedList", lst);
         }
 
