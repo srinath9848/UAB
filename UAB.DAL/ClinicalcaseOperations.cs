@@ -1209,13 +1209,13 @@ namespace UAB.DAL
 
                             chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
                             chartSummaryDTO.QADx = Convert.ToString(reader["QADx"]);
-                            chartSummaryDTO.QADxRemarks = Convert.ToString(reader["QADxRemark"]);
+                            chartSummaryDTO.QADxRemarks = Convert.ToString(reader["QARebuttedDxRemark"]);
                             chartSummaryDTO.ShadowQADx = Convert.ToString(reader["ShadowQADx"]);
                             chartSummaryDTO.ShadowQADxRemarks = Convert.ToString(reader["ShadowQADxRemark"]);
 
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
                             chartSummaryDTO.QACPTCode = Convert.ToString(reader["QACPTCode"]);
-                            chartSummaryDTO.QACPTCodeRemarks = Convert.ToString(reader["QACPTCodeRemark"]);
+                            chartSummaryDTO.QACPTCodeRemarks = Convert.ToString(reader["QARebuttedCPTCodeRemark"]);
                             chartSummaryDTO.ShadowQACPTCode = Convert.ToString(reader["ShadowQACPTCode"]);
                             chartSummaryDTO.ShadowQACPTCodeRemarks = Convert.ToString(reader["ShadowQACPTCodeRemark"]);
 

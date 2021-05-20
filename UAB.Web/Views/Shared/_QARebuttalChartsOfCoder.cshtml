@@ -95,7 +95,7 @@
                                     <div title="@title" class="col-md-3 input-group">
                                         @{string Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                                         @{string Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
-                                        @Html.DropDownListFor(model => model.FirstOrDefault().ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = "ProviderID1", @class = "form-control QARevised ControlHeight" })
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = "ProviderID1", @class = "form-control CoderDetails ControlHeight" })
 
                                         <div class="input-group-append QACorrections">
                                             <span class="input-group-text">
