@@ -981,8 +981,6 @@ namespace UAB.Controllers
         }
         public IActionResult SubmitQARebuttalChartsOfCoder(ChartSummaryDTO chartSummaryDTO, string SubmitAndGetNext)
         {
-            var hdnRejected = Request.Form["hdnRejected"].ToString();
-
             //Starting of fetching Dx,CPT in Claim2 to Claim4 
             DataTable dtAudit = new DataTable();
             dtAudit.Columns.Add("FieldName", typeof(string));
@@ -1064,10 +1062,10 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             if (string.IsNullOrEmpty(SubmitAndGetNext))
-                clinicalcaseOperations.SubmitQARebuttalChartsOfCoder(chartSummaryDTO, dtAudit, hdnRejected);
+                clinicalcaseOperations.SubmitQARebuttalChartsOfCoder(chartSummaryDTO, dtAudit);
             else
             {
-                clinicalcaseOperations.SubmitQARebuttalChartsOfCoder(chartSummaryDTO, dtAudit, hdnRejected);
+                clinicalcaseOperations.SubmitQARebuttalChartsOfCoder(chartSummaryDTO, dtAudit);
                 return RedirectToAction("GetQARebuttalChartsOfCoder", new { Role = Roles.QA.ToString(), ChartType = "RebuttalOfCoder", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName });
             }
 
