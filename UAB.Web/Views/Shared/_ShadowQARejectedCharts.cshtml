@@ -469,6 +469,7 @@
                                                     </div>
 
                                                 }
+                                                @{ Show = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex"); }
                                                 <div title="" class="col-md-3 input-group">
                                                     <input type="text" id="QACptRemarks_@j" style="@Show" class="form-control ControlHeight" value="@dictQACptRemarks?.ElementAt(i).Value" />
                                                     <span id="validCpt_@j" class="text-danger txtdanger" style="display:none">*</span>
