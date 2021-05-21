@@ -20,7 +20,7 @@ namespace UAB.DTO
         [Required(ErrorMessage = "*")]
         public int PayorID { get; set; }
         public string PayorText { get; set; }
-        public string Status  { get; set; }
+        public string Status { get; set; }
 
         [Required(ErrorMessage = "*")]
         public int ProviderID { get; set; }
@@ -112,7 +112,7 @@ namespace UAB.DTO
         public string BlockCategory { get; set; }
         public string BlockRemarks { get; set; }
         public DateTime BlockedDate { get; set; }
-        public string Blockedbyuser  { get; set; }
+        public string Blockedbyuser { get; set; }
 
         public int? ClaimId { get; set; }
         public int TabIndex { get; set; }
@@ -122,7 +122,7 @@ namespace UAB.DTO
         public int ProviderPostedId { get; set; }
         public DateTime PostingDate { get; set; }
         public string CoderComment { get; set; }
-
+        public string CCIDs { get; set; }
     }
 
     public class LelvellingReportDTO

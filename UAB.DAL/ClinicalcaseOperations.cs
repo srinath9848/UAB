@@ -475,7 +475,7 @@ namespace UAB.DAL
 
             return lst;
         }
-        public ChartSummaryDTO GetNext(string Role, string ChartType, int projectID)
+        public ChartSummaryDTO GetNext(string Role, string ChartType, int projectID, int CurrCCId = 0)
         {
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO.ProjectID = projectID;
@@ -506,6 +506,12 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = mUserId
+                         }
+                        , new SqlParameter() {
+                            ParameterName = "@PrevOrNextCCID",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = CurrCCId
                          }};
 
                 using (var con = context.Database.GetDbConnection())
@@ -883,12 +889,18 @@ namespace UAB.DAL
                             //chartSummaryDTO.RevisedProviderFeedbackRemarks = Convert.ToString(reader["RebuttedProviderFeedbackIDRemark"]);
                         }
                     }
+                    reader.NextResult();
+
+                    while (reader.Read())
+                    {
+                        chartSummaryDTO.CCIDs = Convert.ToString(reader["CCIDs"]);
+                    }
                 }
             }
             return chartSummaryDTO;
         }
 
-        public List<ChartSummaryDTO> GetNext1(string Role, string ChartType, int projectID)
+        public List<ChartSummaryDTO> GetNext1(string Role, string ChartType, int projectID, int CurrCCId = 0)
         {
             List<ChartSummaryDTO> lstchartSummaryDTO = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
@@ -920,6 +932,12 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = mUserId
+                         }
+                         , new SqlParameter() {
+                            ParameterName = "@PrevOrNextCCID",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = CurrCCId
                          }};
 
                 using (var con = context.Database.GetDbConnection())
@@ -1129,6 +1147,7 @@ namespace UAB.DAL
                         }
                         else if (Role == "ShadowQA" && ChartType == "Block")
                         {
+                            chartSummaryDTO.ProjectID = Convert.ToInt32(reader["ProjectId"]);
                             chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
                             chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
                             chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate();
@@ -1397,6 +1416,13 @@ namespace UAB.DAL
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
                         }
                         lstchartSummaryDTO.Add(chartSummaryDTO);
+                    }
+                    reader.NextResult();
+
+                    while (reader.Read())
+                    {
+                        lstchartSummaryDTO.ForEach(x => x.CCIDs = Convert.ToString(reader["CCIDs"]));
+                        //chartSummaryDTO.CCIDs = Convert.ToString(reader["CCIDs"]);
                     }
                 }
                 return lstchartSummaryDTO;

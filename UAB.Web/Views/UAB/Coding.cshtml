@@ -30,25 +30,36 @@
 <script type="text/javascript">
     $("#PayorID").focus();
     $("#hdnProviderPosted").val('');
+     var enableNext = @(ViewBag.EnableNext == null ? "false": ViewBag.EnableNext);
+    var enablePrevious = @(ViewBag.EnablePrevious == null ? "false" : ViewBag.EnablePrevious);
 
     var isBlocked = @(ViewBag.IsBlocked == null ? "0": "1");
     if (isBlocked == 1) {
         $("#btnBlock").hide();
         $("#btnBlockHistory").show();
         $("#btnProviderPosted").hide();
-        var currentindex = $("#currentindex").val();
-        var lastindex = $("#lastindex").val();
-        
-        if (currentindex == 0) {
-            $("#btnPrevious").hide();
+        //var currentindex = $("#currentindex").val();
+        //var lastindex = $("#lastindex").val();
+
+        //if (currentindex == 0) {
+        //    $("#btnPrevious").hide();
+        //} else {
+        //    $("#btnPrevious").show();
+        //}
+        //if (currentindex == lastindex) {
+        //    $("#btnNext").hide();
+        //} else {
+        //    $("#btnNext").show();
+        //}
+        if (enablePrevious == true) {
+            $("#btnPrevious").css('visibility', 'visible');
         } else {
-            $("#btnPrevious").show();
+            $("#btnPrevious").css('visibility', 'hidden');
         }
-        if (currentindex == lastindex) {
-            $("#btnNext").hide();
-            $("#codingSubmitAndGetNext").hide();
+        if (enableNext == true) {
+            $("#btnNext").css('visibility', 'visible');
         } else {
-            $("#btnNext").show();
+            $("#btnNext").css('visibility', 'hidden');
         }
     }
 
