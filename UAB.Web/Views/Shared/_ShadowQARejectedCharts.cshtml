@@ -249,6 +249,7 @@
                                                 </div>
                                                 <div title="" class="col-md-3 input-group">
                                                     <input type="text" id="DxRemarks_@j" style="@Show" class="form-control" value="@dictQADxRemarks?.ElementAt(i).Value" />
+                                                    <span id="validDx_@j" class="text-danger txtdanger" style="display:none">*</span>
                                                 </div>
                                                 <div class="col-md-3 input-group" style="@Show">
                                                     <div class="input-group-prepend ControlHeight">
@@ -269,10 +270,6 @@
                                                         </span>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3 input-group" style="display:none">
-                                                    <input type="text" id="Dx_@j" class="form-control QARevised ControlHeight" />
-                                                </div>
-
                                                 <div title="" class="col-md-3 input-group" style="@Show">
                                                     <input type="text" class="form-control QARemarks ControlHeight" value="@dictShadowQADxRemarks?.ElementAt(i).Value" />
                                                 </div>
@@ -472,8 +469,10 @@
                                                     </div>
 
                                                 }
+                                                @{ Show = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex"); }
                                                 <div title="" class="col-md-3 input-group">
                                                     <input type="text" id="QACptRemarks_@j" style="@Show" class="form-control ControlHeight" value="@dictQACptRemarks?.ElementAt(i).Value" />
+                                                    <span id="validCpt_@j" class="text-danger txtdanger" style="display:none">*</span>
                                                 </div>
 
                                                 <div class="col-md-3 CptlessWidth input-group" style="@Show">
@@ -507,7 +506,7 @@
                                                             }
                                                         }
                                                     }
-                                                    <input type="text" class="form-control QARemarks ControlHeight" id="txtCpt_@j" autocomplete="off" placeholder="Code" value="@ShadowQaCptVal" style="min-width: 60px;"/>
+                                                    <input type="text" class="form-control QARemarks ControlHeight" id="txtCpt_@j" autocomplete="off" placeholder="Code" value="@ShadowQaCptVal" style="min-width: 60px;" />
                                                     <input type="text" class="form-control QARemarks ControlHeight" id="txtMod_@j" autocomplete="off" placeholder="Mod" value="@ShadowQaModVal" />
                                                     <input type="text" id="txtQty_@j" class="form-control QARemarks ControlHeight" autocomplete="off" placeholder="Qty" value="@ShadowQaQtyVal" />
                                                     <input type="text" id="txtLinks_@j" class="form-control QARemarks ControlHeight" autocomplete="off" placeholder="Link All" value="@ShadowQaLinkAllVal" />
@@ -588,7 +587,10 @@
                                                                 Error Type
                                                             </label>
                                                             <div class="col-md-7">
-                                                                @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;" })
+                                                                @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;", @id = string.Format("ErrorType_{0}", tabIndex), @onchange = "ErrorType('" + tabIndex + "')" })
+                                                                @Html.ValidationMessageFor(model => model.FirstOrDefault().QADTO.ErrorType, null, new { @class = "text-danger ErrorType", @id = string.Format("ErrorTypeError_{0}", tabIndex) })
+
+                                                                @*@Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;" })*@
                                                             </div>
                                                         </div>
                                                     </div>

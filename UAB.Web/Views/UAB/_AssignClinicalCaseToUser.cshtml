@@ -22,7 +22,7 @@
 <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
     <div class="modal-dialog">
         <div class="modal-content" style="width: 500px;">
-            <div class="modal-header">
+            <div class="modal-header" style="background: #27a9e3;color: white;">
                 <h5 class="modal-title" id="exampleModalLongTitle">Assign Clinical Case To User</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ModalClose1()">
                     <span aria-hidden="true">&times;</span>
@@ -33,14 +33,14 @@
                     <label>Assign From User : </label>
                     <span>@Model.AssignFromUserEmail</span>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <label>Assign To User</label>
                     @Html.DropDownListFor(model => model.AssignToUserEmail, new SelectList(@ViewBag.assignusers, "UserId", "Email"), "--Select a User Email--", new { @id = "emailddto", @class = "form-control CoderDetails" })
                     @Html.ValidationMessageFor(model => model.AssignToUserEmail, null, new { @class = "text-danger" })
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 </div>
                 <br />
-                <div class="col-md-3 custom-control custom-checkbox mr-sm-2">
+                <div class="col-md-3 custom-control custom-checkbox mr-sm-2" style="margin-left: 12px;">
                     @Html.CheckBoxFor(model => model.IsPriority, new { @class = "custom-control-input ShadowQADetails", @id = "customControlAutosizing2" })
                     <label class="custom-control-label" for="customControlAutosizing2">Is Priority</label>
                 </div>

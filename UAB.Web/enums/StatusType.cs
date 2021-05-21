@@ -22,6 +22,7 @@ namespace UAB.enums
         QARebutted = 13,
         ToCoderCorrection = 14,
         ReadyforPosting = 15,
-        PostingCompleted = 16
+        PostingCompleted = 16,
+        ProviderPosted=17
     }
 }

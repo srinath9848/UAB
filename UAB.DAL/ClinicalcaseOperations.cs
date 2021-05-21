@@ -1209,13 +1209,13 @@ namespace UAB.DAL
 
                             chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
                             chartSummaryDTO.QADx = Convert.ToString(reader["QADx"]);
-                            chartSummaryDTO.QADxRemarks = Convert.ToString(reader["QADxRemark"]);
+                            chartSummaryDTO.QADxRemarks = Convert.ToString(reader["QARebuttedDxRemark"]);
                             chartSummaryDTO.ShadowQADx = Convert.ToString(reader["ShadowQADx"]);
                             chartSummaryDTO.ShadowQADxRemarks = Convert.ToString(reader["ShadowQADxRemark"]);
 
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
                             chartSummaryDTO.QACPTCode = Convert.ToString(reader["QACPTCode"]);
-                            chartSummaryDTO.QACPTCodeRemarks = Convert.ToString(reader["QACPTCodeRemark"]);
+                            chartSummaryDTO.QACPTCodeRemarks = Convert.ToString(reader["QARebuttedCPTCodeRemark"]);
                             chartSummaryDTO.ShadowQACPTCode = Convert.ToString(reader["ShadowQACPTCode"]);
                             chartSummaryDTO.ShadowQACPTCodeRemarks = Convert.ToString(reader["ShadowQACPTCodeRemark"]);
 
@@ -1587,14 +1587,11 @@ namespace UAB.DAL
                 if (flag == "Unblock")
                 {
                     var existingblockchart = context.WorkItem.Where(a => a.ClinicalCaseId == cid).FirstOrDefault();
-                    var existingblockhist = context.BlockHistory.Where(a => a.ClinicalCaseId == cid).ToList();
 
                     if (existingblockchart != null)
                     {
                         existingblockchart.IsBlocked = 0;
                         context.Entry(existingblockchart).State = EntityState.Modified;
-                        if (existingblockhist.Count != 0)
-                            context.BlockHistory.RemoveRange(existingblockhist);
                     }
                 }
 
@@ -3085,6 +3082,16 @@ namespace UAB.DAL
                 if (existingcc != null)
                 {
                     existingcc.AssignedTo = AssignedTouserid;
+                    if (existingcc.StatusId == 4 || existingcc.StatusId == 5 || existingcc.StatusId == 6
+                        || existingcc.StatusId == 11 || existingcc.StatusId == 12)
+                    {
+                        existingcc.QABy = AssignedTouserid;
+                    }
+                    if (existingcc.StatusId == 7 || existingcc.StatusId == 8 || existingcc.StatusId == 9
+                         || existingcc.StatusId == 10 || existingcc.StatusId == 13)
+                    {
+                        existingcc.ShadowQABy = AssignedTouserid;
+                    }
                     existingcc.AssignedBy = mUserId;
                     existingcc.AssignedDate = DateTime.Now;
                     existingcc.IsPriority = searchResultDTO.IsPriority ? 1 : 0;
@@ -3327,6 +3334,17 @@ namespace UAB.DAL
             {
                 string fromemial = null;
                 var workitem = context.WorkItem.Where(a => a.ClinicalCaseId == Convert.ToInt32(ccid)).FirstOrDefault();
+                int roleid = 1;
+                if (workitem.StatusId == 4 || workitem.StatusId == 5 || workitem.StatusId == 6
+                       || workitem.StatusId == 11 || workitem.StatusId == 12)
+                {
+                    roleid = 2;
+                }
+                if (workitem.StatusId == 7 || workitem.StatusId == 8 || workitem.StatusId == 9
+                        || workitem.StatusId == 10 || workitem.StatusId == 13)
+                {
+                    roleid = 3;
+                }
                 if (workitem.AssignedTo != null)
                 {
                     var user = context.User.Where(a => a.UserId == workitem.AssignedTo).FirstOrDefault();
@@ -3338,7 +3356,18 @@ namespace UAB.DAL
                 }
                 else
                 {
-                    return context.User.Where(a => !a.Email.Contains(fromemial)).ToList();
+                    List<User> userlist = context.User.Where(a => !a.Email.Contains(fromemial)).ToList();
+                    var projectuserids = context.ProjectUser.Where(x => x.ProjectId == workitem.ProjectId&&x.RoleId==roleid && x.UserId != workitem.AssignedTo).Select(x => x.UserId).Distinct().ToList();
+
+                    List<User> userlist3 = new List<User>();
+
+                    foreach (var userid in projectuserids)
+                    {
+                        var re = userlist.Where(x => x.UserId == userid).FirstOrDefault();
+                        if (re != null)
+                            userlist3.Add(re);
+                    }
+                    return userlist3;
                 }
 
             }

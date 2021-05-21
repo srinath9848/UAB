@@ -31,14 +31,14 @@
     $("#PayorID").focus();
     $("#hdnProviderPosted").val('');
 
-     var isBlocked = @(ViewBag.IsBlocked == null ? "0": "1");
+    var isBlocked = @(ViewBag.IsBlocked == null ? "0": "1");
     if (isBlocked == 1) {
         $("#btnBlock").hide();
         $("#btnBlockHistory").show();
         $("#btnProviderPosted").hide();
         var currentindex = $("#currentindex").val();
         var lastindex = $("#lastindex").val();
-
+        
         if (currentindex == 0) {
             $("#btnPrevious").hide();
         } else {
@@ -46,6 +46,7 @@
         }
         if (currentindex == lastindex) {
             $("#btnNext").hide();
+            $("#codingSubmitAndGetNext").hide();
         } else {
             $("#btnNext").show();
         }

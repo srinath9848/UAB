@@ -159,6 +159,7 @@
                 </div>
                 <div title="" class="col-md-3 input-group">
                     <input type="text" id="@string.Format("DxRemarks_{0}_{1}", Model.TabIndex, j)" style="@Show" class="form-control QARevised ControlHeight" value="@dictQADxRemarks?.ElementAt(i).Value" />
+                    <span id="@string.Format("validDxRemarksClaim_{0}_{1}", Model.TabIndex, j)" class="text-danger txtdanger" style="display:none">*</span>
                 </div>
                 <div title="@dictRevisedDxRemarks?.ElementAt(i).Value" class="col-md-3 input-group CoderCorrections">
                     <input type="text" id="RevisedDXRemarks" class="form-control ControlHeight" style="@Show" value="@dictRevisedDxRemarks?.ElementAt(i).Value" />
@@ -239,7 +240,7 @@
                         <div class="input-group-prepend ControlHeight">
                             <span class="input-group-text" id="basic-addon1">@j</span>
                         </div>
-                        <input type="text" maxlength="5"  class="form-control CoderDetails ControlHeight" style="color: green;width: 17px;" placeholder="Code" value="@coderCptcodes[0]" />
+                        <input type="text" maxlength="5" class="form-control CoderDetails ControlHeight" style="color: green;width: 17px;" placeholder="Code" value="@coderCptcodes[0]" />
                         <input type="text" class="form-control CoderDetails ControlHeight" style="color:green;" placeholder="Mod" value="@coderModVal" />
                         <input type="text" class="form-control CoderDetails ControlHeight" style="color:green;" placeholder="Qty" value="@coderCptcodes[2]" />
                         <input type="text" class="form-control CoderDetails ControlHeight" style="color: green;" placeholder="Link All" value="@coderLinkAllVal" />
@@ -289,6 +290,8 @@
                 </div>
                 <div title="" class="col-md-3 input-group" style="@Show">
                     <input type="text" id="@string.Format("CptRemarks_{0}_{1}", Model.TabIndex, j)" class="form-control ControlHeight" value="@dictQACptRemarks?.ElementAt(i).Value" />
+                    <span id="@string.Format("validCptRemarksClaim_{0}_{1}", Model.TabIndex, j)" class="text-danger txtdanger" style="display:none">*</span>
+
                 </div>
                 <div title="@dictRevisedCptRemarks?.ElementAt(i).Value" class="col-md-3 input-group CoderCorrections" style="@Show">
                     <input type="text" class="form-control ControlHeight" value="@dictRevisedCptRemarks?.ElementAt(i).Value" />
@@ -357,7 +360,10 @@
                             Error Type
                         </label>
                         <div class="col-md-7">
-                            @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight CoderDetails", @id = string.Format("ErrorType_{0}", tabIndex) })
+                            @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;", @id = string.Format("ErrorType_{0}", Model.TabIndex), @onchange = "ErrorType('" + tabIndex + "')" })
+                            @Html.ValidationMessageFor(model => model.QADTO.ErrorType, null, new { @class = "text-danger ErrorType", @id = string.Format("ErrorTypeError_{0}", Model.TabIndex) })
+
+                            @*@Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight CoderDetails", @id = string.Format("ErrorType_{0}", tabIndex) })*@
                         </div>
                     </div>
                 </div>
