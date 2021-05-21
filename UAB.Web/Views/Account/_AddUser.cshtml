@@ -70,15 +70,16 @@
                             </td>
 
                         </tr>
-                        <tr>
-                            <td>Sample %</td>
-                            <td>@Html.TextBoxFor(model => model.SamplePercentage, new { @type = "number", @class = "", style = "width:136px", @autofocus = "autofocus", @autocomplete = "off", @id = "samplepercentage", @placeholder = "Enter Sample % " })</td>
+                        <tr id="samplingdiv">
+                            <td>Sampling %</td>
+                            <td>@Html.TextBoxFor(model => model.SamplePercentage, new { @type = "number", @class = "", style = "width:136px", @autofocus = "autofocus", @autocomplete = "off", @id = "samplepercentage", @placeholder = "Enter Sampling % " })</td>
                         </tr>
                     </table>
                     <div id="addbtnerror" style="color:red"></div>
                     <div class="col-md-10">
                         <button type="button" class="btn btn-sm btn-info btn-fill" id="AddRoleandProject">Add</button>
                     </div>
+                    <br />
                     <div class="form-group row" id="tbleProjectwithRoles" style="display:none;">
                         <div class="table-responsive tableresponsiveforroles col-md-13">
                             <table class="table table-striped table-bordered">
@@ -86,7 +87,7 @@
                                     <tr>
                                         <th style="width: 250px; font-weight:900;">Project</th>
                                         <th style="width: 250px; font-weight:900;">Role</th>
-                                        <th style="width: 250px; font-weight:900;">Sample %</th>
+                                        <th style="width: 250px; font-weight:900;">Sampling %</th>
                                         <th style="width: 250px; font-weight:900;">Action</th>
                                     </tr>
                                 </thead>
@@ -110,6 +111,15 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
+        $("#roledd").change(function () {
+            if ($("#roledd option:selected").text() == 'ShadowQA' || $("#roledd option:selected").text() == 'Manager') {
+                $("#samplepercentage").val(0);
+                $("#samplingdiv").hide();
+            } else {
+                $("#samplingdiv").show();
+                $('#samplepercentage').val('');
+            }
+        });
 
         $('#samplepercentage').on('keyup keypress change', function (e) {
             this.value = this.value.replace(/[^0-9\.]/g, '');
