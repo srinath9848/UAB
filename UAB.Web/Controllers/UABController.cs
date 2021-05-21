@@ -253,7 +253,6 @@ namespace UAB.Controllers
             ViewBag.IsBlocked = "1";
 
             ViewBag.currentindex = 0;            //always first will open from here so currentindex is zero
-
             #endregion
 
             chartSummaryDTO.ProjectName = ProjectName;
@@ -471,9 +470,9 @@ namespace UAB.Controllers
                 else
                 {
                     clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDTO, dtClaim, dtCpt);
-                    return RedirectToAction("GetCodingAvailableChart", new { Role = Roles.Coder.ToString(), ChartType = "Available", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName });
+                        return RedirectToAction("GetCodingAvailableChart", new { Role = Roles.Coder.ToString(), ChartType = "Available", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName });
+                    }
                 }
-            }
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("CodingSummary", lstDto);
