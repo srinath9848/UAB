@@ -126,15 +126,28 @@
                 var DxNewClaimremarks = $("[id*=QADxRemarkss_" + tabid + "_]");
                 $("#hdnQADxRemarks" + tabid).val("");
                 for (var i = 0; i < DxNewClaimremarks.length; i++) {
+                    $("#validDxRemarksClaim_" + tabid + "_" + id).hide();
                     var id = parseInt($(DxNewClaimremarks[i]).attr("id").split("_")[2]);
                     var res = $("[id='DxClaim_" + tabid + "_" + id + "']:eq(1)").attr('class');
                     if ($(DxNewClaimremarks[i]).css("display") == "flex" && res.includes('reject')) {
                         if ($(DxNewClaimremarks[i]).val() != "") {
+                            $("#validDxRemarksClaim_" + tabid + "_" + id).hide();
+                            if ($("#ErrorType_" + tabid).val() != "") {
+                                $("#ErrorTypeError_" + tabid).html('');
+                            }
                             if ($("#hdnQADxRemarks" + tabid).val() == "")
                                 $("#hdnQADxRemarks" + tabid).val(id + "^" + $(DxNewClaimremarks[i]).val());
                             else
                                 $("#hdnQADxRemarks" + tabid).val($("#hdnQADxRemarks" + tabid).val() + "|" + id + "^" + $(DxNewClaimremarks[i]).val());
 
+                        } else {
+                            $(DxNewClaimremarks[i]).focus();
+                            $("#validDxRemarksClaim_" + tabid + "_" + id).show();
+                            if ($("#ErrorType_" + tabid).val() == "") {
+                                $("#ErrorType_" + tabid).attr('readonly', false);
+                                $("#ErrorType_" + tabid).css("pointer-events", "auto");
+                                $("#ErrorTypeError_" + tabid).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                            }
                         }
                     }
                 }
@@ -171,6 +184,7 @@
                 $("#hdnQACptCodes" + tabid).val("");
                 var index = 1;
                 for (var i = 0; i < CptNewClaimRemarks.length; i++) {
+                    $("#validCptRemarksClaim_" + tabid + "_" + id).hide();
                     var id = parseInt($(CptNewClaimRemarks[i]).attr("id").split("_")[2]);
                     var res = $("[id='Cpt_" + tabid + "_" + index + "']:eq(1)").attr('class');
                     if ($(CptNewClaimRemarks[i]).css("display") == "flex" && res.includes('reject')) {
@@ -181,10 +195,23 @@
                                 $("#hdnQACptCodes" + tabid).val($("#hdnQACptCodes" + tabid).val() + "|" + id + "^" + $("#txt" + tabid + "Cpt_" + index).val());
                         }
                         if ($(CptNewClaimRemarks[i]).val() != "") {
+                            $("#validCptRemarksClaim_" + tabid + "_" + id).hide();
+                            if ($("#ErrorType_" + tabid).val() != "") {
+                                $("#ErrorTypeError_" + tabid).html('');
+                            }
                             if ($("#hdnQACptRemarks" + tabid).val() == "")
                                 $("#hdnQACptRemarks" + tabid).val(id + "^" + $(CptNewClaimRemarks[i]).val());
                             else
                                 $("#hdnQACptRemarks" + tabid).val($("#hdnQACptRemarks" + tabid).val() + "|" + id + "^" + $(CptNewClaimRemarks[i]).val());
+                        }
+                        else {
+                            $(CptNewClaimRemarks[i]).focus();
+                            $("#validCptRemarksClaim_" + tabid + "_" + id).show();
+                            if ($("#ErrorType_" + tabid).val() == "") {
+                                $("#ErrorType_" + tabid).attr('readonly', false);
+                                $("#ErrorType_" + tabid).css("pointer-events", "auto");
+                                $("#ErrorTypeError_" + tabid).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                            }
                         }
                     }
                     index = index + parseInt(1);
@@ -200,6 +227,7 @@
         $("#hdnQADxCodes").val('');
         $("#hdnQADxRemarks").val('');
         for (var i = 0; i < Dxcodes.length; i++) {
+            $("#validDx_" + id).hide();
             var id = parseInt($(Dxcodes[i]).attr("id").split("_")[1]);
             var res = $("[id='Dx_" + id + "']:eq(1)").attr('class');
             if (res.includes('reject') && $(Dxcodes[i]).css("display") == "flex") {
@@ -234,6 +262,7 @@
         $("#hdnQACptCodes").val('');
         $("#hdnQACptRemarks").val('');
         for (var i = 0; i < CPTcodes.length; i++) {
+            $("#validCpt_" + id).hide();
             var id = parseInt($(CPTcodes[i]).attr("id").split("_")[1]);
             var res = $("[id='Cpt_" + id + "']:eq(1)").attr('class');
             if (res.includes('reject') && $(CPTcodes[i]).css("display") == "flex") {
@@ -253,7 +282,7 @@
                         $("#hdnQACptRemarks").val($("#hdnQACptRemarks").val() + "|" + id + "^" + $("#QACptRemarks_" + id).val());
                 }
                 else {
-                    $("#txtCpt_" + i).focus();
+                    $("#txtCpt_" + id).focus();
                     $("#validCpt_" + id).show();
                     if ($("#ErrorType_" + id).val() == "") {
                         $("#ErrorType_" + id).attr('readonly', false);
@@ -274,9 +303,6 @@
             e.preventDefault();
         }
         else {
-            if ($("#ErrorType_" + id).val() == "") {
-                $("#ErrorTypeError_" + id).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
-            }
             var txtdanger = $('[class*=txtdanger][style=""]');
             var errortype = $('[id*=projectdd]').text();
             if (txtdanger.length > 0 || errortype != "")
@@ -284,7 +310,6 @@
             else
                 $("#form1").submit();
         }
-
     });
 
     ErrorType = function (id) {
