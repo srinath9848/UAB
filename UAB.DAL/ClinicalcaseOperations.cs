@@ -1305,12 +1305,16 @@ namespace UAB.DAL
                                 chartSummaryDTO.ShadowQAProviderFeedbackID = Convert.ToInt32(reader["ShadowQAProviderFeedbackID"]);
                             chartSummaryDTO.ShadowQAProviderFeedbackRemarks = Convert.ToString(reader["ShadowQAProviderFeedbackIDRemark"]);
 
-                            chartSummaryDTO.RevisedPayorRemarks = Convert.ToString(reader["RebuttedPayorIdRemark"]);
-                            chartSummaryDTO.RevisedProviderRemarks = Convert.ToString(reader["RebuttedProviderIDRemark"]);
-                            chartSummaryDTO.RevisedCPTRemarks = Convert.ToString(reader["RebuttedCPTCodeRemark"]);
-                            chartSummaryDTO.RevisedModRemarks = Convert.ToString(reader["RebuttedModRemark"]);
-                            chartSummaryDTO.RevisedDXRemarks = Convert.ToString(reader["RebuttedDxRemark"]);
-                            chartSummaryDTO.RevisedProviderFeedbackRemarks = Convert.ToString(reader["RebuttedProviderFeedbackIDRemark"]);
+                            //chartSummaryDTO.RevisedPayorRemarks = Convert.ToString(reader["RebuttedPayorIdRemark"]);
+                            //chartSummaryDTO.RevisedProviderRemarks = Convert.ToString(reader["RebuttedProviderIDRemark"]);
+
+                            //chartSummaryDTO.RevisedDX = Convert.ToString(reader["RebuttedDx"]);
+                            //chartSummaryDTO.RevisedDXRemarks = Convert.ToString(reader["RebuttedDxRemark"]);
+
+                            //chartSummaryDTO.RevisedCPTRemarks = Convert.ToString(reader["RebuttedCPTCodeRemark"]);
+                            //chartSummaryDTO.RevisedCPTCode = Convert.ToString(reader["RebuttedCPTCode"]);
+
+                            //chartSummaryDTO.RevisedProviderFeedbackRemarks = Convert.ToString(reader["RebuttedProviderFeedbackIDRemark"]);
 
                         }
                         else if (Role == "QA" && ChartType == "RebuttalOfCoder")
@@ -1461,14 +1465,14 @@ namespace UAB.DAL
                         chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
                         chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
                         chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate();
-                        chartSummaryDTO.Blockedbyuser= Convert.ToString(reader["Name"]);
+                        chartSummaryDTO.Blockedbyuser = Convert.ToString(reader["Name"]);
                         lst.Add(chartSummaryDTO);
                     }
                 }
             }
             return lst;
         }
-        public void SaveOrUnblockchart(int cid, string responseremarks,string flag)
+        public void SaveOrUnblockchart(int cid, string responseremarks, string flag)
         {
             using (var context = new UABContext())
             {
@@ -1481,7 +1485,7 @@ namespace UAB.DAL
                 };
                 context.BlockResponse.Add(mdl);
 
-                if (flag =="Unblock")
+                if (flag == "Unblock")
                 {
                     var existingblockchart = context.WorkItem.Where(a => a.ClinicalCaseId == cid).FirstOrDefault();
 
@@ -2527,7 +2531,7 @@ namespace UAB.DAL
             return dto;
         }
 
-        public CodingDTO SubmitQARebuttalChartsOfCoder(ChartSummaryDTO chartSummaryDTO, DataTable dtAudit, string hdnRejected)
+        public CodingDTO SubmitQARebuttalChartsOfCoder(ChartSummaryDTO chartSummaryDTO, DataTable dtAudit)
         {
             CodingDTO dto = new CodingDTO();
 
@@ -2544,12 +2548,7 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = mUserId
-                        },   new SqlParameter() {
-                            ParameterName = "@hdnRejected",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = hdnRejected
-                        },
+                        },   
                           new SqlParameter() {
                             ParameterName = "@utAudit1",
                             SqlDbType =  System.Data.SqlDbType.Structured,

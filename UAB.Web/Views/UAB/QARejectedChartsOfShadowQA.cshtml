@@ -208,10 +208,25 @@
                 else
                     $("#hdnQADxCodes").val($("#hdnQADxCodes").val() + "|" + id + "^" + $("#txtDxCode_" + id).val());
 
-                if ($("#hdnQADxRemarks").val() == "")
-                    $("#hdnQADxRemarks").val(id + "^" + $("#DxRemarks_" + id).val());
-                else
-                    $("#hdnQADxRemarks").val($("#hdnQADxRemarks").val() + "|" + id + "^" + $("#DxRemarks_" + id).val());
+                if ($("#DxRemarks_" + id).val() != "") {
+                    $("#validDx_" + id).hide();
+                    if ($("#ErrorType_" + id).val() != "") {
+                        $("#ErrorTypeError_" + id).html('');
+                    }
+                    if ($("#hdnQADxRemarks").val() == "")
+                        $("#hdnQADxRemarks").val(id + "^" + $("#DxRemarks_" + id).val());
+                    else
+                        $("#hdnQADxRemarks").val($("#hdnQADxRemarks").val() + "|" + id + "^" + $("#DxRemarks_" + id).val());
+                }
+                else {
+                    $("#DxRemarks_" + id).focus();
+                    $("#validDx_" + id).show();
+                    if ($("#ErrorType_" + id).val() == "") {
+                        $("#ErrorType_" + id).attr('readonly', false);
+                        $("#ErrorType_" + id).css("pointer-events", "auto");
+                        $("#ErrorTypeError_" + id).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                    }
+                }
             }
         }
 
@@ -227,25 +242,56 @@
                 else
                     $("#hdnQACptCodes").val($("#hdnQACptCodes").val() + "|" + id + "^" + $("#txtCPTCode_" + id).val());
 
-                if ($("#hdnQACptRemarks").val() == "")
-                    $("#hdnQACptRemarks").val(id + "^" + $("#QACptRemarks_" + id).val());
-                else
-                    $("#hdnQACptRemarks").val($("#hdnQACptRemarks").val() + "|" + id + "^" + $("#QACptRemarks_" + id).val());
+                if ($("#QACptRemarks_" + id).val() != "") {
+                    $("#validCpt_" + id).hide();
+                    if ($("#ErrorType_" + id).val() != "") {
+                        $("#ErrorTypeError_" + id).html('');
+                    }
+                    if ($("#hdnQACptRemarks").val() == "")
+                        $("#hdnQACptRemarks").val(id + "^" + $("#QACptRemarks_" + id).val());
+                    else
+                        $("#hdnQACptRemarks").val($("#hdnQACptRemarks").val() + "|" + id + "^" + $("#QACptRemarks_" + id).val());
+                }
+                else {
+                    $("#txtCpt_" + i).focus();
+                    $("#validCpt_" + id).show();
+                    if ($("#ErrorType_" + id).val() == "") {
+                        $("#ErrorType_" + id).attr('readonly', false);
+                        $("#ErrorType_" + id).css("pointer-events", "auto");
+                        $("#ErrorTypeError_" + id).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                    }
+                }
             }
         }
 
         var total = $(".fa-check-circle").length;
         var reject = $(".reject").length;
         var accept = $(".accept").length;
+
+
         if (total != accept + reject) {
             $("#validationPopUp").show();
             e.preventDefault();
         }
         else {
-            $("#form1").submit();
+            if ($("#ErrorType_" + id).val() == "") {
+                $("#ErrorTypeError_" + id).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+            }
+            var txtdanger = $('[class*=txtdanger][style=""]');
+            var errortype = $('[id*=projectdd]').text();
+            if (txtdanger.length > 0 || errortype != "")
+                e.preventDefault();
+            else
+                $("#form1").submit();
         }
 
     });
+
+    ErrorType = function (id) {
+        if ($("#ErrorType_" + id).val() != "") {
+            $("#ErrorTypeError_" + id).text('');
+        }
+    }
 
     validationPopUp = function () {
         $("#validationPopUp").hide();
