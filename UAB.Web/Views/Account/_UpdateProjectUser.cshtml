@@ -15,17 +15,17 @@
                 <div class="modal-body">
                     <div class="form-horizontal" action="">
                         <div class="form-group" style="font-size: 15px">
-                            <label style="width:80px;"><bold>Email :</bold></label>
+                            <label style="width:90px;"><bold>Email :</bold></label>
                             <span>@Model.Email</span>
                         </div>
                         <br />
                         <div class="form-group" style="font-size: 15px">
-                            <label style="width:80px;"><bold>Project :</bold></label>
+                            <label style="width:90px;"><bold>Project :</bold></label>
                             <span>@Model.ProjectName</span>
                         </div>
                         <br />
                         <div class="form-group" style="font-size: 15px">
-                            <label style="width:80px;"><bold>Role :</bold></label>
+                            <label style="width:90px;"><bold>Role :</bold></label>
                             <span>
                                 @Html.DropDownListFor(model => model.RoleId, new SelectList(@ViewBag.Roles, "RoleId", "Name"), "--Select a Role--", new { @id = "roledd" })
                             </span>
@@ -33,10 +33,10 @@
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         </div>
                         <br />
-                        <div class="form-group" style="font-size: 15px">
-                            <label style="width:80px;"><bold>Sample % :</bold></label>
+                        <div class="form-group" style="font-size: 15px" id="samplingdiv">
+                            <label style="width:90px;"><bold>Sampling % :</bold></label>
                             <span>
-                                @Html.TextBoxFor(model => model.SamplePercentage, new { @class = "", style = "width:136px", @autofocus = "autofocus", @autocomplete = "off", @id = "samplepercentage", @placeholder = "Enter Sample Percentage" })
+                                @Html.TextBoxFor(model => model.SamplePercentage, new { @class = "", style = "width:136px", @autofocus = "autofocus", @autocomplete = "off", @id = "samplepercentage", @placeholder = "Enter Sampling %" })
                             </span>
                             @Html.ValidationMessageFor(model => model.SamplePercentage, null, new { @class = "text-danger" })
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -60,8 +60,26 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+
+        if ($("#roledd option:selected").text() == 'ShadowQA' || $("#roledd option:selected").text() == 'Manager') {
+            $("#samplingdiv").hide();
+        } else {
+            $("#samplingdiv").show();
+            $('#samplepercentage').val('');
+        }
+
         var intialrole = $("#roledd").find('option:selected').val();
         var intialsampleper = $("#samplepercentage").val();
+        $("#roledd").change(function () {
+            if ($("#roledd option:selected").text() == 'ShadowQA' || $("#roledd option:selected").text() == 'Manager') {
+                $('#samplepercentage').val(0);
+                $("#samplingdiv").hide();
+            } else {
+                $("#samplingdiv").show();
+                $('#samplepercentage').val('');
+            }
+
+        });
         $('#btnupdate').click(function (e) {
             var finalrole = $("#roledd").find('option:selected').val();
             var finalsampleper = $("#samplepercentage").val();
