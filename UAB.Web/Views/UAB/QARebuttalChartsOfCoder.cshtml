@@ -174,7 +174,7 @@
                 var DxClaimcodes = $("[id*=DxRemarks_" + tabid + "_]");
 
                 for (var i = 0; i < DxClaimcodes.length; i++) {
-
+                    $("#validDxRemarksClaim_" + tabid + "_" + id).hide();
                     var id = parseInt($(DxClaimcodes[i]).attr("id").split("_")[2]);
 
                     var res = $("[id='DxClaim_" + tabid + "_" + id + "']:eq(1)").attr('class');
@@ -185,10 +185,24 @@
                         else
                             $("#hdnDx" + tabid).val($("#hdnDx" + tabid).val() + "|" + id + "^" + $("#txtDxCode_" + tabid + "_" + id).val());
 
-                        if ($("#hdnDxRemarks" + tabid).val() == "")
-                            $("#hdnDxRemarks" + tabid).val(id + "^" + $("#DxRemarks_" + tabid + "_" + id).val());
-                        else
-                            $("#hdnDxRemarks" + tabid).val($("#hdnDxRemarks" + tabid).val() + "|" + id + "^" + $("#DxRemarks_" + tabid + "_" + id).val());
+                        if ($("#DxRemarks_" + tabid + "_" + id).val() != "") {
+                            $("#validDxRemarksClaim_" + tabid + "_" + id).hide();
+                            if ($("#ErrorType_" + tabid).val() != "") {
+                                $("#ErrorTypeError_" + tabid).html('');
+                            }
+                            if ($("#hdnDxRemarks" + tabid).val() == "")
+                                $("#hdnDxRemarks" + tabid).val(id + "^" + $("#DxRemarks_" + tabid + "_" + id).val());
+                            else
+                                $("#hdnDxRemarks" + tabid).val($("#hdnDxRemarks" + tabid).val() + "|" + id + "^" + $("#DxRemarks_" + tabid + "_" + id).val());
+                        } else {
+                            $("#DxRemarks_" + tabid + "_" + id).focus();
+                            $("#validDxRemarksClaim_" + tabid + "_" + id).show();
+                            if ($("#ErrorType_" + tabid).val() == "") {
+                                $("#ErrorType_" + tabid).attr('readonly', false);
+                                $("#ErrorType_" + tabid).css("pointer-events", "auto");
+                                $("#ErrorTypeError_" + tabid).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                            }
+                        }
                     }
                 }
 
@@ -197,7 +211,7 @@
                 var CPTClaimcodes = $("[id*=CptRemarks_" + tabid + "_]");
 
                 for (var i = 0; i < CPTClaimcodes.length; i++) {
-
+                    $("#validCptRemarksClaim_" + tabid + "_" + id).hide();
                     var id = parseInt($(CPTClaimcodes[i]).attr("id").split("_")[2]);
 
                     var res = $("[id='Cpt_" + tabid + "_" + id + "']:eq(1)").attr('class');
@@ -207,11 +221,24 @@
                             $("#hdnCpt" + tabid).val(id + "^" + $("#txtCpt_" + tabid + "_" + id).val() + "^" + $("#txtMod_" + tabid + "_" + id).val() + "^" + $("#txtQty_" + tabid + "_" + id).val() + "^" + $("#txtLinks_" + tabid + "_" + id).val());
                         else
                             $("#hdnCpt" + tabid).val($("#hdnCpt" + tabid).val() + "|" + id + "^" + $("#txtCpt_" + tabid + "_" + id).val() + "^" + $("#txtMod_" + tabid + "_" + id).val() + "^" + $("#txtQty_" + tabid + "_" + id).val() + "^" + $("#txtLinks_" + tabid + "_" + id).val());
-
-                        if ($("#hdnCptRemarks" + tabid).val() == "")
-                            $("#hdnCptRemarks" + tabid).val(id + "^" + $("#CptRemarks_" + tabid + "_" + id).val());
-                        else
-                            $("#hdnCptRemarks" + tabid).val($("#hdnCptRemarks" + tabid).val() + "|" + id + "^" + $("#CptRemarks_" + tabid + "_" + id).val());
+                        if ($("#CptRemarks_" + tabid + "_" + id).val() != "") {
+                            $("#validCptRemarksClaim_" + tabid + "_" + id).hide();
+                            if ($("#ErrorType_" + tabid).val() != "") {
+                                $("#ErrorTypeError_" + tabid).html('');
+                            }
+                            if ($("#hdnCptRemarks" + tabid).val() == "")
+                                $("#hdnCptRemarks" + tabid).val(id + "^" + $("#CptRemarks_" + tabid + "_" + id).val());
+                            else
+                                $("#hdnCptRemarks" + tabid).val($("#hdnCptRemarks" + tabid).val() + "|" + id + "^" + $("#CptRemarks_" + tabid + "_" + id).val());
+                        } else {
+                            $("#CptRemarks_" + tabid + "_" + id).focus();
+                            $("#validCptRemarksClaim_" + tabid + "_" + id).show();
+                            if ($("#ErrorType_" + tabid).val() == "") {
+                                $("#ErrorType_" + tabid).attr('readonly', false);
+                                $("#ErrorType_" + tabid).css("pointer-events", "auto");
+                                $("#ErrorTypeError_" + tabid).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                            }
+                        }
                     }
                 }
             }
@@ -223,7 +250,7 @@
         $("#hdnDx").val('');
         $("#hdnDxRemarks").val('');
         for (var i = 0; i < Dxcodes.length; i++) {
-
+            $("#validDx_" + id).hide();
             var id = parseInt($(Dxcodes[i]).attr("id").split("_")[1]);
 
             var res = $("[id='Dx_" + id + "']:eq(1)").attr('class');
@@ -234,10 +261,24 @@
                 else
                     $("#hdnDx").val($("#hdnDx").val() + "|" + id + "^" + $("#txtDxCode_" + id).val());
 
-                if ($("#hdnDxRemarks").val() == "")
-                    $("#hdnDxRemarks").val(id + "^" + $("#DxRemarks_" + id).val());
-                else
-                    $("#hdnDxRemarks").val($("#hdnDxRemarks").val() + "|" + id + "^" + $("#DxRemarks_" + id).val());
+                if ($("#DxRemarks_" + id).val() != "") {
+                    $("#validDx_" + id).hide();
+                    if ($("#ErrorType_" + id).val() != "") {
+                        $("#ErrorTypeError_" + id).html('');
+                    }
+                    if ($("#hdnDxRemarks").val() == "")
+                        $("#hdnDxRemarks").val(id + "^" + $("#DxRemarks_" + id).val());
+                    else
+                        $("#hdnDxRemarks").val($("#hdnDxRemarks").val() + "|" + id + "^" + $("#DxRemarks_" + id).val());
+                } else {
+                    $("#DxRemarks_" + id).focus();
+                    $("#validDx_" + id).show();
+                    if ($("#ErrorType_" + id).val() == "") {
+                        $("#ErrorType_" + id).attr('readonly', false);
+                        $("#ErrorType_" + id).css("pointer-events", "auto");
+                        $("#ErrorTypeError_" + id).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                    }
+                }
             }
         }
 
@@ -245,7 +286,7 @@
         $("#hdnCpt").val('');
         $("#hdnCptRemarks").val('');
         for (var i = 0; i < CPTcodes.length; i++) {
-
+            $("#validCpt_" + id).hide();
             var id = parseInt($(CPTcodes[i]).attr("id").split("_")[1]);
 
             var res = $("[id='Cpt_" + id + "']:eq(1)").attr('class');
@@ -256,10 +297,24 @@
                 else
                     $("#hdnCpt").val($("#hdnCpt").val() + "|" + id + "^" + $("#txtCpt_" + id).val() + "^" + $("#txtMod_" + id).val() + "^" + $("#txtQty_" + id).val() + "^" + $("#txtLinks_" + id).val());
 
-                if ($("#hdnCptRemarks").val() == "")
-                    $("#hdnCptRemarks").val(id + "^" + $("#CptRemarks_" + id).val());
-                else
-                    $("#hdnCptRemarks").val($("#hdnCptRemarks").val() + "|" + id + "^" + $("#CptRemarks_" + id).val());
+                if ($("#CptRemarks_" + id).val() != "") {
+                    $("#validCpt_" + id).hide();
+                    if ($("#ErrorType_" + id).val() != "") {
+                        $("#ErrorTypeError_" + id).html('');
+                    }
+                    if ($("#hdnCptRemarks").val() == "")
+                        $("#hdnCptRemarks").val(id + "^" + $("#CptRemarks_" + id).val());
+                    else
+                        $("#hdnCptRemarks").val($("#hdnCptRemarks").val() + "|" + id + "^" + $("#CptRemarks_" + id).val());
+                } else {
+                    $("#txtCpt_" + id).focus();
+                    $("#validCpt_" + id).show();
+                    if ($("#ErrorType_" + id).val() == "") {
+                        $("#ErrorType_" + id).attr('readonly', false);
+                        $("#ErrorType_" + id).css("pointer-events", "auto");
+                        $("#ErrorTypeError_" + id).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                    }
+                }
             }
         }
         //Reading Dx,CPT in Default Claim is Ended
@@ -272,21 +327,20 @@
             $("#validationPopUp").show();
             e.preventDefault();
         } else {
-            var remarks = $('.QARevised[style="display:flex"]');
-            var isRemarkEmpty = false;
-
-            for (var i = 0; i < remarks.length; i++) {
-                if ($(remarks[i]).val() == "")
-                    isRemarkEmpty = true;
-            }
-            if (isRemarkEmpty) {
-                $("#validationPopUp").show();
+            var txtdanger = $('[class*=txtdanger][style=""]');
+            var errortype = $('[id*=projectdd]').text();
+            if (txtdanger.length > 0 || errortype != "")
                 e.preventDefault();
-            }
             else
                 $("#formSubmitQARebuttalChartsOfCoder").submit();
         }
     });
+
+    ErrorType = function (id) {
+        if ($("#ErrorType_" + id).val() != "") {
+            $("#ErrorTypeError_" + id).text('');
+        }
+    }
 
     validationPopUp = function () {
         $("#validationPopUp").hide();
