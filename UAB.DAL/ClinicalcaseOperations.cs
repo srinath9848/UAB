@@ -1421,7 +1421,106 @@ namespace UAB.DAL
             }
             return ds;
         }
-        public List<ChartSummaryDTO> GetAgingReportDetails(string ColumnName, int projectID)
+
+        public List<ChartSummaryDTO> GetAgingReportDetails(string ColumnName, string projectTypeName, int projectID)
+        {
+            List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
+            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
+            chartSummaryDTO.ProjectID = projectID;
+            using (var context = new UABContext())
+            {
+                var param = new SqlParameter[] {
+                    new SqlParameter() {
+                            ParameterName = "@ProjectId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = projectID
+                        },
+                    new SqlParameter() {
+                            ParameterName = "@ProjectTypeName",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = projectTypeName
+                        },
+                     new SqlParameter() {
+                            ParameterName = "@ColumnName",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = ColumnName
+                        }
+                    };
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[USPAgingBreakDownDetailedReportByDay]";
+                    cmd.Parameters.AddRange(param);
+                    cmd.Connection = con;
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        chartSummaryDTO = new ChartSummaryDTO();
+                        chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
+                        chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
+                        lst.Add(chartSummaryDTO);
+                    }
+                }
+            }
+            return lst;
+        }
+
+        public List<ChartSummaryDTO> GetAgingReportDetailsByStatus(string ColumnName, string projectTypeName, int projectID)
+        {
+            List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
+            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
+            chartSummaryDTO.ProjectID = projectID;
+            using (var context = new UABContext())
+            {
+                var param = new SqlParameter[] {
+                    new SqlParameter() {
+                            ParameterName = "@ProjectId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = projectID
+                        },
+                    new SqlParameter() {
+                            ParameterName = "@ProjectTypeName",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = projectTypeName
+                        },
+                     new SqlParameter() {
+                            ParameterName = "@ColumnName",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = ColumnName
+                        }
+                    };
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[USPAgingBreakDownDetailedReportByStatus]";
+                    cmd.Parameters.AddRange(param);
+                    cmd.Connection = con;
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        chartSummaryDTO = new ChartSummaryDTO();
+                        chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
+                        chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
+                        lst.Add(chartSummaryDTO);
+                    }
+                }
+            }
+            return lst;
+        }
+
+        public List<ChartSummaryDTO> GetAgingReportDetailsForBlockedCharts(string ColumnName, int projectID)
         {
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
@@ -2551,7 +2650,7 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = mUserId
-                        },   
+                        },
                           new SqlParameter() {
                             ParameterName = "@utAudit1",
                             SqlDbType =  System.Data.SqlDbType.Structured,

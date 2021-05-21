@@ -54,12 +54,36 @@ namespace UAB.Controllers
             var lstagingtDTO = clinicalcaseOperations.GetAgingReport();
             return PartialView("_AgingReport", lstagingtDTO);
         }
+
         [HttpGet]
-        public IActionResult GetAgingReportDetails (string ColumnName,string ProjectName)
+        public IActionResult GetAgingReportDetails(string ColumnName, string ProjectType, string ProjectName)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             int ProjectId = clinicalcaseOperations.GetProjects().Where(x => x.Name == ProjectName).Select(x => x.ProjectId).FirstOrDefault();
-            var lstAgingReportDetails = clinicalcaseOperations.GetAgingReportDetails(ColumnName,ProjectId);
+            var lstAgingReportDetails = clinicalcaseOperations.GetAgingReportDetails(ColumnName,ProjectType, ProjectId);
+
+            ViewBag.ColumnName = ColumnName;
+            ViewBag.projectname = ProjectName;
+            return PartialView("_AgingBreakDownReportDetailsByDay", lstAgingReportDetails);
+        }
+        [HttpGet]
+        public IActionResult GetAgingReportDetailsByStatus(string ColumnName, string ProjectType, string ProjectName)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            int ProjectId = clinicalcaseOperations.GetProjects().Where(x => x.Name == ProjectName).Select(x => x.ProjectId).FirstOrDefault();
+            var lstAgingReportDetails = clinicalcaseOperations.GetAgingReportDetailsByStatus(ColumnName, ProjectType, ProjectId);
+
+            ViewBag.ColumnName = ColumnName;
+            ViewBag.projectname = ProjectName;
+            return PartialView("_AgingBreakDownReportDetailsByDay", lstAgingReportDetails);
+        }
+        
+        [HttpGet]
+        public IActionResult GetAgingReportDetailsForBlockedCharts(string ColumnName,string ProjectName)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            int ProjectId = clinicalcaseOperations.GetProjects().Where(x => x.Name == ProjectName).Select(x => x.ProjectId).FirstOrDefault();
+            var lstAgingReportDetails = clinicalcaseOperations.GetAgingReportDetailsForBlockedCharts(ColumnName,ProjectId);
 
             ViewBag.ColumnName = ColumnName;
             ViewBag.projectname = ProjectName;
