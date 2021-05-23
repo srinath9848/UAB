@@ -991,6 +991,7 @@ namespace UAB.DAL
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
                             if (reader["ProviderFeedbackId"] != DBNull.Value)
                                 chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
+                            chartSummaryDTO.ProjectID = Convert.ToInt32(reader["ProjectId"]);
                         }
                         else if ((Role == "Coder" && ChartType == "ReadyForPosting") ||
                             (Role == "QA" && ChartType == "OnHold"))

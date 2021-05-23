@@ -29,18 +29,18 @@
     var enablePrevious = @(ViewBag.EnablePrevious == null ? "false" : ViewBag.EnablePrevious);
 
     if (isBlocked == 1) {
-        $("#btnBlock").hide();
-        $("#btnBlockHistory").show();
+        $(".clsbtnBlock").hide();
+        $(".clsbtnBlockHistory").show();
 
         if (enablePrevious == true) {
-            $("#btnPrevious").css('visibility','visible');
+            $(".clsPrevious").css('visibility','visible');
         } else {
-            $("#btnPrevious").css('visibility', 'hidden');
+            $(".clsPrevious").css('visibility', 'hidden');
         }
         if (enableNext == true) {
-            $("#btnNext").css('visibility', 'visible');
+            $(".clsNext").css('visibility', 'visible');
         } else {
-            $("#btnNext").css('visibility', 'hidden');
+            $(".clsNext").css('visibility', 'hidden');
         }
     }
 
