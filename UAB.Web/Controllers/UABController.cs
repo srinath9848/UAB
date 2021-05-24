@@ -239,7 +239,7 @@ namespace UAB.Controllers
 
         }
 
-        public IActionResult GetCodingBlockedChart(string Role, string ChartType, int ProjectID, string ProjectName)
+        public IActionResult GetCodingBlockedChart(string Role, string ChartType, int ProjectID, string ccids, string ProjectName, int CurrCCId = 0, string Previous = "", string Next = "")
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
@@ -258,33 +258,89 @@ namespace UAB.Controllers
             chartSummaryDTO.ProjectName = ProjectName;
 
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
+
+            int PrevOrNextCCId = 0;
+            ViewBag.EnableNext = "false";
+            ViewBag.EnablePrevious = "false";
+
+            if (ccids != null)
+            {
+                List<int> CCIds = ccids.Split(",").Select(int.Parse).ToList();
+
+                int CurrentIndex = CCIds.IndexOf(CurrCCId);
+
+                if (Previous == "" && Next == "")
+                {
+                    PrevOrNextCCId = CCIds[0];
+                    if (CCIds.Count > 1)
+                        ViewBag.EnableNext = "true";
+                }
+                else if (Previous != "")
+                {
+                    ViewBag.EnableNext = "true";
+                    PrevOrNextCCId = CCIds[CurrentIndex - 1];
+
+                    if ((CurrentIndex - 1) == 0)
+                        ViewBag.EnablePrevious = "false";
+                    else
+                        ViewBag.EnablePrevious = "true";
+                }
+                else if (Next != "")
+                {
+                    ViewBag.EnablePrevious = "true";
+
+                    PrevOrNextCCId = CCIds[CurrentIndex + 1];
+
+                    if ((CurrentIndex + 1) == (CCIds.Count - 1))
+                        ViewBag.EnableNext = "false";
+                    else
+                        ViewBag.EnableNext = "true";
+                }
+            }
+
             switch (Role)
             {
                 case "Coder":
-                    chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
-                    //for prenxt button disblenable operation
-                    lst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);
-                    List<int> codercidslst = lst.Select(x => x.CodingDTO.ClinicalCaseID).ToList();
-                    ViewBag.lastindex = codercidslst.Count - 1;
+                    chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID, PrevOrNextCCId);
+                    chartSummaryDTO.ProjectName = ProjectName;
+
+                    if (ccids == null && chartSummaryDTO.CCIDs.Split(",").Length > 1)
+                    {
+                        ViewBag.CurrentCCId = chartSummaryDTO.CCIDs.Split(",")[0];
+                        ViewBag.EnableNext = "true";
+                    }
+                    else
+                        ViewBag.CurrentCCId = PrevOrNextCCId;
                     break;
                 case "QA":
-                    lstChartSummaryDTO = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
-                    if (lstChartSummaryDTO.Count > 0)
-                        lstChartSummaryDTO.FirstOrDefault().ProjectName = ProjectName;
-                    //for prenxt button disblenable operation
-                    lst = clinicalcaseOperations.DisplayBlockCharts(Role, ProjectID);
-                    List<int> qacidslst = lst.Select(x => x.CodingDTO.ClinicalCaseID).ToList();
-                    ViewBag.lastindex = qacidslst.Count - 1;
-                    break;
                 case "ShadowQA":
-                    lstChartSummaryDTO = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
+
+
+                    lstChartSummaryDTO = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID, PrevOrNextCCId);
+
                     if (lstChartSummaryDTO.Count > 0)
+                    {
                         lstChartSummaryDTO.FirstOrDefault().ProjectName = ProjectName;
-                    //for prenxt button disblenable operation
-                    lst = clinicalcaseOperations.DisplayBlockCharts(Role, ProjectID);
-                    List<int> shadowqacidslst = lst.Select(x => x.CodingDTO.ClinicalCaseID).ToList();
-                    ViewBag.lastindex = shadowqacidslst.Count - 1;
+
+                        if (ccids == null && lstChartSummaryDTO.FirstOrDefault().CCIDs.Split(",").Length > 1)
+                        {
+                            ViewBag.CurrentCCId = lstChartSummaryDTO.FirstOrDefault().CCIDs.Split(",")[0];
+                            ViewBag.EnableNext = "true";
+                        }
+                        else
+                            ViewBag.CurrentCCId = PrevOrNextCCId;
+                    }
+
                     break;
+                    //case "ShadowQA":
+                    //    lstChartSummaryDTO = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
+                    //    if (lstChartSummaryDTO.Count > 0)
+                    //        lstChartSummaryDTO.FirstOrDefault().ProjectName = ProjectName;
+                    //    //for prenxt button disblenable operation
+                    //    lst = clinicalcaseOperations.DisplayBlockCharts(Role, ProjectID);
+                    //    List<int> shadowqacidslst = lst.Select(x => x.CodingDTO.ClinicalCaseID).ToList();
+                    //    ViewBag.lastindex = shadowqacidslst.Count - 1;
+                    //    break;
             }
             if (Role == "QA")
                 return View("QA", lstChartSummaryDTO.OrderBy(a => a.ClaimId).ToList());

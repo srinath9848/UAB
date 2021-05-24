@@ -653,14 +653,12 @@
                 $("#validationPopUp").show();
                 e.preventDefault();
             }
+            var txtdanger = $('[class*=txtdanger][style=""]');
+            if (txtdanger.length > 0)
+                e.preventDefault();
+            else
+                $("#FormSubmitCodingIncorrectChart").submit();
         }
-
-        var txtdanger = $('[class*=txtdanger][style=""]');
-        if (txtdanger.length > 0)
-            e.preventDefault();
-        else
-            $("#FormSubmitCodingIncorrectChart").submit();
-
     });
 
     validationPopUp = function () {

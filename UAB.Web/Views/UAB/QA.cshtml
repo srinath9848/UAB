@@ -25,22 +25,22 @@
     $(".accept").removeClass('accept');
 
     var isBlocked = @(ViewBag.IsBlocked == null ? "0": "1");
-
+    var enableNext = @(ViewBag.EnableNext == null ? "false": ViewBag.EnableNext);
+    var enablePrevious = @(ViewBag.EnablePrevious == null ? "false" : ViewBag.EnablePrevious);
 
     if (isBlocked == 1) {
-        $("#btnBlock").hide();
-        $("#btnBlockHistory").show();
-        var currentindex = $("#currentindex").val();
-        var lastindex = $("#lastindex").val();
-        if (currentindex == 0) {
-            $("#btnPrevious").hide();
+        $(".clsbtnBlock").hide();
+        $(".clsbtnBlockHistory").show();
+
+        if (enablePrevious == true) {
+            $(".clsPrevious").css('visibility','visible');
         } else {
-            $("#btnPrevious").show();
+            $(".clsPrevious").css('visibility', 'hidden');
         }
-        if (currentindex == lastindex) {
-            $("#btnNext").hide();
+        if (enableNext == true) {
+            $(".clsNext").css('visibility', 'visible');
         } else {
-            $("#btnNext").show();
+            $(".clsNext").css('visibility', 'hidden');
         }
     }
 

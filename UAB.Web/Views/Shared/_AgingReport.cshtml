@@ -73,12 +73,32 @@
                                 <tbody>
                                     @for (int i = 0; i < Model.Tables[0].Rows.Count; i++)
                                     {
-                                        <tr class="body">
-                                            @for (int j = 0; j < Model.Tables[0].Columns.Count; j++)
+                                    <tr class="body">
+                                        @for (int j = 0; j < Model.Tables[0].Columns.Count; j++)
+                                        {
+                                            @if (Model.Tables[0].Columns[j].ColumnName != "Project Name" && Model.Tables[0].Columns[j].ColumnName != "Project Type")
                                             {
-                                                <td>@Model.Tables[0].Rows[i][j]</td>
+                                                @if (Model.Tables[0].Rows[i][j].ToString() != "0")
+                                                {
+                                                    <td style="cursor:pointer;text-decoration:underline;color:cornflowerblue;" onclick="ClickOnCellForAging('@Model.Tables[0].Columns[j].ColumnName','@Model.Tables[0].Rows[i][1]','@Model.Tables[0].Rows[i][0]','@Model.Tables[0].Rows[i][j]')">
+                                                        @Model.Tables[0].Rows[i][j]
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        @Model.Tables[0].Rows[i][j]
+                                                    </td>
+                                                }
                                             }
-                                        </tr>
+                                            else
+                                            {
+                                                <td>
+                                                    @Model.Tables[0].Rows[i][j]
+                                                </td>
+                                            }
+                                        }
+                                    </tr>
                                     }
                                 </tbody>
 
@@ -147,10 +167,12 @@
                                 <tbody>
                                     @for (int i = 0; i < Model.Tables[1].Rows.Count; i++)
                                     {
-                                        <tr class="body">
-                                            @for (int j = 0; j < Model.Tables[1].Columns.Count; j++)
+                                    <tr class="body">
+                                        @for (int j = 0; j < Model.Tables[1].Columns.Count; j++)
+                                        {
+                                            @if (@Model.Tables[1].Columns[j].ColumnName == "Blocked")
                                             {
-                                                @if (@Model.Tables[1].Columns[j].ColumnName == "Blocked")
+                                                @if (Model.Tables[1].Rows[i][j].ToString() != "0")
                                                 {
                                                     <td style="cursor:pointer;text-decoration:underline;color:cornflowerblue;"
                                                         onclick="ClickOnCell('@Model.Tables[1].Columns[j].ColumnName','@Model.Tables[1].Rows[i][0]')">
@@ -159,10 +181,32 @@
                                                 }
                                                 else
                                                 {
-                                                    <td>@Model.Tables[1].Rows[i][j]</td>
+                                                    <td>
+                                                        @Model.Tables[1].Rows[i][j]
+                                                    </td>
                                                 }
                                             }
-                                        </tr>
+                                            else if (Model.Tables[1].Columns[j].ColumnName != "Project Name" && Model.Tables[1].Columns[j].ColumnName != "Project Type")
+                                            {
+                                                @if (Model.Tables[1].Rows[i][j].ToString() != "0")
+                                                {
+                                                    <td style="cursor:pointer;text-decoration:underline;color:cornflowerblue;" onclick="ClickOnCellForAgingByStatus('@Model.Tables[1].Columns[j].ColumnName','@Model.Tables[1].Rows[i][1]','@Model.Tables[1].Rows[i][0]','@Model.Tables[1].Rows[i][j]')">
+                                                        @Model.Tables[1].Rows[i][j]
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        @Model.Tables[1].Rows[i][j]
+                                                    </td>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <td onclick="ClickOnCellForAgingByStatus('@Model.Tables[1].Columns[j].ColumnName','@Model.Tables[1].Rows[i][1]','@Model.Tables[1].Rows[i][0]','@Model.Tables[1].Rows[i][j]')">@Model.Tables[1].Rows[i][j]</td>
+                                            }
+                                        }
+                                    </tr>
                                     }
                                 </tbody>
                             }
@@ -213,7 +257,7 @@
         ClickOnCell = function (p1,p2) {
                  $.ajax({
                 type: "GET",
-                url: "@Url.Action("GetAgingReportDetails", "Home")",
+                url: "@Url.Action("GetAgingReportDetailsForBlockedCharts", "Home")",
                 data: {
                     "ColumnName": p1,
                     "ProjectName":p2
@@ -225,6 +269,46 @@
                     alert(response);
                 }
             });
+        };
+
+        ClickOnCellForAging = function (p1, p2, p3,p4) {
+            if (p4 != 0 && p1 != 'Project Name' && p1 !='Project Type') {
+                 $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetAgingReportDetails", "Home")",
+                data: {
+                    "ColumnName": p1,
+                    "ProjectType": p2,
+                    "ProjectName":p3
+                },
+                success: function (response) {
+                    $("#modalContent1").html(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+            }
+        };
+
+        ClickOnCellForAgingByStatus = function (p1, p2, p3, p4) {
+            if (p4 != 0 && p1 != 'Project Name' && p1 !='Project Type') {
+                 $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetAgingReportDetailsByStatus", "Home")",
+                data: {
+                    "ColumnName": p1,
+                    "ProjectType": p2,
+                    "ProjectName":p3
+                },
+                success: function (response) {
+                    $("#modalContent1").html(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+            }
         };
     ModalClose1 = function () {
         $("#modalContent").html('');
