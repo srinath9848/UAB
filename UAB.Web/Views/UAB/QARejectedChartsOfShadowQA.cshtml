@@ -126,8 +126,8 @@
                 var DxNewClaimremarks = $("[id*=QADxRemarkss_" + tabid + "_]");
                 $("#hdnQADxRemarks" + tabid).val("");
                 for (var i = 0; i < DxNewClaimremarks.length; i++) {
-                    $("#validDxRemarksClaim_" + tabid + "_" + id).hide();
                     var id = parseInt($(DxNewClaimremarks[i]).attr("id").split("_")[2]);
+                    var res1 = $("[id='DxClaim_" + tabid + "_" + id + "']:eq(0)").attr('class');
                     var res = $("[id='DxClaim_" + tabid + "_" + id + "']:eq(1)").attr('class');
                     if ($(DxNewClaimremarks[i]).css("display") == "flex" && res.includes('reject')) {
                         if ($(DxNewClaimremarks[i]).val() != "") {
@@ -148,6 +148,13 @@
                                 $("#ErrorType_" + tabid).css("pointer-events", "auto");
                                 $("#ErrorTypeError_" + tabid).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
                             }
+                        }
+                    }
+                    if (res1.includes('accept') && $(DxNewClaimremarks[i]).css("display") == "flex") {
+                        if ($(DxNewClaimremarks[i]).val() != "") {
+                            $("#validDxRemarksClaim_" + tabid + "_" + id).hide();
+                        } else {
+                            $("#validDxRemarksClaim_" + tabid + "_" + id).show();
                         }
                     }
                 }
@@ -186,6 +193,7 @@
                 for (var i = 0; i < CptNewClaimRemarks.length; i++) {
                     $("#validCptRemarksClaim_" + tabid + "_" + id).hide();
                     var id = parseInt($(CptNewClaimRemarks[i]).attr("id").split("_")[2]);
+                    var res1 = $("[id='Cpt_" + tabid + "_" + index + "']:eq(0)").attr('class');
                     var res = $("[id='Cpt_" + tabid + "_" + index + "']:eq(1)").attr('class');
                     if ($(CptNewClaimRemarks[i]).css("display") == "flex" && res.includes('reject')) {
                         if ($("#txt" + tabid + "Cpt_" + index).val() != "") {
@@ -214,6 +222,13 @@
                             }
                         }
                     }
+                    if (res1.includes('accept') && $(CptNewClaimRemarks[i]).css("display") == "flex") {
+                        if ($("#QACptRemarks_" + id).val() != "") {
+                            $("#validCptRemarksClaim_" + tabid + "_" + id).hide();
+                        } else {
+                            $("#validCptRemarksClaim_" + tabid + "_" + id).show();
+                        }
+                    }
                     index = index + parseInt(1);
                 }
             };
@@ -227,8 +242,8 @@
         $("#hdnQADxCodes").val('');
         $("#hdnQADxRemarks").val('');
         for (var i = 0; i < Dxcodes.length; i++) {
-            $("#validDx_" + id).hide();
             var id = parseInt($(Dxcodes[i]).attr("id").split("_")[1]);
+            var res1 = $("[id='Dx_" + id + "']:eq(0)").attr('class');
             var res = $("[id='Dx_" + id + "']:eq(1)").attr('class');
             if (res.includes('reject') && $(Dxcodes[i]).css("display") == "flex") {
                 if ($("#hdnQADxCodes").val() == "")
@@ -249,11 +264,18 @@
                 else {
                     $("#DxRemarks_" + id).focus();
                     $("#validDx_" + id).show();
-                    if ($("#ErrorType_" + id).val() == "") {
-                        $("#ErrorType_" + id).attr('readonly', false);
-                        $("#ErrorType_" + id).css("pointer-events", "auto");
-                        $("#ErrorTypeError_" + id).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                    if ($("#ErrorType_1").val() == "") {
+                        $("#ErrorType_1").attr('readonly', false);
+                        $("#ErrorType_1").css("pointer-events", "auto");
+                        $("#ErrorTypeError_1").html('<span id="projectdd-error" class="">ErrorType is required.</span>');
                     }
+                }
+            }
+            if (res1.includes('accept') && $(Dxcodes[i]).css("display") == "flex") {
+                if ($("#DxRemarks_" + id).val() != "") {
+                    $("#validDx_" + id).hide();
+                } else {
+                    $("#validDx_" + id).show();
                 }
             }
         }
@@ -262,8 +284,8 @@
         $("#hdnQACptCodes").val('');
         $("#hdnQACptRemarks").val('');
         for (var i = 0; i < CPTcodes.length; i++) {
-            $("#validCpt_" + id).hide();
             var id = parseInt($(CPTcodes[i]).attr("id").split("_")[1]);
+            var res1 = $("[id='Cpt_" + id + "']:eq(0)").attr('class');
             var res = $("[id='Cpt_" + id + "']:eq(1)").attr('class');
             if (res.includes('reject') && $(CPTcodes[i]).css("display") == "flex") {
                 if ($("#hdnQACptCodes").val() == "")
@@ -284,11 +306,18 @@
                 else {
                     $("#txtCpt_" + id).focus();
                     $("#validCpt_" + id).show();
-                    if ($("#ErrorType_" + id).val() == "") {
-                        $("#ErrorType_" + id).attr('readonly', false);
-                        $("#ErrorType_" + id).css("pointer-events", "auto");
-                        $("#ErrorTypeError_" + id).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                    if ($("#ErrorType_1").val() == "") {
+                        $("#ErrorType_1").attr('readonly', false);
+                        $("#ErrorType_1").css("pointer-events", "auto");
+                        $("#ErrorTypeError_1").html('<span id="projectdd-error" class="">ErrorType is required.</span>');
                     }
+                }
+            }
+            if (res1.includes('accept') && $(CPTcodes[i]).css("display") == "flex") {
+                if ($("#QACptRemarks_" + id).val() != "") {
+                    $("#validCpt_" + id).hide();
+                } else {
+                    $("#validCpt_" + id).show();
                 }
             }
         }
