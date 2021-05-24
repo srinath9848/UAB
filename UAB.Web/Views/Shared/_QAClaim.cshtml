@@ -308,8 +308,8 @@
                     <div class="form-group row">
                         @*<label class="col-md-5 m-t-15"></label>*@
                         <div class="col-md-15">
-                            <a href="@Url.Action("GetCodingBlockedChart", "UAB", new { Role = Roles.QA, ChartType = "Block", ProjectID = @Model.ProjectID, ProjectName = Model.ProjectName, ccids = Model.CCIDs, Previous = "1",CurrCCId = ViewBag.CurrentCCId })" class="clsPrevious btn btn-success Available" id="btnPrevious" style="visibility:hidden">Previous</a>
-                            <a href="@Url.Action("GetCodingBlockedChart", "UAB", new { Role = Roles.QA, ChartType = "Block", ProjectID = @Model.ProjectID, ProjectName = Model.ProjectName, ccids = Model.CCIDs, Next = "1",CurrCCId = ViewBag.CurrentCCId })" class="clsNext btn btn-success Available" id="btnNext" style="visibility: hidden">Next</a>
+                            <a href="@Url.Action("GetBlockedChart", "UAB", new { Role = Roles.QA, ChartType = "Block", ProjectID = @Model.ProjectID, ProjectName = Model.ProjectName, ccids = Model.CCIDs, Previous = "1",CurrCCId = ViewBag.CurrentCCId })" class="clsPrevious btn btn-success Available" id="btnPrevious" style="visibility:hidden">Previous</a>
+                            <a href="@Url.Action("GetBlockedChart", "UAB", new { Role = Roles.QA, ChartType = "Block", ProjectID = @Model.ProjectID, ProjectName = Model.ProjectName, ccids = Model.CCIDs, Next = "1",CurrCCId = ViewBag.CurrentCCId })" class="clsNext btn btn-success Available" id="btnNext" style="visibility: hidden">Next</a>
                             <button id="btnBlock" type="button" class="clsbtnBlock btn btn-danger" onclick="Block()">Block</button>
                             <button id="btnBlockHistory" style="display:none" type="button" class="clsbtnBlockHistory btn btn-danger" onclick="BlockHistory()">Block History</button>
                             <button id="btnsubmit" type="button" class="btn btn-success">Save</button>
