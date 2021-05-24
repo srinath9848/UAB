@@ -129,32 +129,48 @@
                     var id = parseInt($(DxNewClaimremarks[i]).attr("id").split("_")[2]);
                     var res1 = $("[id='DxClaim_" + tabid + "_" + id + "']:eq(0)").attr('class');
                     var res = $("[id='DxClaim_" + tabid + "_" + id + "']:eq(1)").attr('class');
-                    if ($(DxNewClaimremarks[i]).css("display") == "flex" && res.includes('reject')) {
-                        if ($(DxNewClaimremarks[i]).val() != "") {
-                            $("#validDxRemarksClaim_" + tabid + "_" + id).hide();
-                            if ($("#ErrorType_" + tabid).val() != "") {
-                                $("#ErrorTypeError_" + tabid).html('');
-                            }
-                            if ($("#hdnQADxRemarks" + tabid).val() == "")
-                                $("#hdnQADxRemarks" + tabid).val(id + "^" + $(DxNewClaimremarks[i]).val());
-                            else
-                                $("#hdnQADxRemarks" + tabid).val($("#hdnQADxRemarks" + tabid).val() + "|" + id + "^" + $(DxNewClaimremarks[i]).val());
+                    if (res1 != undefined) {
+                        if ($(DxNewClaimremarks[i]).css("display") == "flex" && res.includes('reject')) {
+                            if ($(DxNewClaimremarks[i]).val() != "") {
+                                $("#validDxRemarksClaim_" + tabid + "_" + id).hide();
+                                if ($("#ErrorType_" + tabid).val() != "") {
+                                    $("#ErrorTypeError_" + tabid).html('');
+                                }
+                                if ($("#hdnQADxRemarks" + tabid).val() == "")
+                                    $("#hdnQADxRemarks" + tabid).val(id + "^" + $(DxNewClaimremarks[i]).val());
+                                else
+                                    $("#hdnQADxRemarks" + tabid).val($("#hdnQADxRemarks" + tabid).val() + "|" + id + "^" + $(DxNewClaimremarks[i]).val());
 
-                        } else {
-                            $(DxNewClaimremarks[i]).focus();
-                            $("#validDxRemarksClaim_" + tabid + "_" + id).show();
-                            if ($("#ErrorType_" + tabid).val() == "") {
-                                $("#ErrorType_" + tabid).attr('readonly', false);
-                                $("#ErrorType_" + tabid).css("pointer-events", "auto");
-                                $("#ErrorTypeError_" + tabid).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                            } else {
+                                $(DxNewClaimremarks[i]).focus();
+                                $("#validDxRemarksClaim_" + tabid + "_" + id).show();
+                                if ($("#ErrorType_" + tabid).val() == "") {
+                                    $("#ErrorType_" + tabid).attr('readonly', false);
+                                    $("#ErrorType_" + tabid).css("pointer-events", "auto");
+                                    $("#ErrorTypeError_" + tabid).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                                }
                             }
                         }
-                    }
-                    if (res1.includes('accept') && $(DxNewClaimremarks[i]).css("display") == "flex") {
-                        if ($(DxNewClaimremarks[i]).val() != "") {
-                            $("#validDxRemarksClaim_" + tabid + "_" + id).hide();
-                        } else {
-                            $("#validDxRemarksClaim_" + tabid + "_" + id).show();
+                        if (res1.includes('accept') && $(DxNewClaimremarks[i]).css("display") == "flex") {
+                            if ($(DxNewClaimremarks[i]).val() != "") {
+                                $("#validDxRemarksClaim_" + tabid + "_" + id).hide();
+                                if ($("#ErrorType_" + tabid).val() != "") {
+                                    $("#ErrorTypeError_" + tabid).html('');
+                                }
+                                if ($("#hdnQAAcceptDxRemarks" + tabid).val() == "")
+                                    $("#hdnQAAcceptDxRemarks" + tabid).val(id + "^" + $("#SQADxRemarkss_" + tabid + "_" + id).val());
+                                else
+                                    $("#hdnQAAcceptDxRemarks" + tabid).val($("#hdnQAAcceptDxRemarks" + tabid).val() + "|" + id + "^" + $("#SQADxRemarkss_" + tabid + "_" + id).val());
+
+                            } else {
+                                $(DxNewClaimremarks[i]).focus();
+                                $("#validDxRemarksClaim_" + tabid + "_" + id).show();
+                                if ($("#ErrorType_" + tabid).val() == "") {
+                                    $("#ErrorType_" + tabid).attr('readonly', false);
+                                    $("#ErrorType_" + tabid).css("pointer-events", "auto");
+                                    $("#ErrorTypeError_" + tabid).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                                }
+                            }
                         }
                     }
                 }
@@ -165,9 +181,8 @@
                 for (var i = 0; i < DxNewClaimcodes.length; i++) {
                     var id = parseInt($(DxNewClaimcodes[i]).attr("id").split("_")[1]);
                     var res = $("[id='DxClaim_" + tabid + "_" + id + "']:eq(1)").attr('class');
-                    if ($(".DxRemarkss_" + tabid + "_" + id).length && res.includes('reject')) {
+                    if (res.includes('reject')) {
                         if ($("#" + $(DxNewClaimcodes[i]).attr("id")).val() != "" && $(DxNewClaimcodes[i]).val() != "") {
-
                             if ($("#hdnQADxCodes" + tabid).val() == "")
                                 $("#hdnQADxCodes" + tabid).val(id + "^" + $(DxNewClaimcodes[i]).val());
                             else
@@ -175,11 +190,11 @@
                         }
                     }
                     else {
-                        if ($("#" + $(DxNewClaimcodes[i]).attr("id")).val() != "" && $(DxNewClaimcodes[i]).val() != "" && res.includes('reject')) {
-                            if ($("#hdnQADxCodes" + tabid).val() == "")
-                                $("#hdnQADxCodes" + tabid).val(id + "^" + $(DxNewClaimcodes[i]).val());
+                        if ($(".DxRemarkss_" + tabid + "_" + id).length && res1.includes('accept')) {
+                            if ($("#hdnQAAcceptDxCodes" + tabid).val() == "")
+                                $("#hdnQAAcceptDxCodes" + tabid).val(id + "^" + $("#txtSQADx" + tabid + "Claim_" + id).val());
                             else
-                                $("#hdnQADxCodes" + tabid).val($("#hdnQADxCodes" + tabid).val() + "|" + id + "^" + $(DxNewClaimcodes[i]).val());
+                                $("#hdnQAAcceptDxCodes" + tabid).val($("#hdnQAAcceptDxCodes" + tabid).val() + "|" + id + "^" + $("#txtSQADx" + tabid + "Claim_" + id).val());
                         }
                     }
                 }
@@ -194,39 +209,61 @@
                     $("#validCptRemarksClaim_" + tabid + "_" + id).hide();
                     var id = parseInt($(CptNewClaimRemarks[i]).attr("id").split("_")[2]);
                     var res1 = $("[id='Cpt_" + tabid + "_" + index + "']:eq(0)").attr('class');
-                    var res = $("[id='Cpt_" + tabid + "_" + index + "']:eq(1)").attr('class');
-                    if ($(CptNewClaimRemarks[i]).css("display") == "flex" && res.includes('reject')) {
-                        if ($("#txt" + tabid + "Cpt_" + index).val() != "") {
-                            if ($("#hdnQACptCodes" + tabid).val() == "")
-                                $("#hdnQACptCodes" + tabid).val(id + "^" + $("#txt" + tabid + "Cpt_" + index).val());
-                            else
-                                $("#hdnQACptCodes" + tabid).val($("#hdnQACptCodes" + tabid).val() + "|" + id + "^" + $("#txt" + tabid + "Cpt_" + index).val());
-                        }
-                        if ($(CptNewClaimRemarks[i]).val() != "") {
-                            $("#validCptRemarksClaim_" + tabid + "_" + id).hide();
-                            if ($("#ErrorType_" + tabid).val() != "") {
-                                $("#ErrorTypeError_" + tabid).html('');
+                    if (res1 != undefined) {
+                        var res = $("[id='Cpt_" + tabid + "_" + index + "']:eq(1)").attr('class');
+                        if ($(CptNewClaimRemarks[i]).css("display") == "flex" && res.includes('reject')) {
+                            if ($("#txt" + tabid + "Cpt_" + index).val() != "") {
+                                if ($("#hdnQACptCodes" + tabid).val() == "")
+                                    $("#hdnQACptCodes" + tabid).val(id + "^" + $("#txt" + tabid + "Cpt_" + index).val());
+                                else
+                                    $("#hdnQACptCodes" + tabid).val($("#hdnQACptCodes" + tabid).val() + "|" + id + "^" + $("#txt" + tabid + "Cpt_" + index).val());
                             }
-                            if ($("#hdnQACptRemarks" + tabid).val() == "")
-                                $("#hdnQACptRemarks" + tabid).val(id + "^" + $(CptNewClaimRemarks[i]).val());
-                            else
-                                $("#hdnQACptRemarks" + tabid).val($("#hdnQACptRemarks" + tabid).val() + "|" + id + "^" + $(CptNewClaimRemarks[i]).val());
-                        }
-                        else {
-                            $(CptNewClaimRemarks[i]).focus();
-                            $("#validCptRemarksClaim_" + tabid + "_" + id).show();
-                            if ($("#ErrorType_" + tabid).val() == "") {
-                                $("#ErrorType_" + tabid).attr('readonly', false);
-                                $("#ErrorType_" + tabid).css("pointer-events", "auto");
-                                $("#ErrorTypeError_" + tabid).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                            if ($(CptNewClaimRemarks[i]).val() != "") {
+                                $("#validCptRemarksClaim_" + tabid + "_" + id).hide();
+                                if ($("#ErrorType_" + tabid).val() != "") {
+                                    $("#ErrorTypeError_" + tabid).html('');
+                                }
+                                if ($("#hdnQACptRemarks" + tabid).val() == "")
+                                    $("#hdnQACptRemarks" + tabid).val(id + "^" + $(CptNewClaimRemarks[i]).val());
+                                else
+                                    $("#hdnQACptRemarks" + tabid).val($("#hdnQACptRemarks" + tabid).val() + "|" + id + "^" + $(CptNewClaimRemarks[i]).val());
+                            }
+                            else {
+                                $(CptNewClaimRemarks[i]).focus();
+                                $("#validCptRemarksClaim_" + tabid + "_" + id).show();
+                                if ($("#ErrorType_" + tabid).val() == "") {
+                                    $("#ErrorType_" + tabid).attr('readonly', false);
+                                    $("#ErrorType_" + tabid).css("pointer-events", "auto");
+                                    $("#ErrorTypeError_" + tabid).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                                }
                             }
                         }
-                    }
-                    if (res1.includes('accept') && $(CptNewClaimRemarks[i]).css("display") == "flex") {
-                        if ($("#QACptRemarks_" + id).val() != "") {
-                            $("#validCptRemarksClaim_" + tabid + "_" + id).hide();
-                        } else {
-                            $("#validCptRemarksClaim_" + tabid + "_" + id).show();
+                        if (res1.includes('accept') && $(CptNewClaimRemarks[i]).css("display") == "flex") {
+                            if ($("#txt" + tabid + "Cpt_" + index).val() != "") {
+                                if ($("#hdnQAAcceptCptCodes" + tabid).val() == "")
+                                    $("#hdnQAAcceptCptCodes" + tabid).val(id + "^" + $("#txt" + tabid + "SQACpt_" + index).val());
+                                else
+                                    $("#hdnQAAcceptCptCodes" + tabid).val($("#hdnQAAcceptCptCodes" + tabid).val() + "|" + id + "^" + $("#txt" + tabid + "SQACpt_" + index).val());
+                            }
+                            if ($(CptNewClaimRemarks[i]).val() != "") {
+                                $("#validCptRemarksClaim_" + tabid + "_" + id).hide();
+                                if ($("#ErrorType_" + tabid).val() != "") {
+                                    $("#ErrorTypeError_" + tabid).html('');
+                                }
+                                if ($("#hdnQAAcceptCptRemarks" + tabid).val() == "")
+                                    $("#hdnQAAcceptCptRemarks" + tabid).val(id + "^" + $("#SQACptRemarkss_" + tabid + "_" + id).val());
+                                else
+                                    $("#hdnQAAcceptCptRemarks" + tabid).val($("#hdnQAAcceptCptRemarks" + tabid).val() + "|" + id + "^" + $("#SQACptRemarkss_" + tabid + "_" + id).val());
+                            }
+                            else {
+                                $(CptNewClaimRemarks[i]).focus();
+                                $("#validCptRemarksClaim_" + tabid + "_" + id).show();
+                                if ($("#ErrorType_" + tabid).val() == "") {
+                                    $("#ErrorType_" + tabid).attr('readonly', false);
+                                    $("#ErrorType_" + tabid).css("pointer-events", "auto");
+                                    $("#ErrorTypeError_" + tabid).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                                }
+                            }
                         }
                     }
                     index = index + parseInt(1);
@@ -272,10 +309,29 @@
                 }
             }
             if (res1.includes('accept') && $(Dxcodes[i]).css("display") == "flex") {
+                if ($("#hdnQAAcceptDxCodes").val() == "")
+                    $("#hdnQAAcceptDxCodes").val(id + "^" + $("#txtSQADxCode_" + id).val());
+                else
+                    $("#hdnQAAcceptDxCodes").val($("#hdnQAAcceptDxCodes").val() + "|" + id + "^" + $("#txtSQADxCode_" + id).val());
+
                 if ($("#DxRemarks_" + id).val() != "") {
                     $("#validDx_" + id).hide();
-                } else {
+                    if ($("#ErrorType_" + id).val() != "") {
+                        $("#ErrorTypeError_" + id).html('');
+                    }
+                    if ($("#hdnQAAcceptDxRemarks").val() == "")
+                        $("#hdnQAAcceptDxRemarks").val(id + "^" + $("#SQADxRemarks_" + id).val());
+                    else
+                        $("#hdnQAAcceptDxRemarks").val($("#hdnQAAcceptDxRemarks").val() + "|" + id + "^" + $("#SQADxRemarks_" + id).val());
+                }
+                else {
+                    $("#DxRemarks_" + id).focus();
                     $("#validDx_" + id).show();
+                    if ($("#ErrorType_1").val() == "") {
+                        $("#ErrorType_1").attr('readonly', false);
+                        $("#ErrorType_1").css("pointer-events", "auto");
+                        $("#ErrorTypeError_1").html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                    }
                 }
             }
         }
@@ -314,10 +370,29 @@
                 }
             }
             if (res1.includes('accept') && $(CPTcodes[i]).css("display") == "flex") {
+                if ($("#hdnQAAcceptCptCodes").val() == "")
+                    $("#hdnQAAcceptCptCodes").val(id + "^" + $("#txtSQACPTCode_" + id).val());
+                else
+                    $("#hdnQAAcceptCptCodes").val($("#hdnQAAcceptCptCodes").val() + "|" + id + "^" + $("#txtSQACPTCode_" + id).val());
+
                 if ($("#QACptRemarks_" + id).val() != "") {
                     $("#validCpt_" + id).hide();
-                } else {
+                    if ($("#ErrorType_" + id).val() != "") {
+                        $("#ErrorTypeError_" + id).html('');
+                    }
+                    if ($("#hdnQAAcceptCptRemarks").val() == "")
+                        $("#hdnQAAcceptCptRemarks").val(id + "^" + $("#SQACptRemarks_" + id).val());
+                    else
+                        $("#hdnQAAcceptCptRemarks").val($("#hdnQAAcceptCptRemarks").val() + "|" + id + "^" + $("#SQACptRemarks_" + id).val());
+                }
+                else {
+                    $("#txtCpt_" + id).focus();
                     $("#validCpt_" + id).show();
+                    if ($("#ErrorType_1").val() == "") {
+                        $("#ErrorType_1").attr('readonly', false);
+                        $("#ErrorType_1").css("pointer-events", "auto");
+                        $("#ErrorTypeError_1").html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                    }
                 }
             }
         }
