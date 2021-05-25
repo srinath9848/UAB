@@ -1637,7 +1637,7 @@ namespace UAB.DAL
             return ds;
         }
 
-        public DataSet GetReceivedChartsReport(int projectID, string rangeType)
+        public DataSet GetReceivedChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate)
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
@@ -1655,6 +1655,18 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = rangeType
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@StartDate",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = startDate
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@EndDate",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = endDate
                         }
                 };
 
@@ -1889,7 +1901,7 @@ namespace UAB.DAL
             return lst;
         }
 
-        public DataSet GetCodedChartsReport(int projectID, string rangeType)
+        public DataSet GetCodedChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate)
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
@@ -1907,6 +1919,18 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = rangeType
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@StartDate",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = startDate
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@EndDate",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = endDate
                         }
                 };
 
