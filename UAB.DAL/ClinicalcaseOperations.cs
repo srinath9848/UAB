@@ -11,6 +11,7 @@ using System.Linq;
 using System.IO;
 using ExcelDataReader;
 using System.Data.Entity.Infrastructure;
+using Version = UAB.DAL.Models.Version;
 
 namespace UAB.DAL
 {
@@ -3163,6 +3164,7 @@ namespace UAB.DAL
         {
             int ccid = Convert.ToInt32(searchResultDTO.ClinicalCaseId);
             int AssignedTouserid = Convert.ToInt32(searchResultDTO.AssignToUserEmail);
+            
 
             using (var context = new UABContext())
             {
@@ -3170,6 +3172,27 @@ namespace UAB.DAL
                 if (existingcc != null)
                 {
                     
+                    int assignfromuser = existingcc.AssignedTo == null ? 0 : Convert.ToInt32(existingcc.AssignedTo);
+                    
+                    Version vr1 = new Version()
+                    {
+                        ClinicalCaseId = ccid,
+                        StatusId = 18,
+                        UserId = Convert.ToInt32(existingcc.AssignedTo),
+                        VersionDate = DateTime.Now
+                    };
+                    Version vr2 = new Version()
+                    {
+                        ClinicalCaseId = ccid,
+                        StatusId =19,
+                        UserId = AssignedTouserid,
+                        VersionDate = DateTime.Now
+                    };
+                    List<Version> vrlst = new List<Version>();
+                    vrlst.Add(vr1);
+                    vrlst.Add(vr2);
+
+
                     if (existingcc.StatusId == 1 || existingcc.StatusId == 2 || existingcc.StatusId == 3
                         || existingcc.StatusId == 14 || existingcc.StatusId == 15)
                     {
@@ -3189,6 +3212,8 @@ namespace UAB.DAL
                     existingcc.AssignedDate = DateTime.Now;
                     existingcc.IsPriority = searchResultDTO.IsPriority ? 1 : 0;
                     context.Entry(existingcc).State = EntityState.Modified;
+
+                    context.Version.AddRange(vrlst);
                     context.SaveChanges();
                 }
             }
