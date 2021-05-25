@@ -10,6 +10,7 @@ namespace UAB.enums
         Coder,
         QA,
         ShadowQA,
-        Manager
+        Manager,
+        Supervisor
     }
 }
