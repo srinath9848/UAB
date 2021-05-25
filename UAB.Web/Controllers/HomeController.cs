@@ -38,6 +38,60 @@ namespace UAB.Controllers
             ViewBag.Projects = clinicalcaseOperations.GetProjects();
             return View();
         }
+        public IActionResult LevellingSummaryReport ()
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            ViewBag.Projects = clinicalcaseOperations.GetProjects();
+            return View();
+        }
+        public IActionResult ReceivedChartsReport()
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            ViewBag.Projects = clinicalcaseOperations.GetProjects();
+            return View();
+        }
+        public IActionResult ChartSummaryReport ()
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            ViewBag.Projects = clinicalcaseOperations.GetProjects();
+            return View();
+        }
+        public IActionResult CodedChartsReport ()
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            ViewBag.Projects = clinicalcaseOperations.GetProjects();
+            return View();
+        }
+        public IActionResult QAChartsReport ()
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            ViewBag.Projects = clinicalcaseOperations.GetProjects();
+            return View();
+        }
+        public IActionResult PostedChartsReport()
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            ViewBag.Projects = clinicalcaseOperations.GetProjects();
+            return View();
+        }
+        public IActionResult PendingChartsReport ()
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            ViewBag.Projects = clinicalcaseOperations.GetProjects();
+            return View();
+        }
+        public IActionResult ProvidedPostedChartsReport()
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            ViewBag.Projects = clinicalcaseOperations.GetProjects();
+            return View();
+        }
+        public IActionResult BacklogChartsReport()
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            ViewBag.Projects = clinicalcaseOperations.GetProjects();
+            return View();
+        }
 
         [HttpPost]
         public IActionResult GetLevellingReport(int ProjectId, DateTime StartDate, DateTime EndDate)
@@ -52,7 +106,9 @@ namespace UAB.Controllers
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var lstagingtDTO = clinicalcaseOperations.GetAgingReport();
-            return PartialView("_AgingReport", lstagingtDTO);
+
+            //return PartialView("_AgingReport", lstagingtDTO);
+            return View("AgingReport", lstagingtDTO);
         }
 
         [HttpGet]

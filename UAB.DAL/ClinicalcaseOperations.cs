@@ -475,7 +475,7 @@ namespace UAB.DAL
 
             return lst;
         }
-        public ChartSummaryDTO GetNext(string Role, string ChartType, int projectID)
+        public ChartSummaryDTO GetNext(string Role, string ChartType, int projectID, int CurrCCId = 0)
         {
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO.ProjectID = projectID;
@@ -506,6 +506,12 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = mUserId
+                         }
+                        , new SqlParameter() {
+                            ParameterName = "@PrevOrNextCCID",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = CurrCCId
                          }};
 
                 using (var con = context.Database.GetDbConnection())
@@ -883,12 +889,18 @@ namespace UAB.DAL
                             //chartSummaryDTO.RevisedProviderFeedbackRemarks = Convert.ToString(reader["RebuttedProviderFeedbackIDRemark"]);
                         }
                     }
+                    reader.NextResult();
+
+                    while (reader.Read())
+                    {
+                        chartSummaryDTO.CCIDs = Convert.ToString(reader["CCIDs"]);
+                    }
                 }
             }
             return chartSummaryDTO;
         }
 
-        public List<ChartSummaryDTO> GetNext1(string Role, string ChartType, int projectID)
+        public List<ChartSummaryDTO> GetNext1(string Role, string ChartType, int projectID, int CurrCCId = 0)
         {
             List<ChartSummaryDTO> lstchartSummaryDTO = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
@@ -920,6 +932,12 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = mUserId
+                         }
+                         , new SqlParameter() {
+                            ParameterName = "@PrevOrNextCCID",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = CurrCCId
                          }};
 
                 using (var con = context.Database.GetDbConnection())
@@ -973,6 +991,7 @@ namespace UAB.DAL
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
                             if (reader["ProviderFeedbackId"] != DBNull.Value)
                                 chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
+                            chartSummaryDTO.ProjectID = Convert.ToInt32(reader["ProjectId"]);
                         }
                         else if ((Role == "Coder" && ChartType == "ReadyForPosting") ||
                             (Role == "QA" && ChartType == "OnHold"))
@@ -1129,6 +1148,7 @@ namespace UAB.DAL
                         }
                         else if (Role == "ShadowQA" && ChartType == "Block")
                         {
+                            chartSummaryDTO.ProjectID = Convert.ToInt32(reader["ProjectId"]);
                             chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
                             chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
                             chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate();
@@ -1209,13 +1229,13 @@ namespace UAB.DAL
 
                             chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
                             chartSummaryDTO.QADx = Convert.ToString(reader["QADx"]);
-                            chartSummaryDTO.QADxRemarks = Convert.ToString(reader["QARebuttedDxRemark"]);
+                            chartSummaryDTO.QADxRemarks = Convert.ToString(reader["QADxRemark"]);
                             chartSummaryDTO.ShadowQADx = Convert.ToString(reader["ShadowQADx"]);
                             chartSummaryDTO.ShadowQADxRemarks = Convert.ToString(reader["ShadowQADxRemark"]);
 
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
                             chartSummaryDTO.QACPTCode = Convert.ToString(reader["QACPTCode"]);
-                            chartSummaryDTO.QACPTCodeRemarks = Convert.ToString(reader["QARebuttedCPTCodeRemark"]);
+                            chartSummaryDTO.QACPTCodeRemarks = Convert.ToString(reader["QACPTCodeRemark"]);
                             chartSummaryDTO.ShadowQACPTCode = Convert.ToString(reader["ShadowQACPTCode"]);
                             chartSummaryDTO.ShadowQACPTCodeRemarks = Convert.ToString(reader["ShadowQACPTCodeRemark"]);
 
@@ -1397,6 +1417,13 @@ namespace UAB.DAL
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
                         }
                         lstchartSummaryDTO.Add(chartSummaryDTO);
+                    }
+                    reader.NextResult();
+
+                    while (reader.Read())
+                    {
+                        lstchartSummaryDTO.ForEach(x => x.CCIDs = Convert.ToString(reader["CCIDs"]));
+                        //chartSummaryDTO.CCIDs = Convert.ToString(reader["CCIDs"]);
                     }
                 }
                 return lstchartSummaryDTO;
@@ -2708,7 +2735,43 @@ namespace UAB.DAL
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.CommandText = "[dbo].[USPGetSearchData]";
                     cmd.Connection = con;
+                    //searchParametersDTO.MRN = searchParametersDTO.MRN == "" ? null : searchParametersDTO.MRN;
+                    //searchParametersDTO.FirstName = searchParametersDTO.FirstName == "" ? null : searchParametersDTO.FirstName;
 
+                    searchParametersDTO.ProviderName = searchParametersDTO.ProviderName == "--Select a Provider--" ? null : searchParametersDTO.ProviderName;
+                    searchParametersDTO.ProjectName = searchParametersDTO.ProjectName == "--Select a Project--" ? null : searchParametersDTO.ProjectName;
+
+                    var param = new SqlParameter[] {
+                        new SqlParameter() {
+                            ParameterName = "@mrn",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = searchParametersDTO.MRN
+                        },   new SqlParameter() {
+                            ParameterName = "@fname",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = searchParametersDTO.FirstName
+                        },
+                         new SqlParameter() {
+                            ParameterName = "@lname",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = searchParametersDTO.LastName
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@projectname",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = searchParametersDTO.ProjectName
+                        },   new SqlParameter() {
+                            ParameterName = "@providername",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = searchParametersDTO.ProviderName
+                        }
+                };
+                    cmd.Parameters.AddRange(param);
                     con.Open();
                     var reader = cmd.ExecuteReader();
                     while (reader.Read())
@@ -2734,22 +2797,23 @@ namespace UAB.DAL
             if (!mUserRole.Contains("Manager"))
                 lstDto = lstDto.Where(a => a.Assigneduser.Equals(Convert.ToString(mUserId))).ToList();
 
-            if (!string.IsNullOrWhiteSpace(searchParametersDTO.MRN))
-                lstDto = lstDto.Where(a => a.MRN == searchParametersDTO.MRN).ToList();
+            //if (!string.IsNullOrWhiteSpace(searchParametersDTO.MRN))
+            //    lstDto = lstDto.Where(a => a.MRN == searchParametersDTO.MRN).ToList();
 
-            if (!string.IsNullOrWhiteSpace(searchParametersDTO.FirstName))
-                lstDto = lstDto.Where(s => s.FirstName.Contains(searchParametersDTO.FirstName.ToUpper())).ToList();
-            if (!string.IsNullOrWhiteSpace(searchParametersDTO.LastName))
-                lstDto = lstDto.Where(s => s.LastName.Contains(searchParametersDTO.LastName.ToUpper())).ToList();
-            if (!string.IsNullOrWhiteSpace(searchParametersDTO.MRN))
-                if (searchParametersDTO.DoSFrom != default(DateTime) && searchParametersDTO.DoSTo != default(DateTime))
-                {
-                    var DoSFrom = searchParametersDTO.DoSFrom.Value;
-                    var DoSTo = searchParametersDTO.DoSTo.Value;
-                    lstDto = lstDto.Where(s => s.DoS >= DoSFrom && s.DoS <= DoSTo).ToList();
-                }
-            if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProviderName) && searchParametersDTO.ProviderName != "--Select a Provider--")
-                lstDto = lstDto.Where(a => a.ProviderName == searchParametersDTO.ProviderName).ToList();
+            //if (!string.IsNullOrWhiteSpace(searchParametersDTO.FirstName))
+            //    lstDto = lstDto.Where(s => s.FirstName.Contains(searchParametersDTO.FirstName.ToUpper())).ToList();
+            //if (!string.IsNullOrWhiteSpace(searchParametersDTO.LastName))
+            //    lstDto = lstDto.Where(s => s.LastName.Contains(searchParametersDTO.LastName.ToUpper())).ToList();
+            //if (!string.IsNullOrWhiteSpace(searchParametersDTO.MRN))
+            if (searchParametersDTO.DoSFrom != default(DateTime) && searchParametersDTO.DoSTo != default(DateTime))
+            {
+                var DoSFrom = searchParametersDTO.DoSFrom.Value;
+                var DoSTo = searchParametersDTO.DoSTo.Value;
+                lstDto = lstDto.Where(s => s.DoS >= DoSFrom && s.DoS <= DoSTo).ToList();
+            }
+            //if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProviderName) && searchParametersDTO.ProviderName != "--Select a Provider--")
+            //    lstDto = lstDto.Where(a => a.ProviderName == searchParametersDTO.ProviderName).ToList();
+
             if (!string.IsNullOrWhiteSpace(searchParametersDTO.StatusName) && searchParametersDTO.StatusName != "--Select a Status--")
             {
                 if (searchParametersDTO.IncludeBlocked)
@@ -2761,8 +2825,8 @@ namespace UAB.DAL
                     lstDto = lstDto.Where(a => a.Status == searchParametersDTO.StatusName).ToList();
                 }
             }
-            if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProjectName) && searchParametersDTO.ProjectName != "--Select a Project--")
-                lstDto = lstDto.Where(a => a.ProjectName == searchParametersDTO.ProjectName).ToList();
+            //if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProjectName) && searchParametersDTO.ProjectName != "--Select a Project--")
+            //    lstDto = lstDto.Where(a => a.ProjectName == searchParametersDTO.ProjectName).ToList();
             if (searchParametersDTO.IncludeBlocked && (searchParametersDTO.StatusName == null || searchParametersDTO.StatusName == "--Select a Status--"))
             {
                 lstDto = lstDto.Where(a => a.IncludeBlocked == "1").ToList();
@@ -2790,10 +2854,10 @@ namespace UAB.DAL
                             Value = mUserId
                         },
                           new SqlParameter() {
-                            ParameterName = "@utAudit1",
+                            ParameterName = "@utWorkItemAudit",
                             SqlDbType =  System.Data.SqlDbType.Structured,
                             Direction = System.Data.ParameterDirection.Input,
-                            TypeName = "utAudit1",
+                            TypeName = "utWorkItemAudit",
                             Value = dtAudit
                         }
 
@@ -2871,10 +2935,10 @@ namespace UAB.DAL
                             Value = mUserId
                          }
                         ,  new SqlParameter() {
-                            ParameterName = "@utAudit1",
+                            ParameterName = "@utWorkItemAudit",
                             SqlDbType =  System.Data.SqlDbType.Structured,
                             Direction = System.Data.ParameterDirection.Input,
-                            TypeName = "utAudit1",
+                            TypeName = "utWorkItemAudit",
                             Value = dtAudit
                         }
 
@@ -3105,7 +3169,12 @@ namespace UAB.DAL
                 var existingcc = context.WorkItem.Where(c => c.ClinicalCaseId == ccid).FirstOrDefault();
                 if (existingcc != null)
                 {
-                    existingcc.AssignedTo = AssignedTouserid;
+                    
+                    if (existingcc.StatusId == 1 || existingcc.StatusId == 2 || existingcc.StatusId == 3
+                        || existingcc.StatusId == 14 || existingcc.StatusId == 15)
+                    {
+                        existingcc.AssignedTo = AssignedTouserid;
+                    }
                     if (existingcc.StatusId == 4 || existingcc.StatusId == 5 || existingcc.StatusId == 6
                         || existingcc.StatusId == 11 || existingcc.StatusId == 12)
                     {

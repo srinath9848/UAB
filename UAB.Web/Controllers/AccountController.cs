@@ -68,14 +68,16 @@ namespace UAB.Controllers
                             ExpiresUtc = DateTime.UtcNow.AddMinutes(20)
                         });
 
-                    if (userInfo.RoleName.Split(",").Contains("Coder"))
+                    if (userInfo.RoleName.Split(",").Contains("Manager"))
+                        return RedirectToAction("GetAgingReport", "Home");
+                    else if (userInfo.RoleName.Split(",").Contains("Supervisor"))
+                        return RedirectToAction("GetAgingReport", "Home");
+                    else if (userInfo.RoleName.Split(",").Contains("Coder"))
                         return RedirectToAction("CodingSummary", "UAB");
                     else if (userInfo.RoleName.Split(",").Contains("QA"))
                         return RedirectToAction("QASummary", "UAB");
                     else if (userInfo.RoleName.Split(",").Contains("ShadowQA"))
                         return RedirectToAction("ShadowQASummary", "UAB");
-                    else if (userInfo.RoleName.Split(",").Contains("Manager"))
-                        return RedirectToAction("ManageUsers", "Account");
 
                     return RedirectToAction("Index", "Home");
                 }

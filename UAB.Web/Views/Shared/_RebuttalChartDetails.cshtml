@@ -8,6 +8,7 @@
         @Html.HiddenFor(model => model.FirstOrDefault().Dx)
         @Html.HiddenFor(model => model.FirstOrDefault().CPTCode)
 
+
         @Html.Hidden("hdnPayorIDReject")
         @Html.Hidden("hdnProviderIDReject")
         @Html.Hidden("hdnCptReject")
@@ -46,6 +47,11 @@
         @Html.Hidden("hdnQAErrorTypeID2")
         @Html.Hidden("hdnQAErrorTypeID3")
         @Html.Hidden("hdnQAErrorTypeID4")
+
+        @Html.HiddenFor(model => model.FirstOrDefault().CCIDs)
+        <input name="hdnCurrentCCId" type="hidden" value="@(ViewBag.CurrentCCId == null ? "0" : ViewBag.CurrentCCId)" />
+        <input name="hdnIsBlocked" type="hidden" value="@(ViewBag.IsBlocked == null ? "0" : "1")" />
+
 
         <ul class="nav nav-tabs" role="tablist">
             @{
@@ -362,10 +368,10 @@
                                                 <div class="form-group row">
                                                     @*<label class="col-md-5 m-t-15"></label>*@
                                                     <div class="col-md-15">
-                                                        <a href="@Url.Action("GetCodingBlockedCharts", "UAB", new { Role = Roles.QA, ChartType = "Block", ProjectID = @Model.FirstOrDefault().ProjectID, ProjectName = Model.FirstOrDefault().ProjectName, ccid = Model.FirstOrDefault().CodingDTO.ClinicalCaseID, plusorminus = "Previous" })" class="btn btn-success Available" id="btnPrevious" style="display:none">Previous</a>
-                                                        <a href="@Url.Action("GetCodingBlockedCharts", "UAB", new { Role = Roles.QA, ChartType = "Block", ProjectID = @Model.FirstOrDefault().ProjectID, ProjectName = Model.FirstOrDefault().ProjectName, ccid = Model.FirstOrDefault().CodingDTO.ClinicalCaseID, plusorminus = "Next" })" class="btn btn-success Available" id="btnNext" style="display:none">Next</a>
-                                                        <button id="btnBlock" type="button" class="btn btn-danger" onclick="Block()">Block</button>
-                                                        <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger" onclick="BlockHistory()">Block History</button>
+                                                        <a href="@Url.Action("GetBlockedChart", "UAB", new { Role = Roles.QA, ChartType = "Block", ProjectID = @Model.FirstOrDefault().ProjectID, ProjectName = Model.FirstOrDefault().ProjectName, ccids = Model.FirstOrDefault().CCIDs, Previous = "1",CurrCCId = ViewBag.CurrentCCId })" class="clsPrevious btn btn-success Available" id="btnPrevious" style="visibility:hidden">Previous</a>
+                                                        <a href="@Url.Action("GetBlockedChart", "UAB", new { Role = Roles.QA, ChartType = "Block", ProjectID = @Model.FirstOrDefault().ProjectID, ProjectName = Model.FirstOrDefault().ProjectName, ccids = Model.FirstOrDefault().CCIDs, Next = "1",CurrCCId = ViewBag.CurrentCCId })" class="clsNext btn btn-success Available" id="btnNext" style="visibility: hidden">Next</a>
+                                                        <button id="btnBlock" type="button" class="clsbtnBlock btn btn-danger" onclick="Block()">Block</button>
+                                                        <button id="btnBlockHistory" style="display:none" type="button" class="clsbtnBlockHistory btn btn-danger" onclick="BlockHistory()">Block History</button>
                                                         <button id="btnsubmit" type="button" class="btn btn-success">Save</button>
                                                         <button id="SubmitAndGetNext" name="SubmitAndGetNext" type="submit" value="SubmitAndGetNext" class="btn btn-success Available">Save And GetNext</button>
                                                     </div>

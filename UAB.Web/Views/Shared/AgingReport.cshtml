@@ -31,6 +31,9 @@
     td, th {
         text-align: center;
     }
+    .highlight {
+        background-color: #a8cb17 !important;
+    }
 </style>
 <div class="container-fluid">
     <div class="row">
@@ -223,8 +226,10 @@
         </div>
     </div>
 </div>
-
+<script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript">
+
+    $("#dashBoard").addClass('selected');
 
     var reportsArray = [];
     var reportscolor = ['', 'odd', 'even', 'odd', 'even'];
