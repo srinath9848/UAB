@@ -8,6 +8,11 @@
         @Html.Hidden("hdnQACptRemarks")
         @Html.Hidden("hdnQACptCodes")
 
+        @Html.Hidden("hdnQAAcceptDxRemarks")
+        @Html.Hidden("hdnQAAcceptDxCodes")
+        @Html.Hidden("hdnQAAcceptCptRemarks")
+        @Html.Hidden("hdnQAAcceptCptCodes")
+
         @Html.Hidden("hdnClaim1")
         @Html.Hidden("hdnClaim2")
         @Html.Hidden("hdnClaim3")
@@ -24,15 +29,31 @@
         @Html.Hidden("hdnQACptRemarks2")
         @Html.Hidden("hdnQACptCodes2")
 
+        @Html.Hidden("hdnQAAcceptDxRemarks2")
+        @Html.Hidden("hdnQAAcceptDxCodes2")
+        @Html.Hidden("hdnQAAcceptCptRemarks2")
+        @Html.Hidden("hdnQAAcceptCptCodes2")
+
         @Html.Hidden("hdnQADxRemarks3")
         @Html.Hidden("hdnQADxCodes3")
         @Html.Hidden("hdnQACptRemarks3")
         @Html.Hidden("hdnQACptCodes3")
 
+        @Html.Hidden("hdnQAAcceptDxRemarks3")
+        @Html.Hidden("hdnQAAcceptDxCodes3")
+        @Html.Hidden("hdnQAAcceptCptRemarks3")
+        @Html.Hidden("hdnQAAcceptCptCodes3")
+
+
         @Html.Hidden("hdnQADxRemarks4")
         @Html.Hidden("hdnQADxCodes4")
         @Html.Hidden("hdnQACptRemarks4")
         @Html.Hidden("hdnQACptCodes4")
+
+        @Html.Hidden("hdnQAAcceptDxRemarks4")
+        @Html.Hidden("hdnQAAcceptDxCodes4")
+        @Html.Hidden("hdnQAAcceptCptRemarks4")
+        @Html.Hidden("hdnQAAcceptCptCodes4")
 
         @Html.Hidden("hdnQAErrorTypeID1")
         @Html.Hidden("hdnQAErrorTypeID2")
@@ -262,7 +283,7 @@
                                                             ShadowQaDxVal = dictDxCodes.ElementAt(i).Value;
                                                         }
                                                     }
-                                                    <input type="text" class="form-control txtDx QARemarks ControlHeight" placeholder="Code" value="@ShadowQaDxVal" />
+                                                    <input type="text" id="txtSQADxCode_@j" class="form-control txtDx QARemarks ControlHeight" placeholder="Code" value="@ShadowQaDxVal" />
                                                     <div class="input-group-append ControlHeight" style="@Show">
                                                         <span class="input-group-text ControlHeight AcceptRejectWidth">
                                                             &nbsp;<i id="Dx_@j" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
@@ -271,7 +292,7 @@
                                                     </div>
                                                 </div>
                                                 <div title="" class="col-md-3 input-group" style="@Show">
-                                                    <input type="text" class="form-control QARemarks ControlHeight" value="@dictShadowQADxRemarks?.ElementAt(i).Value" />
+                                                    <input type="text" id="SQADxRemarks_@j" class="form-control QARemarks ControlHeight" value="@dictShadowQADxRemarks?.ElementAt(i).Value" />
                                                 </div>
 
                                             </div>
@@ -506,6 +527,7 @@
                                                             }
                                                         }
                                                     }
+                                                    <input type="hidden" id="txtSQACPTCode_@j" value="@ShadowQaCptVal^@ShadowQaModVal^@ShadowQaQtyVal^@ShadowQaLinkAllVal" />
                                                     <input type="text" class="form-control QARemarks ControlHeight" id="txtCpt_@j" autocomplete="off" placeholder="Code" value="@ShadowQaCptVal" style="min-width: 60px;" />
                                                     <input type="text" class="form-control QARemarks ControlHeight" id="txtMod_@j" autocomplete="off" placeholder="Mod" value="@ShadowQaModVal" />
                                                     <input type="text" id="txtQty_@j" class="form-control QARemarks ControlHeight" autocomplete="off" placeholder="Qty" value="@ShadowQaQtyVal" />
@@ -519,7 +541,7 @@
                                                 </div>
 
                                                 <div title="" class="col-md-3 input-group" style="@Show">
-                                                    <input type="text" class="form-control QARemarks ControlHeight" value="@dictShadowQACptRemarks?.ElementAt(i).Value" />
+                                                    <input type="text" id="SQACptRemarks_@j" class="form-control QARemarks ControlHeight" value="@dictShadowQACptRemarks?.ElementAt(i).Value" />
                                                 </div>
                                             </div>
                                             j = j + 1;
