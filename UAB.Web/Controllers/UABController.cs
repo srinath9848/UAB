@@ -458,23 +458,24 @@ namespace UAB.Controllers
             }
         }
 
-        public IActionResult SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO, string codingSubmitAndGetNext, string submitAndPost, string submitOnly, int providerPostedId, DateTime txtPostingDate, string txtCoderComment)
+        public IActionResult SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO, string codingSubmitAndGetNext, int providerPostedId, DateTime txtPostingDate, string txtCoderComment)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             string providerPosted = Request.Form["hdnProviderPosted"].ToString();
 
-            string submitType = Request.Form["hdnSubmitAndPost"];
+            //string submitType = Request.Form["hdnSubmitAndPost"];
             string hdnIsAuditRequired = Request.Form["hdnIsAuditRequired"];
 
-            if (submitType == "submitAndPost")
-                chartSummaryDTO.SubmitAndPostAlso = true;
-            else
-                chartSummaryDTO.SubmitAndPostAlso = false;
-
             if (hdnIsAuditRequired == "true")
+            {
                 chartSummaryDTO.IsAuditRequired = true;
+                chartSummaryDTO.SubmitAndPostAlso = false;
+            }
             else
+            {
                 chartSummaryDTO.IsAuditRequired = false;
+                chartSummaryDTO.SubmitAndPostAlso = true;
+            }
 
             if (string.IsNullOrEmpty(codingSubmitAndGetNext))
                 codingSubmitAndGetNext = Request.Form["hdnButtonType"];
@@ -536,9 +537,10 @@ namespace UAB.Controllers
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("CodingSummary", lstDto);
         }
-        public IActionResult codingSubmitPopup(ChartSummaryDTO chartSummaryDTO, string buttonType)
+        public IActionResult codingSubmitPopup(ChartSummaryDTO chartSummaryDTO, string buttonType, string isAuditRequired)
         {
             ViewBag.buttonType = buttonType;
+            ViewBag.isAuditRequired = isAuditRequired;
             return PartialView("_CodingSubmitPopup", chartSummaryDTO);
         }
         public IActionResult GetAuditDetails(string chartType, int projectId, string dt)
