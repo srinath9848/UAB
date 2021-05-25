@@ -286,8 +286,8 @@
                                                 <div class="col-md-3 input-group" style="@Show">
                                                     <input type="text" class="form-control ControlHeight SQADxRemarks_@j" id="" value="@dictShadowQADxRemarks?.ElementAt(i).Value" />
                                                 </div>
-                                                <div class="col-md-3 input-group" style="@Show">
-                                                    <input type="text" class="form-control CoderDetails ControlHeight" id="DxRemarks_@j" value="@dictQADxRemarks?.ElementAt(i).Value" />
+                                                <div class="col-md-3 input-group">
+                                                    <input type="text" class="form-control CoderDetails ControlHeight" style="@Show" id="DxRemarks_@j" value="@dictQADxRemarks?.ElementAt(i).Value" />
                                                 </div>
                                             </div>
 
@@ -501,7 +501,6 @@
                                                             }
                                                         }
                                                     }
-                                                    <input type="hidden" id="txtSAQCPTCode_@j" value="@ShadowQaCptVal^@ShadowQaModVal^@ShadowQaQtyVal^@ShadowQaLinkAllVal" />
                                                     <input type="text" style="min-width:48px;" class="form-control QARemarks ControlHeight" id="txtCpt_@j" autocomplete="off" placeholder="Code" value="@ShadowQaCptVal" />
                                                     <input type="text" class="form-control QARemarks ControlHeight" id="txtMod_@j" autocomplete="off" placeholder="Mod" value="@ShadowQaModVal" />
                                                     <input type="text" id="txtQty_@j" style="max-width:22px;" class="form-control QARemarks ControlHeight" autocomplete="off" placeholder="Qty" value="@ShadowQaQtyVal" />
@@ -518,8 +517,8 @@
                                                     <input type="text" class="form-control ControlHeight SQACptRemarks_@j" value="@dictShadowQACptRemarks?.ElementAt(i).Value" />
                                                 </div>
 
-                                                <div class="col-md-3 input-group" style="@Show">
-                                                    <input type="text" class="form-control CoderDetails ControlHeight" id="QACptRemarks_@j" value="@dictQACptRemarks?.ElementAt(i).Value" />
+                                                <div class="col-md-3 input-group">
+                                                    <input type="text" class="form-control CoderDetails ControlHeight" style="@Show" id="QACptRemarks_@j" value="@dictQACptRemarks?.ElementAt(i).Value" />
                                                 </div>
                                             </div>
                                             j = j + 1;
