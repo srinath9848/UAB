@@ -2713,6 +2713,10 @@ namespace UAB.DAL
                     cmd.Connection = con;
                     //searchParametersDTO.MRN = searchParametersDTO.MRN == "" ? null : searchParametersDTO.MRN;
                     //searchParametersDTO.FirstName = searchParametersDTO.FirstName == "" ? null : searchParametersDTO.FirstName;
+
+                    searchParametersDTO.ProviderName = searchParametersDTO.ProviderName == "--Select a Provider--" ? null : searchParametersDTO.ProviderName;
+                    searchParametersDTO.ProjectName = searchParametersDTO.ProjectName == "--Select a Project--" ? null : searchParametersDTO.ProjectName;
+
                     var param = new SqlParameter[] {
                         new SqlParameter() {
                             ParameterName = "@mrn",
@@ -2724,6 +2728,23 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = searchParametersDTO.FirstName
+                        },
+                         new SqlParameter() {
+                            ParameterName = "@lname",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = searchParametersDTO.LastName
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@projectname",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = searchParametersDTO.ProjectName
+                        },   new SqlParameter() {
+                            ParameterName = "@providername",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = searchParametersDTO.ProviderName
                         }
                 };
                     cmd.Parameters.AddRange(param);
@@ -2757,17 +2778,18 @@ namespace UAB.DAL
 
             //if (!string.IsNullOrWhiteSpace(searchParametersDTO.FirstName))
             //    lstDto = lstDto.Where(s => s.FirstName.Contains(searchParametersDTO.FirstName.ToUpper())).ToList();
-            if (!string.IsNullOrWhiteSpace(searchParametersDTO.LastName))
-                lstDto = lstDto.Where(s => s.LastName.Contains(searchParametersDTO.LastName.ToUpper())).ToList();
-            if (!string.IsNullOrWhiteSpace(searchParametersDTO.MRN))
-                if (searchParametersDTO.DoSFrom != default(DateTime) && searchParametersDTO.DoSTo != default(DateTime))
-                {
-                    var DoSFrom = searchParametersDTO.DoSFrom.Value;
-                    var DoSTo = searchParametersDTO.DoSTo.Value;
-                    lstDto = lstDto.Where(s => s.DoS >= DoSFrom && s.DoS <= DoSTo).ToList();
-                }
-            if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProviderName) && searchParametersDTO.ProviderName != "--Select a Provider--")
-                lstDto = lstDto.Where(a => a.ProviderName == searchParametersDTO.ProviderName).ToList();
+            //if (!string.IsNullOrWhiteSpace(searchParametersDTO.LastName))
+            //    lstDto = lstDto.Where(s => s.LastName.Contains(searchParametersDTO.LastName.ToUpper())).ToList();
+            //if (!string.IsNullOrWhiteSpace(searchParametersDTO.MRN))
+            if (searchParametersDTO.DoSFrom != default(DateTime) && searchParametersDTO.DoSTo != default(DateTime))
+            {
+                var DoSFrom = searchParametersDTO.DoSFrom.Value;
+                var DoSTo = searchParametersDTO.DoSTo.Value;
+                lstDto = lstDto.Where(s => s.DoS >= DoSFrom && s.DoS <= DoSTo).ToList();
+            }
+            //if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProviderName) && searchParametersDTO.ProviderName != "--Select a Provider--")
+            //    lstDto = lstDto.Where(a => a.ProviderName == searchParametersDTO.ProviderName).ToList();
+
             if (!string.IsNullOrWhiteSpace(searchParametersDTO.StatusName) && searchParametersDTO.StatusName != "--Select a Status--")
             {
                 if (searchParametersDTO.IncludeBlocked)
@@ -2779,8 +2801,8 @@ namespace UAB.DAL
                     lstDto = lstDto.Where(a => a.Status == searchParametersDTO.StatusName).ToList();
                 }
             }
-            if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProjectName) && searchParametersDTO.ProjectName != "--Select a Project--")
-                lstDto = lstDto.Where(a => a.ProjectName == searchParametersDTO.ProjectName).ToList();
+            //if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProjectName) && searchParametersDTO.ProjectName != "--Select a Project--")
+            //    lstDto = lstDto.Where(a => a.ProjectName == searchParametersDTO.ProjectName).ToList();
             if (searchParametersDTO.IncludeBlocked && (searchParametersDTO.StatusName == null || searchParametersDTO.StatusName == "--Select a Status--"))
             {
                 lstDto = lstDto.Where(a => a.IncludeBlocked == "1").ToList();
