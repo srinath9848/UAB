@@ -23,15 +23,19 @@
 <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
     <input type="hidden" name="postingSubmitAndGetNext" value="@ViewBag.buttonType" />
     <div class="modal-dialog">
-        <div class="modal-content" style="width:900px;max-height:500px;margin-top:200px !important">
-            <div class="modal-header" style="background-color:moccasin">
+        <div class="modal-content" style="width: 500px;">
+            <div class="modal-header" style="background: #27a9e3;color: white;">
                 <h5 class="modal-title" id="exampleModalLongTitle">Posting Complete</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ModalClose1()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="table-responsive" style="max-height:400px">
-                <br /><br /> <span style="text-align:center">Are you sure you have posted all the claims in the client system?</span><br /><br />
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="control-label">Are you sure you have posted all the claims in the client system?</label>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="submit" id="postingComplete" name="postingComplete" class="btn btn-sm btn-danger btn-fill">Yes</button>
