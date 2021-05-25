@@ -2711,7 +2711,22 @@ namespace UAB.DAL
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.CommandText = "[dbo].[USPGetSearchData]";
                     cmd.Connection = con;
-
+                    //searchParametersDTO.MRN = searchParametersDTO.MRN == "" ? null : searchParametersDTO.MRN;
+                    //searchParametersDTO.FirstName = searchParametersDTO.FirstName == "" ? null : searchParametersDTO.FirstName;
+                    var param = new SqlParameter[] {
+                        new SqlParameter() {
+                            ParameterName = "@mrn",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = searchParametersDTO.MRN
+                        },   new SqlParameter() {
+                            ParameterName = "@fname",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = searchParametersDTO.FirstName
+                        }
+                };
+                    cmd.Parameters.AddRange(param);
                     con.Open();
                     var reader = cmd.ExecuteReader();
                     while (reader.Read())
@@ -2737,11 +2752,11 @@ namespace UAB.DAL
             if (!mUserRole.Contains("Manager"))
                 lstDto = lstDto.Where(a => a.Assigneduser.Equals(Convert.ToString(mUserId))).ToList();
 
-            if (!string.IsNullOrWhiteSpace(searchParametersDTO.MRN))
-                lstDto = lstDto.Where(a => a.MRN == searchParametersDTO.MRN).ToList();
+            //if (!string.IsNullOrWhiteSpace(searchParametersDTO.MRN))
+            //    lstDto = lstDto.Where(a => a.MRN == searchParametersDTO.MRN).ToList();
 
-            if (!string.IsNullOrWhiteSpace(searchParametersDTO.FirstName))
-                lstDto = lstDto.Where(s => s.FirstName.Contains(searchParametersDTO.FirstName.ToUpper())).ToList();
+            //if (!string.IsNullOrWhiteSpace(searchParametersDTO.FirstName))
+            //    lstDto = lstDto.Where(s => s.FirstName.Contains(searchParametersDTO.FirstName.ToUpper())).ToList();
             if (!string.IsNullOrWhiteSpace(searchParametersDTO.LastName))
                 lstDto = lstDto.Where(s => s.LastName.Contains(searchParametersDTO.LastName.ToUpper())).ToList();
             if (!string.IsNullOrWhiteSpace(searchParametersDTO.MRN))
@@ -3108,7 +3123,12 @@ namespace UAB.DAL
                 var existingcc = context.WorkItem.Where(c => c.ClinicalCaseId == ccid).FirstOrDefault();
                 if (existingcc != null)
                 {
-                    existingcc.AssignedTo = AssignedTouserid;
+                    
+                    if (existingcc.StatusId == 1 || existingcc.StatusId == 2 || existingcc.StatusId == 3
+                        || existingcc.StatusId == 14 || existingcc.StatusId == 15)
+                    {
+                        existingcc.AssignedTo = AssignedTouserid;
+                    }
                     if (existingcc.StatusId == 4 || existingcc.StatusId == 5 || existingcc.StatusId == 6
                         || existingcc.StatusId == 11 || existingcc.StatusId == 12)
                     {
