@@ -2565,11 +2565,6 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = mUserId
-                        },   new SqlParameter() {
-                            ParameterName = "@ErrorTypeID",
-                            SqlDbType =  System.Data.SqlDbType.Int,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.QADTO.ErrorType
                         }
                         ,   new SqlParameter() {
                             ParameterName = "@StatusId",
@@ -2578,10 +2573,10 @@ namespace UAB.DAL
                             Value = statusId
                         },
                           new SqlParameter() {
-                            ParameterName = "@utAudit",
+                            ParameterName = "@utWorkItemAudit",
                             SqlDbType =  System.Data.SqlDbType.Structured,
                             Direction = System.Data.ParameterDirection.Input,
-                            TypeName = "utAudit",
+                            TypeName = "utWorkItemAudit",
                             Value = dtAudit
                         },
                           new SqlParameter() {
@@ -2605,7 +2600,6 @@ namespace UAB.DAL
                             TypeName = "utCptCode",
                             Value = dtCpt
                         }
-
                 };
 
                 using (var con = context.Database.GetDbConnection())
@@ -3145,7 +3139,7 @@ namespace UAB.DAL
                 var existingcc = context.WorkItem.Where(c => c.ClinicalCaseId == ccid).FirstOrDefault();
                 if (existingcc != null)
                 {
-                    
+
                     if (existingcc.StatusId == 1 || existingcc.StatusId == 2 || existingcc.StatusId == 3
                         || existingcc.StatusId == 14 || existingcc.StatusId == 15)
                     {
@@ -3426,7 +3420,7 @@ namespace UAB.DAL
                 else
                 {
                     List<User> userlist = context.User.Where(a => !a.Email.Contains(fromemial)).ToList();
-                    var projectuserids = context.ProjectUser.Where(x => x.ProjectId == workitem.ProjectId&&x.RoleId==roleid && x.UserId != workitem.AssignedTo).Select(x => x.UserId).Distinct().ToList();
+                    var projectuserids = context.ProjectUser.Where(x => x.ProjectId == workitem.ProjectId && x.RoleId == roleid && x.UserId != workitem.AssignedTo).Select(x => x.UserId).Distinct().ToList();
 
                     List<User> userlist3 = new List<User>();
 
