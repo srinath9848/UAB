@@ -17,8 +17,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="~/dashboardassets/images/favicon.png">
     <title>@ViewData["Title"] - UAB</title>
     @*
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />*@
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/site.css" />*@
     <link href="~/dashboardassets/libs/flot/css/float-chart.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="~/dashboardassets/dist/css/style.min.css" rel="stylesheet">
@@ -123,104 +123,115 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav" class="p-t-30">
-                        <li id="dashBoard" class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" asp-area="" asp-controller="Home" asp-action="GetAgingReport">
-                                <i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span>
-                            </a>
-                        </li>
-                        <li id="reports" class="sidebar-item">
-                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="/">
-                                <i class="mdi mdi-chart-bar"></i><span class="hide-menu">Reports</span>
-                            </a>
-                            <ul aria-expanded="false" class="collapse first-level">
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link" asp-area="" asp-controller="Home" asp-action="LevellingSummaryReport">
-                                        <i class="mdi mdi-note-outline"></i><span class="hide-menu">
-                                            Levelling
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link" asp-area="" asp-controller="Home" asp-action="ReceivedChartsReport">
-                                        <i class="mdi mdi-note-outline"></i><span class="hide-menu">
-                                            Received Charts
-                                        </span>
-                                    </a>
-                                </li>
-                                <li id="SettingsEmgroups" class="sidebar-item">
-                                    <a class="sidebar-link" asp-area="" asp-controller="Home" asp-action="ChartSummaryReport">
-                                        <i class="mdi mdi-note-outline"></i><span class="hide-menu">
-                                            Chart Summary
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link" asp-area="" asp-controller="Home" asp-action="CodedChartsReport">
-                                        <i class="mdi mdi-note-outline"></i><span class="hide-menu">
-                                            Coded Charts
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link" asp-area="" asp-controller="Home" asp-action="QAChartsReport">
-                                        <i class="mdi mdi-note-outline"></i><span class="hide-menu">
-                                            QA Charts
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link" asp-area="" asp-controller="Home" asp-action="PostedChartsReport">
-                                        <i class="mdi mdi-note-outline"></i><span class="hide-menu">
-                                            Posted Charts
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link" asp-area="" asp-controller="Home" asp-action="PendingChartsReport">
-                                        <i class="mdi mdi-note-outline"></i><span class="hide-menu">
-                                            Pending Charts
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link" asp-area="" asp-controller="Home" asp-action="ProvidedPostedChartsReport">
-                                        <i class="mdi mdi-note-outline"></i><span class="hide-menu">
-                                            Provider Posted Charts
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link" asp-area="" asp-controller="Home" asp-action="BacklogChartsReport">
-                                        <i class="mdi mdi-note-outline"></i><span class="hide-menu">
-                                            Backlog Charts
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                        @if (roles.Split(',').ToList().Contains(Roles.Manager.ToString()))
+                        {
+                            <li id="dashBoard" class="sidebar-item">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" asp-area="" asp-controller="Home" asp-action="GetAgingReport">
+                                    <i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span>
+                                </a>
+                            </li>
+                            <li id="reports" class="sidebar-item">
+                                <a class="sidebar-link has-arrow waves-effect waves-dark" href="/">
+                                    <i class="mdi mdi-chart-bar"></i><span class="hide-menu">Reports</span>
+                                </a>
+                                <ul aria-expanded="false" class="collapse first-level">
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="Home" asp-action="LevellingSummaryReport">
+                                            <i class="mdi mdi-note-outline"></i><span class="hide-menu">
+                                                Levelling
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="Home" asp-action="ReceivedChartsReport">
+                                            <i class="mdi mdi-note-outline"></i><span class="hide-menu">
+                                                Received Charts
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li id="SettingsEmgroups" class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="Home" asp-action="ChartSummaryReport">
+                                            <i class="mdi mdi-note-outline"></i><span class="hide-menu">
+                                                Chart Summary
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="Home" asp-action="CodedChartsReport">
+                                            <i class="mdi mdi-note-outline"></i><span class="hide-menu">
+                                                Coded Charts
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="Home" asp-action="QAChartsReport">
+                                            <i class="mdi mdi-note-outline"></i><span class="hide-menu">
+                                                QA Charts
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="Home" asp-action="PostedChartsReport">
+                                            <i class="mdi mdi-note-outline"></i><span class="hide-menu">
+                                                Posted Charts
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="Home" asp-action="PendingChartsReport">
+                                            <i class="mdi mdi-note-outline"></i><span class="hide-menu">
+                                                Pending Charts
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="Home" asp-action="ProvidedPostedChartsReport">
+                                            <i class="mdi mdi-note-outline"></i><span class="hide-menu">
+                                                Provider Posted Charts
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="Home" asp-action="BacklogChartsReport">
+                                            <i class="mdi mdi-note-outline"></i><span class="hide-menu">
+                                                Backlog Charts
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        @if (roles.Split(',').ToList().Contains(Roles.Supervisor.ToString()))
+                        {
+                            <li id="dashBoard" class="sidebar-item">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" asp-area="" asp-controller="Home" asp-action="GetAgingReport">
+                                    <i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span>
+                                </a>
+                            </li>
+                        }
                         @if (roles.Split(',').ToList().Contains(Roles.Coder.ToString()))
                         {
-                        <li id="coding" class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" asp-area="" asp-controller="UAB" asp-action="CodingSummary">
-                                <i class="mdi mdi-receipt"></i><span class="hide-menu">Coding</span>
-                            </a>
-                        </li>
+                            <li id="coding" class="sidebar-item">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" asp-area="" asp-controller="UAB" asp-action="CodingSummary">
+                                    <i class="mdi mdi-receipt"></i><span class="hide-menu">Coding</span>
+                                </a>
+                            </li>
                         }
                         @if (roles.Split(',').ToList().Contains(Roles.QA.ToString()))
                         {
-                        <li id="qa" class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" asp-area="" asp-controller="UAB" asp-action="QASummary">
-                                <i class="mdi mdi-chart-bar"></i><span class="hide-menu">QA</span>
-                            </a>
-                        </li>
+                            <li id="qa" class="sidebar-item">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" asp-area="" asp-controller="UAB" asp-action="QASummary">
+                                    <i class="mdi mdi-chart-bar"></i><span class="hide-menu">QA</span>
+                                </a>
+                            </li>
                         }
                         @if (roles.Split(',').ToList().Contains(Roles.ShadowQA.ToString()))
                         {
-                        <li id="shadowQA" class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" asp-area="" asp-controller="UAB" asp-action="ShadowQASummary">
-                                <i class="mdi mdi-chart-bar"></i><span class="hide-menu">Shadow QA</span>
-                            </a>
-                        </li>
+                            <li id="shadowQA" class="sidebar-item">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" asp-area="" asp-controller="UAB" asp-action="ShadowQASummary">
+                                    <i class="mdi mdi-chart-bar"></i><span class="hide-menu">Shadow QA</span>
+                                </a>
+                            </li>
                         }
                         <li id="Search" class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsSearch">
@@ -229,76 +240,76 @@
                         </li>
                         @if (roles.Split(',').ToList().Contains(Roles.Manager.ToString()))
                         {
-                        <li id="settings" class="sidebar-item">
-                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="/">
-                                <i class="mdi mdi-settings"></i><span class="hide-menu">Settings</span>
-                            </a>
-                            <ul aria-expanded="false" class="collapse first-level">
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link" asp-area="" asp-controller="Account" asp-action="ManageUsers">
-                                        <i class="fa fa-user-circle"></i><span class="hide-menu">
-                                            Manage Users
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsBlockCategories">
-                                        <i class="mdi mdi-note-outline"></i><span class="hide-menu">
-                                            Block Categories
-                                        </span>
-                                    </a>
-                                </li>
-                                <li id="SettingsEmgroups" class="sidebar-item">
-                                    <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="ManageEMCodeLevels">
-                                        <i class="mdi mdi-note-outline"></i><span class="hide-menu">
-                                            EM Code Levels
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsProvider">
-                                        <i class="mdi mdi-note-outline"></i><span class="hide-menu">
-                                            Provider
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsPayor">
-                                        <i class="mdi mdi-note-plus"></i><span class="hide-menu">
-                                            Payor
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsProviderFeedback">
-                                        <i class="mdi mdi-note-plus"></i><span class="hide-menu">
-                                            Provider Feedback
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsErrorType">
-                                        <i class="mdi mdi-note-plus"></i><span class="hide-menu">
-                                            Error Type
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsProject">
-                                        <i class="mdi mdi-note-plus"></i><span class="hide-menu">
-                                            Project
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsFileUpload">
-                                        <i class="fa fa-upload"></i><span class="hide-menu">
-                                            File Upload
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                            <li id="settings" class="sidebar-item">
+                                <a class="sidebar-link has-arrow waves-effect waves-dark" href="/">
+                                    <i class="mdi mdi-settings"></i><span class="hide-menu">Settings</span>
+                                </a>
+                                <ul aria-expanded="false" class="collapse first-level">
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="Account" asp-action="ManageUsers">
+                                            <i class="fa fa-user-circle"></i><span class="hide-menu">
+                                                Manage Users
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsBlockCategories">
+                                            <i class="mdi mdi-note-outline"></i><span class="hide-menu">
+                                                Block Categories
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li id="SettingsEmgroups" class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="ManageEMCodeLevels">
+                                            <i class="mdi mdi-note-outline"></i><span class="hide-menu">
+                                                EM Code Levels
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsProvider">
+                                            <i class="mdi mdi-note-outline"></i><span class="hide-menu">
+                                                Provider
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsPayor">
+                                            <i class="mdi mdi-note-plus"></i><span class="hide-menu">
+                                                Payor
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsProviderFeedback">
+                                            <i class="mdi mdi-note-plus"></i><span class="hide-menu">
+                                                Provider Feedback
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsErrorType">
+                                            <i class="mdi mdi-note-plus"></i><span class="hide-menu">
+                                                Error Type
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsProject">
+                                            <i class="mdi mdi-note-plus"></i><span class="hide-menu">
+                                                Project
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-area="" asp-controller="UAB" asp-action="SettingsFileUpload">
+                                            <i class="fa fa-upload"></i><span class="hide-menu">
+                                                File Upload
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                         }
                     </ul>
                 </nav>
@@ -321,7 +332,7 @@
         <div class="modal-dialog">
             <div class="modal-content" style="width: 500px;">
                 <br />
-                <div class="modal-header">
+                <div class="modal-header" style="background: #27a9e3;color: white;">
                     <h4 class="modal-title"><strong>Error</strong></h4>
                 </div>
                 <div class="modal-body">
