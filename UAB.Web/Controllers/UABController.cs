@@ -75,7 +75,7 @@ namespace UAB.Controllers
             {
                 lst = clinicalcaseOperations.DisplayBlockCharts(Role, ProjectID);
             }
-           else  if (Role == Roles.ShadowQA.ToString())
+            else if (Role == Roles.ShadowQA.ToString())
             {
                 lst = clinicalcaseOperations.DisplayBlockCharts(Role, ProjectID);
             }
@@ -83,7 +83,7 @@ namespace UAB.Controllers
             {
                 lst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);
             }
-            var projectname  = clinicalcaseOperations.projectname(ProjectID);
+            var projectname = clinicalcaseOperations.projectname(ProjectID);
             ViewBag.Role = Role;
             ViewBag.Project = projectname;
             return PartialView("_BlockedList", lst);
@@ -239,7 +239,7 @@ namespace UAB.Controllers
 
         }
 
-        public IActionResult GetCodingBlockedChart(string Role, string ChartType, int ProjectID, string ccids, string ProjectName, int CurrCCId = 0, string Previous = "", string Next = "")
+        public IActionResult GetBlockedChart(string Role, string ChartType, int ProjectID, string ccids, string ProjectName, int CurrCCId = 0, string Previous = "", string Next = "")
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
@@ -302,19 +302,27 @@ namespace UAB.Controllers
             {
                 case "Coder":
                     chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID, PrevOrNextCCId);
-                    chartSummaryDTO.ProjectName = ProjectName;
 
-                    if (ccids == null && chartSummaryDTO.CCIDs.Split(",").Length > 1)
+                    if (chartSummaryDTO == null)
                     {
-                        ViewBag.CurrentCCId = chartSummaryDTO.CCIDs.Split(",")[0];
-                        ViewBag.EnableNext = "true";
+                        TempData["Toast"] = "There are no charts available";
+                        return RedirectToAction("CodingSummary");
                     }
                     else
-                        ViewBag.CurrentCCId = PrevOrNextCCId;
+                    {
+                        chartSummaryDTO.ProjectName = ProjectName;
+
+                        if (ccids == null && chartSummaryDTO.CCIDs.Split(",").Length > 1)
+                        {
+                            ViewBag.CurrentCCId = chartSummaryDTO.CCIDs.Split(",")[0];
+                            ViewBag.EnableNext = "true";
+                        }
+                        else
+                            ViewBag.CurrentCCId = PrevOrNextCCId;
+                    }
                     break;
                 case "QA":
                 case "ShadowQA":
-
 
                     lstChartSummaryDTO = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID, PrevOrNextCCId);
 
@@ -330,17 +338,12 @@ namespace UAB.Controllers
                         else
                             ViewBag.CurrentCCId = PrevOrNextCCId;
                     }
-
+                    else
+                    {
+                        TempData["Toast"] = "There are no charts available";
+                        return (Role == "QA") ? RedirectToAction("QASummary") : RedirectToAction("ShadowQASummary");
+                    }
                     break;
-                    //case "ShadowQA":
-                    //    lstChartSummaryDTO = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
-                    //    if (lstChartSummaryDTO.Count > 0)
-                    //        lstChartSummaryDTO.FirstOrDefault().ProjectName = ProjectName;
-                    //    //for prenxt button disblenable operation
-                    //    lst = clinicalcaseOperations.DisplayBlockCharts(Role, ProjectID);
-                    //    List<int> shadowqacidslst = lst.Select(x => x.CodingDTO.ClinicalCaseID).ToList();
-                    //    ViewBag.lastindex = shadowqacidslst.Count - 1;
-                    //    break;
             }
             if (Role == "QA")
                 return View("QA", lstChartSummaryDTO.OrderBy(a => a.ClaimId).ToList());
@@ -526,9 +529,9 @@ namespace UAB.Controllers
                 else
                 {
                     clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDTO, dtClaim, dtCpt);
-                        return RedirectToAction("GetCodingAvailableChart", new { Role = Roles.Coder.ToString(), ChartType = "Available", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName });
-                    }
+                    return RedirectToAction("GetCodingAvailableChart", new { Role = Roles.Coder.ToString(), ChartType = "Available", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName });
                 }
+            }
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("CodingSummary", lstDto);
@@ -938,6 +941,11 @@ namespace UAB.Controllers
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
+            //Below 3 fields are related to Block->Next & Previous functionality
+            string hdnBlockedCCIds = Request.Form["CCIDs"].ToString();
+            string hdnCurrentCCId = Request.Form["hdnCurrentCCId"].ToString();
+            string hdnIsBlocked = Request.Form["hdnIsBlocked"].ToString();
+
             //Starting of Reading Claim2 to Claim4 Data
             DataTable dtCpt = new DataTable();
             dtCpt.Columns.Add("CPTCode", typeof(string));
@@ -1021,15 +1029,40 @@ namespace UAB.Controllers
             string currDt = Request.Form["hdnCurrDate"].ToString();
             bool audit = IsAuditRequired("QA", chartSummaryDTO.ProjectID, currDt);
             chartSummaryDTO.IsAuditRequired = audit;
+            List<DashboardDTO> lstDto = new List<DashboardDTO>();
 
             if (string.IsNullOrEmpty(SubmitAndGetNext))
                 clinicalcaseOperations.SubmitQAAvailableChart(chartSummaryDTO, dtAudit);
             else
             {
                 clinicalcaseOperations.SubmitQAAvailableChart(chartSummaryDTO, dtAudit);
-                return RedirectToAction("GetQAAvailableChart", new { Role = Roles.QA.ToString(), ChartType = "Available", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName });
+                if (hdnIsBlocked == "1" && hdnBlockedCCIds != "" && hdnCurrentCCId != "")
+                {
+                    List<int> blockedCCIds = hdnBlockedCCIds.Split(",").Select(int.Parse).ToList();
+
+                    int CurrentIndex = blockedCCIds.IndexOf(Convert.ToInt32(hdnCurrentCCId));
+
+                    string currCCId = "";
+                    if (CurrentIndex > 0)
+                        currCCId = blockedCCIds[CurrentIndex - 1].ToString();
+
+                    blockedCCIds.RemoveAll(item => item == Convert.ToInt32(hdnCurrentCCId));
+
+                    if (blockedCCIds.Count == 0 || hdnCurrentCCId == "0")//(CurrentIndex + 1) == blockedCCIds.Count ||
+                    {
+                        TempData["Toast"] = "There are no charts available";
+                        lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.QA.ToString());
+                        return RedirectToAction("QASummary", lstDto);
+                    }
+                    else
+                    {
+                        return RedirectToAction("GetBlockedChart", new { Role = Roles.QA.ToString(), ChartType = "Block", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName, ccids = ((CurrentIndex == blockedCCIds.Count) || CurrentIndex == 0) ? null : string.Join<int>(",", blockedCCIds), Next = "1", CurrCCId = currCCId });
+                    }
+                }
+                else
+                    return RedirectToAction("GetQAAvailableChart", new { Role = Roles.QA.ToString(), ChartType = "Available", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName });
             }
-            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.QA.ToString());
+            lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.QA.ToString());
 
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("QASummary", lstDto);
@@ -1347,6 +1380,11 @@ namespace UAB.Controllers
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
+            //Below 3 fields are related to Block->Next & Previous functionality
+            string hdnBlockedCCIds = Request.Form["CCIDs"].ToString();
+            string hdnCurrentCCId = Request.Form["hdnCurrentCCId"].ToString();
+            string hdnIsBlocked = Request.Form["hdnIsBlocked"].ToString();
+
             DataTable dtAudit = new DataTable();
             dtAudit.Columns.Add("FieldName", typeof(string));
             dtAudit.Columns.Add("FieldValue", typeof(string));
@@ -1433,15 +1471,42 @@ namespace UAB.Controllers
 
 
             bool isQAAgreed = hdnIsQAAgreed;// Convert.ToBoolean(Request.Form["hdnIsQAAgreed"]);
+            List<DashboardDTO> lstDto = new List<DashboardDTO>();
 
             if (string.IsNullOrEmpty(SubmitAndGetNext))
                 clinicalcaseOperations.SubmitShadowQAAvailableChart(chartSummaryDTO, isQAAgreed, dtAudit);
             else
             {
                 clinicalcaseOperations.SubmitShadowQAAvailableChart(chartSummaryDTO, isQAAgreed, dtAudit);
-                return RedirectToAction("GetShadowQAAvailableChart", new { Role = Roles.ShadowQA.ToString(), ChartType = "Available", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName });
+                if (hdnIsBlocked == "1" && hdnBlockedCCIds != "" && hdnCurrentCCId != "")
+                {
+                    List<int> blockedCCIds = hdnBlockedCCIds.Split(",").Select(int.Parse).ToList();
+
+                    int CurrentIndex = blockedCCIds.IndexOf(Convert.ToInt32(hdnCurrentCCId));
+
+                    string currCCId = "";
+                    if (CurrentIndex > 0)
+                        currCCId = blockedCCIds[CurrentIndex - 1].ToString();
+
+                    blockedCCIds.RemoveAll(item => item == Convert.ToInt32(hdnCurrentCCId));
+
+                    if (blockedCCIds.Count == 0 || hdnCurrentCCId == "0")
+                    {
+                        TempData["Toast"] = "There are no charts available";
+                        lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.ShadowQA.ToString());
+                        return RedirectToAction("ShadowQASummary", lstDto);
+                    }
+                    else
+                    {
+                        return RedirectToAction("GetBlockedChart", new { Role = Roles.ShadowQA.ToString(), ChartType = "Block", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName, ccids = ((CurrentIndex == blockedCCIds.Count) || CurrentIndex == 0) ? null : string.Join<int>(",", blockedCCIds), Next = "1", CurrCCId = currCCId });
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("GetShadowQAAvailableChart", new { Role = Roles.ShadowQA.ToString(), ChartType = "Available", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName });
+                }
             }
-            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.ShadowQA.ToString());
+            lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.ShadowQA.ToString());
 
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("ShadowQASummary", lstDto);

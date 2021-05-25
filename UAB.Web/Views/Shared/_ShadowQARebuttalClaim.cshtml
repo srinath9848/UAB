@@ -189,7 +189,7 @@
                     <div class="input-group-prepend ControlHeight">
                         <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                     </div>
-                    <input type="text" id="@string.Format("txtDx{0}Claim_{1}", Model.TabIndex, j)" class="form-control txtDx ControlHeight" autocomplete="off" tabindex="@i" placeholder="Code" value="@dictShadowQADxCodes?.ElementAt(i).Value" />
+                    <input type="text" style="@Show" id="@string.Format("txtDx{0}Claim_{1}", Model.TabIndex, j)" class="form-control txtDx ControlHeight" autocomplete="off" tabindex="@i" placeholder="Code" value="@dictShadowQADxCodes?.ElementAt(i).Value" />
                     <input type="hidden" id="@string.Format("txtQADx{0}Claim_{1}", Model.TabIndex, j)" class="form-control txtDx ControlHeight" value="@dictQADxCodes?.ElementAt(i).Value" />
                     <div class="input-group-append ControlHeight">
                         <span class="input-group-text ControlHeight AcceptRejectWidth">
@@ -198,12 +198,12 @@
                         </span>
                     </div>
                 </div>
-                <div title="" class="col-md-3 input-group" style="@Show">
-                    <input type="text" id="@string.Format("ShadowQADxRemarkss_{0}_{1}", Model.TabIndex, j)" class="form-control ControlHeight" value="@dictShadowQADxRemarks?.ElementAt(i).Value" />
+                <div title="" class="col-md-3 input-group">
+                    <input type="text" style="@Show" id="@string.Format("ShadowQADxRemarkss_{0}_{1}", Model.TabIndex, j)" class="form-control ControlHeight" value="@dictShadowQADxRemarks?.ElementAt(i).Value" />
                 </div>
 
-                <div title="" class="col-md-3 input-group" style="@Show">
-                    <input type="text" class="form-control CoderDetails ControlHeight @string.Format("QADxRemarkss_{0}_{1}", Model.TabIndex, j)" value="@dictQADxRemarks?.ElementAt(i).Value" />
+                <div title="" class="col-md-3 input-group">
+                    <input type="text" style="@Show" class="form-control CoderDetails ControlHeight @string.Format("QADxRemarkss_{0}_{1}", Model.TabIndex, j)" value="@dictQADxRemarks?.ElementAt(i).Value" />
                 </div>
 
             </div>
@@ -350,7 +350,7 @@
                             <span style="color:green">@linkAll</span>
                         </div>
 
-                        <input type="hidden" id="@string.Format("txt{0}Cpt_{1}", Model.TabIndex,j)" value="@qacptCode^@qaMod^@qaQty^@qaLinks" />
+                        <input type="hidden" id="@string.Format("txt{0}QACpt_{1}", Model.TabIndex,j)" value="@qacptCode^@qaMod^@qaQty^@qaLinks" />
                     </div>
                 }
                 else
@@ -376,7 +376,7 @@
                         <input type="text" class="form-control CoderDetails ControlHeight" style="color:green;" placeholder="Mod" value="@coderModVal" />
                         <input type="text" class="form-control CoderDetails ControlHeight" style="color:green;" placeholder="Qty" value="@qtyVal" />
                         <input type="text" class="form-control CoderDetails ControlHeight" style="color: green;" placeholder="Link All" value="@coderLinkAllVal" />
-                        <input type="hidden" id="@string.Format("txt{0}Cpt_{1}", Model.TabIndex,j)" value="@coderCptcodes[0]^@coderModVal^@coderCptcodes[2]^@coderLinkAllVal" />
+                        <input type="hidden" id="@string.Format("txt{0}QACpt_{1}", Model.TabIndex,j)" value="@coderCptcodes[0]^@coderModVal^@coderCptcodes[2]^@coderLinkAllVal" />
                     </div>
                 }
 
@@ -424,12 +424,12 @@
                     </div>
                 </div>
 
-                <div title="" class="col-md-3 input-group" style="@Show">
-                    <input type="text" id="@string.Format("ShadowQACptRemarkss_{0}_{1}", Model.TabIndex,j)" class="form-control ControlHeight QACptRemarks_@j" value="@dictShadowQACptRemarks?.ElementAt(i).Value" />
+                <div title="" class="col-md-3 input-group">
+                    <input type="text" style="@Show" id="@string.Format("ShadowQACptRemarkss_{0}_{1}", Model.TabIndex,j)" class="form-control ControlHeight QACptRemarks_@j" value="@dictShadowQACptRemarks?.ElementAt(i).Value" />
                 </div>
 
-                <div class="col-md-3 input-group" style="@Show">
-                    <input type="text" class="form-control CoderDetails ControlHeight @string.Format("QACptRemarkss_{0}_{1}", Model.TabIndex,j)" value="@dictQACptRemarks?.ElementAt(i).Value" />
+                <div class="col-md-3 input-group">
+                    <input type="text" style="@Show" class="form-control CoderDetails ControlHeight @string.Format("QACptRemarkss_{0}_{1}", Model.TabIndex,j)" value="@dictQACptRemarks?.ElementAt(i).Value" />
                 </div>
             </div>
             j = j + 1;
