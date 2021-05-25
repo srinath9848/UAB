@@ -154,10 +154,10 @@ namespace UAB.Controllers
             return RedirectToAction("Index", "Home");
         }
         [HttpPost]
-        public IActionResult GetReceivedChartsReport(int ProjectId, string range)
+        public IActionResult GetReceivedChartsReport(int ProjectId, string range, DateTime StartDate, DateTime EndDate)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstReceivedChartReport = clinicalcaseOperations.GetReceivedChartsReport(ProjectId, range);
+            var lstReceivedChartReport = clinicalcaseOperations.GetReceivedChartsReport(ProjectId, range, StartDate, EndDate);
             return PartialView("_ReceivedChartReport", lstReceivedChartReport);
         }
         [HttpPost]
@@ -208,10 +208,10 @@ namespace UAB.Controllers
             return PartialView("_BackLogChartsReportDetails",lstBackLogChartReportDetails);
         }
 
-        public IActionResult GetCodedChartsReport(int ProjectId, string range)
+        public IActionResult GetCodedChartsReport(int ProjectId, string range, DateTime StartDate, DateTime EndDate)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstReceivedChartReport = clinicalcaseOperations.GetCodedChartsReport(ProjectId, range);
+            var lstReceivedChartReport = clinicalcaseOperations.GetCodedChartsReport(ProjectId, range, StartDate, EndDate);
             return PartialView("_CodedChartReport", lstReceivedChartReport);
         }
         public IActionResult GetQAChartsReport (int ProjectId, string range)

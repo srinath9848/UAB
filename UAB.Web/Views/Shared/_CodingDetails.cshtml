@@ -33,8 +33,8 @@
 <div class="col-md-12">
     <div class="card">
         @*<div class="card-body">
-            <h4 class="card-title"><span>Chart ID : <label style="color: black;">@Model.CodingDTO.ClinicalCaseID</label></span></h4>
-        </div>*@
+                <h4 class="card-title"><span>Chart ID : <label style="color: black;">@Model.CodingDTO.ClinicalCaseID</label></span></h4>
+            </div>*@
         @Html.HiddenFor(model => model.Links)
         @Html.HiddenFor(model => model.ProjectName)
         @Html.HiddenFor(model => model.ProjectID)
@@ -73,7 +73,7 @@
                             <div class="col-md-3" style="display:inherit;">
                                 @if (@Model.ProviderID != 0)
                                 {
-                                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id="pr1",@class = "form-control CoderDetails ControlHeight", @style = "pointer-events:none;background-color:#e9ecef" })
+                                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = "pr1", @class = "form-control CoderDetails ControlHeight", @style = "pointer-events:none;background-color:#e9ecef" })
                                 }
                                 else
                                 {
@@ -149,8 +149,8 @@
                 </div>
                 <div class="border-top">
                     <div class="card-body" style="text-align:right">
-                        <a href="@Url.Action("GetBlockedChart", "UAB", new { Role = Roles.Coder, ChartType = "Block", ProjectID = @Model.ProjectID, ProjectName = Model.ProjectName, ccids = Model.CCIDs, Previous = "1",CurrCCId = ViewBag.CurrentCCId })" class="btn btn-success Available" id="btnPrevious" style="visibility:hidden">Previous</a>
-                        <a href="@Url.Action("GetBlockedChart", "UAB", new { Role = Roles.Coder, ChartType = "Block", ProjectID = @Model.ProjectID, ProjectName = Model.ProjectName, ccids = Model.CCIDs, Next = "1",CurrCCId = ViewBag.CurrentCCId })" class="btn btn-success Available" id="btnNext" style="visibility: hidden">Next</a>
+                        <a href="@Url.Action("GetBlockedChart", "UAB", new { Role = Roles.Coder, ChartType = "Block", ProjectID = @Model.ProjectID, ProjectName = Model.ProjectName, ccids = Model.CCIDs, Previous = "1",CurrCCId = ViewBag.CurrentCCId })" class="btn btn-success Available" id="btnPrevious" style="opacity: 0.65; pointer-events: none">Previous</a>
+                        <a href="@Url.Action("GetBlockedChart", "UAB", new { Role = Roles.Coder, ChartType = "Block", ProjectID = @Model.ProjectID, ProjectName = Model.ProjectName, ccids = Model.CCIDs, Next = "1",CurrCCId = ViewBag.CurrentCCId })" class="btn btn-success Available" id="btnNext" style="opacity: 0.65; pointer-events: none">Next</a>
                         <button id="btnProviderPosted" name="btnProviderPosted" type="button" class="btn btn-danger" disabled onclick="">Provider Posted</button>
                         <button id="btnBlock" type="button" class="btn btn-danger" onclick="Block()">Block</button>
                         <button id="btnBlockHistory" style="display:none" type="button" class="btn btn-danger" onclick="BlockHistory()">Block History</button>

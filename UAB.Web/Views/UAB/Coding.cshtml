@@ -52,18 +52,30 @@
         //    $("#btnNext").show();
         //}
         if (enablePrevious == true) {
-            $("#btnPrevious").css('visibility', 'visible');
+            $("#btnPrevious").css({
+                'opacity': '100', 'pointer-events': 'auto'
+            });
         } else {
-            $("#btnPrevious").css('visibility', 'hidden');
+            $("#btnPrevious").css({
+                'opacity': '0.65', 'pointer-events': 'none'
+            });
         }
         if (enableNext == true) {
-            $("#btnNext").css('visibility', 'visible');
+            $("#btnNext").css({
+                'opacity': '100', 'pointer-events': 'auto'
+            });
         } else {
-            $("#btnNext").css('visibility', 'hidden');
+            $("#btnNext").css({
+                'opacity': '0.65', 'pointer-events': 'none'
+            });
         }
     }
+    else {
+        $("#btnPrevious").hide();
+        $("#btnNext").hide();
+    }
 
-  
+
 
    $(document).ready(function () {
         ProviderPostedClinicalcase = function () {

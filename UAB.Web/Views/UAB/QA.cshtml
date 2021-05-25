@@ -33,15 +33,27 @@
         $(".clsbtnBlockHistory").show();
 
         if (enablePrevious == true) {
-            $(".clsPrevious").css('visibility','visible');
+            $(".clsPrevious").css({
+                'opacity': '100', 'pointer-events': 'auto'
+            });
         } else {
-            $(".clsPrevious").css('visibility', 'hidden');
+            $(".clsPrevious").css({
+                'opacity': '0.65', 'pointer-events': 'none'
+            });
         }
         if (enableNext == true) {
-            $(".clsNext").css('visibility', 'visible');
+            $(".clsNext").css({
+                'opacity': '100', 'pointer-events': 'auto'
+            });
         } else {
-            $(".clsNext").css('visibility', 'hidden');
+            $(".clsNext").css({
+                'opacity': '0.65', 'pointer-events': 'none'
+            });
         }
+    }
+    else {
+        $(".clsPrevious").hide();
+        $(".clsNext").hide();
     }
 
     CheckAllboxes = function (chkAll) {
