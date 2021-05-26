@@ -13,7 +13,15 @@ namespace UAB.DTO
         public string DateOfService { get; set; }
         public string ListName  { get; set; }
     }
-
+    public class BlockResponseDTO
+    {
+        public int BlockResponseId { get; set; }
+        public int ClinicalCaseId { get; set; }
+        public string ResponseRemarks { get; set; }
+        public int ResponseByUserId { get; set; }
+        public string ResponseByUserName { get; set; }
+        public DateTime ResponseDate { get; set; }
+    }
     public class QADTO
     {
         public string CoderRebuttal { get; set; }

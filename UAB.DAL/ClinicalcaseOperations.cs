@@ -476,6 +476,25 @@ namespace UAB.DAL
 
             return lst;
         }
+
+        public BlockResponseDTO GetBlockResponseBycid(int cid)
+        {
+            using (var context=new UABContext())
+            {
+
+                var res=context.BlockResponse.Where(x => x.ClinicalCaseId == cid).FirstOrDefault();
+
+                var un = context.User.Where(x => x.UserId == res.ResponseByUserId).FirstOrDefault();
+
+                BlockResponseDTO brdt = new BlockResponseDTO
+                {
+                    ResponseByUserName = un.FirstName+un.LastName,
+                    ResponseRemarks = res.ResponseRemarks,
+                    ResponseDate = res.ResponseDate
+                };
+                return brdt;
+            }
+        }
         public ChartSummaryDTO GetNext(string Role, string ChartType, int projectID, int CurrCCId = 0)
         {
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
