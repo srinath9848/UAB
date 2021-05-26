@@ -5,7 +5,7 @@
         <div class="modal-content" style="width: 500px;">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Block Response </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ModalClose1()">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnClose">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-danger btn-fill" onclick="ModalClose1()">Close</button>
+                <button type="button" class="btn btn-sm btn-danger btn-fill" id="btnClose">Close</button>
             </div>
         </div>
     </div>
@@ -33,9 +33,9 @@
 <script src="~/dashboardassets/extra-libs/DataTables/datatables.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        ModalClose1 = function () {
-            $("#myModal1").html('');
-        }
+        $(document).on("click", "#btnClose", function () {
+            $("#myModal1").css('display', 'none');
+        });
     });
 </script>
 

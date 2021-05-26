@@ -64,7 +64,11 @@ namespace UAB.Controllers
                 TempData["Toast"] = "There are no charts available";
                 return RedirectToAction("CodingSummary");
             }
-            chartSummary.BlockResponseDTO = clinicalcaseOperations.GetBlockResponseBycid(chartSummary.CodingDTO.ClinicalCaseID);
+            var res= clinicalcaseOperations.GetBlockResponseBycid(chartSummary.CodingDTO.ClinicalCaseID);
+            if (res!=null)
+            {
+                chartSummary.BlockResponseDTO = res;
+            }
             return View("Coding", chartSummary);
         }
         [HttpGet]
