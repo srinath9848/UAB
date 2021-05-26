@@ -2992,10 +2992,10 @@ namespace UAB.DAL
                             Value = isQAAgreed
                         },
                           new SqlParameter() {
-                            ParameterName = "@utAudit1",
+                            ParameterName = "@utWorkItemAudit",
                             SqlDbType =  System.Data.SqlDbType.Structured,
                             Direction = System.Data.ParameterDirection.Input,
-                            TypeName = "utAudit1",
+                            TypeName = "utWorkItemAudit",
                             Value = dtAudit
                         }
 
