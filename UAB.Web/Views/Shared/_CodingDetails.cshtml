@@ -55,6 +55,11 @@
         @Html.Hidden("hdnIsAuditRequired")
         @Html.Hidden("hdnProviderPosted")
 
+        @Html.HiddenFor(model => model.CCIDs)
+        <input name="hdnCurrentCCId" type="hidden" value="@(ViewBag.CurrentCCId == null ? "0" : ViewBag.CurrentCCId)" />
+        <input name="hdnIsBlocked" type="hidden" value="@(ViewBag.IsBlocked == null ? "0" : "1")" />
+
+
         <!-- Tabs -->
         <div id="modalContent"></div>
         <div class="card">
