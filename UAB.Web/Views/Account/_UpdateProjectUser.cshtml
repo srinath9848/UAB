@@ -61,22 +61,21 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        if ($("#roledd option:selected").text() == 'ShadowQA' || $("#roledd option:selected").text() == 'Manager') {
+        if ($("#roledd option:selected").text() == 'ShadowQA' || $("#roledd option:selected").text() == 'Manager' || $("#roledd option:selected").text() == 'Supervisor') {
             $("#samplingdiv").hide();
         } else {
             $("#samplingdiv").show();
-            $('#samplepercentage').val('');
         }
 
         var intialrole = $("#roledd").find('option:selected').val();
         var intialsampleper = $("#samplepercentage").val();
         $("#roledd").change(function () {
-            if ($("#roledd option:selected").text() == 'ShadowQA' || $("#roledd option:selected").text() == 'Manager') {
-                $('#samplepercentage').val(0);
+            if ($("#roledd option:selected").text() == 'ShadowQA' || $("#roledd option:selected").text() == 'Manager' || $("#roledd option:selected").text() == 'Supervisor') {
+                //$('#samplepercentage').val(0);
                 $("#samplingdiv").hide();
             } else {
                 $("#samplingdiv").show();
-                $('#samplepercentage').val('');
+                //$('#samplepercentage').val('');
             }
 
         });
