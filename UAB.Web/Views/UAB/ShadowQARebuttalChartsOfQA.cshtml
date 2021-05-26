@@ -240,7 +240,7 @@
                         var mod = $("#txtMod_" + id).val() != "" ? $("#txtMod_" + id).val() : null;
                         var qty = $("#txtQty_" + id).val() != "" ? $("#txtQty_" + id).val() : null;
                         var links = $("#txtLinks_" + id).val() != "" ? $("#txtLinks_" + id).val() : null;
-                        $("#hdnQACptCodes").val($("#hdnQACptCodes" + tabid).val() + "|" + id + "^" + $("#txtCpt_" + id).val() + "^" + mod + "^" + qty + "^" + links);
+                        $("#hdnQACptCodes").val($("#hdnQACptCodes").val() + "|" + id + "^" + $("#txtCpt_" + id).val() + "^" + mod + "^" + qty + "^" + links);
                     }
 
                     if ($("#hdnQACptRemarks").val() == "") {
