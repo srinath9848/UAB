@@ -2830,7 +2830,7 @@ namespace UAB.DAL
             return lstDto;
         }
 
-        public CodingDTO SubmitQARejectedChartsOfShadowQA(ChartSummaryDTO chartSummaryDTO, DataTable dtAudit)
+        public CodingDTO SubmitQARejectedChartsOfShadowQA(ChartSummaryDTO chartSummaryDTO, DataTable dtAudit, int statusId)
         {
             CodingDTO dto = new CodingDTO();
 
@@ -2847,6 +2847,12 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = mUserId
+                        },
+                       new SqlParameter() {
+                            ParameterName = "@StatusID",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = statusId
                         },
                           new SqlParameter() {
                             ParameterName = "@utWorkItemAudit",
@@ -2911,7 +2917,7 @@ namespace UAB.DAL
                 }
             }
         }
-        public CodingDTO SubmitShadowQARebuttalChartsOfQA(ChartSummaryDTO chartSummaryDTO, DataTable dtAudit)
+        public CodingDTO SubmitShadowQARebuttalChartsOfQA(ChartSummaryDTO chartSummaryDTO, DataTable dtAudit, int statusId)
         {
             CodingDTO dto = new CodingDTO();
 
@@ -2928,7 +2934,13 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = mUserId
-                         }
+                         },
+                       new SqlParameter() {
+                            ParameterName = "@StatusID",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = statusId
+                        }
                         ,  new SqlParameter() {
                             ParameterName = "@utWorkItemAudit",
                             SqlDbType =  System.Data.SqlDbType.Structured,
@@ -3158,16 +3170,16 @@ namespace UAB.DAL
         {
             int ccid = Convert.ToInt32(searchResultDTO.ClinicalCaseId);
             int AssignedTouserid = Convert.ToInt32(searchResultDTO.AssignToUserEmail);
-            
+
 
             using (var context = new UABContext())
             {
                 var existingcc = context.WorkItem.Where(c => c.ClinicalCaseId == ccid).FirstOrDefault();
                 if (existingcc != null)
                 {
-                    
+
                     int assignfromuser = existingcc.AssignedTo == null ? 0 : Convert.ToInt32(existingcc.AssignedTo);
-                    
+
                     Version vr1 = new Version()
                     {
                         ClinicalCaseId = ccid,
@@ -3178,7 +3190,7 @@ namespace UAB.DAL
                     Version vr2 = new Version()
                     {
                         ClinicalCaseId = ccid,
-                        StatusId =19,
+                        StatusId = 19,
                         UserId = AssignedTouserid,
                         VersionDate = DateTime.Now
                     };
@@ -3224,7 +3236,7 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                return context.Status.Where(x=>x.StatusId!=18 && x.StatusId!=19).ToList();
+                return context.Status.Where(x => x.StatusId != 18 && x.StatusId != 19).ToList();
             }
         }
         public List<Role> GetRolesList()

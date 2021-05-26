@@ -401,7 +401,11 @@
         var reject = $(".reject").length;
         var accept = $(".accept").length;
 
-
+        if (total == accept) {
+            $("#hdnStatusID").val('14');
+        } else {
+            $("#hdnStatusID").val('13');
+        }
         if (total != accept + reject) {
             $("#validationPopUp").show();
             e.preventDefault();

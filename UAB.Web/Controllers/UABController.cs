@@ -1317,6 +1317,8 @@ namespace UAB.Controllers
             string hdnQAErrorTypeID3 = Request.Form["hdnQAErrorTypeID3"].ToString();
             string hdnQAErrorTypeID4 = Request.Form["hdnQAErrorTypeID4"].ToString();
 
+            string hdnStatusID = Request.Form["hdnStatusID"].ToString();
+
             // basic Params fro Claim 1 - Claim 2
 
             if (!string.IsNullOrEmpty(hdnClaim1))
@@ -1389,7 +1391,7 @@ namespace UAB.Controllers
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
-            clinicalcaseOperations.SubmitQARejectedChartsOfShadowQA(chartSummaryDTO, dtAudit);
+            clinicalcaseOperations.SubmitQARejectedChartsOfShadowQA(chartSummaryDTO, dtAudit, Convert.ToInt32(hdnStatusID));
 
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.QA.ToString());
 
@@ -1667,6 +1669,8 @@ namespace UAB.Controllers
             string hdnQAErrorTypeID3 = Request.Form["hdnQAErrorTypeID3"].ToString();
             string hdnQAErrorTypeID4 = Request.Form["hdnQAErrorTypeID4"].ToString();
 
+            string hdnStatusID = Request.Form["hdnStatusID"].ToString();
+
             // basic Params fro Claim 1 - Claim 2
 
             if (!string.IsNullOrEmpty(hdnClaim1))
@@ -1740,7 +1744,7 @@ namespace UAB.Controllers
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
-            clinicalcaseOperations.SubmitShadowQARebuttalChartsOfQA(chartSummaryDTO, dtAudit);
+            clinicalcaseOperations.SubmitShadowQARebuttalChartsOfQA(chartSummaryDTO, dtAudit, Convert.ToInt32(hdnStatusID));
 
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.ShadowQA.ToString());
 
