@@ -89,6 +89,24 @@
         }
 });
 
+    function ShowSubmitPopup(buttonType)
+    {
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("codingSubmitPopup", "UAB")",
+            data: {
+                "chartSummaryDTO": "@Model",
+                "buttonType": buttonType,
+                "isAuditRequired": $("#hdnIsAuditRequired").val()
+            },
+            success: function (response) {
+                $("#modalContent").html(response);
+            },
+            failure: function (response) {
+                alert(response);
+            }
+        });
+    }
 
     $('#codingSubmit,#codingSubmitAndGetNext,#btnProviderPosted').click(function (e) {
         var claimArray = [];
@@ -209,6 +227,7 @@
             + currentdate.getFullYear();
 
         var buttonType = $(this).attr("name");
+        $("#hdnButtonType").val(buttonType);
         if (buttonType === "btnProviderPosted") {
             $("#hdnProviderPosted").val('1');
             $.ajax({
@@ -230,54 +249,40 @@
                      });
         }
         else {
-        var isAuditRequired;
-         $.ajax({
-                type: "GET",
-                url: "@Url.Action("GetAuditDetails", "UAB")",
-                data: {
-                    "chartType": "Coding",
-                    "projectId": $("#ProjectID").val(),
-                    "dt": datetime
+            var isAuditRequired;
 
-                },
-             success: function (response) {
+            if ($("#hdnIsAuditRequired").val() == "") {
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("GetAuditDetails", "UAB")",
+                    data: {
+                        "chartType": "Coding",
+                        "projectId": $("#ProjectID").val(),
+                        "dt": datetime
+                    },
+                    success: function (response) {
 
-                 isAuditRequired = response;
+                        isAuditRequired = response;
 
-                 if (isAuditRequired == false) {
-                     $.ajax({
-                         type: "GET",
-                         url: "@Url.Action("codingSubmitPopup", "UAB")",
-                         data: {
-                             "chartSummaryDTO": "@Model",
-                             "buttonType": buttonType
-                         },
-                         success: function (response) {
-                             $("#modalContent").html(response);
-                         },
-                         failure: function (response) {
-                             alert(response);
-                         }
-                     });
-                 }
-                 else {
-                     $("#hdnButtonType").val(buttonType);
-                     $("#hdnIsAuditRequired").val("true");
-                     $("#frmSubmitCodingAvailableChart").submit();
-                 }
-                },
-                failure: function (response) {
-                    alert(response);
-                }
-         });
+                        if (isAuditRequired == true)
+                            $("#hdnIsAuditRequired").val("true");
+                        else
+                            $("#hdnIsAuditRequired").val("false");
+
+                        ShowSubmitPopup(buttonType);
+                    },
+                    failure: function (response) {
+                        alert(response);
+                    }
+                });
+            }
+            else
+                ShowSubmitPopup();
         }
         EnableButton();
         EnableButtonForClaim2();
         EnableButtonForClaim3();
     });
-
-
-
 
     $("#coding").addClass('selected');
     $('.Approved').hide();

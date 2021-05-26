@@ -23,19 +23,30 @@
 <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
     <input type="hidden" name="codingSubmitAndGetNext" value="@ViewBag.buttonType" />
     <div class="modal-dialog">
-        <div class="modal-content" style="width:900px;max-height:500px;margin-top:200px !important">
+        <div class="modal-content" style="width:600px;max-height:500px;margin-top:200px !important">
             <div class="modal-header" style="background: #27a9e3;color: white;">
                 <h5 class="modal-title" id="exampleModalLongTitle">Submit Coding</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ModalClose1()">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ClosePopup()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            @{string show = "", msg = "";}
+            @{ if (ViewBag.isAuditRequired == "true")
+                {
+                    show = "display:none";
+                    msg = "This chart is identified for Auditing. Please confirm this chart is not posted.";
+                }
+                else
+                {
+                    msg = "Confirm if the chart is posted?";
+                }
+            }
             <div class="table-responsive" style="max-height:400px">
-                <br /><br /> <span style="text-align:center">This chart is not marked for Audit, do you want to Post it now?</span><br /><br />
+                <br /><br /> <span style="text-align:center">&nbsp;@msg</span><br /><br />
             </div>
             <div class="modal-footer">
-                <button type="submit" id="submitAndPost" name="submitAndPost" class="btn btn-sm btn-danger btn-fill">OK</button>
-                <button type="submit" id="submitOnly" name="submitOnly" class="btn btn-sm btn-danger btn-fill">Later</button>
+                <button type="submit" id="submitAndPost" name="submitAndPost" class="btn btn-sm btn-danger btn-fill">Yes</button>
+                <button style="@show" onclick="ClosePopup()" type="button" class="btn btn-sm btn-danger btn-fill">No</button>
             </div>
         </div>
     </div>
@@ -49,11 +60,11 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        $("#submitAndPost,#submitOnly").click(function (e) {
+        $("#submitAndPost").click(function (e) {
             $("#hdnSubmitAndPost").val($(this).attr("id"));
         });
 
-        ModalClose1 = function () {
+        ClosePopup = function () {
             $("#modalContent").html('');
         }
     });
