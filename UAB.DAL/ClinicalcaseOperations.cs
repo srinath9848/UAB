@@ -3230,7 +3230,7 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                return context.Status.ToList();
+                return context.Status.Where(x=>x.StatusId!=18 && x.StatusId!=19).ToList();
             }
         }
         public List<Role> GetRolesList()
