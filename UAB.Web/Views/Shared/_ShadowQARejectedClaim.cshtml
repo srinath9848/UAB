@@ -469,7 +469,7 @@
                 </div>
 
                 <div title="" class="col-md-3 input-group" style="@Show">
-                    <input type="text" id="@string.Format("SQACptRemarkss_{0}_{1}", Model.TabIndex,j)" class="form-control QARemarks ControlHeight" value="@dictShadowQACptRemarks?.ElementAt(i).Value" />
+                    <input type="text" class="form-control QARemarks ControlHeight @string.Format("SQACptRemarkss_{0}_{1}", Model.TabIndex,j)" value="@dictShadowQACptRemarks?.ElementAt(i).Value" />
                 </div>
             </div>
             j = j + 1;
