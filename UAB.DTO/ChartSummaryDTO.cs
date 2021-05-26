@@ -12,6 +12,7 @@ namespace UAB.DTO
             CodingDTO = new CodingDTO();
             QADTO = new QADTO();
             ShadowQADTO = new ShadowQADTO();
+            BlockResponseDTO = new BlockResponseDTO();
         }
         //[Required(ErrorMessage = "Feedback Provider is required.")]
         public int? ProviderFeedbackID { get; set; }
@@ -44,6 +45,7 @@ namespace UAB.DTO
         public CodingDTO CodingDTO { get; set; }
         public QADTO QADTO { get; set; }
         public ShadowQADTO ShadowQADTO { get; set; }
+        public BlockResponseDTO BlockResponseDTO { get; set; } 
         [Required(ErrorMessage = "*")]
         public int QAPayorID { get; set; }
         public string QAPayorText { get; set; }
