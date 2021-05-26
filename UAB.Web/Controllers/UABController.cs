@@ -463,6 +463,11 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             string providerPosted = Request.Form["hdnProviderPosted"].ToString();
 
+            //Below 3 fields are related to Block->Next & Previous functionality
+            string hdnBlockedCCIds = Request.Form["CCIDs"].ToString();
+            string hdnCurrentCCId = Request.Form["hdnCurrentCCId"].ToString();
+            string hdnIsBlocked = Request.Form["hdnIsBlocked"].ToString();
+
             //string submitType = Request.Form["hdnSubmitAndPost"];
             string hdnIsAuditRequired = Request.Form["hdnIsAuditRequired"];
 
@@ -519,6 +524,8 @@ namespace UAB.Controllers
             if (!string.IsNullOrEmpty(hdnClaim3))
                 PrepareClaim(hdnClaim3, hdnDxClaim3, hdnCptClaim3, 3, ref dtClaim, ref dtCpt);
 
+            List<DashboardDTO> lstDto = new List<DashboardDTO>();
+
             if (providerPosted != "")
             {
                 clinicalcaseOperations.SubmitProviderPostedChart(chartSummaryDTO, dtClaim, dtCpt, providerPostedId, txtPostingDate, txtCoderComment);
@@ -530,10 +537,37 @@ namespace UAB.Controllers
                 else
                 {
                     clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDTO, dtClaim, dtCpt);
-                    return RedirectToAction("GetCodingAvailableChart", new { Role = Roles.Coder.ToString(), ChartType = "Available", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName });
+
+                    if (hdnIsBlocked == "1" && hdnBlockedCCIds != "" && hdnCurrentCCId != "")
+                    {
+                        List<int> blockedCCIds = hdnBlockedCCIds.Split(",").Select(int.Parse).ToList();
+
+                        int CurrentIndex = blockedCCIds.IndexOf(Convert.ToInt32(hdnCurrentCCId));
+
+                        string currCCId = "";
+                        if (CurrentIndex > 0)
+                            currCCId = blockedCCIds[CurrentIndex - 1].ToString();
+
+                        blockedCCIds.RemoveAll(item => item == Convert.ToInt32(hdnCurrentCCId));
+
+                        if (blockedCCIds.Count == 0 || hdnCurrentCCId == "0")//(CurrentIndex + 1) == blockedCCIds.Count ||
+                        {
+                            TempData["Toast"] = "There are no charts available";
+                            lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
+                            return RedirectToAction("CodingSummary", lstDto);
+                        }
+                        else
+                        {
+                            return RedirectToAction("GetBlockedChart", new { Role = Roles.Coder.ToString(), ChartType = "Block", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName, ccids = ((CurrentIndex == blockedCCIds.Count) || CurrentIndex == 0) ? null : string.Join<int>(",", blockedCCIds), Next = "1", CurrCCId = currCCId });
+                        }
+                    }
+                    else
+                    {
+                        return RedirectToAction("GetCodingAvailableChart", new { Role = Roles.Coder.ToString(), ChartType = "Available", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName });
+                    }
                 }
             }
-            List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
+            lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("CodingSummary", lstDto);
         }
