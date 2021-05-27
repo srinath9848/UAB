@@ -17,6 +17,8 @@ using System.Data;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Diagnostics;
 
 namespace UAB.Controllers
 {
@@ -25,17 +27,20 @@ namespace UAB.Controllers
     {
         private int mUserId;
         private string mUserRole;
+        private ILogger _logger;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public UABController(IHttpContextAccessor httpContextAccessor)
+        public UABController(IHttpContextAccessor httpContextAccessor, ILogger<UABController> logger)
         {
             mUserId = Convert.ToInt32(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value);
             mUserRole = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Role)?.Value;
             _httpContextAccessor = httpContextAccessor;
+            _logger = logger;
         }
 
         #region Coding
         public IActionResult CodingSummary()
         {
+            _logger.LogInformation("Loading Started for CodingSummary for User: " + mUserId);
             List<DashboardDTO> lstDto = new List<DashboardDTO>();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
@@ -44,11 +49,15 @@ namespace UAB.Controllers
 
             lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
 
+            _logger.LogInformation("Loading Ended for CodingSummary for User: " + mUserId);
+
             return View(lstDto);
         }
 
         public IActionResult GetCodingAvailableChart(string Role, string ChartType, int ProjectID, string ProjectName)
         {
+            _logger.LogInformation("Loading Started for GetCodingAvailableChart for User: " + mUserId);
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ChartSummaryDTO chartSummary = new ChartSummaryDTO();
             chartSummary = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
@@ -59,6 +68,9 @@ namespace UAB.Controllers
             ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             #endregion
+
+            _logger.LogInformation("Loading Ended for GetCodingAvailableChart for User: " + mUserId);
+
             if (chartSummary.CodingDTO.ClinicalCaseID == 0)
             {
                 TempData["Toast"] = "There are no charts available";
@@ -74,6 +86,8 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult GetBlockedChartsList(string Role, string ChartType, int ProjectID)
         {
+            _logger.LogInformation("Loading Started for GetBlockedChartsList for User: " + mUserId);
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             if (Role == Roles.QA.ToString())
@@ -91,19 +105,29 @@ namespace UAB.Controllers
             var projectname = clinicalcaseOperations.projectname(ProjectID);
             ViewBag.Role = Role;
             ViewBag.Project = projectname;
+
+            _logger.LogInformation("Loading Ended for GetBlockedChartsList for User: " + mUserId);
+
             return PartialView("_BlockedList", lst);
         }
 
         [HttpGet]
         public IActionResult ViewHistory(string ccid)
         {
+            _logger.LogInformation("Loading Started for ViewHistory for User: " + mUserId);
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var reslut = clinicalcaseOperations.GetWorkflowHistories(ccid);
+
+            _logger.LogInformation("Loading Ended for ViewHistory for User: " + mUserId);
+
             return PartialView("_ViewHistory", reslut);
         }
         [HttpGet]
         public IActionResult BlockHistory(string name, string remarks, string createdate)
         {
+            _logger.LogInformation("Loading Started for BlockHistory for User: " + mUserId);
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             BlockDTO dt = new BlockDTO()
             {
@@ -111,6 +135,9 @@ namespace UAB.Controllers
                 Remarks = remarks,
                 CreateDate = Convert.ToDateTime(createdate)
             };
+
+            _logger.LogInformation("Loading Ended for BlockHistory for User: " + mUserId);
+
             return PartialView("_BlockHistory", dt);
         }
 
@@ -246,6 +273,8 @@ namespace UAB.Controllers
 
         public IActionResult GetBlockedChart(string Role, string ChartType, int ProjectID, string ccids, string ProjectName, int CurrCCId = 0, string Previous = "", string Next = "")
         {
+            _logger.LogInformation("Loading Started for GetBlockedChart for User: " + mUserId);
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             List<ChartSummaryDTO> lstChartSummaryDTO = new List<ChartSummaryDTO>();
@@ -310,6 +339,7 @@ namespace UAB.Controllers
 
                     if (chartSummaryDTO == null)
                     {
+                        _logger.LogInformation("Loading Ended for GetBlockedChart for User: " + mUserId);
                         TempData["Toast"] = "There are no charts available";
                         return RedirectToAction("CodingSummary");
                     }
@@ -345,11 +375,15 @@ namespace UAB.Controllers
                     }
                     else
                     {
+                        _logger.LogInformation("Loading Ended for GetBlockedChart for User: " + mUserId);
                         TempData["Toast"] = "There are no charts available";
                         return (Role == "QA") ? RedirectToAction("QASummary") : RedirectToAction("ShadowQASummary");
                     }
                     break;
             }
+
+            _logger.LogInformation("Loading Ended for GetBlockedChart for User: " + mUserId);
+
             if (Role == "QA")
                 return View("QA", lstChartSummaryDTO.OrderBy(a => a.ClaimId).ToList());
             else if (Role == "ShadowQA")
@@ -361,34 +395,50 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult ProviderPostedClinicalcase(string ccid)
         {
+            _logger.LogInformation("Loading Started for ProviderPostedClinicalcase for User: " + mUserId);
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ViewBag.ccid = Convert.ToInt32(ccid);
             ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
+
+            _logger.LogInformation("Loading Ended for ProviderPostedClinicalcase for User: " + mUserId);
+
             return PartialView("_ProviderPosted");
         }
 
         [HttpGet]
         public IActionResult BlockClinicalcase(string ccid)
         {
+            _logger.LogInformation("Loading Started for Fetching BlockClinicalcase for User: " + mUserId);
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ViewBag.BlockCategories = clinicalcaseOperations.GetBlockCategories();
             ViewBag.ccid = Convert.ToInt32(ccid);
             ViewBag.statusid = clinicalcaseOperations.GetStatusId(ccid);
+
+            _logger.LogInformation("Loading Ended for Fetching BlockClinicalcase for User: " + mUserId);
+
             return PartialView("_BlockCategory");
         }
         [HttpPost]
         public IActionResult BlockClinicalcase(string ccid, string bid, string remarks)
         {
+            _logger.LogInformation("Loading Started for Submit BlockClinicalcase for User: " + mUserId);
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             if (ccid != null && bid != null && remarks != null)
             {
                 clinicalcaseOperations.BlockClinicalcase(ccid, bid, remarks);
             }
+            _logger.LogInformation("Loading Ended for Submit BlockClinicalcase for User: " + mUserId);
+
             return RedirectToAction("CodingSummary");
         }
 
         public IActionResult GetCodingIncorrectChart(string Role, string ChartType, int ProjectID, string ProjectName)
         {
+            _logger.LogInformation("Loading Started for GetCodingIncorrectChart for User: " + mUserId);
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<ChartSummaryDTO> lstchartSummary = new List<ChartSummaryDTO>();
             lstchartSummary = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
@@ -401,16 +451,21 @@ namespace UAB.Controllers
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
 
+            _logger.LogInformation("Loading Ended for GetCodingIncorrectChart for User: " + mUserId);
+
             return View("IncorrectCharts", lstchartSummary);
         }
 
         public IActionResult GetCodingReadyForPostingChart(string Role, string ChartType, int ProjectID, string ProjectName)
         {
+            _logger.LogInformation("Loading Started for GetCodingReadyForPostingChart for User: " + mUserId);
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<ChartSummaryDTO> chartSummaryDTO = new List<ChartSummaryDTO>();
             chartSummaryDTO = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
             if (chartSummaryDTO.Count == 0)
             {
+                _logger.LogInformation("Loading Ended for GetCodingReadyForPostingChart for User: " + mUserId);
                 TempData["Toast"] = "There are no charts available";
                 return RedirectToAction("CodingSummary");
             }
@@ -421,6 +476,7 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
+            _logger.LogInformation("Loading Ended for GetCodingReadyForPostingChart for User: " + mUserId);
             return View("ReadyForPostingChart", chartSummaryDTO);
         }
 
@@ -465,6 +521,8 @@ namespace UAB.Controllers
 
         public IActionResult SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO, string codingSubmitAndGetNext, int providerPostedId, DateTime txtPostingDate, string txtCoderComment)
         {
+            _logger.LogInformation("Loading Started for SubmitCodingAvailableChart for User: " + mUserId);
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             string providerPosted = Request.Form["hdnProviderPosted"].ToString();
 
@@ -557,34 +615,50 @@ namespace UAB.Controllers
 
                         if (blockedCCIds.Count == 0 || hdnCurrentCCId == "0")//(CurrentIndex + 1) == blockedCCIds.Count ||
                         {
+                            _logger.LogInformation("Loading Ended for SubmitCodingAvailableChart for User: " + mUserId);
                             TempData["Toast"] = "There are no charts available";
                             lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
                             return RedirectToAction("CodingSummary", lstDto);
                         }
                         else
                         {
+                            _logger.LogInformation("Loading Ended for SubmitCodingAvailableChart for User: " + mUserId);
                             return RedirectToAction("GetBlockedChart", new { Role = Roles.Coder.ToString(), ChartType = "Block", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName, ccids = ((CurrentIndex == blockedCCIds.Count) || CurrentIndex == 0) ? null : string.Join<int>(",", blockedCCIds), Next = "1", CurrCCId = currCCId });
                         }
                     }
                     else
                     {
+                        _logger.LogInformation("Loading Ended for SubmitCodingAvailableChart for User: " + mUserId);
                         return RedirectToAction("GetCodingAvailableChart", new { Role = Roles.Coder.ToString(), ChartType = "Available", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName });
                     }
                 }
             }
             lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
+
+            _logger.LogInformation("Loading Ended for SubmitCodingAvailableChart for User: " + mUserId);
+
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("CodingSummary", lstDto);
         }
         public IActionResult codingSubmitPopup(ChartSummaryDTO chartSummaryDTO, string buttonType, string isAuditRequired)
         {
+            _logger.LogInformation("Loading Started for codingSubmitPopup for User: " + mUserId);
+
             ViewBag.buttonType = buttonType;
             ViewBag.isAuditRequired = isAuditRequired;
+
+            _logger.LogInformation("Loading Ended for codingSubmitPopup for User: " + mUserId);
+
             return PartialView("_CodingSubmitPopup", chartSummaryDTO);
         }
         public IActionResult GetAuditDetails(string chartType, int projectId, string dt)
         {
+            _logger.LogInformation("Loading Started for GetAuditDetails for User: " + mUserId);
+
             bool auditFlag = IsAuditRequired(chartType, projectId, dt);
+
+            _logger.LogInformation("Loading Ended for GetAuditDetails for User: " + mUserId);
+
             return new JsonResult(auditFlag);
         }
         public bool IsAuditRequired(string chartType, int projectId, string currDate)
@@ -687,6 +761,8 @@ namespace UAB.Controllers
         }
         public IActionResult SubmitCodingIncorrectChart(ChartSummaryDTO chartSummaryDTO)
         {
+            _logger.LogInformation("Loading Started for SubmitCodingIncorrectChart for User: " + mUserId);
+
             var hdnStatusId = Request.Form["hdnStatusId"].ToString();
 
             string hdnClaim1 = Request.Form["hdnClaim1"].ToString();
@@ -903,11 +979,15 @@ namespace UAB.Controllers
 
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
 
+            _logger.LogInformation("Loading Ended for SubmitCodingIncorrectChart for User: " + mUserId);
+
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("CodingSummary", lstDto);
         }
         public IActionResult SubmitCodingReadyForPostingChart(ChartSummaryDTO chartSummaryDTO, string postingSubmitAndGetNext)
         {
+            _logger.LogInformation("Loading Started for SubmitCodingReadyForPostingChart for User: " + mUserId);
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             if (string.IsNullOrEmpty(postingSubmitAndGetNext))
                 postingSubmitAndGetNext = Request.Form["hdnButtonType"];
@@ -920,6 +1000,8 @@ namespace UAB.Controllers
             }
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
 
+            _logger.LogInformation("Loading Ended for SubmitCodingReadyForPostingChart for User: " + mUserId);
+
             TempData["Success"] = "Chart Details posted successfully !";
             return View("CodingSummary", lstDto);
         }
@@ -927,13 +1009,20 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult GetReadyforPostingPopup(string buttonType)
         {
+            _logger.LogInformation("Loading Started for GetReadyforPostingPopup for User: " + mUserId);
+
             ViewBag.buttonType = buttonType;
+
+            _logger.LogInformation("Loading Ended for GetReadyforPostingPopup for User: " + mUserId);
+
             return PartialView("_ReadyForPostingSubmitPopup");
         }
 
         [HttpGet]
         public IActionResult AddNewClaim(int claimID, int pid1, int pid2, int pid3, int pid4)
         {
+            _logger.LogInformation("Loading Started for AddNewClaim for User: " + mUserId);
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var prlst = clinicalcaseOperations.GetProvidersList();
             prlst.RemoveAll(x => x.ID == pid1 || x.ID == pid2 || x.ID == pid3 || x.ID == pid4);
@@ -942,6 +1031,9 @@ namespace UAB.Controllers
             ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ClaimId = claimID;
+
+            _logger.LogInformation("Loading Ended for AddNewClaim for User: " + mUserId);
+
             return PartialView("_CodingClaim");
         }
         #endregion
@@ -949,17 +1041,20 @@ namespace UAB.Controllers
         #region QA
         public IActionResult QASummary()
         {
-            var identity = (ClaimsIdentity)User.Identity;
-            mUserId = Convert.ToInt32(identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value);
+            _logger.LogInformation("Loading Started for QASummary for User: " + mUserId);
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.QA.ToString());
 
+            _logger.LogInformation("Loading Ended for QASummary for User: " + mUserId);
+
             return View(lstDto);
         }
         public IActionResult GetQAAvailableChart(string Role, string ChartType, int ProjectID, string ProjectName)
         {
+            _logger.LogInformation("Loading Started for GetQAAvailableChart for User: " + mUserId);
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<ChartSummaryDTO> lstchartSummary = new List<ChartSummaryDTO>();
             lstchartSummary = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
@@ -974,14 +1069,18 @@ namespace UAB.Controllers
             #endregion
             if (lstchartSummary.Count == 0)
             {
+                _logger.LogInformation("Loading Ended for GetQAAvailableChart for User: " + mUserId);
                 TempData["Toast"] = "There are no charts available";
                 return RedirectToAction("QASummary");
             }
+            _logger.LogInformation("Loading Ended for GetQAAvailableChart for User: " + mUserId);
             return View("QA", lstchartSummary.OrderBy(a => a.ClaimId).ToList());
         }
 
         public IActionResult GetQARebuttalChartsOfCoder(string Role, string ChartType, int ProjectID, string ProjectName)
         {
+            _logger.LogInformation("Loading Started for GetQARebuttalChartsOfCoder for User: " + mUserId);
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<ChartSummaryDTO> lstchartSummary = new List<ChartSummaryDTO>();
             lstchartSummary = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
@@ -996,14 +1095,19 @@ namespace UAB.Controllers
             #endregion
             if (lstchartSummary.Count == 0)
             {
+                _logger.LogInformation("Loading Ended for GetQARebuttalChartsOfCoder for User: " + mUserId);
                 TempData["Toast"] = "There are no charts available";
                 return RedirectToAction("QASummary");
             }
+            _logger.LogInformation("Loading Ended for GetQARebuttalChartsOfCoder for User: " + mUserId);
+
             return View("QARebuttalChartsOfCoder", lstchartSummary.OrderBy(a => a.ClaimId).ToList());
         }
 
         public IActionResult GetQARejectedChartsOfShadowQA(string Role, string ChartType, int ProjectID, string ProjectName)
         {
+            _logger.LogInformation("Loading Started for GetQARejectedChartsOfShadowQA for User: " + mUserId);
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<ChartSummaryDTO> lstChartSummaryDTO = new List<ChartSummaryDTO>();
             lstChartSummaryDTO = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
@@ -1015,6 +1119,8 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
+            _logger.LogInformation("Loading Ended for GetQARejectedChartsOfShadowQA for User: " + mUserId);
+
             return View("QARejectedChartsOfShadowQA", lstChartSummaryDTO);
         }
         //public IActionResult GetQAOnHoldChart(string Role, string ChartType, int ProjectID, string ProjectName)
@@ -1034,6 +1140,8 @@ namespace UAB.Controllers
         //}
         public IActionResult SubmitQAAvailableChart(ChartSummaryDTO chartSummaryDTO, string SubmitAndGetNext)
         {
+            _logger.LogInformation("Loading Started for SubmitQAAvailableChart for User: " + mUserId);
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             //Below 3 fields are related to Block->Next & Previous functionality
@@ -1145,25 +1253,34 @@ namespace UAB.Controllers
 
                     if (blockedCCIds.Count == 0 || hdnCurrentCCId == "0")//(CurrentIndex + 1) == blockedCCIds.Count ||
                     {
+                        _logger.LogInformation("Loading Ended for SubmitQAAvailableChart for User: " + mUserId);
                         TempData["Toast"] = "There are no charts available";
                         lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.QA.ToString());
                         return RedirectToAction("QASummary", lstDto);
                     }
                     else
                     {
+                        _logger.LogInformation("Loading Ended for SubmitQAAvailableChart for User: " + mUserId);
                         return RedirectToAction("GetBlockedChart", new { Role = Roles.QA.ToString(), ChartType = "Block", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName, ccids = ((CurrentIndex == blockedCCIds.Count) || CurrentIndex == 0) ? null : string.Join<int>(",", blockedCCIds), Next = "1", CurrCCId = currCCId });
                     }
                 }
                 else
+                {
+                    _logger.LogInformation("Loading Ended for SubmitQAAvailableChart for User: " + mUserId);
                     return RedirectToAction("GetQAAvailableChart", new { Role = Roles.QA.ToString(), ChartType = "Available", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName });
+                }
             }
             lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.QA.ToString());
+
+            _logger.LogInformation("Loading Ended for SubmitQAAvailableChart for User: " + mUserId);
 
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("QASummary", lstDto);
         }
         public IActionResult SubmitQARebuttalChartsOfCoder(ChartSummaryDTO chartSummaryDTO, string SubmitAndGetNext)
         {
+            _logger.LogInformation("Loading Started for SubmitQARebuttalChartsOfCoder for User: " + mUserId);
+
             //Starting of fetching Dx,CPT in Claim2 to Claim4 
             DataTable dtAudit = new DataTable();
             dtAudit.Columns.Add("FieldName", typeof(string));
@@ -1254,11 +1371,15 @@ namespace UAB.Controllers
 
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.QA.ToString());
 
+            _logger.LogInformation("Loading Ended for SubmitQARebuttalChartsOfCoder for User: " + mUserId);
+
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("QASummary", lstDto);
         }
         public IActionResult SubmitQARejectedChartsOfShadowQA(ChartSummaryDTO chartSummaryDTO)
         {
+            _logger.LogInformation("Loading Started for SubmitQARejectedChartsOfShadowQA for User: " + mUserId);
+
             DataTable dtAudit = new DataTable();
             dtAudit.Columns.Add("FieldName", typeof(string));
             dtAudit.Columns.Add("FieldValue", typeof(string));
@@ -1400,6 +1521,8 @@ namespace UAB.Controllers
 
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.QA.ToString());
 
+            _logger.LogInformation("Loading Ended for SubmitQARejectedChartsOfShadowQA for User: " + mUserId);
+
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("QASummary", lstDto);
         }
@@ -1423,18 +1546,21 @@ namespace UAB.Controllers
         #region Shadow QA
         public IActionResult ShadowQASummary()
         {
-            var identity = (ClaimsIdentity)User.Identity;
-            mUserId = Convert.ToInt32(identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value);
+            _logger.LogInformation("Loading Started for ShadowQASummary for User: " + mUserId);
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.ShadowQA.ToString());
+
+            _logger.LogInformation("Loading Ended for ShadowQASummary for User: " + mUserId);
 
             return View(lstDto);
         }
 
         public IActionResult GetShadowQAAvailableChart(string Role, string ChartType, int ProjectID, string ProjectName)
         {
+            _logger.LogInformation("Loading Started for GetShadowQAAvailableChart for User: " + mUserId);
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<ChartSummaryDTO> lstchartSummary = new List<ChartSummaryDTO>();
             lstchartSummary = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
@@ -1450,14 +1576,18 @@ namespace UAB.Controllers
 
             if (lstchartSummary.Count == 0)
             {
+                _logger.LogInformation("Loading Ended for GetShadowQAAvailableChart for User: " + mUserId);
                 TempData["Toast"] = "There are no charts available";
                 return RedirectToAction("ShadowQASummary");
             }
+            _logger.LogInformation("Loading Ended for GetShadowQAAvailableChart for User: " + mUserId);
             return View("ShadowQA", lstchartSummary.OrderBy(a => a.ClaimId).ToList());
         }
 
         public IActionResult GetShadowQARebuttalChartsOfQA(string Role, string ChartType, int ProjectID, string ProjectName)
         {
+            _logger.LogInformation("Loading Started for GetShadowQARebuttalChartsOfQA for User: " + mUserId);
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<ChartSummaryDTO> lstChartSummaryDTO = new List<ChartSummaryDTO>();
             lstChartSummaryDTO = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID);
@@ -1469,12 +1599,15 @@ namespace UAB.Controllers
             ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
+            _logger.LogInformation("Loading Ended for GetShadowQARebuttalChartsOfQA for User: " + mUserId);
             return View("ShadowQARebuttalChartsOfQA", lstChartSummaryDTO);
         }
 
         [HttpPost]
         public IActionResult SubmitShadowQAAvailableChart(ChartSummaryDTO chartSummaryDTO, bool hdnIsQAAgreed, string SubmitAndGetNext)
         {
+            _logger.LogInformation("Loading Started for SubmitShadowQAAvailableChart for User: " + mUserId);
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             //Below 3 fields are related to Block->Next & Previous functionality
@@ -1643,28 +1776,33 @@ namespace UAB.Controllers
 
                     if (blockedCCIds.Count == 0 || hdnCurrentCCId == "0")
                     {
+                        _logger.LogInformation("Loading Ended for SubmitShadowQAAvailableChart for User: " + mUserId);
                         TempData["Toast"] = "There are no charts available";
                         lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.ShadowQA.ToString());
                         return RedirectToAction("ShadowQASummary", lstDto);
                     }
                     else
                     {
+                        _logger.LogInformation("Loading Ended for SubmitShadowQAAvailableChart for User: " + mUserId);
                         return RedirectToAction("GetBlockedChart", new { Role = Roles.ShadowQA.ToString(), ChartType = "Block", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName, ccids = ((CurrentIndex == blockedCCIds.Count) || CurrentIndex == 0) ? null : string.Join<int>(",", blockedCCIds), Next = "1", CurrCCId = currCCId });
                     }
                 }
                 else
                 {
+                    _logger.LogInformation("Loading Ended for SubmitShadowQAAvailableChart for User: " + mUserId);
                     return RedirectToAction("GetShadowQAAvailableChart", new { Role = Roles.ShadowQA.ToString(), ChartType = "Available", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName });
                 }
             }
             lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.ShadowQA.ToString());
-
+            _logger.LogInformation("Loading Ended for SubmitShadowQAAvailableChart for User: " + mUserId);
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("ShadowQASummary", lstDto);
         }
 
         public IActionResult SubmitShadowQARebuttalChartsOfQA(ChartSummaryDTO chartSummaryDTO)
         {
+            _logger.LogInformation("Loading Started for SubmitShadowQARebuttalChartsOfQA for User: " + mUserId);
+
             DataTable dtAudit = new DataTable();
             dtAudit.Columns.Add("FieldName", typeof(string));
             dtAudit.Columns.Add("FieldValue", typeof(string));
@@ -1807,6 +1945,8 @@ namespace UAB.Controllers
 
             List<DashboardDTO> lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.ShadowQA.ToString());
 
+            _logger.LogInformation("Loading Ended for SubmitShadowQARebuttalChartsOfQA for User: " + mUserId);
+
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("ShadowQASummary", lstDto);
         }
@@ -1831,6 +1971,8 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult AssignClinicalCaseToUser(string ccid)
         {
+            _logger.LogInformation("Loading Started for Fetching AssignClinicalCaseToUser for User: " + mUserId);
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             string assignedusername = clinicalcaseOperations.GetAssignedusername(ccid);
             var assignusers = clinicalcaseOperations.GetAssignedToUsers(ccid);
@@ -1842,12 +1984,17 @@ namespace UAB.Controllers
             SearchResultDTO SearchResultDTO = new SearchResultDTO();
             SearchResultDTO.ClinicalCaseId = ccid;
             SearchResultDTO.AssignFromUserEmail = assignedusername;
+
+            _logger.LogInformation("Loading Ended for Fetching AssignClinicalCaseToUser for User: " + mUserId);
+
             return PartialView("_AssignClinicalCaseToUser", SearchResultDTO);
 
         }
         [HttpPost]
         public IActionResult AssignClinicalCaseToUser(string ccid, string AssignedTo, string IsPriority)
         {
+            _logger.LogInformation("Loading Started for Submit AssignClinicalCaseToUser for User: " + mUserId);
+
             SearchResultDTO SearchResultDTO = new SearchResultDTO();
             SearchResultDTO.ClinicalCaseId = ccid;
             SearchResultDTO.AssignToUserEmail = AssignedTo;
@@ -1856,22 +2003,25 @@ namespace UAB.Controllers
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             clinicalcaseOperations.AssignClinicalcase(SearchResultDTO);
+            _logger.LogInformation("Loading Ended for Submit AssignClinicalCaseToUser for User: " + mUserId);
             return RedirectToAction("SettingsSearch");
         }
         [HttpGet]
         public IActionResult SettingsSearch()
         {
+            _logger.LogInformation("Loading Started for Fetching SettingsSearch for User: " + mUserId);
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
             ViewBag.Status = clinicalcaseOperations.GetStatusList();
             ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
-
+            _logger.LogInformation("Loading Ended for Fetching SettingsSearch for User: " + mUserId);
             return View();
         }
         [HttpPost]
         public IActionResult SettingsSearch(string ccid, string fname, string lname, string mrn, string dosfrom, string dosto, int statusId, int projectId, int providerId, bool includeblocked)
         {
-
+            _logger.LogInformation("Loading Started for Submit SettingsSearch for User: " + mUserId);
             SearchParametersDTO searchParametersDTO = new SearchParametersDTO()
             {
                 ClinicalCaseId = ccid,
@@ -1887,6 +2037,7 @@ namespace UAB.Controllers
             };
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId, mUserRole);
             var searchData = clinicalcaseOperations.GetSearchData(searchParametersDTO);
+            _logger.LogInformation("Loading Ended for Submit SettingsSearch for User: " + mUserId);
             return PartialView("_SettingsSearchResults", searchData);
         }
         [HttpPost]
@@ -1894,15 +2045,22 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult SettingsBlockCategories()
         {
+            _logger.LogInformation("Loading Started for SettingsBlockCategories for User: " + mUserId);
+
             List<BlockCategory> lstblock = new List<BlockCategory>();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             lstblock = clinicalcaseOperations.GetBlockCategories();
             ViewBag.lstblock = lstblock;
+
+            _logger.LogInformation("Loading Ended for SettingsBlockCategories for User: " + mUserId);
+
             return View();
         }
         [HttpGet]
         public ActionResult Add_EditBlockCategories(int id = 0)
         {
+            _logger.LogInformation("Loading Started for Add_EditBlockCategories for User: " + mUserId);
+
             BlockCategory obj = new BlockCategory();
             if (id != 0)
             {
@@ -1912,11 +2070,15 @@ namespace UAB.Controllers
                 var res = lstProvider.Where(a => a.BlockCategoryId == id).FirstOrDefault();
                 obj = res;
             }
+            _logger.LogInformation("Loading Ended for Add_EditBlockCategories for User: " + mUserId);
+
             return PartialView("_AddEditBlockCategory", obj);
         }
         [HttpPost]
         public IActionResult AddSettingsBlockCategory(BlockCategory category)
         {
+            _logger.LogInformation("Loading Started for AddSettingsBlockCategory for User: " + mUserId);
+
             if (ModelState.IsValid)
             {
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
@@ -1939,11 +2101,15 @@ namespace UAB.Controllers
                     TempData["Error"] = "The Block Category \"" + category.Name + "\" is already present in our Block categories list!";
                 }
             }
+            _logger.LogInformation("Loading Ended for AddSettingsBlockCategory for User: " + mUserId);
+
             return RedirectToAction("SettingsBlockCategories");
         }
         [HttpGet]
         public IActionResult DeleteBlockCategory(int id)
         {
+            _logger.LogInformation("Loading Started for Fetching DeleteBlockCategory for User: " + mUserId);
+
             BlockCategory obj = new BlockCategory();
             if (id != 0)
             {
@@ -1953,6 +2119,7 @@ namespace UAB.Controllers
                 var res = lstblock.Where(a => a.BlockCategoryId == id).FirstOrDefault();
                 obj = res;
             }
+            _logger.LogInformation("Loading Ended for Fetching DeleteBlockCategory for User: " + mUserId);
             return PartialView("_DeleteBlockCategory", obj);
         }
 
@@ -1961,6 +2128,8 @@ namespace UAB.Controllers
         {
             try
             {
+                _logger.LogInformation("Loading Started for Submit DeleteBlockCategory for User: " + mUserId);
+
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 if (blockCategory.BlockCategoryId != 0)
                     clinicalcaseOperations.DeletetBlockCategory(blockCategory.BlockCategoryId); // Delete
@@ -1969,15 +2138,18 @@ namespace UAB.Controllers
             {
                 TempData["error"] = ex.Message;
             }
+            _logger.LogInformation("Loading Ended for Submit DeleteBlockCategory for User: " + mUserId);
             return RedirectToAction("SettingsBlockCategories");
         }
 
         [HttpGet]
         public IActionResult ManageEMCodeLevels()
         {
+            _logger.LogInformation("Loading Started for ManageEMCodeLevels for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var eMCodeLevels = clinicalcaseOperations.GetManageEMCodeLevels();
             ViewBag.eMCodeLevels = eMCodeLevels;
+            _logger.LogInformation("Loading Ended for ManageEMCodeLevels for User: " + mUserId);
             return View();
         }
         [HttpGet]
@@ -2130,6 +2302,8 @@ namespace UAB.Controllers
         }
         public IActionResult AddSettingsProvider(Provider provider)
         {
+            _logger.LogInformation("Loading Started for AddSettingsProvider for User: " + mUserId);
+
             if (ModelState.IsValid)
             {
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
@@ -2152,22 +2326,26 @@ namespace UAB.Controllers
                     TempData["Error"] = "The Provider \"" + provider.Name + "\" is already present in our Provider list!";
                 }
             }
+            _logger.LogInformation("Loading Ended for AddSettingsProvider for User: " + mUserId);
             return RedirectToAction("SettingsProvider");
         }
 
         [HttpGet]
         public IActionResult SettingsProvider()
         {
+            _logger.LogInformation("Loading Started for SettingsProvider for User: " + mUserId);
             List<Provider> lstProvider = new List<Provider>();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             lstProvider = clinicalcaseOperations.GetProviders();
             ViewBag.lstProvider = lstProvider;
+            _logger.LogInformation("Loading Ended for SettingsProvider for User: " + mUserId);
             return View();
         }
 
         [HttpGet]
         public ActionResult Add_EditProvider(int id = 0)
         {
+            _logger.LogInformation("Loading Started for Add_EditProvider for User: " + mUserId);
             Provider obj = new Provider();
             if (id != 0)
             {
@@ -2177,12 +2355,14 @@ namespace UAB.Controllers
                 var res = lstProvider.Where(a => a.ProviderId == id).FirstOrDefault();
                 obj = res;
             }
+            _logger.LogInformation("Loading Ended for Add_EditProvider for User: " + mUserId);
             return PartialView("_AddEditProvider", obj);
         }
 
         [HttpGet]
         public IActionResult DeleteProvider(int id)
         {
+            _logger.LogInformation("Loading Started for Fetching DeleteProvider for User: " + mUserId);
             Provider obj = new Provider();
             if (id != 0)
             {
@@ -2192,6 +2372,7 @@ namespace UAB.Controllers
                 var res = lstProvider.Where(a => a.ProviderId == id).FirstOrDefault();
                 obj = res;
             }
+            _logger.LogInformation("Loading Ended for Fetching DeleteProvider for User: " + mUserId);
             return PartialView("_DeleteProvider", obj);
         }
 
@@ -2200,6 +2381,7 @@ namespace UAB.Controllers
         {
             try
             {
+                _logger.LogInformation("Loading Started for Submit DeleteProvider for User: " + mUserId);
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 if (provider.ProviderId != 0)
                     clinicalcaseOperations.DeleteProvider(provider); // Delete
@@ -2208,12 +2390,15 @@ namespace UAB.Controllers
             {
                 TempData["error"] = ex.Message;
             }
+            _logger.LogInformation("Loading Ended for Submit DeleteProvider for User: " + mUserId);
             return RedirectToAction("SettingsProvider");
         }
 
         [HttpPost]
         public IActionResult AddSettingsPayor(Payor payor)
         {
+            _logger.LogInformation("Loading Started for AddSettingsPayor for User: " + mUserId);
+
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<string> lstPayor = clinicalcaseOperations.GetPayorNames();
             if (!lstPayor.Contains(payor.Name.ToLower()))
@@ -2233,6 +2418,7 @@ namespace UAB.Controllers
             {
                 TempData["Error"] = "The Payor \"" + payor.Name + "\" is already present in our Payor list!";
             }
+            _logger.LogInformation("Loading Ended for AddSettingsPayor for User: " + mUserId);
             return RedirectToAction("SettingsPayor");
         }
 
@@ -2240,6 +2426,7 @@ namespace UAB.Controllers
         [HttpGet]
         public ActionResult Add_EditPayor(int id = 0)
         {
+            _logger.LogInformation("Loading Started for Add_EditPayor for User: " + mUserId);
             Payor obj = new Payor();
             if (id != 0)
             {
@@ -2249,12 +2436,14 @@ namespace UAB.Controllers
                 var res = lstPayor.Where(a => a.PayorId == id).FirstOrDefault();
                 obj = res;
             }
+            _logger.LogInformation("Loading Ended for Add_EditPayor for User: " + mUserId);
             return PartialView("_AddEditPayor", obj);
         }
 
         [HttpGet]
         public IActionResult DeletePayor(int id)
         {
+            _logger.LogInformation("Loading Started for Fetching DeletePayor for User: " + mUserId);
             Payor obj = new Payor();
             if (id != 0)
             {
@@ -2264,6 +2453,7 @@ namespace UAB.Controllers
                 var res = lstPayor.Where(a => a.PayorId == id).FirstOrDefault();
                 obj = res;
             }
+            _logger.LogInformation("Loading Ended for Fetching DeletePayor for User: " + mUserId);
             return PartialView("_DeletePayor", obj);
         }
 
@@ -2272,6 +2462,7 @@ namespace UAB.Controllers
         {
             try
             {
+                _logger.LogInformation("Loading Started for Submit DeletePayor for User: " + mUserId);
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 if (payor.PayorId != 0)
                     clinicalcaseOperations.DeletePayor(payor); // Delete
@@ -2280,22 +2471,26 @@ namespace UAB.Controllers
             {
                 TempData["error"] = ex.Message;
             }
+            _logger.LogInformation("Loading Ended for Submit DeletePayor for User: " + mUserId);
             return RedirectToAction("SettingsPayor");
         }
 
         [HttpGet]
         public IActionResult SettingsPayor()
         {
+            _logger.LogInformation("Loading Started for SettingsPayor for User: " + mUserId);
             List<Payor> lstPayor = new List<Payor>();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             lstPayor = clinicalcaseOperations.GetPayors();
             ViewBag.lstPayor = lstPayor;
+            _logger.LogInformation("Loading Ended for SettingsPayor for User: " + mUserId);
             return View();
         }
 
         [HttpPost]
         public IActionResult AddSettingsErrorType(ErrorType errorType)
         {
+            _logger.LogInformation("Loading Started for AddSettingsErrorType for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<string> lstErrorType = clinicalcaseOperations.GetErrorTypeNames();
             if (!lstErrorType.Contains(errorType.Name.ToLower()))
@@ -2315,6 +2510,7 @@ namespace UAB.Controllers
             {
                 TempData["Error"] = "The Error Type \"" + errorType.Name + "\" is already present in our Error Type list!";
             }
+            _logger.LogInformation("Loading Ended for AddSettingsErrorType for User: " + mUserId);
             return RedirectToAction("SettingsErrorType");
         }
 
@@ -2322,6 +2518,7 @@ namespace UAB.Controllers
         [HttpGet]
         public ActionResult Add_EditErrorType(int id = 0)
         {
+            _logger.LogInformation("Loading Started for Add_EditErrorType for User: " + mUserId);
             ErrorType obj = new ErrorType();
             if (id != 0)
             {
@@ -2331,12 +2528,16 @@ namespace UAB.Controllers
                 var res = lstErrorType.Where(a => a.ErrorTypeId == id).FirstOrDefault();
                 obj = res;
             }
+            _logger.LogInformation("Loading Ended for Add_EditErrorType for User: " + mUserId);
+
             return PartialView("_AddEditErrorType", obj);
         }
 
         [HttpGet]
         public IActionResult DeleteErrorType(int id)
         {
+            _logger.LogInformation("Loading Started for Fetching DeleteErrorType for User: " + mUserId);
+
             ErrorType obj = new ErrorType();
             if (id != 0)
             {
@@ -2346,6 +2547,7 @@ namespace UAB.Controllers
                 var res = lstErrorType.Where(a => a.ErrorTypeId == id).FirstOrDefault();
                 obj = res;
             }
+            _logger.LogInformation("Loading Ended for Fetching DeleteErrorType for User: " + mUserId);
             return PartialView("_DeleteErrorType", obj);
         }
 
@@ -2354,6 +2556,7 @@ namespace UAB.Controllers
         {
             try
             {
+                _logger.LogInformation("Loading Started for Submit DeleteErrorType for User: " + mUserId);
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 if (errorType.ErrorTypeId != 0)
                     clinicalcaseOperations.DeleteErrorType(errorType); // Delete
@@ -2362,22 +2565,26 @@ namespace UAB.Controllers
             {
                 TempData["error"] = ex.Message;
             }
+            _logger.LogInformation("Loading Ended for Submit DeleteErrorType for User: " + mUserId);
             return RedirectToAction("SettingsErrorType");
         }
 
         [HttpGet]
         public IActionResult SettingsErrorType()
         {
+            _logger.LogInformation("Loading Started for SettingsErrorType for User: " + mUserId);
             List<ErrorType> lstErrorType = new List<ErrorType>();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             lstErrorType = clinicalcaseOperations.GetErrorTypes();
             ViewBag.lstErrorType = lstErrorType;
+            _logger.LogInformation("Loading Ended for SettingsErrorType for User: " + mUserId);
             return View();
         }
 
         [HttpPost]
         public IActionResult AddSettingsProviderFeedback(BindDTO providerFeedback)
         {
+            _logger.LogInformation("Loading Started for AddSettingsProviderFeedback for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<string> lstFeedback = clinicalcaseOperations.GetProviderFeedbackNames();
             if (!lstFeedback.Contains(providerFeedback.Name.ToLower()))
@@ -2397,21 +2604,25 @@ namespace UAB.Controllers
             {
                 TempData["Error"] = "The Provider Feedback \"" + providerFeedback.Name + "\" is already present in our Provider feedback list!";
             }
+            _logger.LogInformation("Loading Ended for AddSettingsProviderFeedback for User: " + mUserId);
             return RedirectToAction("SettingsProviderFeedback");
         }
         [HttpGet]
         public IActionResult SettingsProviderFeedback()
         {
+            _logger.LogInformation("Loading Started for SettingsProviderFeedback for User: " + mUserId);
             List<BindDTO> lstProviderFeedback = new List<BindDTO>();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             lstProviderFeedback = clinicalcaseOperations.GetProviderFeedbacksList();
             ViewBag.lstProviderFeedback = lstProviderFeedback;
+            _logger.LogInformation("Loading Ended for SettingsProviderFeedback for User: " + mUserId);
             return View();
         }
 
         [HttpGet]
         public ActionResult Add_EditProviderFeedback(int id = 0)
         {
+            _logger.LogInformation("Loading Started for Add_EditProviderFeedback for User: " + mUserId);
             BindDTO obj = new BindDTO();
             if (id != 0)
             {
@@ -2421,12 +2632,14 @@ namespace UAB.Controllers
                 var res = lstproviderFeedback.Where(a => a.ID == id).FirstOrDefault();
                 obj = res;
             }
+            _logger.LogInformation("Loading Ended for Add_EditProviderFeedback for User: " + mUserId);
             return PartialView("_AddEditProviderFeedback", obj);
         }
 
         [HttpGet]
         public IActionResult DeleteProviderFeedback(int id)
         {
+            _logger.LogInformation("Loading Started for Fetching DeleteProviderFeedback for User: " + mUserId);
             BindDTO obj = new BindDTO();
             if (id != 0)
             {
@@ -2436,6 +2649,7 @@ namespace UAB.Controllers
                 var res = lstproviderFeedback.Where(a => a.ID == id).FirstOrDefault();
                 obj = res;
             }
+            _logger.LogInformation("Loading Ended for Fetching DeleteProviderFeedback for User: " + mUserId);
             return PartialView("_DeleteProviderFeedback", obj);
         }
 
@@ -2444,6 +2658,7 @@ namespace UAB.Controllers
         {
             try
             {
+                _logger.LogInformation("Loading Started for Submit DeleteProviderFeedback for User: " + mUserId);
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 if (providerFeedback.ID != 0)
                     clinicalcaseOperations.DeleteProviderFeedback(providerFeedback); // Delete
@@ -2452,22 +2667,27 @@ namespace UAB.Controllers
             {
                 TempData["error"] = ex.Message;
             }
+            _logger.LogInformation("Loading Ended for Submit DeleteProviderFeedback for User: " + mUserId);
             return RedirectToAction("SettingsProviderFeedback");
         }
 
         [HttpGet]
         public IActionResult SettingsProject()
         {
+            _logger.LogInformation("Loading Started for SettingsProject for User: " + mUserId);
+
             List<ApplicationProject> lstProject = new List<ApplicationProject>();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             lstProject = clinicalcaseOperations.GetProjects();
             ViewBag.lstProject = lstProject;
+            _logger.LogInformation("Loading Ended for SettingsProject for User: " + mUserId);
             return View();
         }
 
         [HttpPost]
         public IActionResult AddSettingsProject(ApplicationProject project)
         {
+            _logger.LogInformation("Loading Started for AddSettingsProject for User: " + mUserId);
             if (ModelState.IsValid)
             {
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
@@ -2491,12 +2711,14 @@ namespace UAB.Controllers
                     TempData["Success"] = "Provider \"" + project.Name + "\" Updated Successfully!";
                 }
             }
+            _logger.LogInformation("Loading Ended for AddSettingsProject for User: " + mUserId);
             return RedirectToAction("SettingsProject");
         }
 
         [HttpGet]
         public ActionResult Add_EditProject(int id = 0)
         {
+            _logger.LogInformation("Loading Started for Add_EditProject for User: " + mUserId);
             ApplicationProject obj = new ApplicationProject();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ViewBag.Clients = clinicalcaseOperations.GetClientList();
@@ -2506,9 +2728,11 @@ namespace UAB.Controllers
                 List<ApplicationProject> lstProject = new List<ApplicationProject>();
                 lstProject = clinicalcaseOperations.GetProjects();
                 var res = lstProject.Where(a => a.ProjectId == id).FirstOrDefault();
-                obj = res;
+                obj = res; 
+                _logger.LogInformation("Loading Ended for Add_EditProject for User: " + mUserId);
                 return PartialView("_AddEditProject", obj);
             }
+            _logger.LogInformation("Loading Ended for Add_EditProject for User: " + mUserId);
             return PartialView("_AddEditProject", obj);
         }
 
@@ -2517,6 +2741,7 @@ namespace UAB.Controllers
         {
             try
             {
+                _logger.LogInformation("Loading Started for Submit DeleteProject for User: " + mUserId);
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 if (project.ProjectId != 0)
                     clinicalcaseOperations.DeleteProject(project);
@@ -2525,12 +2750,14 @@ namespace UAB.Controllers
             {
                 TempData["error"] = ex.Message;
             }
+            _logger.LogInformation("Loading Ended for Submit DeleteProject for User: " + mUserId);
             return RedirectToAction("SettingsProject");
         }
 
         [HttpGet]
         public IActionResult DeleteProject(int id)
         {
+            _logger.LogInformation("Loading Started for Fetching DeleteProject for User: " + mUserId);
             ApplicationProject obj = new ApplicationProject();
             if (id != 0)
             {
@@ -2540,21 +2767,25 @@ namespace UAB.Controllers
                 var res = lstProject.Where(a => a.ProjectId == id).FirstOrDefault();
                 obj = res;
             }
+            _logger.LogInformation("Loading Ended for Fetching DeleteProject for User: " + mUserId);
             return PartialView("_DeleteProject", obj);
         }
 
         [HttpGet]
         public IActionResult SettingsFileUpload()
         {
+            _logger.LogInformation("Loading Started for Fetching SettingsFileUpload for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
+            _logger.LogInformation("Loading Ended for Fetching SettingsFileUpload for User: " + mUserId);
             return View();
         }
 
         [HttpPost]
         public IActionResult SettingsFileUpload(IFormFile files, int projectid)
         {
+            _logger.LogInformation("Loading Started for Submit SettingsFileUpload for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             try
             {
@@ -2569,6 +2800,7 @@ namespace UAB.Controllers
                 }
                 TempData["Success"] = "Data uploaded Successfully!";
                 ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
+                _logger.LogInformation("Loading Ended for Submit SettingsFileUpload for User: " + mUserId);
                 return View();
             }
             catch (Exception ex)
