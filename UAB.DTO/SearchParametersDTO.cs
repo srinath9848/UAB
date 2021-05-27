@@ -11,16 +11,13 @@ namespace UAB.DTO
         public string  FirstName   { get; set; }
         public string LastName { get; set; }
         public string MRN { get; set; }
+        public int? ProviderId { get; set; } 
         public string ProviderName  { get; set; }
-        //public string DoS { get; set; }
-        
         public DateTime? DoSFrom   { get; set; }
         public DateTime? DoSTo  { get; set; }
-
-        //public ProjectDTO Project { get; set; }
+        public int? ProjectId { get; set; }
         public string ProjectName   { get; set; }
-
-        //public StatusDTO Status { get; set; }
+        public int? StatusId { get; set; }
         public string StatusName  { get; set; }
         public bool IncludeBlocked  { get; set; }
         public string Assigneduser { get; set; }

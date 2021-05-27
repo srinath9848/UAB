@@ -1828,7 +1828,7 @@ namespace UAB.DAL
             return ds;
         }
 
-        public DataSet GetPostedChartsReport(int projectID, string rangeType)
+        public DataSet GetPostedChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate)
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
@@ -1846,6 +1846,18 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = rangeType
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@StartDate",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = startDate
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@EndDate",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = endDate
                         }
                 };
 
@@ -1864,7 +1876,7 @@ namespace UAB.DAL
             }
             return ds;
         }
-        public DataSet GetBacklogChartsReport(int projectID, string rangeType)
+        public DataSet GetBacklogChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate)
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
@@ -1882,6 +1894,18 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = rangeType
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@StartDate",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = startDate
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@EndDate",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = endDate
                         }
                 };
 
@@ -1999,7 +2023,7 @@ namespace UAB.DAL
             }
             return ds;
         }
-        public DataSet GetQAChartsReport(int projectID, string rangeType)
+        public DataSet GetQAChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate)
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
@@ -2017,6 +2041,18 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = rangeType
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@StartDate",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = startDate
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@EndDate",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = endDate
                         }
                 };
 
@@ -2035,7 +2071,7 @@ namespace UAB.DAL
             }
             return ds;
         }
-        public DataSet GetProvidedpostedchartsChartsReport(int projectID, string rangeType)
+        public DataSet GetProvidedpostedchartsChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate)
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
@@ -2053,6 +2089,18 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = rangeType
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@StartDate",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = startDate
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@EndDate",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = endDate
                         }
                 };
 
@@ -2072,7 +2120,7 @@ namespace UAB.DAL
             return ds;
         }
 
-        public DataSet GetPendingChartsReport(int projectID, string rangeType)
+        public DataSet GetPendingChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate)
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
@@ -2090,6 +2138,18 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = rangeType
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@StartDate",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = startDate
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@EndDate",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = endDate
                         }
                 };
 
@@ -2752,12 +2812,14 @@ namespace UAB.DAL
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.CommandText = "[dbo].[USPGetSearchData]";
                     cmd.Connection = con;
-                    //searchParametersDTO.MRN = searchParametersDTO.MRN == "" ? null : searchParametersDTO.MRN;
-                    //searchParametersDTO.FirstName = searchParametersDTO.FirstName == "" ? null : searchParametersDTO.FirstName;
 
-                    searchParametersDTO.ProviderName = searchParametersDTO.ProviderName == "--Select a Provider--" ? null : searchParametersDTO.ProviderName;
-                    searchParametersDTO.ProjectName = searchParametersDTO.ProjectName == "--Select a Project--" ? null : searchParametersDTO.ProjectName;
+                    searchParametersDTO.ProviderId = searchParametersDTO.ProviderId == 0 ? null : searchParametersDTO.ProviderId;
+                    searchParametersDTO.ProjectId = searchParametersDTO.ProjectId == 0 ? null : searchParametersDTO.ProjectId;
+                    searchParametersDTO.StatusId = searchParametersDTO.StatusId == 0 ? null : searchParametersDTO.StatusId;
+                    int Isblocked = searchParametersDTO.IncludeBlocked == true ? 1 : 0;
 
+                    searchParametersDTO.DoSFrom = searchParametersDTO.DoSFrom == DateTime.Parse("1/1/0001 12:00:00 AM") ? null : searchParametersDTO.DoSFrom;
+                    searchParametersDTO.DoSTo = searchParametersDTO.DoSTo == DateTime.Parse("1/1/0001 12:00:00 AM") ? null : searchParametersDTO.DoSTo;
                     var param = new SqlParameter[] {
                         new SqlParameter() {
                             ParameterName = "@mrn",
@@ -2777,17 +2839,45 @@ namespace UAB.DAL
                             Value = searchParametersDTO.LastName
                         },
                         new SqlParameter() {
-                            ParameterName = "@projectname",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            ParameterName = "@projectId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = searchParametersDTO.ProjectName
+                            Value = searchParametersDTO.ProjectId
                         },   new SqlParameter() {
-                            ParameterName = "@providername",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            ParameterName = "@providerId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = searchParametersDTO.ProviderName
+                            Value = searchParametersDTO.ProviderId
+                        },
+                        new SqlParameter()
+                        {
+                            ParameterName = "@DoSFrom",
+                            SqlDbType = System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = searchParametersDTO.DoSFrom
+                        },
+                        new SqlParameter()
+                        {
+                            ParameterName = "@DoSTo",
+                            SqlDbType = System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = searchParametersDTO.DoSTo
+                        },
+                        new SqlParameter()
+                        {
+                            ParameterName = "@StatusId",
+                            SqlDbType = System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = searchParametersDTO.StatusId
+                        },
+                        new SqlParameter()
+                        {
+                            ParameterName = "@IncludeBlocked",
+                            SqlDbType = System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = Isblocked
                         }
-                };
+                    };
                     cmd.Parameters.AddRange(param);
                     con.Open();
                     var reader = cmd.ExecuteReader();
@@ -2810,45 +2900,6 @@ namespace UAB.DAL
                     }
                 }
             }
-
-            if (!mUserRole.Contains("Manager"))
-                lstDto = lstDto.Where(a => a.Assigneduser.Equals(Convert.ToString(mUserId))).ToList();
-
-            //if (!string.IsNullOrWhiteSpace(searchParametersDTO.MRN))
-            //    lstDto = lstDto.Where(a => a.MRN == searchParametersDTO.MRN).ToList();
-
-            //if (!string.IsNullOrWhiteSpace(searchParametersDTO.FirstName))
-            //    lstDto = lstDto.Where(s => s.FirstName.Contains(searchParametersDTO.FirstName.ToUpper())).ToList();
-            //if (!string.IsNullOrWhiteSpace(searchParametersDTO.LastName))
-            //    lstDto = lstDto.Where(s => s.LastName.Contains(searchParametersDTO.LastName.ToUpper())).ToList();
-            //if (!string.IsNullOrWhiteSpace(searchParametersDTO.MRN))
-            if (searchParametersDTO.DoSFrom != default(DateTime) && searchParametersDTO.DoSTo != default(DateTime))
-            {
-                var DoSFrom = searchParametersDTO.DoSFrom.Value;
-                var DoSTo = searchParametersDTO.DoSTo.Value;
-                lstDto = lstDto.Where(s => s.DoS >= DoSFrom && s.DoS <= DoSTo).ToList();
-            }
-            //if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProviderName) && searchParametersDTO.ProviderName != "--Select a Provider--")
-            //    lstDto = lstDto.Where(a => a.ProviderName == searchParametersDTO.ProviderName).ToList();
-
-            if (!string.IsNullOrWhiteSpace(searchParametersDTO.StatusName) && searchParametersDTO.StatusName != "--Select a Status--")
-            {
-                if (searchParametersDTO.IncludeBlocked)
-                {
-                    lstDto = lstDto.Where(a => a.Status == searchParametersDTO.StatusName || a.IncludeBlocked == "1").ToList();
-                }
-                else
-                {
-                    lstDto = lstDto.Where(a => a.Status == searchParametersDTO.StatusName).ToList();
-                }
-            }
-            //if (!string.IsNullOrWhiteSpace(searchParametersDTO.ProjectName) && searchParametersDTO.ProjectName != "--Select a Project--")
-            //    lstDto = lstDto.Where(a => a.ProjectName == searchParametersDTO.ProjectName).ToList();
-            if (searchParametersDTO.IncludeBlocked && (searchParametersDTO.StatusName == null || searchParametersDTO.StatusName == "--Select a Status--"))
-            {
-                lstDto = lstDto.Where(a => a.IncludeBlocked == "1").ToList();
-            }
-
             return lstDto;
         }
 
