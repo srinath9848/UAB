@@ -1,7 +1,8 @@
-    
-CREATE PROCEDURE [dbo].[UspProvidedpostedChartReport] --NULL,'PerDay'      
+ALTER PROCEDURE [dbo].[UspProvidedpostedChartReport] --NULL,'PerDay'      
 @ProjectId INT = NULL,      
-@RangeType VARCHAR(100)      
+@RangeType VARCHAR(100),
+@StartDate Date,
+@EndDate Date
 AS      
 BEGIN      
     
@@ -14,7 +15,9 @@ BEGIN
  INNER JOIN Clinicalcase CC ON W.ClinicalcaseId = CC.ClinicalcaseId 
  INNER JOIN ProviderPosted PP ON PP.ClinicalCaseId=CC.ClinicalCaseId
  WHERE (W.ProjectId = @ProjectId OR (W.ProjectID = ISNULL(@ProjectId,W.ProjectId)))    
- AND W.StatusId =17    
+ AND W.StatusId =17
+ AND (PostingDate >= @StartDate OR (PostingDate = ISNULL(@StartDate,PostingDate)))
+ AND (PostingDate <= @EndDate OR (PostingDate = ISNULL(@EndDate,PostingDate)))
  GROUP BY CONVERT(VARCHAR, PostingDate, 1)      
 END      
 ELSE IF @RangeType = 'PerWeek'      
@@ -28,7 +31,9 @@ BEGIN
  INNER JOIN Clinicalcase CC ON W.ClinicalcaseId = CC.ClinicalcaseId
  INNER JOIN ProviderPosted PP ON PP.ClinicalCaseId=CC.ClinicalCaseId
  WHERE (W.ProjectId = @ProjectId OR (W.ProjectID = ISNULL(@ProjectId,W.ProjectId)))    
- AND W.StatusId =17  
+ AND W.StatusId =17
+ AND (PostingDate >= @StartDate OR (PostingDate = ISNULL(@StartDate,PostingDate)))
+ AND (PostingDate <= @EndDate OR (PostingDate = ISNULL(@EndDate,PostingDate)))
  GROUP BY DATEPART(ISO_WEEK, PostingDate),      
     DATENAME(month, PostingDate),      
     DATEPART(yyyy , PostingDate)--,DATEPART(WEEK, DATEADD(MM, DATEDIFF(MM,0,CodedDate), 0))      
@@ -45,7 +50,9 @@ BEGIN
  INNER JOIN Clinicalcase CC ON W.ClinicalcaseId = CC.ClinicalcaseId
  INNER JOIN ProviderPosted PP ON PP.ClinicalCaseId=CC.ClinicalCaseId
  WHERE (W.ProjectId = @ProjectId OR (W.ProjectID = ISNULL(@ProjectId,W.ProjectId)))    
- AND W.StatusId =17  
+ AND W.StatusId =17
+ AND (PostingDate >= @StartDate OR (PostingDate = ISNULL(@StartDate,PostingDate)))
+ AND (PostingDate <= @EndDate OR (PostingDate = ISNULL(@EndDate,PostingDate)))
  GROUP BY DATENAME(month, PostingDate),      
     DATEPART(yyyy , PostingDate),      
     DATEPART(mm, PostingDate)      

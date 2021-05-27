@@ -24,7 +24,7 @@
                                 <label class="control-label1 col-form-label">Range</label>
                                 <div class="col-sm-2">
                                     @{var listItems3 = new List<SelectListItem>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    {
           new SelectListItem { Text = "Per Day", Value="PerDay" },
           new SelectListItem { Text = "Per Week", Value="PerWeek" },
           new SelectListItem { Text = "Per Month", Value="PerMonth" }
@@ -32,10 +32,20 @@
                                     }
                                     @Html.DropDownList("range", new SelectList(listItems3, "Value", "Text"), new { @class = "form-control ControlHeight", @id = "rangeType2" })
                                 </div>
-                                <div class="clearfix"></div><br />
-                                <div class="col-md-3">
-                                    <button type="submit" class="btn btn-success">Submit</button>
+                                <label class="col-sm-1 control-label col-form-label">Start Date</label>
+                                <div class="col-sm-2">
+                                    @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control ControlHeight", @autocomplete = "off", @type = "date" })
+                                    @Html.ValidationMessageFor(model => model.StartDate, null, new { @class = "text-danger" })
                                 </div>
+                                <label class="col-sm-1 control-label col-form-label">End Date </label>
+                                <div class="col-sm-2">
+                                    @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control ControlHeight", @autocomplete = "off", @type = "date" })
+                                    @Html.ValidationMessageFor(model => model.EndDate, null, new { @class = "text-danger" })
+                                </div>
+                                <div class="clearfix"></div><br />
+                            </div>
+                            <div class="col-md-12 row flex-row-reverse">
+                                <button type="submit" class="btn btn-success">Submit</button>
                             </div>
                         </div>
                     </form>

@@ -1828,7 +1828,7 @@ namespace UAB.DAL
             return ds;
         }
 
-        public DataSet GetPostedChartsReport(int projectID, string rangeType)
+        public DataSet GetPostedChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate)
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
@@ -1846,6 +1846,18 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = rangeType
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@StartDate",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = startDate
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@EndDate",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = endDate
                         }
                 };
 
@@ -1864,7 +1876,7 @@ namespace UAB.DAL
             }
             return ds;
         }
-        public DataSet GetBacklogChartsReport(int projectID, string rangeType)
+        public DataSet GetBacklogChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate)
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
@@ -1882,6 +1894,18 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = rangeType
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@StartDate",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = startDate
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@EndDate",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = endDate
                         }
                 };
 
@@ -1999,7 +2023,7 @@ namespace UAB.DAL
             }
             return ds;
         }
-        public DataSet GetQAChartsReport(int projectID, string rangeType)
+        public DataSet GetQAChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate)
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
@@ -2017,6 +2041,18 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = rangeType
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@StartDate",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = startDate
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@EndDate",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = endDate
                         }
                 };
 
@@ -2035,7 +2071,7 @@ namespace UAB.DAL
             }
             return ds;
         }
-        public DataSet GetProvidedpostedchartsChartsReport(int projectID, string rangeType)
+        public DataSet GetProvidedpostedchartsChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate)
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
@@ -2053,6 +2089,18 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = rangeType
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@StartDate",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = startDate
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@EndDate",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = endDate
                         }
                 };
 
@@ -2072,7 +2120,7 @@ namespace UAB.DAL
             return ds;
         }
 
-        public DataSet GetPendingChartsReport(int projectID, string rangeType)
+        public DataSet GetPendingChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate)
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
@@ -2090,6 +2138,18 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = rangeType
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@StartDate",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = startDate
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@EndDate",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = endDate
                         }
                 };
 
@@ -3012,10 +3072,10 @@ namespace UAB.DAL
                             Value = isQAAgreed
                         },
                           new SqlParameter() {
-                            ParameterName = "@utAudit1",
+                            ParameterName = "@utWorkItemAudit",
                             SqlDbType =  System.Data.SqlDbType.Structured,
                             Direction = System.Data.ParameterDirection.Input,
-                            TypeName = "utAudit1",
+                            TypeName = "utWorkItemAudit",
                             Value = dtAudit
                         }
 

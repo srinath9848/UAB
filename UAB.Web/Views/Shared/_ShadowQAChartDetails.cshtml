@@ -15,6 +15,11 @@
         @Html.Hidden("hdnShadowQACptRemarks")
         @Html.Hidden("hdnShadowQACptCodes")
 
+        @Html.Hidden("hdnShadowQAAcceptDxRemarks")
+        @Html.Hidden("hdnShadowQAAcceptDxCodes")
+        @Html.Hidden("hdnShadowQAAcceptCptRemarks")
+        @Html.Hidden("hdnShadowQAAcceptCptCodes")
+
         @Html.Hidden("hdnClaim1")
         @Html.Hidden("hdnClaim2")
         @Html.Hidden("hdnClaim3")
@@ -30,15 +35,30 @@
         @Html.Hidden("hdnShadowQACptRemarks2")
         @Html.Hidden("hdnShadowQACptCodes2")
 
+        @Html.Hidden("hdnShadowQAAcceptDxRemarks2")
+        @Html.Hidden("hdnShadowQAAcceptDxCodes2")
+        @Html.Hidden("hdnShadowQAAcceptCptRemarks2")
+        @Html.Hidden("hdnShadowQAAcceptCptCodes2")
+
         @Html.Hidden("hdnShadowQADxRemarks3")
         @Html.Hidden("hdnShadowQADxCodes3")
         @Html.Hidden("hdnShadowQACptRemarks3")
         @Html.Hidden("hdnShadowQACptCodes3")
 
+        @Html.Hidden("hdnShadowQAAcceptDxRemarks3")
+        @Html.Hidden("hdnShadowQAAcceptDxCodes3")
+        @Html.Hidden("hdnShadowQAAcceptCptRemarks3")
+        @Html.Hidden("hdnShadowQAAcceptCptCodes3")
+
         @Html.Hidden("hdnShadowQADxRemarks4")
         @Html.Hidden("hdnShadowQADxCodes4")
         @Html.Hidden("hdnShadowQACptRemarks4")
         @Html.Hidden("hdnShadowQACptCodes4")
+
+        @Html.Hidden("hdnShadowQAAcceptDxRemarks4")
+        @Html.Hidden("hdnShadowQAAcceptDxCodes4")
+        @Html.Hidden("hdnShadowQAAcceptCptRemarks4")
+        @Html.Hidden("hdnShadowQAAcceptCptCodes4")
 
         @Html.Hidden("hdnShadowQAErrorTypeID1")
         @Html.Hidden("hdnShadowQAErrorTypeID2")
@@ -209,7 +229,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 lessWidth m-t-15">Note Title</label>
                                     <div class="col-md-3 input-group">
-                                        @Html.TextBoxFor(model => model.FirstOrDefault().NoteTitle, new { @class = "form-control CoderDetails ControlHeight", @disabled="true" })
+                                        @Html.TextBoxFor(model => model.FirstOrDefault().NoteTitle, new { @class = "form-control CoderDetails ControlHeight", @disabled = "true" })
                                     </div>
                                 </div>
                                 @{

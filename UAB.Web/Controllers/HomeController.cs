@@ -181,16 +181,16 @@ namespace UAB.Controllers
             return PartialView("_ChartSummaryReportDetails", lstChartSummaryReportDetails);
         }
 
-        public IActionResult GetPostedChartsReport(int ProjectId, string range)
+        public IActionResult GetPostedChartsReport(int ProjectId, string range, DateTime StartDate, DateTime EndDate)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstReceivedChartReport = clinicalcaseOperations.GetPostedChartsReport(ProjectId, range);
+            var lstReceivedChartReport = clinicalcaseOperations.GetPostedChartsReport(ProjectId, range, StartDate, EndDate);
             return PartialView("_PostedChartReport", lstReceivedChartReport);
         }
-        public IActionResult GetBackLogChartsReport(int ProjectId, string range)
+        public IActionResult GetBackLogChartsReport(int ProjectId, string range, DateTime StartDate, DateTime EndDate)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstBacklogChartReport = clinicalcaseOperations.GetBacklogChartsReport (ProjectId, range);
+            var lstBacklogChartReport = clinicalcaseOperations.GetBacklogChartsReport (ProjectId, range, StartDate, EndDate);
             ViewBag.ProjectId = ProjectId;
             return PartialView("_BacklogChartReport",lstBacklogChartReport);
         }
@@ -214,16 +214,16 @@ namespace UAB.Controllers
             var lstReceivedChartReport = clinicalcaseOperations.GetCodedChartsReport(ProjectId, range, StartDate, EndDate);
             return PartialView("_CodedChartReport", lstReceivedChartReport);
         }
-        public IActionResult GetQAChartsReport (int ProjectId, string range)
+        public IActionResult GetQAChartsReport (int ProjectId, string range, DateTime StartDate, DateTime EndDate)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstqaChartReport = clinicalcaseOperations.GetQAChartsReport(ProjectId, range);
+            var lstqaChartReport = clinicalcaseOperations.GetQAChartsReport(ProjectId, range, StartDate, EndDate);
             return PartialView("_QAChartReport", lstqaChartReport);
         }
-        public IActionResult GetPendingChartsReport(int ProjectId, string range)
+        public IActionResult GetPendingChartsReport(int ProjectId, string range, DateTime StartDate, DateTime EndDate)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstPendingChartReport = clinicalcaseOperations.GetPendingChartsReport(ProjectId, range);
+            var lstPendingChartReport = clinicalcaseOperations.GetPendingChartsReport(ProjectId, range, StartDate, EndDate);
 
             ViewBag.ProjectId = ProjectId;
             ViewBag.range = range;
@@ -241,10 +241,10 @@ namespace UAB.Controllers
             return PartialView("_PendingReportDetails", lstPendingReportDetails);
         }
 
-        public IActionResult GetProvidedpostedchartsChartsReport(int ProjectId, string range)
+        public IActionResult GetProvidedpostedchartsChartsReport(int ProjectId, string range, DateTime StartDate, DateTime EndDate)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstChartReport = clinicalcaseOperations.GetProvidedpostedchartsChartsReport(ProjectId, range);
+            var lstChartReport = clinicalcaseOperations.GetProvidedpostedchartsChartsReport(ProjectId, range, StartDate, EndDate);
             return PartialView("_ProvidedpostedchartsChartReport", lstChartReport);
         }
 
