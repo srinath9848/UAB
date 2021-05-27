@@ -2813,19 +2813,14 @@ namespace UAB.DAL
                     cmd.CommandText = "[dbo].[USPGetSearchData]";
                     cmd.Connection = con;
 
-                    searchParametersDTO.ProviderName = searchParametersDTO.ProviderName == "--Select a Provider--" ? null : searchParametersDTO.ProviderName;
-                    searchParametersDTO.ProjectName = searchParametersDTO.ProjectName == "--Select a Project--" ? null : searchParametersDTO.ProjectName;
-                    searchParametersDTO.StatusName = searchParametersDTO.StatusName == "--Select a Status--" ? null : searchParametersDTO.StatusName;
-                    int Isblocked= searchParametersDTO.IncludeBlocked == true ? 1 : 0;
+                    searchParametersDTO.ProviderId = searchParametersDTO.ProviderId == 0 ? null : searchParametersDTO.ProviderId;
+                    searchParametersDTO.ProjectId = searchParametersDTO.ProjectId == 0 ? null : searchParametersDTO.ProjectId;
+                    searchParametersDTO.StatusId = searchParametersDTO.StatusId == 0 ? null : searchParametersDTO.StatusId;
+                    int Isblocked = searchParametersDTO.IncludeBlocked == true ? 1 : 0;
 
+                    searchParametersDTO.DoSFrom = searchParametersDTO.DoSFrom == DateTime.Parse("1/1/0001 12:00:00 AM") ? null : searchParametersDTO.DoSFrom;
+                    searchParametersDTO.DoSTo = searchParametersDTO.DoSTo == DateTime.Parse("1/1/0001 12:00:00 AM") ? null : searchParametersDTO.DoSTo;
                     var param = new SqlParameter[] {
-                        new SqlParameter()
-                        {
-                            ParameterName="@userId",
-                            SqlDbType=System.Data.SqlDbType.Int,
-                            Direction=System.Data.ParameterDirection.Input,
-                            Value=mUserId
-                        },
                         new SqlParameter() {
                             ParameterName = "@mrn",
                             SqlDbType =  System.Data.SqlDbType.VarChar,
@@ -2844,36 +2839,36 @@ namespace UAB.DAL
                             Value = searchParametersDTO.LastName
                         },
                         new SqlParameter() {
-                            ParameterName = "@projectname",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            ParameterName = "@projectId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = searchParametersDTO.ProjectName
+                            Value = searchParametersDTO.ProjectId
                         },   new SqlParameter() {
-                            ParameterName = "@providername",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            ParameterName = "@providerId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = searchParametersDTO.ProviderName
+                            Value = searchParametersDTO.ProviderId
                         },
                         new SqlParameter()
                         {
                             ParameterName = "@DoSFrom",
-                            SqlDbType = System.Data.SqlDbType.DateTime,
+                            SqlDbType = System.Data.SqlDbType.Date,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = searchParametersDTO.DoSFrom
                         },
                         new SqlParameter()
                         {
                             ParameterName = "@DoSTo",
-                            SqlDbType = System.Data.SqlDbType.DateTime,
+                            SqlDbType = System.Data.SqlDbType.Date,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = searchParametersDTO.DoSTo
                         },
                         new SqlParameter()
                         {
-                            ParameterName = "@StatusName",
-                            SqlDbType = System.Data.SqlDbType.VarChar,
+                            ParameterName = "@StatusId",
+                            SqlDbType = System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = searchParametersDTO.StatusName
+                            Value = searchParametersDTO.StatusId
                         },
                         new SqlParameter()
                         {
@@ -2881,7 +2876,7 @@ namespace UAB.DAL
                             SqlDbType = System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = Isblocked
-                        } 
+                        }
                     };
                     cmd.Parameters.AddRange(param);
                     con.Open();
@@ -2905,8 +2900,6 @@ namespace UAB.DAL
                     }
                 }
             }
-            if (!mUserRole.Contains("Manager"))
-                lstDto = lstDto.Where(a => a.Assigneduser.Equals(Convert.ToString(mUserId))).ToList();
             return lstDto;
         }
 

@@ -1869,7 +1869,7 @@ namespace UAB.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult SettingsSearch(string ccid, string fname, string lname, string mrn, DateTime dosfrom, DateTime dosto, string statusname, string projectname, string providername, bool includeblocked)
+        public IActionResult SettingsSearch(string ccid, string fname, string lname, string mrn, string dosfrom, string dosto, int statusId, int projectId, int providerId, bool includeblocked)
         {
 
             SearchParametersDTO searchParametersDTO = new SearchParametersDTO()
@@ -1878,11 +1878,11 @@ namespace UAB.Controllers
                 FirstName = fname,
                 LastName = lname,
                 MRN = mrn,
-                DoSFrom = dosfrom,
-                DoSTo = dosto,
-                StatusName = statusname,
-                ProjectName = projectname,
-                ProviderName = providername,
+                DoSFrom = Convert.ToDateTime(dosfrom),
+                DoSTo = Convert.ToDateTime(dosto),
+                StatusId = statusId,
+                ProjectId = projectId,
+                ProviderId = providerId,
                 IncludeBlocked = includeblocked
             };
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId, mUserRole);
