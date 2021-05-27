@@ -17,7 +17,7 @@ namespace UAB.UnitTest
         public void ProviderAddedSuccessfully()
         {
             //Arrange
-            UABController controller = new UABController(null);
+            UABController controller = new UABController(null, null);
             var mockTempData = new Mock<ITempDataDictionary>();
             ClinicalcaseOperations clinicalCaseOperations = new ClinicalcaseOperations();
             controller.TempData = mockTempData.Object;
@@ -36,7 +36,7 @@ namespace UAB.UnitTest
         public void ProviderAdditionFailed()
         {
             //Arrange
-            UABController controller = new UABController(null);
+            UABController controller = new UABController(null, null);
             var mockTempData = new Mock<ITempDataDictionary>();
             ClinicalcaseOperations clinicalCaseOperations = new ClinicalcaseOperations();
             controller.TempData = mockTempData.Object;
@@ -55,7 +55,7 @@ namespace UAB.UnitTest
         public void ProviderUpdatedSuccessfully()
         {
             //Arrange
-            UABController controller = new UABController(null);
+            UABController controller = new UABController(null, null);
             var mockTempData = new Mock<ITempDataDictionary>();
             ClinicalcaseOperations clinicalCaseOperations = new ClinicalcaseOperations();
             controller.TempData = mockTempData.Object;
@@ -77,7 +77,7 @@ namespace UAB.UnitTest
         public void ProviderDeletedSuccessfully()
         {
             //Arrange
-            UABController controller = new UABController(null);
+            UABController controller = new UABController(null, null);
             var mockTempData = new Mock<ITempDataDictionary>();
             ClinicalcaseOperations clinicalCaseOperations = new ClinicalcaseOperations();
             controller.TempData = mockTempData.Object;
