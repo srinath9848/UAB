@@ -181,7 +181,7 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             clinicalcaseOperations.SaveOrUnblockchart(cid, ManagerResponse, flag);
             _logger.LogInformation("Loading Ended for SaveOrUnblocktheChart for User: " + mUserId);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("GetAgingReport", "Home");
         }
         [HttpPost]
         public IActionResult GetReceivedChartsReport(int ProjectId, string range, DateTime StartDate, DateTime EndDate)
