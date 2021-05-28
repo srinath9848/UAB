@@ -36,7 +36,7 @@
                 </div>
                 <br />
                 <div class="col-md-12 form-group">
-                    @Html.TextBoxFor(model => model.PostingDate, new { @class = "form-control", @type = "text", @autofocus = "autofocus", @id = "txtPostingDate", @autocomplete = "off", @placeholder = "Enter Posting Date", @onfocus = "(this.type='date')", @onblur = "(this.type='text')", @style = "padding: 0.375rem 0.75rem!important;" })
+                    @Html.TextBoxFor(model => model.PostingDate, new { @class = "form-control", @type = "date", @autofocus = "autofocus", @id = "txtPostingDate", @autocomplete = "off", @placeholder = "Enter Posting Date", @style = "padding: 0.375rem 0.75rem!important;" })
                     @Html.ValidationMessageFor(model => model.PostingDate, null, new { @class = "text-danger" })
                 </div>
                 <br />
@@ -71,9 +71,24 @@
         ModalClose1 = function () {
             $("#modalContent").html('');
         }
+
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd
+        }
+        if (mm < 10) {
+            mm = '0' + mm
+        }
+
+        today = yyyy + '-' + mm + '-' + dd;
+        $("#txtPostingDate").attr("max", today);
+
     });
 
 
-    
+
 
 </script>
