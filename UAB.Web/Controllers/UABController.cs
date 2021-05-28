@@ -2027,20 +2027,19 @@ namespace UAB.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult SettingsSearch(string ccid, string fname, string lname, string mrn, string dosfrom, string dosto, int statusId, int projectId, int providerId, bool includeblocked)
+        public IActionResult SettingsSearch(string fname, string lname, string mrn, string dosfrom, string dosto, string status, string project, string provider, bool includeblocked)
         {
             _logger.LogInformation("Loading Started for Submit SettingsSearch for User: " + mUserId);
             SearchParametersDTO searchParametersDTO = new SearchParametersDTO()
             {
-                ClinicalCaseId = ccid,
                 FirstName = fname,
                 LastName = lname,
                 MRN = mrn,
                 DoSFrom = Convert.ToDateTime(dosfrom),
                 DoSTo = Convert.ToDateTime(dosto),
-                StatusId = statusId,
-                ProjectId = projectId,
-                ProviderId = providerId,
+                StatusName = status,
+                ProjectName = project,
+                ProviderName = provider,
                 IncludeBlocked = includeblocked
             };
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId, mUserRole);

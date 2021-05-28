@@ -2813,9 +2813,9 @@ namespace UAB.DAL
                     cmd.CommandText = "[dbo].[USPGetSearchData]";
                     cmd.Connection = con;
 
-                    searchParametersDTO.ProviderId = searchParametersDTO.ProviderId == 0 ? null : searchParametersDTO.ProviderId;
-                    searchParametersDTO.ProjectId = searchParametersDTO.ProjectId == 0 ? null : searchParametersDTO.ProjectId;
-                    searchParametersDTO.StatusId = searchParametersDTO.StatusId == 0 ? null : searchParametersDTO.StatusId;
+                    searchParametersDTO.ProviderName = searchParametersDTO.ProviderName == "--Select a Provider--" ? null : searchParametersDTO.ProviderName;
+                    searchParametersDTO.ProjectName = searchParametersDTO.ProjectName == "--Select a Project--" ? null : searchParametersDTO.ProjectName;
+                    searchParametersDTO.StatusName = searchParametersDTO.StatusName == "--Select a Status--" ? null : searchParametersDTO.StatusName;
                     int Isblocked = searchParametersDTO.IncludeBlocked == true ? 1 : 0;
 
                     searchParametersDTO.DoSFrom = searchParametersDTO.DoSFrom == DateTime.Parse("1/1/0001 12:00:00 AM") ? null : searchParametersDTO.DoSFrom;
@@ -2839,15 +2839,15 @@ namespace UAB.DAL
                             Value = searchParametersDTO.LastName
                         },
                         new SqlParameter() {
-                            ParameterName = "@projectId",
-                            SqlDbType =  System.Data.SqlDbType.Int,
+                            ParameterName = "@projectname",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = searchParametersDTO.ProjectId
+                            Value = searchParametersDTO.ProjectName
                         },   new SqlParameter() {
-                            ParameterName = "@providerId",
-                            SqlDbType =  System.Data.SqlDbType.Int,
+                            ParameterName = "@providername",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = searchParametersDTO.ProviderId
+                            Value = searchParametersDTO.ProviderName
                         },
                         new SqlParameter()
                         {
@@ -2865,15 +2865,15 @@ namespace UAB.DAL
                         },
                         new SqlParameter()
                         {
-                            ParameterName = "@StatusId",
-                            SqlDbType = System.Data.SqlDbType.Int,
+                            ParameterName = "@StatusName",
+                            SqlDbType = System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
-                            Value = searchParametersDTO.StatusId
+                            Value = searchParametersDTO.StatusName
                         },
                         new SqlParameter()
                         {
-                            ParameterName = "@IncludeBlocked",
-                            SqlDbType = System.Data.SqlDbType.Int,
+                            ParameterName = "@IsBlocked",
+                            SqlDbType = System.Data.SqlDbType.Bit,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = Isblocked
                         }
