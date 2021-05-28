@@ -46,7 +46,6 @@
                                 @Html.DropDownListFor(model => model.ProjectId, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select a Project--", new { @id = "projectdd" })
                             </span>
                             @Html.ValidationMessageFor(model => model.ProjectId, null, new { @class = "text-danger" })
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group" style="font-size: 15px">
                             <label style="width:90px;"><bold>Role</bold></label>
@@ -54,7 +53,6 @@
                                 @Html.DropDownListFor(model => model.RoleId, new SelectList(@ViewBag.Roles, "RoleId", "Name"), "--Select a Role--", new { @id = "roledd" })
                             </span>
                             @Html.ValidationMessageFor(model => model.RoleId, null, new { @class = "text-danger" })
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group" style="font-size: 15px" id="samplingdiv">
                             <label style="width:90px;"><bold>Sampling %</bold></label>
@@ -63,7 +61,6 @@
                             </span>
                             <label id="sampleerror" style="color:red"></label>
                             @Html.ValidationMessageFor(model => model.SamplePercentage, null, new { @class = "text-danger" })
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         </div>
                         <div id="addbtnerror" style="color:red"></div>
                         <div class="col-md-10">
@@ -127,15 +124,15 @@
             $("#ErrorMessage").text('');
             if (iCnt <= 100) {
                 iCnt = iCnt + 1;
-                var ProjectId = $("#projectdd option:selected").text();
-                var RoleId = $("#roledd option:selected").text();
+                var Project = $("#projectdd option:selected").text();
+                var Role = $("#roledd option:selected").text();
                 var SamplePercentage = $("#samplepercentage").val();
-                if (ProjectId !== "--Select a Project--" && RoleId !== "--Select a Role--" && SamplePercentage !== "") {
-                    var newprojectandrole = ProjectId + "^" + RoleId;
+                if (Project !== "--Select a Project--" && Role !== "--Select a Role--" && SamplePercentage !== "") {
+                    var newprojectandrole = Project + "^" + Role;
                     if ($.inArray(newprojectandrole, existingrolesandprojects) == -1) {
-                        var ProjectAndRolevalue = ProjectId + "^" + RoleId + "^" + SamplePercentage;
+                        var ProjectAndRolevalue = Project + "^" + Role + "^" + SamplePercentage;
                         if ($.inArray(ProjectAndRolevalue, ProjectAndRole) == -1) {
-                            $("#tableid").append('<tr id="tr' + iCnt + '"><td id="txtproject' + iCnt + '">' + ProjectId + '</td><td id="txtrole' + iCnt + '">' + RoleId + '</td><td id="txtsample' + iCnt + '">' + SamplePercentage + '</td><td><button type="button" id="btndelete" title="btn_' + iCnt + '"  style="cursor: pointer" class="btn btn-sm btn-danger btn-fill"><i class="fa fa-times"></i>Delete</button></td></td></tr >');
+                            $("#tableid").append('<tr id="tr' + iCnt + '"><td id="txtproject' + iCnt + '">' + Project + '</td><td id="txtrole' + iCnt + '">' + Role + '</td><td id="txtsample' + iCnt + '">' + SamplePercentage + '</td><td><button type="button" id="btndelete" title="btn_' + iCnt + '"  style="cursor: pointer" class="btn btn-sm btn-danger btn-fill"><i class="fa fa-times"></i>Delete</button></td></td></tr >');
                             ProjectAndRole.push(ProjectAndRolevalue);
                             $("#hdnProjectAndRole").val(ProjectAndRole);
                             $("#tbleProjectwithRoles").show();
@@ -150,12 +147,12 @@
                     }
                 }
                 else {
-                    if (ProjectId === "--Select a Project--")
+                    if (Project === "--Select a Project--")
                         $("#validproject").html('<span id="projectdd-error" class="">Project is required.</span>');
                     else
                         $("#validproject").html('');
 
-                    if (RoleId === "--Select a Role--")
+                    if (Role === "--Select a Role--")
                         $("#validrole").html('<span id="roledd-error" class="">Role is required.</span>');
                     else
                         $("#validrole").html('');
@@ -170,9 +167,9 @@
 
         $(document).on('click', '#btndelete', function () {
             var id = $(this).attr('title').split("btn_")[1];
-            var ProjectId = $("#txtproject" + id).text();
-            var RoleId = $("#txtrole" + id).text();
-            var ProjectAndRolevalue = ProjectId + "^" + RoleId;
+            var Project = $("#txtproject" + id).text();
+            var Role = $("#txtrole" + id).text();
+            var ProjectAndRolevalue = Project + "^" + Role;
             ProjectAndRole.splice($.inArray(ProjectAndRolevalue, ProjectAndRole), 1);
             $("#hdnProjectAndRole").val(ProjectAndRole);
             $('#tr' + id).remove();
@@ -180,20 +177,20 @@
 
         $('#btnsubmit').click(function (e) {
             var Email = $("#emaildd option:selected").text();
-            var ProjectId = $("#projectdd option:selected").text();
-            var RoleId = $("#roledd option:selected").text();
+            var Project = $("#projectdd option:selected").text();
+            var Role = $("#roledd option:selected").text();
             var SamplePercentage = $("#samplepercentage").val();
-            if (Email === "--Select a Email--" && ProjectId === "--Select a Project--" && RoleId === "--Select a Role--") {
+            if (Email === "--Select a Email--" && Project === "--Select a Project--" && Role === "--Select a Role--") {
                 $("#AddUserForm").valid();
                 e.preventDefault();
             }
             if ($("#hdnProjectAndRole").val() === "") {
-                if (ProjectId === "--Select a Project--")
+                if (Project === "--Select a Project--")
                     $("#validproject").html('<span id="projectdd-error" class="">Project is required.</span>');
                 else
                     $("#validproject").html('');
 
-                if (RoleId === "--Select a Role--")
+                if (Role === "--Select a Role--")
                     $("#validrole").html('<span id="roledd-error" class="">Role is required.</span>');
                 else
                     $("#validrole").html('');
@@ -201,7 +198,7 @@
                     $("#sampleerror").html("SamplePercentage is required :");
                 else
                     $("#sampleerror").html('');
-                if (Email !== "--Select a Email--" && ProjectId !== "--Select a Project--" && RoleId !== "--Select a Role--") {
+                if (Email !== "--Select a Email--" && Project !== "--Select a Project--" && Role !== "--Select a Role--") {
                     $("#ErrorMessage").text('Please click on the add button, before save');
                 }
                 e.preventDefault();
