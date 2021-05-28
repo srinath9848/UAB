@@ -11,7 +11,7 @@ IF @ProjectId = 0
       
 IF @RangeType = 'PerDay'      
 BEGIN      
- SELECT COUNT(*) Total,CONVERT(VARCHAR, PostingDate, 1) [Date]  FROM WorkItem W       
+ SELECT CONVERT(VARCHAR, PostingDate, 1) [Date],COUNT(*) Total  FROM WorkItem W       
  INNER JOIN Clinicalcase CC ON W.ClinicalcaseId = CC.ClinicalcaseId 
  INNER JOIN ProviderPosted PP ON PP.ClinicalCaseId=CC.ClinicalCaseId
  WHERE (W.ProjectId = @ProjectId OR (W.ProjectID = ISNULL(@ProjectId,W.ProjectId)))    
@@ -22,11 +22,12 @@ BEGIN
 END      
 ELSE IF @RangeType = 'PerWeek'      
 BEGIN      
- SELECT COUNT(*) Total,    
+ SELECT     
    DATEPART(ISO_WEEK, PostingDate) [Week],   
  --DATEPART(WEEK, CodedDate)-DATEPART(WEEK, DATEADD(MM, DATEDIFF(MM,0,CodedDate), 0))+ 1 AS [Week],      
  DATENAME(month, PostingDate) AS [Month],      
- DATEPART(yyyy, PostingDate) AS [Year]      
+ DATEPART(yyyy, PostingDate) AS [Year],
+ COUNT(*) Total
  FROM WorkItem W       
  INNER JOIN Clinicalcase CC ON W.ClinicalcaseId = CC.ClinicalcaseId
  INNER JOIN ProviderPosted PP ON PP.ClinicalCaseId=CC.ClinicalCaseId
@@ -42,10 +43,11 @@ ELSE IF @RangeType = 'PerMonth'
 BEGIN     
     
 ;with cte as(     
- SELECT COUNT(*) Total,       
+ SELECT        
  DATENAME(month, PostingDate) AS [Month],      
  DATEPART(mm, PostingDate) AS [Monthnumber],      
- DATEPART(yyyy, PostingDate) AS [Year]      
+ DATEPART(yyyy, PostingDate) AS [Year],
+ COUNT(*) Total
  FROM WorkItem W       
  INNER JOIN Clinicalcase CC ON W.ClinicalcaseId = CC.ClinicalcaseId
  INNER JOIN ProviderPosted PP ON PP.ClinicalCaseId=CC.ClinicalCaseId
@@ -57,7 +59,7 @@ BEGIN
     DATEPART(yyyy , PostingDate),      
     DATEPART(mm, PostingDate)      
 )    
- select Total,[Month],[Year] from cte  ORDER BY Monthnumber      
+ select [Month],[Year],Total from cte  ORDER BY Monthnumber      
 END      
       
 END      

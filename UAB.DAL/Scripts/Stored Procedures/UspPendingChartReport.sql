@@ -1,5 +1,5 @@
 
-CREATE PROCEDURE [dbo].[UspPendingChartReport] --NULL,'PerWeek'      
+ALTER PROCEDURE [dbo].[UspPendingChartReport] --NULL,'PerWeek'      
 @ProjectId INT = NULL,      
 @RangeType VARCHAR(100),
 @StartDate Date,
@@ -12,7 +12,7 @@ IF @ProjectId = 0
       
 IF @RangeType = 'PerDay'      
 BEGIN      
- SELECT COUNT(*) Total,CONVERT(VARCHAR, BH.CreateDate, 1) [Date]  FROM WorkItem W       
+ SELECT CONVERT(VARCHAR, BH.CreateDate, 1) [Date],COUNT(*) Total  FROM WorkItem W       
  INNER JOIN Clinicalcase CC ON W.ClinicalcaseId = CC.ClinicalcaseId    
  INNER JOIN BlockHistory BH on CC.ClinicalcaseId = bh.ClinicalcaseId  
  INNER JOIN BlockCategory BC on BH.BlockCategoryID = BC.BlockCategoryId  
@@ -23,11 +23,12 @@ BEGIN
 END      
 ELSE IF @RangeType = 'PerWeek'      
 BEGIN      
- SELECT COUNT(*) Total,       
+ SELECT        
    DATEPART(ISO_WEEK, BH.CreateDate) [Week],
  --DATEPART(WEEK, BH.CreateDate)-DATEPART(WEEK, DATEADD(MM, DATEDIFF(MM,0,BH.CreateDate), 0))+ 1 AS [Week],      
  DATENAME(month, BH.CreateDate) AS [Month],      
- DATEPART(yyyy, BH.CreateDate) AS [YEAR]      
+ DATEPART(yyyy, BH.CreateDate) AS [Year],
+ COUNT(*) Total
  FROM WorkItem W       
  INNER JOIN Clinicalcase CC ON W.ClinicalcaseId = CC.ClinicalcaseId    
  INNER JOIN BlockHistory BH on CC.ClinicalcaseId = bh.ClinicalcaseId  
@@ -43,10 +44,11 @@ ELSE IF @RangeType = 'PerMonth'
 BEGIN     
     
 ;with cte as(     
- SELECT COUNT(*) Total,       
+ SELECT        
  DATENAME(month, BH.CreateDate) AS [Month],      
  DATEPART(mm, BH.CreateDate) AS [Monthnumber],      
- DATEPART(yyyy, BH.CreateDate) AS [YEAR]      
+ DATEPART(yyyy, BH.CreateDate) AS [Year],
+ COUNT(*) Total
  FROM WorkItem W       
  INNER JOIN Clinicalcase CC ON W.ClinicalcaseId = CC.ClinicalcaseId    
  INNER JOIN BlockHistory BH on CC.ClinicalcaseId = bh.ClinicalcaseId  
@@ -58,7 +60,7 @@ BEGIN
     DATEPART(yyyy , BH.CreateDate),      
     DATEPART(mm, BH.CreateDate)      
 )    
- select Total,[Month],[YEAR] from cte  ORDER BY Monthnumber      
+ select [Month],[Year],Total from cte  ORDER BY Monthnumber      
 END      
       
 END      
