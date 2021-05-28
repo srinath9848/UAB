@@ -26,63 +26,48 @@
     }
 </style>
 
-<div class="col-md-10">
-    <h5 class="card-title" style="font-size:20px;margin-left:500px;">Search</h5>
-</div>
+<br/>
 <div class="row">
-    <div class="col-md-3" style="min-height:690px">
-        <table style="margin-left:10px">
+    <div class="col-md-3" style="min-height:690px;margin-right: -25px;">
+        <table style="margin-left:20px">
             <tr>
                 <td>
                     <div class="form-group">
                         @Html.TextBoxFor(model => model.MRN, new { @class = "form-control", @autofocus = "autofocus", @id = "txtMRN", @autocomplete = "off", @placeholder = "Enter MRN" })
                         @Html.ValidationMessageFor(model => model.MRN, null, new { @class = "text-danger" })
-
                     </div>
                     <div class="form-group">
                         @Html.DropDownListFor(model => model.ProjectName, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select a Project--", new { @class = "form-control", @id = "projectdd" })
                         @Html.ValidationMessageFor(model => model.ProjectName, null, new { @class = "text-danger" })
-
                     </div>
                     <div class="form-group">
                         @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @autofocus = "autofocus", @id = "txtFirstName", @autocomplete = "off", @placeholder = "Enter First Name" })
                         @Html.ValidationMessageFor(model => model.FirstName, null, new { @class = "text-danger" })
-
                     </div>
-
                     <div class="form-group">
                         @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", @autofocus = "autofocus", @id = "txtLastName", @autocomplete = "off", @placeholder = "Enter Last Name" })
                         @Html.ValidationMessageFor(model => model.LastName, null, new { @class = "text-danger" })
-
                     </div>
                     <div class="form-group">
                         @Html.DropDownListFor(model => model.ProviderName, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select a Provider--", new { @class = "form-control", @id = "providerdd" })
                         @Html.ValidationMessageFor(model => model.ProviderName, null, new { @class = "text-danger" })
-
-                    </div>
-
-                    <div class="custom-control custom-checkbox mr-sm-1">
-                        @Html.CheckBoxFor(model => model.IncludeBlocked, new { @class = "custom-control-input ShadowQADetails", @id = "customControlAutosizing1" })
-                        <label class="custom-control-label" for="customControlAutosizing1">Show Blocked Charts</label>
                     </div>
                     <div class="form-group">
                         @Html.TextBoxFor(model => model.DoSFrom, new { @class = "form-control", @type = "text", @autofocus = "autofocus", @id = "txtDoSFrom", @autocomplete = "off", @placeholder = "Enter DOS From", @onfocus = "(this.type='date')", @onblur = "(this.type='text')" })
                         @Html.ValidationMessageFor(model => model.DoSFrom, null, new { @class = "text-danger" })
-
                     </div>
-
                     <div class="form-group">
                         @Html.TextBoxFor(model => model.DoSTo, new { @class = "form-control", @type = "text", @autofocus = "autofocus", @id = "txtDoSTo", @autocomplete = "off", @placeholder = "Enter DOS To", @onfocus = "(this.type='date')", @onblur = "(this.type='text')" })
                         @Html.ValidationMessageFor(model => model.DoSTo, null, new { @class = "text-danger" })
-
                     </div>
-
                     <div class="form-group">
                         @Html.DropDownListFor(model => model.StatusName, new SelectList(@ViewBag.Status, "StatusId", "Name"), "--Select a Status--", new { @class = "form-control", @id = "statusdd" })
                         @Html.ValidationMessageFor(model => model.StatusName, null, new { @class = "text-danger" })
-
                     </div>
-
+                    <div class="custom-control custom-checkbox mr-sm-1">
+                        @Html.CheckBoxFor(model => model.IncludeBlocked, new { @class = "custom-control-input ShadowQADetails", @id = "customControlAutosizing1" })
+                        <label class="custom-control-label" for="customControlAutosizing1">Show Blocked Charts</label>
+                    </div>
                 </td>
             </tr>
         </table>
@@ -105,7 +90,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-            clearFields = function () {
+        clearFields = function () {
             $("#txtClinicalCaseId").val('');
             $("#txtFirstName").val('');
             $("#txtLastName").val('');
@@ -117,36 +102,37 @@
             $('#providerdd').val($('#providerdd').prop('defaultSelected'))
             $("#txtProvidername").val('');
             $("#customControlAutosizing1").prop("checked", false);
-                }
+        }
 
-                Search = function () {
+        Search = function () {
+            var fname = $("#txtFirstName").val();
+            var lname = $("#txtLastName").val();
+            var mrn = $("#txtMRN").val();
+            var dosfrom = $("#txtDoSFrom").val();
+            var dosto = $("#txtDoSTo").val();
+            var statusname = $("#statusdd").find('option:selected').text();
+            var projectname = $("#projectdd").find('option:selected').text();
+            var providername = $("#providerdd").find('option:selected').text();
+            var includeblocked = $("#customControlAutosizing1").prop("checked");
 
-                    var ccid = $("#txtClinicalCaseId").val();
-                    var fname = $("#txtFirstName").val();
-                    var lname = $("#txtLastName").val();
-                    var mrn = $("#txtMRN").val();
-                    var dosfrom = $("#txtDoSFrom").val();
-                    var dosto = $("#txtDoSTo").val();
-                    var statusname = $("#statusdd").find('option:selected').text();
-                    var projectname = $("#projectdd").find('option:selected').text();
-                    var providername = $("#providerdd").find('option:selected').text();
-                    var includeblocked = $("#customControlAutosizing1").prop("checked");
-                    if (ccid !== "" || fname !=="" || lname !=="" || mrn !=="" || dosfrom !=="" || dosto !=="" || providername !=="" ||
-                        projectname !== "--Select a Project--" || statusname !== "--Select a Status--" || includeblocked!==false) {
-                $("#error").hide();
-                $.ajax({
+            if (fname == "" && lname == "" && mrn == "" && dosfrom == "" && dosto == "" && providername == "--Select a Provider--" &&
+                projectname == "--Select a Project--" && statusname == "--Select a Status--" && includeblocked == false) {
+                $("#error").html("Plese enter search parameters");
+            }
+            else {
+                $("#error").html('');
+                 $.ajax({
                         type: "POST",
                     url: "@Url.Action("SettingsSearch", "UAB")",
                     data: {
-                        "ccid": $("#txtClinicalCaseId").val(),
                         "fname": $("#txtFirstName").val(),
                         "lname": $("#txtLastName").val(),
                         "mrn": $("#txtMRN").val(),
                         "dosfrom": $("#txtDoSFrom").val(),
                         "dosto": $("#txtDoSTo").val(),
-                        "statusname": $("#statusdd").find('option:selected').text(),
-                        "projectname": $("#projectdd").find('option:selected').text(),
-                        "providername": $("#providerdd").find('option:selected').text(),
+                        "status": $("#statusdd").find('option:selected').text(),
+                        "project": $("#projectdd").find('option:selected').text(),
+                        "provider": $("#providerdd").find('option:selected').text(),
                         "includeblocked": $("#customControlAutosizing1").prop("checked")
 
                     },
@@ -157,11 +143,7 @@
                                 alert(response);
                             }
                         });
-                    }
-                    else {
-                $("#error").html("Plese enter search parameters");
-                $("#error").fadeOut(10000);
-                    }
-                }
-            });
+            }
+        }
+    });
 </script>

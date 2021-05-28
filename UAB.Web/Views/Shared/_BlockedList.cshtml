@@ -14,7 +14,7 @@
     <div class="modal-dialog">
         <div class="modal-content" style="width:1100px;max-height:500px;margin-left:-200px;">
             <div class="modal-header" style="background-color: #27a9e3;color: white;">
-                <h5 class="modal-title" id="exampleModalLongTitle">List of Blocked Charts [ @ViewBag.Project ]</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">List of Blocked Charts [ @Model.FirstOrDefault().ProjectName ]</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ModalClose1()">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -44,13 +44,13 @@
                                     @switch (@ViewBag.Role)
                                     {
                                         case "QA":
-                                            <a href="@Url.Action("GetCodingBlockedCharts", "UAB", new { Role = Roles.QA, ChartType = "Block", ProjectID =item.ProjectID, ProjectName =item.ProjectName,ccid=item.CodingDTO.ClinicalCaseID,plusorminus="Current"})" class="btn btn-info btn-sm">Open</a>
+                                            <a href="@Url.Action("GetBlockedChart", "UAB" ,new { Role=Roles.QA,ChartType ="Block",ProjectID=item.ProjectID,ProjectName =item.ProjectName,ccids=ViewBag.CCIDs,CurrCCId=item.CodingDTO.ClinicalCaseID,showAll="1"})" class="btn btn-info btn-sm">Open</a>
                                             break;
                                         case "ShadowQA":
-                                            <a href="@Url.Action("GetCodingBlockedCharts", "UAB", new { Role = Roles.ShadowQA, ChartType = "Block", ProjectID =item.ProjectID, ProjectName =item.ProjectName,ccid=item.CodingDTO.ClinicalCaseID,plusorminus="Current"})" class="btn btn-info btn-sm">Open</a>
+                                            <a href="@Url.Action("GetBlockedChart", "UAB" ,new { Role=Roles.ShadowQA,ChartType ="Block",ProjectID=item.ProjectID,ProjectName =item.ProjectName,ccids=ViewBag.CCIDs,CurrCCId=item.CodingDTO.ClinicalCaseID,showAll="1"})" class="btn btn-info btn-sm">Open</a>
                                             break;
                                         default:
-                                            <a href="@Url.Action("GetCodingBlockedCharts", "UAB", new { Role = Roles.Coder, ChartType = "Block", ProjectID =item.ProjectID, ProjectName =item.ProjectName,ccid=item.CodingDTO.ClinicalCaseID,plusorminus="Current"})" class="btn btn-info btn-sm">Open</a>
+                                            <a href="@Url.Action("GetBlockedChart", "UAB" ,new { Role=Roles.Coder,ChartType ="Block",ProjectID=item.ProjectID,ProjectName =item.ProjectName,ccids=ViewBag.CCIDs,CurrCCId=item.CodingDTO.ClinicalCaseID,showAll="1"})" class="btn btn-info btn-sm">Open</a>
                                             break;
                                     }
                                 </td>

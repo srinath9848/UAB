@@ -2,8 +2,6 @@
 @{
     ViewData["Title"] = "Coding";
 }
-<input type="hidden" id="currentindex" value="@ViewBag.currentindex" />
-<input type="hidden" id="lastindex" value=@ViewBag.lastindex />
 <form asp-action="SubmitCodingAvailableChart" id="frmSubmitCodingAvailableChart" asp-controller="UAB" method="POST">
     <div class="container-fluid">
         <div class="row">
@@ -42,19 +40,7 @@
         $("#btnBlock").hide();
         $("#btnBlockHistory").show();
         $("#btnProviderPosted").hide();
-        //var currentindex = $("#currentindex").val();
-        //var lastindex = $("#lastindex").val();
-
-        //if (currentindex == 0) {
-        //    $("#btnPrevious").hide();
-        //} else {
-        //    $("#btnPrevious").show();
-        //}
-        //if (currentindex == lastindex) {
-        //    $("#btnNext").hide();
-        //} else {
-        //    $("#btnNext").show();
-        //}
+      
         if (enablePrevious == true) {
             $("#btnPrevious").css({
                 'opacity': '100', 'pointer-events': 'auto'
