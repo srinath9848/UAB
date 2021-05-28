@@ -84,27 +84,17 @@ namespace UAB.Controllers
             return View("Coding", chartSummary);
         }
         [HttpGet]
-        public IActionResult GetBlockedChartsList(string Role, string ChartType, int ProjectID)
+        public IActionResult GetBlockedChartsList(string Role, int ProjectID)
         {
             _logger.LogInformation("Loading Started for GetBlockedChartsList for User: " + mUserId);
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
-            if (Role == Roles.QA.ToString())
-            {
-                lst = clinicalcaseOperations.DisplayBlockCharts(Role, ProjectID);
-            }
-            else if (Role == Roles.ShadowQA.ToString())
-            {
-                lst = clinicalcaseOperations.DisplayBlockCharts(Role, ProjectID);
-            }
-            else
-            {
-                lst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);
-            }
-            var projectname = clinicalcaseOperations.projectname(ProjectID);
+
+            lst = clinicalcaseOperations.GetBlockedChartsList(Role, ProjectID);
+
             ViewBag.Role = Role;
-            ViewBag.Project = projectname;
+            ViewBag.CCIDs = lst.Count > 0 ? lst.FirstOrDefault().CCIDs : null;
 
             _logger.LogInformation("Loading Ended for GetBlockedChartsList for User: " + mUserId);
 
@@ -142,136 +132,136 @@ namespace UAB.Controllers
         }
 
 
-        [HttpGet]
-        public IActionResult GetCodingBlockedCharts(string Role, string ChartType, int ProjectID, string ProjectName, string ccid, string plusorminus)
-        {
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+        //[HttpGet]
+        //public IActionResult GetCodingBlockedCharts(string Role, string ChartType, int ProjectID, string ProjectName, string ccid, string plusorminus)
+        //{
+        //    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
-            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();                                //coding,ShadowQA
-            List<ChartSummaryDTO> chartSummaryDTOlst = new List<ChartSummaryDTO>();                 //coding,ShadowQA
-            List<ChartSummaryDTO> qadto = new List<ChartSummaryDTO>();                              //QA
-            List<ChartSummaryDTO> shadowQADto = new List<ChartSummaryDTO>();
+        //    ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();                                //coding,ShadowQA
+        //    List<ChartSummaryDTO> chartSummaryDTOlst = new List<ChartSummaryDTO>();                 //coding,ShadowQA
+        //    List<ChartSummaryDTO> qadto = new List<ChartSummaryDTO>();                              //QA
+        //    List<ChartSummaryDTO> shadowQADto = new List<ChartSummaryDTO>();
 
 
-            if (ProjectName == null || ProjectID == 0)
-            {
-                var projects = clinicalcaseOperations.GetProjects();
-                if (ProjectName == null)
-                {
-                    ProjectName = projects.Where(a => a.ProjectId == ProjectID).Select(a => a.Name).FirstOrDefault();
-                }
-                else if (ProjectID == 0)
-                {
-                    ProjectID = projects.Where(a => a.Name == ProjectName).Select(a => a.ProjectId).FirstOrDefault();
-                }
-            }
-            if (Role == Roles.QA.ToString())
-            {
-                var res = clinicalcaseOperations.DisplayBlockCharts(Role, ProjectID);
-                List<int> ccids = res.Select(a => a.CodingDTO.ClinicalCaseID).ToList();
-                int searchcid = Convert.ToInt32(ccid);
-                if (ccids.Count != 0)
-                {
-                    switch (plusorminus)
-                    {
-                        case "Next":
-                            searchcid = ccids[(ccids.IndexOf(Convert.ToInt32(ccid)) + 1) % ccids.Count];
-                            break;
-                        case "Previous":
-                            searchcid = ccids[(ccids.IndexOf(Convert.ToInt32(ccid)) - 1 + ccids.Count) % ccids.Count];
-                            break;
-                        default:
-                            searchcid = Convert.ToInt32(ccid);
-                            break;
-                    }
-                    int currentindex = ccids.IndexOf(searchcid);
-                    ViewBag.currentindex = currentindex;
-                    ViewBag.lastindex = ccids.Count - 1;
-                }
-                qadto = clinicalcaseOperations.GetQABlockedChart(Role, ChartType, ProjectID, searchcid);
-                qadto.FirstOrDefault().ProjectName = ProjectName;
-            }
-            else if (Role == Roles.Coder.ToString())
-            {
-                chartSummaryDTOlst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);  //total block charts
-                List<int> cidslst = chartSummaryDTOlst.Select(x => x.CodingDTO.ClinicalCaseID).ToList();
-                switch (plusorminus)
-                {
-                    case "Next":
-                        chartSummaryDTO = chartSummaryDTOlst.SkipWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).FirstOrDefault();
-                        if (chartSummaryDTO == null)
-                        {
-                            chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
-                            chartSummaryDTO.ProjectName = ProjectName;
-                        }
-                        break;
-                    case "Previous":
-                        var x = chartSummaryDTOlst;
-                        x.Reverse();
-                        chartSummaryDTO = x.SkipWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).FirstOrDefault();
-                        if (chartSummaryDTO == null)
-                        {
-                            chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
-                            chartSummaryDTO.ProjectName = ProjectName;
-                        }
-                        break;
+        //    if (ProjectName == null || ProjectID == 0)
+        //    {
+        //        var projects = clinicalcaseOperations.GetProjects();
+        //        if (ProjectName == null)
+        //        {
+        //            ProjectName = projects.Where(a => a.ProjectId == ProjectID).Select(a => a.Name).FirstOrDefault();
+        //        }
+        //        else if (ProjectID == 0)
+        //        {
+        //            ProjectID = projects.Where(a => a.Name == ProjectName).Select(a => a.ProjectId).FirstOrDefault();
+        //        }
+        //    }
+        //    if (Role == Roles.QA.ToString())
+        //    {
+        //        var res = clinicalcaseOperations.DisplayBlockCharts(Role, ProjectID);
+        //        List<int> ccids = res.Select(a => a.CodingDTO.ClinicalCaseID).ToList();
+        //        int searchcid = Convert.ToInt32(ccid);
+        //        if (ccids.Count != 0)
+        //        {
+        //            switch (plusorminus)
+        //            {
+        //                case "Next":
+        //                    searchcid = ccids[(ccids.IndexOf(Convert.ToInt32(ccid)) + 1) % ccids.Count];
+        //                    break;
+        //                case "Previous":
+        //                    searchcid = ccids[(ccids.IndexOf(Convert.ToInt32(ccid)) - 1 + ccids.Count) % ccids.Count];
+        //                    break;
+        //                default:
+        //                    searchcid = Convert.ToInt32(ccid);
+        //                    break;
+        //            }
+        //            int currentindex = ccids.IndexOf(searchcid);
+        //            ViewBag.currentindex = currentindex;
+        //            ViewBag.lastindex = ccids.Count - 1;
+        //        }
+        //        qadto = clinicalcaseOperations.GetQABlockedChart(Role, ChartType, ProjectID, searchcid);
+        //        qadto.FirstOrDefault().ProjectName = ProjectName;
+        //    }
+        //    else if (Role == Roles.Coder.ToString())
+        //    {
+        //        chartSummaryDTOlst = clinicalcaseOperations.GetBlockNext(Role, ChartType, ProjectID);  //total block charts
+        //        List<int> cidslst = chartSummaryDTOlst.Select(x => x.CodingDTO.ClinicalCaseID).ToList();
+        //        switch (plusorminus)
+        //        {
+        //            case "Next":
+        //                chartSummaryDTO = chartSummaryDTOlst.SkipWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).FirstOrDefault();
+        //                if (chartSummaryDTO == null)
+        //                {
+        //                    chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
+        //                    chartSummaryDTO.ProjectName = ProjectName;
+        //                }
+        //                break;
+        //            case "Previous":
+        //                var x = chartSummaryDTOlst;
+        //                x.Reverse();
+        //                chartSummaryDTO = x.SkipWhile(x => !x.CodingDTO.ClinicalCaseID.Equals(Convert.ToInt32(ccid))).Skip(1).FirstOrDefault();
+        //                if (chartSummaryDTO == null)
+        //                {
+        //                    chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
+        //                    chartSummaryDTO.ProjectName = ProjectName;
+        //                }
+        //                break;
 
-                    default:
-                        chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
-                        chartSummaryDTO.ProjectName = ProjectName;
-                        break;
-                }
-                int indcid = chartSummaryDTO.CodingDTO.ClinicalCaseID;
-                int currentindex = cidslst.IndexOf(indcid);
-                ViewBag.currentindex = currentindex;
-                ViewBag.lastindex = cidslst.Count - 1;
-            }
-            else if (Role == Roles.ShadowQA.ToString())
-            {
-                var res = clinicalcaseOperations.DisplayBlockCharts(Role, ProjectID);  //total block charts
-                List<int> ccids = res.Select(x => x.CodingDTO.ClinicalCaseID).ToList();
-                int searchcid = Convert.ToInt32(ccid);
-                if (ccids.Count != 0)
-                {
-                    switch (plusorminus)
-                    {
-                        case "Next":
-                            searchcid = ccids[(ccids.IndexOf(Convert.ToInt32(ccid)) + 1) % ccids.Count];
-                            break;
-                        case "Previous":
-                            searchcid = ccids[(ccids.IndexOf(Convert.ToInt32(ccid)) - 1 + ccids.Count) % ccids.Count];
-                            break;
-                        default:
-                            searchcid = Convert.ToInt32(ccid);
-                            break;
-                    }
-                    int currentindex = ccids.IndexOf(searchcid);
-                    ViewBag.currentindex = currentindex;
-                    ViewBag.lastindex = ccids.Count - 1;
-                }
-                shadowQADto = clinicalcaseOperations.GetShadowQABlockedChart(Role, ChartType, ProjectID, searchcid);
-                shadowQADto.FirstOrDefault().ProjectName = ProjectName;
-            }
+        //            default:
+        //                chartSummaryDTO = chartSummaryDTOlst.Where(c => c.CodingDTO.ClinicalCaseID == Convert.ToInt32(ccid)).FirstOrDefault();
+        //                chartSummaryDTO.ProjectName = ProjectName;
+        //                break;
+        //        }
+        //        int indcid = chartSummaryDTO.CodingDTO.ClinicalCaseID;
+        //        int currentindex = cidslst.IndexOf(indcid);
+        //        ViewBag.currentindex = currentindex;
+        //        ViewBag.lastindex = cidslst.Count - 1;
+        //    }
+        //    else if (Role == Roles.ShadowQA.ToString())
+        //    {
+        //        var res = clinicalcaseOperations.DisplayBlockCharts(Role, ProjectID);  //total block charts
+        //        List<int> ccids = res.Select(x => x.CodingDTO.ClinicalCaseID).ToList();
+        //        int searchcid = Convert.ToInt32(ccid);
+        //        if (ccids.Count != 0)
+        //        {
+        //            switch (plusorminus)
+        //            {
+        //                case "Next":
+        //                    searchcid = ccids[(ccids.IndexOf(Convert.ToInt32(ccid)) + 1) % ccids.Count];
+        //                    break;
+        //                case "Previous":
+        //                    searchcid = ccids[(ccids.IndexOf(Convert.ToInt32(ccid)) - 1 + ccids.Count) % ccids.Count];
+        //                    break;
+        //                default:
+        //                    searchcid = Convert.ToInt32(ccid);
+        //                    break;
+        //            }
+        //            int currentindex = ccids.IndexOf(searchcid);
+        //            ViewBag.currentindex = currentindex;
+        //            ViewBag.lastindex = ccids.Count - 1;
+        //        }
+        //        shadowQADto = clinicalcaseOperations.GetShadowQABlockedChart(Role, ChartType, ProjectID, searchcid);
+        //        shadowQADto.FirstOrDefault().ProjectName = ProjectName;
+        //    }
 
-            ViewBag.IsBlocked = "1";
+        //    ViewBag.IsBlocked = "1";
 
-            #region binding data
-            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
-            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
-            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
-            ViewBag.ErrorTypes = BindErrorType();
-            #endregion
+        //    #region binding data
+        //    ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
+        //    ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
+        //    ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+        //    ViewBag.ErrorTypes = BindErrorType();
+        //    #endregion
 
-            if (Role == Roles.QA.ToString())
-                return View("QA", qadto);
-            else if (Role == "ShadowQA")
-                return View("ShadowQA", shadowQADto);
-            else
-                return View("Coding", chartSummaryDTO);
+        //    if (Role == Roles.QA.ToString())
+        //        return View("QA", qadto);
+        //    else if (Role == "ShadowQA")
+        //        return View("ShadowQA", shadowQADto);
+        //    else
+        //        return View("Coding", chartSummaryDTO);
 
-        }
+        //}
 
-        public IActionResult GetBlockedChart(string Role, string ChartType, int ProjectID, string ccids, string ProjectName, int CurrCCId = 0, string Previous = "", string Next = "")
+        public IActionResult GetBlockedChart(string Role, string ChartType, int ProjectID, string ccids, string ProjectName, int CurrCCId = 0, string Previous = "", string Next = "", string showAll = "")
         {
             _logger.LogInformation("Loading Started for GetBlockedChart for User: " + mUserId);
 
@@ -286,10 +276,9 @@ namespace UAB.Controllers
             ViewBag.ErrorTypes = BindErrorType();
             ViewBag.IsBlocked = "1";
 
-            ViewBag.currentindex = 0;            //always first will open from here so currentindex is zero
             #endregion
 
-            chartSummaryDTO.ProjectName = ProjectName;
+            //chartSummaryDTO.ProjectName = ProjectName;
 
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
 
@@ -297,6 +286,23 @@ namespace UAB.Controllers
             ViewBag.EnableNext = "false";
             ViewBag.EnablePrevious = "false";
 
+            if (showAll != "" && ccids != null)
+            {
+                List<int> BlockedCCIds = ccids.Split(",").Select(int.Parse).ToList();
+                int CurrentIndex = BlockedCCIds.IndexOf(CurrCCId);
+
+                if (BlockedCCIds.Count == 1 || CurrentIndex == 0)
+                {
+                    Previous = "";
+                    Next = "";
+                }
+                else
+                {
+                    Previous = "";
+                    Next = "1";
+                    CurrCCId = BlockedCCIds[CurrentIndex - 1];
+                }
+            }
             if (ccids != null)
             {
                 List<int> CCIds = ccids.Split(",").Select(int.Parse).ToList();
