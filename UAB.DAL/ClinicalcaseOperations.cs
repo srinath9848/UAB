@@ -341,7 +341,7 @@ namespace UAB.DAL
             return lst;
         }
 
-        public List<ChartSummaryDTO> GetBlockNext(string Role, string ChartType, int projectID)
+        public List<ChartSummaryDTO> GetBlockedChartsList(string Role, int projectID)
         {
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
@@ -360,12 +360,6 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = Role
-                        }
-                        ,   new SqlParameter() {
-                            ParameterName = "@ChartType",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = ChartType
                         }
                          ,   new SqlParameter() {
                             ParameterName = "@UserId",
@@ -393,87 +387,23 @@ namespace UAB.DAL
                         var dos = Convert.ToDateTime(reader["DateOfService"]);
                         chartSummaryDTO.CodingDTO.DateOfService = dos.ToString("MM/dd/yyyy");
                         chartSummaryDTO.ProjectID = projectID;
-                        if (Role == "Coder" && ChartType == "Block")
-                        {
-                            chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
-                            chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
-                            chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate();
-                            if (reader["ProviderId"] != DBNull.Value)
-                                chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
-                        }
-                        else if (Role == "ShadowQA" && ChartType == "Block")
-                        {
-                            chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
-                            chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
-                            chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate();
+                        chartSummaryDTO.ProjectName = Convert.ToString(reader["ProjectName"]);
+                        chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
+                        chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
+                        chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate();
+                        if (reader["ProviderId"] != DBNull.Value)
+                            chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
 
-                            chartSummaryDTO.CodedBy = Convert.ToString(reader["CodedBy"]);
-                            if (reader["ClaimId"] != DBNull.Value)
-                                chartSummaryDTO.ClaimId = Convert.ToInt32(reader["ClaimId"]);
-                            else
-                                chartSummaryDTO.ClaimId = null;
-                            if (reader["ProviderId"] != DBNull.Value)
-                                chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
-                            if (reader["PayorId"] != DBNull.Value)
-                                chartSummaryDTO.PayorID = Convert.ToInt32(reader["PayorId"]);
-                            chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
-                            chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
-                            chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
-                            if (reader["ProviderFeedbackId"] != DBNull.Value)
-                                chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
-
-                            chartSummaryDTO.QABy = Convert.ToString(reader["QABy"]);
-
-                            chartSummaryDTO.PayorText = Convert.ToString(reader["PayorText"]);
-                            chartSummaryDTO.QAPayorText = Convert.ToString(reader["QAPayorText"]);
-                            chartSummaryDTO.QAPayorRemarks = Convert.ToString(reader["QAPayorIdRemark"]);
-
-                            chartSummaryDTO.ProviderText = Convert.ToString(reader["ProviderText"]);
-                            chartSummaryDTO.QAProviderText = Convert.ToString(reader["QAProviderText"]);
-                            chartSummaryDTO.QAProviderRemarks = Convert.ToString(reader["QAProviderIDRemark"]);
-
-                            chartSummaryDTO.QACPTCode = Convert.ToString(reader["QACPTCode"]);
-                            chartSummaryDTO.QACPTCodeRemarks = Convert.ToString(reader["QACPTCodeRemark"]);
-
-                            chartSummaryDTO.QAMod = Convert.ToString(reader["QAMod"]);
-                            chartSummaryDTO.QAModRemarks = Convert.ToString(reader["QAModRemark"]);
-
-                            chartSummaryDTO.QADx = Convert.ToString(reader["QADx"]);
-                            chartSummaryDTO.QADxRemarks = Convert.ToString(reader["QADxRemark"]);
-
-                            chartSummaryDTO.ProviderFeedbackText = Convert.ToString(reader["ProviderFeedbackText"]);
-                            chartSummaryDTO.QAProviderFeedbackText = Convert.ToString(reader["QAProviderFeedbackText"]);
-                            chartSummaryDTO.QAProviderFeedbackRemarks = Convert.ToString(reader["QAProviderFeedbackIDRemark"]);
-                            chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
-                            chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
-                            chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
-                        }
-                        else if (Role == "QA" && ChartType == "Block")
-                        {
-                            chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
-                            chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
-                            chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate();
-
-                            chartSummaryDTO.CodedBy = Convert.ToString(reader["CodedBy"]);
-                            if (reader["ClaimId"] != DBNull.Value)
-                                chartSummaryDTO.ClaimId = Convert.ToInt32(reader["ClaimId"]);
-                            else
-                                chartSummaryDTO.ClaimId = null;
-                            if (reader["ProviderId"] != DBNull.Value)
-                                chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
-                            if (reader["PayorId"] != DBNull.Value)
-                                chartSummaryDTO.PayorID = Convert.ToInt32(reader["PayorId"]);
-                            chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
-                            chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
-                            chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
-                            if (reader["ProviderFeedbackId"] != DBNull.Value)
-                                chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
-                        }
                         lst.Add(chartSummaryDTO);
+                    }
+                    reader.NextResult();
+
+                    while (reader.Read())
+                    {
+                        lst.ForEach(x => x.CCIDs = Convert.ToString(reader["CCIDs"]));
                     }
                 }
             }
-
             return lst;
         }
 
