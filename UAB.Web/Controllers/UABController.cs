@@ -1079,6 +1079,11 @@ namespace UAB.Controllers
                 TempData["Toast"] = "There are no charts available";
                 return RedirectToAction("QASummary");
             }
+            var res = clinicalcaseOperations.GetBlockResponseBycid(lstchartSummary.FirstOrDefault().CodingDTO.ClinicalCaseID);
+            if (res != null)
+            {
+                lstchartSummary.FirstOrDefault().BlockResponseDTO = res;
+            }
             _logger.LogInformation("Loading Ended for GetQAAvailableChart for User: " + mUserId);
             return View("QA", lstchartSummary.OrderBy(a => a.ClaimId).ToList());
         }
@@ -1585,6 +1590,11 @@ namespace UAB.Controllers
                 _logger.LogInformation("Loading Ended for GetShadowQAAvailableChart for User: " + mUserId);
                 TempData["Toast"] = "There are no charts available";
                 return RedirectToAction("ShadowQASummary");
+            }
+            var res = clinicalcaseOperations.GetBlockResponseBycid(lstchartSummary.FirstOrDefault().CodingDTO.ClinicalCaseID);
+            if (res != null)
+            {
+                lstchartSummary.FirstOrDefault().BlockResponseDTO = res;
             }
             _logger.LogInformation("Loading Ended for GetShadowQAAvailableChart for User: " + mUserId);
             return View("ShadowQA", lstchartSummary.OrderBy(a => a.ClaimId).ToList());
