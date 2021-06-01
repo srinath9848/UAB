@@ -496,16 +496,16 @@
                     }
                 }
             }
-            var res2 = $("[id=" + "Feedback_" + tabid + "]:eq(1)").attr('class');
-            if (res2.includes('reject')) {
-                ProviderFeedbackID = $("#ShadowQAProviderFeedback_" + tabid).val();
-                FeedbackRemarks = $('#ShadowQAProviderFeedbackRemarks_' + tabid).val();
-                if ($("#hdnClaim" + tabid).val() == "") {
-                    $("#hdnClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID + "," + FeedbackRemarks + "," + ErrorTypeID);
-                } else {
-                    $("#hdnClaim" + tabid).val($("#hdnClaim" + tabid).val() + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID + "," + FeedbackRemarks + "," + ErrorTypeID);
-                }
-            }
+            //var res2 = $("[id=" + "Feedback_" + tabid + "]:eq(1)").attr('class');
+            //if (res2.includes('reject')) {
+            //    ProviderFeedbackID = $("#ShadowQAProviderFeedback_" + tabid).val();
+            //    FeedbackRemarks = $('#ShadowQAProviderFeedbackRemarks_' + tabid).val();
+            //    if ($("#hdnClaim" + tabid).val() == "") {
+            //        $("#hdnClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID + "," + FeedbackRemarks + "," + ErrorTypeID);
+            //    } else {
+            //        $("#hdnClaim" + tabid).val($("#hdnClaim" + tabid).val() + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID + "," + FeedbackRemarks + "," + ErrorTypeID);
+            //    }
+            //}
             //else {
             //    ProviderFeedbackID = $("#QAFeedback_" + tabid).val();
             //    if (ProviderFeedbackID != "0") {

@@ -180,10 +180,10 @@
             var res2 = $("[id='DxClaim_1_" + id + "']:eq(1)").attr('class');
 
             if (res2.includes('reject')) {
-                if ($("#hdnRejectedDxCodes").val() == "")
-                    $("#hdnRejectedDxCodes").val($("#DxClaim_1_Coder_" + id).val());
-                else
-                    $("#hdnRejectedDxCodes").val($("#hdnRejectedDxCodes").val() + "," + $("#DxClaim_1_Coder_" + id).val());
+                //if ($("#hdnRejectedDxCodes").val() == "")
+                //    $("#hdnRejectedDxCodes").val($("#DxClaim_1_Coder_" + id).val());
+                //else
+                //    $("#hdnRejectedDxCodes").val($("#hdnRejectedDxCodes").val() + "," + $("#DxClaim_1_Coder_" + id).val());
             }
             else {
                 if ($("#hdnDxCodes").val() == "")
