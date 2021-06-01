@@ -3099,16 +3099,54 @@ namespace UAB.DAL
                 var existingcc = context.WorkItem.Where(c => c.ClinicalCaseId == ccid).FirstOrDefault();
                 if (existingcc != null)
                 {
+                    Version vr1 = new Version();
+                    int assignfromuser = 0;
 
-                    int assignfromuser = existingcc.AssignedTo == null ? 0 : Convert.ToInt32(existingcc.AssignedTo);
+                    assignfromuser = existingcc.AssignedTo == null ? 0 : Convert.ToInt32(existingcc.AssignedTo);
 
-                    Version vr1 = new Version()
+
+                    if (existingcc.StatusId == 1 || existingcc.StatusId == 2 || existingcc.StatusId == 3
+                        || existingcc.StatusId == 14 || existingcc.StatusId == 15)
                     {
-                        ClinicalCaseId = ccid,
-                        StatusId = 18,
-                        UserId = Convert.ToInt32(existingcc.AssignedTo),
-                        VersionDate = DateTime.Now
-                    };
+                        
+                        assignfromuser = existingcc.AssignedTo == null ? 0 : Convert.ToInt32(existingcc.AssignedTo);
+
+                        existingcc.AssignedTo = AssignedTouserid;
+
+                        //version table assign from event
+                        vr1.ClinicalCaseId = ccid;
+                        vr1.StatusId = 18;
+                        vr1.UserId = assignfromuser;
+                        vr1.VersionDate = DateTime.Now;
+                    }
+                    if (existingcc.StatusId == 4 || existingcc.StatusId == 5 || existingcc.StatusId == 6
+                        || existingcc.StatusId == 11 || existingcc.StatusId == 12)
+                    {
+                        
+                        assignfromuser = existingcc.AssignedTo == null ? 0 : Convert.ToInt32(existingcc.QABy);
+                        existingcc.QABy = AssignedTouserid;
+
+                        //version table assign from event
+                        vr1.ClinicalCaseId = ccid;
+                        vr1.StatusId = 18;
+                        vr1.UserId = assignfromuser;
+                        vr1.VersionDate = DateTime.Now;
+                    }
+                    if (existingcc.StatusId == 7 || existingcc.StatusId == 8 || existingcc.StatusId == 9
+                         || existingcc.StatusId == 10 || existingcc.StatusId == 13)
+                    {
+                        
+                        assignfromuser = existingcc.AssignedTo == null ? 0 : Convert.ToInt32(existingcc.ShadowQABy);
+                        existingcc.ShadowQABy = AssignedTouserid;
+
+                        //version table assign from event
+                        vr1.ClinicalCaseId = ccid;
+                        vr1.StatusId = 18;
+                        vr1.UserId = assignfromuser;
+                        vr1.VersionDate = DateTime.Now;
+                        
+                    }
+                    //version table assign To  event
                     Version vr2 = new Version()
                     {
                         ClinicalCaseId = ccid,
@@ -3120,22 +3158,6 @@ namespace UAB.DAL
                     vrlst.Add(vr1);
                     vrlst.Add(vr2);
 
-
-                    if (existingcc.StatusId == 1 || existingcc.StatusId == 2 || existingcc.StatusId == 3
-                        || existingcc.StatusId == 14 || existingcc.StatusId == 15)
-                    {
-                        existingcc.AssignedTo = AssignedTouserid;
-                    }
-                    if (existingcc.StatusId == 4 || existingcc.StatusId == 5 || existingcc.StatusId == 6
-                        || existingcc.StatusId == 11 || existingcc.StatusId == 12)
-                    {
-                        existingcc.QABy = AssignedTouserid;
-                    }
-                    if (existingcc.StatusId == 7 || existingcc.StatusId == 8 || existingcc.StatusId == 9
-                         || existingcc.StatusId == 10 || existingcc.StatusId == 13)
-                    {
-                        existingcc.ShadowQABy = AssignedTouserid;
-                    }
                     existingcc.AssignedBy = mUserId;
                     existingcc.AssignedDate = DateTime.Now;
                     existingcc.IsPriority = searchResultDTO.IsPriority ? 1 : 0;
