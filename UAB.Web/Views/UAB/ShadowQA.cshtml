@@ -8,6 +8,10 @@
             <partial name="_InitialData" model=Model.FirstOrDefault() />
             <partial name="_ShadowQAChartDetails" model=Model />
         </div>
+        @if (Model.FirstOrDefault().BlockResponseDTO.ResponseRemarks != null)
+        {
+            <partial name="_BlockResponsePopUp" model=Model.FirstOrDefault() />
+        }
     </div>
 </form>
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>

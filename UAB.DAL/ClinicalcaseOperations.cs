@@ -419,7 +419,7 @@ namespace UAB.DAL
 
                     BlockResponseDTO brdt = new BlockResponseDTO
                     {
-                        ResponseByUserName = un.FirstName + un.LastName,
+                        ResponseByUserName = un.FirstName+" "+ un.LastName,
                         ResponseRemarks = res.ResponseRemarks,
                         ResponseDate = res.ResponseDate
                     };
