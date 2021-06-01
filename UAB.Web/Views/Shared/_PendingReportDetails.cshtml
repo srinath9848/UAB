@@ -36,17 +36,29 @@
                 <table id="Codes" class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th style="width: 250px; font-weight:900;">Name</th>
+                            <th style="width: 250px; font-weight:900;">Date Of Service</th>
+                            @if (ViewBag.projectType == "IP")
+                            {
+                                <th style="width: 250px; font-weight:900;">List Name</th>
+                            }
                             <th style="width: 250px; font-weight:900;">MRN</th>
+                            <th style="width: 250px; font-weight:900;">Patient Name</th>
+                            <th style="width: 250px; font-weight:900;">Provider</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>@item.CodingDTO.Name</td>
-                                <td>@item.CodingDTO.PatientMRN</td>
-                            </tr>
+                        <tr>
+                            <td>@item.CodingDTO.DateOfService</td>
+                            @if (ViewBag.projectType == "IP")
+                            {
+                                <td>@item.CodingDTO.ListName</td>
+                            }
+                            <td>@item.CodingDTO.PatientMRN</td>
+                            <td>@item.CodingDTO.Name</td>
+                            <td>@item.ProviderName</td>
+                        </tr>
                         }
                     </tbody>
                 </table>
