@@ -10,24 +10,21 @@
     <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
         <div class="modal-dialog">
             <div class="modal-content" style="width: 500px;">
-                <br />
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <div class="col-md-6">
-                            <h5 class="card" style="width:300px">Add EM Code</h5>
-                        </div>
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.EMCode, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter EM Code " })
-                            @Html.ValidationMessageFor(model => model.EMCode, null, new { @class = "text-danger" })
-                        </div>
+                <div class="modal-header" style="background: #27a9e3;color: white;">
+                    <h5 class="modal-title" style="width:300px">Add EM Code</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ModalClose1()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        @Html.TextBoxFor(model => model.EMCode, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter EM Code " })
+                        @Html.ValidationMessageFor(model => model.EMCode, null, new { @class = "text-danger" })
                     </div>
-                    <div class="clearfix"></div>
-                    <div class="col-md-12">
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-sm btn-info btn-fill">Add</button>
-                            <button type="button" class="btn btn-sm btn-danger btn-fill" onclick="ModalClose1()">Close</button>
-                        </div>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success Available">Add</button>
+                    <button type="button" class="btn btn-danger" onclick="ModalClose1()">Close</button>
                 </div>
             </div>
         </div>

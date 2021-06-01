@@ -10,46 +10,43 @@
     <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
         <div class="modal-dialog">
             <div class="modal-content" style="width: 500px;">
-                <br />
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <div class="col-md-6">
-                            @if (Model.BlockCategoryId != 0)
-                            {
-                                <h5 class="card" style="width:300px">Update Block Category</h5>
-                            }
-                            else
-                            {
+                <div class="modal-header" style="background: #27a9e3;color: white;">
+                    @if (Model.BlockCategoryId != 0)
+                    {
+                        <h5 class="modal-title" style="width:300px">Update Block Category</h5>
+                    }
+                    else
+                    {
 
-                                <h5 class="card" style="width:300px">Add New Block Category</h5>
-                            }
-
-                        </div>
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter Block Category Name ",@id="txtBlock" })
-                            @Html.ValidationMessageFor(model => model.Name, null, new { @class = "text-danger" })
-                        </div>
-                        <br />
-                        <div class="col-md-10">
-                            @Html.RadioButtonFor(model => model.BlockType, "Internal")
-                            Internal
-                            @Html.RadioButtonFor(model => model.BlockType, "External")
-                            External
-                        </div>
+                        <h5 class="modal-title" style="width:300px">Add New Block Category</h5>
+                    }
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ModalClose1()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter Block Category Name ", @id = "txtBlock" })
+                        @Html.ValidationMessageFor(model => model.Name, null, new { @class = "text-danger" })
                     </div>
-                    <div class="col-md-12">
-                        <div class="modal-footer">
-                            @if (Model.BlockCategoryId != 0)
-                            {
-                                <button type="submit" class="btn btn-sm btn-info btn-fill">Update</button>
-                            }
-                            else
-                            {
-                                <button type="submit" class="btn btn-sm btn-info btn-fill">Add</button>
-                            }
-                            <button type="button" class="btn btn-sm btn-danger btn-fill" onclick="ModalClose1()">Close</button>
-                        </div>
+                    <br />
+                    <div>
+                        @Html.RadioButtonFor(model => model.BlockType, "Internal")
+                        Internal
+                        @Html.RadioButtonFor(model => model.BlockType, "External")
+                        External
                     </div>
+                </div>
+                <div class="modal-footer">
+                    @if (Model.BlockCategoryId != 0)
+                    {
+                        <button type="submit" class="btn btn-success Available">Update</button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-success Available">Add</button>
+                    }
+                    <button type="button" class="btn btn-danger" onclick="ModalClose1()">Close</button>
                 </div>
             </div>
         </div>
