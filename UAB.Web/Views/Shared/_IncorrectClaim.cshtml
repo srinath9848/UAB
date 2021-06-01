@@ -106,26 +106,16 @@
     Dictionary<int, string> dictQADxCodes = Utility.GetQAOrShadowQADxCodes(Model.QADx);
     Dictionary<int, string> dictQADxRemarks = Utility.GetQAOrShadowQADxRemarks(Model.QADxRemarks);
 
-    Dictionary<int, string> dictShadowQADxCodes = Utility.GetQAOrShadowQADxRemarks(Model.ShadowQADx);
-    Dictionary<int, string> dictShadowQADxRemarks = Utility.GetQAOrShadowQADxRemarks(Model.ShadowQADxRemarks);
-
-
     dictQADxCodes = (dictQADxCodes == null) ? new Dictionary<int, string>() : dictQADxCodes;
     dictQADxRemarks = (dictQADxRemarks == null) ? new Dictionary<int, string>() : dictQADxRemarks;
 
-    dictShadowQADxCodes = (dictShadowQADxCodes == null) ? new Dictionary<int, string>() : dictShadowQADxCodes;
-    dictShadowQADxRemarks = (dictShadowQADxRemarks == null) ? new Dictionary<int, string>() : dictShadowQADxRemarks;
-
-    int count = Math.Max(dictDxCodes.Count(), Math.Max(dictQADxCodes.Count(), dictShadowQADxCodes.Count()));
+    int count = Math.Max(dictDxCodes.Count(), Math.Max(dictQADxCodes.Count(), 0));
 
     int totalDxCount = count + 1;
 
     Utility.AddEmptyRows(dictDxCodes, count, "NA");
     Utility.AddEmptyRows(dictQADxCodes, count, "");
     Utility.AddEmptyRows(dictQADxRemarks, count, "");
-    Utility.AddEmptyRows(dictShadowQADxCodes, count, "");
-    Utility.AddEmptyRows(dictShadowQADxRemarks, count, "");
-
 }
 <div id="DivDx">
     @{
@@ -215,25 +205,16 @@
     Dictionary<int, string> dictQACptCodes = Utility.GetQAOrShadowQACptCodes(Model.QACPTCode);
     Dictionary<int, string> dictQACptRemarks = Utility.GetQAOrShadowQACptRemarks(Model.QACPTCodeRemarks);
 
-    Dictionary<int, string> dictShadowQACptCodes = Utility.GetQAOrShadowQACptCodes(Model.ShadowQACPTCode);
-    Dictionary<int, string> dictShadowQACptRemarks = Utility.GetQAOrShadowQADxRemarks(Model.ShadowQACPTCodeRemarks);
-
-
     dictQACptCodes = (dictQACptCodes == null) ? new Dictionary<int, string>() : dictQACptCodes;
     dictQACptRemarks = (dictQACptRemarks == null) ? new Dictionary<int, string>() : dictQACptRemarks;
-    dictShadowQACptCodes = (dictShadowQACptCodes == null) ? new Dictionary<int, string>() : dictShadowQACptCodes;
-    dictShadowQACptRemarks = (dictShadowQACptRemarks == null) ? new Dictionary<int, string>() : dictShadowQACptRemarks;
 
-    count = Math.Max(dictCptCodes.Count(), Math.Max(dictQACptCodes.Count(), dictShadowQACptCodes.Count()));
+    count = Math.Max(dictCptCodes.Count(), Math.Max(dictQACptCodes.Count(), 0));
 
     int totalCptCount = count + 1;
 
     Utility.AddEmptyRows(dictCptCodes, count, "NA");
     Utility.AddEmptyRows(dictQACptCodes, count, "");
     Utility.AddEmptyRows(dictQACptRemarks, count, "");
-    Utility.AddEmptyRows(dictShadowQACptCodes, count, "");
-    Utility.AddEmptyRows(dictShadowQACptRemarks, count, "");
-
 }
 <div id="DivCpt">
     @{

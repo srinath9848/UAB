@@ -1028,14 +1028,10 @@ namespace UAB.DAL
                             chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
                             chartSummaryDTO.QADx = Convert.ToString(reader["QADx"]);
                             chartSummaryDTO.QADxRemarks = Convert.ToString(reader["QADxRemark"]);
-                            chartSummaryDTO.ShadowQADx = Convert.ToString(reader["ShadowQADx"]);
-                            chartSummaryDTO.ShadowQADxRemarks = Convert.ToString(reader["ShadowQADxRemark"]);
 
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
                             chartSummaryDTO.QACPTCode = Convert.ToString(reader["QACPTCode"]);
                             chartSummaryDTO.QACPTCodeRemarks = Convert.ToString(reader["QACPTCodeRemark"]);
-                            chartSummaryDTO.ShadowQACPTCode = Convert.ToString(reader["ShadowQACPTCode"]);
-                            chartSummaryDTO.ShadowQACPTCodeRemarks = Convert.ToString(reader["ShadowQACPTCodeRemark"]);
 
                             if (reader["ProviderFeedbackID"] != DBNull.Value)
                                 chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackID"]);
@@ -1046,13 +1042,6 @@ namespace UAB.DAL
                                 chartSummaryDTO.QADTO.ErrorType = Convert.ToInt32(reader["QAErrorTypeId"]);
 
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
-                            chartSummaryDTO.RevisedPayorRemarks = Convert.ToString(reader["RebuttedPayorIdRemark"]);
-                            chartSummaryDTO.RevisedProviderRemarks = Convert.ToString(reader["RebuttedProviderIDRemark"]);
-                            chartSummaryDTO.RevisedCPTRemarks = Convert.ToString(reader["RebuttedCPTCodeRemark"]);
-                            chartSummaryDTO.RevisedModRemarks = Convert.ToString(reader["RebuttedModRemark"]);
-                            chartSummaryDTO.RevisedDXRemarks = Convert.ToString(reader["RebuttedDxRemark"]);
-                            chartSummaryDTO.RevisedProviderFeedbackRemarks = Convert.ToString(reader["RebuttedProviderFeedbackIDRemark"]);
-
                         }
                         else if (Role == "ShadowQA" && ChartType == "Available")
                         {
@@ -1665,6 +1654,85 @@ namespace UAB.DAL
             }
             return ds;
         }
+        public List<ChartSummaryDTO> GetReceivedChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range)
+        {
+            List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
+            ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
+            chartSummaryDTO.ProjectID = projectID;
+            if (date == new DateTime())
+                date = DateTime.Now;
+            using (var context = new UABContext())
+            {
+                var param = new SqlParameter[] {
+                     new SqlParameter() {
+                            ParameterName = "@ProjectID",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = projectID
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@RangeType",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = range
+                        }
+                        ,   new SqlParameter() {
+                            ParameterName = "@Date",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = date
+                        }
+                        ,   new SqlParameter() {
+                            ParameterName = "@Week",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = week
+                        }
+                        ,   new SqlParameter() {
+                            ParameterName = "@Month",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = month
+                        }
+                        ,   new SqlParameter() {
+                            ParameterName = "@Year",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = year
+                        }
+                    };
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[UspReceivedChartDetailedReport]";
+                    cmd.Parameters.AddRange(param);
+                    cmd.Connection = con;
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        chartSummaryDTO = new ChartSummaryDTO();
+                        chartSummaryDTO.CodingDTO.ListName = Convert.ToString(reader["ListName"]);
+                        chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
+                        chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
+                        var dos = Convert.ToDateTime(reader["DateOfService"]);
+                        chartSummaryDTO.CodingDTO.DateOfService = dos.ToString("MM/dd/yyyy");
+                        chartSummaryDTO.ProviderName = Convert.ToString(reader["Provider"]);
+                        //chartSummaryDTO.CodingDTO.ListName = Convert.ToString(reader["ListName"]);
+                        //chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
+                        //chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
+                        //var dos = Convert.ToDateTime(reader["DateOfService"]);
+                        //chartSummaryDTO.CodingDTO.DateOfService = dos.ToString("MM/dd/yyyy");
+                        //chartSummaryDTO.ProviderName = Convert.ToString(reader["Provider"]);
+                        lst.Add(chartSummaryDTO);
+                    }
+                }
+            }
+            return lst;
+        }
+
         public List<ChartSummaryDTO> GetChartSummaryReportDetails(int projectID, DateTime CurrentDos, string ColumnName)
         {
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();

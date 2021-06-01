@@ -15,6 +15,7 @@
         @Html.Hidden("hdnShadowQACptRemarks")
         @Html.Hidden("hdnShadowQACptCodes")
 
+        @Html.Hidden("hdnAcceptClaim1")
         @Html.Hidden("hdnShadowQAAcceptDxRemarks")
         @Html.Hidden("hdnShadowQAAcceptDxCodes")
         @Html.Hidden("hdnShadowQAAcceptCptRemarks")
@@ -35,6 +36,7 @@
         @Html.Hidden("hdnShadowQACptRemarks2")
         @Html.Hidden("hdnShadowQACptCodes2")
 
+        @Html.Hidden("hdnAcceptClaim2")
         @Html.Hidden("hdnShadowQAAcceptDxRemarks2")
         @Html.Hidden("hdnShadowQAAcceptDxCodes2")
         @Html.Hidden("hdnShadowQAAcceptCptRemarks2")
@@ -45,6 +47,7 @@
         @Html.Hidden("hdnShadowQACptRemarks3")
         @Html.Hidden("hdnShadowQACptCodes3")
 
+        @Html.Hidden("hdnAcceptClaim3")
         @Html.Hidden("hdnShadowQAAcceptDxRemarks3")
         @Html.Hidden("hdnShadowQAAcceptDxCodes3")
         @Html.Hidden("hdnShadowQAAcceptCptRemarks3")
@@ -55,6 +58,7 @@
         @Html.Hidden("hdnShadowQACptRemarks4")
         @Html.Hidden("hdnShadowQACptCodes4")
 
+        @Html.Hidden("hdnAcceptClaim4")
         @Html.Hidden("hdnShadowQAAcceptDxRemarks4")
         @Html.Hidden("hdnShadowQAAcceptDxCodes4")
         @Html.Hidden("hdnShadowQAAcceptCptRemarks4")
@@ -144,6 +148,7 @@
                                     @{string ProviderText = (Model.FirstOrDefault().ProviderText?.Length > len) ? Model.FirstOrDefault().ProviderText.Substring(0, len) + ".." : Model.FirstOrDefault().ProviderText;}
                                     @{string QAProviderText = (Model.FirstOrDefault().QAProviderText?.Length > len) ? "/" + Model.FirstOrDefault().QAProviderText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAProviderText;}
                                     @{string title = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText) ? Model.FirstOrDefault().ProviderText + "/" + Model.FirstOrDefault().QAProviderText : Model.FirstOrDefault().ProviderText);}
+                                    @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("QAProviderID_{0}", tabIndex) , @style = "display:none;" })
 
                                     <div title="@title" class="col-md-3 input-group">
                                         @{string Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
@@ -175,11 +180,11 @@
                                     </div>
 
                                     <div class="col-md-3 input-group">
-                                        @Html.DropDownListFor(model => model.FirstOrDefault().ShadowQAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = string.Format("ProviderID_{0}1", @tabIndex), @class = "form-control QARevised ControlHeight", @style = "display:none" })
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().ShadowQAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = string.Format("ShadowQAProviderID_{0}", @tabIndex), @class = string.Format("form-control QARevised ControlHeight ProviderID_{0}", @tabIndex), @style = "display:none" })
                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().ShadowQAProviderID, null, new { @class = "text-danger errMsg" })
                                     </div>
                                     <div class="col-md-3 input-group">
-                                        @Html.TextBoxFor(model => model.FirstOrDefault().ShadowQAProviderRemarks, new { @style = "display:none", @class = "form-control QARevised ControlHeight", @id = string.Format("ProviderID_{0}2", @tabIndex) })
+                                        @Html.TextBoxFor(model => model.FirstOrDefault().ShadowQAProviderRemarks, new { @style = "display:none", @class = string.Format("form-control QARevised ControlHeight ProviderID_{0}", @tabIndex), @id = string.Format("ShadowQAProviderIDRemarks_{0}", @tabIndex) })
                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().ShadowQAProviderRemarks, null, new { @class = "text-danger errMsg" })
                                     </div>
                                 </div>
@@ -189,6 +194,7 @@
                                     @{string PayorText = (Model.FirstOrDefault().PayorText?.Length > len) ? Model.FirstOrDefault().PayorText.Substring(0, len) + ".." : Model.FirstOrDefault().PayorText;}
                                     @{string QAPayorText = (Model.FirstOrDefault().QAPayorText?.Length > len) ? "/" + Model.FirstOrDefault().QAPayorText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAPayorText;}
                                     @{title = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) ? Model.FirstOrDefault().PayorText + "/" + Model.FirstOrDefault().QAPayorText : Model.FirstOrDefault().PayorText);}
+                                    @Html.DropDownListFor(model => model.FirstOrDefault().PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("QAPayorID_{0}", tabIndex), @style = "display:none;" })
 
                                     <div title="@title" class="col-md-3 input-group">
                                         <div name="PayorText" class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
@@ -217,11 +223,11 @@
                                         <input type="text" class="form-control QARemarks ControlHeight" value="@Model.FirstOrDefault().QAPayorRemarks" />
                                     </div>
                                     <div class="col-md-3 input-group">
-                                        @Html.DropDownListFor(model => model.FirstOrDefault().ShadowQAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = string.Format("PayorID_{0}1", @tabIndex), @class = "form-control QARevised ControlHeight", @style = "display:none" })
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().ShadowQAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = string.Format("ShadowQAPayorID_{0}", @tabIndex), @class = string.Format("form-control QARevised ControlHeight PayorID_{0}", @tabIndex), @style = "display:none" })
                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().ShadowQAPayorID, null, new { @class = "text-danger errMsg" })
                                     </div>
                                     <div class="col-md-3 input-group">
-                                        @Html.TextBoxFor(model => model.FirstOrDefault().ShadowQAPayorRemarks, new { @style = "display:none", @class = "form-control QARevised ControlHeight", @id = string.Format("PayorID_{0}2", @tabIndex) })
+                                        @Html.TextBoxFor(model => model.FirstOrDefault().ShadowQAPayorRemarks, new { @style = "display:none", @class = string.Format("form-control QARevised ControlHeight PayorID_{0}", @tabIndex), @id = string.Format("ShadowQAPayorIDRemarks_{0}", @tabIndex) })
                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().ShadowQAPayorRemarks, null, new { @class = "text-danger errMsg" })
                                     </div>
                                 </div>
@@ -317,7 +323,7 @@
                                                     <span id="validDx_@j" class="text-danger txtdanger" style="display:none">*</span>
                                                 </div>
                                             </div>
-                                             j = j + 1;
+                                            j = j + 1;
                                         }
                                     }
 
@@ -583,6 +589,7 @@
                                     @{string ProviderFeedbackText = (Model.FirstOrDefault().ProviderFeedbackText?.Length > len) ? Model.FirstOrDefault().ProviderFeedbackText.Substring(0, len) + ".." : Model.FirstOrDefault().ProviderFeedbackText;}
                                     @{string QAProviderFeedbackText = (Model.FirstOrDefault().QAProviderFeedbackText?.Length > len) ? "/" + Model.FirstOrDefault().QAProviderFeedbackText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAProviderFeedbackText;}
                                     @{title = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText) ? Model.FirstOrDefault().ProviderFeedbackText + "/" + Model.FirstOrDefault().QAProviderFeedbackText : Model.FirstOrDefault().ProviderFeedbackText);}
+                                    @Html.DropDownListFor(model => model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("QAFeedback_{0}", tabIndex), @style = "display:none;" })
 
                                     <div title="@title" class="col-md-3 input-group">
                                         <div class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
@@ -611,11 +618,11 @@
                                         <input type="text" class="form-control QARemarks ControlHeight" disabled value="@Model.FirstOrDefault().QAProviderFeedbackRemarks" />
                                     </div>
                                     <div class="col-md-3 input-group">
-                                        @Html.DropDownListFor(model => model.FirstOrDefault().ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = "display:none", @class = "form-control QARevised ControlHeight", @id = string.Format("Feedback_{0}1", @tabIndex) })
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = "display:none", @class = string.Format("form-control QARevised ControlHeight Feedback_{0}", @tabIndex), @id = string.Format("ShadowQAProviderFeedback_{0}", @tabIndex) })
                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().ShadowQAProviderFeedbackID, null, new { @class = "text-danger errMsg" })
                                     </div>
                                     <div class="col-md-3 input-group">
-                                        @Html.TextBoxFor(model => model.FirstOrDefault().ShadowQAProviderFeedbackRemarks, new { @style = "display:none", @class = "form-control QARevised ControlHeight", @id = string.Format("Feedback_{0}2", @tabIndex) })
+                                        @Html.TextBoxFor(model => model.FirstOrDefault().ShadowQAProviderFeedbackRemarks, new { @style = "display:none", @class = string.Format("form-control QARevised ControlHeight Feedback_{0}", @tabIndex), @id = string.Format("ShadowQAProviderFeedbackRemarks_{0}", @tabIndex) })
                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().ShadowQAProviderFeedbackRemarks, null, new { @class = "text-danger errMsg" })
                                     </div>
                                 </div>
