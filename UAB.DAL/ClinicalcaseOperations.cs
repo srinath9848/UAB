@@ -2122,7 +2122,7 @@ namespace UAB.DAL
                         }
                         ,   new SqlParameter() {
                             ParameterName = "@Date",
-                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            SqlDbType =  System.Data.SqlDbType.Date,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = date
                         }
@@ -2158,10 +2158,12 @@ namespace UAB.DAL
                     while (reader.Read())
                     {
                         chartSummaryDTO = new ChartSummaryDTO();
+                        chartSummaryDTO.CodingDTO.ListName = Convert.ToString(reader["ListName"]);
                         chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
                         chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
                         var dos = Convert.ToDateTime(reader["DateOfService"]);
                         chartSummaryDTO.CodingDTO.DateOfService = dos.ToString("MM/dd/yyyy");
+                        chartSummaryDTO.ProviderName = Convert.ToString(reader["Provider"]);
                         lst.Add(chartSummaryDTO);
                     }
                 }

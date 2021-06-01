@@ -25,6 +25,7 @@ namespace UAB.DTO
 
         [Required(ErrorMessage = "*")]
         public int ProviderID { get; set; }
+        public string ProviderName { get; set; }
         public string ProviderText { get; set; }
         [Required(ErrorMessage = "*")]
         public string CPTCode { get; set; }

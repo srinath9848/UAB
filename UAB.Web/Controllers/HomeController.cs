@@ -284,8 +284,10 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var lstPendingReportDetails = clinicalcaseOperations.GetPendingReportDetails(date,week,month,year,ProjectId,range);
             string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.Name).FirstOrDefault();
+            string projectType=clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.ProjectTypeName).FirstOrDefault();
 
             ViewBag.projectname = projectname;
+            ViewBag.projectType = projectType;
             _logger.LogInformation("Loading Ended for GetPendingReportDetails for User: " + mUserId);
             return PartialView("_PendingReportDetails", lstPendingReportDetails);
         }
