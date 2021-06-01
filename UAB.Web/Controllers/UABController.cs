@@ -1763,6 +1763,11 @@ namespace UAB.Controllers
             string hdnShadowQAErrorTypeID3 = Request.Form["hdnShadowQAErrorTypeID3"].ToString();
             string hdnShadowQAErrorTypeID4 = Request.Form["hdnShadowQAErrorTypeID4"].ToString();
 
+            string hdnAcceptClaim1 = Request.Form["hdnAcceptClaim1"].ToString();
+            string hdnAcceptClaim2 = Request.Form["hdnAcceptClaim2"].ToString();
+            string hdnAcceptClaim3 = Request.Form["hdnAcceptClaim3"].ToString();
+            string hdnAcceptClaim4 = Request.Form["hdnAcceptClaim4"].ToString();
+
             var hdnShadowQAAcceptDxCodes = Request.Form["hdnShadowQAAcceptDxCodes"].ToString();
             var hdnShadowQAAcceptDxRemarks = Request.Form["hdnShadowQAAcceptDxRemarks"].ToString();
             var hdnShadowQAAcceptCptCodes = Request.Form["hdnShadowQAAcceptCptCodes"].ToString();
@@ -1783,19 +1788,33 @@ namespace UAB.Controllers
             var hdnShadowQAAcceptCptCodes4 = Request.Form["hdnShadowQAAcceptCptCodes4"].ToString();
             var hdnShadowQAAcceptCptRemarks4 = Request.Form["hdnShadowQAAcceptCptRemarks4"].ToString();
 
-            // basic Params fro Claim 1 - Claim 2
+            // basic Accept Params for Claim 1 - Claim 2
+
+            if (!string.IsNullOrEmpty(hdnAcceptClaim1) && !string.IsNullOrEmpty(hdnShadowQAErrorTypeID1))
+                PrepareAcceptAudit(hdnAcceptClaim1, dtAudit, Convert.ToInt32(hdnShadowQAErrorTypeID1));
+
+            if (!string.IsNullOrEmpty(hdnAcceptClaim2) && !string.IsNullOrEmpty(hdnShadowQAErrorTypeID2))
+                PrepareAcceptAudit(hdnAcceptClaim2, dtAudit, Convert.ToInt32(hdnShadowQAErrorTypeID2));
+
+            if (!string.IsNullOrEmpty(hdnAcceptClaim3) && !string.IsNullOrEmpty(hdnShadowQAErrorTypeID3))
+                PrepareAcceptAudit(hdnAcceptClaim3, dtAudit, Convert.ToInt32(hdnShadowQAErrorTypeID3));
+
+            if (!string.IsNullOrEmpty(hdnAcceptClaim4) && !string.IsNullOrEmpty(hdnShadowQAErrorTypeID4))
+                PrepareAcceptAudit(hdnAcceptClaim4, dtAudit, Convert.ToInt32(hdnShadowQAErrorTypeID4));
+
+            // basic Reject Params for Claim 1 - Claim 2
 
             if (!string.IsNullOrEmpty(hdnClaim1))
-                PrepareAuditForInCorrect(hdnClaim1, dtAudit, Convert.ToInt32(hdnShadowQAErrorTypeID1));
+                PrepareAcceptAudit(hdnClaim1, dtAudit, Convert.ToInt32(hdnShadowQAErrorTypeID1));
 
             if (!string.IsNullOrEmpty(hdnClaim2))
-                PrepareAuditForInCorrect(hdnClaim2, dtAudit, Convert.ToInt32(hdnShadowQAErrorTypeID2));
+                PrepareAcceptAudit(hdnClaim2, dtAudit, Convert.ToInt32(hdnShadowQAErrorTypeID2));
 
             if (!string.IsNullOrEmpty(hdnClaim3))
-                PrepareAuditForInCorrect(hdnClaim3, dtAudit, Convert.ToInt32(hdnShadowQAErrorTypeID3));
+                PrepareAcceptAudit(hdnClaim3, dtAudit, Convert.ToInt32(hdnShadowQAErrorTypeID3));
 
             if (!string.IsNullOrEmpty(hdnClaim4))
-                PrepareAuditForInCorrect(hdnClaim4, dtAudit, Convert.ToInt32(hdnShadowQAErrorTypeID4));
+                PrepareAcceptAudit(hdnClaim4, dtAudit, Convert.ToInt32(hdnShadowQAErrorTypeID4));
 
             // Accept Dx & CPT
 

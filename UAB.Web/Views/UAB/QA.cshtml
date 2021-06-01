@@ -279,16 +279,16 @@
                     $("#hdnClaim" + tabid).val($("#hdnClaim" + tabid).val() + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID + "," + FeedbackRemarks);
                 }
             }
-            else {
-                ProviderFeedbackID = $("#CoderFeedback_" + tabid).val();
-                if (ProviderFeedbackID != "0") {
-                    if ($("#hdnAcceptClaim" + tabid).val() == "") {
-                        $("#hdnAcceptClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID);
-                    } else {
-                        $("#hdnAcceptClaim" + tabid).val($("#hdnAcceptClaim" + tabid).val() + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID);
-                    }
-                }
-            }
+            //else {
+            //    ProviderFeedbackID = $("#CoderFeedback_" + tabid).val();
+            //    if (ProviderFeedbackID != "0") {
+            //        if ($("#hdnAcceptClaim" + tabid).val() == "") {
+            //            $("#hdnAcceptClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID);
+            //        } else {
+            //            $("#hdnAcceptClaim" + tabid).val($("#hdnAcceptClaim" + tabid).val() + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID);
+            //        }
+            //    }
+            //}
 
             if (id != "1") {
                 // Dx & Remarks
