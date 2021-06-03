@@ -129,13 +129,8 @@
     $(document).ready(function () {
 
         ClickOnCell = function (p1, p2, p3, p4) {
-            alert(p1);
-            alert(p2);
-            
             var projectId = $("#projectId").val();
             var range = $("#rangeId").val();
-            alert(projectId);
-            alert(range);
             if (range== 'PerDay') {
                 $.ajax({
                     type: "GET",
