@@ -1959,37 +1959,37 @@ namespace UAB.Controllers
             // Claim 1 Dx & CPT
             if (!string.IsNullOrEmpty(hdnShadowQAErrorTypeID1))
             {
-                if (!string.IsNullOrEmpty(hdnShadowQAAcceptDxCodes) && !string.IsNullOrEmpty(hdnShadowQAAcceptDxRemarks))
+                if (!string.IsNullOrEmpty(hdnShadowQAAcceptDxCodes))
                     dtAudit.Rows.Add("Dx", hdnShadowQAAcceptDxCodes, hdnShadowQAAcceptDxRemarks, Convert.ToInt32(hdnShadowQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), true);
 
-                if (!string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes) && !string.IsNullOrEmpty(hdnShadowQAAcceptCptRemarks))
+                if (!string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes))
                     dtAudit.Rows.Add("CPTCode", hdnShadowQAAcceptCptCodes, hdnShadowQAAcceptCptRemarks, Convert.ToInt32(hdnShadowQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), true);
             }
             // Claim 2 Dx & CPT
             if (!string.IsNullOrEmpty(hdnShadowQAErrorTypeID2))
             {
-                if (!string.IsNullOrEmpty(hdnShadowQAAcceptDxCodes2) && !string.IsNullOrEmpty(hdnShadowQAAcceptDxRemarks2))
+                if (!string.IsNullOrEmpty(hdnShadowQAAcceptDxCodes2))
                     dtAudit.Rows.Add("Dx", hdnShadowQAAcceptDxCodes2, hdnShadowQAAcceptDxRemarks2, Convert.ToInt32(hdnShadowQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
 
-                if (!string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes2) && !string.IsNullOrEmpty(hdnShadowQAAcceptCptRemarks2))
+                if (!string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes2))
                     dtAudit.Rows.Add("CPTCode", hdnShadowQAAcceptCptCodes2, hdnShadowQAAcceptCptRemarks2, Convert.ToInt32(hdnShadowQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
             }
             if (!string.IsNullOrEmpty(hdnShadowQAErrorTypeID3))
             {
                 // Claim 3 Dx & CPT
-                if (!string.IsNullOrEmpty(hdnShadowQAAcceptDxCodes3) && !string.IsNullOrEmpty(hdnShadowQAAcceptDxRemarks3))
+                if (!string.IsNullOrEmpty(hdnShadowQAAcceptDxCodes3))
                     dtAudit.Rows.Add("Dx", hdnShadowQAAcceptDxCodes3, hdnShadowQAAcceptDxRemarks3, Convert.ToInt32(hdnShadowQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
 
-                if (!string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes3) && !string.IsNullOrEmpty(hdnShadowQAAcceptCptRemarks3))
+                if (!string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes3))
                     dtAudit.Rows.Add("CPTCode", hdnShadowQAAcceptCptCodes3, hdnShadowQAAcceptCptRemarks3, Convert.ToInt32(hdnShadowQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
             }
             if (!string.IsNullOrEmpty(hdnShadowQAErrorTypeID4))
             {
                 // Claim 4 Dx & CPT
-                if (!string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes4) && !string.IsNullOrEmpty(hdnShadowQAAcceptDxRemarks4))
+                if (!string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes4))
                     dtAudit.Rows.Add("Dx", hdnShadowQAAcceptCptCodes4, hdnShadowQAAcceptDxRemarks4, Convert.ToInt32(hdnShadowQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
 
-                if (!string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes4) && !string.IsNullOrEmpty(hdnShadowQAAcceptCptRemarks4))
+                if (!string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes4))
                     dtAudit.Rows.Add("CPTCode", hdnShadowQAAcceptCptCodes4, hdnShadowQAAcceptCptRemarks4, Convert.ToInt32(hdnShadowQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
             }
 

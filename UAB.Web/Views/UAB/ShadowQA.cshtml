@@ -812,14 +812,16 @@
            var tabid = id.split("tabIndex_")[1].split("_ClaimId_")[0];
            if (tabid == "1") {
                var chk = $("#chkAll_" + tabid).is(':checked');
-                    if (!chk) {
-                        if ($("#ShadowQAErrorType_" + tabid).val() == "") {
-                            $("#ShadowQAErrorTypeError_" + tabid).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
-                            var txtdanger = $('[class*=txtdanger][style=""]');
-                            if (txtdanger.length > 0)
-                                e.preventDefault();
-                        }
-                    }
+               if (!chk) {
+                   if ($("#ShadowQAErrorType_" + tabid).val() == "") {
+                       $("#ShadowQAErrorTypeError_" + tabid).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
+                       var txtdanger = $('[class*=txtdanger][style=""]');
+                       if (txtdanger.length > 0)
+                           e.preventDefault();
+                   }
+               } else {
+                   $("#hdnShadowQAErrorTypeID" + tabid).val("0");
+               }
                 } else {
                     var chk = $("#chkAll_" + tabid).is(':checked');
                     if (!chk) {
@@ -829,6 +831,9 @@
                             if (txtdanger.length > 0)
                                 e.preventDefault();
                         }
+               }
+                    else {
+                        $("#hdnShadowQAErrorTypeID" + tabid).val("0");
                     }
                 }
        });

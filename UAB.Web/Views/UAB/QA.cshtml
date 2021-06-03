@@ -594,6 +594,10 @@
                         if (txtdanger.length > 0)
                             e.preventDefault();
                     }
+
+                }
+                else {
+                    $("#hdnQAErrorTypeID" + tabid).val("0");
                 }
             } else {
                 var chk = $("#chkAll_" + tabid).is(':checked');
@@ -604,6 +608,9 @@
                         if (txtdanger.length > 0)
                             e.preventDefault();
                     }
+                }
+                else {
+                    $("#hdnQAErrorTypeID" + tabid).val("0");
                 }
             }
         });
