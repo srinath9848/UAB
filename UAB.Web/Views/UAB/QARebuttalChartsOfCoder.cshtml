@@ -92,6 +92,11 @@
 
         $(".tab").each(function () {
             var id = $(this).attr('id');
+            var tabid = id.split("tabIndex_")[1].split("_ClaimId_")[0];
+            var claimId = id.split("tabIndex_")[1].split("_ClaimId_")[1];
+            var ErrorTypeID = $("#ErrorType_" + tabid).val();
+            $("#hdnQAErrorTypeID" + tabid).val(ErrorTypeID);
+            $("#hdnClaimId" + tabid).val(claimId);
             var ProviderID = "";
             var PayorID = "";
             var ProviderFeedbackID = "";
@@ -99,75 +104,75 @@
             var payorRemarks = "";
             var FeedbackRemarks = "";
 
-            if (id == "1") {
-                var claimId = "0";
-                var ErrorTypeID = $("#ErrorType_" + id).val();
-                $("#hdnQAErrorTypeID" + id).val(ErrorTypeID);
-                $("#hdnClaimData" + id).val('');
-                if ($("#ProviderID .reject").length > 0) {
-                    ProviderID = $("#ProviderID1").val();
-                    ProviderRemarks = $("#ProviderID2").val();
-                    if ($("#hdnClaimData" + id).val() == "") {
-                        $("#hdnClaimData" + id).val("ClaimId" + "," + claimId + "^" + "ProviderID" + "," + ProviderID + "," + ProviderRemarks + "^" + "ErrorTypeId" + "," + ErrorTypeID);
+            $("#hdnClaimData" + tabid).val('');
+            var res2 = $("[id=" + "ProviderID_" + tabid + "]:eq(1)").attr('class');
+            if (res2.includes('reject')) {
+                ProviderID = $("#QAProviderID_" + tabid).val();
+                ProviderRemarks = $("#QAProviderIDRemarks_" + tabid).val();
+                if ($("#hdnClaimData" + tabid).val() == "") {
+                    $("#hdnClaimData" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderID" + "," + ProviderID + "," + ProviderRemarks);
+                }
+            }
+            else {
+                ProviderID = $("#CoderProviderID_" + tabid).val();
+                ProviderRemarks = $("#CoderProviderIDRemarks_" + tabid).val();
+                if (ProviderID != "0" && ProviderID != "") {
+                    if ($("#hdnAcceptClaim" + tabid).val() == "") {
+                        $("#hdnAcceptClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderID" + "," + ProviderID + "," + ProviderRemarks);
                     }
                 }
+            }
 
-                if ($("#PayorID .reject").length > 0) {
-                    PayorID = $("#PayorID1").val();
-                    payorRemarks = $('#PayorID2').val();
-                    if ($("#hdnClaimData" + id).val() == "") {
-                        $("#hdnClaimData" + id).val("ClaimId" + "," + claimId + "^" + "PayorID" + "," + PayorID + "," + payorRemarks + "^" + "ErrorTypeId" + "," + ErrorTypeID);
-                    } else {
-                        $("#hdnClaimData" + id).val($("#hdnClaimData" + id).val() + "^" + "PayorID" + "," + PayorID + "," + payorRemarks + "^" + "ErrorTypeId" + "," + ErrorTypeID);
-                    }
+            var res2 = $("[id=" + "PayorID_" + tabid + "]:eq(1)").attr('class');
+            if (res2.includes('reject')) {
+                PayorID = $("#QAPayorID_" + tabid).val();
+                payorRemarks = $('#QAPayorIDRemarks_' + tabid).val();
+                if ($("#hdnClaimData" + tabid).val() == "") {
+                    $("#hdnClaimData" + tabid).val("ClaimId" + "," + claimId + "^" + "PayorID" + "," + PayorID + "," + payorRemarks);
+                } else {
+                    $("#hdnClaimData" + tabid).val($("#hdnClaimData" + tabid).val() + "^" + "PayorID" + "," + PayorID + "," + payorRemarks);
                 }
-
-                if ($("#Feedback .reject").length > 0) {
-                    ProviderFeedbackID = $("#Feedback1").val();
-                    FeedbackRemarks = $('#Feedback2').val();
-                    if ($("#hdnClaimData" + id).val() == "") {
-                        $("#hdnClaimData" + id).val("ClaimId" + "," + claimId + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID + "," + FeedbackRemarks + "^" + "ErrorTypeId" + "," + ErrorTypeID);
-                    } else {
-                        $("#hdnClaimData" + id).val($("#hdnClaimData" + id).val() + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID + "," + FeedbackRemarks + "^" + "ErrorTypeId" + "," + ErrorTypeID);
-                    }
-                }
-
             } else {
-                var tabid = id.split("tabIndex_")[1].split("_ClaimId_")[0];
-                var claimId = id.split("tabIndex_")[1].split("_ClaimId_")[1];
-                var ErrorTypeID = $("#ErrorType_" + tabid).val();
-                $("#hdnQAErrorTypeID" + tabid).val(ErrorTypeID);
-                $("#hdnClaimId" + tabid).val(claimId);
-
-                $("#hdnClaimData" + tabid).val('');
-                if ($("#ProviderID_" + tabid + ".reject").length > 0) {
-                    ProviderID = $("#ProviderID1_" + tabid).val();
-                    ProviderRemarks = $("#ProviderID2_" + tabid).val();
-                    if ($("#hdnClaimData" + tabid).val() == "") {
-                        $("#hdnClaimData" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderID" + "," + ProviderID + "," + ProviderRemarks + "^" + "ErrorTypeId" + "," + ErrorTypeID);
-                    }
-                }
-
-                if ($("#PayorID_" + tabid + ".reject").length > 0) {
-                    PayorID = $("#PayorID1_" + tabid).val();
-                    payorRemarks = $('#PayorID2_' + tabid).val();
-                    if ($("#hdnClaimData" + tabid).val() == "") {
-                        $("#hdnClaimData" + tabid).val("ClaimId" + "," + claimId + "^" + "PayorID" + "," + PayorID + "," + payorRemarks + "^" + "ErrorTypeId" + "," + ErrorTypeID);
+                PayorID = $("#CoderPayorID_" + tabid).val();
+                payorRemarks = $('#CoderPayorIDRemarks_' + tabid).val();
+                if (PayorID != "0" && PayorID != "") {
+                    if ($("#hdnAcceptClaim" + tabid).val() == "") {
+                        $("#hdnAcceptClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "PayorID" + "," + PayorID);
                     } else {
-                        $("#hdnClaimData" + tabid).val($("#hdnClaimData" + tabid).val() + "^" + "PayorID" + "," + PayorID + "," + payorRemarks + "^" + "ErrorTypeId" + "," + ErrorTypeID);
+                        $("#hdnAcceptClaim" + tabid).val($("#hdnAcceptClaim" + tabid).val() + "^" + "PayorID" + "," + PayorID);
                     }
                 }
-
-                if ($("#ProviderFeedback_" + tabid + ".reject").length > 0) {
-                    ProviderFeedbackID = $("#Feedback1_" + tabid).val();
-                    FeedbackRemarks = $('#Feedback2_' + tabid).val();
-                    if ($("#hdnClaimData" + tabid).val() == "") {
-                        $("#hdnClaimData" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID + "," + FeedbackRemarks + "^" + "ErrorTypeId" + "," + ErrorTypeID);
-                    } else {
-                        $("#hdnClaimData" + tabid).val($("#hdnClaimData" + tabid).val() + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID + "," + FeedbackRemarks + "^" + "ErrorTypeId" + "," + ErrorTypeID);
-                    }
+            }
+            var res2 = $("[id=" + "Feedback_" + tabid + "]:eq(1)").attr('class');
+            if (res2.includes('reject')) {
+                if ($("#QAProviderFeedback_" + tabid).val() != "" && $('#QAProviderFeedbackRemarks_' + tabid).val() != "") {
+                    ProviderFeedbackID = $("#QAProviderFeedback_" + tabid).val();
+                    FeedbackRemarks = $('#QAProviderFeedbackRemarks_' + tabid).val();
                 }
+                else
+                    ProviderFeedbackID = 0;
 
+                if ($("#hdnClaimData" + tabid).val() == "") {
+                    $("#hdnClaimData" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID + "," + FeedbackRemarks);
+                } else {
+                    $("#hdnClaimData" + tabid).val($("#hdnClaimData" + tabid).val() + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID + "," + FeedbackRemarks);
+                }
+            }
+            else {
+                if ($("#CoderFeedback_" + tabid).val() != "" && $('#CoderProviderFeedbackRemarks_' + tabid).val() != "") {
+                    ProviderFeedbackID = $("#CoderFeedback_" + tabid).val();
+                    FeedbackRemarks = $('#CoderProviderFeedbackRemarks_' + tabid).val();
+                }
+                else
+                    ProviderFeedbackID = 0;
+
+                if ($("#hdnAcceptClaim" + tabid).val() == "") {
+                    $("#hdnAcceptClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID + "," + FeedbackRemarks);
+                } else {
+                    $("#hdnAcceptClaim" + tabid).val($("#hdnAcceptClaim" + tabid).val() + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID + "," + FeedbackRemarks);
+                }
+            }
+            if (id != "1") {
                 $("#hdnDx" + tabid).val("");
                 $("#hdnDxRemarks" + tabid).val("");
 
@@ -204,6 +209,25 @@
                             }
                         }
                     }
+                    else {
+                        if ($("#hdnQAAcceptDxCodes" + tabid).val() == "") {
+                            if ($("#CoderDxCodes_" + tabid + "_" + id).val() != undefined) {
+                                $("#hdnQAAcceptDxCodes" + tabid).val(id + "^" + $("#CoderDxCodes_" + tabid + "_" + id).val());
+                            }
+                            else {
+                                if ($("#CoderDxCodes_" + tabid + "_" + id).val() != undefined) {
+                                    $("#hdnQAAcceptDxCodes" + tabid).val($("#hdnQAAcceptDxCodes" + tabid).val() + "|" + id + "^" + $("#CoderDxCodes_" + tabid + "_" + id).val());
+                                }
+                            }
+                        }
+
+                        if ($("#hdnQAAcceptDxRemarks" + tabid).val() == "")
+                            $("#hdnQAAcceptDxRemarks" + tabid).val(id + "^" + $(".CoderDXRemarks_" + tabid + "_" + id).val());
+                        else
+                            $("#hdnQAAcceptDxRemarks" + tabid).val($("#hdnQAAcceptDxRemarks" + tabid).val() + "|" + id + "^" + $(".CoderDXRemarks_" + tabid + "_" + id).val());
+
+                    }
+
                 }
 
                 $("#hdnCpt" + tabid).val("");
@@ -240,8 +264,28 @@
                             }
                         }
                     }
+                    else {
+                        if ($("#hdnQAAcceptCptCodes" + tabid).val() == "") {
+                            if ($("#CoderCptCodes_" + tabid + "_" + id).val() != undefined) {
+                                $("#hdnQAAcceptCptCodes" + tabid).val(id + "^" + $("#CoderCptCodes_" + tabid + "_" + id).val());
+                            }
+                        }
+                        else {
+                            if ($("#CoderCptCodes_" + tabid + "_" + id).val() != undefined) {
+                                $("#hdnQAAcceptCptCodes" + tabid).val($("#hdnQAAcceptCptCodes" + tabid).val() + "|" + id + "^" + $("#CoderCptCodes_" + tabid + "_" + id).val());
+                            }
+                        }
+
+                        if ($("#hdnQAAcceptCptRemarks" + tabid).val() == "")
+                            $("#hdnQAAcceptCptRemarks" + tabid).val(id + "^" + $(".CoderCptRemarks_" + tabid + "_" + id).val());
+                        else
+                            $("#hdnQAAcceptCptRemarks" + tabid).val($("#hdnQAAcceptCptRemarks" + tabid).val() + "|" + id + "^" + $(".CoderCptRemarks_" + tabid + "_" + id).val());
+
+
+                    }
                 }
             }
+
         });
         //Ending of Reading Dx,CPT in Claim2 to Claim4
 
@@ -280,6 +324,22 @@
                     }
                 }
             }
+            else {
+                if ($("#hdnQAAcceptDxCodes").val() == "")
+                    if ($("#CoderDxCodes_" + id).val() != undefined) {
+                        $("#hdnQAAcceptDxCodes").val(id + "^" + $("#CoderDxCodes_" + id).val());
+                    }
+                    else {
+                        if ($("#CoderDxCodes_" + id).val() != undefined) {
+                            $("#hdnQAAcceptDxCodes").val($("#hdnQAAcceptDxCodes").val() + "|" + id + "^" + $("#CoderDxCodes_" + id).val());
+                        }
+                    }
+
+                if ($("#hdnQAAcceptDxRemarks").val() == "")
+                    $("#hdnQAAcceptDxRemarks").val(id + "^" + $(".CoderDXRemarks_" + id).val());
+                else
+                    $("#hdnQAAcceptDxRemarks").val($("#hdnQAAcceptDxRemarks").val() + "|" + id + "^" + $(".CoderDXRemarks_" + id).val());
+            }
         }
 
         var CPTcodes = $("#claim1 [id*=CptRemarks_]");
@@ -316,6 +376,25 @@
                     }
                 }
             }
+            else {
+                if ($("#hdnQAAcceptCptCodes").val() == "") {
+                    if ($("#CoderCptCodes_" + id).val() != undefined) {
+                        $("#hdnQAAcceptCptCodes").val(id + "^" + $("#CoderCptCodes_" + id).val());
+                    }
+                }
+                else {
+                    if ($("#CoderCptCodes_" + id).val() != undefined) {
+                        $("#hdnQAAcceptCptCodes").val($("#hdnQAAcceptCptCodes").val() + "|" + id + "^" + $("#CoderCptCodes_" + id).val());
+                    }
+                }
+
+                if ($("#hdnQAAcceptCptRemarks").val() == "")
+                    $("#hdnQAAcceptCptRemarks").val(id + "^" + $(".CoderCptRemarks_" + id).val());
+                else
+                    $("#hdnQAAcceptCptRemarks").val($("#hdnQAAcceptCptRemarks").val() + "|" + id + "^" + $(".CoderCptRemarks_" + id).val());
+
+            }
+
         }
         //Reading Dx,CPT in Default Claim is Ended
 
