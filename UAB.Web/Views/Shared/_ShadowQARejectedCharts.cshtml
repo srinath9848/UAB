@@ -300,7 +300,7 @@
                                                     </div>
                                                 </div>
                                                 <div title="" class="col-md-3 input-group" style="@Show">
-                                                    <input type="text" id="SQADxRemarks_@j" class="form-control QARemarks ControlHeight" value="@dictShadowQADxRemarks?.ElementAt(i).Value" />
+                                                    <input type="text" class="form-control QARemarks ControlHeight SQADxRemarks_@j" value="@dictShadowQADxRemarks?.ElementAt(i).Value" />
                                                 </div>
 
                                             </div>
@@ -549,7 +549,7 @@
                                                 </div>
 
                                                 <div title="" class="col-md-3 input-group" style="@Show">
-                                                    <input type="text" id="SQACptRemarks_@j" class="form-control QARemarks ControlHeight" value="@dictShadowQACptRemarks?.ElementAt(i).Value" />
+                                                    <input type="text" class="form-control QARemarks ControlHeight SQACptRemarks_@j" value="@dictShadowQACptRemarks?.ElementAt(i).Value" />
                                                 </div>
                                             </div>
                                             j = j + 1;
@@ -563,7 +563,7 @@
                                     @{string ProviderFeedbackText = (Model.FirstOrDefault().ProviderFeedbackText?.Length > len) ? Model.FirstOrDefault().ProviderFeedbackText.Substring(0, len) + ".." : Model.FirstOrDefault().ProviderFeedbackText;}
                                     @{string QAProviderFeedbackText = (Model.FirstOrDefault().QAProviderFeedbackText?.Length > len) ? "/" + Model.FirstOrDefault().QAProviderFeedbackText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAProviderFeedbackText;}
                                     @{title = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText) ? Model.FirstOrDefault().ProviderFeedbackText + "/" + Model.FirstOrDefault().QAProviderFeedbackText : Model.FirstOrDefault().ProviderFeedbackText);}
-                                    @Html.DropDownListFor(model => Model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @class = "form-control CoderDetails", @id = string.Format("QAFeedback_{0}", tabIndex), @style = "display:none;" })
+                                    @Html.DropDownListFor(model => Model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails", @id = string.Format("QAFeedback_{0}", tabIndex), @style = "display:none;" })
 
                                     <div title="@title" class="col-md-3 input-group">
                                         <div class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
