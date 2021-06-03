@@ -399,8 +399,28 @@ namespace UAB.Controllers
             _logger.LogInformation("Loading Started for GetProvidedpostedchartsChartsReport for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var lstChartReport = clinicalcaseOperations.GetProvidedpostedchartsChartsReport(ProjectId, range, StartDate, EndDate);
+
+            ViewBag.ProjectId = ProjectId;
+            ViewBag.range = range;
             _logger.LogInformation("Loading Ended for GetProvidedpostedchartsChartsReport for User: " + mUserId);
             return PartialView("_ProvidedpostedchartsChartReport", lstChartReport);
+        }
+
+        [HttpGet]
+        public IActionResult GetProviderPostedReportDetails(DateTime date, int week, string month, string year, int ProjectId, string range)
+        {
+            _logger.LogInformation("Loading Started for GetProviderPostedReportDetails for User: " + mUserId);
+            string createdDate = date.ToString();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var lstPendingReportDetails = clinicalcaseOperations.GetProviderPostedChartReportDetails(date, week, month, year, ProjectId, range);
+            string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.Name).FirstOrDefault();
+            string projectType = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.ProjectTypeName).FirstOrDefault();
+
+            ViewBag.projectname = projectname;
+            ViewBag.projectType = projectType;
+            ViewBag.ChartName = "Provider Posted Chart Details";
+            _logger.LogInformation("Loading Ended for GetProviderPostedReportDetails for User: " + mUserId);
+            return PartialView("_DetailedReport", lstPendingReportDetails);
         }
 
         public IActionResult Privacy()
