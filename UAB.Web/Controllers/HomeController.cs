@@ -264,9 +264,29 @@ namespace UAB.Controllers
             _logger.LogInformation("Loading Started for GetPostedChartsReport for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var lstReceivedChartReport = clinicalcaseOperations.GetPostedChartsReport(ProjectId, range, StartDate, EndDate);
+
+            ViewBag.ProjectId = ProjectId;
+            ViewBag.range = range;
             _logger.LogInformation("Loading Ended for GetPostedChartsReport for User: " + mUserId);
             return PartialView("_PostedChartReport", lstReceivedChartReport);
         }
+        [HttpGet]
+        public IActionResult GetPostedReportDetails(DateTime date, int week, string month, string year, int ProjectId, string range)
+        {
+            _logger.LogInformation("Loading Started for GetPostedReportDetails for User: " + mUserId);
+            string createdDate = date.ToString();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var lstPendingReportDetails = clinicalcaseOperations.GetPostedChartReportDetails(date, week, month, year, ProjectId, range);
+            string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.Name).FirstOrDefault();
+            string projectType = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.ProjectTypeName).FirstOrDefault();
+
+            ViewBag.projectname = projectname;
+            ViewBag.projectType = projectType;
+            ViewBag.ChartName = "Posted Chart Details";
+            _logger.LogInformation("Loading Ended for GetPostedReportDetails for User: " + mUserId);
+            return PartialView("_DetailedReport", lstPendingReportDetails);
+        }
+
         public IActionResult GetBackLogChartsReport(int ProjectId, string range, DateTime StartDate, DateTime EndDate)
         {
             _logger.LogInformation("Loading Started for GetBackLogChartsReport for User: " + mUserId);
@@ -295,18 +315,58 @@ namespace UAB.Controllers
         {
             _logger.LogInformation("Loading Started for GetCodedChartsReport for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstReceivedChartReport = clinicalcaseOperations.GetCodedChartsReport(ProjectId, range, StartDate, EndDate);
+            var lstCodedChartReport = clinicalcaseOperations.GetCodedChartsReport(ProjectId, range, StartDate, EndDate);
+
+            ViewBag.ProjectId = ProjectId;
+            ViewBag.range = range;
             _logger.LogInformation("Loading Ended for GetCodedChartsReport for User: " + mUserId);
-            return PartialView("_CodedChartReport", lstReceivedChartReport);
+            return PartialView("_CodedChartReport", lstCodedChartReport);
         }
+        [HttpGet]
+        public IActionResult GetCodedReportDetails(DateTime date, int week, string month, string year, int ProjectId, string range)
+        {
+            _logger.LogInformation("Loading Started for GetCodedReportDetails for User: " + mUserId);
+            string createdDate = date.ToString();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var lstPendingReportDetails = clinicalcaseOperations.GetCodedChartReportDetails(date, week, month, year, ProjectId, range);
+            string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.Name).FirstOrDefault();
+            string projectType = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.ProjectTypeName).FirstOrDefault();
+
+            ViewBag.projectname = projectname;
+            ViewBag.projectType = projectType;
+            ViewBag.ChartName = "Coded Chart Details";
+            _logger.LogInformation("Loading Ended for GetCodedReportDetails for User: " + mUserId);
+            return PartialView("_DetailedReport", lstPendingReportDetails);
+        }
+
         public IActionResult GetQAChartsReport(int ProjectId, string range, DateTime StartDate, DateTime EndDate)
         {
             _logger.LogInformation("Loading Started for GetQAChartsReport for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var lstqaChartReport = clinicalcaseOperations.GetQAChartsReport(ProjectId, range, StartDate, EndDate);
+
+            ViewBag.ProjectId = ProjectId;
+            ViewBag.range = range;
             _logger.LogInformation("Loading Ended for GetQAChartsReport for User: " + mUserId);
             return PartialView("_QAChartReport", lstqaChartReport);
         }
+        [HttpGet]
+        public IActionResult GetQAReportDetails(DateTime date, int week, string month, string year, int ProjectId, string range)
+        {
+            _logger.LogInformation("Loading Started for GetQAReportDetails for User: " + mUserId);
+            string createdDate = date.ToString();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var lstQAReportDetails = clinicalcaseOperations.GetQAChartReportDetails(date, week, month, year, ProjectId, range);
+            string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.Name).FirstOrDefault();
+            string projectType = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.ProjectTypeName).FirstOrDefault();
+
+            ViewBag.projectname = projectname;
+            ViewBag.projectType = projectType;
+            ViewBag.ChartName = "QA Chart Details";
+            _logger.LogInformation("Loading Ended for GetQAReportDetails for User: " + mUserId);
+            return PartialView("_DetailedReport", lstQAReportDetails);
+        }
+
         public IActionResult GetPendingChartsReport(int ProjectId, string range, DateTime StartDate, DateTime EndDate)
         {
             _logger.LogInformation("Loading Started for GetPendingChartsReport for User: " + mUserId);
