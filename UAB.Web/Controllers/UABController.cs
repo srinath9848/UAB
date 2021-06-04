@@ -19,6 +19,7 @@ using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Diagnostics;
+using Newtonsoft.Json;
 
 namespace UAB.Controllers
 {
@@ -68,9 +69,18 @@ namespace UAB.Controllers
             chartSummary.ProjectName = ProjectName;
 
             #region binding data
-            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
-            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
-            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            if (_httpContextAccessor.HttpContext.Session.GetString("PayorsList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("PayorsList", JsonConvert.SerializeObject(clinicalcaseOperations.GetPayorsList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ProvidersList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ProvidersList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProvidersList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+            ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
+            ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
+            ViewBag.ProviderFeedbacks = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
             #endregion
 
             _logger.LogInformation("Loading Ended for GetCodingAvailableChart for User: " + mUserId);
@@ -274,9 +284,18 @@ namespace UAB.Controllers
             List<ChartSummaryDTO> lstChartSummaryDTO = new List<ChartSummaryDTO>();
 
             #region binding data
-            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
-            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
-            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            if (_httpContextAccessor.HttpContext.Session.GetString("PayorsList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("PayorsList", JsonConvert.SerializeObject(clinicalcaseOperations.GetPayorsList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ProvidersList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ProvidersList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProvidersList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+            ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
+            ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
+            ViewBag.ProviderFeedbacks = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
             ViewBag.ErrorTypes = BindErrorType();
             ViewBag.IsBlocked = "1";
 
@@ -410,7 +429,11 @@ namespace UAB.Controllers
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ViewBag.ccid = Convert.ToInt32(ccid);
-            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ProvidersList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ProvidersList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProvidersList()));
+
+            ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
 
             _logger.LogInformation("Loading Ended for ProviderPostedClinicalcase for User: " + mUserId);
 
@@ -456,9 +479,19 @@ namespace UAB.Controllers
             lstchartSummary.FirstOrDefault().ProjectName = ProjectName;
 
             #region binding data
-            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
-            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
-            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            if (_httpContextAccessor.HttpContext.Session.GetString("PayorsList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("PayorsList", JsonConvert.SerializeObject(clinicalcaseOperations.GetPayorsList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ProvidersList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ProvidersList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProvidersList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+            ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
+            ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
+            ViewBag.ProviderFeedbacks = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
+
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
 
@@ -482,9 +515,18 @@ namespace UAB.Controllers
             }
             chartSummaryDTO.FirstOrDefault().ProjectName = ProjectName;
             #region binding data
-            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
-            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
-            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            if (_httpContextAccessor.HttpContext.Session.GetString("PayorsList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("PayorsList", JsonConvert.SerializeObject(clinicalcaseOperations.GetPayorsList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ProvidersList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ProvidersList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProvidersList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+            ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
+            ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
+            ViewBag.ProviderFeedbacks = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
             _logger.LogInformation("Loading Ended for GetCodingReadyForPostingChart for User: " + mUserId);
@@ -1067,12 +1109,22 @@ namespace UAB.Controllers
             _logger.LogInformation("Loading Started for AddNewClaim for User: " + mUserId);
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var prlst = clinicalcaseOperations.GetProvidersList();
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("PayorsList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("PayorsList", JsonConvert.SerializeObject(clinicalcaseOperations.GetPayorsList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ProvidersList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ProvidersList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProvidersList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+            var prlst = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
             prlst.RemoveAll(x => x.ID == pid1 || x.ID == pid2 || x.ID == pid3 || x.ID == pid4);
             ViewBag.Providers = prlst;
             //ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
-            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
-            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
+            ViewBag.ProviderFeedbacks = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
             ViewBag.ClaimId = claimID;
 
             _logger.LogInformation("Loading Ended for AddNewClaim for User: " + mUserId);
@@ -1105,9 +1157,19 @@ namespace UAB.Controllers
                 lstchartSummary.FirstOrDefault().ProjectName = ProjectName;
 
             #region binding data
-            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
-            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
-            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            if (_httpContextAccessor.HttpContext.Session.GetString("PayorsList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("PayorsList", JsonConvert.SerializeObject(clinicalcaseOperations.GetPayorsList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ProvidersList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ProvidersList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProvidersList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+            ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
+            ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
+            ViewBag.ProviderFeedbacks = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
+
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
             if (lstchartSummary.Count == 0)
@@ -1136,9 +1198,19 @@ namespace UAB.Controllers
                 lstchartSummary.FirstOrDefault().ProjectName = ProjectName;
 
             #region binding data
-            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
-            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
-            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            if (_httpContextAccessor.HttpContext.Session.GetString("PayorsList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("PayorsList", JsonConvert.SerializeObject(clinicalcaseOperations.GetPayorsList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ProvidersList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ProvidersList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProvidersList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+            ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
+            ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
+            ViewBag.ProviderFeedbacks = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
+
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
             if (lstchartSummary.Count == 0)
@@ -1162,9 +1234,19 @@ namespace UAB.Controllers
             lstChartSummaryDTO.FirstOrDefault().ProjectName = ProjectName;
 
             #region binding data
-            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
-            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
-            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            if (_httpContextAccessor.HttpContext.Session.GetString("PayorsList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("PayorsList", JsonConvert.SerializeObject(clinicalcaseOperations.GetPayorsList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ProvidersList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ProvidersList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProvidersList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+            ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
+            ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
+            ViewBag.ProviderFeedbacks = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
+
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
             _logger.LogInformation("Loading Ended for GetQARejectedChartsOfShadowQA for User: " + mUserId);
@@ -1811,9 +1893,19 @@ namespace UAB.Controllers
                 lstchartSummary.FirstOrDefault().ProjectName = ProjectName;
 
             #region binding data
-            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
-            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
-            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            if (_httpContextAccessor.HttpContext.Session.GetString("PayorsList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("PayorsList", JsonConvert.SerializeObject(clinicalcaseOperations.GetPayorsList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ProvidersList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ProvidersList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProvidersList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+            ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
+            ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
+            ViewBag.ProviderFeedbacks = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
+
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
 
@@ -1842,9 +1934,19 @@ namespace UAB.Controllers
             lstChartSummaryDTO.FirstOrDefault().ProjectName = ProjectName;
 
             #region binding data
-            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
-            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
-            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            if (_httpContextAccessor.HttpContext.Session.GetString("PayorsList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("PayorsList", JsonConvert.SerializeObject(clinicalcaseOperations.GetPayorsList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ProvidersList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ProvidersList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProvidersList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+            ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
+            ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
+            ViewBag.ProviderFeedbacks = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
+
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
             _logger.LogInformation("Loading Ended for GetShadowQARebuttalChartsOfQA for User: " + mUserId);
@@ -2250,7 +2352,11 @@ namespace UAB.Controllers
         public List<BindDTO> BindErrorType()
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            List<ErrorType> lstErrorType = clinicalcaseOperations.GetErrorTypes();
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ErrorType") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ErrorType", JsonConvert.SerializeObject(clinicalcaseOperations.GetErrorTypes()));
+
+            List<ErrorType> lstErrorType = JsonConvert.DeserializeObject<List<ErrorType>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
 
             List<BindDTO> lstDto = new List<BindDTO>();
 
@@ -2305,9 +2411,13 @@ namespace UAB.Controllers
             _logger.LogInformation("Loading Started for Fetching SettingsSearch for User: " + mUserId);
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ProvidersList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ProvidersList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProvidersList()));
+
             ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
             ViewBag.Status = clinicalcaseOperations.GetStatusList();
-            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
+            ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
             _logger.LogInformation("Loading Ended for Fetching SettingsSearch for User: " + mUserId);
             return View();
         }
@@ -2903,10 +3013,11 @@ namespace UAB.Controllers
         public IActionResult SettingsProviderFeedback()
         {
             _logger.LogInformation("Loading Started for SettingsProviderFeedback for User: " + mUserId);
-            List<BindDTO> lstProviderFeedback = new List<BindDTO>();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            lstProviderFeedback = clinicalcaseOperations.GetProviderFeedbacksList();
-            ViewBag.lstProviderFeedback = lstProviderFeedback;
+            if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+            ViewBag.lstProviderFeedback = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList")); ;
             _logger.LogInformation("Loading Ended for SettingsProviderFeedback for User: " + mUserId);
             return View();
         }
@@ -2920,7 +3031,10 @@ namespace UAB.Controllers
             {
                 List<BindDTO> lstproviderFeedback = new List<BindDTO>();
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-                lstproviderFeedback = clinicalcaseOperations.GetProviderFeedbacksList();
+                if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                    _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+                lstproviderFeedback = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
                 var res = lstproviderFeedback.Where(a => a.ID == id).FirstOrDefault();
                 obj = res;
             }
@@ -2937,7 +3051,11 @@ namespace UAB.Controllers
             {
                 List<BindDTO> lstproviderFeedback = new List<BindDTO>();
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-                lstproviderFeedback = clinicalcaseOperations.GetProviderFeedbacksList();
+
+                if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                    _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+                lstproviderFeedback = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList")); ;
                 var res = lstproviderFeedback.Where(a => a.ID == id).FirstOrDefault();
                 obj = res;
             }
