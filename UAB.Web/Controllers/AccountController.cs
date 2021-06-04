@@ -10,6 +10,7 @@ using UAB.DAL.Models;
 using Microsoft.AspNetCore.Authentication;
 using System.Linq;
 using System.Security.Principal;
+using Microsoft.AspNetCore.Http;
 
 namespace UAB.Controllers
 {
@@ -17,10 +18,12 @@ namespace UAB.Controllers
     {
         int mUserId;
         private readonly IAuthenticationService1 _mAuthenticationService;
-        public AccountController(IAuthenticationService1 mAuthenticationService)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public AccountController(IAuthenticationService1 mAuthenticationService, IHttpContextAccessor httpContextAccessor)
         {
             _mAuthenticationService = mAuthenticationService;
-
+            _httpContextAccessor = httpContextAccessor;
         }
         public IActionResult Index()
         {
@@ -47,6 +50,8 @@ namespace UAB.Controllers
                 var userInfo = _mAuthenticationService.GetUserInfoByEmail(Email);
                 if (userInfo.Email != null)
                 {
+                    string offSet = Request.Form["hdnOffset"].ToString();
+                    CreateCookie(offSet);
                     mUserId = userInfo.UserId;
                     var claims = new List<Claim>
                         {
@@ -88,6 +93,17 @@ namespace UAB.Controllers
                 }
             }
         }
+        void CreateCookie(string offSet)
+        {
+            string timeZoneCookie = _httpContextAccessor.HttpContext.Request.Cookies["UAB_TimeZoneOffset"];
+
+            if (timeZoneCookie == null)
+            {
+                CookieOptions option = new CookieOptions();
+                option.Expires = new DateTimeOffset(DateTime.Now.AddDays(1));
+                Response.Cookies.Append("UAB_TimeZoneOffset", offSet, option);
+            }
+        }
 
         [HttpGet]
         public IActionResult ManageUsers()
@@ -107,7 +123,7 @@ namespace UAB.Controllers
             ViewBag.Identityusers = clinicalcaseOperations.GetIdentityUsersList();
             ViewBag.Roles = clinicalcaseOperations.GetRolesList();
             ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
-            
+
             return PartialView("_AddUser");
         }
         [HttpPost]
@@ -220,8 +236,11 @@ namespace UAB.Controllers
             ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
 
             var UserProjects = clinicalcaseOperations.GetUserProjects(userId);
-
-            string hdnroleproject = UserProjects.FirstOrDefault().hdnProjectAndRole.ToString();
+            string hdnroleproject = null;
+            if (UserProjects.Count >1)
+            {
+                 hdnroleproject = UserProjects.FirstOrDefault().hdnProjectAndRole.ToString();
+            }
             ApplicationUser appuser = new ApplicationUser();
             var user = clinicalcaseOperations.Getuser(userId);
             appuser.Email = user.Email;
@@ -271,8 +290,8 @@ namespace UAB.Controllers
         [HttpPost]
         public IActionResult UpdateProjectUser(ApplicationUser model, string user = null)
         {
-            if (model.RoleId !=0 &&!string.IsNullOrWhiteSpace(model.SamplePercentage)
-                && model.ProjectUserId!=0 && model.UserId!=0)
+            if (model.RoleId != 0 && !string.IsNullOrWhiteSpace(model.SamplePercentage)
+                && model.ProjectUserId != 0 && model.UserId != 0)
             {
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 int i = clinicalcaseOperations.UpdateProjectUser(model);
