@@ -24,6 +24,7 @@ namespace UAB.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private int mUserId;
+        private string timeZoneCookie;
         private string mUserRole;
         private readonly IHttpContextAccessor _httpContextAccessor;
         public HomeController(IHttpContextAccessor httpContextAccessor, ILogger<HomeController> logger)
@@ -32,6 +33,7 @@ namespace UAB.Controllers
             mUserRole = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Role)?.Value;
             _httpContextAccessor = httpContextAccessor;
             _logger = logger;
+            timeZoneCookie = _httpContextAccessor.HttpContext.Request.Cookies["UAB_TimeZoneOffset"];
         }
 
         public IActionResult Index()
@@ -192,7 +194,7 @@ namespace UAB.Controllers
             _logger.LogInformation("Loading Started for GetAgingReportDetailsForBlockedCharts for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             int ProjectId = clinicalcaseOperations.GetProjects().Where(x => x.Name == ProjectName).Select(x => x.ProjectId).FirstOrDefault();
-            var lstAgingReportDetails = clinicalcaseOperations.GetAgingReportDetailsForBlockedCharts(ColumnName, ProjectId);
+            var lstAgingReportDetails = clinicalcaseOperations.GetAgingReportDetailsForBlockedCharts(ColumnName, ProjectId, timeZoneCookie);
 
             ViewBag.ColumnName = ColumnName;
             ViewBag.projectname = ProjectName;
@@ -323,7 +325,7 @@ namespace UAB.Controllers
         {
             _logger.LogInformation("Loading Started for GetCodedChartsReport for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstCodedChartReport = clinicalcaseOperations.GetCodedChartsReport(ProjectId, range, StartDate, EndDate);
+            var lstCodedChartReport = clinicalcaseOperations.GetCodedChartsReport(ProjectId, range, StartDate.ToUtcDate(timeZoneCookie), EndDate.AddHours(23).AddMinutes(59).AddSeconds(59).ToUtcDate(timeZoneCookie));
 
             ViewBag.ProjectId = ProjectId;
             ViewBag.range = range;
@@ -334,9 +336,8 @@ namespace UAB.Controllers
         public IActionResult GetCodedReportDetails(DateTime date, int week, string month, string year, int ProjectId, string range)
         {
             _logger.LogInformation("Loading Started for GetCodedReportDetails for User: " + mUserId);
-            string createdDate = date.ToString();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstPendingReportDetails = clinicalcaseOperations.GetCodedChartReportDetails(date, week, month, year, ProjectId, range);
+            var lstPendingReportDetails = clinicalcaseOperations.GetCodedChartReportDetails(date.ToUtcDate(timeZoneCookie), week, month, year, ProjectId, range);
             string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.Name).FirstOrDefault();
             string projectType = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.ProjectTypeName).FirstOrDefault();
 

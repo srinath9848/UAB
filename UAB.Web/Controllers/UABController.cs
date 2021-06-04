@@ -26,6 +26,7 @@ namespace UAB.Controllers
     public class UABController : Controller
     {
         private int mUserId;
+        private string timeZoneCookie;
         private string mUserRole;
         private ILogger _logger;
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -35,6 +36,7 @@ namespace UAB.Controllers
             mUserRole = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Role)?.Value;
             _httpContextAccessor = httpContextAccessor;
             _logger = logger;
+            timeZoneCookie = _httpContextAccessor.HttpContext.Request.Cookies["UAB_TimeZoneOffset"];
         }
 
         #region Coding
@@ -60,7 +62,9 @@ namespace UAB.Controllers
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ChartSummaryDTO chartSummary = new ChartSummaryDTO();
-            chartSummary = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID);
+
+
+            chartSummary = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID, timeZoneCookie);
             chartSummary.ProjectName = ProjectName;
 
             #region binding data
@@ -91,7 +95,7 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
 
-            lst = clinicalcaseOperations.GetBlockedChartsList(Role, ProjectID);
+            lst = clinicalcaseOperations.GetBlockedChartsList(Role, ProjectID, timeZoneCookie);
 
             ViewBag.Role = Role;
             ViewBag.CCIDs = lst.Count > 0 ? lst.FirstOrDefault().CCIDs : null;
@@ -107,7 +111,7 @@ namespace UAB.Controllers
             _logger.LogInformation("Loading Started for ViewHistory for User: " + mUserId);
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var reslut = clinicalcaseOperations.GetWorkflowHistories(ccid);
+            var reslut = clinicalcaseOperations.GetWorkflowHistories(ccid, timeZoneCookie);
 
             _logger.LogInformation("Loading Ended for ViewHistory for User: " + mUserId);
 
@@ -341,7 +345,8 @@ namespace UAB.Controllers
             switch (Role)
             {
                 case "Coder":
-                    chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID, PrevOrNextCCId);
+
+                    chartSummaryDTO = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID, timeZoneCookie, PrevOrNextCCId);
 
                     if (chartSummaryDTO == null)
                     {
@@ -365,7 +370,7 @@ namespace UAB.Controllers
                 case "QA":
                 case "ShadowQA":
 
-                    lstChartSummaryDTO = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID, PrevOrNextCCId);
+                    lstChartSummaryDTO = clinicalcaseOperations.GetNext1(Role, ChartType, ProjectID, timeZoneCookie, PrevOrNextCCId);
 
                     if (lstChartSummaryDTO.Count > 0)
                     {
