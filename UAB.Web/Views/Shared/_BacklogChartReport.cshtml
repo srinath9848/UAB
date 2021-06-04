@@ -50,7 +50,7 @@
                                         {
                                             @if (@Model.Tables[0].Columns[j].ColumnName=="Total")
                                             {
-                                                <td onclick="ClickOnCell('@Model.Tables[0].Rows[i][1]','@Model.Tables[0].Rows[i][2]')">@Model.Tables[0].Rows[i][j]</td>
+                                                <td onclick="ClickOnCell('@Model.Tables[0].Rows[i][1]','@Model.Tables[0].Rows[i][2]')" style="cursor:pointer;text-decoration:underline;color:cornflowerblue;">@Model.Tables[0].Rows[i][j]</td>
                                             }
                                             else
                                             {

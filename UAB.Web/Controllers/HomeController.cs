@@ -162,9 +162,11 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             int ProjectId = clinicalcaseOperations.GetProjects().Where(x => x.Name == ProjectName).Select(x => x.ProjectId).FirstOrDefault();
             var lstAgingReportDetails = clinicalcaseOperations.GetAgingReportDetails(ColumnName, ProjectType, ProjectId);
+            string projectType = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.ProjectTypeName).FirstOrDefault();
 
             ViewBag.ColumnName = ColumnName;
             ViewBag.projectname = ProjectName;
+            ViewBag.projectType = projectType;
             _logger.LogInformation("Loading Ended for GetAgingReportDetails for User: " + mUserId);
             return PartialView("_AgingBreakDownReportDetailsByDay", lstAgingReportDetails);
         }
@@ -175,9 +177,11 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             int ProjectId = clinicalcaseOperations.GetProjects().Where(x => x.Name == ProjectName).Select(x => x.ProjectId).FirstOrDefault();
             var lstAgingReportDetails = clinicalcaseOperations.GetAgingReportDetailsByStatus(ColumnName, ProjectType, ProjectId);
+            string projectType = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.ProjectTypeName).FirstOrDefault();
 
             ViewBag.ColumnName = ColumnName;
             ViewBag.projectname = ProjectName;
+            ViewBag.projectType = projectType;
             _logger.LogInformation("Loading Ended for GetAgingReportDetailsByStatus for User: " + mUserId);
             return PartialView("_AgingBreakDownReportDetailsByDay", lstAgingReportDetails);
         }
@@ -251,10 +255,12 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var lstChartSummaryReportDetails = clinicalcaseOperations.GetChartSummaryReportDetails(ProjectId, dos, ColumnName);
             string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.Name).FirstOrDefault();
+            string projectType = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.ProjectTypeName).FirstOrDefault();
 
             ViewBag.ColumnName = ColumnName;
             ViewBag.dos = dos.ToString("MM/dd/yyyy");
             ViewBag.projectname = projectname;
+            ViewBag.projectType = projectType;
             _logger.LogInformation("Loading Ended for GetChartSummaryReportDetails for User: " + mUserId);
             return PartialView("_ChartSummaryReportDetails", lstChartSummaryReportDetails);
         }
@@ -304,9 +310,11 @@ namespace UAB.Controllers
             int statusid = clinicalcaseOperations.GetStatusList().Where(x => x.Name == status).Select(x => x.StatusId).FirstOrDefault();
             var lstBackLogChartReportDetails = clinicalcaseOperations.GetBacklogChartsReportDetails(delaydays, statusid, projectid);
             string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == projectid).Select(x => x.Name).FirstOrDefault();
+            string projectType = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == projectid).Select(x => x.ProjectTypeName).FirstOrDefault();
             ViewBag.delaydays = delaydays;
             ViewBag.projectname = projectname;
             ViewBag.status = status;
+            ViewBag.projectType = projectType;
             _logger.LogInformation("Loading Ended for GetBackLogChartsReportDetails for User: " + mUserId);
             return PartialView("_BackLogChartsReportDetails", lstBackLogChartReportDetails);
         }
