@@ -236,8 +236,11 @@ namespace UAB.Controllers
             ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
 
             var UserProjects = clinicalcaseOperations.GetUserProjects(userId);
-
-            string hdnroleproject = UserProjects.FirstOrDefault().hdnProjectAndRole.ToString();
+            string hdnroleproject = null;
+            if (UserProjects.Count >1)
+            {
+                 hdnroleproject = UserProjects.FirstOrDefault().hdnProjectAndRole.ToString();
+            }
             ApplicationUser appuser = new ApplicationUser();
             var user = clinicalcaseOperations.Getuser(userId);
             appuser.Email = user.Email;
