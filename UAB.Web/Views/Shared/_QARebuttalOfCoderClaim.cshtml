@@ -155,6 +155,10 @@
                     </div>
                 </div>
                 @{ Show = (string.IsNullOrEmpty(dictRevisedDxRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
+                @{
+                    Accepted = (string.IsNullOrEmpty(dictRevisedDxRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
+                    Rejected = (string.IsNullOrEmpty(dictRevisedDxRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
+                }
                 <div class="col-md-3 input-group" style="@Show">
                     <div class="input-group-prepend ControlHeight">
                         <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
@@ -163,8 +167,8 @@
                     <input id="@string.Format("txtDxCode_{0}_{1}", Model.TabIndex, j)" type="text" class="form-control ControlHeight" autocomplete="off" tabindex="@j" placeholder="Code" value="@dictQADxCodes.ElementAt(i).Value" />
                     <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
                         <span class="input-group-text ControlHeight AcceptRejectWidth">
-                            &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex, j)" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
-                            &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex, j)" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                            &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex, j)" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
+                            &nbsp;<i id="@string.Format("DxClaim_{0}_{1}", Model.TabIndex, j)" class="@Rejected" aria-hidden="true"></i>
                         </span>
                     </div>
                 </div>
@@ -221,6 +225,10 @@
                 @{ string[] coderCptcodes = dictCptCodes?.ElementAt(i).Value.Split("^");}
                 @{ string[] qaCptcodes = dictQACptCodes?.ElementAt(i).Value.Split("^");}
                 @{ Show = (string.IsNullOrEmpty(dictRevisedCptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
+                @{
+                    Accepted = (string.IsNullOrEmpty(dictRevisedCptRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
+                    Rejected = (string.IsNullOrEmpty(dictRevisedCptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
+                }
                 @if (!string.IsNullOrEmpty(dictQACptCodes?.ElementAt(i).Value))
                 {
                     string codercptCode = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[0]);
@@ -387,8 +395,8 @@
 
                     <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
                         <span class="input-group-text AcceptRejectWidth">
-                            &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,j)" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
-                            &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,j)" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                            &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,j)" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
+                            &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,j)" class="@Rejected" aria-hidden="true"></i>
                         </span>
                     </div>
                 </div>

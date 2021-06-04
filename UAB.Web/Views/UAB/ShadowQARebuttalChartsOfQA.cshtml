@@ -131,12 +131,13 @@
                                     $("#hdnQADxRemarks" + tabid).val($("#hdnQADxRemarks" + tabid).val() + "|" + id + "^" + $(DxNewClaimremarks[i]).val());
 
                             }
-                        } else {
-                            if ($("#hdnQAAcceptDxRemarks" + tabid).val() == "")
-                                $("#hdnQAAcceptDxRemarks" + tabid).val(id + "^" + $(".QADxRemarkss_" + tabid + "_" + id).val());
-                            else
-                                $("#hdnQAAcceptDxRemarks" + tabid).val($("#hdnQAAcceptDxRemarks" + tabid).val() + "|" + id + "^" + $(".QADxRemarkss_" + tabid + "_" + id).val());
                         }
+                        //else {
+                        //    if ($("#hdnQAAcceptDxRemarks" + tabid).val() == "")
+                        //        $("#hdnQAAcceptDxRemarks" + tabid).val(id + "^" + $(".QADxRemarkss_" + tabid + "_" + id).val());
+                        //    else
+                        //        $("#hdnQAAcceptDxRemarks" + tabid).val($("#hdnQAAcceptDxRemarks" + tabid).val() + "|" + id + "^" + $(".QADxRemarkss_" + tabid + "_" + id).val());
+                        //}
                     }
                 }
 
@@ -207,10 +208,10 @@
                                 $("#hdnQAAcceptCptCodes" + tabid).val($("#hdnQAAcceptCptCodes" + tabid).val() + "|" + id + "^" + $("#txt" + tabid + "QACpt_" + id).val());
                             }
 
-                            if ($("#hdnQAAcceptCptRemarks" + tabid).val() == "")
-                                $("#hdnQAAcceptCptRemarks" + tabid).val(id + "^" + $(".QACptRemarkss_" + tabid + "_" + id).val());
-                            else
-                                $("#hdnQAAcceptCptRemarks" + tabid).val($("#hdnQAAcceptCptRemarks" + tabid).val() + "|" + id + "^" + $(".QACptRemarkss_" + tabid + "_" + id).val());
+                            //if ($("#hdnQAAcceptCptRemarks" + tabid).val() == "")
+                            //    $("#hdnQAAcceptCptRemarks" + tabid).val(id + "^" + $(".QACptRemarkss_" + tabid + "_" + id).val());
+                            //else
+                            //    $("#hdnQAAcceptCptRemarks" + tabid).val($("#hdnQAAcceptCptRemarks" + tabid).val() + "|" + id + "^" + $(".QACptRemarkss_" + tabid + "_" + id).val());
                         }
                     }
                     index = index + parseInt(1);
@@ -247,10 +248,10 @@
                 else
                     $("#hdnQAAcceptDxCodes").val($("#hdnQAAcceptDxCodes").val() + "|" + id + "^" + $("#txtQADxCode_" + id).val());
 
-                if ($("#hdnQAAcceptDxRemarks").val() == "")
-                    $("#hdnQAAcceptDxRemarks").val(id + "^" + $("#DxRemarks_" + id).val());
-                else
-                    $("#hdnQAAcceptDxRemarks").val($("#hdnQAAcceptDxRemarks").val() + "|" + id + "^" + $("#DxRemarks_" + id).val());
+                //if ($("#hdnQAAcceptDxRemarks").val() == "")
+                //    $("#hdnQAAcceptDxRemarks").val(id + "^" + $("#DxRemarks_" + id).val());
+                //else
+                //    $("#hdnQAAcceptDxRemarks").val($("#hdnQAAcceptDxRemarks").val() + "|" + id + "^" + $("#DxRemarks_" + id).val());
             }
         }
 
@@ -289,10 +290,10 @@
                 else
                     $("#hdnQAAcceptCptCodes").val($("#hdnQAAcceptCptCodes").val() + "|" + id + "^" + $("#txtCPTCode_" + id).val());
 
-                if ($("#hdnQAAcceptCptRemarks").val() == "")
-                    $("#hdnQAAcceptCptRemarks").val(id + "^" + $("#QACptRemarks_" + id).val());
-                else
-                    $("#hdnQAAcceptCptRemarks").val($("#hdnQAAcceptCptRemarks").val() + "|" + id + "^" + $("#QACptRemarks_" + id).val());
+                //if ($("#hdnQAAcceptCptRemarks").val() == "")
+                //    $("#hdnQAAcceptCptRemarks").val(id + "^" + $("#QACptRemarks_" + id).val());
+                //else
+                //    $("#hdnQAAcceptCptRemarks").val($("#hdnQAAcceptCptRemarks").val() + "|" + id + "^" + $("#QACptRemarks_" + id).val());
             }
         }
 

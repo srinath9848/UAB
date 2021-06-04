@@ -38,6 +38,8 @@ namespace UAB
 
             foreach (var item in lstDxCodes)
             {
+                if (item == "") continue;
+
                 string[] strItem = item.Split('^');
 
                 if (rno != Convert.ToInt16(strItem[0]))
@@ -187,6 +189,8 @@ namespace UAB
 
             foreach (var item in lstCptCodes)
             {
+                if (item == "") continue;
+
                 string[] strItem = item.Split('^');
 
                 if (rno != Convert.ToInt16(strItem[0]))

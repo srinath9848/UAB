@@ -2967,7 +2967,7 @@ namespace UAB.DAL
         }
 
 
-        public CodingDTO SubmitShadowQAAvailableChart(ChartSummaryDTO chartSummaryDTO, bool isQAAgreed, DataTable dtAudit)
+        public CodingDTO SubmitShadowQAAvailableChart(ChartSummaryDTO chartSummaryDTO, DataTable dtAudit)
         {
             CodingDTO dto = new CodingDTO();
 
@@ -2985,12 +2985,6 @@ namespace UAB.DAL
                             Direction = System.Data.ParameterDirection.Input,
                             Value = mUserId
                          },
-                         new SqlParameter() {
-                            ParameterName = "@isQAAgreed",
-                            SqlDbType =  System.Data.SqlDbType.Bit,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = isQAAgreed
-                        },
                           new SqlParameter() {
                             ParameterName = "@utWorkItemAudit",
                             SqlDbType =  System.Data.SqlDbType.Structured,

@@ -253,12 +253,12 @@
                                                 <input type="hidden" id="CoderDxCodes_@j" value="@dictDxCodes.ElementAt(i).Value" />
                                                 @{ Show = (string.IsNullOrEmpty(dictRevisedDxRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
 
-                                                <div class="col-md-3 input-group" style="">
+                                                <div class="col-md-3 input-group" style="@Show">
                                                     <div class="input-group-prepend ControlHeight">
                                                         <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                                                     </div>
                                                     <input id="txtDxCode_@j" type="text" class="form-control ControlHeight" autocomplete="off" tabindex="@j" placeholder="Code" value="@dictQADxCodes.ElementAt(i).Value" />
-                                                    <div class="input-group-append CoderCorrections ControlHeight" style="">
+                                                    <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
                                                         @{
                                                             Accepted = (string.IsNullOrEmpty(dictRevisedDxRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
                                                             Rejected = (string.IsNullOrEmpty(dictRevisedDxRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
@@ -425,6 +425,7 @@
                                                         </div>
 
                                                         <input type="hidden" id="txtCPTCode_@j" value="@qacptCode^@qaMod^@qaQty^@qaLinks" />
+                                                        <input type="hidden" id="CoderCptCodes_@j" value="@cptCode^@cptMod^@cptQty^@cptLinks" />
                                                     </div>
                                                 }
                                                 else
@@ -440,7 +441,7 @@
                                                         cptVal = coderCptcodes[0] == "NA" ? "" : coderCptcodes[0];
                                                         qtyVal = coderCptcodes[2];
                                                     }
-                                                    <input type="hidden" id="CoderCptCodes" value="@cptVal^@coderModVal^@qtyVal^@coderLinkAllVal" />
+                                                    <input type="hidden" id="CoderCptCodes_@j" value="@cptVal^@coderModVal^@qtyVal^@coderLinkAllVal" />
                                                     <div title="Code : @cptVal, Mod : @coderModVal, Quantity : @qtyVal, Link : @coderLinkAllVal" class="col-md-3 input-group">
                                                         <div class="input-group-prepend ControlHeight">
                                                             <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
@@ -497,11 +498,11 @@
                                                 </div>
 
                                                 <div title="" class="col-md-3 input-group" style="@Show">
-                                                    <input type="text" class="form-control ControlHeight SQACptRemarks_@j" value="@dictRevisedCptRemarks?.ElementAt(i).Value" />
+                                                    <input type="text" class="form-control ControlHeight" id="CptRemarks_@j" value="@dictRevisedCptRemarks?.ElementAt(i).Value" />
                                                 </div>
 
                                                 <div class="col-md-3 input-group">
-                                                    <input type="text" class="form-control CoderDetails ControlHeight" style="@Show" id="QACptRemarks_@j" value="@dictQACptRemarks?.ElementAt(i).Value" />
+                                                    <input type="text" class="form-control CoderDetails ControlHeight CoderCptRemarks_@j" style="@Show" value="@dictQACptRemarks?.ElementAt(i).Value" />
                                                 </div>
                                             </div>
                                             j = j + 1;

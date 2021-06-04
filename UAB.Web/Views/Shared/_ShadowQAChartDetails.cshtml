@@ -75,13 +75,13 @@
 
 
         @{
-            bool isQAAgreed = false;
+            //bool isQAAgreed = false;
             string Show = "display:none;";
 
-            if (string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) && string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText)
-            && string.IsNullOrEmpty(Model.FirstOrDefault().QACPTCode) && string.IsNullOrEmpty(Model.FirstOrDefault().QADx) &&
-            string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText))
-                isQAAgreed = true;
+            //if (string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) && string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText)
+            //&& string.IsNullOrEmpty(Model.FirstOrDefault().QACPTCode) && string.IsNullOrEmpty(Model.FirstOrDefault().QADx) &&
+            //string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText))
+            //    isQAAgreed = true;
 
             if (!string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) || !string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText)
             || !string.IsNullOrEmpty(Model.FirstOrDefault().QACPTCode) || !string.IsNullOrEmpty(Model.FirstOrDefault().QADx) ||
@@ -89,7 +89,7 @@
                 Show = "display:flex;";
 
         }
-        @Html.Hidden("hdnIsQAAgreed", isQAAgreed)
+        @*@Html.Hidden("hdnIsQAAgreed", isQAAgreed)*@
         <ul class="nav nav-tabs" role="tablist">
             @{
                 int tabIndex = 1;
