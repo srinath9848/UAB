@@ -30,7 +30,7 @@
     @{string ProviderText = (Model.ProviderText?.Length > len) ? Model.ProviderText.Substring(0, len) + ".." : Model.ProviderText;}
     @{string QAProviderText = (Model.QAProviderText?.Length > len) ? "/" + Model.QAProviderText.Substring(0, len) + ".." : "/" + Model.QAProviderText;}
     @{string title = (!string.IsNullOrEmpty(Model.QAProviderText) ? Model.ProviderText + "/" + Model.QAProviderText : Model.ProviderText);}
-    @Html.DropDownListFor(model => model.QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("QAProviderID_{0}", tabIndex), @style = "display:none;" })
+    @Html.DropDownListFor(model => model.QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("QAProviderID_{0}", tabIndex), @style = "display:none;" })
 
     <div title="@title" class="col-md-3 CPTWidth input-group">
         <div class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
@@ -76,7 +76,7 @@
     @{string PayorText = (Model.PayorText?.Length > len) ? Model.PayorText.Substring(0, len) + ".." : Model.PayorText;}
     @{string QAPayorText = (Model.QAPayorText?.Length > len) ? "/" + Model.QAPayorText.Substring(0, len) + ".." : "/" + Model.QAPayorText;}
     @{title = (!string.IsNullOrEmpty(Model.QAPayorText) ? Model.PayorText + "/" + Model.QAPayorText : Model.PayorText);}
-    @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("QAPayorID_{0}", tabIndex), @style = "display:none;" })
+    @Html.DropDownListFor(model => model.QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("QAPayorID_{0}", tabIndex), @style = "display:none;" })
 
     <div title="@title" class="col-md-3 CPTWidth input-group">
         <div name="PayorText" class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
@@ -452,7 +452,7 @@
             </span>
         </div>
     </div>
-    @Html.DropDownListFor(model => Model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @class = "form-control CoderDetails", @id = string.Format("QAFeedback_{0}", tabIndex), @style = "display:none;" })
+    @Html.DropDownListFor(model => Model.QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails", @id = string.Format("QAFeedback_{0}", tabIndex), @style = "display:none;" })
 
     @{Show = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "display:none" : "display:flex");}
     <div class="col-md-3 CPTWidth input-group" style="@Show">

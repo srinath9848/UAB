@@ -348,7 +348,7 @@
                     }
                 }
             }
-            if (res1.includes('accept') && $(Dxcodes[i]).css("display") == "flex") {
+            if (res1.includes('accept')) {
                 if ($("#hdnQAAcceptDxCodes").val() == "")
                     $("#hdnQAAcceptDxCodes").val(id + "^" + $("#txtSQADxCode_" + id).val());
                 else
@@ -360,9 +360,9 @@
                         $("#ErrorTypeError_" + id).html('');
                     }
                     if ($("#hdnQAAcceptDxRemarks").val() == "")
-                        $("#hdnQAAcceptDxRemarks").val(id + "^" + $("#SQADxRemarks_" + id).val());
+                        $("#hdnQAAcceptDxRemarks").val(id + "^" + $(".SQADxRemarks_" + id).val());
                     else
-                        $("#hdnQAAcceptDxRemarks").val($("#hdnQAAcceptDxRemarks").val() + "|" + id + "^" + $("#SQADxRemarks_" + id).val());
+                        $("#hdnQAAcceptDxRemarks").val($("#hdnQAAcceptDxRemarks").val() + "|" + id + "^" + $(".SQADxRemarks_" + id).val());
                 }
                 else {
                     $("#DxRemarks_" + id).focus();
@@ -409,7 +409,7 @@
                     }
                 }
             }
-            if (res1.includes('accept') && $(CPTcodes[i]).css("display") == "flex") {
+            if (res1.includes('accept')) {
                 if ($("#hdnQAAcceptCptCodes").val() == "")
                     $("#hdnQAAcceptCptCodes").val(id + "^" + $("#txtSQACPTCode_" + id).val());
                 else
@@ -421,9 +421,9 @@
                         $("#ErrorTypeError_" + id).html('');
                     }
                     if ($("#hdnQAAcceptCptRemarks").val() == "")
-                        $("#hdnQAAcceptCptRemarks").val(id + "^" + $("#SQACptRemarks_" + id).val());
+                        $("#hdnQAAcceptCptRemarks").val(id + "^" + $(".SQACptRemarks_" + id).val());
                     else
-                        $("#hdnQAAcceptCptRemarks").val($("#hdnQAAcceptCptRemarks").val() + "|" + id + "^" + $("#SQACptRemarks_" + id).val());
+                        $("#hdnQAAcceptCptRemarks").val($("#hdnQAAcceptCptRemarks").val() + "|" + id + "^" + $(".SQACptRemarks_" + id).val());
                 }
                 else {
                     $("#txtCpt_" + id).focus();
