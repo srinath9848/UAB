@@ -30,7 +30,7 @@ namespace UAB
             if (dxCodes == "")
                 return null;
 
-            List<string> lstDxCodes = dxCodes.Split('|').ToList();
+            List<string> lstDxCodes = dxCodes.Split('|').OrderBy(q => q).ToList();
 
             Dictionary<int, string> dictDxCodes = new Dictionary<int, string>();
 
@@ -61,7 +61,7 @@ namespace UAB
             if (QAdxCodes == "")
                 return null;
 
-            List<string> lstQADxCodes = QAdxCodes.Split('|').ToList();
+            List<string> lstQADxCodes = QAdxCodes.Split('|').OrderBy(q => q).ToList();
 
             Dictionary<int, string> dictQADxCodes = new Dictionary<int, string>();
 
@@ -100,13 +100,15 @@ namespace UAB
             if (dxRemarks == "")
                 return null;
 
-            List<string> lstDxRemarks = dxRemarks.Split('|').ToList();
+            List<string> lstDxRemarks = dxRemarks.Split('|').OrderBy(q => q).ToList();
 
             Dictionary<int, string> dictDxRemarks = new Dictionary<int, string>();
 
             int rno = 1;
             foreach (var item in lstDxRemarks)
             {
+                if (item == "") continue;
+
                 string[] strItem = item.Split('^');
 
                 if (rno != Convert.ToInt16(strItem[0]))
@@ -161,7 +163,7 @@ namespace UAB
 
         public static Dictionary<int, string> GetCptCodes(string cptCodes)
         {
-            List<string> lstdxCodes = cptCodes.Split('|').ToList();
+            List<string> lstdxCodes = cptCodes.Split('|').OrderBy(q => q).ToList();
 
             Dictionary<int, string> dictCptCodes = new Dictionary<int, string>();
 
@@ -177,7 +179,7 @@ namespace UAB
             if (cptCodes == "")
                 return null;
 
-            List<string> lstCptCodes = cptCodes.Split('|').ToList();
+            List<string> lstCptCodes = cptCodes.Split('|').OrderBy(q => q).ToList();
 
             Dictionary<int, string> dictCptCodes = new Dictionary<int, string>();
 
@@ -208,13 +210,15 @@ namespace UAB
             if (cptRemarks == "")
                 return null;
 
-            List<string> lstCptRemarks = cptRemarks.Split('|').ToList();
+            List<string> lstCptRemarks = cptRemarks.Split('|').OrderBy(q => q).ToList();
 
             Dictionary<int, string> dictCptRemarks = new Dictionary<int, string>();
 
             int rno = 1;
             foreach (var item in lstCptRemarks)
             {
+                if (item == "") continue;
+
                 string[] strItem = item.Split('^');
 
                 if (rno != Convert.ToInt16(strItem[0]))

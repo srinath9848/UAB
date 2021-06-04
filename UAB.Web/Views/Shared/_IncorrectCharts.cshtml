@@ -12,12 +12,18 @@
         @Html.Hidden("hdnRejectedCptRemarks")
         @Html.Hidden("hdnCptCodes")
 
+        @Html.Hidden("hdnAcceptedDxRemarks")
+        @Html.Hidden("hdnAcceptedCptRemarks")
+
         @Html.Hidden("hdnRejectedDxRemarks1")
         @Html.Hidden("hdnRejectedDxCodes1")
         @Html.Hidden("hdnDxCodes1")
         @Html.Hidden("hdnRejectedCptCodes1")
         @Html.Hidden("hdnRejectedCptRemarks1")
         @Html.Hidden("hdnCptCodes1")
+
+        @Html.Hidden("hdnAcceptedDxRemarks1")
+        @Html.Hidden("hdnAcceptedCptRemarks1")
 
         @Html.Hidden("hdnRejectedDxRemarks2")
         @Html.Hidden("hdnRejectedDxCodes2")
@@ -26,12 +32,18 @@
         @Html.Hidden("hdnRejectedCptRemarks2")
         @Html.Hidden("hdnCptCodes2")
 
+        @Html.Hidden("hdnAcceptedDxRemarks2")
+        @Html.Hidden("hdnAcceptedCptRemarks2")
+
         @Html.Hidden("hdnRejectedDxRemarks3")
         @Html.Hidden("hdnRejectedDxCodes3")
         @Html.Hidden("hdnDxCodes3")
         @Html.Hidden("hdnRejectedCptCodes3")
         @Html.Hidden("hdnRejectedCptRemarks3")
         @Html.Hidden("hdnCptCodes3")
+
+        @Html.Hidden("hdnAcceptedDxRemarks3")
+        @Html.Hidden("hdnAcceptedCptRemarks3")
 
         @Html.Hidden("hdnClaim1")
         @Html.Hidden("hdnClaim2")
@@ -523,7 +535,7 @@
                                                         Error Type
                                                     </label>
                                                     <div class="col-md-7">
-                                                        @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight CoderDetails", @id = string.Format("ErrorType_{0}", tabIndex) })
+                                                        @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"),  new { @class = "form-control ControlHeight CoderDetails", @id = string.Format("ErrorType_{0}", tabIndex) })
                                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().QADTO.ErrorType, null, new { @class = "text-danger ErrorType" })
                                                     </div>
                                                 </div>

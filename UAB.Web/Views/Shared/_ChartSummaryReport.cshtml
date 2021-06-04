@@ -45,12 +45,30 @@
 
                                 @for (int i = 0; i < Model.Tables[0].Rows.Count; i++)
                                 {
-                                    <tr class="body">
-                                        @for (int j = 0; j < Model.Tables[0].Columns.Count; j++)
+                                <tr class="body">
+                                    @for (int j = 0; j < Model.Tables[0].Columns.Count; j++)
+                                    {
+                                        @if (@Model.Tables[0].Columns[j].ColumnName != "ProjectName" && @Model.Tables[0].Columns[j].ColumnName != "DateOfService")
                                         {
-                                            <td onclick="ClickOnCell('@Model.Tables[0].Columns[j].ColumnName','@Model.Tables[0].Rows[i][1]','@Model.Tables[0].Rows[i][j]')">@Model.Tables[0].Rows[i][j]</td>
+                                            @if (@Model.Tables[0].Rows[i][j].ToString() != "0")
+                                            {
+                                                <td onclick="ClickOnCell('@Model.Tables[0].Columns[j].ColumnName','@Model.Tables[0].Rows[i][1]','@Model.Tables[0].Rows[i][j]')" style="cursor:pointer;text-decoration:underline;color:cornflowerblue;">@Model.Tables[0].Rows[i][j]</td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    @Model.Tables[0].Rows[i][j]
+                                                </td>
+                                            }
                                         }
-                                    </tr>
+                                        else
+                                        {
+                                            <td>
+                                                @Model.Tables[0].Rows[i][j]
+                                            </td>
+                                        }
+                                    }
+                                </tr>
                                 }
                             </tbody>
                         </table>
