@@ -686,18 +686,18 @@
                     }
                 }
             }
-            //else {
-            //    if ($("#hdnShadowQAAcceptDxRemarks").val() == "") {
-            //        if ($("#QARemarks_" + id).val() != undefined) {
-            //            $("#hdnShadowQAAcceptDxRemarks").val(id + "^" + $("#QADxRemarks_" + id).val());
-            //        }
-            //    }
-            //    else {
-            //        if ($("#QARemarks_" + id).val() != undefined) {
-            //            $("#hdnShadowQAAcceptDxRemarks").val($("#hdnShadowQAAcceptDxRemarks").val() + "|" + id + "^" + $("#QADxRemarks_" + id).val());
-            //        }
-            //    }
-            //}
+            else {
+                if ($("#hdnShadowQAAcceptDxRemarks").val() == "") {
+                    if ($("#QADxRemarks_" + id).val() != undefined) {
+                        $("#hdnShadowQAAcceptDxRemarks").val(id + "^" + $("#QADxRemarks_" + id).val());
+                    }
+                }
+                else {
+                    if ($("#QADxRemarks_" + id).val() != undefined) {
+                        $("#hdnShadowQAAcceptDxRemarks").val($("#hdnShadowQAAcceptDxRemarks").val() + "|" + id + "^" + $("#QADxRemarks_" + id).val());
+                    }
+                }
+            }
         }
 
         var DxCodes = $("#claim1 [id*=txtDx_]");
@@ -711,17 +711,16 @@
                     $("#hdnShadowQADxCodes").val($("#hdnShadowQADxCodes").val() + "|" + id + "^" + $(DxCodes[i]).val());
             } else {
 
-                //if ($("#hdnShadowQAAcceptDxCodes").val() == "") {
-                //    if ($(".txQADx_" + id).val() != undefined) {
-                //        $("#hdnShadowQAAcceptDxCodes").val(id + "^" + $(".txQADx_" + id).val());
-                //    }
-                //}
-                //else {
-                //    if ($(".txQADx_" + id).val() != undefined) {
-                //        $("#hdnShadowQAAcceptDxCodes").val($("#hdnShadowQAAcceptDxCodes").val() + "|" + id + "^" + $(".txQADx_" + id).val());
-                //    }
-                //}
-
+                if ($("#hdnShadowQAAcceptDxCodes").val() == "") {
+                    if ($(".txQADx_" + id).val() != undefined) {
+                        $("#hdnShadowQAAcceptDxCodes").val(id + "^" + $(".txQADx_" + id).val());
+                    }
+                }
+                else {
+                    if ($(".txQADx_" + id).val() != undefined) {
+                        $("#hdnShadowQAAcceptDxCodes").val($("#hdnShadowQAAcceptDxCodes").val() + "|" + id + "^" + $(".txQADx_" + id).val());
+                    }
+                }
             }
         }
 
@@ -748,18 +747,18 @@
                     }
                 }
             }
-            //else {
-            //    if ($("#hdnShadowQAAcceptCptRemarks").val() == "") {
-            //        if ($("#QACptRemarks_" + id).val() != undefined) {
-            //            $("#hdnShadowQAAcceptCptRemarks").val(id + "^" + $("#QACptRemarks_" + id).val());
-            //        }
-            //    }
-            //    else {
-            //        if ($("#QACptRemarks_" + id).val() != undefined) {
-            //            $("#hdnShadowQAAcceptCptRemarks").val($("#hdnShadowQAAcceptCptRemarks").val() + "|" + id + "^" + $("#QACptRemarks_" + id).val());
-            //        }
-            //    }
-            //}
+            else {
+                if ($("#hdnShadowQAAcceptCptRemarks").val() == "") {
+                    if ($("#QACptRemarks_" + id).val() != undefined) {
+                        $("#hdnShadowQAAcceptCptRemarks").val(id + "^" + $("#QACptRemarks_" + id).val());
+                    }
+                }
+                else {
+                    if ($("#QACptRemarks_" + id).val() != undefined) {
+                        $("#hdnShadowQAAcceptCptRemarks").val($("#hdnShadowQAAcceptCptRemarks").val() + "|" + id + "^" + $("#QACptRemarks_" + id).val());
+                    }
+                }
+            }
         }
 
         var CptCodes = $("#claim1 [id*=DivCptRow_]");
@@ -786,19 +785,19 @@
                     }
                 }
             }
-            //else {
-            //    if ($("#hdnShadowQAAcceptCptCodes").val() == "") {
-            //        if ($("#QaCptCodes_" + id).val() != undefined) {
-            //            $("#hdnShadowQAAcceptCptCodes").val(id + "^" + $("#QaCptCodes_" + id).val());
+            else {
+                if ($("#hdnShadowQAAcceptCptCodes").val() == "") {
+                    if ($("#QaCptCodes_" + id).val() != undefined) {
+                        $("#hdnShadowQAAcceptCptCodes").val(id + "^" + $("#QaCptCodes_" + id).val());
 
-            //        }
-            //    }
-            //    else {
-            //        if ($("#QaCptCodes_" + id).val() != undefined) {
-            //            $("#hdnShadowQAAcceptCptCodes").val($("#hdnShadowQAAcceptCptCodes").val() + "|" + id + "^" + $("#QaCptCodes_" + id).val());
-            //        }
-            //    }
-            //}
+                    }
+                }
+                else {
+                    if ($("#QaCptCodes_" + id).val() != undefined) {
+                        $("#hdnShadowQAAcceptCptCodes").val($("#hdnShadowQAAcceptCptCodes").val() + "|" + id + "^" + $("#QaCptCodes_" + id).val());
+                    }
+                }
+            }
         }
 
 
