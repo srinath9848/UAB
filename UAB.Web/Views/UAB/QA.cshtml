@@ -8,7 +8,7 @@
             <partial name="_InitialData" model=Model.FirstOrDefault() />
             <partial name="_RebuttalChartDetails" model=Model />
         </div>
-        @if (Model.FirstOrDefault().BlockResponseDTO.ResponseRemarks != null)
+        @if (Model.FirstOrDefault().BlockResponseDTO.ResponseRemarks != null && Model.FirstOrDefault().BlockResponseDTO.BlockedInQueueKind == "QA")
         {
             <partial name="_BlockResponsePopUp" model=Model.FirstOrDefault() />
         }
