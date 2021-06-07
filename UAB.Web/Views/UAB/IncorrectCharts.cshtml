@@ -420,15 +420,15 @@
             var res2 = $("[id='DxClaim_3_" + id + "']:eq(1)").attr('class');
             if (res2.includes('reject') || (!res1.includes('accept') && !res2.includes('reject'))) {
                 if ($("#hdnDxCodes2").val() == "")
-                    $("#hdnDxCodes2").val($("#DxClaim_3_Coder_" + id).val());
+                    $("#hdnDxCodes2").val(id + "^" + $("#DxClaim_3_Coder_" + id).val());
                 else
-                    $("#hdnDxCodes2").val($("#hdnDxCodes2").val() + "," + $("#DxClaim_3_Coder_" + id).val());
+                    $("#hdnDxCodes2").val($("#hdnDxCodes2").val() + "," + id + "^" + $("#DxClaim_3_Coder_" + id).val());
             }
             else {
                 if ($("#hdnDxCodes2").val() == "")
-                    $("#hdnDxCodes2").val($("#DxClaim_3_QA_" + id).val());
+                    $("#hdnDxCodes2").val(id + "^" + $("#DxClaim_3_QA_" + id).val());
                 else
-                    $("#hdnDxCodes2").val($("#hdnDxCodes2").val() + "," + $("#DxClaim_3_QA_" + id).val());
+                    $("#hdnDxCodes2").val($("#hdnDxCodes2").val() + "," + id + "^" + $("#DxClaim_3_QA_" + id).val());
             }
         }
 
@@ -546,15 +546,15 @@
 
             if (res2.includes('reject') || (!res1.includes('accept') && !res2.includes('reject'))) {
                 if ($("#hdnDxCodes3").val() == "")
-                    $("#hdnDxCodes3").val($("#DxClaim_4_Coder_" + id).val());
+                    $("#hdnDxCodes3").val(id + "^" + $("#DxClaim_4_Coder_" + id).val());
                 else
-                    $("#hdnDxCodes3").val($("#hdnDxCodes3").val() + "," + $("#DxClaim_4_Coder_" + id).val());
+                    $("#hdnDxCodes3").val($("#hdnDxCodes3").val() + "," + id + "^" + $("#DxClaim_4_Coder_" + id).val());
             }
             else {
                 if ($("#hdnDxCodes3").val() == "")
-                    $("#hdnDxCodes3").val($("#DxClaim_4_QA_" + id).val());
+                    $("#hdnDxCodes3").val(id + "^" + $("#DxClaim_4_QA_" + id).val());
                 else
-                    $("#hdnDxCodes3").val($("#hdnDxCodes3").val() + "," + $("#DxClaim_4_QA_" + id).val());
+                    $("#hdnDxCodes3").val($("#hdnDxCodes3").val() + "," + id + "^" + $("#DxClaim_4_QA_" + id).val());
             }
         }
 
