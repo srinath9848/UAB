@@ -1433,13 +1433,12 @@ namespace UAB.DAL
             return lst;
         }
 
-        public List<ChartSummaryDTO> GetCodedChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range)
+        public List<ChartSummaryDTO> GetCodedChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range, double timeZoneOffSet, DateTime StartDate, DateTime EndDate)
         {
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO.ProjectID = projectID;
-            if (date == new DateTime())
-                date = DateTime.Now;
+
             using (var context = new UABContext())
             {
                 var param = new SqlParameter[] {
@@ -1454,8 +1453,7 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = range
-                        }
-                        ,   new SqlParameter() {
+                        },   new SqlParameter() {
                             ParameterName = "@Date",
                             SqlDbType =  System.Data.SqlDbType.DateTime,
                             Direction = System.Data.ParameterDirection.Input,
@@ -1478,6 +1476,22 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = year
+                        } ,
+                        new SqlParameter() {
+                            ParameterName = "@TimeZoneOffset",
+                            SqlDbType =  System.Data.SqlDbType.Decimal,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = timeZoneOffSet
+                        } ,   new SqlParameter() {
+                            ParameterName = "@StartDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = StartDate
+                        } ,   new SqlParameter() {
+                            ParameterName = "@EndDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = EndDate
                         }
                     };
                 using (var con = context.Database.GetDbConnection())
@@ -1591,7 +1605,7 @@ namespace UAB.DAL
             return lst;
         }
 
-        public List<ChartSummaryDTO> GetPostedChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range)
+        public List<ChartSummaryDTO> GetPostedChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range, double timeZoneOffSet, DateTime StartDate, DateTime EndDate)
         {
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
@@ -1615,7 +1629,7 @@ namespace UAB.DAL
                         }
                         ,   new SqlParameter() {
                             ParameterName = "@Date",
-                            SqlDbType =  System.Data.SqlDbType.Date,
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = date
                         }
@@ -1636,6 +1650,22 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = year
+                        },   new SqlParameter() {
+                            ParameterName = "@StartDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = StartDate
+                        } ,   new SqlParameter() {
+                            ParameterName = "@EndDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = EndDate
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@TimeZoneOffset",
+                            SqlDbType =  System.Data.SqlDbType.Decimal,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = timeZoneOffSet
                         }
                     };
                 using (var con = context.Database.GetDbConnection())
@@ -1838,7 +1868,7 @@ namespace UAB.DAL
             return ds;
         }
 
-        public DataSet GetPostedChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate)
+        public DataSet GetPostedChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate, double timeZoneOffSet)
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
@@ -1859,15 +1889,21 @@ namespace UAB.DAL
                         },
                         new SqlParameter() {
                             ParameterName = "@StartDate",
-                            SqlDbType =  System.Data.SqlDbType.Date,
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = startDate
                         },
                         new SqlParameter() {
                             ParameterName = "@EndDate",
-                            SqlDbType =  System.Data.SqlDbType.Date,
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = endDate
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@TimeZoneOffset",
+                            SqlDbType =  System.Data.SqlDbType.Decimal,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = timeZoneOffSet
                         }
                 };
 
@@ -1991,7 +2027,7 @@ namespace UAB.DAL
             return lst;
         }
 
-        public DataSet GetCodedChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate)
+        public DataSet GetCodedChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate, double timeZoneOffSet)
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
@@ -2021,6 +2057,12 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.DateTime,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = endDate
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@TimeZoneOffset",
+                            SqlDbType =  System.Data.SqlDbType.Decimal,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = timeZoneOffSet
                         }
                 };
 
