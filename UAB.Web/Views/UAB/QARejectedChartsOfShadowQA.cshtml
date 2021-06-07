@@ -230,7 +230,7 @@
                         }
                     }
                     else {
-                        if ($(".DxRemarkss_" + tabid + "_" + id).length && res1.includes('accept')) {
+                        if (res1.includes('accept')) {
                             if ($("#hdnQAAcceptDxCodes" + tabid).val() == "")
                                 $("#hdnQAAcceptDxCodes" + tabid).val(id + "^" + $("#txtSQADx" + tabid + "Claim_" + id).val());
                             else
@@ -278,7 +278,7 @@
                                 }
                             }
                         }
-                        if (res1.includes('accept') && $(CptNewClaimRemarks[i]).css("display") == "flex") {
+                        if (res1.includes('accept')) {
                             if ($("#txt" + tabid + "Cpt_" + index).val() != "") {
                                 if ($("#hdnQAAcceptCptCodes" + tabid).val() == "")
                                     $("#hdnQAAcceptCptCodes" + tabid).val(id + "^" + $("#txt" + tabid + "SQACpt_" + index).val());

@@ -35,8 +35,7 @@
     <div title="@title" class="col-md-3 CPTWidth input-group">
         <div class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
             <span style="white-space:nowrap">
-
-                @if (!string.IsNullOrEmpty(Model.QAProviderText))
+                @if (!Model.QAProviderText.Equals(Model.ProviderText))
                 {
                     <label style="color: red;">@ProviderText</label>
                     <label style="color: green">@QAProviderText</label>
@@ -81,7 +80,7 @@
     <div title="@title" class="col-md-3 CPTWidth input-group">
         <div name="PayorText" class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
             <span style="white-space:nowrap">
-                @if (!string.IsNullOrEmpty(Model.QAPayorText))
+                @if (!Model.QAProviderText.Equals(Model.ProviderText))
                 {
                     <label style="color:red">@PayorText</label>
                     <label style="color:green;">@QAPayorText</label>
@@ -174,7 +173,7 @@
                     </div>
                     <div class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
                         <span style="white-space:nowrap">
-                            @if (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value))
+                            @if (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) && !dictDxCodes.ElementAt(i).Value.Equals(dictQADxCodes.ElementAt(i).Value))
                             {
                                 <label style="color: red;">@Dx</label>
                                 <label style="color:green">@QADx</label>
@@ -309,9 +308,9 @@
                             else
                             {
                                 <span style="color:red">@cptCode</span>
+                                <br />
+                                <span style="color:green">@qacptCode</span>
                             }
-                            <br />
-                            <span style="color:green">@qacptCode</span>
                         </div>
 
                         <div class="form-control CoderDetails">
@@ -322,9 +321,10 @@
                             else
                             {
                                 <span style="color:red">@cptMod</span>
+                                <br />
+                                <span style="color:green">@mod</span>
                             }
-                            <br />
-                            <span style="color:green">@mod</span>
+
                         </div>
 
                         <div class="form-control CoderDetails">
@@ -335,9 +335,10 @@
                             else
                             {
                                 <span style="color:red">@cptQty</span>
+                                <br />
+                                <span style="color:green">@qaQty</span>
                             }
-                            <br />
-                            <span style="color:green">@qaQty</span>
+
                         </div>
 
                         <div class="form-control CoderDetails">
@@ -348,9 +349,10 @@
                             else
                             {
                                 <span style="color:red">@cptLinks</span>
+                                <br />
+                                <span style="color:green">@linkAll</span>
                             }
-                            <br />
-                            <span style="color:green">@linkAll</span>
+
                         </div>
 
                         <input type="hidden" id="@string.Format("txt{0}QACpt_{1}", Model.TabIndex,j)" value="@qacptCode^@qaMod^@qaQty^@qaLinks" />
