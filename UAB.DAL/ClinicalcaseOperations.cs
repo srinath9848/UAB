@@ -411,17 +411,25 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
+                var res1 = context.BlockHistory.Where(x => x.ClinicalCaseId == cid).OrderByDescending(x => x.BlockHistoryId).FirstOrDefault();
 
-                var res = context.BlockResponse.Where(x => x.ClinicalCaseId == cid).OrderByDescending(x=>x.BlockResponseId).FirstOrDefault();
-                if (res != null)
+                var res = context.BlockResponse.Where(x => x.ClinicalCaseId == cid).OrderByDescending(x => x.BlockResponseId).FirstOrDefault();
+                if (res1 != null && res != null)
                 {
                     var un = context.User.Where(x => x.UserId == res.ResponseByUserId).FirstOrDefault();
-
+                    var bn = context.User.Where(x => x.UserId == res1.BlockedByUserId).FirstOrDefault();
+                    string bc = context.BlockCategory.Where(x => x.BlockCategoryId == res1.BlockCategoryId).Select(x=>x.Name).FirstOrDefault();
+                    
                     BlockResponseDTO brdt = new BlockResponseDTO
                     {
                         ResponseByUserName = un.FirstName + " " + un.LastName,
                         ResponseRemarks = res.ResponseRemarks,
-                        ResponseDate = res.ResponseDate
+                        ResponseDate = res.ResponseDate,
+                        BlockCategory =bc,
+                        BlockRemarks = res1.Remarks,
+                        Blockedbyuser = bn.FirstName + " " + bn.LastName,
+                        BlockedDate = res1.CreateDate,
+                        BlockedInQueueKind=res1.BlockedInQueueKind
                     };
                     return brdt;
                 }
@@ -3180,7 +3188,7 @@ namespace UAB.DAL
                     if (existingcc.StatusId == 1 || existingcc.StatusId == 2 || existingcc.StatusId == 3
                         || existingcc.StatusId == 14 || existingcc.StatusId == 15)
                     {
-                        
+
                         assignfromuser = existingcc.AssignedTo == null ? 0 : Convert.ToInt32(existingcc.AssignedTo);
 
                         existingcc.AssignedTo = AssignedTouserid;
@@ -3194,7 +3202,7 @@ namespace UAB.DAL
                     if (existingcc.StatusId == 4 || existingcc.StatusId == 5 || existingcc.StatusId == 6
                         || existingcc.StatusId == 11 || existingcc.StatusId == 12)
                     {
-                        
+
                         assignfromuser = existingcc.AssignedTo == null ? 0 : Convert.ToInt32(existingcc.QABy);
                         existingcc.QABy = AssignedTouserid;
 
@@ -3207,7 +3215,7 @@ namespace UAB.DAL
                     if (existingcc.StatusId == 7 || existingcc.StatusId == 8 || existingcc.StatusId == 9
                          || existingcc.StatusId == 10 || existingcc.StatusId == 13)
                     {
-                        
+
                         assignfromuser = existingcc.AssignedTo == null ? 0 : Convert.ToInt32(existingcc.ShadowQABy);
                         existingcc.ShadowQABy = AssignedTouserid;
 
@@ -3216,7 +3224,7 @@ namespace UAB.DAL
                         vr1.StatusId = 18;
                         vr1.UserId = assignfromuser;
                         vr1.VersionDate = DateTime.Now;
-                        
+
                     }
                     //version table assign To  event
                     Version vr2 = new Version()

@@ -10,7 +10,7 @@
             <input type="hidden" id="_providerPostedId" name="providerPostedId" />
             <input type="hidden" id="_txtPostingDate" name="txtPostingDate" />
             <input type="hidden" id="_txtCoderComment" name="txtCoderComment" />
-            @if (Model.BlockResponseDTO.ResponseRemarks != null)
+            @if (Model.BlockResponseDTO.ResponseRemarks != null && Model.BlockResponseDTO.BlockedInQueueKind == "Coding")
             {
                 <partial name="_BlockResponsePopUp" model=Model />
             }
