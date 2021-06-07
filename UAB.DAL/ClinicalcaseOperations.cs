@@ -412,7 +412,7 @@ namespace UAB.DAL
             using (var context = new UABContext())
             {
 
-                var res = context.BlockResponse.Where(x => x.ClinicalCaseId == cid).FirstOrDefault();
+                var res = context.BlockResponse.Where(x => x.ClinicalCaseId == cid).OrderByDescending(x=>x.BlockResponseId).FirstOrDefault();
                 if (res != null)
                 {
                     var un = context.User.Where(x => x.UserId == res.ResponseByUserId).FirstOrDefault();
