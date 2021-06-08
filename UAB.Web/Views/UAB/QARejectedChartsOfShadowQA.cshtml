@@ -220,6 +220,7 @@
                 $("#hdnQADxCodes" + tabid).val("");
                 for (var i = 0; i < DxNewClaimcodes.length; i++) {
                     var id = parseInt($(DxNewClaimcodes[i]).attr("id").split("_")[1]);
+                    var res1 = $("[id='DxClaim_" + tabid + "_" + id + "']:eq(0)").attr('class');
                     var res = $("[id='DxClaim_" + tabid + "_" + id + "']:eq(1)").attr('class');
                     if (res.includes('reject')) {
                         if ($("#" + $(DxNewClaimcodes[i]).attr("id")).val() != "" && $(DxNewClaimcodes[i]).val() != "") {
