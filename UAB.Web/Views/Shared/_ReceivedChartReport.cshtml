@@ -169,6 +169,8 @@
         ClickOnCell = function (p1, p2, p3, p4) {
             var projectId = $("#projectId").val();
             var range = $("#rangeId").val();
+            var StartDate = $("#startDate").val();
+            var EndDate = $("#endDate").val();
             if (range== 'PerDay') {
                 $.ajax({
                     type: "GET",
@@ -177,7 +179,9 @@
                         "Total": p1,
                         "date": p2,
                         "ProjectId":projectId,
-                            "range":range
+                        "range": range,
+                        "StartDate": StartDate,
+                        "EndDate": EndDate
                     },
                     success: function (response) {
                         $("#modalContent2").html(response);

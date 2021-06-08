@@ -34,11 +34,20 @@
                     <h6 class="modal-title" id="exampleModalLongTitle"><span>Project : @ViewBag.projectname</span></h6>
                 </div>
                 <div class="col-2">
-                    <input class="btn btn-info" style="height:32px" type="button" onclick="ExportDetailedReport('@ViewBag.ColumnName','@ViewBag.projectname','@ViewBag.projectType')" value="Export" />
+                    <input class="btn btn-info" style="height:32px" type="button" onclick="ExportDetailedReport()" value="Export" />
                 </div>
                 <input type="hidden" id="ColumnName" value="@ViewBag.ColumnName" />
                 <input type="hidden" id="ProjectName" value="@ViewBag.projectname" />
                 <input type="hidden" id="ProjectType" value="@ViewBag.projectType" />
+                <input type="hidden" id="date" value="@ViewBag.date" />
+                <input type="hidden" id="week" value="@ViewBag.week" />
+                <input type="hidden" id="month" value="@ViewBag.month" />
+                <input type="hidden" id="year" value="@ViewBag.year" />
+                <input type="hidden" id="ProjectId" value="@ViewBag.ProjectId" />
+                <input type="hidden" id="range" value="@ViewBag.range" />
+                <input type="hidden" id="StartDate" value="@ViewBag.StartDate" />
+                <input type="hidden" id="EndDate" value="@ViewBag.EndDate" />
+                <input type="hidden" id="ChartName" value="@ViewBag.ChartName" />
             </div>
 
             @*<div style="margin-left: 12px;">
@@ -105,18 +114,28 @@
     $(document).ready(function () {
 
         ExportDetailedReport = function () {
-            var projectId = $("#projectId").val();
-            var range = $("#rangeId").val();
-            var StartDate = $("#startDate").val();
-            var EndDate = $("#endDate").val();
+            var date = $("#date").val();
+            var week = $("#week").val();
+            var month = $("#month").val();
+            var year = $("#year").val();
+            var ProjectId = $("#ProjectId").val();
+            var range = $("#range").val();
+            var ChartName = $("#ChartName").val();
+            var StartDate = $("#StartDate").val();
+            var EndDate = $("#EndDate").val();
             $.ajax({
                 type: "GET",
                 url: "@Url.Action("ExportDetailedReport", "Home")",
                 data: {
-                    "projectId": projectId,
+                    "date": date,
+                    "week": week,
+                    "month": month,
+                    "year": year,
+                    "ProjectId": ProjectId,
                     "range": range,
+                    "ChartName": ChartName,
                     "StartDate": StartDate,
-                    "EndDate":EndDate
+                    "EndDate": EndDate
                 },
                 success: function (response) {
           $("#modalContent1").html(response);

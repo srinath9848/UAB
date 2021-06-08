@@ -28,9 +28,21 @@
                 </button>
 
             </div>
-            <div style="margin-left: 12px;">
-                <h6 class="modal-title" id="exampleModalLongTitle"><span>Project : @ViewBag.projectname</span></h6>
+
+            <div class="col-12 row" style="margin-top:5px;">
+                <div class="col-10">
+                    <h6 class="modal-title" id="exampleModalLongTitle"><span>Project : @ViewBag.projectname</span></h6>
+                </div>
+                <div class="col-2">
+                    <input class="btn btn-info" style="height:32px" type="button" onclick="ExportBackLogChartsReportDetails()" value="Export" />
+                </div>
+                <input type="hidden" id="delaydays" value="@ViewBag.delaydays" />
+                <input type="hidden" id="status" value="@ViewBag.status" />
+                <input type="hidden" id="ProjectId" value="@ViewBag.projectId" />
             </div>
+            @*<div style="margin-left: 12px;">
+            <h6 class="modal-title" id="exampleModalLongTitle"><span>Project : @ViewBag.projectname</span></h6>
+        </div>*@
             <div style="margin-left: 12px;">
                 <h6 class="modal-title" id="exampleModalLongTitle"><span>Status : @ViewBag.status</span></h6>
             </div>
@@ -83,6 +95,28 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+
+        ExportBackLogChartsReportDetails = function () {
+            var delaydays = $("#delaydays").val();
+            var status = $("#status").val();
+            var ProjectId = $("#ProjectId").val();
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("ExportBackLogChartsReportDetails", "Home")",
+                data: {
+                    "delaydays": delaydays,
+                    "status": status,
+                    "projectid": ProjectId
+                },
+                success: function (response) {
+          $("#modalContent1").html(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        };
+
         ModalClose1 = function () {
             $("#modalContent1").html('');
         }
