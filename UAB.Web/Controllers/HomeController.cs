@@ -158,20 +158,18 @@ namespace UAB.Controllers
             }
         }
 
-        public IActionResult ExportAgingReportByProject(string dataTableName)
+        public IActionResult ExportAgingReportByProject()
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var lstagingtDTO = clinicalcaseOperations.GetAgingReport();
-            ExportToExcel(lstagingtDTO.Tables[0]);
-            return View("AgingReport", lstagingtDTO);
+            return ExportToExcel(lstagingtDTO.Tables[0]);
         }
 
-        public IActionResult ExportAgingReportByStatus(string dataTableName)
+        public IActionResult ExportAgingReportByStatus()
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var lstagingtDTO = clinicalcaseOperations.GetAgingReport();
-            ExportToExcel(lstagingtDTO.Tables[1]);
-            return View("AgingReport", lstagingtDTO);
+            return ExportToExcel(lstagingtDTO.Tables[1]);
         }
 
         [HttpGet]
