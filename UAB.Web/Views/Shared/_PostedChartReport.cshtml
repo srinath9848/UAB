@@ -38,8 +38,8 @@
                         </div>
                         <input id="projectId" type="hidden" value="@ViewBag.ProjectId" />
                         <input id="rangeId" type="hidden" value="@ViewBag.range" />
-                        <input id="startDate" type="hidden" value="@ViewBag.StartDate" />
-                        <input id="endDate" type="hidden" value="@ViewBag.EndDate" />
+                        <input id="StartDate" type="hidden" value="@ViewBag.StartDate" />
+                        <input id="EndDate" type="hidden" value="@ViewBag.EndDate" />
                     </div>
 
                     @*<h5 class="card">Posted Chart Report</h5>
@@ -144,8 +144,8 @@
         ExportPostedChartReport = function () {
             var projectId = $("#projectId").val();
             var range = $("#rangeId").val();
-            var StartDate = $("#startDate").val();
-            var EndDate = $("#endDate").val();
+            var StartDate = $("#StartDate").val();
+            var EndDate = $("#EndDate").val();
             $.ajax({
                 type: "GET",
                 url: "@Url.Action("ExportPostedChartsReport", "Home")",
@@ -175,7 +175,9 @@
                         "Total": p1,
                         "date": p2,
                         "ProjectId":projectId,
-                            "range":range
+                        "range": range,
+                        "StartDate": $("#StartDate").val(),
+                        "EndDate": $("#EndDate").val()
                     },
                     success: function (response) {
                         $("#modalContent2").html(response);
@@ -191,11 +193,14 @@
                     url: "@Url.Action("GetPostedReportDetails", "Home")",
                     data: {
                         "Total": p1,
+                        "date": $("#StartDate").val(),
                         "week": p2,
                         "month": p3,
                         "year":p4,
                         "ProjectId":projectId,
-                            "range":range
+                        "range": range,
+                        "StartDate": $("#StartDate").val(),
+                        "EndDate": $("#EndDate").val()
                     },
                     success: function (response) {
                         $("#modalContent2").html(response);
@@ -212,9 +217,12 @@
                     data: {
                         "Total": p1,
                         "month": p2,
+                        "date": $("#StartDate").val(),
                         "year":p3,
                         "ProjectId":projectId,
-                            "range":range
+                        "range": range,
+                        "StartDate": $("#StartDate").val(),
+                        "EndDate": $("#EndDate").val()
                     },
                     success: function (response) {
                         $("#modalContent2").html(response);

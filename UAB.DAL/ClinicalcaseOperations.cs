@@ -412,17 +412,25 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
+                var res1 = context.BlockHistory.Where(x => x.ClinicalCaseId == cid).OrderByDescending(x => x.BlockHistoryId).FirstOrDefault();
 
-                var res = context.BlockResponse.Where(x => x.ClinicalCaseId == cid).FirstOrDefault();
-                if (res != null)
+                var res = context.BlockResponse.Where(x => x.ClinicalCaseId == cid).OrderByDescending(x => x.BlockResponseId).FirstOrDefault();
+                if (res1 != null && res != null)
                 {
                     var un = context.User.Where(x => x.UserId == res.ResponseByUserId).FirstOrDefault();
-
+                    var bn = context.User.Where(x => x.UserId == res1.BlockedByUserId).FirstOrDefault();
+                    string bc = context.BlockCategory.Where(x => x.BlockCategoryId == res1.BlockCategoryId).Select(x=>x.Name).FirstOrDefault();
+                    
                     BlockResponseDTO brdt = new BlockResponseDTO
                     {
                         ResponseByUserName = un.FirstName + " " + un.LastName,
                         ResponseRemarks = res.ResponseRemarks,
-                        ResponseDate = res.ResponseDate
+                        ResponseDate = res.ResponseDate,
+                        BlockCategory =bc,
+                        BlockRemarks = res1.Remarks,
+                        Blockedbyuser = bn.FirstName + " " + bn.LastName,
+                        BlockedDate = res1.CreateDate,
+                        BlockedInQueueKind=res1.BlockedInQueueKind
                     };
                     return brdt;
                 }
@@ -1455,13 +1463,12 @@ namespace UAB.DAL
             return lst;
         }
 
-        public List<ChartSummaryDTO> GetCodedChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range)
+        public List<ChartSummaryDTO> GetCodedChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range, double timeZoneOffSet, DateTime StartDate, DateTime EndDate)
         {
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO.ProjectID = projectID;
-            if (date == new DateTime())
-                date = DateTime.Now;
+
             using (var context = new UABContext())
             {
                 var param = new SqlParameter[] {
@@ -1476,8 +1483,7 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = range
-                        }
-                        ,   new SqlParameter() {
+                        },   new SqlParameter() {
                             ParameterName = "@Date",
                             SqlDbType =  System.Data.SqlDbType.DateTime,
                             Direction = System.Data.ParameterDirection.Input,
@@ -1500,6 +1506,22 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = year
+                        } ,
+                        new SqlParameter() {
+                            ParameterName = "@TimeZoneOffset",
+                            SqlDbType =  System.Data.SqlDbType.Decimal,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = timeZoneOffSet
+                        } ,   new SqlParameter() {
+                            ParameterName = "@StartDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = StartDate
+                        } ,   new SqlParameter() {
+                            ParameterName = "@EndDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = EndDate
                         }
                     };
                 using (var con = context.Database.GetDbConnection())
@@ -1613,7 +1635,7 @@ namespace UAB.DAL
             return lst;
         }
 
-        public List<ChartSummaryDTO> GetPostedChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range)
+        public List<ChartSummaryDTO> GetPostedChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range, double timeZoneOffSet, DateTime StartDate, DateTime EndDate)
         {
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
@@ -1637,7 +1659,7 @@ namespace UAB.DAL
                         }
                         ,   new SqlParameter() {
                             ParameterName = "@Date",
-                            SqlDbType =  System.Data.SqlDbType.Date,
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = date
                         }
@@ -1658,6 +1680,22 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = year
+                        },   new SqlParameter() {
+                            ParameterName = "@StartDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = StartDate
+                        } ,   new SqlParameter() {
+                            ParameterName = "@EndDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = EndDate
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@TimeZoneOffset",
+                            SqlDbType =  System.Data.SqlDbType.Decimal,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = timeZoneOffSet
                         }
                     };
                 using (var con = context.Database.GetDbConnection())
@@ -1860,7 +1898,7 @@ namespace UAB.DAL
             return ds;
         }
 
-        public DataSet GetPostedChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate)
+        public DataSet GetPostedChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate, double timeZoneOffSet)
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
@@ -1881,15 +1919,21 @@ namespace UAB.DAL
                         },
                         new SqlParameter() {
                             ParameterName = "@StartDate",
-                            SqlDbType =  System.Data.SqlDbType.Date,
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = startDate
                         },
                         new SqlParameter() {
                             ParameterName = "@EndDate",
-                            SqlDbType =  System.Data.SqlDbType.Date,
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = endDate
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@TimeZoneOffset",
+                            SqlDbType =  System.Data.SqlDbType.Decimal,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = timeZoneOffSet
                         }
                 };
 
@@ -2013,7 +2057,7 @@ namespace UAB.DAL
             return lst;
         }
 
-        public DataSet GetCodedChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate)
+        public DataSet GetCodedChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate, double timeZoneOffSet)
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
@@ -2043,6 +2087,12 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.DateTime,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = endDate
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@TimeZoneOffset",
+                            SqlDbType =  System.Data.SqlDbType.Decimal,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = timeZoneOffSet
                         }
                 };
 
@@ -2734,10 +2784,10 @@ namespace UAB.DAL
                             Value = mUserId
                         },
                           new SqlParameter() {
-                            ParameterName = "@utAudit1",
+                            ParameterName = "@utWorkItemAudit",
                             SqlDbType =  System.Data.SqlDbType.Structured,
                             Direction = System.Data.ParameterDirection.Input,
-                            TypeName = "utAudit1",
+                            TypeName = "utWorkItemAudit",
                             Value = dtAudit
                         }
                 };
@@ -2997,7 +3047,7 @@ namespace UAB.DAL
         }
 
 
-        public CodingDTO SubmitShadowQAAvailableChart(ChartSummaryDTO chartSummaryDTO, bool isQAAgreed, DataTable dtAudit)
+        public CodingDTO SubmitShadowQAAvailableChart(ChartSummaryDTO chartSummaryDTO, DataTable dtAudit)
         {
             CodingDTO dto = new CodingDTO();
 
@@ -3015,12 +3065,6 @@ namespace UAB.DAL
                             Direction = System.Data.ParameterDirection.Input,
                             Value = mUserId
                          },
-                         new SqlParameter() {
-                            ParameterName = "@isQAAgreed",
-                            SqlDbType =  System.Data.SqlDbType.Bit,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = isQAAgreed
-                        },
                           new SqlParameter() {
                             ParameterName = "@utWorkItemAudit",
                             SqlDbType =  System.Data.SqlDbType.Structured,
@@ -3216,7 +3260,7 @@ namespace UAB.DAL
                     if (existingcc.StatusId == 1 || existingcc.StatusId == 2 || existingcc.StatusId == 3
                         || existingcc.StatusId == 14 || existingcc.StatusId == 15)
                     {
-                        
+
                         assignfromuser = existingcc.AssignedTo == null ? 0 : Convert.ToInt32(existingcc.AssignedTo);
 
                         existingcc.AssignedTo = AssignedTouserid;
@@ -3230,7 +3274,7 @@ namespace UAB.DAL
                     if (existingcc.StatusId == 4 || existingcc.StatusId == 5 || existingcc.StatusId == 6
                         || existingcc.StatusId == 11 || existingcc.StatusId == 12)
                     {
-                        
+
                         assignfromuser = existingcc.AssignedTo == null ? 0 : Convert.ToInt32(existingcc.QABy);
                         existingcc.QABy = AssignedTouserid;
 
@@ -3243,7 +3287,7 @@ namespace UAB.DAL
                     if (existingcc.StatusId == 7 || existingcc.StatusId == 8 || existingcc.StatusId == 9
                          || existingcc.StatusId == 10 || existingcc.StatusId == 13)
                     {
-                        
+
                         assignfromuser = existingcc.AssignedTo == null ? 0 : Convert.ToInt32(existingcc.ShadowQABy);
                         existingcc.ShadowQABy = AssignedTouserid;
 
@@ -3252,7 +3296,7 @@ namespace UAB.DAL
                         vr1.StatusId = 18;
                         vr1.UserId = assignfromuser;
                         vr1.VersionDate = DateTime.Now;
-                        
+
                     }
                     //version table assign To  event
                     Version vr2 = new Version()

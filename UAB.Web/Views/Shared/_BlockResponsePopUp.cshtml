@@ -1,8 +1,17 @@
 ﻿@model UAB.DTO.ChartSummaryDTO
 
+
+    <style>
+        .table td, .table th {
+            padding: 10px !important;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+        }
+    </style>
+
 <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
     <div class="modal-dialog">
-        <div class="modal-content" style="width: 500px;">
+        <div class="modal-content" style="width:500px;">
             <div class="modal-header" style="background: #27a9e3;color: white;">
                 <h5 class="modal-title" id="exampleModalLongTitle">Block Response </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnClose">
@@ -10,16 +19,37 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="form-horizontal" action="">
-                    <div class="col-sm-12">
-                        <strong>Response Remarks</strong>&nbsp;&nbsp;<label>@Model.BlockResponseDTO.ResponseRemarks</label>
-                        <br />
-                        <strong>Date</strong>&nbsp;&nbsp;<label>@Model.BlockResponseDTO.ResponseDate</label>
-                        <br />
-                        <strong>By User</strong>&nbsp;&nbsp;<label>@Model.BlockResponseDTO.ResponseByUserName</label>
-                        <br />
-                    </div>
-                </div>
+                <table>
+                    <tr>
+                        <th>Block Date</th>
+                        <td>@Model.BlockResponseDTO.BlockedDate.ToString("MM/dd/yyyy")</td>
+                    </tr>
+                    <tr>
+                        <th>Block By</th>
+                        <td>@Model.BlockResponseDTO.Blockedbyuser</td>
+                    </tr>
+                    <tr>
+                        <th>Block Category</th>
+                        <td>@Model.BlockResponseDTO.BlockCategory</td>
+                    </tr>
+                    <tr>
+                        <th>Block Remarks</th>
+                        <td>@Model.BlockResponseDTO.BlockRemarks</td>
+                    </tr>
+                    <tr></tr>
+                    <tr>
+                        <th style="padding-top: 25px;">Response Date</th>
+                        <td style="padding-top: 25px;">@Model.BlockResponseDTO.ResponseDate.ToString("MM/dd/yyyy")</td>
+                    </tr>
+                    <tr>
+                        <th>Response By</th>
+                        <td>@Model.BlockResponseDTO.ResponseByUserName</td>
+                    </tr>
+                    <tr>
+                        <th style="padding-right: 25px;">Response Remarks</th>
+                        <td>@Model.BlockResponseDTO.ResponseRemarks</td>
+                    </tr>
+                </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-danger btn-fill" id="btnClose">Close</button>

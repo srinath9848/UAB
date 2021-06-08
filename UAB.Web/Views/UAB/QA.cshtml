@@ -8,7 +8,7 @@
             <partial name="_InitialData" model=Model.FirstOrDefault() />
             <partial name="_RebuttalChartDetails" model=Model />
         </div>
-        @if (Model.FirstOrDefault().BlockResponseDTO.ResponseRemarks != null)
+        @if (Model.FirstOrDefault().BlockResponseDTO.ResponseRemarks != null && Model.FirstOrDefault().BlockResponseDTO.BlockedInQueueKind == "QA")
         {
             <partial name="_BlockResponsePopUp" model=Model.FirstOrDefault() />
         }
@@ -345,12 +345,12 @@
                         }
                     } else {
                         if ($("#hdnQAAcceptDxCodes" + tabid).val() == "") {
-                            if ($(".txtQADx_" + tabid + "_" + id).val() != undefined) {
+                            if ($(".txtQADx_" + tabid + "_" + id).val() != undefined && $(".txtQADx_" + tabid + "_" + id).val() != "") {
                                 $("#hdnQAAcceptDxCodes" + tabid).val(id + "^" + $(".txtQADx_" + tabid + "_" + id).val());
                             }
                         }
                        else {
-                           if ($(".txtQADx_" + tabid + "_" + id).val() != undefined) {
+                            if ($(".txtQADx_" + tabid + "_" + id).val() != undefined && $(".txtQADx_" + tabid + "_" + id).val() !="") {
                                $("#hdnQAAcceptDxCodes" +  tabid).val($("#hdnQAAcceptDxCodes" + tabid).val() + "|" + id + "^" + $(".txtQADx_" + tabid + "_" + id).val());
                            }
                        }
@@ -413,12 +413,12 @@
                     }
                     else {
                         if ($("#hdnQAAcceptCptCodes" + tabid).val() == "") {
-                            if ($(".txtQACpt_" + tabid + "_" + id).val() != undefined) {
+                            if ($(".txtQACpt_" + tabid + "_" + id).val() != undefined && $(".txtQACpt_" + tabid + "_" + id).val() !="") {
                                 $("#hdnQAAcceptCptCodes" + tabid).val(id + "^" + $(".txtQACpt_" + tabid + "_" + id).val());
                             }
                         }
                         else {
-                            if ($(".txtQACpt_" + tabid + "_" + id).val() != undefined) {
+                            if ($(".txtQACpt_" + tabid + "_" + id).val() != undefined && $(".txtQACpt_" + tabid + "_" + id).val() !="") {
                                 $("#hdnQAAcceptCptCodes" + tabid).val($("#hdnQAAcceptCptCodes" + tabid).val() + "|" + id + "^" + $(".txtQACpt_" + tabid + "_" + id).val());
                             }
                         }
@@ -489,12 +489,12 @@
             }
             else {
                 if ($("#hdnQAAcceptDxCodes").val() == "") {
-                    if ($(".txtQADx_" + id).val() != undefined) {
+                    if ($(".txtQADx_" + id).val() != undefined && $(".txtQADx_" + id).val() !="") {
                         $("#hdnQAAcceptDxCodes").val(id + "^" + $(".txtQADx_" + id).val());
                     }
                 }
                else {
-                   if ($(".txtQADx_" + id).val() != undefined) {
+                    if ($(".txtQADx_" + id).val() != undefined && $(".txtQADx_" + id).val() !="") {
                        $("#hdnQAAcceptDxCodes").val($("#hdnQAAcceptDxCodes").val() + "|" + id + "^" + $(".txtQADx_" + id).val());
                    }
                }
@@ -566,12 +566,12 @@
                 }
             } else {
                 if ($("#hdnQAAcceptCptCodes").val() == "") {
-                    if ($(".txtQACpt_" + id).val() != undefined) {
+                    if ($(".txtQACpt_" + id).val() != undefined && $(".txtQACpt_" + id).val() !="" ) {
                         $("#hdnQAAcceptCptCodes").val(id + "^" + $(".txtQACpt_" + id).val());
                     }
                 }
                else {
-                   if ($(".txtQACpt_" + id).val() != undefined) {
+                    if ($(".txtQACpt_" + id).val() != undefined && $(".txtQACpt_" + id).val() !="") {
                        $("#hdnQAAcceptCptCodes").val($("#hdnQAAcceptCptCodes").val() + "|" + id + "^" + $(".txtQACpt_" + id).val());
                    }
                }

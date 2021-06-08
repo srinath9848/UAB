@@ -22,6 +22,14 @@ namespace UAB.DTO
         public int ResponseByUserId { get; set; }
         public string ResponseByUserName { get; set; }
         public DateTime ResponseDate { get; set; }
+
+        public string BlockCategory { get; set; }
+        public string BlockRemarks { get; set; }
+        public DateTime BlockedDate { get; set; }
+        public string Blockedbyuser { get; set; }
+
+        public string BlockedInQueueKind { get; set; }
+
     }
     public class QADTO
     {

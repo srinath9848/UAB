@@ -379,8 +379,10 @@ namespace UAB.Controllers
         {
             _logger.LogInformation("Loading Started for GetPostedChartsReport for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstReceivedChartReport = clinicalcaseOperations.GetPostedChartsReport(ProjectId, range, StartDate, EndDate);
+            var lstReceivedChartReport = clinicalcaseOperations.GetPostedChartsReport(ProjectId, range, StartDate, EndDate.AddHours(23).AddMinutes(59).AddSeconds(59), Convert.ToDouble(timeZoneCookie));
 
+            ViewBag.StartDate = StartDate;
+            ViewBag.EndDate = EndDate;
             ViewBag.ProjectId = ProjectId;
             ViewBag.range = range;
             ViewBag.StartDate = StartDate;
@@ -405,12 +407,12 @@ namespace UAB.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetPostedReportDetails(DateTime date, int week, string month, string year, int ProjectId, string range)
+        public IActionResult GetPostedReportDetails(DateTime date, int week, string month, string year, int ProjectId, string range, DateTime StartDate, DateTime EndDate)
         {
             _logger.LogInformation("Loading Started for GetPostedReportDetails for User: " + mUserId);
             string createdDate = date.ToString();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstPendingReportDetails = clinicalcaseOperations.GetPostedChartReportDetails(date, week, month, year, ProjectId, range);
+            var lstPendingReportDetails = clinicalcaseOperations.GetPostedChartReportDetails(date, week, month, year, ProjectId, range, Convert.ToDouble(timeZoneCookie), StartDate, EndDate);
             string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.Name).FirstOrDefault();
             string projectType = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.ProjectTypeName).FirstOrDefault();
 
@@ -469,19 +471,21 @@ namespace UAB.Controllers
         {
             _logger.LogInformation("Loading Started for GetCodedChartsReport for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstCodedChartReport = clinicalcaseOperations.GetCodedChartsReport(ProjectId, range, StartDate.ToUtcDate(timeZoneCookie), EndDate.AddHours(23).AddMinutes(59).AddSeconds(59).ToUtcDate(timeZoneCookie));
+            var lstCodedChartReport = clinicalcaseOperations.GetCodedChartsReport(ProjectId, range, StartDate, EndDate.AddHours(23).AddMinutes(59).AddSeconds(59), Convert.ToDouble(timeZoneCookie));
 
+            ViewBag.StartDate = StartDate;
+            ViewBag.EndDate = EndDate;
             ViewBag.ProjectId = ProjectId;
             ViewBag.range = range;
             _logger.LogInformation("Loading Ended for GetCodedChartsReport for User: " + mUserId);
             return PartialView("_CodedChartReport", lstCodedChartReport);
         }
         [HttpGet]
-        public IActionResult GetCodedReportDetails(DateTime date, int week, string month, string year, int ProjectId, string range)
+        public IActionResult GetCodedReportDetails(DateTime date, int week, string month, string year, int ProjectId, string range, DateTime StartDate, DateTime EndDate)
         {
             _logger.LogInformation("Loading Started for GetCodedReportDetails for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstPendingReportDetails = clinicalcaseOperations.GetCodedChartReportDetails(date.ToUtcDate(timeZoneCookie), week, month, year, ProjectId, range);
+            var lstPendingReportDetails = clinicalcaseOperations.GetCodedChartReportDetails(date, week, month, year, ProjectId, range, Convert.ToDouble(timeZoneCookie), StartDate, EndDate);
             string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.Name).FirstOrDefault();
             string projectType = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.ProjectTypeName).FirstOrDefault();
 
@@ -575,7 +579,7 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var lstPendingReportDetails = clinicalcaseOperations.GetPendingReportDetails(date, week, month, year, ProjectId, range);
             string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.Name).FirstOrDefault();
-            string projectType=clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.ProjectTypeName).FirstOrDefault();
+            string projectType = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.ProjectTypeName).FirstOrDefault();
 
             ViewBag.projectname = projectname;
             ViewBag.projectType = projectType;

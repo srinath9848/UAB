@@ -31,7 +31,8 @@ namespace UAB
             services.AddSingleton<IClock, Clock>();
             services.AddSingleton<IPasswordAlgorithm, PasswordAlgorithm>();
             services.AddMvc();
-            services.AddHttpContextAccessor();
+            services.AddSession();
+            services.AddHttpContextAccessor();         
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>
             {
@@ -52,19 +53,20 @@ namespace UAB
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+           
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
             });
-
+          
 
             app.UseEndpoints(endpoints =>
             {

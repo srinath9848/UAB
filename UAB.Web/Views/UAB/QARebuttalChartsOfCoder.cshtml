@@ -17,8 +17,8 @@
     $(".CoderDetails").css("background-color", "#e9ecef");
     $('.CoderDetails').attr('disabled', true);
 
-    $(".reject").removeClass("reject")
-    $(".accept").removeClass("accept")
+    //$(".reject").removeClass("reject")
+    //$(".accept").removeClass("accept")
 
     $(".QADetails").attr("readonly", false);
     $("#qa").addClass('selected');
@@ -325,20 +325,27 @@
                 }
             }
             else {
-                if ($("#hdnQAAcceptDxCodes").val() == "")
-                    if ($("#CoderDxCodes_" + id).val() != undefined) {
-                        $("#hdnQAAcceptDxCodes").val(id + "^" + $("#CoderDxCodes_" + id).val());
+                if ($("#hdnQAAcceptDxCodes").val() == "") {
+                    if ($("#CoderDxCodes_" + id).val() != "") {
+                        $("#hdnQAAcceptDxCodes").val(id + "^" + $("#txtDxCode_" + id).val());
                     }
-                    else {
-                        if ($("#CoderDxCodes_" + id).val() != undefined) {
-                            $("#hdnQAAcceptDxCodes").val($("#hdnQAAcceptDxCodes").val() + "|" + id + "^" + $("#CoderDxCodes_" + id).val());
-                        }
+                }
+                else {
+                    if ($("#CoderDxCodes_" + id).val() != "") {
+                        $("#hdnQAAcceptDxCodes").val($("#hdnQAAcceptDxCodes").val() + "|" + id + "^" + $("#txtDxCode_" + id).val());
                     }
+                }
 
-                if ($("#hdnQAAcceptDxRemarks").val() == "")
-                    $("#hdnQAAcceptDxRemarks").val(id + "^" + $(".CoderDXRemarks_" + id).val());
-                else
-                    $("#hdnQAAcceptDxRemarks").val($("#hdnQAAcceptDxRemarks").val() + "|" + id + "^" + $(".CoderDXRemarks_" + id).val());
+                //if ($("#hdnQAAcceptDxRemarks").val() == "") {
+                //    if ($(".CoderDXRemarks_" + id).val() != "") {
+                //        $("#hdnQAAcceptDxRemarks").val(id + "^" + $(".CoderDXRemarks_" + id).val());
+                //    }
+                //}
+                //else {
+                //    if ($(".CoderDXRemarks_" + id).val() != "") {
+                //        $("#hdnQAAcceptDxRemarks").val($("#hdnQAAcceptDxRemarks").val() + "|" + id + "^" + $(".CoderDXRemarks_" + id).val());
+                //    }
+                //}
             }
         }
 
@@ -378,23 +385,28 @@
             }
             else {
                 if ($("#hdnQAAcceptCptCodes").val() == "") {
-                    if ($("#CoderCptCodes_" + id).val() != undefined) {
-                        $("#hdnQAAcceptCptCodes").val(id + "^" + $("#CoderCptCodes_" + id).val());
+                    if ($("#CoderCptCodes_" + id).val() != "") {
+                        $("#hdnQAAcceptCptCodes").val(id + "^" + $("#txtCPTCode_" + id).val());
                     }
                 }
                 else {
-                    if ($("#CoderCptCodes_" + id).val() != undefined) {
-                        $("#hdnQAAcceptCptCodes").val($("#hdnQAAcceptCptCodes").val() + "|" + id + "^" + $("#CoderCptCodes_" + id).val());
+                    if ($("#CoderCptCodes_" + id).val() != "") {
+                        $("#hdnQAAcceptCptCodes").val($("#hdnQAAcceptCptCodes").val() + "|" + id + "^" + $("#txtCPTCode_" + id).val());
                     }
                 }
 
-                if ($("#hdnQAAcceptCptRemarks").val() == "")
-                    $("#hdnQAAcceptCptRemarks").val(id + "^" + $(".CoderCptRemarks_" + id).val());
-                else
-                    $("#hdnQAAcceptCptRemarks").val($("#hdnQAAcceptCptRemarks").val() + "|" + id + "^" + $(".CoderCptRemarks_" + id).val());
+                //if ($("#hdnQAAcceptCptRemarks").val() == "") {
+                //    if ($(".CoderCptRemarks_" + id).val() != "") {
+                //        $("#hdnQAAcceptCptRemarks").val(id + "^" + $(".CoderCptRemarks_" + id).val());
+                //    }
+                //}
+                //else {
+                //    if ($(".CoderCptRemarks_" + id).val() != "") {
+                //        $("#hdnQAAcceptCptRemarks").val($("#hdnQAAcceptCptRemarks").val() + "|" + id + "^" + $(".CoderCptRemarks_" + id).val());
+                //    }
+                //}
 
             }
-
         }
         //Reading Dx,CPT in Default Claim is Ended
 

@@ -8,7 +8,7 @@
             <partial name="_InitialData" model=Model.FirstOrDefault() />
             <partial name="_ShadowQAChartDetails" model=Model />
         </div>
-        @if (Model.FirstOrDefault().BlockResponseDTO.ResponseRemarks != null)
+        @if (Model.FirstOrDefault().BlockResponseDTO.ResponseRemarks != null&& Model.FirstOrDefault().BlockResponseDTO.BlockedInQueueKind == "ShadowQA")
         {
             <partial name="_BlockResponsePopUp" model=Model.FirstOrDefault() />
         }
@@ -552,13 +552,14 @@
                         }
                     }
                     else {
-                        if ($("#hdnShadowQAAcceptDxRemarks" + tabid).val() == "")
-                            $("#hdnShadowQAAcceptDxRemarks" + tabid).val(id + "^" + $(".QADxRemarks_" + tabid + "_" + id).val());
-                        else {
-                            if ($(".QADxRemarks_" + tabid + "_" + id).val() != undefined) {
-                                $("#hdnShadowQAAcceptDxRemarks" + tabid).val($("#hdnShadowQAAcceptDxRemarks" + tabid).val() + "|" + id + "^" + $(".QADxRemarks_" + tabid + "_" + id).val());
-                            }
+                        if ($("#hdnShadowQAAcceptDxRemarks" + tabid).val() == "") {
+                            if ($(".QADxRemarks_" + tabid + "_" + id).val() != undefined && $(".QADxRemarks_" + tabid + "_" + id).val() != "")
+                                $("#hdnShadowQAAcceptDxRemarks" + tabid).val(id + "^" + $(".QADxRemarks_" + tabid + "_" + id).val());
                         }
+                        else {
+                                if ($(".QADxRemarks_" + tabid + "_" + id).val() != undefined && $(".QADxRemarks_" + tabid + "_" + id).val() != "")
+                                    $("#hdnShadowQAAcceptDxRemarks" + tabid).val($("#hdnShadowQAAcceptDxRemarks" + tabid).val() + "|" + id + "^" + $(".QADxRemarks_" + tabid + "_" + id).val());
+                            }
                     }
                 }
 
@@ -579,12 +580,12 @@
                     }
                     else {
                         if ($("#hdnShadowQAAcceptDxCodes" + tabid).val() == "") {
-                            $("#hdnShadowQAAcceptDxCodes" + tabid).val(id + "^" + $(".txQADx_" + tabid + "_" + id).val());
+                            if ($(".txQADx_" + tabid + "_" + id).val() != undefined && $(".txQADx_" + tabid + "_" + id).val() !="")
+                                $("#hdnShadowQAAcceptDxCodes" + tabid).val(id + "^" + $(".txQADx_" + tabid + "_" + id).val());
                         }
                         else {
-                            if ($(".txQADx_" + tabid + "_" + id).val() != undefined) {
+                            if ($(".txQADx_" + tabid + "_" + id).val() != undefined && $(".txQADx_" + tabid + "_" + id).val() !="")
                                 $("#hdnShadowQAAcceptDxCodes" + tabid).val($("#hdnShadowQAAcceptDxCodes" + tabid).val() + "|" + id + "^" + $(".txQADx_" + tabid + "_" + id).val());
-                            }
                         }
                     }
                 }
@@ -642,18 +643,20 @@
                     }
                     else {
                         if ($("#hdnShadowQAAcceptCptCodes" + tabid).val() == "") {
+                            if ($("#QaCptCodes_" + tabid + "_" + id).val() != undefined && $("#QaCptCodes_" + tabid + "_" + id).val() != "")
                             $("#hdnShadowQAAcceptCptCodes" + tabid).val(id + "^" + $("#QaCptCodes_" + tabid + "_" + id).val());
                         }
                         else {
-                            if ($("#QaCptCodes_" + tabid + "_" + id).val() != undefined) {
+                            if ($("#QaCptCodes_" + tabid + "_" + id).val() != undefined && $("#QaCptCodes_" + tabid + "_" + id).val() !="") {
                                 $("#hdnShadowQAAcceptCptCodes" + tabid).val($("#hdnShadowQAAcceptCptCodes" + tabid).val() + "|" + id + "^" + $("#QaCptCodes_" + tabid + "_" + id).val());
                             }
                         }
                         if ($("#hdnShadowQAAcceptCptRemarks" + tabid).val() == "") {
+                            if ($(".QACptRemarks_" + tabid + "_" + id).val() != undefined && $(".QACptRemarks_" + tabid + "_" + id).val() != "")
                             $("#hdnShadowQAAcceptCptRemarks" + tabid).val(id + "^" + $(".QACptRemarks_" + tabid + "_" + id).val());
                         }
                         else {
-                            if ($(".QACptRemarks_" + tabid + "_" + id).val() != undefined) {
+                            if ($(".QACptRemarks_" + tabid + "_" + id).val() != undefined && $(".QACptRemarks_" + tabid + "_" + id).val() != "")  {
                                 $("#hdnShadowQAAcceptCptRemarks" + tabid).val($("#hdnShadowQAAcceptCptRemarks" + tabid).val() + "|" + id + "^" + $(".QACptRemarks_" + tabid + "_" + id).val());
                             }
                         }
@@ -666,6 +669,7 @@
 
         var Dxremarks = $("#claim1 [class*=DxRemarks_]");
         $("#hdnShadowQADxRemarks").val("");
+        $("#hdnShadowQAAcceptDxRemarks").val("");
         for (var i = 0; i < Dxremarks.length; i++) {
             var id = parseInt($(Dxremarks[i]).attr("id").split("_")[1]);
             if ($(Dxremarks[i]).css("display") == "flex") {
@@ -688,12 +692,12 @@
             }
             else {
                 if ($("#hdnShadowQAAcceptDxRemarks").val() == "") {
-                    if ($("#QARemarks_" + id).val() != undefined) {
+                    if ($("#QADxRemarks_" + id).val() != undefined && $("#QADxRemarks_" + id).val() != "") {
                         $("#hdnShadowQAAcceptDxRemarks").val(id + "^" + $("#QADxRemarks_" + id).val());
                     }
                 }
                 else {
-                    if ($("#QARemarks_" + id).val() != undefined) {
+                    if ($("#QADxRemarks_" + id).val() != undefined && $("#QADxRemarks_" + id).val() != "") {
                         $("#hdnShadowQAAcceptDxRemarks").val($("#hdnShadowQAAcceptDxRemarks").val() + "|" + id + "^" + $("#QADxRemarks_" + id).val());
                     }
                 }
@@ -702,6 +706,7 @@
 
         var DxCodes = $("#claim1 [id*=txtDx_]");
         $("#hdnShadowQADxCodes").val("");
+        $("#hdnShadowQAAcceptDxCodes").val("");
         for (var i = 0; i < DxCodes.length; i++) {
             var id = parseInt($(DxCodes[i]).attr("id").split("_")[1]);
             if ($(Dxremarks[i]).val() != "" && $(Dxremarks[i]).css("display") == "flex") {
@@ -712,22 +717,22 @@
             } else {
 
                 if ($("#hdnShadowQAAcceptDxCodes").val() == "") {
-                    if ($(".txQADx_" + id).val() != undefined) {
+                    if ($(".txQADx_" + id).val() != undefined && $(".txQADx_k" + id).val() != "") {
                         $("#hdnShadowQAAcceptDxCodes").val(id + "^" + $(".txQADx_" + id).val());
                     }
                 }
                 else {
-                    if ($(".txQADx_" + id).val() != undefined) {
+                    if ($(".txQADx_" + id).val() != undefined && $(".txQADx_" + id).val() != "") {
                         $("#hdnShadowQAAcceptDxCodes").val($("#hdnShadowQAAcceptDxCodes").val() + "|" + id + "^" + $(".txQADx_" + id).val());
                     }
                 }
-
             }
         }
 
 
         var CptRemarks = $("#claim1 [class*=CptRemarks_]");
         $("#hdnShadowQACptRemarks").val("");
+        $("#hdnShadowQAAcceptCptRemarks").val("");
         for (var i = 0; i < CptRemarks.length; i++) {
             var id = parseInt($(CptRemarks[i]).attr("id").split("_")[1]);
             if ($(CptRemarks[i]).css("display") == "flex") {
@@ -750,12 +755,12 @@
             }
             else {
                 if ($("#hdnShadowQAAcceptCptRemarks").val() == "") {
-                    if ($("#QACptRemarks_" + id).val() != undefined) {
+                    if ($("#QACptRemarks_" + id).val() != undefined && $("#QACptRemarks_" + id).val() != "") {
                         $("#hdnShadowQAAcceptCptRemarks").val(id + "^" + $("#QACptRemarks_" + id).val());
                     }
                 }
                 else {
-                    if ($("#QACptRemarks_" + id).val() != undefined) {
+                    if ($("#QACptRemarks_" + id).val() != undefined && $("#QACptRemarks_" + id).val() != "") {
                         $("#hdnShadowQAAcceptCptRemarks").val($("#hdnShadowQAAcceptCptRemarks").val() + "|" + id + "^" + $("#QACptRemarks_" + id).val());
                     }
                 }
@@ -764,6 +769,7 @@
 
         var CptCodes = $("#claim1 [id*=DivCptRow_]");
         $("#hdnShadowQACptCodes").val("");
+        $("#hdnShadowQAAcceptCptCodes").val("");
         for (var i = 1; i <= CptCodes.length; i++) {
             var id = parseInt($("#txtCpt_" + i).attr("id").split("_")[1]);
             if ($(".CptRemarks_" + id).css("display") == "flex") {
@@ -788,13 +794,12 @@
             }
             else {
                 if ($("#hdnShadowQAAcceptCptCodes").val() == "") {
-                    if ($("#QaCptCodes_" + id).val() != undefined) {
+                    if ($("#QaCptCodes_" + id).val() != undefined && $("#QaCptCodes_" + id).val() != "") {
                         $("#hdnShadowQAAcceptCptCodes").val(id + "^" + $("#QaCptCodes_" + id).val());
-
                     }
                 }
                 else {
-                    if ($("#QaCptCodes_" + id).val() != undefined) {
+                    if ($("#QaCptCodes_" + id).val() != undefined && $("#QaCptCodes_" + id).val() != "") {
                         $("#hdnShadowQAAcceptCptCodes").val($("#hdnShadowQAAcceptCptCodes").val() + "|" + id + "^" + $("#QaCptCodes_" + id).val());
                     }
                 }

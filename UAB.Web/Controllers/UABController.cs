@@ -19,6 +19,7 @@ using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Diagnostics;
+using Newtonsoft.Json;
 
 namespace UAB.Controllers
 {
@@ -68,9 +69,18 @@ namespace UAB.Controllers
             chartSummary.ProjectName = ProjectName;
 
             #region binding data
-            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
-            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
-            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            if (_httpContextAccessor.HttpContext.Session.GetString("PayorsList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("PayorsList", JsonConvert.SerializeObject(clinicalcaseOperations.GetPayorsList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ProvidersList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ProvidersList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProvidersList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+            ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
+            ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
+            ViewBag.ProviderFeedbacks = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
             #endregion
 
             _logger.LogInformation("Loading Ended for GetCodingAvailableChart for User: " + mUserId);
@@ -274,9 +284,18 @@ namespace UAB.Controllers
             List<ChartSummaryDTO> lstChartSummaryDTO = new List<ChartSummaryDTO>();
 
             #region binding data
-            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
-            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
-            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            if (_httpContextAccessor.HttpContext.Session.GetString("PayorsList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("PayorsList", JsonConvert.SerializeObject(clinicalcaseOperations.GetPayorsList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ProvidersList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ProvidersList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProvidersList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+            ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
+            ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
+            ViewBag.ProviderFeedbacks = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
             ViewBag.ErrorTypes = BindErrorType();
             ViewBag.IsBlocked = "1";
 
@@ -410,7 +429,11 @@ namespace UAB.Controllers
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ViewBag.ccid = Convert.ToInt32(ccid);
-            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ProvidersList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ProvidersList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProvidersList()));
+
+            ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
 
             _logger.LogInformation("Loading Ended for ProviderPostedClinicalcase for User: " + mUserId);
 
@@ -456,9 +479,19 @@ namespace UAB.Controllers
             lstchartSummary.FirstOrDefault().ProjectName = ProjectName;
 
             #region binding data
-            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
-            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
-            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            if (_httpContextAccessor.HttpContext.Session.GetString("PayorsList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("PayorsList", JsonConvert.SerializeObject(clinicalcaseOperations.GetPayorsList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ProvidersList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ProvidersList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProvidersList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+            ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
+            ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
+            ViewBag.ProviderFeedbacks = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
+
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
 
@@ -482,9 +515,18 @@ namespace UAB.Controllers
             }
             chartSummaryDTO.FirstOrDefault().ProjectName = ProjectName;
             #region binding data
-            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
-            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
-            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            if (_httpContextAccessor.HttpContext.Session.GetString("PayorsList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("PayorsList", JsonConvert.SerializeObject(clinicalcaseOperations.GetPayorsList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ProvidersList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ProvidersList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProvidersList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+            ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
+            ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
+            ViewBag.ProviderFeedbacks = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
             _logger.LogInformation("Loading Ended for GetCodingReadyForPostingChart for User: " + mUserId);
@@ -526,7 +568,7 @@ namespace UAB.Controllers
             foreach (var item in lstdxs)
             {
                 string[] lstdxrow = item.Split("^");
-                dtDx.Rows.Add(lstdxrow[0], claimId);
+                dtDx.Rows.Add(lstdxrow[1], claimId);
             }
         }
 
@@ -966,25 +1008,25 @@ namespace UAB.Controllers
 
             // Accepetd Dx Codes
 
-            if (!string.IsNullOrEmpty(hdnDxCodes) && !string.IsNullOrEmpty(hdnAcceptedDxRemarks))
+            if (!string.IsNullOrEmpty(hdnDxCodes))
             {
                 PrepareDxCodes(hdnDxCodes, dtDx, Convert.ToInt32(hdnClaimId1));
                 dtAudit.Rows.Add("Dx", hdnDxCodes, hdnAcceptedDxRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), true);
             }
 
-            if (!string.IsNullOrEmpty(hdnDxCodes1) && !string.IsNullOrEmpty(hdnAcceptedDxRemarks1))
+            if (!string.IsNullOrEmpty(hdnDxCodes1))
             {
                 PrepareDxCodes(hdnDxCodes1, dtDx, Convert.ToInt32(hdnClaimId2));
                 dtAudit.Rows.Add("Dx", hdnDxCodes1, hdnAcceptedDxRemarks1, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
             }
 
-            if (!string.IsNullOrEmpty(hdnDxCodes2) && !string.IsNullOrEmpty(hdnAcceptedDxRemarks2))
+            if (!string.IsNullOrEmpty(hdnDxCodes2))
             {
                 PrepareDxCodes(hdnDxCodes2, dtDx, Convert.ToInt32(hdnClaimId3));
                 dtAudit.Rows.Add("Dx", hdnDxCodes2, hdnAcceptedDxRemarks2, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
             }
 
-            if (!string.IsNullOrEmpty(hdnDxCodes3) && !string.IsNullOrEmpty(hdnAcceptedDxRemarks3))
+            if (!string.IsNullOrEmpty(hdnDxCodes3))
             {
                 PrepareDxCodes(hdnDxCodes3, dtDx, Convert.ToInt32(hdnClaimId4));
                 dtAudit.Rows.Add("Dx", hdnDxCodes3, hdnAcceptedDxRemarks3, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
@@ -992,25 +1034,25 @@ namespace UAB.Controllers
 
             // Accepetd CPT Codes
 
-            if (!string.IsNullOrEmpty(hdnCptCodes) && !string.IsNullOrEmpty(hdnAcceptedCptRemarks))
+            if (!string.IsNullOrEmpty(hdnCptCodes))
             {
                 PrepareCptCodes(hdnCptCodes, dtCpt, Convert.ToInt32(hdnClaimId1));
                 dtAudit.Rows.Add("CPTCode", hdnCptCodes, hdnAcceptedCptRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), true);
             }
 
-            if (!string.IsNullOrEmpty(hdnCptCodes1) && !string.IsNullOrEmpty(hdnAcceptedCptRemarks1))
+            if (!string.IsNullOrEmpty(hdnCptCodes1))
             {
                 PrepareCptCodes(hdnCptCodes1, dtCpt, Convert.ToInt32(hdnClaimId2));
                 dtAudit.Rows.Add("CPTCode", hdnCptCodes1, hdnAcceptedCptRemarks1, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
             }
 
-            if (!string.IsNullOrEmpty(hdnCptCodes2) && !string.IsNullOrEmpty(hdnAcceptedCptRemarks2))
+            if (!string.IsNullOrEmpty(hdnCptCodes2))
             {
                 PrepareCptCodes(hdnCptCodes2, dtCpt, Convert.ToInt32(hdnClaimId3));
                 dtAudit.Rows.Add("CPTCode", hdnCptCodes1, hdnAcceptedCptRemarks2, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
             }
 
-            if (!string.IsNullOrEmpty(hdnCptCodes3) && !string.IsNullOrEmpty(hdnAcceptedCptRemarks3))
+            if (!string.IsNullOrEmpty(hdnCptCodes3))
             {
                 PrepareCptCodes(hdnCptCodes3, dtCpt, Convert.ToInt32(hdnClaimId4));
                 dtAudit.Rows.Add("CPTCode", hdnCptCodes1, hdnAcceptedCptRemarks3, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
@@ -1067,12 +1109,22 @@ namespace UAB.Controllers
             _logger.LogInformation("Loading Started for AddNewClaim for User: " + mUserId);
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var prlst = clinicalcaseOperations.GetProvidersList();
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("PayorsList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("PayorsList", JsonConvert.SerializeObject(clinicalcaseOperations.GetPayorsList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ProvidersList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ProvidersList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProvidersList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+            var prlst = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
             prlst.RemoveAll(x => x.ID == pid1 || x.ID == pid2 || x.ID == pid3 || x.ID == pid4);
             ViewBag.Providers = prlst;
             //ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
-            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
-            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
+            ViewBag.ProviderFeedbacks = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
             ViewBag.ClaimId = claimID;
 
             _logger.LogInformation("Loading Ended for AddNewClaim for User: " + mUserId);
@@ -1105,9 +1157,19 @@ namespace UAB.Controllers
                 lstchartSummary.FirstOrDefault().ProjectName = ProjectName;
 
             #region binding data
-            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
-            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
-            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            if (_httpContextAccessor.HttpContext.Session.GetString("PayorsList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("PayorsList", JsonConvert.SerializeObject(clinicalcaseOperations.GetPayorsList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ProvidersList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ProvidersList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProvidersList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+            ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
+            ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
+            ViewBag.ProviderFeedbacks = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
+
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
             if (lstchartSummary.Count == 0)
@@ -1136,9 +1198,19 @@ namespace UAB.Controllers
                 lstchartSummary.FirstOrDefault().ProjectName = ProjectName;
 
             #region binding data
-            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
-            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
-            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            if (_httpContextAccessor.HttpContext.Session.GetString("PayorsList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("PayorsList", JsonConvert.SerializeObject(clinicalcaseOperations.GetPayorsList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ProvidersList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ProvidersList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProvidersList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+            ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
+            ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
+            ViewBag.ProviderFeedbacks = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
+
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
             if (lstchartSummary.Count == 0)
@@ -1162,9 +1234,19 @@ namespace UAB.Controllers
             lstChartSummaryDTO.FirstOrDefault().ProjectName = ProjectName;
 
             #region binding data
-            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
-            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
-            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            if (_httpContextAccessor.HttpContext.Session.GetString("PayorsList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("PayorsList", JsonConvert.SerializeObject(clinicalcaseOperations.GetPayorsList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ProvidersList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ProvidersList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProvidersList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+            ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
+            ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
+            ViewBag.ProviderFeedbacks = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
+
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
             _logger.LogInformation("Loading Ended for GetQARejectedChartsOfShadowQA for User: " + mUserId);
@@ -1493,10 +1575,10 @@ namespace UAB.Controllers
 
             if (!string.IsNullOrEmpty(hdnQAErrorTypeID1))
             {
-                if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes) && !string.IsNullOrEmpty(hdnQAAcceptDxRemarks))
+                if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes))
                     dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes, hdnQAAcceptDxRemarks, Convert.ToInt32(hdnQAErrorTypeID1), 0, true);
 
-                if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes) && !string.IsNullOrEmpty(hdnQAAcceptCptRemarks))
+                if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes))
                     dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes, hdnQAAcceptCptRemarks, Convert.ToInt32(hdnQAErrorTypeID1), 0, true);
             }
 
@@ -1509,10 +1591,10 @@ namespace UAB.Controllers
 
             if (!string.IsNullOrEmpty(hdnQAErrorTypeID2))
             {
-                if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes2) && !string.IsNullOrEmpty(hdnQAAcceptDxRemarks2))
+                if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes2))
                     dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes2, hdnQAAcceptDxRemarks2, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
 
-                if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes2) && !string.IsNullOrEmpty(hdnQAAcceptCptRemarks2))
+                if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes2))
                     dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes2, hdnQAAcceptCptRemarks2, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
             }
 
@@ -1525,10 +1607,10 @@ namespace UAB.Controllers
 
             if (!string.IsNullOrEmpty(hdnQAErrorTypeID3))
             {
-                if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes3) && !string.IsNullOrEmpty(hdnQAAcceptDxRemarks3))
+                if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes3))
                     dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes3, hdnQAAcceptDxRemarks3, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
 
-                if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes3) && !string.IsNullOrEmpty(hdnQAAcceptCptRemarks3))
+                if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes3))
                     dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes3, hdnQAAcceptCptRemarks3, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
             }
 
@@ -1541,10 +1623,10 @@ namespace UAB.Controllers
 
             if (!string.IsNullOrEmpty(hdnQAErrorTypeID4))
             {
-                if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes4) && !string.IsNullOrEmpty(hdnQAAcceptDxRemarks4))
+                if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes4))
                     dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes4, hdnQAAcceptDxRemarks4, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
 
-                if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes4) && !string.IsNullOrEmpty(hdnQAAcceptCptRemarks4))
+                if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes4))
                     dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes4, hdnQAAcceptCptRemarks4, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
             }
 
@@ -1676,17 +1758,37 @@ namespace UAB.Controllers
 
             // basic Accept Params for Claim 1 - Claim 2
 
-            if (!string.IsNullOrEmpty(hdnAcceptClaim1) && !string.IsNullOrEmpty(hdnQAErrorTypeID1))
-                PrepareAcceptAudit(hdnAcceptClaim1, dtAudit, Convert.ToInt32(hdnQAErrorTypeID1));
+            if (!string.IsNullOrEmpty(hdnAcceptClaim1))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID1))
+                    PrepareAcceptAudit(hdnAcceptClaim1, dtAudit, Convert.ToInt32(hdnQAErrorTypeID1));
+                else
+                    PrepareAcceptAudit(hdnAcceptClaim1, dtAudit, 0);
+            }
 
-            if (!string.IsNullOrEmpty(hdnAcceptClaim2) && !string.IsNullOrEmpty(hdnQAErrorTypeID2))
-                PrepareAcceptAudit(hdnAcceptClaim2, dtAudit, Convert.ToInt32(hdnQAErrorTypeID2));
+            if (!string.IsNullOrEmpty(hdnAcceptClaim2))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID2))
+                    PrepareAcceptAudit(hdnAcceptClaim2, dtAudit, Convert.ToInt32(hdnQAErrorTypeID2));
+                else
+                    PrepareAcceptAudit(hdnAcceptClaim2, dtAudit, 0);
+            }
 
-            if (!string.IsNullOrEmpty(hdnAcceptClaim3) && !string.IsNullOrEmpty(hdnQAErrorTypeID3))
-                PrepareAcceptAudit(hdnAcceptClaim3, dtAudit, Convert.ToInt32(hdnQAErrorTypeID3));
+            if (!string.IsNullOrEmpty(hdnAcceptClaim3))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID3))
+                    PrepareAcceptAudit(hdnAcceptClaim3, dtAudit, Convert.ToInt32(hdnQAErrorTypeID3));
+                else
+                    PrepareAcceptAudit(hdnAcceptClaim3, dtAudit, 0);
+            }
 
-            if (!string.IsNullOrEmpty(hdnAcceptClaim4) && !string.IsNullOrEmpty(hdnQAErrorTypeID4))
-                PrepareAcceptAudit(hdnAcceptClaim4, dtAudit, Convert.ToInt32(hdnQAErrorTypeID4));
+            if (!string.IsNullOrEmpty(hdnAcceptClaim4))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID4))
+                    PrepareAcceptAudit(hdnAcceptClaim4, dtAudit, Convert.ToInt32(hdnQAErrorTypeID4));
+                else
+                    PrepareAcceptAudit(hdnAcceptClaim4, dtAudit, 0);
+            }
 
             // basic Reject Params for Claim 1 - Claim 2
 
@@ -1710,11 +1812,21 @@ namespace UAB.Controllers
                 dtAudit.Rows.Add("CPTCode", hdnQACptCodes, hdnQACptRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), false);
 
             // Accept Claim 1 Dx & CPT
-            if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes) && !string.IsNullOrEmpty(hdnQAAcceptDxRemarks))
-                dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes, hdnQAAcceptDxRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), true);
+            if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID1))
+                    dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes, hdnQAAcceptDxRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), true);
+                else
+                    dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes, hdnQAAcceptDxRemarks, 0, Convert.ToInt32(hdnClaimId1), true);
+            }
 
-            if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes) && !string.IsNullOrEmpty(hdnQAAcceptCptRemarks))
-                dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes, hdnQAAcceptCptRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), true);
+            if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID1))
+                    dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes, hdnQAAcceptCptRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), true);
+                else
+                    dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes, hdnQAAcceptCptRemarks, 0, Convert.ToInt32(hdnClaimId1), true);
+            }
 
             // Reject 2 Dx & CPT
             if (!string.IsNullOrEmpty(hdnQADxCodes2) && !string.IsNullOrEmpty(hdnQADxRemarks2))
@@ -1724,12 +1836,21 @@ namespace UAB.Controllers
                 dtAudit.Rows.Add("CPTCode", hdnQACptCodes2, hdnQACptRemarks2, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), false);
 
             // Accept 2 Dx & CPT
-            if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes2) && !string.IsNullOrEmpty(hdnQAAcceptDxRemarks2))
-                dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes2, hdnQAAcceptDxRemarks2, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
+            if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes2))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID2))
+                    dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes2, hdnQAAcceptDxRemarks2, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
+                else
+                    dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes2, hdnQAAcceptDxRemarks2, 0, Convert.ToInt32(hdnClaimId2), true);
+            }
 
-            if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes2) && !string.IsNullOrEmpty(hdnQAAcceptCptRemarks2))
-                dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes2, hdnQAAcceptCptRemarks2, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
-
+            if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes2))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID2))
+                    dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes2, hdnQAAcceptCptRemarks2, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
+                else
+                    dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes2, hdnQAAcceptCptRemarks2, 0, Convert.ToInt32(hdnClaimId2), true);
+            }
             // Reject Claim 3 Dx & CPT
             if (!string.IsNullOrEmpty(hdnQADxCodes3) && !string.IsNullOrEmpty(hdnQADxRemarks3))
                 dtAudit.Rows.Add("Dx", hdnQADxCodes3, hdnQADxRemarks3, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), false);
@@ -1738,12 +1859,20 @@ namespace UAB.Controllers
                 dtAudit.Rows.Add("CPTCode", hdnQACptCodes3, hdnQACptRemarks3, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), false);
 
             // Accept Claim 3 Dx & CPT
-            if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes3) && !string.IsNullOrEmpty(hdnQAAcceptDxRemarks3))
-                dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes3, hdnQAAcceptDxRemarks3, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
-
-            if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes3) && !string.IsNullOrEmpty(hdnQAAcceptCptRemarks3))
-                dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes3, hdnQAAcceptCptRemarks3, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
-
+            if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes3))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID3))
+                    dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes3, hdnQAAcceptDxRemarks3, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
+                else
+                    dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes3, hdnQAAcceptDxRemarks3, 0, Convert.ToInt32(hdnClaimId3), true);
+            }
+            if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes3))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID3))
+                    dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes3, hdnQAAcceptCptRemarks3, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
+                else
+                    dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes3, hdnQAAcceptCptRemarks3, 0, Convert.ToInt32(hdnClaimId3), true);
+            }
             // Reject Claim 4 Dx & CPT
             if (!string.IsNullOrEmpty(hdnQADxCodes4) && !string.IsNullOrEmpty(hdnQADxRemarks4))
                 dtAudit.Rows.Add("Dx", hdnQADxCodes4, hdnQADxRemarks4, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), false);
@@ -1752,11 +1881,20 @@ namespace UAB.Controllers
                 dtAudit.Rows.Add("CPTCode", hdnQACptCodes4, hdnQACptRemarks4, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), false);
 
             // Accept Claim 4 Dx & CPT
-            if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes4) && !string.IsNullOrEmpty(hdnQAAcceptDxRemarks4))
-                dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes4, hdnQAAcceptDxRemarks4, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
-
-            if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes4) && !string.IsNullOrEmpty(hdnQAAcceptCptRemarks4))
-                dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes4, hdnQAAcceptCptRemarks4, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
+            if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes4))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID3))
+                    dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes4, hdnQAAcceptDxRemarks4, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
+                else
+                    dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes4, hdnQAAcceptDxRemarks4, 0, Convert.ToInt32(hdnClaimId4), true);
+            }
+            if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes4))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID4))
+                    dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes4, hdnQAAcceptCptRemarks4, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
+                else
+                    dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes4, hdnQAAcceptCptRemarks4, 0, Convert.ToInt32(hdnClaimId4), true);
+            }
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
@@ -1811,9 +1949,19 @@ namespace UAB.Controllers
                 lstchartSummary.FirstOrDefault().ProjectName = ProjectName;
 
             #region binding data
-            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
-            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
-            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            if (_httpContextAccessor.HttpContext.Session.GetString("PayorsList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("PayorsList", JsonConvert.SerializeObject(clinicalcaseOperations.GetPayorsList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ProvidersList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ProvidersList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProvidersList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+            ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
+            ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
+            ViewBag.ProviderFeedbacks = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
+
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
 
@@ -1842,9 +1990,19 @@ namespace UAB.Controllers
             lstChartSummaryDTO.FirstOrDefault().ProjectName = ProjectName;
 
             #region binding data
-            ViewBag.Payors = clinicalcaseOperations.GetPayorsList();
-            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
-            ViewBag.ProviderFeedbacks = clinicalcaseOperations.GetProviderFeedbacksList();
+            if (_httpContextAccessor.HttpContext.Session.GetString("PayorsList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("PayorsList", JsonConvert.SerializeObject(clinicalcaseOperations.GetPayorsList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ProvidersList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ProvidersList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProvidersList()));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+            ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
+            ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
+            ViewBag.ProviderFeedbacks = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
+
             ViewBag.ErrorTypes = BindErrorType();
             #endregion
             _logger.LogInformation("Loading Ended for GetShadowQARebuttalChartsOfQA for User: " + mUserId);
@@ -1852,7 +2010,7 @@ namespace UAB.Controllers
         }
 
         [HttpPost]
-        public IActionResult SubmitShadowQAAvailableChart(ChartSummaryDTO chartSummaryDTO, bool hdnIsQAAgreed, string SubmitAndGetNext)
+        public IActionResult SubmitShadowQAAvailableChart(ChartSummaryDTO chartSummaryDTO, string SubmitAndGetNext)
         {
             _logger.LogInformation("Loading Started for SubmitShadowQAAvailableChart for User: " + mUserId);
 
@@ -1959,43 +2117,50 @@ namespace UAB.Controllers
             if (!string.IsNullOrEmpty(hdnClaim4))
                 PrepareRejectAudit(hdnClaim4, dtAudit, Convert.ToInt32(hdnShadowQAErrorTypeID4));
 
-            // Accept Dx & CPT
+            // Claim 1 Accept Dx & CPT
 
-            // Claim 1 Dx & CPT
-            if (!string.IsNullOrEmpty(hdnShadowQAErrorTypeID1))
+            if (!string.IsNullOrEmpty(hdnShadowQAAcceptDxCodes) && !string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes) && hdnShadowQAErrorTypeID1 != "0")
             {
-                if (!string.IsNullOrEmpty(hdnShadowQAAcceptDxCodes))
-                    dtAudit.Rows.Add("Dx", hdnShadowQAAcceptDxCodes, hdnShadowQAAcceptDxRemarks, Convert.ToInt32(hdnShadowQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), true);
-
-                if (!string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes))
-                    dtAudit.Rows.Add("CPTCode", hdnShadowQAAcceptCptCodes, hdnShadowQAAcceptCptRemarks, Convert.ToInt32(hdnShadowQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), true);
+                dtAudit.Rows.Add("Dx", hdnShadowQAAcceptDxCodes, hdnShadowQAAcceptDxRemarks, Convert.ToInt32(hdnShadowQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), true);
+                dtAudit.Rows.Add("CPTCode", hdnShadowQAAcceptCptCodes, hdnShadowQAAcceptCptRemarks, Convert.ToInt32(hdnShadowQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), true);
             }
-            // Claim 2 Dx & CPT
-            if (!string.IsNullOrEmpty(hdnShadowQAErrorTypeID2))
+            else if (!string.IsNullOrEmpty(hdnShadowQAAcceptDxCodes) && !string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes))
             {
-                if (!string.IsNullOrEmpty(hdnShadowQAAcceptDxCodes2))
-                    dtAudit.Rows.Add("Dx", hdnShadowQAAcceptDxCodes2, hdnShadowQAAcceptDxRemarks2, Convert.ToInt32(hdnShadowQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
-
-                if (!string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes2))
-                    dtAudit.Rows.Add("CPTCode", hdnShadowQAAcceptCptCodes2, hdnShadowQAAcceptCptRemarks2, Convert.ToInt32(hdnShadowQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
+                dtAudit.Rows.Add("Dx", hdnShadowQAAcceptDxCodes, hdnShadowQAAcceptDxRemarks, Convert.ToInt32(hdnShadowQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), true);
+                dtAudit.Rows.Add("CPTCode", hdnShadowQAAcceptCptCodes, hdnShadowQAAcceptDxRemarks, Convert.ToInt32(hdnShadowQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), true);
             }
-            if (!string.IsNullOrEmpty(hdnShadowQAErrorTypeID3))
+            // Claim 2 Accept Dx & CPT
+            if (!string.IsNullOrEmpty(hdnShadowQAAcceptDxCodes2) && !string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes2) && hdnShadowQAErrorTypeID2 != "0")
             {
-                // Claim 3 Dx & CPT
-                if (!string.IsNullOrEmpty(hdnShadowQAAcceptDxCodes3))
-                    dtAudit.Rows.Add("Dx", hdnShadowQAAcceptDxCodes3, hdnShadowQAAcceptDxRemarks3, Convert.ToInt32(hdnShadowQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
-
-                if (!string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes3))
-                    dtAudit.Rows.Add("CPTCode", hdnShadowQAAcceptCptCodes3, hdnShadowQAAcceptCptRemarks3, Convert.ToInt32(hdnShadowQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
+                dtAudit.Rows.Add("Dx", hdnShadowQAAcceptDxCodes2, hdnShadowQAAcceptDxRemarks2, Convert.ToInt32(hdnShadowQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
+                dtAudit.Rows.Add("CPTCode", hdnShadowQAAcceptCptCodes2, hdnShadowQAAcceptCptRemarks2, Convert.ToInt32(hdnShadowQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
             }
-            if (!string.IsNullOrEmpty(hdnShadowQAErrorTypeID4))
+            else if (!string.IsNullOrEmpty(hdnShadowQAAcceptDxCodes2) && !string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes2))
             {
-                // Claim 4 Dx & CPT
-                if (!string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes4))
-                    dtAudit.Rows.Add("Dx", hdnShadowQAAcceptCptCodes4, hdnShadowQAAcceptDxRemarks4, Convert.ToInt32(hdnShadowQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
-
-                if (!string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes4))
-                    dtAudit.Rows.Add("CPTCode", hdnShadowQAAcceptCptCodes4, hdnShadowQAAcceptCptRemarks4, Convert.ToInt32(hdnShadowQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
+                dtAudit.Rows.Add("Dx", hdnShadowQAAcceptDxCodes2, hdnShadowQAAcceptDxRemarks2, Convert.ToInt32(hdnShadowQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
+                dtAudit.Rows.Add("CPTCode", hdnShadowQAAcceptCptCodes2, hdnShadowQAAcceptDxRemarks2, Convert.ToInt32(hdnShadowQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
+            }
+            // Claim 3 Accept Dx & CPT
+            if (!string.IsNullOrEmpty(hdnShadowQAAcceptDxCodes3) && !string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes3) && hdnShadowQAErrorTypeID3 != "0")
+            {
+                dtAudit.Rows.Add("Dx", hdnShadowQAAcceptDxCodes3, hdnShadowQAAcceptDxRemarks3, Convert.ToInt32(hdnShadowQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
+                dtAudit.Rows.Add("CPTCode", hdnShadowQAAcceptCptCodes3, hdnShadowQAAcceptCptRemarks3, Convert.ToInt32(hdnShadowQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
+            }
+            else if (!string.IsNullOrEmpty(hdnShadowQAAcceptDxCodes3) && !string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes3))
+            {
+                dtAudit.Rows.Add("Dx", hdnShadowQAAcceptDxCodes3, hdnShadowQAAcceptDxRemarks3, Convert.ToInt32(hdnShadowQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
+                dtAudit.Rows.Add("CPTCode", hdnShadowQAAcceptCptCodes3, hdnShadowQAAcceptDxRemarks3, Convert.ToInt32(hdnShadowQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
+            }
+            // Claim 4 Accept Dx & CPT
+            if (!string.IsNullOrEmpty(hdnShadowQAAcceptDxCodes4) && !string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes4) && hdnShadowQAErrorTypeID4 != "0")
+            {
+                dtAudit.Rows.Add("Dx", hdnShadowQAAcceptDxCodes4, hdnShadowQAAcceptDxRemarks4, Convert.ToInt32(hdnShadowQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
+                dtAudit.Rows.Add("CPTCode", hdnShadowQAAcceptCptCodes4, hdnShadowQAAcceptCptRemarks4, Convert.ToInt32(hdnShadowQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
+            }
+            else if (!string.IsNullOrEmpty(hdnShadowQAAcceptDxCodes4) && !string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes4))
+            {
+                dtAudit.Rows.Add("Dx", hdnShadowQAAcceptDxCodes4, hdnShadowQAAcceptDxRemarks4, Convert.ToInt32(hdnShadowQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
+                dtAudit.Rows.Add("CPTCode", hdnShadowQAAcceptCptCodes4, hdnShadowQAAcceptDxRemarks4, Convert.ToInt32(hdnShadowQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
             }
 
             // Reject Dx & CPT
@@ -2029,14 +2194,13 @@ namespace UAB.Controllers
                 dtAudit.Rows.Add("CPTCode", hdnShadowQACptCodes4, hdnShadowQACptRemarks4, Convert.ToInt32(hdnShadowQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), false);
 
 
-            bool isQAAgreed = hdnIsQAAgreed;// Convert.ToBoolean(Request.Form["hdnIsQAAgreed"]);
             List<DashboardDTO> lstDto = new List<DashboardDTO>();
 
             if (string.IsNullOrEmpty(SubmitAndGetNext))
-                clinicalcaseOperations.SubmitShadowQAAvailableChart(chartSummaryDTO, isQAAgreed, dtAudit);
+                clinicalcaseOperations.SubmitShadowQAAvailableChart(chartSummaryDTO, dtAudit);
             else
             {
-                clinicalcaseOperations.SubmitShadowQAAvailableChart(chartSummaryDTO, isQAAgreed, dtAudit);
+                clinicalcaseOperations.SubmitShadowQAAvailableChart(chartSummaryDTO, dtAudit);
                 if (hdnIsBlocked == "1" && hdnBlockedCCIds != "" && hdnCurrentCCId != "")
                 {
                     List<int> blockedCCIds = hdnBlockedCCIds.Split(",").Select(int.Parse).ToList();
@@ -2150,17 +2314,37 @@ namespace UAB.Controllers
 
             // basic Accept Params for Claim 1 - Claim 2
 
-            if (!string.IsNullOrEmpty(hdnAcceptClaim1) && !string.IsNullOrEmpty(hdnQAErrorTypeID1))
-                PrepareAcceptAudit(hdnAcceptClaim1, dtAudit, Convert.ToInt32(hdnQAErrorTypeID1));
+            if (!string.IsNullOrEmpty(hdnAcceptClaim1))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID1))
+                    PrepareAcceptAudit(hdnAcceptClaim1, dtAudit, Convert.ToInt32(hdnQAErrorTypeID1));
+                else
+                    PrepareAcceptAudit(hdnAcceptClaim1, dtAudit, 0);
+            }
 
-            if (!string.IsNullOrEmpty(hdnAcceptClaim2) && !string.IsNullOrEmpty(hdnQAErrorTypeID2))
-                PrepareAcceptAudit(hdnAcceptClaim2, dtAudit, Convert.ToInt32(hdnQAErrorTypeID2));
+            if (!string.IsNullOrEmpty(hdnAcceptClaim2))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID2))
+                    PrepareAcceptAudit(hdnAcceptClaim2, dtAudit, Convert.ToInt32(hdnQAErrorTypeID2));
+                else
+                    PrepareAcceptAudit(hdnAcceptClaim2, dtAudit, 0);
+            }
 
-            if (!string.IsNullOrEmpty(hdnAcceptClaim3) && !string.IsNullOrEmpty(hdnQAErrorTypeID3))
-                PrepareAcceptAudit(hdnAcceptClaim3, dtAudit, Convert.ToInt32(hdnQAErrorTypeID3));
+            if (!string.IsNullOrEmpty(hdnAcceptClaim3))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID3))
+                    PrepareAcceptAudit(hdnAcceptClaim3, dtAudit, Convert.ToInt32(hdnQAErrorTypeID3));
+                else
+                    PrepareAcceptAudit(hdnAcceptClaim3, dtAudit, 0);
+            }
 
-            if (!string.IsNullOrEmpty(hdnAcceptClaim4) && !string.IsNullOrEmpty(hdnQAErrorTypeID4))
-                PrepareAcceptAudit(hdnAcceptClaim4, dtAudit, Convert.ToInt32(hdnQAErrorTypeID4));
+            if (!string.IsNullOrEmpty(hdnAcceptClaim4))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID4))
+                    PrepareAcceptAudit(hdnAcceptClaim4, dtAudit, Convert.ToInt32(hdnQAErrorTypeID4));
+                else
+                    PrepareAcceptAudit(hdnAcceptClaim4, dtAudit, 0);
+            }
 
             // basic Reject Params for Claim 1 - Claim 2
 
@@ -2184,12 +2368,21 @@ namespace UAB.Controllers
                 dtAudit.Rows.Add("CPTCode", hdnQACptCodes, hdnQACptRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), false);
 
             // Accept Claim 1 Dx & CPT
-            if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes) && !string.IsNullOrEmpty(hdnQAAcceptDxRemarks))
-                dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes, hdnQAAcceptDxRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), true);
+            if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID1))
+                    dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes, hdnQAAcceptDxRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), true);
+                else
+                    dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes, hdnQAAcceptDxRemarks, 0, Convert.ToInt32(hdnClaimId1), true);
+            }
 
-            if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes) && !string.IsNullOrEmpty(hdnQAAcceptCptRemarks))
-                dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes, hdnQAAcceptCptRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), true);
-
+            if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID1))
+                    dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes, hdnQAAcceptCptRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), true);
+                else
+                    dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes, hdnQAAcceptCptRemarks, 0, Convert.ToInt32(hdnClaimId1), true);
+            }
             // Reject 2 Dx & CPT
             if (!string.IsNullOrEmpty(hdnQADxCodes2) && !string.IsNullOrEmpty(hdnQADxRemarks2))
                 dtAudit.Rows.Add("Dx", hdnQADxCodes2, hdnQADxRemarks2, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), false);
@@ -2198,12 +2391,20 @@ namespace UAB.Controllers
                 dtAudit.Rows.Add("CPTCode", hdnQACptCodes2, hdnQACptRemarks2, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), false);
 
             // Accept 2 Dx & CPT
-            if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes2) && !string.IsNullOrEmpty(hdnQAAcceptDxRemarks2))
-                dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes2, hdnQAAcceptDxRemarks2, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
-
-            if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes2) && !string.IsNullOrEmpty(hdnQAAcceptCptRemarks2))
-                dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes2, hdnQAAcceptCptRemarks2, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
-
+            if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes2))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID2))
+                    dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes2, hdnQAAcceptDxRemarks2, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
+                else
+                    dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes2, hdnQAAcceptDxRemarks2, 0, Convert.ToInt32(hdnClaimId2), true);
+            }
+            if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes2))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID2))
+                    dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes2, hdnQAAcceptCptRemarks2, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
+                else
+                    dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes2, hdnQAAcceptCptRemarks2, 0, Convert.ToInt32(hdnClaimId2), true);
+            }
             // Reject Claim 3 Dx & CPT
             if (!string.IsNullOrEmpty(hdnQADxCodes3) && !string.IsNullOrEmpty(hdnQADxRemarks3))
                 dtAudit.Rows.Add("Dx", hdnQADxCodes3, hdnQADxRemarks3, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), false);
@@ -2212,12 +2413,20 @@ namespace UAB.Controllers
                 dtAudit.Rows.Add("CPTCode", hdnQACptCodes3, hdnQACptRemarks3, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), false);
 
             // Accept Claim 3 Dx & CPT
-            if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes3) && !string.IsNullOrEmpty(hdnQAAcceptDxRemarks3))
-                dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes3, hdnQAAcceptDxRemarks3, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
-
-            if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes3) && !string.IsNullOrEmpty(hdnQAAcceptCptRemarks3))
-                dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes3, hdnQAAcceptCptRemarks3, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
-
+            if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes3))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID3))
+                    dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes3, hdnQAAcceptDxRemarks3, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
+                else
+                    dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes3, hdnQAAcceptDxRemarks3, 0, Convert.ToInt32(hdnClaimId3), true);
+            }
+            if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes3))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID3))
+                    dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes3, hdnQAAcceptCptRemarks3, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
+                else
+                    dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes3, hdnQAAcceptCptRemarks3, 0, Convert.ToInt32(hdnClaimId3), true);
+            }
             // Reject Claim 4 Dx & CPT
             if (!string.IsNullOrEmpty(hdnQADxCodes4) && !string.IsNullOrEmpty(hdnQADxRemarks4))
                 dtAudit.Rows.Add("Dx", hdnQADxCodes4, hdnQADxRemarks4, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), false);
@@ -2226,12 +2435,20 @@ namespace UAB.Controllers
                 dtAudit.Rows.Add("CPTCode", hdnQACptCodes4, hdnQACptRemarks4, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), false);
 
             // Accept Claim 4 Dx & CPT
-            if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes4) && !string.IsNullOrEmpty(hdnQAAcceptDxRemarks4))
-                dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes4, hdnQAAcceptDxRemarks4, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
-
-            if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes4) && !string.IsNullOrEmpty(hdnQAAcceptCptRemarks4))
-                dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes4, hdnQAAcceptCptRemarks4, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
-
+            if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes4))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID3))
+                    dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes4, hdnQAAcceptDxRemarks4, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
+                else
+                    dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes4, hdnQAAcceptDxRemarks4, 0, Convert.ToInt32(hdnClaimId4), true);
+            }
+            if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes4))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID4))
+                    dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes4, hdnQAAcceptCptRemarks4, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
+                else
+                    dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes4, hdnQAAcceptCptRemarks4, 0, Convert.ToInt32(hdnClaimId4), true);
+            }
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
@@ -2251,7 +2468,11 @@ namespace UAB.Controllers
         public List<BindDTO> BindErrorType()
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            List<ErrorType> lstErrorType = clinicalcaseOperations.GetErrorTypes();
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ErrorType") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ErrorType", JsonConvert.SerializeObject(clinicalcaseOperations.GetErrorTypes()));
+
+            List<ErrorType> lstErrorType = JsonConvert.DeserializeObject<List<ErrorType>>(_httpContextAccessor.HttpContext.Session.GetString("ErrorType"));
 
             List<BindDTO> lstDto = new List<BindDTO>();
 
@@ -2306,9 +2527,13 @@ namespace UAB.Controllers
             _logger.LogInformation("Loading Started for Fetching SettingsSearch for User: " + mUserId);
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("ProvidersList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("ProvidersList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProvidersList()));
+
             ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
             ViewBag.Status = clinicalcaseOperations.GetStatusList();
-            ViewBag.Providers = clinicalcaseOperations.GetProvidersList();
+            ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
             _logger.LogInformation("Loading Ended for Fetching SettingsSearch for User: " + mUserId);
             return View();
         }
@@ -2904,10 +3129,11 @@ namespace UAB.Controllers
         public IActionResult SettingsProviderFeedback()
         {
             _logger.LogInformation("Loading Started for SettingsProviderFeedback for User: " + mUserId);
-            List<BindDTO> lstProviderFeedback = new List<BindDTO>();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            lstProviderFeedback = clinicalcaseOperations.GetProviderFeedbacksList();
-            ViewBag.lstProviderFeedback = lstProviderFeedback;
+            if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+            ViewBag.lstProviderFeedback = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList")); ;
             _logger.LogInformation("Loading Ended for SettingsProviderFeedback for User: " + mUserId);
             return View();
         }
@@ -2921,7 +3147,10 @@ namespace UAB.Controllers
             {
                 List<BindDTO> lstproviderFeedback = new List<BindDTO>();
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-                lstproviderFeedback = clinicalcaseOperations.GetProviderFeedbacksList();
+                if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                    _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+                lstproviderFeedback = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
                 var res = lstproviderFeedback.Where(a => a.ID == id).FirstOrDefault();
                 obj = res;
             }
@@ -2938,7 +3167,11 @@ namespace UAB.Controllers
             {
                 List<BindDTO> lstproviderFeedback = new List<BindDTO>();
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-                lstproviderFeedback = clinicalcaseOperations.GetProviderFeedbacksList();
+
+                if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                    _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+                lstproviderFeedback = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList")); ;
                 var res = lstproviderFeedback.Where(a => a.ID == id).FirstOrDefault();
                 obj = res;
             }
