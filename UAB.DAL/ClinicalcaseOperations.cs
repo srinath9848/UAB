@@ -2570,6 +2570,12 @@ namespace UAB.DAL
                     SqlDbType = System.Data.SqlDbType.Bit,
                      Direction = System.Data.ParameterDirection.Input,
                      Value = chartSummaryDTO.SubmitAndPostAlso
+                 },
+                  new SqlParameter() {
+                    ParameterName = "@IsWrongProvider",
+                    SqlDbType = System.Data.SqlDbType.Bit,
+                     Direction = System.Data.ParameterDirection.Input,
+                     Value = chartSummaryDTO.isWrongProvider
                  }
                 };
 
