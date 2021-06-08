@@ -46,7 +46,8 @@
                             <h5 class="card">Aging Break down Report</h5>
                         </div>
                         <div class="col-1">
-                            <input class="btn btn-info" style="height:32px" type="button" onclick="ExportAgingReportByProject()" value="Export" />
+                            @Html.ActionLink("Export", "ExportAgingReportByProject")
+                            @*<input class="btn btn-info" style="height:32px" type="button" onclick="ExportAgingReportByProject()" value="Export" />*@
                         </div>
                         <input type="hidden" id="ExportAgingReportByProject" value="@Model.Tables[0]" />
                     </div>
@@ -129,7 +130,8 @@
                             <h5 class="card">Aging Break down by Status Report</h5>
                         </div>
                         <div class="col-1">
-                            <input class="btn btn-info" style="height:32px" type="button" onclick="ExportAgingReportByStatus()" value="Export" />
+                            @Html.ActionLink("Export", "ExportAgingReportByStatus")
+                            @*<input class="btn btn-info" style="height:32px" type="button" onclick="ExportAgingReportByStatus()" value="Export" />*@
                         </div>
                         <input type="hidden" id="ExportAgingReportByStatus" value="@Model.Tables[0]" />
                     </div>
@@ -287,7 +289,7 @@
                     "dataTableName": ModelTable1
                 },
                 success: function (response) {
-          $("#modalContent1").html(response);
+          //$("#modalContent1").html(response);
                 },
                 failure: function (response) {
                     alert(response);
@@ -305,7 +307,7 @@
                     "dataTable": ModelTable2
                 },
                 success: function (response) {
-          $("#modalContent1").html(response);
+          //$("#modalContent1").html(response);
                 },
                 failure: function (response) {
                     alert(response);
