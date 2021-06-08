@@ -394,7 +394,7 @@ namespace UAB.Controllers
         {
             _logger.LogInformation("Loading Started for GetPostedChartsReport for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstPostedChartReport = clinicalcaseOperations.GetPostedChartsReport(ProjectId, range, StartDate, EndDate);
+            var lstPostedChartReport = clinicalcaseOperations.GetPostedChartsReport(ProjectId, range, StartDate, EndDate.AddHours(23).AddMinutes(59).AddSeconds(59), Convert.ToDouble(timeZoneCookie));
 
             ViewBag.ProjectId = ProjectId;
             ViewBag.range = range;
