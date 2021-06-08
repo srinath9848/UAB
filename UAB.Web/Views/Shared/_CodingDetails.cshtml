@@ -33,12 +33,13 @@
 <div class="col-md-12">
     <div class="card">
         @*<div class="card-body">
-            <h4 class="card-title"><span>Chart ID : <label style="color: black;">@Model.CodingDTO.ClinicalCaseID</label></span></h4>
-        </div>*@
+                <h4 class="card-title"><span>Chart ID : <label style="color: black;">@Model.CodingDTO.ClinicalCaseID</label></span></h4>
+            </div>*@
         @Html.HiddenFor(model => model.Links)
         @Html.HiddenFor(model => model.ProjectName)
         @Html.HiddenFor(model => model.ProjectID)
         @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { @id = "ccid" })
+        <input type="hidden" value="@Model.ProviderID" id="OriginalProviderID" />
         @Html.Hidden("hdnDxCodes")
         @Html.Hidden("hdnCptCodes")
         @Html.Hidden("hdnClaim2")
@@ -87,6 +88,14 @@
 
                                 @Html.ValidationMessageFor(model => model.ProviderID, null, new { @class = "text-danger" })
                             </div>
+                            @if (@Model.ProviderID != 0)
+                            {
+                                <div class="custom-control custom-checkbox mr-sm-2 col-md-3" id="divWrongProvider">
+                                    <input type="checkbox" class="custom-control-input" id="chkWrongProvider" onclick="EnableProviderDrpDwn()">
+                                    <label class="custom-control-label" for="chkWrongProvider">Wrong Provider</label>
+                                    <input type="hidden" name="hdnWrongProvider" id="hdnWrongProvider">
+                                </div>
+                            }
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 m-t-15 AlignControl">Payor</label>
