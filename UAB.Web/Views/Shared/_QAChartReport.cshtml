@@ -28,9 +28,22 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card">QA Chart Report</h5>
-                    <input id="projectId" type="hidden" value="@ViewBag.ProjectId" />
-                    <input id="rangeId" type="hidden" value="@ViewBag.range" />
+                    <div class="col-12 row">
+                        <div class="col-11">
+                            <h5 class="card">QA Chart Report</h5>
+                        </div>
+                        <div class="col-1">
+                            <input class="btn btn-info" style="height:32px" type="button" onclick="ExportQAChartReport()" value="Export" />
+                        </div>
+                        <input id="projectId" type="hidden" value="@ViewBag.ProjectId" />
+                        <input id="rangeId" type="hidden" value="@ViewBag.range" />
+                        <input id="startDate" type="hidden" value="@ViewBag.StartDate" />
+                        <input id="endDate" type="hidden" value="@ViewBag.EndDate" />
+                    </div>
+
+                    @*<h5 class="card">QA Chart Report</h5>
+        <input id="projectId" type="hidden" value="@ViewBag.ProjectId" />
+        <input id="rangeId" type="hidden" value="@ViewBag.range" />*@
                     <div id="modalContent2"></div>
                     <div class="table-responsive col-8">
                         <table id="Codes" class="table table-striped table-bordered">
@@ -46,50 +59,50 @@
 
                                 @for (int i = 0; i < Model.Tables[0].Rows.Count; i++)
                                 {
-                                <tr class="body">
-                                    @for (int j = 0; j < Model.Tables[0].Columns.Count; j++)
-                                    {
-                                        if (@ViewBag.range == "PerDay")
+                                    <tr class="body">
+                                        @for (int j = 0; j < Model.Tables[0].Columns.Count; j++)
                                         {
-                                            @if (@Model.Tables[0].Columns[j].ColumnName == "Total")
+                                            if (@ViewBag.range == "PerDay")
                                             {
-                                                <td>
-                                                    <span onclick="ClickOnCell('@Model.Tables[0].Rows[i][1]','@Model.Tables[0].Rows[i][0]')" style="cursor:pointer;text-decoration:underline;color:cornflowerblue;">@Model.Tables[0].Rows[i][j]</span>
-                                                </td>
+                                                @if (@Model.Tables[0].Columns[j].ColumnName == "Total")
+                                                {
+                                                    <td>
+                                                        <span onclick="ClickOnCell('@Model.Tables[0].Rows[i][1]','@Model.Tables[0].Rows[i][0]')" style="cursor:pointer;text-decoration:underline;color:cornflowerblue;">@Model.Tables[0].Rows[i][j]</span>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@Model.Tables[0].Rows[i][j]</td>
+                                                }
+                                            }
+                                            else if (@ViewBag.range == "PerWeek")
+                                            {
+                                                @if (@Model.Tables[0].Columns[j].ColumnName == "Total")
+                                                {
+                                                    <td>
+                                                        <span onclick="ClickOnCell('@Model.Tables[0].Rows[i][3]','@Model.Tables[0].Rows[i][0]','@Model.Tables[0].Rows[i][1]','@Model.Tables[0].Rows[i][2]')" style="cursor:pointer;text-decoration:underline;color:cornflowerblue;">@Model.Tables[0].Rows[i][j]</span>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@Model.Tables[0].Rows[i][j]</td>
+                                                }
                                             }
                                             else
                                             {
-                                                <td>@Model.Tables[0].Rows[i][j]</td>
+                                                @if (@Model.Tables[0].Columns[j].ColumnName == "Total")
+                                                {
+                                                    <td>
+                                                        <span onclick="ClickOnCell('@Model.Tables[0].Rows[i][2]','@Model.Tables[0].Rows[i][0]','@Model.Tables[0].Rows[i][1]')" style="cursor:pointer;text-decoration:underline;color:cornflowerblue;">@Model.Tables[0].Rows[i][j]</span>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@Model.Tables[0].Rows[i][j]</td>
+                                                }
                                             }
                                         }
-                                        else if (@ViewBag.range == "PerWeek")
-                                        {
-                                            @if (@Model.Tables[0].Columns[j].ColumnName == "Total")
-                                            {
-                                                <td>
-                                                    <span onclick="ClickOnCell('@Model.Tables[0].Rows[i][3]','@Model.Tables[0].Rows[i][0]','@Model.Tables[0].Rows[i][1]','@Model.Tables[0].Rows[i][2]')" style="cursor:pointer;text-decoration:underline;color:cornflowerblue;">@Model.Tables[0].Rows[i][j]</span>
-                                                </td>
-                                            }
-                                            else
-                                            {
-                                                <td>@Model.Tables[0].Rows[i][j]</td>
-                                            }
-                                        }
-                                        else
-                                        {
-                                            @if (@Model.Tables[0].Columns[j].ColumnName == "Total")
-                                            {
-                                                <td>
-                                                    <span onclick="ClickOnCell('@Model.Tables[0].Rows[i][2]','@Model.Tables[0].Rows[i][0]','@Model.Tables[0].Rows[i][1]')" style="cursor:pointer;text-decoration:underline;color:cornflowerblue;">@Model.Tables[0].Rows[i][j]</span>
-                                                </td>
-                                            }
-                                            else
-                                            {
-                                                <td>@Model.Tables[0].Rows[i][j]</td>
-                                            }
-                                        }
-                                    }
-                                </tr>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
@@ -127,6 +140,29 @@
     });
 
     $(document).ready(function () {
+
+        ExportQAChartReport = function () {
+            var projectId = $("#projectId").val();
+            var range = $("#rangeId").val();
+            var StartDate = $("#startDate").val();
+            var EndDate = $("#endDate").val();
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("ExportQAChartReport", "Home")",
+                data: {
+                    "projectId": projectId,
+                    "range": range,
+                    "StartDate": StartDate,
+                    "EndDate":EndDate
+                },
+                success: function (response) {
+          $("#modalContent1").html(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        };
 
         ClickOnCell = function (p1, p2, p3, p4) {
             var projectId = $("#projectId").val();

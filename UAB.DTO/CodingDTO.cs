@@ -12,6 +12,7 @@ namespace UAB.DTO
         public string Name { get; set; }
         public string DateOfService { get; set; }
         public string ListName  { get; set; }
+        public string Provider { get; set; }
     }
     public class BlockResponseDTO
     {

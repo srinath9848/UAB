@@ -16,6 +16,7 @@ using UAB.Models;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Diagnostics;
 using ClosedXML.Excel;
+using FastMember;
 
 namespace UAB.Controllers
 {
@@ -157,6 +158,22 @@ namespace UAB.Controllers
             }
         }
 
+        public IActionResult ExportAgingReportByProject(string dataTableName)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var lstagingtDTO = clinicalcaseOperations.GetAgingReport();
+            ExportToExcel(lstagingtDTO.Tables[0]);
+            return View("AgingReport", lstagingtDTO);
+        }
+
+        public IActionResult ExportAgingReportByStatus(string dataTableName)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var lstagingtDTO = clinicalcaseOperations.GetAgingReport();
+            ExportToExcel(lstagingtDTO.Tables[1]);
+            return View("AgingReport", lstagingtDTO);
+        }
+
         [HttpGet]
         public IActionResult GetAgingReportDetails(string ColumnName, string ProjectType, string ProjectName)
         {
@@ -172,6 +189,34 @@ namespace UAB.Controllers
             _logger.LogInformation("Loading Ended for GetAgingReportDetails for User: " + mUserId);
             return PartialView("_AgingBreakDownReportDetailsByDay", lstAgingReportDetails);
         }
+        [HttpGet]
+        public IActionResult ExportAgingReportDetailByProject(string ColumnName, string ProjectType, string ProjectName)
+        {
+            _logger.LogInformation("Loading Started for ExportAgingReportDetailByProject for User: " + mUserId);
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            int ProjectId = clinicalcaseOperations.GetProjects().Where(x => x.Name == ProjectName).Select(x => x.ProjectId).FirstOrDefault();
+            var lstAgingReportDetails = clinicalcaseOperations.GetAgingReportDetails(ColumnName, ProjectType, ProjectId);
+            List<CodingDTO> agingList = new List<CodingDTO>();
+            foreach (var agingData in lstAgingReportDetails)
+            {
+                CodingDTO data = new CodingDTO();
+                data = agingData.CodingDTO;
+                agingList.Add(data);
+            }
+            //var listAgingData
+            //foreach(var agingData in lstAgingReportDetails)
+            //DataTable table = new DataTable();
+            //using (var reader = ObjectReader.Create(agingList))
+            //{
+            //    table.Load(reader);
+            //}
+            var table=clinicalcaseOperations.ToDataTable<CodingDTO>(agingList);
+
+            ExportToExcel(table);
+            _logger.LogInformation("Loading Ended for ExportAgingReportDetailByProject for User: " + mUserId);
+            return PartialView("_AgingBreakDownReportDetailsByDay", lstAgingReportDetails);
+        }
+
         [HttpGet]
         public IActionResult GetAgingReportDetailsByStatus(string ColumnName, string ProjectType, string ProjectName)
         {
@@ -220,9 +265,24 @@ namespace UAB.Controllers
 
             ViewBag.ProjectId = ProjectId;
             ViewBag.range = range;
+            ViewBag.StartDate = StartDate;
+            ViewBag.EndDate = EndDate;
             _logger.LogInformation("Loading Ended for GetReceivedChartsReport for User: " + mUserId);
             return PartialView("_ReceivedChartReport", lstReceivedChartReport);
         }
+        public IActionResult ExportReceivedChartReport(int ProjectId, string range, DateTime StartDate, DateTime EndDate)
+        {
+            _logger.LogInformation("Loading Started for GetReceivedChartsReport for User: " + mUserId);
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var lstReceivedChartReport = clinicalcaseOperations.GetReceivedChartsReport(ProjectId, range, StartDate, EndDate);
+
+            ViewBag.ProjectId = ProjectId;
+            ViewBag.range = range;
+            ExportToExcel(lstReceivedChartReport.Tables[0]);
+            _logger.LogInformation("Loading Ended for GetReceivedChartsReport for User: " + mUserId);
+            return PartialView("_ReceivedChartReport", lstReceivedChartReport);
+        }
+
         [HttpGet]
         public IActionResult GetReceivedReportDetails(DateTime date, int week, string month, string year, int ProjectId, string range)
         {
@@ -235,21 +295,69 @@ namespace UAB.Controllers
 
             ViewBag.projectname = projectname;
             ViewBag.projectType = projectType;
+            ViewBag.date = date;
+            ViewBag.week = week;
+            ViewBag.month = month;
+            ViewBag.year = year;
+            ViewBag.ProjectId = ProjectId;
+            ViewBag.range = range;
+            ViewBag.ChartName = "Received Chart Details";
+            _logger.LogInformation("Loading Ended for GetReceivedReportDetails for User: " + mUserId);
+            return PartialView("_DetailedReport", lstPendingReportDetails);
+        }
+
+        public IActionResult ExportDetailedReport(DateTime date, int week, string month, string year, int ProjectId, string range)
+        {
+            _logger.LogInformation("Loading Started for GetReceivedReportDetails for User: " + mUserId);
+            string createdDate = date.ToString();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var lstPendingReportDetails = clinicalcaseOperations.GetReceivedChartReportDetails(date, week, month, year, ProjectId, range);
+            string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.Name).FirstOrDefault();
+            string projectType = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.ProjectTypeName).FirstOrDefault();
+
+            ViewBag.projectname = projectname;
+            ViewBag.projectType = projectType;
+            ViewBag.date = date;
+            ViewBag.week = week;
+            ViewBag.month = month;
+            ViewBag.year = year;
+            ViewBag.ProjectId = ProjectId;
+            ViewBag.range = range;
             ViewBag.ChartName = "Received Chart Details";
             _logger.LogInformation("Loading Ended for GetReceivedReportDetails for User: " + mUserId);
             return PartialView("_DetailedReport", lstPendingReportDetails);
         }
 
         [HttpPost]
-        public IActionResult GetChartSummaryReport(int ProjectId, DateTime StartDate, DateTime EndDate)
+        public IActionResult GetChartSummaryReport(int ProjectId, DateTime StartDate, DateTime EndDate,string buttonType)
         {
             _logger.LogInformation("Loading Started for GetChartSummaryReport for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var lstReceivedChartReport = clinicalcaseOperations.GetChartSummaryReport(ProjectId, StartDate, EndDate);
             ViewBag.ProjectId = ProjectId;
+            ViewBag.StartDate = StartDate;
+            ViewBag.EndDate = EndDate;
+            if (buttonType == "btnExport")
+            {
+                ExportToExcel(lstReceivedChartReport.Tables[0]);
+            }
             _logger.LogInformation("Loading Ended for GetChartSummaryReport for User: " + mUserId);
             return PartialView("_ChartSummaryReport", lstReceivedChartReport);
         }
+        public IActionResult ExportChartSummaryReport(int ProjectId, DateTime StartDate, DateTime EndDate)
+        {
+            _logger.LogInformation("Loading Started for GetChartSummaryReport for User: " + mUserId);
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var lstReceivedChartReport = clinicalcaseOperations.GetChartSummaryReport(ProjectId, StartDate, EndDate);
+            ViewBag.ProjectId = ProjectId;
+            ViewBag.StartDate = StartDate;
+            ViewBag.EndDate = EndDate;
+
+            ExportToExcel(lstReceivedChartReport.Tables[0]);
+            _logger.LogInformation("Loading Ended for GetChartSummaryReport for User: " + mUserId);
+            return PartialView("_ChartSummaryReport", lstReceivedChartReport);
+        }
+
         [HttpGet]
         public IActionResult GetChartSummaryReportDetails(string ColumnName, DateTime dos, int ProjectId)
         {
@@ -275,9 +383,27 @@ namespace UAB.Controllers
 
             ViewBag.ProjectId = ProjectId;
             ViewBag.range = range;
+            ViewBag.StartDate = StartDate;
+            ViewBag.EndDate = EndDate;
             _logger.LogInformation("Loading Ended for GetPostedChartsReport for User: " + mUserId);
             return PartialView("_PostedChartReport", lstReceivedChartReport);
         }
+        public IActionResult ExportPostedChartsReport(int ProjectId, string range, DateTime StartDate, DateTime EndDate)
+        {
+            _logger.LogInformation("Loading Started for GetPostedChartsReport for User: " + mUserId);
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var lstPostedChartReport = clinicalcaseOperations.GetPostedChartsReport(ProjectId, range, StartDate, EndDate);
+
+            ViewBag.ProjectId = ProjectId;
+            ViewBag.range = range;
+            ViewBag.StartDate = StartDate;
+            ViewBag.EndDate = EndDate;
+
+            ExportToExcel(lstPostedChartReport.Tables[0]);
+            _logger.LogInformation("Loading Ended for GetPostedChartsReport for User: " + mUserId);
+            return PartialView("_PostedChartReport", lstPostedChartReport);
+        }
+
         [HttpGet]
         public IActionResult GetPostedReportDetails(DateTime date, int week, string month, string year, int ProjectId, string range)
         {
@@ -301,9 +427,27 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var lstBacklogChartReport = clinicalcaseOperations.GetBacklogChartsReport(ProjectId, range, StartDate, EndDate);
             ViewBag.ProjectId = ProjectId;
+            ViewBag.range = range;
+            ViewBag.StartDate = StartDate;
+            ViewBag.EndDate = EndDate;
             _logger.LogInformation("Loading Ended for GetBackLogChartsReport for User: " + mUserId);
             return PartialView("_BacklogChartReport", lstBacklogChartReport);
         }
+        public IActionResult ExportBackLogChartsReport(int ProjectId, string range, DateTime StartDate, DateTime EndDate)
+        {
+            _logger.LogInformation("Loading Started for GetBackLogChartsReport for User: " + mUserId);
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var lstBacklogChartReport = clinicalcaseOperations.GetBacklogChartsReport(ProjectId, range, StartDate, EndDate);
+            ViewBag.ProjectId = ProjectId;
+            ViewBag.range = range;
+            ViewBag.StartDate = StartDate;
+            ViewBag.EndDate = EndDate;
+
+            ExportToExcel(lstBacklogChartReport.Tables[0]);
+            _logger.LogInformation("Loading Ended for GetBackLogChartsReport for User: " + mUserId);
+            return PartialView("_BacklogChartReport", lstBacklogChartReport);
+        }
+
         [HttpGet]
         public IActionResult GetBackLogChartsReportDetails(int delaydays, string status, int projectid)
         {
@@ -356,6 +500,24 @@ namespace UAB.Controllers
 
             ViewBag.ProjectId = ProjectId;
             ViewBag.range = range;
+            ViewBag.StartDate = StartDate;
+            ViewBag.EndDate = EndDate;
+            _logger.LogInformation("Loading Ended for GetQAChartsReport for User: " + mUserId);
+            return PartialView("_QAChartReport", lstqaChartReport);
+        }
+
+        public IActionResult ExportQAChartReport(int ProjectId, string range, DateTime StartDate, DateTime EndDate)
+        {
+            _logger.LogInformation("Loading Started for GetQAChartsReport for User: " + mUserId);
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var lstqaChartReport = clinicalcaseOperations.GetQAChartsReport(ProjectId, range, StartDate, EndDate);
+
+            ViewBag.ProjectId = ProjectId;
+            ViewBag.range = range;
+            ViewBag.StartDate = StartDate;
+            ViewBag.EndDate = EndDate;
+
+            ExportToExcel(lstqaChartReport.Tables[0]);
             _logger.LogInformation("Loading Ended for GetQAChartsReport for User: " + mUserId);
             return PartialView("_QAChartReport", lstqaChartReport);
         }
@@ -384,9 +546,27 @@ namespace UAB.Controllers
 
             ViewBag.ProjectId = ProjectId;
             ViewBag.range = range;
+            ViewBag.StartDate = StartDate;
+            ViewBag.EndDate = EndDate;
             _logger.LogInformation("Loading Ended for GetPendingChartsReport for User: " + mUserId);
             return PartialView("_PendingChartsReport", lstPendingChartReport);
         }
+        public IActionResult ExportPendingChartsReport(int ProjectId, string range, DateTime StartDate, DateTime EndDate)
+        {
+            _logger.LogInformation("Loading Started for GetPendingChartsReport for User: " + mUserId);
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var lstPendingChartReport = clinicalcaseOperations.GetPendingChartsReport(ProjectId, range, StartDate, EndDate);
+
+            ViewBag.ProjectId = ProjectId;
+            ViewBag.range = range;
+            ViewBag.StartDate = StartDate;
+            ViewBag.EndDate = EndDate;
+
+            ExportToExcel(lstPendingChartReport.Tables[0]);
+            _logger.LogInformation("Loading Ended for GetPendingChartsReport for User: " + mUserId);
+            return PartialView("_PendingChartsReport", lstPendingChartReport);
+        }
+
         [HttpGet]
         public IActionResult GetPendingReportDetails(DateTime date, int week, string month, string year, int ProjectId, string range)
         {
@@ -411,6 +591,24 @@ namespace UAB.Controllers
 
             ViewBag.ProjectId = ProjectId;
             ViewBag.range = range;
+            ViewBag.StartDate = StartDate;
+            ViewBag.EndDate = EndDate;
+            _logger.LogInformation("Loading Ended for GetProvidedpostedchartsChartsReport for User: " + mUserId);
+            return PartialView("_ProvidedpostedchartsChartReport", lstChartReport);
+        }
+
+        public IActionResult ExportProvidedpostedchartsChartsReport(int ProjectId, string range, DateTime StartDate, DateTime EndDate)
+        {
+            _logger.LogInformation("Loading Started for GetProvidedpostedchartsChartsReport for User: " + mUserId);
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var lstChartReport = clinicalcaseOperations.GetProvidedpostedchartsChartsReport(ProjectId, range, StartDate, EndDate);
+
+            ViewBag.ProjectId = ProjectId;
+            ViewBag.range = range;
+            ViewBag.StartDate = StartDate;
+            ViewBag.EndDate = EndDate;
+
+            ExportToExcel(lstChartReport.Tables[0]);
             _logger.LogInformation("Loading Ended for GetProvidedpostedchartsChartsReport for User: " + mUserId);
             return PartialView("_ProvidedpostedchartsChartReport", lstChartReport);
         }
