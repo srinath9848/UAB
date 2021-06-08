@@ -46,7 +46,7 @@ namespace UAB.DTO
         public CodingDTO CodingDTO { get; set; }
         public QADTO QADTO { get; set; }
         public ShadowQADTO ShadowQADTO { get; set; }
-        public BlockResponseDTO BlockResponseDTO { get; set; } 
+        public BlockResponseDTO BlockResponseDTO { get; set; }
         [Required(ErrorMessage = "*")]
         public int QAPayorID { get; set; }
         public string QAPayorText { get; set; }
@@ -126,6 +126,7 @@ namespace UAB.DTO
         public DateTime PostingDate { get; set; }
         public string CoderComment { get; set; }
         public string CCIDs { get; set; }
+        public bool isWrongProvider { get; set; }
     }
 
     public class LelvellingReportDTO

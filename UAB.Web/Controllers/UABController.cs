@@ -583,7 +583,12 @@ namespace UAB.Controllers
             string hdnBlockedCCIds = Request.Form["CCIDs"].ToString();
             string hdnCurrentCCId = Request.Form["hdnCurrentCCId"].ToString();
             string hdnIsBlocked = Request.Form["hdnIsBlocked"].ToString();
+            string IsWrongProvider = Request.Form["hdnWrongProvider"].ToString();
 
+            if (IsWrongProvider == "true")
+                chartSummaryDTO.isWrongProvider = true;
+            else
+                chartSummaryDTO.isWrongProvider = false;
             //string submitType = Request.Form["hdnSubmitAndPost"];
             string hdnIsAuditRequired = Request.Form["hdnIsAuditRequired"];
 

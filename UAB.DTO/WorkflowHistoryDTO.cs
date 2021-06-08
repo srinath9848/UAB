@@ -9,5 +9,6 @@ namespace UAB.DTO
         public string Event  { get; set; }
         public DateTime DateandTime  { get; set; }
         public string ByUser  { get; set; }
+        public string Remarks  { get; set; }
     }
 }
