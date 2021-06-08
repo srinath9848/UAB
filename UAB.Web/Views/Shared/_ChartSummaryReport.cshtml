@@ -28,7 +28,22 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card">Chart Summary Report</h5>
+
+                    <div class="col-12 row">
+                        <div class="col-11">
+                            <h5 class="card">Chart Summary Report</h5>
+                        </div>
+                        <div class="col-1">
+                            <input id="btnExport" class="btn btn-info" style="height:32px" type="button" onclick="ExportChartSummaryReport()" value="Export" />
+                        </div>
+                        <input id="projectId" type="hidden" value="@ViewBag.ProjectId" />
+                        <input id="rangeId" type="hidden" value="@ViewBag.range" />
+                        <input id="startDate" type="hidden" value="@ViewBag.StartDate" />
+                        <input id="endDate" type="hidden" value="@ViewBag.EndDate" />
+                    </div>
+
+
+                    @*<h5 class="card">Chart Summary Report</h5>*@
                     <div id="modalContent1"></div>
                     @*<input type="hidden" id="projectid" value="@ViewBag["ProjectId"]" />*@
                     <div class="table-responsive col-16">
@@ -45,14 +60,21 @@
 
                                 @for (int i = 0; i < Model.Tables[0].Rows.Count; i++)
                                 {
-                                <tr class="body">
-                                    @for (int j = 0; j < Model.Tables[0].Columns.Count; j++)
-                                    {
-                                        @if (@Model.Tables[0].Columns[j].ColumnName != "ProjectName" && @Model.Tables[0].Columns[j].ColumnName != "DateOfService")
+                                    <tr class="body">
+                                        @for (int j = 0; j < Model.Tables[0].Columns.Count; j++)
                                         {
-                                            @if (@Model.Tables[0].Rows[i][j].ToString() != "0")
+                                            @if (@Model.Tables[0].Columns[j].ColumnName != "ProjectName" && @Model.Tables[0].Columns[j].ColumnName != "DateOfService")
                                             {
-                                                <td onclick="ClickOnCell('@Model.Tables[0].Columns[j].ColumnName','@Model.Tables[0].Rows[i][1]','@Model.Tables[0].Rows[i][j]')" style="cursor:pointer;text-decoration:underline;color:cornflowerblue;">@Model.Tables[0].Rows[i][j]</td>
+                                                @if (@Model.Tables[0].Rows[i][j].ToString() != "0")
+                                                {
+                                                    <td onclick="ClickOnCell('@Model.Tables[0].Columns[j].ColumnName','@Model.Tables[0].Rows[i][1]','@Model.Tables[0].Rows[i][j]')" style="cursor:pointer;text-decoration:underline;color:cornflowerblue;">@Model.Tables[0].Rows[i][j]</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        @Model.Tables[0].Rows[i][j]
+                                                    </td>
+                                                }
                                             }
                                             else
                                             {
@@ -61,14 +83,7 @@
                                                 </td>
                                             }
                                         }
-                                        else
-                                        {
-                                            <td>
-                                                @Model.Tables[0].Rows[i][j]
-                                            </td>
-                                        }
-                                    }
-                                </tr>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
@@ -106,6 +121,31 @@
     });
 
     $(document).ready(function () {
+
+        ExportChartSummaryReport = function () {
+            var buttonType = $(this).attr("name");
+            var projectId = $("#projectId").val();
+            var StartDate = $("#startDate").val();
+            var EndDate = $("#endDate").val();
+            alert(buttonType);
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("ExportChartSummaryReport", "Home")",
+                data: {
+                    "projectId": projectId,
+                    "StartDate": StartDate,
+                    "EndDate": EndDate,
+                    "buttonType": buttonType
+                },
+                success: function (response) {
+          $("#modalContent1").html(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        };
+
         ClickOnCell = function (p1, p2,p3) {
             if (p3 != 0 && p1 != 'ProjectName' && p1 !='DateOfService') {
                  $.ajax({

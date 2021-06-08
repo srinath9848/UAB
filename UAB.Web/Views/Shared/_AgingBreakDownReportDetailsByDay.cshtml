@@ -28,8 +28,16 @@
                 </button>
 
             </div>
-            <div style="margin-left: 12px;">
-                <h6 class="modal-title" id="exampleModalLongTitle"><span>Project : @ViewBag.projectname</span></h6>
+            <div class="col-12 row" style="margin-top:5px;">
+                <div class="col-10">
+                    <h6 class="modal-title" id="exampleModalLongTitle"><span>Project : @ViewBag.projectname</span></h6>
+                </div>
+                <div class="col-2">
+                    <input class="btn btn-info" style="height:32px" type="button" onclick="ExportAgingReportDetailByProject('@ViewBag.ColumnName','@ViewBag.projectname','@ViewBag.projectType')" value="Export" />
+                </div>
+                <input type="hidden" id="ColumnName" value="@ViewBag.ColumnName" />
+                <input type="hidden" id="ProjectName" value="@ViewBag.projectname" />
+                <input type="hidden" id="ProjectType" value="@ViewBag.projectType" />
             </div>
             <br />
             <div class="table-responsive col-12" style="max-height:400px;overflow-y:scroll">
@@ -90,6 +98,27 @@
     });
 
     $(document).ready(function () {
+        ExportAgingReportDetailByProject = function (p1,p2,p3) {
+            alert(p1);
+            alert(p2);
+            alert(p3);
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("ExportAgingReportDetailByProject", "Home")",
+                data: {
+                    "ColumnName": p1,
+                    "ProjectType": p3,
+                    "ProjectName":p2
+                },
+                success: function (response) {
+          $("#modalContent1").html(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        };
+
         ModalClose2 = function () {
             $("#modalContent1").html('');
         }
