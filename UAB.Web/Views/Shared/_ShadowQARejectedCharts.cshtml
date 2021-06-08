@@ -121,7 +121,7 @@
                                     <div title="@title" class="col-md-3 input-group">
                                         <div class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
                                             <span style="white-space:nowrap">
-                                                @if (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText))
+                                                @if (!Model.FirstOrDefault().ProviderText.Equals(Model.FirstOrDefault().QAProviderText))
                                                 {
                                                     <label style="color: red;">@ProviderText</label>
                                                     <label style="color: green">@QAProviderText</label>
@@ -167,7 +167,7 @@
                                         <div name="PayorText" class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
                                             <span style="white-space:nowrap">
 
-                                                @if (!string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText))
+                                                @if (!Model.FirstOrDefault().PayorText.Equals(Model.FirstOrDefault().QAPayorText))
                                                 {
                                                     <label style="color: red;">@PayorText</label>
                                                     <label style="color: green">@QAPayorText</label>
@@ -569,7 +569,7 @@
                                         <div class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
                                             <span style="white-space:nowrap">
 
-                                                @if (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText))
+                                                @if (!Model.FirstOrDefault().ProviderFeedbackText.Equals(Model.FirstOrDefault().QAProviderFeedbackText))
                                                 {
                                                     <label style="color: red;">@ProviderFeedbackText</label>
                                                     <label style="color:green">@QAProviderFeedbackText</label>
