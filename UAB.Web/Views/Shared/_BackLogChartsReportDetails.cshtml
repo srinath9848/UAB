@@ -26,11 +26,11 @@
         cursor: pointer;
     }
 
-    a {
+    .whiteLink {
         color: white !important
     }
 
-        a:hover {
+        .whiteLink:hover {
             color: white !important
         }
 </style>
@@ -50,7 +50,7 @@
                     <h6 class="modal-title" id="exampleModalLongTitle"><span>Project : @ViewBag.projectname</span></h6>
                 </div>
                 <div class="col-2 linkToButton">
-                    @Html.ActionLink("Export", "ExportBackLogChartsReportDetails", "Home", new { delaydays= @ViewBag.delaydays,status= @ViewBag.status, projectid= @ViewBag.projectId })
+                    @Html.ActionLink("Export", "ExportBackLogChartsReportDetails", "Home", new { delaydays= @ViewBag.delaydays,status= @ViewBag.status, projectid= @ViewBag.projectId },new { @class= "whiteLink" })
                 </div>
                 <input type="hidden" id="delaydays" value="@ViewBag.delaydays" />
                 <input type="hidden" id="status" value="@ViewBag.status" />
