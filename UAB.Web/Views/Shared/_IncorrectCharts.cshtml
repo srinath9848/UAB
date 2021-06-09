@@ -119,7 +119,7 @@
                                     @{string QAProviderText = (Model.FirstOrDefault().QAProviderText?.Length > len) ? "/" + Model.FirstOrDefault().QAProviderText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAProviderText;}
                                     @{string title = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText) ? Model.FirstOrDefault().ProviderText + "/" + Model.FirstOrDefault().QAProviderText : Model.FirstOrDefault().ProviderText);}
                                     @{ var ProviderID = string.Format("ProviderID_{0}", @Model.FirstOrDefault().TabIndex);}
-                                    @Html.DropDownListFor(model => model.FirstOrDefault().ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @style = "display:none", @class = "form-control CoderDetails", @id = ProviderID })
+                                    @Html.DropDownListFor(model => model.FirstOrDefault().ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"),"--Select--", new { @style = "display:none", @class = "form-control CoderDetails", @id = ProviderID })
                                     @{string Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                                     @{string Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
@@ -144,7 +144,7 @@
                                     <div title="@Model.FirstOrDefault().QAProviderRemarks" class="col-md-2 input-group" style="@Show">
                                         <input type="text" class="form-control QARemarks ControlHeight" value="@Model.FirstOrDefault().QAProviderRemarks" />
                                     </div>
-                                    @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @id = QAProviderID, @class = "form-control QARevised", @style = "display:none" })
+                                    @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"),"--Select--", new { @id = QAProviderID, @class = "form-control QARevised", @style = "display:none" })
                                     <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
                                         <span class="input-group-text ControlHeight" style="margin-left:-12px;">
                                             &nbsp;<i id="Provider" title="ProviderID1_@Model.FirstOrDefault().TabIndex" class="@Accepted" aria-hidden="true"></i>
@@ -162,7 +162,7 @@
                                     @{string QAPayorText = (Model.FirstOrDefault().QAPayorText?.Length > len) ? "/" + Model.FirstOrDefault().QAPayorText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAPayorText;}
                                     @{title = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) ? Model.FirstOrDefault().PayorText + "/" + Model.FirstOrDefault().QAPayorText : Model.FirstOrDefault().PayorText);}
                                     @{ var PayorID = string.Format("PayorID_{0}", @Model.FirstOrDefault().TabIndex);}
-                                    @Html.DropDownListFor(model => model.FirstOrDefault().PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @style = "display:none", @class = "form-control CoderDetails", @id = PayorID })
+                                    @Html.DropDownListFor(model => model.FirstOrDefault().PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"),"--Select--", new { @style = "display:none", @class = "form-control CoderDetails", @id = PayorID })
                                     @{Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                                     @{Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
@@ -186,7 +186,7 @@
                                         <input type="text" class="form-control QARemarks" value="@Model.FirstOrDefault().QAPayorRemarks" />
                                     </div>
                                     @{ var QAPayorID = string.Format("QAPayorID_{0}", @Model.FirstOrDefault().TabIndex);}
-                                    @Html.DropDownListFor(model => model.FirstOrDefault().QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @id = QAPayorID, @class = "form-control QARevised", @style = "display:none" })
+                                    @Html.DropDownListFor(model => model.FirstOrDefault().QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"),"--Select--", new { @id = QAPayorID, @class = "form-control QARevised", @style = "display:none" })
                                     <div class="input-group-append CoderCorrections" style="@Show">
                                         <span class="input-group-text ControlHeight" style="margin-left:-12px;">
                                             &nbsp;<i id="Payor" title="PayorID1_@Model.FirstOrDefault().TabIndex" class="@Accepted" aria-hidden="true"></i>
@@ -496,7 +496,7 @@
                                     @{string QAProviderFeedbackText = (Model.FirstOrDefault().QAProviderFeedbackText?.Length > len) ? "/" + Model.FirstOrDefault().QAProviderFeedbackText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAProviderFeedbackText;}
                                     @{title = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText) ? Model.FirstOrDefault().ProviderFeedbackText + "/" + Model.FirstOrDefault().QAProviderFeedbackText : Model.FirstOrDefault().ProviderFeedbackText);}
                                     @{ var ProviderFeedbackID = string.Format("ProviderFeedbackID_{0}", @Model.FirstOrDefault().TabIndex);}
-                                    @Html.DropDownListFor(model => model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @style = "display:none", @class = "form-control CoderDetails", @id = ProviderFeedbackID })
+                                    @Html.DropDownListFor(model => model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = "display:none", @class = "form-control CoderDetails", @id = ProviderFeedbackID })
                                     <input type="hidden" id="ProviderFeedbackText_@tabIndex" value="@ProviderFeedbackText" />
                                     <div title="@title" class="col-md-3 lessWidth input-group ControlWidth">
                                         <div class="form-control CoderDetails" style="line-height:2.2;overflow:hidden;height:32px;">
@@ -528,7 +528,7 @@
                                         </span>
                                     </div>
                                     @{ var QAProviderFeedbackID = string.Format("QAProviderFeedbackID_{0}", @Model.FirstOrDefault().TabIndex);}
-                                    @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @style = "display:none", @class = "form-control QARevised", @id = QAProviderFeedbackID })
+                                    @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = "display:none", @class = "form-control QARevised", @id = QAProviderFeedbackID })
                                     <div class="col-md-3 input-group CoderCorrections">
                                         @Html.TextBoxFor(model => model.FirstOrDefault().RevisedProviderFeedbackRemarks, new { @class = string.Format("form-control Revised RevisedProviderFeedback_{0}", @Model.FirstOrDefault().TabIndex), @id = "RevisedProviderFeedbackRemarks", @style = @Show })
                                     </div>
@@ -549,7 +549,7 @@
                                                         Error Type
                                                     </label>
                                                     <div class="col-md-7">
-                                                        @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"),  new { @class = "form-control ControlHeight CoderDetails", @id = string.Format("ErrorType_{0}", tabIndex) })
+                                                        @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--",  new { @class = "form-control ControlHeight CoderDetails", @id = string.Format("ErrorType_{0}", tabIndex) })
                                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().QADTO.ErrorType, null, new { @class = "text-danger ErrorType" })
                                                     </div>
                                                 </div>

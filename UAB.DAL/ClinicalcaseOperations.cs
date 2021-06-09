@@ -2046,10 +2046,6 @@ namespace UAB.DAL
                         var dos = Convert.ToDateTime(reader["DateOfService"]);
                         chartSummaryDTO.CodingDTO.DateOfService = dos.ToString("MM/dd/yyyy");
                         chartSummaryDTO.CodingDTO.Provider = Convert.ToString(reader["Provider"]);
-                        //chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
-                        //chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
-                        //var dos = Convert.ToDateTime(reader["DateOfService"]);
-                        //chartSummaryDTO.CodingDTO.DateOfService = dos.ToString("MM/dd/yyyy");
                         lst.Add(chartSummaryDTO);
                     }
                 }

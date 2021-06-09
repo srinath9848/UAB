@@ -117,7 +117,7 @@
                                     @{string ProviderText = (Model.FirstOrDefault().ProviderText?.Length > len) ? Model.FirstOrDefault().ProviderText.Substring(0, len) + ".." : Model.FirstOrDefault().ProviderText;}
                                     @{string QAProviderText = (Model.FirstOrDefault().QAProviderText?.Length > len) ? "/" + Model.FirstOrDefault().QAProviderText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAProviderText;}
                                     @{string title = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText) ? Model.FirstOrDefault().ProviderText + "/" + Model.FirstOrDefault().QAProviderText : Model.FirstOrDefault().ProviderText);}
-                                    @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("QAProviderID_{0}", tabIndex), @style = "display:none;" })
+                                    @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("QAProviderID_{0}", tabIndex), @style = "display:none;" })
 
                                     <div title="@title" class="col-md-3 input-group">
                                         <div class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
@@ -144,7 +144,7 @@
                                         @Html.TextBoxFor(model => Model.FirstOrDefault().QAProviderRemarks, new { @class = "form-control ControlHeight", id = string.Format("QAProviderIDRemarks_{0}", @tabIndex) })
                                     </div>
                                     <div class="col-md-3 input-group">
-                                        @Html.DropDownListFor(model => Model.FirstOrDefault().ShadowQAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), new { @style = @Show, @id = string.Format("ShadowQAProviderID_{0}", @tabIndex), @class = "form-control CoderDetails ControlHeight" })
+                                        @Html.DropDownListFor(model => Model.FirstOrDefault().ShadowQAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @style = @Show, @id = string.Format("ShadowQAProviderID_{0}", @tabIndex), @class = "form-control CoderDetails ControlHeight" })
                                         <div class="input-group-append ControlHeight" style="@Show">
                                             <span class="input-group-text AcceptRejectWidth AcceptRejectWidth_@tabIndex">
                                                 &nbsp;<i id="ProviderID_@tabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
@@ -163,7 +163,7 @@
                                     @{string PayorText = (Model.FirstOrDefault().PayorText?.Length > len) ? Model.FirstOrDefault().PayorText.Substring(0, len) + ".." : Model.FirstOrDefault().PayorText;}
                                     @{string QAPayorText = (Model.FirstOrDefault().QAPayorText?.Length > len) ? "/" + Model.FirstOrDefault().QAPayorText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAPayorText;}
                                     @{title = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) ? Model.FirstOrDefault().PayorText + "/" + Model.FirstOrDefault().QAPayorText : Model.FirstOrDefault().PayorText);}
-                                    @Html.DropDownListFor(model => model.FirstOrDefault().PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("QAPayorID_{0}", tabIndex), @style = "display:none;" })
+                                    @Html.DropDownListFor(model => model.FirstOrDefault().PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("QAPayorID_{0}", tabIndex), @style = "display:none;" })
 
                                     <div title="@title" class="col-md-3 input-group">
                                         <div name="PayorText" class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
@@ -193,7 +193,7 @@
                                     </div>
 
                                     <div class="col-md-3 input-group">
-                                        @Html.DropDownListFor(model => Model.FirstOrDefault().ShadowQAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), new { @style = @Show, @id = string.Format("ShadowQAPayorID_{0}", @tabIndex), @class = "form-control QARevised ControlHeight" })
+                                        @Html.DropDownListFor(model => Model.FirstOrDefault().ShadowQAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @style = @Show, @id = string.Format("ShadowQAPayorID_{0}", @tabIndex), @class = "form-control QARevised ControlHeight" })
                                         <div class="input-group-append ControlHeight" style="@Show">
                                             <span class="input-group-text AcceptRejectWidth AcceptRejectWidth_@tabIndex">
                                                 &nbsp;<i id="PayorID_@tabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
@@ -592,7 +592,7 @@
                                         @Html.TextBoxFor(model => Model.FirstOrDefault().QAProviderFeedbackRemarks, new { @class = "form-control ControlHeight", @id = string.Format("QAProviderFeedbackRemarks_{0}", @tabIndex) })
                                     </div>
                                     <div class="col-md-3 input-group">
-                                        @Html.DropDownListFor(model => Model.FirstOrDefault().ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @style = @Show, @id = string.Format("ShadowQAProviderFeedback_{0}", @tabIndex), @class = "form-control QARevised ControlHeight" })
+                                        @Html.DropDownListFor(model => Model.FirstOrDefault().ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = @Show, @id = string.Format("ShadowQAProviderFeedback_{0}", @tabIndex), @class = "form-control QARevised ControlHeight" })
                                         <div class="input-group-append ControlHeight" style="@Show">
                                             <span class="input-group-text AcceptRejectWidth AcceptRejectWidth_@tabIndex">
                                                 &nbsp;<i id="Feedback_@tabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
