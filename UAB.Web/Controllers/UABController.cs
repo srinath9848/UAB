@@ -1931,7 +1931,7 @@ namespace UAB.Controllers
             // Accept Claim 4 Dx & CPT
             if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes4))
             {
-                if (!string.IsNullOrEmpty(hdnQAErrorTypeID3))
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID4))
                     dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes4, hdnQAAcceptDxRemarks4, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
                 else
                     dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes4, hdnQAAcceptDxRemarks4, 0, Convert.ToInt32(hdnClaimId4), true);
@@ -2485,7 +2485,7 @@ namespace UAB.Controllers
             // Accept Claim 4 Dx & CPT
             if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes4))
             {
-                if (!string.IsNullOrEmpty(hdnQAErrorTypeID3))
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID4))
                     dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes4, hdnQAAcceptDxRemarks4, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
                 else
                     dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes4, hdnQAAcceptDxRemarks4, 0, Convert.ToInt32(hdnClaimId4), true);
