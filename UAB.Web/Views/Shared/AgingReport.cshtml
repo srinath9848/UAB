@@ -43,12 +43,12 @@
         color: white;
         cursor: pointer;
     }
-    a {
+    .whiteLink {
         color: white !important
     }
-    a:hover{
-        color:white !important
-    }
+        .whiteLink:hover {
+            color: white !important
+        }
 </style>
 <div class="container-fluid">
     <div class="row">
@@ -60,7 +60,7 @@
                             <h5 class="card">Aging Break down Report</h5>
                         </div>
                         <div class="col-1 linkToButton">
-                            @Html.ActionLink("Export", "ExportAgingReportByProject")
+                            @Html.ActionLink("Export", "ExportAgingReportByProject","Home",null,new { @class= "whiteLink" })
                             @*<input class="btn btn-info" style="height:32px" type="button" onclick="ExportAgingReportByProject()" value="Export" />*@
                         </div>
                         <input type="hidden" id="ExportAgingReportByProject" value="@Model.Tables[0]" />
@@ -144,7 +144,7 @@
                             <h5 class="card">Aging Break down by Status Report</h5>
                         </div>
                         <div class="col-1 linkToButton">
-                            @Html.ActionLink("Export", "ExportAgingReportByStatus","Home",new { @class = "whiteLink" })
+                            @Html.ActionLink("Export", "ExportAgingReportByStatus","Home",null,new { @class = "whiteLink" })
                         </div>
                         <input type="hidden" id="ExportAgingReportByStatus" value="@Model.Tables[0]" />
                     </div>

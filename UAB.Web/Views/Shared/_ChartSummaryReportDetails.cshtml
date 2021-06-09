@@ -17,6 +17,7 @@
     .roledddwith {
         width: 215px;
     }
+
     .linkToButton {
         background-color: #2255a4;
         height: 32px;
@@ -26,11 +27,11 @@
         cursor: pointer;
     }
 
-    a {
+    .whiteLink {
         color: white !important
     }
 
-        a:hover {
+        .whiteLink:hover {
             color: white !important
         }
 </style>
@@ -39,12 +40,7 @@
         <div class="modal-content" style="width: 500px;">
             <div class="modal-header">
                 <div class="col-12 row" style="margin-top:5px;">
-                    <div class="col-10">
-                        <h6 class="modal-title" id="exampleModalLongTitle"><span>Chart Summary Details</span></h6>
-                    </div>
-                    <div class="col-2">
-                        <input class="btn btn-info" style="height:32px" type="button" onclick="ExportChartSummaryReportDetails()" value="Export" />
-                    </div>
+                    <h6 class="modal-title" id="exampleModalLongTitle"><span>Chart Summary Details</span></h6>
                     <input type="hidden" id="ColumnName" value="@ViewBag.ColumnName" />
                     <input type="hidden" id="dos" value="@ViewBag.dos" />
                     <input type="hidden" id="ProjectId" value="@ViewBag.ProjectId" />
@@ -62,12 +58,8 @@
                     <h6 class="modal-title" id="exampleModalLongTitle"><span>Project : @ViewBag.projectname</span></h6>
                 </div>
                 <div class="col-2 linkToButton">
-                    @Html.ActionLink("Export", "ExportChartSummaryReportDetails", "Home", new { ColumnName = @ViewBag.ColumnName, dos = @ViewBag.dos, ProjectId = @ViewBag.ProjectId })
+                    @Html.ActionLink("Export", "ExportChartSummaryReportDetails", "Home", new { ColumnName = @ViewBag.ColumnName, dos = @ViewBag.dos, ProjectId = @ViewBag.ProjectId }, new { @class = "whiteLink" })
                 </div>
-            </div>
-
-            <div style="margin-left: 12px;">
-                <h6 class="modal-title" id="exampleModalLongTitle"><span>Project : @ViewBag.projectname</span></h6>
             </div>
             <div style="margin-left: 12px;">
                 <h6 class="modal-title" id="exampleModalLongTitle"><span>Type : @ViewBag.ColumnName</span></h6>

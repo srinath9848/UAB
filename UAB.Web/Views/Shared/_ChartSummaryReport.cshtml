@@ -31,11 +31,11 @@
         cursor: pointer;
     }
 
-    a {
+    .whiteLink {
         color: white !important
     }
 
-        a:hover {
+        .whiteLink:hover {
             color: white !important
         }
 </style>
@@ -50,7 +50,7 @@
                             <h5 class="card">Chart Summary Report</h5>
                         </div>
                         <div class="col-1 linkToButton">
-                            @Html.ActionLink("Export", "ExportChartSummaryReport", new { projectId = @ViewBag.ProjectId, StartDate = @ViewBag.StartDate, EndDate = @ViewBag.EndDate })
+                            @Html.ActionLink("Export", "ExportChartSummaryReport","Home", new { projectId = @ViewBag.ProjectId, StartDate = @ViewBag.StartDate, EndDate = @ViewBag.EndDate },new { @class= "whiteLink" })
                         </div>
                         <input id="projectId" type="hidden" value="@ViewBag.ProjectId" />
                         <input id="rangeId" type="hidden" value="@ViewBag.range" />
