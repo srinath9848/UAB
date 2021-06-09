@@ -84,12 +84,17 @@
                $("#hdnWrongProvider").val("true");
                $("#pr1").css("pointer-events", "auto");
                $("#pr1").css("background-color", "");
+               $("#pr1").val("");
+               var original = $("#InitialProviderID").val();
+               $("#pr1 option[value='" + original + "']").attr("disabled", "disabled");
+               EnableButton();
            }
            else {
                $("#hdnWrongProvider").val("false");
                $("#pr1").css("pointer-events", "none");
                $("#pr1").css("background-color", "#e9ecef");
-               $("#pr1").val($("#OriginalProviderID").val());
+               $("#pr1").val($("#InitialProviderID").val());
+               EnableButton();
            }
        }
 });

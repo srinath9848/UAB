@@ -39,7 +39,7 @@
         @Html.HiddenFor(model => model.ProjectName)
         @Html.HiddenFor(model => model.ProjectID)
         @Html.HiddenFor(model => model.CodingDTO.ClinicalCaseID, new { @id = "ccid" })
-        <input type="hidden" value="@Model.ProviderID" id="OriginalProviderID" />
+        <input type="hidden" value="@Model.ProviderID" id="InitialProviderID" />
         @Html.Hidden("hdnDxCodes")
         @Html.Hidden("hdnCptCodes")
         @Html.Hidden("hdnClaim2")
@@ -242,7 +242,7 @@
         });
 
         EnableButton = function () {
-            if ($('#PayorID').val() !== "" && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== "" && $('#Providers_2').val() === undefined && $('#Providers_3').val() === undefined && $('#Providers_4').val() === undefined) {
+            if ($('#pr1').val() !== "" && $('#PayorID').val() !== "" && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== "" && $('#Providers_2').val() === undefined && $('#Providers_3').val() === undefined && $('#Providers_4').val() === undefined) {
                 $('#codingSubmit').prop('disabled', false);
                 $('#codingSubmitAndGetNext').prop('disabled', false);
                 $('#btnProviderPosted').prop('disabled', false);
@@ -254,6 +254,9 @@
             }
         }
 
+        $('#pr1').change(function () {
+            EnableButton();
+        });
         $('#Providers_2').change(function () {
             EnableButtonForClaim2();
         });
