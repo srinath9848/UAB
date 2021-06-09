@@ -22,6 +22,22 @@
     .alert {
         padding: 0.5rem 1.25rem;
     }
+    .linkToButton {
+        background-color: #2255a4;
+        height: 32px;
+        line-height: 2;
+        max-width: 62px;
+        color: white;
+        cursor: pointer;
+    }
+
+    a {
+        color: white !important
+    }
+
+        a:hover {
+            color: white !important
+        }
 </style>
 <div class="container-fluid">
     <div class="row">
@@ -33,8 +49,8 @@
                         <div class="col-11">
                             <h5 class="card">Chart Summary Report</h5>
                         </div>
-                        <div class="col-1">
-                            <input id="btnExport" class="btn btn-info" style="height:32px" type="button" onclick="ExportChartSummaryReport()" value="Export" />
+                        <div class="col-1 linkToButton">
+                            @Html.ActionLink("Export", "ExportChartSummaryReport", new { projectId = @ViewBag.ProjectId, StartDate = @ViewBag.StartDate, EndDate = @ViewBag.EndDate })
                         </div>
                         <input id="projectId" type="hidden" value="@ViewBag.ProjectId" />
                         <input id="rangeId" type="hidden" value="@ViewBag.range" />
@@ -121,30 +137,6 @@
     });
 
     $(document).ready(function () {
-
-        ExportChartSummaryReport = function () {
-            var buttonType = $(this).attr("name");
-            var projectId = $("#projectId").val();
-            var StartDate = $("#startDate").val();
-            var EndDate = $("#endDate").val();
-            alert(buttonType);
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("ExportChartSummaryReport", "Home")",
-                data: {
-                    "projectId": projectId,
-                    "StartDate": StartDate,
-                    "EndDate": EndDate,
-                    "buttonType": buttonType
-                },
-                success: function (response) {
-          $("#modalContent1").html(response);
-                },
-                failure: function (response) {
-                    alert(response);
-                }
-            });
-        };
 
         ClickOnCell = function (p1, p2,p3) {
             if (p3 != 0 && p1 != 'ProjectName' && p1 !='DateOfService') {

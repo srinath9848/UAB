@@ -17,6 +17,22 @@
     .roledddwith {
         width: 215px;
     }
+    .linkToButton {
+        background-color: #2255a4;
+        height: 32px;
+        line-height: 2;
+        max-width: 62px;
+        color: white;
+        cursor: pointer;
+    }
+
+    .whiteLink {
+        color: white !important
+    }
+
+    .whiteLink:hover {
+        color: white !important
+    }
 </style>
 <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
     <div class="modal-dialog">
@@ -32,8 +48,8 @@
                 <div class="col-10">
                     <h6 class="modal-title" id="exampleModalLongTitle"><span>Project : @ViewBag.projectname</span></h6>
                 </div>
-                <div class="col-2">
-                    <input class="btn btn-info" style="height:32px" type="button" onclick="ExportAgingReportDetailByProject('@ViewBag.ColumnName','@ViewBag.projectname','@ViewBag.projectType')" value="Export" />
+                <div class="col-2 linkToButton">
+                    @Html.ActionLink("Export", "ExportAgingReportDetailByProject","Home",new { ColumnName= @ViewBag.ColumnName, ProjectType= @ViewBag.projectType, ProjectName= @ViewBag.projectname },new { @class = "whiteLink" })
                 </div>
                 <input type="hidden" id="ColumnName" value="@ViewBag.ColumnName" />
                 <input type="hidden" id="ProjectName" value="@ViewBag.projectname" />
@@ -98,27 +114,7 @@
     });
 
     $(document).ready(function () {
-        ExportAgingReportDetailByProject = function (p1,p2,p3) {
-            alert(p1);
-            alert(p2);
-            alert(p3);
-            $.ajax({
-                type: "GET",
-                url: "@Url.Action("ExportAgingReportDetailByProject", "Home")",
-                data: {
-                    "ColumnName": p1,
-                    "ProjectType": p3,
-                    "ProjectName":p2
-                },
-                success: function (response) {
-          $("#modalContent1").html(response);
-                },
-                failure: function (response) {
-                    alert(response);
-                }
-            });
-        };
-
+        
         ModalClose2 = function () {
             $("#modalContent1").html('');
         }

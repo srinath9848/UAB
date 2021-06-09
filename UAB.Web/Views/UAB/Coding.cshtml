@@ -40,7 +40,7 @@
         $("#btnBlock").hide();
         $("#btnBlockHistory").show();
         $("#btnProviderPosted").hide();
-      
+
         if (enablePrevious == true) {
             $("#btnPrevious").css({
                 'opacity': '100', 'pointer-events': 'auto'
@@ -76,7 +76,22 @@
         }
         ModalClose1 = function () {
             $("#modalContent").html('');
-        }
+       }
+
+       EnableProviderDrpDwn = function () {
+
+           if ($("#chkWrongProvider").is(":checked")) {
+               $("#hdnWrongProvider").val("true");
+               $("#pr1").css("pointer-events", "auto");
+               $("#pr1").css("background-color", "");
+           }
+           else {
+               $("#hdnWrongProvider").val("false");
+               $("#pr1").css("pointer-events", "none");
+               $("#pr1").css("background-color", "#e9ecef");
+               $("#pr1").val($("#OriginalProviderID").val());
+           }
+       }
 });
 
     function ShowSubmitPopup(buttonType)

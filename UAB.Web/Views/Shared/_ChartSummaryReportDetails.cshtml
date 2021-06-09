@@ -17,6 +17,22 @@
     .roledddwith {
         width: 215px;
     }
+    .linkToButton {
+        background-color: #2255a4;
+        height: 32px;
+        line-height: 2;
+        max-width: 62px;
+        color: white;
+        cursor: pointer;
+    }
+
+    a {
+        color: white !important
+    }
+
+        a:hover {
+            color: white !important
+        }
 </style>
 <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
     <div class="modal-dialog">
@@ -40,6 +56,16 @@
                 </button>
 
             </div>
+
+            <div class="col-12 row" style="margin-top:5px;">
+                <div class="col-10">
+                    <h6 class="modal-title" id="exampleModalLongTitle"><span>Project : @ViewBag.projectname</span></h6>
+                </div>
+                <div class="col-2 linkToButton">
+                    @Html.ActionLink("Export", "ExportChartSummaryReportDetails", "Home", new { ColumnName = @ViewBag.ColumnName, dos = @ViewBag.dos, ProjectId = @ViewBag.ProjectId })
+                </div>
+            </div>
+
             <div style="margin-left: 12px;">
                 <h6 class="modal-title" id="exampleModalLongTitle"><span>Project : @ViewBag.projectname</span></h6>
             </div>
@@ -95,28 +121,6 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-
-        ExportChartSummaryReportDetails = function () {
-            var ColumnName = $("#ColumnName").val();
-            var dos = $("#dos").val();
-            var ProjectId = $("#ProjectId").val();
-            
-            $.ajax({
-                type: "GET",
-                url: "@Url.Action("ExportChartSummaryReportDetails", "Home")",
-                data: {
-                    "ColumnName": ColumnName,
-                    "dos": dos,
-                    "ProjectId": ProjectId
-                },
-                success: function (response) {
-          $("#modalContent1").html(response);
-                },
-                failure: function (response) {
-                    alert(response);
-                }
-            });
-        };
 
         ModalClose1 = function () {
             $("#modalContent1").html('');

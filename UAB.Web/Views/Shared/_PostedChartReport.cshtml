@@ -22,6 +22,22 @@
     .alert {
         padding: 0.5rem 1.25rem;
     }
+    .linkToButton {
+        background-color: #2255a4;
+        height: 32px;
+        line-height: 2;
+        max-width: 62px;
+        color: white;
+        cursor: pointer;
+    }
+
+    a {
+        color: white !important
+    }
+
+        a:hover {
+            color: white !important
+        }
 </style>
 <div class="container-fluid">
     <div class="row">
@@ -31,10 +47,10 @@
 
                     <div class="col-12 row">
                         <div class="col-11">
-                            <h5 class="card">Received Chart Report</h5>
+                            <h5 class="card">Posted Chart Report</h5>
                         </div>
-                        <div class="col-1">
-                            <input class="btn btn-info" style="height:32px" type="button" onclick="ExportPostedChartReport()" value="Export" />
+                        <div class="col-1 linkToButton">
+                            @Html.ActionLink("Export", "ExportPostedChartsReport", "Home",new { projectId = @ViewBag.ProjectId, range = @ViewBag.range, StartDate = @ViewBag.StartDate, EndDate = @ViewBag.EndDate })
                         </div>
                         <input id="projectId" type="hidden" value="@ViewBag.ProjectId" />
                         <input id="rangeId" type="hidden" value="@ViewBag.range" />
@@ -140,29 +156,6 @@
     });
 
     $(document).ready(function () {
-
-        ExportPostedChartReport = function () {
-            var projectId = $("#projectId").val();
-            var range = $("#rangeId").val();
-            var StartDate = $("#StartDate").val();
-            var EndDate = $("#EndDate").val();
-            $.ajax({
-                type: "GET",
-                url: "@Url.Action("ExportPostedChartsReport", "Home")",
-                data: {
-                    "projectId": projectId,
-                    "range": range,
-                    "StartDate": StartDate,
-                    "EndDate":EndDate
-                },
-                success: function (response) {
-          $("#modalContent1").html(response);
-                },
-                failure: function (response) {
-                    alert(response);
-                }
-            });
-        };
 
         ClickOnCell = function (p1, p2, p3, p4) {
             var projectId = $("#projectId").val();

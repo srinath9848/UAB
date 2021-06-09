@@ -37,7 +37,7 @@
     </div>
     @{string Show = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "display:none" : "display:flex");}
     <div class="col-md-3 input-group">
-        @Html.DropDownListFor(model => model.QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = "ProviderID1", @class = "form-control QARevised ControlHeight", @style = (Model.QAProviderID == 0 ? "display:none" : "display:flex") })
+        @Html.DropDownListFor(model => model.QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = "ProviderID1", @class = "form-control QARevised ControlHeight", @style = Show })
         @Html.ValidationMessageFor(model => model.QAProviderID, null, new { @class = "text-danger errMsg" })
         <div class="input-group-append CoderCorrections" style="@Show">
             <span class="input-group-text ControlHeight AcceptRejectWidth">
@@ -76,7 +76,7 @@
     </div>
     @{Show = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "display:none" : "display:flex");}
     <div class="col-md-3 input-group">
-        @Html.DropDownListFor(model => model.QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = "PayorID1", @class = "form-control QARevised ControlHeight", @style = (Model.QAPayorID == 0 ? "display:none" : "display:flex") })
+        @Html.DropDownListFor(model => model.QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = "PayorID1", @class = "form-control QARevised ControlHeight", @style = Show })
         @Html.ValidationMessageFor(model => model.QAPayorID, null, new { @class = "text-danger errMsg" })
         <div class="input-group-append CoderCorrections" style="@Show">
             <span class="input-group-text ControlHeight AcceptRejectWidth">

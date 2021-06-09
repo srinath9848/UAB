@@ -17,6 +17,22 @@
     .roledddwith {
         width: 215px;
     }
+    .linkToButton {
+        background-color: #2255a4;
+        height: 32px;
+        line-height: 2;
+        max-width: 62px;
+        color: white;
+        cursor: pointer;
+    }
+
+    a {
+        color: white !important
+    }
+
+        a:hover {
+            color: white !important
+        }
 </style>
 <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
     <div class="modal-dialog">
@@ -33,8 +49,8 @@
                 <div class="col-10">
                     <h6 class="modal-title" id="exampleModalLongTitle"><span>Project : @ViewBag.projectname</span></h6>
                 </div>
-                <div class="col-2">
-                    <input class="btn btn-info" style="height:32px" type="button" onclick="ExportDetailedReport()" value="Export" />
+                <div class="col-2 linkToButton">
+                    @Html.ActionLink("Export", "ExportDetailedReport", "Home", new { date = @ViewBag.date, week = @ViewBag.week, month = @ViewBag.month, year = @ViewBag.year, ProjectId = @ViewBag.ProjectId, range = @ViewBag.range, ChartName = @ViewBag.ChartName, StartDate = @ViewBag.StartDate, EndDate = @ViewBag.EndDate })
                 </div>
                 <input type="hidden" id="ColumnName" value="@ViewBag.ColumnName" />
                 <input type="hidden" id="ProjectName" value="@ViewBag.projectname" />
@@ -112,39 +128,6 @@
     });
 
     $(document).ready(function () {
-
-        ExportDetailedReport = function () {
-            var date = $("#date").val();
-            var week = $("#week").val();
-            var month = $("#month").val();
-            var year = $("#year").val();
-            var ProjectId = $("#ProjectId").val();
-            var range = $("#range").val();
-            var ChartName = $("#ChartName").val();
-            var StartDate = $("#StartDate").val();
-            var EndDate = $("#EndDate").val();
-            $.ajax({
-                type: "GET",
-                url: "@Url.Action("ExportDetailedReport", "Home")",
-                data: {
-                    "date": date,
-                    "week": week,
-                    "month": month,
-                    "year": year,
-                    "ProjectId": ProjectId,
-                    "range": range,
-                    "ChartName": ChartName,
-                    "StartDate": StartDate,
-                    "EndDate": EndDate
-                },
-                success: function (response) {
-          $("#modalContent1").html(response);
-                },
-                failure: function (response) {
-                    alert(response);
-                }
-            });
-        };
 
         ModalClose2 = function () {
             $("#modalContent2").html('');

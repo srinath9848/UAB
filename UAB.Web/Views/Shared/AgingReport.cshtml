@@ -35,6 +35,20 @@
     .highlight {
         background-color: #a8cb17 !important;
     }
+    .linkToButton {
+        background-color: #2255a4;
+        height: 32px;
+        line-height: 2;
+        max-width: 62px;
+        color: white;
+        cursor: pointer;
+    }
+    a {
+        color: white !important
+    }
+    a:hover{
+        color:white !important
+    }
 </style>
 <div class="container-fluid">
     <div class="row">
@@ -45,8 +59,9 @@
                         <div class="col-11">
                             <h5 class="card">Aging Break down Report</h5>
                         </div>
-                        <div class="col-1">
-                            <input class="btn btn-info" style="height:32px" type="button" onclick="ExportAgingReportByProject()" value="Export" />
+                        <div class="col-1 linkToButton">
+                            @Html.ActionLink("Export", "ExportAgingReportByProject")
+                            @*<input class="btn btn-info" style="height:32px" type="button" onclick="ExportAgingReportByProject()" value="Export" />*@
                         </div>
                         <input type="hidden" id="ExportAgingReportByProject" value="@Model.Tables[0]" />
                     </div>
@@ -128,8 +143,8 @@
                         <div class="col-11">
                             <h5 class="card">Aging Break down by Status Report</h5>
                         </div>
-                        <div class="col-1">
-                            <input class="btn btn-info" style="height:32px" type="button" onclick="ExportAgingReportByStatus()" value="Export" />
+                        <div class="col-1 linkToButton">
+                            @Html.ActionLink("Export", "ExportAgingReportByStatus","Home",new { @class = "whiteLink" })
                         </div>
                         <input type="hidden" id="ExportAgingReportByStatus" value="@Model.Tables[0]" />
                     </div>
@@ -277,42 +292,7 @@
     $("#total").text(total);
 
     $(document).ready(function () {
-        var ModelTable1 = $("#ExportAgingReportByProject").val();
-        ExportAgingReportByProject = function () {
-            
-            $.ajax({
-                type: "GET",
-                url: "@Url.Action("ExportAgingReportByProject", "Home")",
-                data: {
-                    "dataTableName": ModelTable1
-                },
-                success: function (response) {
-          $("#modalContent1").html(response);
-                },
-                failure: function (response) {
-                    alert(response);
-                }
-            });
-        };
-
-        var ModelTable2 = $("#ExportAgingReportByStatus").val();
-        ExportAgingReportByStatus = function () {
-            
-            $.ajax({
-                type: "GET",
-                url: "@Url.Action("ExportAgingReportByStatus", "Home")",
-                data: {
-                    "dataTable": ModelTable2
-                },
-                success: function (response) {
-          $("#modalContent1").html(response);
-                },
-                failure: function (response) {
-                    alert(response);
-                }
-            });
-        };
-
+        
         ClickOnCell = function (p1,p2) {
                  $.ajax({
                 type: "GET",

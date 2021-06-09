@@ -419,18 +419,18 @@ namespace UAB.DAL
                 {
                     var un = context.User.Where(x => x.UserId == res.ResponseByUserId).FirstOrDefault();
                     var bn = context.User.Where(x => x.UserId == res1.BlockedByUserId).FirstOrDefault();
-                    string bc = context.BlockCategory.Where(x => x.BlockCategoryId == res1.BlockCategoryId).Select(x=>x.Name).FirstOrDefault();
-                    
+                    string bc = context.BlockCategory.Where(x => x.BlockCategoryId == res1.BlockCategoryId).Select(x => x.Name).FirstOrDefault();
+
                     BlockResponseDTO brdt = new BlockResponseDTO
                     {
                         ResponseByUserName = un.FirstName + " " + un.LastName,
                         ResponseRemarks = res.ResponseRemarks,
                         ResponseDate = res.ResponseDate,
-                        BlockCategory =bc,
+                        BlockCategory = bc,
                         BlockRemarks = res1.Remarks,
                         Blockedbyuser = bn.FirstName + " " + bn.LastName,
                         BlockedDate = res1.CreateDate,
-                        BlockedInQueueKind=res1.BlockedInQueueKind
+                        BlockedInQueueKind = res1.BlockedInQueueKind
                     };
                     return brdt;
                 }
@@ -1542,7 +1542,7 @@ namespace UAB.DAL
                         chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
                         var dos = Convert.ToDateTime(reader["DateOfService"]);
                         chartSummaryDTO.CodingDTO.DateOfService = dos.ToString("MM/dd/yyyy");
-                        chartSummaryDTO.ProviderName = Convert.ToString(reader["Provider"]);
+                        chartSummaryDTO.CodingDTO.Provider = Convert.ToString(reader["Provider"]);
                         //chartSummaryDTO.CodingDTO.ListName = Convert.ToString(reader["ListName"]);
                         //chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
                         //chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
@@ -1621,7 +1621,7 @@ namespace UAB.DAL
                         chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
                         var dos = Convert.ToDateTime(reader["DateOfService"]);
                         chartSummaryDTO.CodingDTO.DateOfService = dos.ToString("MM/dd/yyyy");
-                        chartSummaryDTO.ProviderName = Convert.ToString(reader["Provider"]);
+                        chartSummaryDTO.CodingDTO.Provider = Convert.ToString(reader["Provider"]);
                         //chartSummaryDTO.CodingDTO.ListName = Convert.ToString(reader["ListName"]);
                         //chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
                         //chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
@@ -1716,7 +1716,7 @@ namespace UAB.DAL
                         chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
                         var dos = Convert.ToDateTime(reader["DateOfService"]);
                         chartSummaryDTO.CodingDTO.DateOfService = dos.ToString("MM/dd/yyyy");
-                        chartSummaryDTO.ProviderName = Convert.ToString(reader["Provider"]);
+                        chartSummaryDTO.CodingDTO.Provider = Convert.ToString(reader["Provider"]);
                         //chartSummaryDTO.CodingDTO.ListName = Convert.ToString(reader["ListName"]);
                         //chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
                         //chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
@@ -1795,7 +1795,7 @@ namespace UAB.DAL
                         chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
                         var dos = Convert.ToDateTime(reader["DateOfService"]);
                         chartSummaryDTO.CodingDTO.DateOfService = dos.ToString("MM/dd/yyyy");
-                        chartSummaryDTO.ProviderName = Convert.ToString(reader["Provider"]);
+                        chartSummaryDTO.CodingDTO.Provider = Convert.ToString(reader["Provider"]);
                         lst.Add(chartSummaryDTO);
                     }
                 }
@@ -2045,7 +2045,7 @@ namespace UAB.DAL
                         chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
                         var dos = Convert.ToDateTime(reader["DateOfService"]);
                         chartSummaryDTO.CodingDTO.DateOfService = dos.ToString("MM/dd/yyyy");
-                        chartSummaryDTO.ProviderName = Convert.ToString(reader["Provider"]);
+                        chartSummaryDTO.CodingDTO.Provider = Convert.ToString(reader["Provider"]);
                         //chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
                         //chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
                         //var dos = Convert.ToDateTime(reader["DateOfService"]);
@@ -2321,7 +2321,7 @@ namespace UAB.DAL
                         chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
                         var dos = Convert.ToDateTime(reader["DateOfService"]);
                         chartSummaryDTO.CodingDTO.DateOfService = dos.ToString("MM/dd/yyyy");
-                        chartSummaryDTO.ProviderName = Convert.ToString(reader["Provider"]);
+                        chartSummaryDTO.CodingDTO.Provider = Convert.ToString(reader["Provider"]);
                         lst.Add(chartSummaryDTO);
                     }
                 }
@@ -2570,6 +2570,12 @@ namespace UAB.DAL
                     SqlDbType = System.Data.SqlDbType.Bit,
                      Direction = System.Data.ParameterDirection.Input,
                      Value = chartSummaryDTO.SubmitAndPostAlso
+                 },
+                  new SqlParameter() {
+                    ParameterName = "@IsWrongProvider",
+                    SqlDbType = System.Data.SqlDbType.Bit,
+                     Direction = System.Data.ParameterDirection.Input,
+                     Value = chartSummaryDTO.isWrongProvider
                  }
                 };
 
@@ -3173,6 +3179,7 @@ namespace UAB.DAL
                         wf.Event = Convert.ToString(reader["Event"]);
                         wf.DateandTime = Convert.ToDateTime(reader["Date"]).ToLocalDate(timeZoneCookie);
                         wf.ByUser = Convert.ToString(reader["UserName"]);
+                        wf.Remarks = Convert.ToString(reader["Remarks"]);
                         lst.Add(wf);
                     }
                 }
@@ -3253,69 +3260,109 @@ namespace UAB.DAL
                 {
                     Version vr1 = new Version();
                     int assignfromuser = 0;
-
-                    assignfromuser = existingcc.AssignedTo == null ? 0 : Convert.ToInt32(existingcc.AssignedTo);
-
+                    string unamefrom = null;
+                    string unameto = null;
 
                     if (existingcc.StatusId == 1 || existingcc.StatusId == 2 || existingcc.StatusId == 3
                         || existingcc.StatusId == 14 || existingcc.StatusId == 15)
                     {
 
-                        assignfromuser = existingcc.AssignedTo == null ? 0 : Convert.ToInt32(existingcc.AssignedTo);
+                        //coding
 
+                        assignfromuser = existingcc.AssignedTo == null ? 0 : Convert.ToInt32(existingcc.AssignedTo);
                         existingcc.AssignedTo = AssignedTouserid;
 
-                        //version table assign from event
+                        if (assignfromuser != 0)
+                        {
+                            var user = context.User.Where(x => x.UserId == assignfromuser).FirstOrDefault();
+                            unamefrom = user.FirstName + " " + user.LastName;
+                        }
+                        else
+                        {
+                            unamefrom = "Un Assign";
+                        }
+                        if (AssignedTouserid != 0)
+                        {
+                            var user2 = context.User.Where(x => x.UserId == AssignedTouserid).FirstOrDefault();
+                            unameto = user2.FirstName + " " + user2.LastName;
+                        }
+
+                        //version table assign  event
                         vr1.ClinicalCaseId = ccid;
                         vr1.StatusId = 18;
-                        vr1.UserId = assignfromuser;
+                        vr1.UserId = mUserId;
                         vr1.VersionDate = DateTime.Now;
+                        vr1.Remarks = "Re-Assigned the Coder from" + " " + unamefrom + " " + "to" + " " + unameto;
                     }
                     if (existingcc.StatusId == 4 || existingcc.StatusId == 5 || existingcc.StatusId == 6
                         || existingcc.StatusId == 11 || existingcc.StatusId == 12)
                     {
-
+                        // QA
                         assignfromuser = existingcc.AssignedTo == null ? 0 : Convert.ToInt32(existingcc.QABy);
                         existingcc.QABy = AssignedTouserid;
 
-                        //version table assign from event
+
+                        if (assignfromuser != 0)
+                        {
+                            var user = context.User.Where(x => x.UserId == assignfromuser).FirstOrDefault();
+                            unamefrom = user.FirstName + " " + user.LastName;
+                        }
+                        else
+                        {
+                            unamefrom = "Un Assign";
+                        }
+                        if (AssignedTouserid != 0)
+                        {
+                            var user2 = context.User.Where(x => x.UserId == AssignedTouserid).FirstOrDefault();
+                            unameto = user2.FirstName + " " + user2.LastName;
+                        }
+
+
+                        //version table assign  event
                         vr1.ClinicalCaseId = ccid;
                         vr1.StatusId = 18;
-                        vr1.UserId = assignfromuser;
+                        vr1.UserId = mUserId;
                         vr1.VersionDate = DateTime.Now;
+                        vr1.Remarks = "Re-Assigned the QA from" + unamefrom + "to" + unameto;
                     }
                     if (existingcc.StatusId == 7 || existingcc.StatusId == 8 || existingcc.StatusId == 9
                          || existingcc.StatusId == 10 || existingcc.StatusId == 13)
                     {
-
+                        // Shadow QA
                         assignfromuser = existingcc.AssignedTo == null ? 0 : Convert.ToInt32(existingcc.ShadowQABy);
                         existingcc.ShadowQABy = AssignedTouserid;
 
-                        //version table assign from event
+
+                        if (assignfromuser != 0)
+                        {
+                            var user = context.User.Where(x => x.UserId == assignfromuser).FirstOrDefault();
+                            unamefrom = user.FirstName + " " + user.LastName;
+                        }
+                        else
+                        {
+                            unamefrom = "Un Assign";
+                        }
+                        if (AssignedTouserid != 0)
+                        {
+                            var user2 = context.User.Where(x => x.UserId == AssignedTouserid).FirstOrDefault();
+                            unameto = user2.FirstName + " " + user2.LastName;
+                        }
+
+
+                        //version table assign  event
                         vr1.ClinicalCaseId = ccid;
                         vr1.StatusId = 18;
-                        vr1.UserId = assignfromuser;
+                        vr1.UserId = mUserId;
                         vr1.VersionDate = DateTime.Now;
+                        vr1.Remarks = "Re-Assigned the Shadow QA from" + unamefrom + "to" + unameto;
 
                     }
-                    //version table assign To  event
-                    Version vr2 = new Version()
-                    {
-                        ClinicalCaseId = ccid,
-                        StatusId = 19,
-                        UserId = AssignedTouserid,
-                        VersionDate = DateTime.Now
-                    };
-                    List<Version> vrlst = new List<Version>();
-                    vrlst.Add(vr1);
-                    vrlst.Add(vr2);
-
                     existingcc.AssignedBy = mUserId;
                     existingcc.AssignedDate = DateTime.Now;
                     existingcc.IsPriority = searchResultDTO.IsPriority ? 1 : 0;
                     context.Entry(existingcc).State = EntityState.Modified;
 
-                    context.Version.AddRange(vrlst);
+                    context.Version.Add(vr1);
                     context.SaveChanges();
                 }
             }
