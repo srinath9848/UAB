@@ -3873,19 +3873,14 @@ namespace UAB.DAL
                 var exsitinguser = context.User.Where(a => a.UserId == UserId).FirstOrDefault();
                 var exsitingProjectuser = context.ProjectUser.Where(a => a.UserId == UserId).FirstOrDefault();
 
-                if (exsitingProjectuser != null)
-                {
-                    context.ProjectUser.Remove(exsitingProjectuser);
-                    context.SaveChanges();
-                }
-                if (exsitinguser != null)
+                if (exsitinguser != null && exsitingProjectuser==null)
                 {
                     context.User.Remove(exsitinguser);
                     context.SaveChanges();
                 }
                 else
                 {
-                    throw new Exception("Unable To Delete User : User Not there in UAB");
+                    throw new Exception("Unable To Delete User : User Not there in UAB or User Assigened projects");
                 }
 
             }
@@ -4013,15 +4008,15 @@ namespace UAB.DAL
             using (var context = new UABContext())
             {
                 var existingcategory = context.BlockCategory.Where(a => a.BlockCategoryId == id).FirstOrDefault();
-
-                if (existingcategory != null)
+                var existingcategoryhistory  = context.BlockHistory.Where(x => x.BlockCategoryId == id).FirstOrDefault();
+                if (existingcategory != null && existingcategoryhistory ==null)
                 {
                     context.BlockCategory.Remove(existingcategory);
                     context.SaveChanges();
                 }
                 else
                 {
-                    throw new Exception("Unable To Delete Block Category");
+                    throw new Exception("Unable To Delete Block Category :Its used in UAB");
                 }
 
             }
@@ -4087,31 +4082,22 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                using (var cnn = context.Database.GetDbConnection())
+                var existingprovider  = context.Provider.Where(a => a.ProviderId == provider.ProviderId).FirstOrDefault();
+                var existingproviderfromCC = context.ClinicalCase.Where(x => x.ProviderId==provider.ProviderId).FirstOrDefault();
+                var existingproviderfromWP = context.WorkItemProvider.Where(x => x.ProviderId == provider.ProviderId).FirstOrDefault();
+                var existingproviderfromWA = context.WorkItemAudit.Where(x => x.FieldName =="ProviderID" && x.FieldValue ==provider.ProviderId.ToString()).FirstOrDefault();
+                if (existingprovider  != null && existingproviderfromCC  == null && existingproviderfromWP == null && existingproviderfromWA == null)
                 {
-                    //SqlCommand cmd = new SqlCommand("UspAddProvider");
-                    var cmm = cnn.CreateCommand();
-                    //SqlCommand cmd = new SqlCommand("[dbo].[UspUpdateProvider]", cnn);
-                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmm.CommandText = "[dbo].[UspDeleteProvider]";
-                    cmm.Connection = cnn;
-
-                    SqlParameter param = new SqlParameter();
-                    param.ParameterName = "@ProviderID";
-                    param.Value = provider.ProviderId;
-                    cmm.Parameters.Add(param);
-
-
-                    //SqlParameter name = new SqlParameter();
-                    //name.ParameterName = "@Name";
-                    //name.Value = provider.Name;
-                    //cmm.Parameters.Add(name);
-
-                    cnn.Open();
-                    cmm.ExecuteNonQuery();
+                    context.Provider.Remove(existingprovider);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable To Delete Provider :It is used in UAB");
                 }
             }
         }
+        
         public void DeleteUser(ApplicationUser applicationUser)
         {
             using (var context = new UABContext())
@@ -4224,28 +4210,16 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                using (var cnn = context.Database.GetDbConnection())
+                var existingProviderFeedback = context.ProviderFeedback.Where(a => a.ProviderFeedbackId == providerFeedback.ID).FirstOrDefault();
+                var existingProviderFeedbackfromWP = context.WorkItemProvider.Where(x => x.ProviderFeedbackId == providerFeedback.ID).FirstOrDefault();
+                if (existingProviderFeedback  != null && existingProviderFeedbackfromWP == null)
                 {
-                    //SqlCommand cmd = new SqlCommand("UspAddProvider");
-                    var cmm = cnn.CreateCommand();
-                    //SqlCommand cmd = new SqlCommand("[dbo].[UspUpdateProvider]", cnn);
-                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmm.CommandText = "[dbo].[UspDeleteProviderFeedback]";
-                    cmm.Connection = cnn;
-
-                    SqlParameter param = new SqlParameter();
-                    param.ParameterName = "@ProviderFeedbackId";
-                    param.Value = providerFeedback.ID;
-                    cmm.Parameters.Add(param);
-
-
-                    //SqlParameter name = new SqlParameter();
-                    //name.ParameterName = "@Name";
-                    //name.Value = provider.Name;
-                    //cmm.Parameters.Add(name);
-
-                    cnn.Open();
-                    cmm.ExecuteNonQuery();
+                    context.ProviderFeedback.Remove(existingProviderFeedback);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable To Delete ProviderFeedback :It is used in UAB");
                 }
             }
         }
@@ -4369,28 +4343,17 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                using (var cnn = context.Database.GetDbConnection())
+                var existingpayor  = context.Payor.Where(a => a.PayorId == payor.PayorId).FirstOrDefault();
+                var existingpayorfromWP = context.WorkItemProvider.Where(x => x.PayorId == payor.PayorId).FirstOrDefault();
+                
+                if (existingpayor != null&& existingpayorfromWP == null )
                 {
-                    //SqlCommand cmd = new SqlCommand("UspAddProvider");
-                    var cmm = cnn.CreateCommand();
-                    //SqlCommand cmd = new SqlCommand("[dbo].[UspUpdateProvider]", cnn);
-                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmm.CommandText = "[dbo].[UspDeletePayor]";
-                    cmm.Connection = cnn;
-
-                    SqlParameter param = new SqlParameter();
-                    param.ParameterName = "@PayorID";
-                    param.Value = payor.PayorId;
-                    cmm.Parameters.Add(param);
-
-
-                    //SqlParameter name = new SqlParameter();
-                    //name.ParameterName = "@Name";
-                    //name.Value = provider.Name;
-                    //cmm.Parameters.Add(name);
-
-                    cnn.Open();
-                    cmm.ExecuteNonQuery();
+                    context.Payor.Remove(existingpayor);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable To Delete Payor :It is used in UAB");
                 }
             }
         }
@@ -4506,20 +4469,17 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                using (var cnn = context.Database.GetDbConnection())
+                var existingErrorType = context.ErrorType.Where(a => a.ErrorTypeId == errorType.ErrorTypeId).FirstOrDefault();
+                var existingErrorTypefromWA = context.WorkItemAudit.Where(x => x.ErrorTypeId == errorType.ErrorTypeId).FirstOrDefault();
+
+                if (existingErrorType  != null && existingErrorTypefromWA == null)
                 {
-                    var cmm = cnn.CreateCommand();
-                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmm.CommandText = "[dbo].[UspDeleteErrorType]";
-                    cmm.Connection = cnn;
-
-                    SqlParameter param = new SqlParameter();
-                    param.ParameterName = "@ErrorTypeID";
-                    param.Value = errorType.ErrorTypeId;
-                    cmm.Parameters.Add(param);
-
-                    cnn.Open();
-                    cmm.ExecuteNonQuery();
+                    context.ErrorType.Remove(existingErrorType);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable To Delete Error Type :It is used in UAB");
                 }
             }
         }
@@ -4615,20 +4575,19 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                using (var cnn = context.Database.GetDbConnection())
+                var existingProject  = context.Project.Where(a => a.ProjectId == project.ProjectId).FirstOrDefault();
+                var existingProjectCC = context.ClinicalCase.Where(x => x.ProjectId == project.ProjectId).FirstOrDefault();
+                var existingProjectPU = context.ProjectUser.Where(x => x.ProjectId == project.ProjectId).FirstOrDefault();
+
+
+                if (existingProject != null && existingProjectCC == null && existingProjectPU == null)
                 {
-                    var cmm = cnn.CreateCommand();
-                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmm.CommandText = "[dbo].[UspDeleteProject]";
-                    cmm.Connection = cnn;
-
-                    SqlParameter param = new SqlParameter();
-                    param.ParameterName = "@ProjectId";
-                    param.Value = project.ProjectId;
-                    cmm.Parameters.Add(param);
-
-                    cnn.Open();
-                    cmm.ExecuteNonQuery();
+                    context.Project.Remove(existingProject);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable To Delete Project :It is used in UAB");
                 }
             }
         }
