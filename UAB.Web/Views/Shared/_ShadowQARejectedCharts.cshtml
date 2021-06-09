@@ -112,7 +112,8 @@
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 lessWidth m-t-15">Provider</label>
-                                    @{int len = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText) ? 10 : 20); }
+                                    
+                                    @{int len = ((!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText) && !Model.FirstOrDefault().ProviderText.Equals(Model.FirstOrDefault().QAProviderText)) ? 10 : 20); }
                                     @{string ProviderText = (Model.FirstOrDefault().ProviderText?.Length > len) ? Model.FirstOrDefault().ProviderText.Substring(0, len) + ".." : Model.FirstOrDefault().ProviderText;}
                                     @{string QAProviderText = (Model.FirstOrDefault().QAProviderText?.Length > len) ? "/" + Model.FirstOrDefault().QAProviderText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAProviderText;}
                                     @{string title = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText) ? Model.FirstOrDefault().ProviderText + "/" + Model.FirstOrDefault().QAProviderText : Model.FirstOrDefault().ProviderText);}
@@ -121,7 +122,7 @@
                                     <div title="@title" class="col-md-3 input-group">
                                         <div class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
                                             <span style="white-space:nowrap">
-                                                @if (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText) &&!Model.FirstOrDefault().ProviderText.Equals(Model.FirstOrDefault().QAProviderText))
+                                                @if (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText) && !Model.FirstOrDefault().ProviderText.Equals(Model.FirstOrDefault().QAProviderText))
                                                 {
                                                     <label style="color: red;">@ProviderText</label>
                                                     <label style="color: green">@QAProviderText</label>
@@ -157,7 +158,8 @@
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 lessWidth m-t-15">Payor</label>
-                                    @{len = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) ? 10 : 20); }
+                                    
+                                    @{ len = ((!string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) && !Model.FirstOrDefault().PayorText.Equals(Model.FirstOrDefault().QAPayorText)) ? 10 : 20); }
                                     @{string PayorText = (Model.FirstOrDefault().PayorText?.Length > len) ? Model.FirstOrDefault().PayorText.Substring(0, len) + ".." : Model.FirstOrDefault().PayorText;}
                                     @{string QAPayorText = (Model.FirstOrDefault().QAPayorText?.Length > len) ? "/" + Model.FirstOrDefault().QAPayorText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAPayorText;}
                                     @{title = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) ? Model.FirstOrDefault().PayorText + "/" + Model.FirstOrDefault().QAPayorText : Model.FirstOrDefault().PayorText);}
@@ -167,7 +169,7 @@
                                         <div name="PayorText" class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
                                             <span style="white-space:nowrap">
 
-                                                @if (!string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) &&!Model.FirstOrDefault().PayorText.Equals(Model.FirstOrDefault().QAPayorText))
+                                                @if (!string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) && !Model.FirstOrDefault().PayorText.Equals(Model.FirstOrDefault().QAPayorText))
                                                 {
                                                     <label style="color: red;">@PayorText</label>
                                                     <label style="color: green">@QAPayorText</label>
@@ -559,7 +561,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 lessWidth m-t-15">Provider Feedback</label>
-                                    @{len = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText) ? 10 : 20); }
+                                    @{ len = ((!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText) && !Model.FirstOrDefault().ProviderFeedbackText.Equals(Model.FirstOrDefault().QAProviderFeedbackText)) ? 10 : 20); }
                                     @{string ProviderFeedbackText = (Model.FirstOrDefault().ProviderFeedbackText?.Length > len) ? Model.FirstOrDefault().ProviderFeedbackText.Substring(0, len) + ".." : Model.FirstOrDefault().ProviderFeedbackText;}
                                     @{string QAProviderFeedbackText = (Model.FirstOrDefault().QAProviderFeedbackText?.Length > len) ? "/" + Model.FirstOrDefault().QAProviderFeedbackText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAProviderFeedbackText;}
                                     @{title = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText) ? Model.FirstOrDefault().ProviderFeedbackText + "/" + Model.FirstOrDefault().QAProviderFeedbackText : Model.FirstOrDefault().ProviderFeedbackText);}
@@ -569,7 +571,7 @@
                                         <div class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
                                             <span style="white-space:nowrap">
 
-                                                @if (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText) &&!Model.FirstOrDefault().ProviderFeedbackText.Equals(Model.FirstOrDefault().QAProviderFeedbackText))
+                                                @if (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText) && !Model.FirstOrDefault().ProviderFeedbackText.Equals(Model.FirstOrDefault().QAProviderFeedbackText))
                                                 {
                                                     <label style="color: red;">@ProviderFeedbackText</label>
                                                     <label style="color:green">@QAProviderFeedbackText</label>
