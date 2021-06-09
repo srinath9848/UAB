@@ -13,6 +13,7 @@ namespace UAB.DAL.Models
 
         public int ClinicalCaseId { get; set; }
         public int ProjectId { get; set; }
+        public int ProviderId  { get; set; }
         public int? ListId { get; set; }
         public string PatientMrn { get; set; }
         public string PatientLastName { get; set; }
