@@ -2455,6 +2455,12 @@ namespace UAB.DAL
                     SqlDbType = System.Data.SqlDbType.VarChar,
                      Direction = System.Data.ParameterDirection.Input,
                      Value = coderComment
+                 },
+                  new SqlParameter() {
+                    ParameterName = "@IsWrongProvider",
+                    SqlDbType = System.Data.SqlDbType.Bit,
+                     Direction = System.Data.ParameterDirection.Input,
+                     Value = chartSummaryDTO.isWrongProvider
                  }
                 };
 

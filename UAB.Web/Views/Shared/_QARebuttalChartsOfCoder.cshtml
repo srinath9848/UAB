@@ -138,8 +138,8 @@
                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().QAProviderID, null, new { @class = "text-danger errMsg" })
                                         <div class="input-group-append CoderCorrections" style="@Show">
                                             <span class="input-group-text ControlHeight AcceptRejectWidth">
-                                                &nbsp;<i id="Provider" title="ProviderID1" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
-                                                &nbsp;<i id="Provider" title="ProviderID1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                                &nbsp;<i id="ProviderID_@tabIndex" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
+                                                &nbsp;<i id="ProviderID_@tabIndex" class="@Rejected" aria-hidden="true"></i>
                                             </span>
                                         </div>
                                     </div>
@@ -176,8 +176,8 @@
                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().QAPayorID, null, new { @class = "text-danger errMsg" })
                                         <div class="input-group-append CoderCorrections" style="@Show">
                                             <span class="input-group-text ControlHeight AcceptRejectWidth">
-                                                &nbsp;<i id="Payor" title="PayorID1" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
-                                                &nbsp;<i id="Payor" title="PayorID1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                                &nbsp;<i id="PayorID_@tabIndex" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
+                                                &nbsp;<i id="PayorID_@tabIndex" class="@Rejected" aria-hidden="true"></i>
                                             </span>
                                         </div>
                                     </div>
@@ -454,7 +454,6 @@
                                                     </div>
                                                 }
 
-                                                @{ Show = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
                                                 <div class="col-md-3 CptlessWidth input-group" style="@Show">
                                                     <div class="input-group-prepend ControlHeight">
                                                         <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
@@ -497,12 +496,12 @@
                                                     </div>
                                                 </div>
 
-                                                <div title="" class="col-md-3 input-group" style="@Show">
-                                                    <input type="text" class="form-control ControlHeight" id="CptRemarks_@j" value="@dictRevisedCptRemarks?.ElementAt(i).Value" />
+                                                <div class="col-md-3 input-group" style="@Show">
+                                                    <input type="text" class="form-control ControlHeight" id="CptRemarks_@j" value="@dictQACptRemarks?.ElementAt(i).Value" />
                                                 </div>
 
                                                 <div class="col-md-3 input-group">
-                                                    <input type="text" class="form-control CoderDetails ControlHeight CoderCptRemarks_@j" style="@Show" value="@dictQACptRemarks?.ElementAt(i).Value" />
+                                                    <input type="text" class="form-control CoderDetails ControlHeight CoderCptRemarks_@j" style="@Show" value="@dictRevisedCptRemarks?.ElementAt(i).Value" />
                                                 </div>
                                             </div>
                                             j = j + 1;
@@ -538,8 +537,8 @@
                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().QAProviderFeedbackRemarks, null, new { @class = "text-danger errMsg" })
                                         <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
                                             <span class="input-group-text ControlHeight AcceptRejectWidth">
-                                                &nbsp;<i id="ProviderFeedback" title="Feedback1" class="fa fa-check-circle fa-lg AdjustAcceptReject" aria-hidden="true"></i>
-                                                &nbsp;<i id="ProviderFeedback" title="Feedback1" class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                                                &nbsp;<i id="Feedback_@tabIndex" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
+                                                &nbsp;<i id="Feedback_@tabIndex" class="@Rejected" aria-hidden="true"></i>
                                             </span>
                                         </div>
                                     </div>
