@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -13,6 +14,10 @@ namespace UAB.DAL.Models
         public UABContext(DbContextOptions<UABContext> options)
             : base(options)
         {
+            var objectContext = (this as IObjectContextAdapter).ObjectContext;
+
+            // Sets the command timeout for all the commands
+            objectContext.CommandTimeout = 300;
         }
 
         public virtual DbSet<Client> Client { get; set; }
@@ -39,7 +44,7 @@ namespace UAB.DAL.Models
         public virtual DbSet<BlockCategory> BlockCategory { get; set; }
         public virtual DbSet<BlockHistory> BlockHistory { get; set; }
         public virtual DbSet<EMCodeLevel> EMCodeLevel { get; set; }
-        public virtual DbSet<BlockResponse> BlockResponse  { get; set; }
+        public virtual DbSet<BlockResponse> BlockResponse { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -214,7 +219,7 @@ namespace UAB.DAL.Models
                     .IsRequired()
                     .HasDefaultValueSql("('1')");
             });
-            
+
             modelBuilder.Entity<Provider>(entity =>
             {
                 entity.Property(e => e.ProviderId).HasColumnName("ProviderID");
