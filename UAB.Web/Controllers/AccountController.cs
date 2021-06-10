@@ -290,27 +290,22 @@ namespace UAB.Controllers
         [HttpPost]
         public IActionResult UpdateProjectUser(ApplicationUser model, string user = null)
         {
-            if (model.RoleId != 0 && !string.IsNullOrWhiteSpace(model.SamplePercentage)
+
+            try
+            {
+                if (model.RoleId != 0 && !string.IsNullOrWhiteSpace(model.SamplePercentage)
                 && model.ProjectUserId != 0 && model.UserId != 0)
-            {
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-                int i = clinicalcaseOperations.UpdateProjectUser(model);
-                if (i == 1)
                 {
+                    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                    clinicalcaseOperations.UpdateProjectUser(model);
                     TempData["Success"] = "Successfully Project User Updated";
-                    return RedirectToAction("UserDetails", new { UserId = model.UserId });
-                }
-                else
-                {
-                    TempData["Warning"] = "Unable to  update  project user :no change is there";
-                    return RedirectToAction("UserDetails", new { UserId = model.UserId });
                 }
             }
-            else
+            catch (Exception ex)
             {
-                TempData["Warning"] = "Unable to  update  project user :you havent seleted anything";
-                return RedirectToAction("UserDetails", new { UserId = model.UserId });
+                TempData["error"] = ex.Message;
             }
+            return RedirectToAction("UserDetails", new { UserId = model.UserId });
         }
 
         [HttpGet]

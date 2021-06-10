@@ -3812,39 +3812,48 @@ namespace UAB.DAL
             }
         }
 
-        public int UpdateProjectUser(ApplicationUser projectuser)
+        public void UpdateProjectUser(ApplicationUser projectuser)
         {
             using (var context = new UABContext())
             {
                 var existingprojectuser = context.ProjectUser.First(a => a.ProjectUserId == projectuser.ProjectUserId);
+                var exstingroles = context.ProjectUser.Where(x => x.UserId == projectuser.UserId).Select(x => x.RoleId).ToList();
+
+
                 //there is no updation
                 if (existingprojectuser.RoleId == projectuser.RoleId && existingprojectuser.SamplePercentage == Convert.ToInt32(projectuser.SamplePercentage))
+                    throw new Exception("Unable to Update Project User :There is no change happen");
+
+
+                if (!exstingroles.Contains(projectuser.RoleId))
                 {
-                    return 0;
+                    //updating role 
+                    if (existingprojectuser.RoleId != projectuser.RoleId && existingprojectuser.SamplePercentage == Convert.ToInt32(projectuser.SamplePercentage))
+                    {
+                        existingprojectuser.RoleId = projectuser.RoleId;
+                        context.Entry(existingprojectuser).State = EntityState.Modified;
+                        context.SaveChanges();
+                    }
+                    //updating sample %
+                    else if (existingprojectuser.RoleId == projectuser.RoleId && existingprojectuser.SamplePercentage != Convert.ToInt32(projectuser.SamplePercentage))
+                    {
+                        existingprojectuser.SamplePercentage = Convert.ToInt32(projectuser.SamplePercentage);
+                        context.Entry(existingprojectuser).State = EntityState.Modified;
+                        context.SaveChanges();
+                    }
+                    //updating role and sample %
+                    else if (existingprojectuser.RoleId != projectuser.RoleId && existingprojectuser.SamplePercentage != Convert.ToInt32(projectuser.SamplePercentage))
+                    {
+                        existingprojectuser.RoleId = projectuser.RoleId;
+                        existingprojectuser.SamplePercentage = Convert.ToInt32(projectuser.SamplePercentage);
+                        context.Entry(existingprojectuser).State = EntityState.Modified;
+                        context.SaveChanges();
+                    }
                 }
-                //updating role 
-                else if (existingprojectuser.RoleId != projectuser.RoleId && existingprojectuser.SamplePercentage == Convert.ToInt32(projectuser.SamplePercentage))
+                else
                 {
-                    existingprojectuser.RoleId = projectuser.RoleId;
-                    context.Entry(existingprojectuser).State = EntityState.Modified;
-                    context.SaveChanges();
+                    throw new Exception("Unable to Update Project User :This user has already this role");
                 }
-                //updating sample %
-                else if (existingprojectuser.RoleId == projectuser.RoleId && existingprojectuser.SamplePercentage != Convert.ToInt32(projectuser.SamplePercentage))
-                {
-                    existingprojectuser.SamplePercentage = Convert.ToInt32(projectuser.SamplePercentage);
-                    context.Entry(existingprojectuser).State = EntityState.Modified;
-                    context.SaveChanges();
-                }
-                //updating role and sample %
-                else if (existingprojectuser.RoleId != projectuser.RoleId && existingprojectuser.SamplePercentage != Convert.ToInt32(projectuser.SamplePercentage))
-                {
-                    existingprojectuser.RoleId = projectuser.RoleId;
-                    existingprojectuser.SamplePercentage = Convert.ToInt32(projectuser.SamplePercentage);
-                    context.Entry(existingprojectuser).State = EntityState.Modified;
-                    context.SaveChanges();
-                }
-                return 1;
             }
         }
 
@@ -3873,7 +3882,7 @@ namespace UAB.DAL
                 var exsitinguser = context.User.Where(a => a.UserId == UserId).FirstOrDefault();
                 var exsitingProjectuser = context.ProjectUser.Where(a => a.UserId == UserId).FirstOrDefault();
 
-                if (exsitinguser != null && exsitingProjectuser==null)
+                if (exsitinguser != null && exsitingProjectuser == null)
                 {
                     context.User.Remove(exsitinguser);
                     context.SaveChanges();
@@ -4008,8 +4017,8 @@ namespace UAB.DAL
             using (var context = new UABContext())
             {
                 var existingcategory = context.BlockCategory.Where(a => a.BlockCategoryId == id).FirstOrDefault();
-                var existingcategoryhistory  = context.BlockHistory.Where(x => x.BlockCategoryId == id).FirstOrDefault();
-                if (existingcategory != null && existingcategoryhistory ==null)
+                var existingcategoryhistory = context.BlockHistory.Where(x => x.BlockCategoryId == id).FirstOrDefault();
+                if (existingcategory != null && existingcategoryhistory == null)
                 {
                     context.BlockCategory.Remove(existingcategory);
                     context.SaveChanges();
@@ -4082,11 +4091,10 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                var existingprovider  = context.Provider.Where(a => a.ProviderId == provider.ProviderId).FirstOrDefault();
-                var existingproviderfromCC = context.ClinicalCase.Where(x => x.ProviderId==provider.ProviderId).FirstOrDefault();
+                var existingprovider = context.Provider.Where(a => a.ProviderId == provider.ProviderId).FirstOrDefault();
+                var existingproviderfromCC = context.ClinicalCase.Where(x => x.ProviderId == provider.ProviderId).FirstOrDefault();
                 var existingproviderfromWP = context.WorkItemProvider.Where(x => x.ProviderId == provider.ProviderId).FirstOrDefault();
-                var existingproviderfromWA = context.WorkItemAudit.Where(x => x.FieldName =="ProviderID" && x.FieldValue ==provider.ProviderId.ToString()).FirstOrDefault();
-                if (existingprovider  != null && existingproviderfromCC  == null && existingproviderfromWP == null && existingproviderfromWA == null)
+                if (existingprovider != null && existingproviderfromCC == null && existingproviderfromWP == null)
                 {
                     context.Provider.Remove(existingprovider);
                     context.SaveChanges();
@@ -4097,7 +4105,7 @@ namespace UAB.DAL
                 }
             }
         }
-        
+
         public void DeleteUser(ApplicationUser applicationUser)
         {
             using (var context = new UABContext())
@@ -4212,7 +4220,7 @@ namespace UAB.DAL
             {
                 var existingProviderFeedback = context.ProviderFeedback.Where(a => a.ProviderFeedbackId == providerFeedback.ID).FirstOrDefault();
                 var existingProviderFeedbackfromWP = context.WorkItemProvider.Where(x => x.ProviderFeedbackId == providerFeedback.ID).FirstOrDefault();
-                if (existingProviderFeedback  != null && existingProviderFeedbackfromWP == null)
+                if (existingProviderFeedback != null && existingProviderFeedbackfromWP == null)
                 {
                     context.ProviderFeedback.Remove(existingProviderFeedback);
                     context.SaveChanges();
@@ -4343,10 +4351,10 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                var existingpayor  = context.Payor.Where(a => a.PayorId == payor.PayorId).FirstOrDefault();
+                var existingpayor = context.Payor.Where(a => a.PayorId == payor.PayorId).FirstOrDefault();
                 var existingpayorfromWP = context.WorkItemProvider.Where(x => x.PayorId == payor.PayorId).FirstOrDefault();
-                
-                if (existingpayor != null&& existingpayorfromWP == null )
+
+                if (existingpayor != null && existingpayorfromWP == null)
                 {
                     context.Payor.Remove(existingpayor);
                     context.SaveChanges();
@@ -4472,7 +4480,7 @@ namespace UAB.DAL
                 var existingErrorType = context.ErrorType.Where(a => a.ErrorTypeId == errorType.ErrorTypeId).FirstOrDefault();
                 var existingErrorTypefromWA = context.WorkItemAudit.Where(x => x.ErrorTypeId == errorType.ErrorTypeId).FirstOrDefault();
 
-                if (existingErrorType  != null && existingErrorTypefromWA == null)
+                if (existingErrorType != null && existingErrorTypefromWA == null)
                 {
                     context.ErrorType.Remove(existingErrorType);
                     context.SaveChanges();
@@ -4575,7 +4583,7 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                var existingProject  = context.Project.Where(a => a.ProjectId == project.ProjectId).FirstOrDefault();
+                var existingProject = context.Project.Where(a => a.ProjectId == project.ProjectId).FirstOrDefault();
                 var existingProjectCC = context.ClinicalCase.Where(x => x.ProjectId == project.ProjectId).FirstOrDefault();
                 var existingProjectPU = context.ProjectUser.Where(x => x.ProjectId == project.ProjectId).FirstOrDefault();
 
