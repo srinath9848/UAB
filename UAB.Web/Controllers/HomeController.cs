@@ -206,6 +206,7 @@ namespace UAB.Controllers
                 agingList.Add(data);
             }
             var table = clinicalcaseOperations.ToDataTable<CodingDTO>(agingList);
+            table.Columns.Remove("ClinicalCaseID");
             _logger.LogInformation("Loading Ended for ExportAgingReportDetailByProject for User: " + mUserId);
             return ExportToExcel(table);
         }
@@ -319,6 +320,7 @@ namespace UAB.Controllers
                 }
 
                 var table = clinicalcaseOperations.ToDataTable<CodingDTO>(codingList);
+                table.Columns.Remove("ClinicalCaseID");
                 _logger.LogInformation("Loading Ended for ExportDetailedReport for User: " + mUserId);
                 return ExportToExcel(table);
             }
@@ -334,6 +336,7 @@ namespace UAB.Controllers
                 }
 
                 var table = clinicalcaseOperations.ToDataTable<CodingDTO>(codingList);
+                table.Columns.Remove("ClinicalCaseID");
                 _logger.LogInformation("Loading Ended for ExportDetailedReport for User: " + mUserId);
                 return ExportToExcel(table);
             }
@@ -349,6 +352,7 @@ namespace UAB.Controllers
                 }
 
                 var table = clinicalcaseOperations.ToDataTable<CodingDTO>(codingList);
+                table.Columns.Remove("ClinicalCaseID");
                 _logger.LogInformation("Loading Ended for ExportDetailedReport for User: " + mUserId);
                 return ExportToExcel(table);
             }
@@ -364,6 +368,7 @@ namespace UAB.Controllers
                 }
 
                 var table = clinicalcaseOperations.ToDataTable<CodingDTO>(codingList);
+                table.Columns.Remove("ClinicalCaseID");
                 _logger.LogInformation("Loading Ended for ExportDetailedReport for User: " + mUserId);
                 return ExportToExcel(table);
             }
@@ -379,6 +384,7 @@ namespace UAB.Controllers
                 }
 
                 var table = clinicalcaseOperations.ToDataTable<CodingDTO>(codingList);
+                table.Columns.Remove("ClinicalCaseID");
                 _logger.LogInformation("Loading Ended for ExportDetailedReport for User: " + mUserId);
                 return ExportToExcel(table);
             }
@@ -445,6 +451,7 @@ namespace UAB.Controllers
             }
 
             var table = clinicalcaseOperations.ToDataTable<CodingDTO>(chartSummaryList);
+            table.Columns.Remove("ClinicalCaseID");
             _logger.LogInformation("Loading Ended for ExportChartSummaryReportDetails for User: " + mUserId);
             return ExportToExcel(table);
         }
@@ -556,6 +563,7 @@ namespace UAB.Controllers
             }
 
             var table = clinicalcaseOperations.ToDataTable<CodingDTO>(backlogList);
+            table.Columns.Remove("ClinicalCaseID");
             _logger.LogInformation("Loading Ended for ExportBackLogChartsReportDetails for User: " + mUserId);
             return ExportToExcel(table);
 
@@ -717,6 +725,7 @@ namespace UAB.Controllers
             }
 
             var table = clinicalcaseOperations.ToDataTable<CodingDTO>(pendingList);
+            table.Columns.Remove("ClinicalCaseID");
             _logger.LogInformation("Loading Ended for ExportPendingReportDetails for User: " + mUserId);
             return ExportToExcel(table);
         }
