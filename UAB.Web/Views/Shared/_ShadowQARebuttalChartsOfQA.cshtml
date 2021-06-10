@@ -138,12 +138,13 @@
                                                 }
                                             </span>
                                         </div>
+                                        @{string Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                                        @{string Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+
                                         @{string Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "display:none" : "display:flex");}
                                         <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
                                             <span class="input-group-text AcceptRejectWidth_@tabIndex">
-                                                @{string Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                                                @{string Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
-                                                <i id="ProviderID_@tabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject_@tabIndex accept" aria-hidden="true"></i>
+                                                <i id="ProviderID_@tabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
                                                 <i id="ProviderID_@tabIndex" data="@tabIndex" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
                                             </span>
                                         </div>
@@ -161,7 +162,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 lessWidth m-t-15">Payor</label>
-                                    
+
                                     @{ len = ((!string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) && !Model.FirstOrDefault().PayorText.Equals(Model.FirstOrDefault().QAPayorText)) ? 10 : 20); }
                                     @{string PayorText = (Model.FirstOrDefault().PayorText?.Length > len) ? Model.FirstOrDefault().PayorText.Substring(0, len) + ".." : Model.FirstOrDefault().PayorText;}
                                     @{string QAPayorText = (Model.FirstOrDefault().QAPayorText?.Length > len) ? "/" + Model.FirstOrDefault().QAPayorText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAPayorText;}
@@ -253,14 +254,14 @@
                                                 {
                                                     <label class="col-md-3 lessWidth m-t-15"></label>
                                                 }
-                                                @{ Accepted = (string.IsNullOrEmpty(dictQADxRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                                                @{ Rejected = (string.IsNullOrEmpty(dictQADxRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+                                                @{ Accepted = (string.IsNullOrEmpty(dictShadowQADxRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                                                @{ Rejected = (string.IsNullOrEmpty(dictShadowQADxRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
 
                                                 @{string Dx = dictDxCodes.ElementAt(i).Value;}
                                                 @{string QADx = (dictQADxCodes?.ElementAt(i).Value?.Length > len) ? "/" + dictQADxCodes?.ElementAt(i).Value.Substring(0, len) + ".." : "/" + dictQADxCodes?.ElementAt(i).Value;}
 
-                                                <div title="@title" class="col-md-3 CPTWidth input-group">
+                                                <div class="col-md-3 CPTWidth input-group">
                                                     <div class="input-group-prepend ControlHeight">
                                                         <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                                                     </div>
@@ -277,7 +278,9 @@
                                                             }
                                                         </span>
                                                     </div>
-                                                    <div class="input-group-append CoderCorrections">
+                                                    @{ Show = (string.IsNullOrEmpty(dictShadowQADxRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex"); }
+
+                                                    <div class="input-group-append CoderCorrections" style="@Show">
                                                         <span class="input-group-text">
                                                             &nbsp;<i id="Dx_@j" class="@Accepted" aria-hidden="true"></i>
                                                             &nbsp;<i id="Dx_@j" class="@Rejected" aria-hidden="true"></i>
@@ -285,18 +288,22 @@
                                                     </div>
                                                 </div>
 
-                                                @{ Show = (string.IsNullOrEmpty(dictQADxRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
                                                 <div class="col-md-3 CPTWidth input-group" style="@Show">
                                                     <div class="input-group-prepend ControlHeight">
                                                         <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                                                     </div>
-
-                                                    <input type="text" id="txtDxCode_@j" class="form-control txtDx ControlHeight" value="@dictShadowQADxCodes?.ElementAt(i).Value" />
+                                                    @{
+                                                        string ShadowQaDxVal = !string.IsNullOrEmpty(dictShadowQADxCodes?.ElementAt(i).Value) ? dictShadowQADxCodes?.ElementAt(i).Value : !string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? dictQADxCodes?.ElementAt(i).Value : dictDxCodes?.ElementAt(i).Value;
+                                                    }
+                                                    <input type="text" id="txtDxCode_@j" class="form-control txtDx ControlHeight" value="@ShadowQaDxVal" />
                                                     <input type="hidden" id="txtQADxCode_@j" class="form-control txtDx ControlHeight" value="@dictQADxCodes?.ElementAt(i).Value" />
 
                                                 </div>
+                                                @{
+                                                    string ShadowQaDxRemarks = !string.IsNullOrEmpty(dictShadowQADxRemarks?.ElementAt(i).Value) ? dictShadowQADxRemarks?.ElementAt(i).Value : !string.IsNullOrEmpty(dictQADxRemarks?.ElementAt(i).Value) ? dictQADxRemarks?.ElementAt(i).Value : "N/A";
+                                                }
                                                 <div class="col-md-3 input-group" style="@Show">
-                                                    <input type="text" class="form-control ControlHeight SQADxRemarks_@j" id="" value="@dictShadowQADxRemarks?.ElementAt(i).Value" />
+                                                    <input type="text" class="form-control ControlHeight SQADxRemarks_@j" id="" value="@ShadowQaDxRemarks" />
                                                 </div>
                                                 <div class="col-md-3 input-group">
                                                     <input type="text" class="form-control CoderDetails ControlHeight" style="@Show" id="DxRemarks_@j" value="@dictQADxRemarks?.ElementAt(i).Value" />
@@ -347,11 +354,6 @@
                                                 }
                                                 @{ string[] coderCptcodes = dictCptCodes?.ElementAt(i).Value.Split("^");}
                                                 @{ string[] qaCptcodes = dictQACptCodes?.ElementAt(i).Value.Split("^");}
-
-                                                @{
-                                                    Accepted = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
-                                                    Rejected = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
-                                                }
 
                                                 @if (!string.IsNullOrEmpty(dictQACptCodes?.ElementAt(i).Value))
                                                 {
@@ -449,9 +451,13 @@
                                                             }
 
                                                         </div>
-
+                                                        @{
+                                                            Accepted = (string.IsNullOrEmpty(dictShadowQACptCodes?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
+                                                            Rejected = (string.IsNullOrEmpty(dictShadowQACptCodes?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
+                                                        }
+                                                        @{ Show = (string.IsNullOrEmpty(dictShadowQACptCodes?.ElementAt(i).Value) ? "display:none" : "display:flex");}
                                                         <input type="hidden" id="txtCPTCode_@j" value="@qacptCode^@qaMod^@qaQty^@qaLinks" />
-                                                        <div class="input-group-append CoderCorrections ControlHeight">
+                                                        <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
                                                             <span class="input-group-text AcceptRejectWidth">
                                                                 &nbsp;<i id="Cpt_@j" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
                                                                 &nbsp;<i id="Cpt_@j" class="@Rejected" aria-hidden="true"></i>
@@ -472,6 +478,9 @@
                                                         cptVal = coderCptcodes[0] == "NA" ? "" : coderCptcodes[0];
                                                         qtyVal = coderCptcodes[2];
                                                     }
+                                                    Show = (string.IsNullOrEmpty(dictShadowQACptCodes?.ElementAt(i).Value) ? "display:none" : "display:flex");
+                                                    Accepted = (string.IsNullOrEmpty(dictShadowQACptCodes?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
+                                                    Rejected = (string.IsNullOrEmpty(dictShadowQACptCodes?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
 
                                                     <div title="Code : @cptVal, Mod : @coderModVal, Quantity : @qtyVal, Link : @coderLinkAllVal" class="col-md-3 input-group">
                                                         <div class="input-group-prepend ControlHeight">
@@ -482,7 +491,7 @@
                                                         <input type="text" class="form-control CoderDetails ControlHeight" style="color:green;" placeholder="Qty" value="@qtyVal" />
                                                         <input type="text" class="form-control CoderDetails ControlHeight" style="color: green;" placeholder="Link All" value="@coderLinkAllVal" />
                                                         <input type="hidden" id="txtCPTCode_@j" value="@cptVal^@coderModVal^@qtyVal^@coderLinkAllVal" />
-                                                        <div class="input-group-append CoderCorrections ControlHeight">
+                                                        <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
                                                             <span class="input-group-text AcceptRejectWidth">
                                                                 &nbsp;<i id="Cpt_@j" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
                                                                 &nbsp;<i id="Cpt_@j" class="@Rejected" aria-hidden="true"></i>
@@ -490,10 +499,7 @@
                                                         </div>
                                                     </div>
                                                 }
-                                                @{ Accepted = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                                                @{ Rejected = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-                                                @{ Show = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "visibility:hidden" : "display:flex"); }
                                                 <div class="col-md-3 CPTWidth input-group" style="@Show">
                                                     <div class="input-group-prepend ControlHeight">
                                                         <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
@@ -534,9 +540,11 @@
                                                     <input type="text" id="txtLinks_@j" class="form-control QARemarks ControlHeight" autocomplete="off" placeholder="Link All" value="@ShadowQaLinkAllVal" />
 
                                                 </div>
-
+                                                @{
+                                                    string ShadowQaCptRemarks = !string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? dictShadowQACptRemarks?.ElementAt(i).Value : !string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? dictQACptRemarks?.ElementAt(i).Value : "N/A";
+                                                }
                                                 <div title="" class="col-md-3 input-group" style="@Show">
-                                                    <input type="text" class="form-control ControlHeight SQACptRemarks_@j" value="@dictShadowQACptRemarks?.ElementAt(i).Value" />
+                                                    <input type="text" class="form-control ControlHeight SQACptRemarks_@j" value="@ShadowQaCptRemarks" />
                                                 </div>
 
                                                 <div class="col-md-3 input-group">

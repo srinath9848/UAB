@@ -798,7 +798,7 @@ namespace UAB.Controllers
             int claimId = Convert.ToInt32(items[0].Split(",")[1]);
             for (int i = 1; i < items.Count(); i++)
             {
-                dtAudit.Rows.Add(items[i].Split(",")[0], items[i].Split(",")[1], items[i].Split(",")[2], claimId, errorTypeID, false);
+                dtAudit.Rows.Add(items[i].Split(",")[0], items[i].Split(",")[1], items[i].Split(",")[2], errorTypeID, claimId, false);
             }
         }
 
