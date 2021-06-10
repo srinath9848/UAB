@@ -2751,7 +2751,7 @@ namespace UAB.Controllers
             }
             else
             {
-                TempData["Warning"] = "Unable to  update  EM Code :you havent Changed anything";
+                TempData["Warning"] = "No changes were detected";
                 return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
             }
         }
