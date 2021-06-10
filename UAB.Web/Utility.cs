@@ -102,7 +102,7 @@ namespace UAB
             if (dxRemarks == "")
                 return null;
 
-            List<string> lstDxRemarks = dxRemarks.Split('|').OrderBy(q => q).ToList();
+            List<string> lstDxRemarks = dxRemarks.Split('|').OrderBy(q => q).Distinct().ToList();
 
             Dictionary<int, string> dictDxRemarks = new Dictionary<int, string>();
 
@@ -214,7 +214,7 @@ namespace UAB
             if (cptRemarks == "")
                 return null;
 
-            List<string> lstCptRemarks = cptRemarks.Split('|').OrderBy(q => q).ToList();
+            List<string> lstCptRemarks = cptRemarks.Split('|').OrderBy(q => q).Distinct().ToList();
 
             Dictionary<int, string> dictCptRemarks = new Dictionary<int, string>();
 

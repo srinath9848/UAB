@@ -94,9 +94,18 @@
     foreach (var item in Model.CPTCode.Split('|'))
     {
         string[] coderCptcodes = item.Split("^");
-        string mod = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
-        string linkAll = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
-        string links = !string.IsNullOrEmpty(@linkAll) || @linkAll != "" ? @linkAll : "Link All";
+        string cptVal = coderCptcodes[0] == "NA" ? "" : coderCptcodes[0];
+        string mod = "";
+        string linkAll = "";
+        string qtyVal = "";
+        string links = "";
+        if (cptVal != "")
+        {
+            mod = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
+            qtyVal = coderCptcodes[2] == "null" ? "" : coderCptcodes[2];
+            linkAll = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
+            links = !string.IsNullOrEmpty(@linkAll) || @linkAll != "" ? @linkAll : "Link All";
+        }
         <div class="form-group row">
             @if (i == 1)
             {
@@ -106,13 +115,13 @@
             {
                 <label class="col-md-3 m-t-15 AlignControl"></label>
             }
-            <div title="Code : @coderCptcodes[0], Mod : @mod, Quantity : @coderCptcodes[2], Links : @links" class="col-md-3 lessWidth input-group" style="max-width:20% !important;">
+            <div title="Code : @cptVal, Mod : @mod, Quantity : @qtyVal, Links : @links" class="col-md-3 lessWidth input-group" style="max-width:20% !important;">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">@i</span>
                 </div>
-                <input type="text" class="form-control CoderDetails" placeholder="Code" value="@coderCptcodes[0]" style="width:17px;" />
+                <input type="text" class="form-control CoderDetails" placeholder="Code" value="@cptVal" style="width:17px;" />
                 <input type="text" class="form-control CoderDetails" placeholder="Mod" value="@mod" />
-                <input type="text" class="form-control CoderDetails" placeholder="Qty" value="@coderCptcodes[2]" />
+                <input type="text" class="form-control CoderDetails" placeholder="Qty" value="@qtyVal" />
                 <input type="text" class="form-control CoderDetails" placeholder="Link All" value="@linkAll" />
             </div>
         </div>
