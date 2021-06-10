@@ -337,7 +337,7 @@ namespace UAB.Controllers
             {
                 TempData["Error"] = ex.Message;
             }
-            return RedirectToAction("ManageUsers");
+            return RedirectToAction("UserDetails", new { UserId = model.UserId });
         }
 
         [HttpGet]

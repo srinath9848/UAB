@@ -3884,15 +3884,23 @@ namespace UAB.DAL
             using (var context = new UABContext())
             {
                 var exsitingProjectuser = context.ProjectUser.Where(a => a.ProjectUserId == ProjectUserId).FirstOrDefault();
-
                 if (exsitingProjectuser != null)
                 {
-                    context.ProjectUser.Remove(exsitingProjectuser);
-                    context.SaveChanges();
+                    var exsitingworkitem = context.WorkItem.Where(x => x.ProjectId == exsitingProjectuser.ProjectId && (x.AssignedTo == exsitingProjectuser.UserId || x.QABy == exsitingProjectuser.UserId || x.ShadowQABy == exsitingProjectuser.UserId));
+
+                    if (exsitingworkitem == null)
+                    {
+                        context.ProjectUser.Remove(exsitingProjectuser);
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        throw new Exception("Unable To Delete Project User : This Project User have Assigned charts");
+                    }
                 }
                 else
                 {
-                    throw new Exception("Unable To Delete User : User Not there in UAB");
+                    throw new Exception("Unable To Delete Project User : Project User not there in UAB");
                 }
 
             }
