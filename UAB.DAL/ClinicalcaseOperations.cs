@@ -1336,7 +1336,7 @@ namespace UAB.DAL
             return ds;
         }
 
-        public DataSet GetReceivedChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate)
+        public DataSet GetReceivedChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate, double timeZoneOffSet)
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
@@ -1357,15 +1357,21 @@ namespace UAB.DAL
                         },
                         new SqlParameter() {
                             ParameterName = "@StartDate",
-                            SqlDbType =  System.Data.SqlDbType.Date,
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = startDate
                         },
                         new SqlParameter() {
                             ParameterName = "@EndDate",
-                            SqlDbType =  System.Data.SqlDbType.Date,
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = endDate
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@TimeZoneOffset",
+                            SqlDbType =  System.Data.SqlDbType.Decimal,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = timeZoneOffSet
                         }
                 };
 
@@ -1384,7 +1390,7 @@ namespace UAB.DAL
             }
             return ds;
         }
-        public List<ChartSummaryDTO> GetReceivedChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range)
+        public List<ChartSummaryDTO> GetReceivedChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range, double timeZoneOffSet, DateTime StartDate, DateTime EndDate)
         {
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
@@ -1429,6 +1435,22 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = year
+                        },
+                         new SqlParameter() {
+                            ParameterName = "@TimeZoneOffset",
+                            SqlDbType =  System.Data.SqlDbType.Decimal,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = timeZoneOffSet
+                        } ,   new SqlParameter() {
+                            ParameterName = "@StartDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = StartDate
+                        } ,   new SqlParameter() {
+                            ParameterName = "@EndDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = EndDate
                         }
                     };
                 using (var con = context.Database.GetDbConnection())
@@ -3880,7 +3902,7 @@ namespace UAB.DAL
                 }
                 else
                 {
-                    throw new Exception("Unable To Delete User : User Not there in UAB or User Assigened projects");
+                    throw new Exception("Unable to delete User : It is already used in UAB,the associated information should delete first");
                 }
 
             }
@@ -4016,7 +4038,7 @@ namespace UAB.DAL
                 }
                 else
                 {
-                    throw new Exception("Unable To Delete Block Category :Its used in UAB");
+                    throw new Exception("Unable to delete Block Category : It is already used in UAB,the associated information should delete first");
                 }
 
             }
@@ -4093,7 +4115,7 @@ namespace UAB.DAL
                 }
                 else
                 {
-                    throw new Exception("Unable To Delete Provider :It is used in UAB");
+                    throw new Exception("Unable to delete Provider : It is already used in UAB,the associated information should delete first");
                 }
             }
         }
@@ -4219,7 +4241,7 @@ namespace UAB.DAL
                 }
                 else
                 {
-                    throw new Exception("Unable To Delete ProviderFeedback :It is used in UAB");
+                    throw new Exception("Unable to delete Providerfeedback : It is already used in UAB,the associated information should delete first");
                 }
             }
         }
@@ -4353,7 +4375,7 @@ namespace UAB.DAL
                 }
                 else
                 {
-                    throw new Exception("Unable To Delete Payor :It is used in UAB");
+                    throw new Exception("Unable to delete Payor : It is already used in UAB,the associated information should delete first");
                 }
             }
         }
@@ -4479,7 +4501,7 @@ namespace UAB.DAL
                 }
                 else
                 {
-                    throw new Exception("Unable To Delete Error Type :It is used in UAB");
+                    throw new Exception("Unable to delete Error Type : It is already used in UAB,the associated information should delete first");
                 }
             }
         }
@@ -4587,7 +4609,7 @@ namespace UAB.DAL
                 }
                 else
                 {
-                    throw new Exception("Unable To Delete Project :It is used in UAB");
+                    throw new Exception("Unable to delete Project : It is already used in UAB,the associated information should delete first");
                 }
             }
         }
