@@ -124,6 +124,7 @@ namespace UAB.DTO
 
         public int ProviderPostedId { get; set; }
         public DateTime PostingDate { get; set; }
+        [Required(ErrorMessage = "Coder Comment is Required")]
         public string CoderComment { get; set; }
         public string CCIDs { get; set; }
         public bool isWrongProvider { get; set; }
