@@ -197,10 +197,22 @@
                             //        if ($("#ErrorType_" + tabid).val() != "") {
                             //            $("#ErrorTypeError_" + tabid).html('');
                             //        }
-                            if ($("#hdnQAAcceptDxRemarks" + tabid).val() == "")
-                                $("#hdnQAAcceptDxRemarks" + tabid).val(id + "^" + $("#SQADxRemarkss_" + tabid + "_" + id).val());
-                            else
-                                $("#hdnQAAcceptDxRemarks" + tabid).val($("#hdnQAAcceptDxRemarks" + tabid).val() + "|" + id + "^" + $("#SQADxRemarkss_" + tabid + "_" + id).val());
+
+
+                            if ($("#hdnQAAcceptDxRemarks" + tabid).val() == "") {
+                                if ($("#SQADxRemarkss_" + tabid + "_" + id).val() == "" && $("#SQADxRemarkss_" + tabid + "_" + id).val() == undefined) {
+                                    $("#hdnQAAcceptDxRemarks" + tabid).val(id + "^" + $(".QADxRemarkss_" + tabid + "_" + id).val());
+                                } else {
+                                    $("#hdnQAAcceptDxRemarks" + tabid).val(id + "^" + $("#SQADxRemarkss_" + tabid + "_" + id).val());
+                                }
+                            }
+                            else {
+                                if ($("#SQADxRemarkss_" + tabid + "_" + id).val() == "" && $("#SQADxRemarkss_" + tabid + "_" + id).val() == undefined) {
+                                    $("#hdnQAAcceptDxRemarks" + tabid).val($("#hdnQAAcceptDxRemarks" + tabid).val() + "|" + id + "^" + $(".QADxRemarkss_" + tabid + "_" + id).val());
+                                } else {
+                                    $("#hdnQAAcceptDxRemarks" + tabid).val($("#hdnQAAcceptDxRemarks" + tabid).val() + "|" + id + "^" + $("#SQADxRemarkss_" + tabid + "_" + id).val());
+                                }
+                            }
 
                             //    } else {
                             //        $(DxNewClaimremarks[i]).focus();
@@ -291,11 +303,22 @@
                             //    if ($("#ErrorType_" + tabid).val() != "") {
                             //        $("#ErrorTypeError_" + tabid).html('');
                             //    }
-                            if ($("#hdnQAAcceptCptRemarks" + tabid).val() == "")
-                                $("#hdnQAAcceptCptRemarks" + tabid).val(id + "^" + $(".SQACptRemarkss_" + tabid + "_" + id).val());
-                            else
-                                $("#hdnQAAcceptCptRemarks" + tabid).val($("#hdnQAAcceptCptRemarks" + tabid).val() + "|" + id + "^" + $(".SQACptRemarkss_" + tabid + "_" + id).val());
-                            //}
+
+                            if ($("#hdnQAAcceptCptRemarks" + tabid).val() == "") {
+                                if ($("#SQACptRemarkss_" + tabid + "_" + id).val() == "" && $("#SQACptRemarkss_" + tabid + "_" + id).val() == undefined) {
+                                    $("#hdnQAAcceptCptRemarks" + tabid).val(id + "^" + $(".QACptRemarkss_" + tabid + "_" + id).val());
+                                } else {
+                                    $("#hdnQAAcceptCptRemarks" + tabid).val(id + "^" + $("#SQACptRemarkss_" + tabid + "_" + id).val());
+                                }
+                            }
+                            else {
+                                if ($("#SQACptRemarkss_" + tabid + "_" + id).val() == "" && $("#SQACptRemarkss_" + tabid + "_" + id).val() == undefined) {
+                                    $("#hdnQAAcceptCptRemarks" + tabid).val($("#hdnQAAcceptCptRemarks" + tabid).val() + "|" + id + "^" + $(".QACptRemarkss_" + tabid + "_" + id).val());
+                                } else {
+                                    $("#hdnQAAcceptCptRemarks" + tabid).val($("#hdnQAAcceptCptRemarks" + tabid).val() + "|" + id + "^" + $("#SQACptRemarkss_" + tabid + "_" + id).val());
+                                }
+                            }
+
                             //else {
                             //    $(CptNewClaimRemarks[i]).focus();
                             //    $("#validCptRemarksClaim_" + tabid + "_" + id).show();
@@ -360,10 +383,20 @@
                 //    if ($("#ErrorType_" + id).val() != "") {
                 //        $("#ErrorTypeError_" + id).html('');
                 //    }
-                if ($("#hdnQAAcceptDxRemarks").val() == "")
-                    $("#hdnQAAcceptDxRemarks").val(id + "^" + $(".SQADxRemarks_" + id).val());
-                else
-                    $("#hdnQAAcceptDxRemarks").val($("#hdnQAAcceptDxRemarks").val() + "|" + id + "^" + $(".SQADxRemarks_" + id).val());
+                if ($("#hdnQAAcceptDxRemarks").val() == "") {
+                    if ($(".SQADxRemarks_" + id).val() == "") {
+                        $("#hdnQAAcceptDxRemarks").val(id + "^" + $("#DxRemarks_" + id).val());
+                    } else {
+                        $("#hdnQAAcceptDxRemarks").val(id + "^" + $(".SQADxRemarks_" + id).val());
+                    }
+                }
+                else {
+                    if ($(".SQADxRemarks_" + id).val() == "") {
+                        $("#hdnQAAcceptDxRemarks").val($("#hdnQAAcceptDxRemarks").val() + "|" + id + "^" + $("#DxRemarks_" + id).val());
+                    } else {
+                        $("#hdnQAAcceptDxRemarks").val($("#hdnQAAcceptDxRemarks").val() + "|" + id + "^" + $(".SQADxRemarks_" + id).val());
+                    }
+                }
                 //}
                 //else {
                 //    $("#DxRemarks_" + id).focus();
@@ -421,10 +454,22 @@
                 //    if ($("#ErrorType_" + id).val() != "") {
                 //        $("#ErrorTypeError_" + id).html('');
                 //    }
-                if ($("#hdnQAAcceptCptRemarks").val() == "")
-                    $("#hdnQAAcceptCptRemarks").val(id + "^" + $(".SQACptRemarks_" + id).val());
-                else
-                    $("#hdnQAAcceptCptRemarks").val($("#hdnQAAcceptCptRemarks").val() + "|" + id + "^" + $(".SQACptRemarks_" + id).val());
+
+                if ($("#hdnQAAcceptCptRemarks").val() == "") {
+                    if ($(".SQACptRemarks_" + id).val() == "") {
+                        $("#hdnQAAcceptCptRemarks").val(id + "^" + $("#QACptRemarks_" + id).val());
+                    } else {
+                        $("#hdnQAAcceptCptRemarks").val(id + "^" + $(".SQACptRemarks_" + id).val());
+                    }
+                }
+                else {
+                    if ($(".SQACptRemarks_" + id).val() == "") {
+                        $("#hdnQAAcceptCptRemarks").val($("#hdnQAAcceptCptRemarks").val() + "|" + id + "^" + $("#QACptRemarks_" + id).val());
+                    } else {
+                        $("#hdnQAAcceptCptRemarks").val($("#hdnQAAcceptCptRemarks").val() + "|" + id + "^" + $(".SQACptRemarks_" + id).val());
+                    }
+                }
+
                 //}
                 //else {
                 //    $("#txtCpt_" + id).focus();
