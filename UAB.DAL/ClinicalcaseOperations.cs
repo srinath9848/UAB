@@ -3880,7 +3880,7 @@ namespace UAB.DAL
                 }
                 else
                 {
-                    throw new Exception("Unable To Delete User : User Not there in UAB or User Assigened projects");
+                    throw new Exception("Unable to delete User : It is already used in UAB,the associated information should delete first");
                 }
 
             }
@@ -4016,7 +4016,7 @@ namespace UAB.DAL
                 }
                 else
                 {
-                    throw new Exception("Unable To Delete Block Category :Its used in UAB");
+                    throw new Exception("Unable to delete Block Category : It is already used in UAB,the associated information should delete first");
                 }
 
             }
@@ -4093,7 +4093,7 @@ namespace UAB.DAL
                 }
                 else
                 {
-                    throw new Exception("Unable To Delete Provider :It is used in UAB");
+                    throw new Exception("Unable to delete Provider : It is already used in UAB,the associated information should delete first");
                 }
             }
         }
@@ -4219,7 +4219,7 @@ namespace UAB.DAL
                 }
                 else
                 {
-                    throw new Exception("Unable To Delete ProviderFeedback :It is used in UAB");
+                    throw new Exception("Unable to delete Providerfeedback : It is already used in UAB,the associated information should delete first");
                 }
             }
         }
@@ -4353,7 +4353,7 @@ namespace UAB.DAL
                 }
                 else
                 {
-                    throw new Exception("Unable To Delete Payor :It is used in UAB");
+                    throw new Exception("Unable to delete Payor : It is already used in UAB,the associated information should delete first");
                 }
             }
         }
@@ -4479,7 +4479,7 @@ namespace UAB.DAL
                 }
                 else
                 {
-                    throw new Exception("Unable To Delete Error Type :It is used in UAB");
+                    throw new Exception("Unable to delete Error Type : It is already used in UAB,the associated information should delete first");
                 }
             }
         }
@@ -4587,7 +4587,7 @@ namespace UAB.DAL
                 }
                 else
                 {
-                    throw new Exception("Unable To Delete Project :It is used in UAB");
+                    throw new Exception("Unable to delete Project : It is already used in UAB,the associated information should delete first");
                 }
             }
         }
