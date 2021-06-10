@@ -358,7 +358,7 @@ namespace UAB.Controllers
             }
             else if (ChartName == "QA Chart Details")
             {
-                var lstQAReportDetails = clinicalcaseOperations.GetQAChartReportDetails(date, week, month, year, ProjectId, range);
+                var lstQAReportDetails = clinicalcaseOperations.GetQAChartReportDetails(date, week, month, year, ProjectId, range, Convert.ToDouble(timeZoneCookie), StartDate, EndDate);
 
                 foreach (var qaData in lstQAReportDetails)
                 {
@@ -620,7 +620,7 @@ namespace UAB.Controllers
         {
             _logger.LogInformation("Loading Started for GetQAChartsReport for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstqaChartReport = clinicalcaseOperations.GetQAChartsReport(ProjectId, range, StartDate, EndDate);
+            var lstqaChartReport = clinicalcaseOperations.GetQAChartsReport(ProjectId, range, StartDate, EndDate.AddHours(23).AddMinutes(59).AddSeconds(59), Convert.ToDouble(timeZoneCookie));
 
             ViewBag.ProjectId = ProjectId;
             ViewBag.range = range;
@@ -634,7 +634,7 @@ namespace UAB.Controllers
         {
             _logger.LogInformation("Loading Started for ExportQAChartReport for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstqaChartReport = clinicalcaseOperations.GetQAChartsReport(ProjectId, range, StartDate, EndDate);
+            var lstqaChartReport = clinicalcaseOperations.GetQAChartsReport(ProjectId, range, StartDate, EndDate.AddHours(23).AddMinutes(59).AddSeconds(59), Convert.ToDouble(timeZoneCookie));
             _logger.LogInformation("Loading Ended for ExportQAChartReport for User: " + mUserId);
             return ExportToExcel(lstqaChartReport.Tables[0]);
         }
@@ -644,7 +644,7 @@ namespace UAB.Controllers
             _logger.LogInformation("Loading Started for GetQAReportDetails for User: " + mUserId);
             string createdDate = date.ToString();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstQAReportDetails = clinicalcaseOperations.GetQAChartReportDetails(date, week, month, year, ProjectId, range);
+            var lstQAReportDetails = clinicalcaseOperations.GetQAChartReportDetails(date, week, month, year, ProjectId, range, Convert.ToDouble(timeZoneCookie), StartDate, EndDate);
             string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.Name).FirstOrDefault();
             string projectType = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.ProjectTypeName).FirstOrDefault();
 
@@ -667,7 +667,7 @@ namespace UAB.Controllers
         {
             _logger.LogInformation("Loading Started for GetPendingChartsReport for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstPendingChartReport = clinicalcaseOperations.GetPendingChartsReport(ProjectId, range, StartDate, EndDate);
+            var lstPendingChartReport = clinicalcaseOperations.GetPendingChartsReport(ProjectId, range, StartDate, EndDate.AddHours(23).AddMinutes(59).AddSeconds(59), Convert.ToDouble(timeZoneCookie));
 
             ViewBag.ProjectId = ProjectId;
             ViewBag.range = range;
@@ -680,19 +680,19 @@ namespace UAB.Controllers
         {
             _logger.LogInformation("Loading Started for ExportPendingChartsReport for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstPendingChartReport = clinicalcaseOperations.GetPendingChartsReport(ProjectId, range, StartDate, EndDate);
+            var lstPendingChartReport = clinicalcaseOperations.GetPendingChartsReport(ProjectId, range, StartDate, EndDate.AddHours(23).AddMinutes(59).AddSeconds(59), Convert.ToDouble(timeZoneCookie));
 
             _logger.LogInformation("Loading Ended for ExportPendingChartsReport for User: " + mUserId);
             return ExportToExcel(lstPendingChartReport.Tables[0]);
         }
 
         [HttpGet]
-        public IActionResult GetPendingReportDetails(DateTime date, int week, string month, string year, int ProjectId, string range)
+        public IActionResult GetPendingReportDetails(DateTime date, int week, string month, string year, int ProjectId, string range, DateTime StartDate, DateTime EndDate)
         {
             _logger.LogInformation("Loading Started for GetPendingReportDetails for User: " + mUserId);
             string createdDate = date.ToString();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstPendingReportDetails = clinicalcaseOperations.GetPendingReportDetails(date, week, month, year, ProjectId, range);
+            var lstPendingReportDetails = clinicalcaseOperations.GetPendingReportDetails(date, week, month, year, ProjectId, range, Convert.ToDouble(timeZoneCookie), StartDate, EndDate);
             string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.Name).FirstOrDefault();
             string projectType = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.ProjectTypeName).FirstOrDefault();
 
@@ -704,16 +704,18 @@ namespace UAB.Controllers
             ViewBag.year = year;
             ViewBag.ProjectId = ProjectId;
             ViewBag.range = range;
+            ViewBag.StartDate = StartDate;
+            ViewBag.EndDate = EndDate;
             _logger.LogInformation("Loading Ended for GetPendingReportDetails for User: " + mUserId);
             return PartialView("_PendingReportDetails", lstPendingReportDetails);
         }
 
-        public IActionResult ExportPendingReportDetails(DateTime date, int week, string month, string year, int ProjectId, string range)
+        public IActionResult ExportPendingReportDetails(DateTime date, int week, string month, string year, int ProjectId, string range, DateTime StartDate, DateTime EndDate)
         {
             _logger.LogInformation("Loading Started for ExportPendingReportDetails for User: " + mUserId);
             string createdDate = date.ToString();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstPendingReportDetails = clinicalcaseOperations.GetPendingReportDetails(date, week, month, year, ProjectId, range);
+            var lstPendingReportDetails = clinicalcaseOperations.GetPendingReportDetails(date, week, month, year, ProjectId, range, Convert.ToDouble(timeZoneCookie), StartDate, EndDate);
             string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.Name).FirstOrDefault();
             string projectType = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.ProjectTypeName).FirstOrDefault();
             List<CodingDTO> pendingList = new List<CodingDTO>();

@@ -167,7 +167,9 @@
                         "Total": p1,
                         "date": p2,
                         "ProjectId":projectId,
-                            "range":range
+                        "range": range,
+                        "StartDate": $("#StartDate").val(),
+                        "EndDate": $("#EndDate").val()
                     },
                     success: function (response) {
                         $("#modalContent2").html(response);
@@ -187,7 +189,9 @@
                         "month": p3,
                         "year":p4,
                         "ProjectId":projectId,
-                            "range":range
+                        "range": range,
+                        "StartDate": $("#StartDate").val(),
+                        "EndDate": $("#EndDate").val()
                     },
                     success: function (response) {
                         $("#modalContent2").html(response);
@@ -206,7 +210,9 @@
                         "month": p2,
                         "year":p3,
                         "ProjectId":projectId,
-                            "range":range
+                        "range": range,
+                        "StartDate": $("#StartDate").val(),
+                        "EndDate": $("#EndDate").val()
                     },
                     success: function (response) {
                         $("#modalContent2").html(response);
