@@ -1279,7 +1279,7 @@ namespace UAB.DAL
                     ClinicalCaseId = cid,
                     ResponseRemarks = responseremarks,
                     ResponseByUserId = mUserId,
-                    ResponseDate = DateTime.Now
+                    ResponseDate = DateTime.UtcNow
                 };
                 context.BlockResponse.Add(mdl);
 
@@ -1396,7 +1396,7 @@ namespace UAB.DAL
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO.ProjectID = projectID;
             if (date == new DateTime())
-                date = DateTime.Now;
+                date = DateTime.UtcNow;
             using (var context = new UABContext())
             {
                 var param = new SqlParameter[] {
@@ -1584,7 +1584,7 @@ namespace UAB.DAL
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO.ProjectID = projectID;
             if (date == new DateTime())
-                date = DateTime.Now;
+                date = DateTime.UtcNow;
             using (var context = new UABContext())
             {
                 var param = new SqlParameter[] {
@@ -1679,7 +1679,7 @@ namespace UAB.DAL
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO.ProjectID = projectID;
             if (date == new DateTime())
-                date = DateTime.Now;
+                date = DateTime.UtcNow;
             using (var context = new UABContext())
             {
                 var param = new SqlParameter[] {
@@ -1774,7 +1774,7 @@ namespace UAB.DAL
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO.ProjectID = projectID;
             if (date == new DateTime())
-                date = DateTime.Now;
+                date = DateTime.UtcNow;
             using (var context = new UABContext())
             {
                 var param = new SqlParameter[] {
@@ -2308,7 +2308,7 @@ namespace UAB.DAL
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO.ProjectID = projectID;
             if (date == new DateTime())
-                date = DateTime.Now;
+                date = DateTime.UtcNow;
             using (var context = new UABContext())
             {
                 var param = new SqlParameter[] {
@@ -3358,7 +3358,7 @@ namespace UAB.DAL
                         vr1.ClinicalCaseId = ccid;
                         vr1.StatusId = 18;
                         vr1.UserId = mUserId;
-                        vr1.VersionDate = DateTime.Now;
+                        vr1.VersionDate = DateTime.UtcNow;
                         vr1.Remarks = "Re-Assigned the Coder from" + " " + unamefrom + " " + "to" + " " + unameto;
                     }
                     if (existingcc.StatusId == 4 || existingcc.StatusId == 5 || existingcc.StatusId == 6
@@ -3389,7 +3389,7 @@ namespace UAB.DAL
                         vr1.ClinicalCaseId = ccid;
                         vr1.StatusId = 18;
                         vr1.UserId = mUserId;
-                        vr1.VersionDate = DateTime.Now;
+                        vr1.VersionDate = DateTime.UtcNow;
                         vr1.Remarks = "Re-Assigned the QA from" + unamefrom + "to" + unameto;
                     }
                     if (existingcc.StatusId == 7 || existingcc.StatusId == 8 || existingcc.StatusId == 9
@@ -3420,12 +3420,12 @@ namespace UAB.DAL
                         vr1.ClinicalCaseId = ccid;
                         vr1.StatusId = 18;
                         vr1.UserId = mUserId;
-                        vr1.VersionDate = DateTime.Now;
+                        vr1.VersionDate = DateTime.UtcNow;
                         vr1.Remarks = "Re-Assigned the Shadow QA from" + unamefrom + "to" + unameto;
 
                     }
                     existingcc.AssignedBy = mUserId;
-                    existingcc.AssignedDate = DateTime.Now;
+                    existingcc.AssignedDate = DateTime.UtcNow;
                     existingcc.IsPriority = searchResultDTO.IsPriority ? 1 : 0;
                     context.Entry(existingcc).State = EntityState.Modified;
 
@@ -4619,7 +4619,7 @@ namespace UAB.DAL
                 mdl.ClientId = project.ClientId;
                 mdl.Name = project.Name;
                 mdl.IsActive = project.IsActive;
-                mdl.CreatedDate = DateTime.Now.ToString();
+                mdl.CreatedDate = DateTime.UtcNow.ToString();
                 mdl.InputFileLocation = project.InputFileLocation;
                 mdl.InputFileFormat = project.InputFileFormat;
                 mdl.ProjectTypeId = project.ProjectTypeId;
