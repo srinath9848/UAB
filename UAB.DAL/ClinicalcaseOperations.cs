@@ -1578,7 +1578,7 @@ namespace UAB.DAL
             return lst;
         }
 
-        public List<ChartSummaryDTO> GetQAChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range)
+        public List<ChartSummaryDTO> GetQAChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range, double timeZoneOffSet, DateTime StartDate, DateTime EndDate)
         {
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
@@ -1623,6 +1623,22 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = year
+                        },
+                         new SqlParameter() {
+                            ParameterName = "@TimeZoneOffset",
+                            SqlDbType =  System.Data.SqlDbType.Decimal,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = timeZoneOffSet
+                        } ,   new SqlParameter() {
+                            ParameterName = "@StartDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = StartDate
+                        } ,   new SqlParameter() {
+                            ParameterName = "@EndDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = EndDate
                         }
                     };
                 using (var con = context.Database.GetDbConnection())
@@ -2129,7 +2145,7 @@ namespace UAB.DAL
             }
             return ds;
         }
-        public DataSet GetQAChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate)
+        public DataSet GetQAChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate, double timeZoneOffSet)
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
@@ -2150,15 +2166,21 @@ namespace UAB.DAL
                         },
                         new SqlParameter() {
                             ParameterName = "@StartDate",
-                            SqlDbType =  System.Data.SqlDbType.Date,
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = startDate
                         },
                         new SqlParameter() {
                             ParameterName = "@EndDate",
-                            SqlDbType =  System.Data.SqlDbType.Date,
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = endDate
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@TimeZoneOffset",
+                            SqlDbType =  System.Data.SqlDbType.Decimal,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = timeZoneOffSet
                         }
                 };
 
@@ -2226,7 +2248,7 @@ namespace UAB.DAL
             return ds;
         }
 
-        public DataSet GetPendingChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate)
+        public DataSet GetPendingChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate, double timeZoneOffSet)
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
@@ -2247,15 +2269,21 @@ namespace UAB.DAL
                         },
                         new SqlParameter() {
                             ParameterName = "@StartDate",
-                            SqlDbType =  System.Data.SqlDbType.Date,
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = startDate
                         },
                         new SqlParameter() {
                             ParameterName = "@EndDate",
-                            SqlDbType =  System.Data.SqlDbType.Date,
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = endDate
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@TimeZoneOffset",
+                            SqlDbType =  System.Data.SqlDbType.Decimal,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = timeZoneOffSet
                         }
                 };
 
@@ -2274,7 +2302,7 @@ namespace UAB.DAL
             }
             return ds;
         }
-        public List<ChartSummaryDTO> GetPendingReportDetails(DateTime date, int week, string month, string year, int projectID, string range)
+        public List<ChartSummaryDTO> GetPendingReportDetails(DateTime date, int week, string month, string year, int projectID, string range, double timeZoneOffSet, DateTime StartDate, DateTime EndDate)
         {
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
@@ -2319,6 +2347,21 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = year
+                        }, new SqlParameter() {
+                            ParameterName = "@TimeZoneOffset",
+                            SqlDbType =  System.Data.SqlDbType.Decimal,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = timeZoneOffSet
+                        } ,   new SqlParameter() {
+                            ParameterName = "@StartDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = StartDate
+                        } ,   new SqlParameter() {
+                            ParameterName = "@EndDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = EndDate
                         }
                     };
                 using (var con = context.Database.GetDbConnection())
@@ -3834,39 +3877,48 @@ namespace UAB.DAL
             }
         }
 
-        public int UpdateProjectUser(ApplicationUser projectuser)
+        public void UpdateProjectUser(ApplicationUser projectuser)
         {
             using (var context = new UABContext())
             {
                 var existingprojectuser = context.ProjectUser.First(a => a.ProjectUserId == projectuser.ProjectUserId);
+                var exstingroles = context.ProjectUser.Where(x => x.UserId == projectuser.UserId).Select(x => x.RoleId).ToList();
+
+
                 //there is no updation
                 if (existingprojectuser.RoleId == projectuser.RoleId && existingprojectuser.SamplePercentage == Convert.ToInt32(projectuser.SamplePercentage))
+                    throw new Exception("Unable to Update Project User :There is no change happen");
+
+
+                if (!exstingroles.Contains(projectuser.RoleId))
                 {
-                    return 0;
+                    //updating role 
+                    if (existingprojectuser.RoleId != projectuser.RoleId && existingprojectuser.SamplePercentage == Convert.ToInt32(projectuser.SamplePercentage))
+                    {
+                        existingprojectuser.RoleId = projectuser.RoleId;
+                        context.Entry(existingprojectuser).State = EntityState.Modified;
+                        context.SaveChanges();
+                    }
+                    //updating sample %
+                    else if (existingprojectuser.RoleId == projectuser.RoleId && existingprojectuser.SamplePercentage != Convert.ToInt32(projectuser.SamplePercentage))
+                    {
+                        existingprojectuser.SamplePercentage = Convert.ToInt32(projectuser.SamplePercentage);
+                        context.Entry(existingprojectuser).State = EntityState.Modified;
+                        context.SaveChanges();
+                    }
+                    //updating role and sample %
+                    else if (existingprojectuser.RoleId != projectuser.RoleId && existingprojectuser.SamplePercentage != Convert.ToInt32(projectuser.SamplePercentage))
+                    {
+                        existingprojectuser.RoleId = projectuser.RoleId;
+                        existingprojectuser.SamplePercentage = Convert.ToInt32(projectuser.SamplePercentage);
+                        context.Entry(existingprojectuser).State = EntityState.Modified;
+                        context.SaveChanges();
+                    }
                 }
-                //updating role 
-                else if (existingprojectuser.RoleId != projectuser.RoleId && existingprojectuser.SamplePercentage == Convert.ToInt32(projectuser.SamplePercentage))
+                else
                 {
-                    existingprojectuser.RoleId = projectuser.RoleId;
-                    context.Entry(existingprojectuser).State = EntityState.Modified;
-                    context.SaveChanges();
+                    throw new Exception("Unable to Update Project User :This user has already this role");
                 }
-                //updating sample %
-                else if (existingprojectuser.RoleId == projectuser.RoleId && existingprojectuser.SamplePercentage != Convert.ToInt32(projectuser.SamplePercentage))
-                {
-                    existingprojectuser.SamplePercentage = Convert.ToInt32(projectuser.SamplePercentage);
-                    context.Entry(existingprojectuser).State = EntityState.Modified;
-                    context.SaveChanges();
-                }
-                //updating role and sample %
-                else if (existingprojectuser.RoleId != projectuser.RoleId && existingprojectuser.SamplePercentage != Convert.ToInt32(projectuser.SamplePercentage))
-                {
-                    existingprojectuser.RoleId = projectuser.RoleId;
-                    existingprojectuser.SamplePercentage = Convert.ToInt32(projectuser.SamplePercentage);
-                    context.Entry(existingprojectuser).State = EntityState.Modified;
-                    context.SaveChanges();
-                }
-                return 1;
             }
         }
 
@@ -3875,15 +3927,23 @@ namespace UAB.DAL
             using (var context = new UABContext())
             {
                 var exsitingProjectuser = context.ProjectUser.Where(a => a.ProjectUserId == ProjectUserId).FirstOrDefault();
-
                 if (exsitingProjectuser != null)
                 {
-                    context.ProjectUser.Remove(exsitingProjectuser);
-                    context.SaveChanges();
+                    var exsitingworkitem = context.WorkItem.Where(x => x.ProjectId == exsitingProjectuser.ProjectId && (x.AssignedTo == exsitingProjectuser.UserId || x.QABy == exsitingProjectuser.UserId || x.ShadowQABy == exsitingProjectuser.UserId));
+
+                    if (exsitingworkitem == null)
+                    {
+                        context.ProjectUser.Remove(exsitingProjectuser);
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        throw new Exception("Unable To Delete Project User : This Project User have Assigned charts");
+                    }
                 }
                 else
                 {
-                    throw new Exception("Unable To Delete User : User Not there in UAB");
+                    throw new Exception("Unable To Delete Project User : Project User not there in UAB");
                 }
 
             }
@@ -3895,7 +3955,7 @@ namespace UAB.DAL
                 var exsitinguser = context.User.Where(a => a.UserId == UserId).FirstOrDefault();
                 var exsitingProjectuser = context.ProjectUser.Where(a => a.UserId == UserId).FirstOrDefault();
 
-                if (exsitinguser != null && exsitingProjectuser==null)
+                if (exsitinguser != null && exsitingProjectuser == null)
                 {
                     context.User.Remove(exsitinguser);
                     context.SaveChanges();
@@ -4030,8 +4090,8 @@ namespace UAB.DAL
             using (var context = new UABContext())
             {
                 var existingcategory = context.BlockCategory.Where(a => a.BlockCategoryId == id).FirstOrDefault();
-                var existingcategoryhistory  = context.BlockHistory.Where(x => x.BlockCategoryId == id).FirstOrDefault();
-                if (existingcategory != null && existingcategoryhistory ==null)
+                var existingcategoryhistory = context.BlockHistory.Where(x => x.BlockCategoryId == id).FirstOrDefault();
+                if (existingcategory != null && existingcategoryhistory == null)
                 {
                     context.BlockCategory.Remove(existingcategory);
                     context.SaveChanges();
@@ -4104,11 +4164,10 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                var existingprovider  = context.Provider.Where(a => a.ProviderId == provider.ProviderId).FirstOrDefault();
-                var existingproviderfromCC = context.ClinicalCase.Where(x => x.ProviderId==provider.ProviderId).FirstOrDefault();
+                var existingprovider = context.Provider.Where(a => a.ProviderId == provider.ProviderId).FirstOrDefault();
+                var existingproviderfromCC = context.ClinicalCase.Where(x => x.ProviderId == provider.ProviderId).FirstOrDefault();
                 var existingproviderfromWP = context.WorkItemProvider.Where(x => x.ProviderId == provider.ProviderId).FirstOrDefault();
-                var existingproviderfromWA = context.WorkItemAudit.Where(x => x.FieldName =="ProviderID" && x.FieldValue ==provider.ProviderId.ToString()).FirstOrDefault();
-                if (existingprovider  != null && existingproviderfromCC  == null && existingproviderfromWP == null && existingproviderfromWA == null)
+                if (existingprovider != null && existingproviderfromCC == null && existingproviderfromWP == null)
                 {
                     context.Provider.Remove(existingprovider);
                     context.SaveChanges();
@@ -4119,7 +4178,7 @@ namespace UAB.DAL
                 }
             }
         }
-        
+
         public void DeleteUser(ApplicationUser applicationUser)
         {
             using (var context = new UABContext())
@@ -4234,7 +4293,7 @@ namespace UAB.DAL
             {
                 var existingProviderFeedback = context.ProviderFeedback.Where(a => a.ProviderFeedbackId == providerFeedback.ID).FirstOrDefault();
                 var existingProviderFeedbackfromWP = context.WorkItemProvider.Where(x => x.ProviderFeedbackId == providerFeedback.ID).FirstOrDefault();
-                if (existingProviderFeedback  != null && existingProviderFeedbackfromWP == null)
+                if (existingProviderFeedback != null && existingProviderFeedbackfromWP == null)
                 {
                     context.ProviderFeedback.Remove(existingProviderFeedback);
                     context.SaveChanges();
@@ -4365,10 +4424,10 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                var existingpayor  = context.Payor.Where(a => a.PayorId == payor.PayorId).FirstOrDefault();
+                var existingpayor = context.Payor.Where(a => a.PayorId == payor.PayorId).FirstOrDefault();
                 var existingpayorfromWP = context.WorkItemProvider.Where(x => x.PayorId == payor.PayorId).FirstOrDefault();
-                
-                if (existingpayor != null&& existingpayorfromWP == null )
+
+                if (existingpayor != null && existingpayorfromWP == null)
                 {
                     context.Payor.Remove(existingpayor);
                     context.SaveChanges();
@@ -4494,7 +4553,7 @@ namespace UAB.DAL
                 var existingErrorType = context.ErrorType.Where(a => a.ErrorTypeId == errorType.ErrorTypeId).FirstOrDefault();
                 var existingErrorTypefromWA = context.WorkItemAudit.Where(x => x.ErrorTypeId == errorType.ErrorTypeId).FirstOrDefault();
 
-                if (existingErrorType  != null && existingErrorTypefromWA == null)
+                if (existingErrorType != null && existingErrorTypefromWA == null)
                 {
                     context.ErrorType.Remove(existingErrorType);
                     context.SaveChanges();
@@ -4597,7 +4656,7 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                var existingProject  = context.Project.Where(a => a.ProjectId == project.ProjectId).FirstOrDefault();
+                var existingProject = context.Project.Where(a => a.ProjectId == project.ProjectId).FirstOrDefault();
                 var existingProjectCC = context.ClinicalCase.Where(x => x.ProjectId == project.ProjectId).FirstOrDefault();
                 var existingProjectPU = context.ProjectUser.Where(x => x.ProjectId == project.ProjectId).FirstOrDefault();
 
