@@ -87,8 +87,8 @@
             else {
                 ProviderID = $("#QAProviderID_" + tabid).val();
                 if (ProviderID != "0" && ProviderID != "") {
-                    if ($("#hdnAcceptClaim" + tabid).val() == "") {
-                        $("#hdnAcceptClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderID" + "," + ProviderID);
+                    if ($("#hdnAcceptedClaim" + tabid).val() == "") {
+                        $("#hdnAcceptedClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderID" + "," + ProviderID);
                     }
                 }
             }
@@ -110,8 +110,8 @@
                 }
             }
             else {
-                ProviderID = $("#QAPayorID_" + tabid).val();
-                if (ProviderID != "0" && ProviderID != "") {
+                PayorID = $("#QAPayorID_" + tabid).val();
+                if (PayorID != "0" && PayorID != "") {
                     if ($("#hdnAcceptedClaim" + tabid).val() == "") {
                         $("#hdnAcceptedClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "PayorID" + "," + PayorID);
                     } else {
