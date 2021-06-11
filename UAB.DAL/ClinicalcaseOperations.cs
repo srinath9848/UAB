@@ -3881,39 +3881,49 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                var existingprojectuser = context.ProjectUser.First(a => a.ProjectUserId == projectuser.ProjectUserId);
-                var exstingroles = context.ProjectUser.Where(x => x.UserId == projectuser.UserId).Select(x => x.RoleId).ToList();
+                var userinfo = context.ProjectUser.Where(x => x.UserId == projectuser.UserId).ToList();
+                var existingprojectuser = userinfo.Where(x => x.ProjectUserId == projectuser.ProjectUserId).FirstOrDefault();
+                var exstingroles = userinfo.Where(x => x.UserId == projectuser.UserId).Select(x => x.RoleId).ToList();
 
+                var exsitingworkitem = context.WorkItem.Where(x => x.ProjectId == projectuser.ProjectId &&
+                   (x.AssignedTo == projectuser.UserId || x.QABy == projectuser.UserId || x.ShadowQABy == projectuser.UserId)).FirstOrDefault();
 
                 //there is no updation
                 if (existingprojectuser.RoleId == projectuser.RoleId && existingprojectuser.SamplePercentage == Convert.ToInt32(projectuser.SamplePercentage))
-                    throw new Exception("Unable to Update Project User :There is no change happen");
+                    throw new Exception("Unable to Update Project User :No changes were detected");
 
-
-                if (!exstingroles.Contains(projectuser.RoleId))
+                //updating role only 
+                if (!exstingroles.Contains(projectuser.RoleId) && existingprojectuser.SamplePercentage == Convert.ToInt32(projectuser.SamplePercentage))
                 {
-                    //updating role 
-                    if (existingprojectuser.RoleId != projectuser.RoleId && existingprojectuser.SamplePercentage == Convert.ToInt32(projectuser.SamplePercentage))
+
+                    if (projectuser.RoleId==1 || projectuser.RoleId == 2)
                     {
                         existingprojectuser.RoleId = projectuser.RoleId;
                         context.Entry(existingprojectuser).State = EntityState.Modified;
                         context.SaveChanges();
                     }
-                    //updating sample %
-                    else if (existingprojectuser.RoleId == projectuser.RoleId && existingprojectuser.SamplePercentage != Convert.ToInt32(projectuser.SamplePercentage))
-                    {
-                        existingprojectuser.SamplePercentage = Convert.ToInt32(projectuser.SamplePercentage);
-                        context.Entry(existingprojectuser).State = EntityState.Modified;
-                        context.SaveChanges();
-                    }
-                    //updating role and sample %
-                    else if (existingprojectuser.RoleId != projectuser.RoleId && existingprojectuser.SamplePercentage != Convert.ToInt32(projectuser.SamplePercentage))
+                    else
                     {
                         existingprojectuser.RoleId = projectuser.RoleId;
-                        existingprojectuser.SamplePercentage = Convert.ToInt32(projectuser.SamplePercentage);
+                        existingprojectuser.SamplePercentage = 0;
                         context.Entry(existingprojectuser).State = EntityState.Modified;
                         context.SaveChanges();
                     }
+                }
+                //updating sample % only
+                else if (existingprojectuser.RoleId == projectuser.RoleId && existingprojectuser.SamplePercentage != Convert.ToInt32(projectuser.SamplePercentage))
+                {
+                    existingprojectuser.SamplePercentage = Convert.ToInt32(projectuser.SamplePercentage);
+                    context.Entry(existingprojectuser).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
+                //updating role and sample % both
+                else if (!exstingroles.Contains(projectuser.RoleId) && existingprojectuser.SamplePercentage != Convert.ToInt32(projectuser.SamplePercentage))
+                {
+                    existingprojectuser.RoleId = projectuser.RoleId;
+                    existingprojectuser.SamplePercentage = Convert.ToInt32(projectuser.SamplePercentage);
+                    context.Entry(existingprojectuser).State = EntityState.Modified;
+                    context.SaveChanges();
                 }
                 else
                 {
@@ -3929,7 +3939,8 @@ namespace UAB.DAL
                 var exsitingProjectuser = context.ProjectUser.Where(a => a.ProjectUserId == ProjectUserId).FirstOrDefault();
                 if (exsitingProjectuser != null)
                 {
-                    var exsitingworkitem = context.WorkItem.Where(x => x.ProjectId == exsitingProjectuser.ProjectId && (x.AssignedTo == exsitingProjectuser.UserId || x.QABy == exsitingProjectuser.UserId || x.ShadowQABy == exsitingProjectuser.UserId));
+                    var exsitingworkitem = context.WorkItem.Where(x => x.ProjectId == exsitingProjectuser.ProjectId && 
+                    (x.AssignedTo == exsitingProjectuser.UserId || x.QABy == exsitingProjectuser.UserId || x.ShadowQABy == exsitingProjectuser.UserId)).FirstOrDefault();
 
                     if (exsitingworkitem == null)
                     {
@@ -3945,7 +3956,6 @@ namespace UAB.DAL
                 {
                     throw new Exception("Unable To Delete Project User : Project User not there in UAB");
                 }
-
             }
         }
         public void DeletetUser(int UserId)
