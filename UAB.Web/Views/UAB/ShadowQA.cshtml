@@ -8,7 +8,7 @@
             <partial name="_InitialData" model=Model.FirstOrDefault() />
             <partial name="_ShadowQAChartDetails" model=Model />
         </div>
-        @if (Model.FirstOrDefault().BlockResponseDTO.ResponseRemarks != null&& Model.FirstOrDefault().BlockResponseDTO.BlockedInQueueKind == "ShadowQA")
+        @if (Model.FirstOrDefault().BlockResponseDTO.ResponseRemarks != null && Model.FirstOrDefault().BlockResponseDTO.BlockedInQueueKind == "ShadowQA")
         {
             <partial name="_BlockResponsePopUp" model=Model.FirstOrDefault() />
         }
@@ -461,11 +461,17 @@
             $("#hdnClaim" + tabid).val('');
             $("#hdnAcceptedClaim" + tabid).val('');
             var res2 = $("[id=" + "ProviderID_" + tabid + "]:eq(1)").attr('class');
-            if (res2.includes('reject')) {
+            if (res2.includes('reject') && $("#ShadowQAProviderIDRemarks_" + tabid).css("display") == "flex") {
                 ProviderID = $("#ShadowQAProviderID_" + tabid).val();
-                ProviderRemarks = $("#ShadowQAProviderIDRemarks_" + tabid).val();
-                if ($("#hdnClaim" + tabid).val() == "") {
-                    $("#hdnClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderID" + "," + ProviderID + "," + ProviderRemarks);
+                if ($('#ShadowQAProviderIDRemarks_' + tabid).val() != "") {
+                    ProviderRemarks = $("#ShadowQAProviderIDRemarks_" + tabid).val();
+                    $("#validProvider_" + tabid).hide();
+                    if ($("#hdnClaim" + tabid).val() == "") {
+                        $("#hdnClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderID" + "," + ProviderID + "," + ProviderRemarks);
+                    }
+                } else {
+                    $('#ShadowQAProviderIDRemarks_' + tabid).focus();
+                    $("#validProvider_" + tabid).show();
                 }
             }
             else {
@@ -477,13 +483,19 @@
                 }
             }
             var res2 = $("[id=" + "PayorID_" + tabid + "]:eq(1)").attr('class');
-            if (res2.includes('reject')) {
+            if (res2.includes('reject') && $("#ShadowQAPayorIDRemarks_" + tabid).css("display") == "flex") {
                 PayorID = $("#ShadowQAPayorID_" + tabid).val();
-                payorRemarks = $('#ShadowQAPayorIDRemarks_' + tabid).val();
-                if ($("#hdnClaim" + tabid).val() == "") {
-                    $("#hdnClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "PayorID" + "," + PayorID + "," + payorRemarks);
+                if ($('#ShadowQAPayorIDRemarks_' + tabid).val() != "") {
+                    payorRemarks = $('#ShadowQAPayorIDRemarks_' + tabid).val();
+                    $("#validPayor_" + tabid).hide();
+                    if ($("#hdnClaim" + tabid).val() == "") {
+                        $("#hdnClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "PayorID" + "," + PayorID + "," + payorRemarks);
+                    } else {
+                        $("#hdnClaim" + tabid).val($("#hdnClaim" + tabid).val() + "^" + "PayorID" + "," + PayorID + "," + payorRemarks);
+                    }
                 } else {
-                    $("#hdnClaim" + tabid).val($("#hdnClaim" + tabid).val() + "^" + "PayorID" + "," + PayorID + "," + payorRemarks);
+                    $('#ShadowQAPayorIDRemarks_' + tabid).focus();
+                    $("#validPayor_" + tabid).show();
                 }
             }
             else {
@@ -499,11 +511,15 @@
             var res2 = $("[id=" + "Feedback_" + tabid + "]:eq(1)").attr('class');
             if (res2.includes('reject')) {
                 if ($("#ShadowQAProviderFeedback_" + tabid).val() != "" && $('#ShadowQAProviderFeedbackRemarks_' + tabid).val() != "") {
+                    $("#validFeedback_" + tabid).hide();
                     ProviderFeedbackID = $("#ShadowQAProviderFeedback_" + tabid).val();
                     FeedbackRemarks = $('#ShadowQAProviderFeedbackRemarks_' + tabid).val();
                 }
-                else
+                else {
                     ProviderFeedbackID = 0;
+                    $('#ShadowQAProviderFeedbackRemarks_' + tabid).focus();
+                    $("#validFeedback_" + tabid).show();
+                }
 
                 if ($("#hdnClaim" + tabid).val() == "") {
                     $("#hdnClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID + "," + FeedbackRemarks);

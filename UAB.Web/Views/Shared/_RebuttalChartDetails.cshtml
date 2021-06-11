@@ -141,6 +141,7 @@
                                     <div class="col-md-3 input-group">
                                         @Html.TextBoxFor(model => model.FirstOrDefault().QAProviderRemarks, new { @title = Model.FirstOrDefault().QAProviderRemarks, @style = Show, @class = string.Format("form-control QARevised ControlHeight ProviderID_{0}", tabIndex), @id = string.Format("QAProviderIDRemarks_{0}", tabIndex) })
                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().QAProviderRemarks, null, new { @class = "text-danger errMsg" })
+                                        <span id="validProvider_@Model.FirstOrDefault().TabIndex" class="text-danger txtdanger" style="display:none">*</span>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -169,6 +170,7 @@
                                     <div class="col-md-3 input-group">
                                         @Html.TextBoxFor(model => model.FirstOrDefault().QAPayorRemarks, new { @title = Model.FirstOrDefault().QAPayorRemarks, @style = Show, @class = string.Format("form-control QARevised ControlHeight PayorID_{0}", tabIndex), @id = string.Format("QAPayorIDRemarks_{0}", tabIndex) })
                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().QAPayorRemarks, null, new { @class = "text-danger errMsg" })
+                                        <span id="validPayor_@Model.FirstOrDefault().TabIndex" class="text-danger txtdanger" style="display:none">*</span>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -361,6 +363,7 @@
                                     <div class="col-md-3 input-group">
                                         @Html.TextBoxFor(model => model.FirstOrDefault().QAProviderFeedbackRemarks, new { @title = Model.FirstOrDefault().QAProviderFeedbackRemarks, @style = Show, @class = string.Format("form-control QARevised ControlHeight Feedback_{0}", tabIndex), @id = string.Format("QAProviderFeedbackRemarks_{0}", tabIndex) })
                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().QAProviderFeedbackRemarks, null, new { @class = "text-danger errMsg" })
+                                        <span id="validFeedback_@Model.FirstOrDefault().TabIndex" class="text-danger txtdanger" style="display:none">*</span>
                                     </div>
                                 </div>
                             </div>

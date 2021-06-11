@@ -207,6 +207,10 @@ namespace UAB.Controllers
             }
             var table = clinicalcaseOperations.ToDataTable<CodingDTO>(agingList);
             table.Columns.Remove("ClinicalCaseID");
+            if (ProjectType != "IP")
+            {
+                table.Columns.Remove("ListName");
+            }
             _logger.LogInformation("Loading Ended for ExportAgingReportDetailByProject for User: " + mUserId);
             return ExportToExcel(table);
         }
@@ -280,7 +284,7 @@ namespace UAB.Controllers
             _logger.LogInformation("Loading Started for GetReceivedReportDetails for User: " + mUserId);
             string createdDate = date.ToString();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstPendingReportDetails = clinicalcaseOperations.GetReceivedChartReportDetails(date, week, month, year, ProjectId, range, Convert.ToDouble(timeZoneCookie), StartDate, EndDate);
+            var lstReceivedReportDetails = clinicalcaseOperations.GetReceivedChartReportDetails(date, week, month, year, ProjectId, range, Convert.ToDouble(timeZoneCookie), StartDate, EndDate);
             string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.Name).FirstOrDefault();
             string projectType = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.ProjectTypeName).FirstOrDefault();
 
@@ -296,10 +300,10 @@ namespace UAB.Controllers
             ViewBag.EndDate = EndDate;
             ViewBag.ChartName = "Received Chart Details";
             _logger.LogInformation("Loading Ended for GetReceivedReportDetails for User: " + mUserId);
-            return PartialView("_DetailedReport", lstPendingReportDetails);
+            return PartialView("_DetailedReport", lstReceivedReportDetails);
         }
 
-        public IActionResult ExportDetailedReport(DateTime date, int week, string month, string year, int ProjectId, string range, string ChartName, DateTime StartDate, DateTime EndDate)
+        public IActionResult ExportDetailedReport(DateTime date, int week, string month, string year, int ProjectId, string range, string ChartName, DateTime StartDate, DateTime EndDate,string ProjectType)
         {
             _logger.LogInformation("Loading Started for ExportDetailedReport for User: " + mUserId);
             string createdDate = date.ToString();
@@ -321,6 +325,10 @@ namespace UAB.Controllers
 
                 var table = clinicalcaseOperations.ToDataTable<CodingDTO>(codingList);
                 table.Columns.Remove("ClinicalCaseID");
+                if (ProjectType != "IP")
+                {
+                    table.Columns.Remove("ListName");
+                }
                 _logger.LogInformation("Loading Ended for ExportDetailedReport for User: " + mUserId);
                 return ExportToExcel(table);
             }
@@ -337,6 +345,10 @@ namespace UAB.Controllers
 
                 var table = clinicalcaseOperations.ToDataTable<CodingDTO>(codingList);
                 table.Columns.Remove("ClinicalCaseID");
+                if (ProjectType != "IP")
+                {
+                    table.Columns.Remove("ListName");
+                }
                 _logger.LogInformation("Loading Ended for ExportDetailedReport for User: " + mUserId);
                 return ExportToExcel(table);
             }
@@ -353,6 +365,10 @@ namespace UAB.Controllers
 
                 var table = clinicalcaseOperations.ToDataTable<CodingDTO>(codingList);
                 table.Columns.Remove("ClinicalCaseID");
+                if (ProjectType != "IP")
+                {
+                    table.Columns.Remove("ListName");
+                }
                 _logger.LogInformation("Loading Ended for ExportDetailedReport for User: " + mUserId);
                 return ExportToExcel(table);
             }
@@ -369,6 +385,10 @@ namespace UAB.Controllers
 
                 var table = clinicalcaseOperations.ToDataTable<CodingDTO>(codingList);
                 table.Columns.Remove("ClinicalCaseID");
+                if (ProjectType != "IP")
+                {
+                    table.Columns.Remove("ListName");
+                }
                 _logger.LogInformation("Loading Ended for ExportDetailedReport for User: " + mUserId);
                 return ExportToExcel(table);
             }
@@ -385,6 +405,10 @@ namespace UAB.Controllers
 
                 var table = clinicalcaseOperations.ToDataTable<CodingDTO>(codingList);
                 table.Columns.Remove("ClinicalCaseID");
+                if (ProjectType != "IP")
+                {
+                    table.Columns.Remove("ListName");
+                }
                 _logger.LogInformation("Loading Ended for ExportDetailedReport for User: " + mUserId);
                 return ExportToExcel(table);
             }
@@ -400,22 +424,23 @@ namespace UAB.Controllers
         {
             _logger.LogInformation("Loading Started for GetChartSummaryReport for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstReceivedChartReport = clinicalcaseOperations.GetChartSummaryReport(ProjectId, StartDate, EndDate);
+            var lstChartSummaryReport = clinicalcaseOperations.GetChartSummaryReport(ProjectId, StartDate, EndDate);
+            string projectType = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.ProjectTypeName).FirstOrDefault();
             ViewBag.ProjectId = ProjectId;
             ViewBag.StartDate = StartDate;
             ViewBag.EndDate = EndDate;
-
+            ViewBag.ProjectType = projectType;
             _logger.LogInformation("Loading Ended for GetChartSummaryReport for User: " + mUserId);
-            return PartialView("_ChartSummaryReport", lstReceivedChartReport);
+            return PartialView("_ChartSummaryReport", lstChartSummaryReport);
         }
         public IActionResult ExportChartSummaryReport(int ProjectId, DateTime StartDate, DateTime EndDate)
         {
             _logger.LogInformation("Loading Started for ExportChartSummaryReport for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstReceivedChartReport = clinicalcaseOperations.GetChartSummaryReport(ProjectId, StartDate, EndDate);
+            var lstChartSummaryReport = clinicalcaseOperations.GetChartSummaryReport(ProjectId, StartDate, EndDate);
 
             _logger.LogInformation("Loading Ended for ExportChartSummaryReport for User: " + mUserId);
-            return ExportToExcel(lstReceivedChartReport.Tables[0]);
+            return ExportToExcel(lstChartSummaryReport.Tables[0]);
         }
 
         [HttpGet]
@@ -452,6 +477,10 @@ namespace UAB.Controllers
 
             var table = clinicalcaseOperations.ToDataTable<CodingDTO>(chartSummaryList);
             table.Columns.Remove("ClinicalCaseID");
+            if (projectType != "IP")
+            {
+                table.Columns.Remove("ListName");
+            }
             _logger.LogInformation("Loading Ended for ExportChartSummaryReportDetails for User: " + mUserId);
             return ExportToExcel(table);
         }
@@ -460,7 +489,7 @@ namespace UAB.Controllers
         {
             _logger.LogInformation("Loading Started for GetPostedChartsReport for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstReceivedChartReport = clinicalcaseOperations.GetPostedChartsReport(ProjectId, range, StartDate, EndDate.AddHours(23).AddMinutes(59).AddSeconds(59), Convert.ToDouble(timeZoneCookie));
+            var lstPostedChartReport = clinicalcaseOperations.GetPostedChartsReport(ProjectId, range, StartDate, EndDate.AddHours(23).AddMinutes(59).AddSeconds(59), Convert.ToDouble(timeZoneCookie));
 
             ViewBag.StartDate = StartDate;
             ViewBag.EndDate = EndDate;
@@ -469,7 +498,7 @@ namespace UAB.Controllers
             ViewBag.StartDate = StartDate;
             ViewBag.EndDate = EndDate;
             _logger.LogInformation("Loading Ended for GetPostedChartsReport for User: " + mUserId);
-            return PartialView("_PostedChartReport", lstReceivedChartReport);
+            return PartialView("_PostedChartReport", lstPostedChartReport);
         }
         public IActionResult ExportPostedChartsReport(int ProjectId, string range, DateTime StartDate, DateTime EndDate)
         {
@@ -487,7 +516,7 @@ namespace UAB.Controllers
             _logger.LogInformation("Loading Started for GetPostedReportDetails for User: " + mUserId);
             string createdDate = date.ToString();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstPendingReportDetails = clinicalcaseOperations.GetPostedChartReportDetails(date, week, month, year, ProjectId, range, Convert.ToDouble(timeZoneCookie), StartDate, EndDate);
+            var lstPostedReportDetails = clinicalcaseOperations.GetPostedChartReportDetails(date, week, month, year, ProjectId, range, Convert.ToDouble(timeZoneCookie), StartDate, EndDate);
             string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.Name).FirstOrDefault();
             string projectType = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.ProjectTypeName).FirstOrDefault();
 
@@ -503,7 +532,7 @@ namespace UAB.Controllers
             ViewBag.EndDate = EndDate;
             ViewBag.ChartName = "Posted Chart Details";
             _logger.LogInformation("Loading Ended for GetPostedReportDetails for User: " + mUserId);
-            return PartialView("_DetailedReport", lstPendingReportDetails);
+            return PartialView("_DetailedReport", lstPostedReportDetails);
         }
 
         public IActionResult GetBackLogChartsReport(int ProjectId, string range, DateTime StartDate, DateTime EndDate)
@@ -564,6 +593,10 @@ namespace UAB.Controllers
 
             var table = clinicalcaseOperations.ToDataTable<CodingDTO>(backlogList);
             table.Columns.Remove("ClinicalCaseID");
+            if (projectType != "IP")
+            {
+                table.Columns.Remove("ListName");
+            }
             _logger.LogInformation("Loading Ended for ExportBackLogChartsReportDetails for User: " + mUserId);
             return ExportToExcel(table);
 
@@ -597,7 +630,7 @@ namespace UAB.Controllers
         {
             _logger.LogInformation("Loading Started for GetCodedReportDetails for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstPendingReportDetails = clinicalcaseOperations.GetCodedChartReportDetails(date, week, month, year, ProjectId, range, Convert.ToDouble(timeZoneCookie), StartDate, EndDate);
+            var lstCodedReportDetails = clinicalcaseOperations.GetCodedChartReportDetails(date, week, month, year, ProjectId, range, Convert.ToDouble(timeZoneCookie), StartDate, EndDate);
             string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.Name).FirstOrDefault();
             string projectType = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.ProjectTypeName).FirstOrDefault();
 
@@ -613,7 +646,7 @@ namespace UAB.Controllers
             ViewBag.EndDate = EndDate;
             ViewBag.ChartName = "Coded Chart Details";
             _logger.LogInformation("Loading Ended for GetCodedReportDetails for User: " + mUserId);
-            return PartialView("_DetailedReport", lstPendingReportDetails);
+            return PartialView("_DetailedReport", lstCodedReportDetails);
         }
 
         public IActionResult GetQAChartsReport(int ProjectId, string range, DateTime StartDate, DateTime EndDate)
@@ -728,6 +761,10 @@ namespace UAB.Controllers
 
             var table = clinicalcaseOperations.ToDataTable<CodingDTO>(pendingList);
             table.Columns.Remove("ClinicalCaseID");
+            if (projectType != "IP")
+            {
+                table.Columns.Remove("ListName");
+            }
             _logger.LogInformation("Loading Ended for ExportPendingReportDetails for User: " + mUserId);
             return ExportToExcel(table);
         }
