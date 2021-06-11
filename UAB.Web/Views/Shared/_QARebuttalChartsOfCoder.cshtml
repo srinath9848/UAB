@@ -518,6 +518,7 @@
                                     <div title="@title" class="col-md-3 input-group">
                                         @{ Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                                         @{ Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+                                        @{Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "display:none" : "display:flex");}
 
                                         @Html.DropDownListFor(model => model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("CoderFeedback_{0}", tabIndex), @style = Show })
                                         <div class="input-group-append" style="height: 38px;">
@@ -527,20 +528,19 @@
                                             </span>
                                         </div>
                                     </div>
-                                    @{Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "display:none" : "display:flex");}
                                     <div class="col-md-3 input-group">
                                         @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = Show, @class = "form-control QARevised ControlHeight", @id = string.Format("QAProviderFeedback_{0}", tabIndex) })
                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().QAProviderFeedbackID, null, new { @class = "text-danger errMsg" })
-                                    </div>
-                                    <div title="model.FirstOrDefault().QAProviderFeedbackRemarks" class="col-md-3 input-group">
-                                        @Html.TextBoxFor(model => model.FirstOrDefault().QAProviderFeedbackRemarks, new { @title = Model.FirstOrDefault().QAProviderFeedbackRemarks, @style = Show, @class = "form-control QARevised ControlHeight", @id = string.Format("QAProviderFeedbackRemarks_{0}", tabIndex) })
-                                        @Html.ValidationMessageFor(model => model.FirstOrDefault().QAProviderFeedbackRemarks, null, new { @class = "text-danger errMsg" })
-                                        <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
+                                        <div class="input-group-append CoderCorrections" style="@Show">
                                             <span class="input-group-text ControlHeight AcceptRejectWidth">
                                                 &nbsp;<i id="Feedback_@tabIndex" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
                                                 &nbsp;<i id="Feedback_@tabIndex" class="@Rejected" aria-hidden="true"></i>
                                             </span>
                                         </div>
+                                    </div>
+                                    <div title="model.FirstOrDefault().QAProviderFeedbackRemarks" class="col-md-3 input-group">
+                                        @Html.TextBoxFor(model => model.FirstOrDefault().QAProviderFeedbackRemarks, new { @title = Model.FirstOrDefault().QAProviderFeedbackRemarks, @style = Show, @class = "form-control QARevised ControlHeight", @id = string.Format("QAProviderFeedbackRemarks_{0}", tabIndex) })
+                                        @Html.ValidationMessageFor(model => model.FirstOrDefault().QAProviderFeedbackRemarks, null, new { @class = "text-danger errMsg" })
                                     </div>
                                     <div title="model.FirstOrDefault().RevisedProviderFeedbackRemarks" class="col-md-3 input-group CoderCorrections" style="@Show">
                                         @Html.TextBoxFor(model => model.FirstOrDefault().RevisedProviderFeedbackRemarks, new { @style = Show, @class = "form-control ControlHeight", @id = string.Format("CoderProviderFeedbackRemarks_{0}", tabIndex) })
