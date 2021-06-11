@@ -558,10 +558,23 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 lessWidth m-t-15">Provider Feedback</label>
 
+                                    @{ len = ((!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText) && !Model.FirstOrDefault().ProviderFeedbackText.Equals(Model.FirstOrDefault().QAProviderFeedbackText)) ? 10 : 20); }
+                                    @{string FeedProviderText = (Model.FirstOrDefault().ProviderFeedbackText?.Length > len) ? Model.FirstOrDefault().ProviderFeedbackText.Substring(0, len) + ".." : Model.FirstOrDefault().ProviderFeedbackText;}
+                                    @{string QAFeedProviderText = (Model.FirstOrDefault().QAProviderFeedbackText?.Length > len) ? "/" + Model.FirstOrDefault().QAProviderFeedbackText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAProviderFeedbackText;}
+                                    @{title = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText) ? Model.FirstOrDefault().ProviderFeedbackText + "/" + Model.FirstOrDefault().QAProviderFeedbackText : Model.FirstOrDefault().ProviderFeedbackText);}
+
                                     <div title="@Model.FirstOrDefault().ProviderFeedbackText" class="col-md-3 CPTWidth input-group">
                                         <div class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
                                             <span style="white-space:nowrap">
-                                                <label style="color: green;">@Model.FirstOrDefault().ProviderFeedbackText</label>
+                                                @if (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText) && !Model.FirstOrDefault().QAProviderFeedbackText.Equals(Model.FirstOrDefault().ProviderFeedbackText))
+                                                {
+                                                    <label style="color: red;">@FeedProviderText</label>
+                                                    <label style="color: green">@QAFeedProviderText</label>
+                                                }
+                                                else
+                                                {
+                                                    <label style="color: green;">@FeedProviderText</label>
+                                                }
                                             </span>
                                         </div>
                                         @{Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "display:none" : "display:flex");}
@@ -584,7 +597,7 @@
                                         @Html.TextBoxFor(model => model.FirstOrDefault().ShadowQAProviderFeedbackRemarks, new { @title = Model.FirstOrDefault().ShadowQAProviderFeedbackRemarks, @class = "form-control QARevised ControlHeight", @id = string.Format("ShadowQAProviderFeedbackRemarks_{0}", tabIndex) })
                                     </div>
 
-                                    <div class="col-md-3 input-group" style="@Show">
+                                    <div class="col-md-3 input-group CoderCorrections" style="@Show">
                                         @Html.TextBoxFor(model => model.FirstOrDefault().QAProviderFeedbackRemarks, new { @style = Show, @class = "form-control ControlHeight", @id = string.Format("QAProviderFeedbackRemarks_{0}", tabIndex) })
                                     </div>
                                 </div>
