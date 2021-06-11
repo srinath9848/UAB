@@ -476,26 +476,24 @@
                 <label style="color: green;">@Model.ProviderFeedbackText</label>
             </span>
         </div>
-    </div>
-    @Html.DropDownListFor(model => Model.QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails", @id = string.Format("QAFeedback_{0}", tabIndex), @style = "display:none;" })
+        @{Show = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "display:none" : "display:flex");}
+        @{ Accepted = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+        @{ Rejected = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-    @{Show = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "display:none" : "display:flex");}
-    <div class="col-md-3 CPTWidth input-group" style="@Show">
-        @Html.DropDownListFor(model => model.ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @id = string.Format("ShadowQAProviderFeedback_{0}", tabIndex), @class = "form-control QARevised ControlHeight" })
-        @Html.ValidationMessageFor(model => model.ShadowQAProviderFeedbackID, null, new { @class = "text-danger errMsg" })
-        @{Accepted = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-        @{Rejected = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
-
-        <div class="input-group-append ControlHeight" style="@Show">
+        <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
             <span class="input-group-text AcceptRejectWidth_@tabIndex">
                 &nbsp;<i id="Feedback_@tabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
                 &nbsp;<i id="Feedback_@tabIndex" data="@tabIndex" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
             </span>
         </div>
     </div>
+    @Html.DropDownListFor(model => Model.QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails", @id = string.Format("QAFeedback_{0}", tabIndex), @style = "display:none;" })
+    <div class="col-md-3 CPTWidth input-group" style="@Show">
+        @Html.DropDownListFor(model => model.ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @id = string.Format("ShadowQAProviderFeedback_{0}", tabIndex), @class = "form-control QARevised ControlHeight" })
+
+    </div>
     <div class="col-md-3 input-group" style="@Show">
         @Html.TextBoxFor(model => model.ShadowQAProviderFeedbackRemarks, new { @title = Model.ShadowQAProviderFeedbackRemarks, @class = "form-control QARevised ControlHeight", @id = string.Format("ShadowQAProviderFeedbackRemarks_{0}", tabIndex) })
-        @Html.ValidationMessageFor(model => model.ShadowQAProviderFeedbackRemarks, null, new { @class = "text-danger errMsg" })
     </div>
 
     <div class="col-md-3 input-group" style="@Show">
