@@ -300,6 +300,10 @@ namespace UAB.Controllers
                     clinicalcaseOperations.UpdateProjectUser(model);
                     TempData["Success"] = "Successfully Project User Updated";
                 }
+                else
+                {
+                    TempData["error"] = "Please enter the data";
+                }
             }
             catch (Exception ex)
             {
