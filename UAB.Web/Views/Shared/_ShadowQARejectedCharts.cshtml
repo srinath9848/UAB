@@ -112,7 +112,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 lessWidth m-t-15">Provider</label>
-                                    
+
                                     @{int len = ((!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText) && !Model.FirstOrDefault().ProviderText.Equals(Model.FirstOrDefault().QAProviderText)) ? 10 : 20); }
                                     @{string ProviderText = (Model.FirstOrDefault().ProviderText?.Length > len) ? Model.FirstOrDefault().ProviderText.Substring(0, len) + ".." : Model.FirstOrDefault().ProviderText;}
                                     @{string QAProviderText = (Model.FirstOrDefault().QAProviderText?.Length > len) ? "/" + Model.FirstOrDefault().QAProviderText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAProviderText;}
@@ -158,7 +158,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 lessWidth m-t-15">Payor</label>
-                                    
+
                                     @{ len = ((!string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) && !Model.FirstOrDefault().PayorText.Equals(Model.FirstOrDefault().QAPayorText)) ? 10 : 20); }
                                     @{string PayorText = (Model.FirstOrDefault().PayorText?.Length > len) ? Model.FirstOrDefault().PayorText.Substring(0, len) + ".." : Model.FirstOrDefault().PayorText;}
                                     @{string QAPayorText = (Model.FirstOrDefault().QAPayorText?.Length > len) ? "/" + Model.FirstOrDefault().QAPayorText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAPayorText;}
@@ -252,7 +252,7 @@
 
                                                 @{string Dx = dictDxCodes.ElementAt(i).Value;}
                                                 @{string QADx = (dictQADxCodes?.ElementAt(i).Value?.Length > len) ? "/" + dictQADxCodes?.ElementAt(i).Value.Substring(0, len) + ".." : "/" + dictQADxCodes?.ElementAt(i).Value;}
-
+                                                @{title = (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? dictDxCodes.ElementAt(i).Value + "/" + dictQADxCodes?.ElementAt(i).Value : dictDxCodes.ElementAt(i).Value);}
 
                                                 <div title="@title" class="col-md-3 input-group">
                                                     <div class="input-group-prepend ControlHeight">
