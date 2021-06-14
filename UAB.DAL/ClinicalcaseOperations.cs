@@ -823,15 +823,6 @@ namespace UAB.DAL
                             chartSummaryDTO.QABy = Convert.ToString(reader["QABy"]);
                             chartSummaryDTO.ShadowQABy = Convert.ToString(reader["ShadowQABy"]);
 
-                            //chartSummaryDTO.PayorText = Convert.ToString(reader["PayorText"]);
-                            //chartSummaryDTO.QAPayorText = Convert.ToString(reader["QAPayorText"]);
-
-                            //chartSummaryDTO.ProviderText = Convert.ToString(reader["ProviderText"]);
-                            //chartSummaryDTO.QAProviderText = Convert.ToString(reader["QAProviderText"]);
-
-                            //chartSummaryDTO.ProviderFeedbackText = Convert.ToString(reader["FeedbackText"]);
-                            //chartSummaryDTO.QAProviderFeedbackText = Convert.ToString(reader["QAFeedbackText"]);
-
                             chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                             if (reader["QAProviderID"] != DBNull.Value)
                                 chartSummaryDTO.QAProviderID = Convert.ToInt32(reader["QAProviderID"]);
@@ -850,6 +841,8 @@ namespace UAB.DAL
 
                             chartSummaryDTO.ProviderText = Convert.ToString(reader["ProviderText"]);
                             chartSummaryDTO.QAProviderText = Convert.ToString(reader["QAProviderText"]);
+                            chartSummaryDTO.QAProviderFeedbackText = Convert.ToString(reader["QAProviderFeedbackText"]);
+
                             chartSummaryDTO.QAProviderRemarks = Convert.ToString(reader["QARebuttedProviderIDRemark"]);
                             if (reader["ShadowQAProviderID"] != DBNull.Value)
                                 chartSummaryDTO.ShadowQAProviderID = Convert.ToInt32(reader["ShadowQAProviderID"]);
@@ -996,9 +989,7 @@ namespace UAB.DAL
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
                             chartSummaryDTO.QACPTCode = Convert.ToString(reader["QACPTCode"]);
                             chartSummaryDTO.QACPTCodeRemarks = Convert.ToString(reader["QACPTCodeRemark"]);
-                            //chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
-                            //chartSummaryDTO.QAMod = Convert.ToString(reader["QAMod"]);
-                            //chartSummaryDTO.QAModRemarks = Convert.ToString(reader["QAModRemark"]);
+                           
                             if (reader["ProviderFeedbackID"] != DBNull.Value)
                                 chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackID"]);
                             if (reader["QAProviderFeedbackID"] != DBNull.Value)
@@ -3866,7 +3857,7 @@ namespace UAB.DAL
                 }
                 else
                 {
-                    throw new ArgumentException("Unable to Add project User:trying to add existing project to this user");
+                    throw new ArgumentException("Unable to Add project User : trying to add existing project to this user");
                 }
             }
         }
@@ -3879,18 +3870,40 @@ namespace UAB.DAL
                 var existingprojectuser = userinfo.Where(x => x.ProjectUserId == projectuser.ProjectUserId).FirstOrDefault();
                 var exstingroles = userinfo.Where(x => x.UserId == projectuser.UserId).Select(x => x.RoleId).ToList();
 
-                var exsitingworkitem = context.WorkItem.Where(x => x.ProjectId == projectuser.ProjectId &&
-                   (x.AssignedTo == projectuser.UserId || x.QABy == projectuser.UserId || x.ShadowQABy == projectuser.UserId)).FirstOrDefault();
-
-                //there is no updation
                 if (existingprojectuser.RoleId == projectuser.RoleId && existingprojectuser.SamplePercentage == Convert.ToInt32(projectuser.SamplePercentage))
-                    throw new Exception("Unable to Update Project User :No changes were detected");
+                    throw new Exception("Unable to Update Project User : No changes were detected");
+
+                if (existingprojectuser.RoleId == 1 && projectuser.RoleId != 1)
+                {
+                    var exsitingworkitem = context.WorkItem.Where(x => x.ProjectId == existingprojectuser.ProjectId &&
+                  (x.AssignedTo == projectuser.UserId)).FirstOrDefault();
+
+                    if (exsitingworkitem != null)
+                        throw new Exception("Unable to Update Project User : User have Assigned charts");
+                }
+                else if (existingprojectuser.RoleId == 2 && projectuser.RoleId != 2)
+                {
+                    var exsitingworkitem = context.WorkItem.Where(x => x.ProjectId == existingprojectuser.ProjectId &&
+                  (x.QABy == projectuser.UserId)).FirstOrDefault();
+
+                    if (exsitingworkitem != null)
+                        throw new Exception("Unable to Update Project User : User have Assigned charts");
+                }
+                else if (existingprojectuser.RoleId == 3 && projectuser.RoleId != 3)
+                {
+                    var exsitingworkitem = context.WorkItem.Where(x => x.ProjectId == existingprojectuser.ProjectId &&
+                  (x.ShadowQABy == projectuser.UserId)).FirstOrDefault();
+
+                    if (exsitingworkitem != null)
+                        throw new Exception("Unable to Update Project User : User have Assigned charts");
+                }
+
 
                 //updating role only 
                 if (!exstingroles.Contains(projectuser.RoleId) && existingprojectuser.SamplePercentage == Convert.ToInt32(projectuser.SamplePercentage))
                 {
 
-                    if (projectuser.RoleId==1 || projectuser.RoleId == 2)
+                    if (projectuser.RoleId == 1 || projectuser.RoleId == 2)
                     {
                         existingprojectuser.RoleId = projectuser.RoleId;
                         context.Entry(existingprojectuser).State = EntityState.Modified;
@@ -3921,7 +3934,7 @@ namespace UAB.DAL
                 }
                 else
                 {
-                    throw new Exception("Unable to Update Project User :This user has already this role");
+                    throw new Exception("Unable to Update Project User : This user has already this role");
                 }
             }
         }
@@ -3933,7 +3946,7 @@ namespace UAB.DAL
                 var exsitingProjectuser = context.ProjectUser.Where(a => a.ProjectUserId == ProjectUserId).FirstOrDefault();
                 if (exsitingProjectuser != null)
                 {
-                    var exsitingworkitem = context.WorkItem.Where(x => x.ProjectId == exsitingProjectuser.ProjectId && 
+                    var exsitingworkitem = context.WorkItem.Where(x => x.ProjectId == exsitingProjectuser.ProjectId &&
                     (x.AssignedTo == exsitingProjectuser.UserId || x.QABy == exsitingProjectuser.UserId || x.ShadowQABy == exsitingProjectuser.UserId)).FirstOrDefault();
 
                     if (exsitingworkitem == null)
@@ -3943,7 +3956,7 @@ namespace UAB.DAL
                     }
                     else
                     {
-                        throw new Exception("Unable To Delete Project User : This Project User have Assigned charts");
+                        throw new Exception("Unable To Delete Project User : User have Assigned charts");
                     }
                 }
                 else
