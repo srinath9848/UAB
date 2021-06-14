@@ -989,9 +989,7 @@ namespace UAB.DAL
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
                             chartSummaryDTO.QACPTCode = Convert.ToString(reader["QACPTCode"]);
                             chartSummaryDTO.QACPTCodeRemarks = Convert.ToString(reader["QACPTCodeRemark"]);
-                            //chartSummaryDTO.Mod = Convert.ToString(reader["Modifier"]);
-                            //chartSummaryDTO.QAMod = Convert.ToString(reader["QAMod"]);
-                            //chartSummaryDTO.QAModRemarks = Convert.ToString(reader["QAModRemark"]);
+                           
                             if (reader["ProviderFeedbackID"] != DBNull.Value)
                                 chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackID"]);
                             if (reader["QAProviderFeedbackID"] != DBNull.Value)
