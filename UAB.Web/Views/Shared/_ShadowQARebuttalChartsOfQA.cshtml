@@ -280,9 +280,9 @@
                                                     </div>
                                                     @{ Show = (string.IsNullOrEmpty(dictShadowQADxRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex"); }
 
-                                                    <div class="input-group-append CoderCorrections" style="@Show">
-                                                        <span class="input-group-text">
-                                                            &nbsp;<i id="Dx_@j" class="@Accepted" aria-hidden="true"></i>
+                                                    <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
+                                                        <span class="input-group-text AcceptRejectWidth">
+                                                            &nbsp;<i id="Dx_@j" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
                                                             &nbsp;<i id="Dx_@j" class="@Rejected" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
@@ -457,7 +457,7 @@
                                                         }
                                                         @{ Show = (string.IsNullOrEmpty(dictShadowQACptCodes?.ElementAt(i).Value) ? "display:none" : "display:flex");}
                                                         <input type="hidden" id="txtCPTCode_@j" value="@qacptCode^@qaMod^@qaQty^@qaLinks" />
-                                                        <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
+                                                        <div class="input-group-append CoderCorrections" style="@Show">
                                                             <span class="input-group-text AcceptRejectWidth">
                                                                 &nbsp;<i id="Cpt_@j" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
                                                                 &nbsp;<i id="Cpt_@j" class="@Rejected" aria-hidden="true"></i>

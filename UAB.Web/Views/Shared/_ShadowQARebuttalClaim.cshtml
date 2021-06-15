@@ -367,7 +367,7 @@
 
                         @{ Show = (string.IsNullOrEmpty(dictShadowQACptCodes?.ElementAt(i).Value) ? "display:none" : "display:flex");}
                         <input type="hidden" id="@string.Format("txt{0}QACpt_{1}", Model.TabIndex,j)" value="@qacptCode^@qaMod^@qaQty^@qaLinks" />
-                        <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
+                        <div class="input-group-append CoderCorrections" style="@Show">
                             <span class="input-group-text AcceptRejectWidth">
                                 &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,j)" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
                                 &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,j)" class="@Rejected" aria-hidden="true"></i>
@@ -402,7 +402,7 @@
                         <input type="text" class="form-control CoderDetails ControlHeight" style="color:green;" placeholder="Qty" value="@qtyVal" />
                         <input type="text" class="form-control CoderDetails ControlHeight" style="color: green;" placeholder="Link All" value="@coderLinkAllVal" />
                         <input type="hidden" id="@string.Format("txt{0}QACpt_{1}", Model.TabIndex,j)" value="@cptVal^@coderModVal^@qtyVal^@coderLinkAllVal" />
-                        <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
+                        <div class="input-group-append CoderCorrections" style="@Show">
                             <span class="input-group-text AcceptRejectWidth">
                                 &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,j)" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
                                 &nbsp;<i id="@string.Format("Cpt_{0}_{1}", Model.TabIndex,j)" class="@Rejected" aria-hidden="true"></i>
