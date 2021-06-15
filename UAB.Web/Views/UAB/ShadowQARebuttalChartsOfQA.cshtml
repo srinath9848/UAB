@@ -183,7 +183,7 @@
 
                 // CptNewClaimRemarks
 
-                var CptNewClaimRemarks = $("[id*=ShadowQACptRemarkss_" + tabid + "_]");
+                var CptNewClaimRemarks = $("[id*=SQACptRemarkss_" + tabid + "_]");
                 $("#hdnQACptRemarks" + tabid).val("");
                 $("#hdnQACptCodes" + tabid).val("");
                 $("#hdnQAAcceptCptRemarks" + tabid).val("");
@@ -233,6 +233,8 @@
             };
 
         });
+
+        // Default Dx & Cpt
 
         var Dxcodes = $("[id*=DxRemarks_]");
         $("#hdnQADxCodes").val('');
