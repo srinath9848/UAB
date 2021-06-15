@@ -389,10 +389,11 @@
                     }
                     else
                     {
-                        Show = "display:flex";
+                        if (!string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value))
+                            Show = "display:flex";
+
                         Accepted = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
                         Rejected = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
-
 
                         <div title="Code : @cptCode1@qacptCode, Mod : @cptMod1@qaMod, Quantity : @cptQty1@qaQty, Links : @cptLinks1@link" class="col-md-3 lessWidth input-group ControlWidth">
                             <div class="input-group-prepend">

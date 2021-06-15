@@ -3227,10 +3227,8 @@ namespace UAB.Controllers
         {
             _logger.LogInformation("Loading Started for SettingsProviderFeedback for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
-                _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
 
-            ViewBag.lstProviderFeedback = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList")); ;
+            ViewBag.lstProviderFeedback = clinicalcaseOperations.GetProviderFeedbacksList();
             _logger.LogInformation("Loading Ended for SettingsProviderFeedback for User: " + mUserId);
             return View();
         }
@@ -3244,10 +3242,8 @@ namespace UAB.Controllers
             {
                 List<BindDTO> lstproviderFeedback = new List<BindDTO>();
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-                if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
-                    _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
 
-                lstproviderFeedback = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
+                lstproviderFeedback = clinicalcaseOperations.GetProviderFeedbacksList();
                 var res = lstproviderFeedback.Where(a => a.ID == id).FirstOrDefault();
                 obj = res;
             }
@@ -3265,10 +3261,7 @@ namespace UAB.Controllers
                 List<BindDTO> lstproviderFeedback = new List<BindDTO>();
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
-                if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
-                    _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
-
-                lstproviderFeedback = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList")); ;
+                lstproviderFeedback = clinicalcaseOperations.GetProviderFeedbacksList();
                 var res = lstproviderFeedback.Where(a => a.ID == id).FirstOrDefault();
                 obj = res;
             }
