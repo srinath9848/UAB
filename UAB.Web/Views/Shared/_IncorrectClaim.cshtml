@@ -304,12 +304,12 @@
 
                     string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
                     string qaLinks = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[3]);
-                    color = (coderLinks != qaLinks) ? "color:blue;" : "";
-                    coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[3] : coderCptcodes[3]);
+                    string linkAll = qaLinks == "null" ? "" : qaLinks;
                     string cptLinks = !string.IsNullOrEmpty(coderLinks) ? coderLinks : "";
+                    string cptLinks1 = !string.IsNullOrEmpty(coderLinks) ? coderLinks + "/" : "";
 
                     string link = !string.IsNullOrEmpty(@qaLinks) || @qaLinks != "null" ? @qaLinks : "Link All";
-                    string cptLinks1 = cptLinks == link ? "" : coderLinks + "/";
+                    cptLinks1 = cptLinks == link ? "" : coderLinks + "/";
 
                     if (cptCode == qacptCode)
                     {
