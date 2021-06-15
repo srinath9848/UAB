@@ -265,6 +265,14 @@
 
                 @{ string[] coderCptcodes = dictCptCodes?.ElementAt(i).Value.Split("^");}
                 @{ string[] qaCptcodes = dictQACptCodes?.ElementAt(i).Value.Split("^");}
+                @{ string ShadowQaCpt = dictShadowQACptCodes?.ElementAt(i).Value;
+                    if (ShadowQaCpt != "")
+                    {
+                        string[] CptCodes1 = ShadowQaCpt.Split("^");
+                        ShadowQaCpt = CptCodes1[0] == "NA" ? "" : CptCodes1[0];
+                    }
+                }
+                @{ Show = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex"); }
 
                 @if (!string.IsNullOrEmpty(dictQACptCodes?.ElementAt(i).Value))
                 {
@@ -304,6 +312,7 @@
 
                     string link = !string.IsNullOrEmpty(@qaLinks) || @qaLinks != "null" ? @qaLinks : "Link All";
                     cptLinks1 = cptLinks == link ? "" : coderLinks + "/";
+
                     <div title="Code : @cptCode1@qacptCode, Mod : @cptMod1@mod, Quantity : @cptQty1@qaQty, Link : @cptLinks1@link" class="col-md-3 input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
@@ -362,10 +371,20 @@
                             }
 
                         </div>
-                        @{ Accepted = (string.IsNullOrEmpty(dictShadowQACptCodes?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                        @{ Rejected = (string.IsNullOrEmpty(dictShadowQACptCodes?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
-
-                        @{ Show = (string.IsNullOrEmpty(dictShadowQACptCodes?.ElementAt(i).Value) ? "display:none" : "display:flex");}
+                        @{
+                            if (qacptCode == ShadowQaCpt)
+                            {
+                                Accepted = "fa fa-check-circle fa-lg accept";
+                                Rejected = "fa fa-times-circle fa-lg";
+                                Show = "display:none";
+                            }
+                            else
+                            {
+                                Accepted = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
+                                Rejected = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
+                                Show = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex");
+                            }
+                        }
                         <input type="hidden" id="@string.Format("txt{0}QACpt_{1}", Model.TabIndex,j)" value="@qacptCode^@qaMod^@qaQty^@qaLinks" />
                         <div class="input-group-append CoderCorrections" style="@Show">
                             <span class="input-group-text AcceptRejectWidth">
@@ -389,10 +408,18 @@
                         qtyVal = coderCptcodes[2];
                     }
 
-                    Show = (string.IsNullOrEmpty(dictShadowQACptCodes?.ElementAt(i).Value) ? "display:none" : "display:flex");
-                    Accepted = (string.IsNullOrEmpty(dictShadowQACptCodes?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
-                    Rejected = (string.IsNullOrEmpty(dictShadowQACptCodes?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
-
+                    if (cptVal == ShadowQaCpt)
+                    {
+                        Accepted = "fa fa-check-circle fa-lg accept";
+                        Rejected = "fa fa-times-circle fa-lg";
+                        Show = "display:none";
+                    }
+                    else
+                    {
+                        Show = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex");
+                        Accepted = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
+                        Rejected = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
+                    }
                     <div title="Code : @cptVal, Mod : @coderModVal, Quantity : @qtyVal, Link : @coderLinkAllVal" class="col-md-3 input-group">
                         <div class="input-group-prepend ControlHeight">
                             <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
@@ -411,7 +438,6 @@
                     </div>
                 }
 
-                @{ Show = (string.IsNullOrEmpty(dictShadowQACptCodes?.ElementAt(i).Value) ? "display:none" : "display:flex"); }
                 <div class="col-md-3 CPTWidth input-group" style="@Show">
                     <div class="input-group-prepend ControlHeight">
                         <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>

@@ -347,17 +347,17 @@
                                     //    }
 
                                     if ($("#hdnQAAcceptCptRemarks" + tabid).val() == "") {
-                                        if ($("#SQACptRemarkss_" + tabid + "_" + id).val() == "" && $("#SQACptRemarkss_" + tabid + "_" + id).val() == undefined) {
+                                        if ($(".SQACptRemarkss_" + tabid + "_" + id).val() == "" && $(".SQACptRemarkss_" + tabid + "_" + id).val() == undefined) {
                                             $("#hdnQAAcceptCptRemarks" + tabid).val(id + "^" + $("#QACptRemarkss_" + tabid + "_" + id).val());
                                         } else {
-                                            $("#hdnQAAcceptCptRemarks" + tabid).val(id + "^" + $("#SQACptRemarkss_" + tabid + "_" + id).val());
+                                            $("#hdnQAAcceptCptRemarks" + tabid).val(id + "^" + $(".SQACptRemarkss_" + tabid + "_" + id).val());
                                         }
                                     }
                                     else {
-                                        if ($("#SQACptRemarkss_" + tabid + "_" + id).val() == "" && $("#SQACptRemarkss_" + tabid + "_" + id).val() == undefined) {
+                                        if ($(".SQACptRemarkss_" + tabid + "_" + id).val() == "" && $(".SQACptRemarkss_" + tabid + "_" + id).val() == undefined) {
                                             $("#hdnQAAcceptCptRemarks" + tabid).val($("#hdnQAAcceptCptRemarks" + tabid).val() + "|" + id + "^" + $("#QACptRemarkss_" + tabid + "_" + id).val());
                                         } else {
-                                            $("#hdnQAAcceptCptRemarks" + tabid).val($("#hdnQAAcceptCptRemarks" + tabid).val() + "|" + id + "^" + $("#SQACptRemarkss_" + tabid + "_" + id).val());
+                                            $("#hdnQAAcceptCptRemarks" + tabid).val($("#hdnQAAcceptCptRemarks" + tabid).val() + "|" + id + "^" + $(".SQACptRemarkss_" + tabid + "_" + id).val());
                                         }
                                     }
                                 }
@@ -381,6 +381,9 @@
                     index = index + parseInt(1);
                 }
             };
+
+            if ($("#hdnQACptRemarks" + tabid).val() != "")
+                $("#hdnQAAcceptCptRemarks" + tabid).val('');
 
         });
 
@@ -545,6 +548,10 @@
                 }
             }
         }
+
+        if ($("#hdnQACptRemarks").val() != "")
+            $("#hdnQAAcceptCptRemarks").val('');
+
 
         var total = $(".fa-check-circle").length;
         var reject = $(".reject").length;
