@@ -254,7 +254,7 @@
 
                                                 @{string Dx = dictDxCodes.ElementAt(i).Value;}
                                                 @{string QADx = (dictQADxCodes?.ElementAt(i).Value?.Length > len) ? "/" + dictQADxCodes?.ElementAt(i).Value.Substring(0, len) + ".." : "/" + dictQADxCodes?.ElementAt(i).Value;}
-
+                                                @{title = (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? dictDxCodes.ElementAt(i).Value + "/" + dictQADxCodes?.ElementAt(i).Value : dictDxCodes.ElementAt(i).Value);}
 
                                                 <div title="@title" class="col-md-3 input-group">
                                                     <div class="input-group-prepend ControlHeight">
@@ -605,7 +605,7 @@
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-body">
                                             <h4 class="card-title">QA Details</h4>
@@ -615,7 +615,7 @@
                                                 <div class="row mb-3">
                                                     <div class="col-lg-6">
                                                         <div class="form-group row">
-                                                            <label class="col-md-5 m-t-15">
+                                                            <label class="col-md-3 m-t-15">
                                                                 Error Type
                                                             </label>
                                                             <div class="col-md-7">

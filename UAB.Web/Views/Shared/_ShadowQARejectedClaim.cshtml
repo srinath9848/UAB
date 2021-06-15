@@ -174,7 +174,7 @@
 
                 @{ Accepted = (string.IsNullOrEmpty(dictShadowQADxCodes?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                 @{ Rejected = (string.IsNullOrEmpty(dictShadowQADxCodes?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
-
+                @{title = (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? dictDxCodes.ElementAt(i).Value + "/" + dictQADxCodes?.ElementAt(i).Value : dictDxCodes.ElementAt(i).Value);}
                 <div title="@title" class="col-md-3 input-group">
                     <div class="input-group-prepend ControlHeight">
                         <span class="input-group-text ControlHeight AdjustSerialNumber" id="basic-addon1">@j</span>
@@ -522,7 +522,7 @@
     </div>
 </div>
 <div class="clearfix"></div>
-<div class="col-md-6">
+<div class="col-md-12">
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">QA Details</h4>
@@ -532,7 +532,7 @@
                 <div class="row mb-3">
                     <div class="col-lg-6">
                         <div class="form-group row">
-                            <label class="col-md-5 m-t-15">
+                            <label class="col-md-3 m-t-15">
                                 Error Type
                             </label>
                             <div class="col-md-7">
