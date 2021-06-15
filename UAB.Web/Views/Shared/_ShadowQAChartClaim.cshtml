@@ -329,7 +329,7 @@
 
                     string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
                     string qaLinks = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[3]);
-                    string linkAll = qaLinks == "null" ? "" : qaLinks;
+                    string linkAll = qaLinks == "null" ? "Link All" : qaLinks;
                     string cptLinks = !string.IsNullOrEmpty(coderLinks) ? coderLinks : "";
                     string cptLinks1 = !string.IsNullOrEmpty(coderLinks) ? coderLinks + "/" : "";
 
@@ -343,64 +343,96 @@
                             if (codercptCode == "NA")
                                 color = "color:fuchsia;";
                             <div class="form-control CoderDetails" style="min-width:60px;">
-                                @if (cptCode == qacptCode)
+                                @if (cptCode1 == qacptCode)
                                 {
-                                    <span style="color:green">@cptCode</span>
+                                    <span style="color:green">@cptCode1.Replace("/", "")</span>
                                 }
                                 else
                                 {
-                                    <span style="color:red">@cptCode</span>
+                                    <span style="color:green">@cptCode1.Replace("/", "")</span>
+                                    <br />
+                                    <span style="color:red">@qacptCode</span>
                                 }
-                                <br />
-                                <span style="color:green">@qacptCode</span>
+                                @*<br />
+                                    <span style="color:green">@qacptCode</span>*@
                             </div>
 
                             color = (coderMod != qaMod) ? "color:blue;" : "";
                             if (coderMod == "NA")
                                 color = "color:fuchsia;";
                             <div class="form-control CoderDetails">
-                                @if (cptMod == mod)
+                                @if (coderMod == qaMod)
                                 {
-                                    <span style="color:green">@cptMod</span>
+                                    @if (cptCode1 != qacptCode)
+                                    {
+                                        <span style="color:green">@coderMod.Replace("/", "")</span>
+                                        <br />
+                                        <span style="color:red">@qaMod</span>
+                                    }
+                                    else
+                                    {
+                                        <span style="color:green">@cptMod1</span>
+                                    }
                                 }
                                 else
                                 {
-                                    <span style="color:red">@cptMod</span>
+                                    <span style="color:green">@cptMod1.Replace("/", "")</span>
+                                    <br />
+                                    <span style="color:red">@qaMod</span>
                                 }
-                                <br />
-                                <span style="color:green">@mod</span>
+                                @*<br />
+                                    <span style="color:green">@mod</span>*@
                             </div>
 
                             color = (coderQty != qaQty) ? "color:blue;" : "";
                             if (coderQty == "NA")
                                 color = "color:fuchsia;";
                             <div class="form-control CoderDetails">
-                                @if (cptQty == qaQty)
+                                @if (coderQty == qaQty)
                                 {
-                                    <span style="color:green">@cptQty</span>
+                                    @if (cptCode1 != qacptCode)
+                                    {
+                                        <span style="color:green">@coderQty.Replace("/", "")</span><br />
+                                        <span style="color:red">@qaQty</span>
+                                    }
+                                    else
+                                    {
+                                        <span style="color:green">@cptQty</span>
+                                    }
                                 }
                                 else
                                 {
-                                    <span style="color:red">@cptQty</span>
+                                    <span style="color:green">@cptQty1.Replace("/", "")</span>
+                                    <br />
+                                    <span style="color:red">@qaQty</span>
                                 }
-                                <br />
-                                <span style="color:green">@qaQty</span>
+                                @*<br />
+                                    <span style="color:green">@qaQty</span>*@
                             </div>
 
                             color = (coderLinks != qaLinks) ? "color:blue;" : "";
                             if (coderLinks == "NA")
                                 color = "color:fuchsia;";
                             <div class="form-control CoderDetails">
-                                @if (cptLinks == linkAll)
+                                @if (coderLinks == qaLinks)
                                 {
-                                    <span style="color:green">@cptLinks</span>
+                                    @if (cptCode1 != qacptCode)
+                                    {
+                                        <span style="color:green">@cptLinks1.Replace("/", "")</span><br />
+                                        <span style="color:red">@link</span>
+                                    }
+                                    else
+                                    {
+                                        <span style="color:green">@link</span>
+                                    }
                                 }
                                 else
                                 {
-                                    <span style="color:red">@cptLinks</span>
+                                    <span style="color:green">@cptLinks1.Replace("/", "")</span><br />
+                                    <span style="color:red">@link</span>
                                 }
-                                <br />
-                                <span style="color:green">@linkAll</span>
+                                @*<br />
+                                    <span style="color:green">@linkAll</span>*@
                             </div>
                         }
 

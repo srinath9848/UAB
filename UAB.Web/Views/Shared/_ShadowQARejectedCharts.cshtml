@@ -112,7 +112,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 lessWidth m-t-15">Provider</label>
-                                    
+
                                     @{int len = ((!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText) && !Model.FirstOrDefault().ProviderText.Equals(Model.FirstOrDefault().QAProviderText)) ? 10 : 20); }
                                     @{string ProviderText = (Model.FirstOrDefault().ProviderText?.Length > len) ? Model.FirstOrDefault().ProviderText.Substring(0, len) + ".." : Model.FirstOrDefault().ProviderText;}
                                     @{string QAProviderText = (Model.FirstOrDefault().QAProviderText?.Length > len) ? "/" + Model.FirstOrDefault().QAProviderText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAProviderText;}
@@ -135,13 +135,14 @@
                                         </div>
                                         @{string Show = (string.IsNullOrEmpty(Model.FirstOrDefault().ShadowQAProviderRemarks) ? "display:none" : "display:flex");}
 
-                                        @{string Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                                        @{string Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+                                        @{string Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().ShadowQAProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                                        @{string Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().ShadowQAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
                                     </div>
 
                                     <div class="col-md-3 input-group CoderCorrections ProviderID" style="@Show">
                                         @Html.TextBoxFor(model => Model.FirstOrDefault().QAProviderRemarks, new { @class = "form-control ControlHeight", id = string.Format("QAProviderIDRemarks_{0}", @tabIndex) })
+                                        <span id="validProvider_@Model.FirstOrDefault().TabIndex" class="text-danger txtdanger" style="display:none">*</span>
                                     </div>
                                     <div class="col-md-3 input-group">
                                         @Html.DropDownListFor(model => Model.FirstOrDefault().ShadowQAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @style = @Show, @id = string.Format("ShadowQAProviderID_{0}", @tabIndex), @class = "form-control CoderDetails ControlHeight" })
@@ -158,7 +159,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 lessWidth m-t-15">Payor</label>
-                                    
+
                                     @{ len = ((!string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) && !Model.FirstOrDefault().PayorText.Equals(Model.FirstOrDefault().QAPayorText)) ? 10 : 20); }
                                     @{string PayorText = (Model.FirstOrDefault().PayorText?.Length > len) ? Model.FirstOrDefault().PayorText.Substring(0, len) + ".." : Model.FirstOrDefault().PayorText;}
                                     @{string QAPayorText = (Model.FirstOrDefault().QAPayorText?.Length > len) ? "/" + Model.FirstOrDefault().QAPayorText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAPayorText;}
@@ -182,14 +183,15 @@
                                         </div>
                                         @{ Show = (string.IsNullOrEmpty(Model.FirstOrDefault().ShadowQAPayorRemarks) ? "display:none" : "display:flex");}
 
-                                        @{ Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                                        @{ Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+                                        @{ Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().ShadowQAPayorRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                                        @{ Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().ShadowQAPayorRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
 
                                     </div>
 
                                     <div class="col-md-3 input-group CoderCorrections PayorID" style="@Show">
                                         @Html.TextBoxFor(model => Model.FirstOrDefault().QAPayorRemarks, new { @class = "form-control ControlHeight", @data_val = "false", @id = string.Format("QAPayorIDRemarks_{0}", @tabIndex) })
+                                        <span id="validPayor_@Model.FirstOrDefault().TabIndex" class="text-danger txtdanger" style="display:none">*</span>
                                     </div>
 
                                     <div class="col-md-3 input-group">
@@ -471,13 +473,13 @@
                                                 }
                                                 else
                                                 {
-                                                    string cptVal = coderCptcodes[0] == "NA" ? "" : coderCptcodes[0];
+                                                    string cptVal = coderCptcodes[0] == "NA" ? "NA" : coderCptcodes[0];
                                                     string coderModVal = "";
                                                     string coderLinkAllVal = "";
                                                     string modVal1 = "";
                                                     string qtyVal = "";
                                                     string linkAllVal1 = "";
-                                                    if (cptVal != "")
+                                                    if (cptVal != "NA")
                                                     {
                                                         coderModVal = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
                                                         coderLinkAllVal = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
@@ -492,11 +494,11 @@
                                                         <div class="input-group-prepend ControlHeight">
                                                             <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                                                         </div>
-                                                        <input type="text" class="form-control QARemarks ControlHeight" style="color: green;width: 17px;" placeholder="Code" value="@coderCptcodes[0]" />
-                                                        <input type="text" class="form-control QARemarks ControlHeight" style="color:green;" placeholder="Mod" value="@coderModVal" />
+                                                        <input type="text" class="form-control QARemarks ControlHeight" style="color: green;width: 17px;" placeholder="Code" value="@cptVal" />
+                                                        <input type="text" class="form-control QARemarks ControlHeight" style="color:green;" placeholder="Mod" value="@modVal1" />
                                                         <input type="text" class="form-control QARemarks ControlHeight" style="color:green;" placeholder="Qty" value="@qtyVal" />
-                                                        <input type="text" class="form-control QARemarks ControlHeight" style="color: green;" placeholder="Link All" value="@coderLinkAllVal" />
-                                                        <input type="hidden" id="txtCPTCode_@j" value="@coderCptcodes[0]^@coderModVal^@qtyVal^@coderLinkAllVal" />
+                                                        <input type="text" class="form-control QARemarks ControlHeight" style="color: green;" placeholder="Link All" value="@linkAllVal1" />
+                                                        <input type="hidden" id="txtCPTCode_@j" value="@cptVal^@modVal1^@qtyVal^@linkAllVal1" />
                                                     </div>
 
                                                 }
@@ -570,7 +572,6 @@
                                     <div title="@title" class="col-md-3 input-group">
                                         <div class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
                                             <span style="white-space:nowrap">
-
                                                 @if (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText) && !Model.FirstOrDefault().ProviderFeedbackText.Equals(Model.FirstOrDefault().QAProviderFeedbackText))
                                                 {
                                                     <label style="color: red;">@ProviderFeedbackText</label>
@@ -583,13 +584,12 @@
                                             </span>
                                         </div>
                                         @{ Show = (string.IsNullOrEmpty(Model.FirstOrDefault().ShadowQAProviderFeedbackRemarks) ? "display:none" : "display:flex");}
-                                        @{Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                                        @{Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
-
-
+                                        @{Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().ShadowQAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                                        @{Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().ShadowQAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
                                     </div>
                                     <div class="col-md-3 input-group CoderCorrections Feedback" style="@Show">
                                         @Html.TextBoxFor(model => Model.FirstOrDefault().QAProviderFeedbackRemarks, new { @class = "form-control ControlHeight", @id = string.Format("QAProviderFeedbackRemarks_{0}", @tabIndex) })
+                                        <span id="validFeedback_@Model.FirstOrDefault().TabIndex" class="text-danger txtdanger" style="display:none">*</span>
                                     </div>
                                     <div class="col-md-3 input-group">
                                         @Html.DropDownListFor(model => Model.FirstOrDefault().ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = @Show, @id = string.Format("ShadowQAProviderFeedback_{0}", @tabIndex), @class = "form-control QARevised ControlHeight" })

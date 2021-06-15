@@ -999,28 +999,40 @@ namespace UAB.Controllers
 
             // Accepetd basic Params
 
-            if (!string.IsNullOrEmpty(hdnAcceptedClaim1) && !string.IsNullOrEmpty(hdnQAErrorTypeID1))
+            if (!string.IsNullOrEmpty(hdnAcceptedClaim1))
             {
                 PrepareBasicParams(hdnAcceptedClaim1, dtbasicParams);
-                PrepareAcceptAudit(hdnAcceptedClaim1, dtAudit, Convert.ToInt32(hdnQAErrorTypeID1));
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID1))
+                    PrepareAcceptAudit(hdnAcceptedClaim1, dtAudit, Convert.ToInt32(hdnQAErrorTypeID1));
+                else
+                    PrepareAcceptAudit(hdnAcceptedClaim1, dtAudit, 0);
             }
 
-            if (!string.IsNullOrEmpty(hdnAcceptedClaim2) && !string.IsNullOrEmpty(hdnQAErrorTypeID2))
+            if (!string.IsNullOrEmpty(hdnAcceptedClaim2))
             {
                 PrepareBasicParams(hdnAcceptedClaim2, dtbasicParams);
-                PrepareAcceptAudit(hdnAcceptedClaim2, dtAudit, Convert.ToInt32(hdnQAErrorTypeID2));
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID2))
+                    PrepareAcceptAudit(hdnAcceptedClaim2, dtAudit, Convert.ToInt32(hdnQAErrorTypeID2));
+                else
+                    PrepareAcceptAudit(hdnAcceptedClaim2, dtAudit, 0);
             }
 
-            if (!string.IsNullOrEmpty(hdnAcceptedClaim3) && !string.IsNullOrEmpty(hdnQAErrorTypeID3))
+            if (!string.IsNullOrEmpty(hdnAcceptedClaim3))
             {
                 PrepareBasicParams(hdnAcceptedClaim3, dtbasicParams);
-                PrepareAcceptAudit(hdnAcceptedClaim3, dtAudit, Convert.ToInt32(hdnQAErrorTypeID3));
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID3))
+                    PrepareAcceptAudit(hdnAcceptedClaim3, dtAudit, Convert.ToInt32(hdnQAErrorTypeID3));
+                else
+                    PrepareAcceptAudit(hdnAcceptedClaim3, dtAudit, 0);
             }
 
-            if (!string.IsNullOrEmpty(hdnAcceptedClaim4) && !string.IsNullOrEmpty(hdnQAErrorTypeID4))
+            if (!string.IsNullOrEmpty(hdnAcceptedClaim4))
             {
                 PrepareBasicParams(hdnAcceptedClaim4, dtbasicParams);
-                PrepareAcceptAudit(hdnAcceptedClaim4, dtAudit, Convert.ToInt32(hdnQAErrorTypeID4));
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID4))
+                    PrepareAcceptAudit(hdnAcceptedClaim4, dtAudit, Convert.ToInt32(hdnQAErrorTypeID4));
+                else
+                    PrepareAcceptAudit(hdnAcceptedClaim4, dtAudit, 0);
             }
 
             // Accepetd Dx Codes
@@ -1028,25 +1040,38 @@ namespace UAB.Controllers
             if (!string.IsNullOrEmpty(hdnDxCodes))
             {
                 PrepareDxCodes(hdnDxCodes, dtDx, Convert.ToInt32(hdnClaimId1));
-                dtAudit.Rows.Add("Dx", hdnDxCodes, hdnAcceptedDxRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), true);
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID1))
+                    dtAudit.Rows.Add("Dx", hdnDxCodes, hdnAcceptedDxRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), true);
+                else
+                    dtAudit.Rows.Add("Dx", hdnDxCodes, hdnAcceptedDxRemarks, 0, Convert.ToInt32(hdnClaimId1), true);
+
             }
 
             if (!string.IsNullOrEmpty(hdnDxCodes1))
             {
                 PrepareDxCodes(hdnDxCodes1, dtDx, Convert.ToInt32(hdnClaimId2));
-                dtAudit.Rows.Add("Dx", hdnDxCodes1, hdnAcceptedDxRemarks1, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID2))
+                    dtAudit.Rows.Add("Dx", hdnDxCodes1, hdnAcceptedDxRemarks1, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
+                else
+                    dtAudit.Rows.Add("Dx", hdnDxCodes1, hdnAcceptedDxRemarks1, 0, Convert.ToInt32(hdnClaimId2), true);
             }
 
             if (!string.IsNullOrEmpty(hdnDxCodes2))
             {
                 PrepareDxCodes(hdnDxCodes2, dtDx, Convert.ToInt32(hdnClaimId3));
-                dtAudit.Rows.Add("Dx", hdnDxCodes2, hdnAcceptedDxRemarks2, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID3))
+                    dtAudit.Rows.Add("Dx", hdnDxCodes2, hdnAcceptedDxRemarks2, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
+                else
+                    dtAudit.Rows.Add("Dx", hdnDxCodes2, hdnAcceptedDxRemarks2, 0, Convert.ToInt32(hdnClaimId3), true);
             }
 
             if (!string.IsNullOrEmpty(hdnDxCodes3))
             {
                 PrepareDxCodes(hdnDxCodes3, dtDx, Convert.ToInt32(hdnClaimId4));
-                dtAudit.Rows.Add("Dx", hdnDxCodes3, hdnAcceptedDxRemarks3, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID4))
+                    dtAudit.Rows.Add("Dx", hdnDxCodes3, hdnAcceptedDxRemarks3, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
+                else
+                    dtAudit.Rows.Add("Dx", hdnDxCodes3, hdnAcceptedDxRemarks3, 0, Convert.ToInt32(hdnClaimId4), true);
             }
 
             // Accepetd CPT Codes
@@ -1054,25 +1079,37 @@ namespace UAB.Controllers
             if (!string.IsNullOrEmpty(hdnCptCodes))
             {
                 PrepareCptCodes(hdnCptCodes, dtCpt, Convert.ToInt32(hdnClaimId1));
-                dtAudit.Rows.Add("CPTCode", hdnCptCodes, hdnAcceptedCptRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), true);
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID1))
+                    dtAudit.Rows.Add("CPTCode", hdnCptCodes, hdnAcceptedCptRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), true);
+                else
+                    dtAudit.Rows.Add("CPTCode", hdnCptCodes, hdnAcceptedCptRemarks, 0, Convert.ToInt32(hdnClaimId1), true);
             }
 
             if (!string.IsNullOrEmpty(hdnCptCodes1))
             {
                 PrepareCptCodes(hdnCptCodes1, dtCpt, Convert.ToInt32(hdnClaimId2));
-                dtAudit.Rows.Add("CPTCode", hdnCptCodes1, hdnAcceptedCptRemarks1, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID2))
+                    dtAudit.Rows.Add("CPTCode", hdnCptCodes1, hdnAcceptedCptRemarks1, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
+                else
+                    dtAudit.Rows.Add("CPTCode", hdnCptCodes1, hdnAcceptedCptRemarks1, 0, Convert.ToInt32(hdnClaimId2), true);
             }
 
             if (!string.IsNullOrEmpty(hdnCptCodes2))
             {
                 PrepareCptCodes(hdnCptCodes2, dtCpt, Convert.ToInt32(hdnClaimId3));
-                dtAudit.Rows.Add("CPTCode", hdnCptCodes1, hdnAcceptedCptRemarks2, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID3))
+                    dtAudit.Rows.Add("CPTCode", hdnCptCodes1, hdnAcceptedCptRemarks2, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
+                else
+                    dtAudit.Rows.Add("CPTCode", hdnCptCodes1, hdnAcceptedCptRemarks2, 0, Convert.ToInt32(hdnClaimId3), true);
             }
 
             if (!string.IsNullOrEmpty(hdnCptCodes3))
             {
                 PrepareCptCodes(hdnCptCodes3, dtCpt, Convert.ToInt32(hdnClaimId4));
-                dtAudit.Rows.Add("CPTCode", hdnCptCodes1, hdnAcceptedCptRemarks3, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID4))
+                    dtAudit.Rows.Add("CPTCode", hdnCptCodes1, hdnAcceptedCptRemarks3, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
+                else
+                    dtAudit.Rows.Add("CPTCode", hdnCptCodes1, hdnAcceptedCptRemarks3, 0, Convert.ToInt32(hdnClaimId4), true);
             }
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
