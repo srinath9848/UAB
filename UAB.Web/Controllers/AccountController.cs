@@ -351,6 +351,9 @@ namespace UAB.Controllers
                         CookieAuthenticationDefaults.AuthenticationScheme);
 
             HttpContext.User = new GenericPrincipal(new GenericIdentity(string.Empty), null);
+            _httpContextAccessor.HttpContext.Session.Remove("PayorsList");
+            _httpContextAccessor.HttpContext.Session.Remove("ProvidersList");
+            _httpContextAccessor.HttpContext.Session.Remove("FeedbackList");
             return RedirectToAction("Login", "Account");
         }
     }
