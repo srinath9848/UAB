@@ -51,13 +51,14 @@
         </div>
         @{Show = (string.IsNullOrEmpty(Model.ShadowQAProviderRemarks) ? "display:none" : "display:flex");}
 
-        @{string Accepted = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-        @{string Rejected = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+        @{string Accepted = (string.IsNullOrEmpty(Model.ShadowQAProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+        @{string Rejected = (string.IsNullOrEmpty(Model.ShadowQAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
 
     </div>
     <div class="col-md-3 input-group CoderCorrections ProviderID" style="@Show">
         @Html.TextBoxFor(model => Model.QAProviderRemarks, new { @class = "form-control ControlHeight", @id = string.Format("QAProviderIDRemarks_{0}", @tabIndex) })
+        <span id="validProvider_@Model.TabIndex" class="text-danger txtdanger" style="display:none">*</span>
     </div>
 
     <div class="col-md-3 input-group">
@@ -97,13 +98,14 @@
             </span>
         </div>
         @{Show = (string.IsNullOrEmpty(Model.ShadowQAPayorRemarks) ? "display:none" : "display:flex");}
-        @{ Accepted = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-        @{ Rejected = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+        @{ Accepted = (string.IsNullOrEmpty(Model.ShadowQAPayorRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+        @{ Rejected = (string.IsNullOrEmpty(Model.ShadowQAPayorRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
 
     </div>
     <div class="col-md-3 input-group CoderCorrections PayorID" style="@Show">
         @Html.TextBoxFor(model => Model.QAPayorRemarks, new { @class = "form-control ControlHeight", @data_val = "false,", @id = string.Format("QAPayorIDRemarks_{0}", tabIndex) })
+        <span id="validPayor_@Model.TabIndex" class="text-danger txtdanger" style="display:none">*</span>
     </div>
 
     <div class="col-md-3 input-group">
@@ -386,24 +388,23 @@
                             </div>
                         }
                     </div>
-                }
-                else
-                {
-                    string cptVal = coderCptcodes[0] == "NA" ? "" : coderCptcodes[0];
-                    string coderModVal = "";
-                    string coderLinkAllVal = "";
-                    string modVal1 = "";
-                    string qtyVal = "";
-                    string linkAllVal1 = "";
-                    if (cptVal != "")
-                    {
-                        coderModVal = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
-                        coderLinkAllVal = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
-                        cptVal = coderCptcodes[0] == "NA" ? "" : coderCptcodes[0];
-                        modVal1 = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
-                        qtyVal = coderCptcodes[2];
-                        linkAllVal1 = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
-                    }
+                            }
+                            else
+                            {
+                                string cptVal = coderCptcodes[0] == "NA" ? "NA" : coderCptcodes[0];
+                                string coderModVal = "";
+                                string coderLinkAllVal = "";
+                                string modVal1 = "";
+                                string qtyVal = "";
+                                string linkAllVal1 = "";
+                                if (cptVal != "NA")
+                                {
+                                    coderModVal = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
+                                    coderLinkAllVal = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
+                                    modVal1 = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
+                                    qtyVal = coderCptcodes[2];
+                                    linkAllVal1 = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
+                                }
 
                     <div title="Code : @cptVal, Mod : @modVal1, Quantity : @qtyVal, Link : @linkAllVal1" class="col-md-3 input-group">
                         <div class="input-group-prepend ControlHeight">
@@ -487,7 +488,6 @@
     <div title="@title" class="col-md-3 input-group">
         <div class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
             <span style="white-space:nowrap">
-
                 @if (!string.IsNullOrEmpty(Model.QAProviderFeedbackText) && !Model.ProviderFeedbackText.Equals(Model.QAProviderFeedbackText))
                 {
                     <label style="color: red;">@ProviderFeedbackText</label>
@@ -501,11 +501,12 @@
         </div>
         @{Show = (string.IsNullOrEmpty(Model.ShadowQAProviderFeedbackRemarks) ? "display:none" : "display:flex");}
 
-        @{Accepted = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-        @{Rejected = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+        @{Accepted = (string.IsNullOrEmpty(Model.ShadowQAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+        @{Rejected = (string.IsNullOrEmpty(Model.ShadowQAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
     </div>
     <div class="col-md-3 input-group CoderCorrections Feedback" style="@Show">
         @Html.TextBoxFor(model => Model.QAProviderFeedbackRemarks, new { @class = "form-control ControlHeight", @id = string.Format("QAProviderFeedbackRemarks_{0}", @tabIndex) })
+        <span id="validFeedback_@Model.TabIndex" class="text-danger txtdanger" style="display:none">*</span>
     </div>
     <div class="col-md-3 input-group">
         @Html.DropDownListFor(model => Model.ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = @Show, @id = string.Format("ShadowQAProviderFeedback_{0}", @tabIndex), @class = "form-control QARevised ControlHeight" })
