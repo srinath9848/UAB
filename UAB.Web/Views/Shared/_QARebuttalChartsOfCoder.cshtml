@@ -520,7 +520,7 @@
                                         @{ Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().RevisedProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
                                         @{Show = (string.IsNullOrEmpty(Model.FirstOrDefault().RevisedProviderFeedbackRemarks) ? "display:none" : "display:flex");}
 
-                                        @Html.DropDownListFor(model => model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("CoderFeedback_{0}", tabIndex), @style = Show })
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("CoderFeedback_{0}", tabIndex) })
                                         <div class="input-group-append" style="height: 38px;">
                                             <span class="input-group-text QACorrections">
                                                 &nbsp;<i id="Feedback_@tabIndex" class="@Accepted" aria-hidden="true"></i>
