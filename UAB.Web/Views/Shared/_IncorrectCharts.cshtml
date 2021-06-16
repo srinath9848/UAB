@@ -492,6 +492,8 @@
                                                     {
                                                         if (!string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value))
                                                             Show = "display:flex";
+                                                        else
+                                                            Show = "display:none";
                                                         Accepted = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
                                                         Rejected = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
 

@@ -85,7 +85,7 @@
             var id = $(this).attr('id');
             var tabid = id.split("tabIndex_")[1].split("_ClaimId_")[0];
             var claimId = id.split("tabIndex_")[1].split("_ClaimId_")[1];
-            var ErrorTypeID = $("#ShadowQAErrorType_" + tabid).val();
+            var ErrorTypeID = $("#ErrorType_" + tabid).val();
             $("#hdnQAErrorTypeID" + tabid).val(ErrorTypeID);
             $("#hdnClaimId" + tabid).val(claimId);
             var ProviderID = "";

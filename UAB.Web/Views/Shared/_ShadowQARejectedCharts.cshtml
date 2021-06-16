@@ -621,31 +621,6 @@
                                                             <div class="col-md-7">
                                                                 @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;", @id = string.Format("ErrorType_{0}", tabIndex), @onchange = "ErrorType('" + tabIndex + "')" })
                                                                 @Html.ValidationMessageFor(model => model.FirstOrDefault().QADTO.ErrorType, null, new { @class = "text-danger ErrorType", @id = string.Format("ErrorTypeError_{0}", tabIndex) })
-
-                                                                @*@Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;" })*@
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Shadow QA Details</h4>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="col-12">
-                                                <div class="row mb-3">
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group row">
-                                                            <label class="col-md-3 m-t-15">
-                                                                Error Type
-                                                            </label>
-                                                            <div class="col-md-7">
-                                                                @Html.DropDownListFor(model => model.FirstOrDefault().ShadowQADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight ShadowQAErroryType", @readonly = "readonly", @id = string.Format("ShadowQAErrorType_{0}", tabIndex), @onchange = "ShadowQAErrorType('" + tabIndex + "')" })
                                                             </div>
                                                         </div>
                                                     </div>
