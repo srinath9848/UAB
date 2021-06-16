@@ -262,7 +262,7 @@
                                                     </div>
                                                     <div class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
                                                         <span style="white-space:nowrap">
-                                                            @if (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value))
+                                                            @if (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) && !(dictDxCodes?.ElementAt(i).Value).Equals(dictQADxCodes?.ElementAt(i).Value))
                                                             {
                                                                 <label style="color: red;">@Dx</label>
                                                                 <label style="color:green">@QADx</label>
