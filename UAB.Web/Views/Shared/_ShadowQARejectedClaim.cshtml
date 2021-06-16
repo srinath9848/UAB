@@ -388,23 +388,24 @@
                             </div>
                         }
                     </div>
-                            }
-                            else
-                            {
-                                string cptVal = coderCptcodes[0] == "NA" ? "NA" : coderCptcodes[0];
-                                string coderModVal = "";
-                                string coderLinkAllVal = "";
-                                string modVal1 = "";
-                                string qtyVal = "";
-                                string linkAllVal1 = "";
-                                if (cptVal != "NA")
-                                {
-                                    coderModVal = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
-                                    coderLinkAllVal = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
-                                    modVal1 = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
-                                    qtyVal = coderCptcodes[2];
-                                    linkAllVal1 = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
-                                }
+                }
+                else
+                {
+                    string cptVal = coderCptcodes[0] == "NA" ? "NA" : coderCptcodes[0];
+                    string coderModVal = "";
+                    string coderLinkAllVal = "";
+                    string modVal1 = "";
+                    string qtyVal = "";
+                    string linkAllVal1 = "";
+                    if (cptVal != "NA")
+                    {
+                        coderModVal = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
+                        coderLinkAllVal = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
+                        modVal1 = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
+                        qtyVal = coderCptcodes[2];
+                        linkAllVal1 = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
+                    }
+                    Show = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex");
 
                     <div title="Code : @cptVal, Mod : @modVal1, Quantity : @qtyVal, Link : @linkAllVal1" class="col-md-3 input-group">
                         <div class="input-group-prepend ControlHeight">
