@@ -87,7 +87,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit">Save</button>
-                    <button type="button" class="btn btn-sm btn-danger btn-fill" onclick="ModalClose1()">Close</button>
+                    <button type="button" class="btn btn-sm btn-danger btn-fill" id="btnClose">Close</button>
                 </div>
             </div>
         </div>
@@ -106,6 +106,10 @@
             } else {
                 $('#sampleerror').show();
             }
+        });
+        $('#btnClose').click(function () {
+            location.reload();
+            $("#modalContent").html('');
         });
         $("#roledd").change(function () {
             if ($("#roledd option:selected").text() == 'ShadowQA' || $("#roledd option:selected").text() == 'Manager' || $("#roledd option:selected").text() == 'Supervisor') {
@@ -169,7 +173,8 @@
             var id = $(this).attr('title').split("btn_")[1];
             var Project = $("#txtproject" + id).text();
             var Role = $("#txtrole" + id).text();
-            var ProjectAndRolevalue = Project + "^" + Role;
+            var Sample = $("#txtsample" + id).text();
+            var ProjectAndRolevalue = Project + "^" + Role + "^" + Sample;
             ProjectAndRole.splice($.inArray(ProjectAndRolevalue, ProjectAndRole), 1);
             $("#hdnProjectAndRole").val(ProjectAndRole);
             $('#tr' + id).remove();
@@ -216,9 +221,7 @@
             var roledd = $("#roledd option:selected").text();
             if (roledd !== "--Select a Role--")
                 $("#validrole").html('');
-
         });
-
     });
 </script>
 

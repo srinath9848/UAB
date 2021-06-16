@@ -2629,7 +2629,8 @@ namespace UAB.Controllers
                 _httpContextAccessor.HttpContext.Session.SetString("ProvidersList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProvidersList()));
 
             ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
-            ViewBag.Status = clinicalcaseOperations.GetStatusList();
+            var status = clinicalcaseOperations.GetStatusList();
+            ViewBag.Status = status.Where(x => x.StatusId != 3 && x.StatusId != 6 && x.StatusId != 10).ToList();
             ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
             _logger.LogInformation("Loading Ended for Fetching SettingsSearch for User: " + mUserId);
             return View();
