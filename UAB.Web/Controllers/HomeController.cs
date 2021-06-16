@@ -216,6 +216,30 @@ namespace UAB.Controllers
         }
 
         [HttpGet]
+        public IActionResult ExportAgingReportDetailByStatus(string ColumnName, string ProjectType, string ProjectName)
+        {
+            _logger.LogInformation("Loading Started for ExportAgingReportDetailByProject for User: " + mUserId);
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            int ProjectId = clinicalcaseOperations.GetProjects().Where(x => x.Name == ProjectName).Select(x => x.ProjectId).FirstOrDefault();
+            var lstAgingReportDetails = clinicalcaseOperations.GetAgingReportDetailsByStatus(ColumnName, ProjectType, ProjectId);
+            List<CodingDTO> agingList = new List<CodingDTO>();
+            foreach (var agingData in lstAgingReportDetails)
+            {
+                CodingDTO data = new CodingDTO();
+                data = agingData.CodingDTO;
+                agingList.Add(data);
+            }
+            var table = clinicalcaseOperations.ToDataTable<CodingDTO>(agingList);
+            table.Columns.Remove("ClinicalCaseID");
+            if (ProjectType != "IP")
+            {
+                table.Columns.Remove("ListName");
+            }
+            _logger.LogInformation("Loading Ended for ExportAgingReportDetailByProject for User: " + mUserId);
+            return ExportToExcel(table);
+        }
+
+        [HttpGet]
         public IActionResult GetAgingReportDetailsByStatus(string ColumnName, string ProjectType, string ProjectName)
         {
             _logger.LogInformation("Loading Started for GetAgingReportDetailsByStatus for User: " + mUserId);
@@ -228,7 +252,7 @@ namespace UAB.Controllers
             ViewBag.projectname = ProjectName;
             ViewBag.projectType = projectType;
             _logger.LogInformation("Loading Ended for GetAgingReportDetailsByStatus for User: " + mUserId);
-            return PartialView("_AgingBreakDownReportDetailsByDay", lstAgingReportDetails);
+            return PartialView("_AgingBreakDownReportDetailsByStatus", lstAgingReportDetails);
         }
 
         [HttpGet]
