@@ -564,7 +564,7 @@ namespace UAB.Controllers
 
         private void PrepareDxCodes(string dx, DataTable dtDx, int claimId)
         {
-            string[] lstdxs = dx.Split(",");
+            string[] lstdxs = dx.Split("|");
             foreach (var item in lstdxs)
             {
                 string[] lstdxrow = item.Split("^");
