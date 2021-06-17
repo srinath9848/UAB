@@ -989,7 +989,7 @@ namespace UAB.DAL
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
                             chartSummaryDTO.QACPTCode = Convert.ToString(reader["QACPTCode"]);
                             chartSummaryDTO.QACPTCodeRemarks = Convert.ToString(reader["QACPTCodeRemark"]);
-                           
+
                             if (reader["ProviderFeedbackID"] != DBNull.Value)
                                 chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackID"]);
                             if (reader["QAProviderFeedbackID"] != DBNull.Value)
@@ -3489,6 +3489,13 @@ namespace UAB.DAL
         }
         #endregion
 
+        public List<Location> GetLocations()
+        {
+            using (var context = new UABContext())
+            {
+                return context.Location.ToList();
+            }
+        }
         public List<Provider> GetProviders()
         {
             Provider provider = new Provider();
@@ -4118,6 +4125,48 @@ namespace UAB.DAL
                     throw new Exception("Unable to delete Block Category : It is already used in UAB,the associated information should delete first");
                 }
 
+            }
+        }
+        public void AddLocation(Location location)
+        {
+            using (var context = new UABContext())
+            {
+                var isexistingLocation = context.Location.Where(a => a.Name == location.Name).FirstOrDefault();
+
+                if (isexistingLocation == null)
+                {
+                    context.Location.Add(location);
+                    context.SaveChanges();
+                }
+            }
+        }
+        public void UpdateLocation(Location location)
+        {
+            using (var context = new UABContext())
+            {
+                var existingLocation = context.Location.Where(a => a.LocationId == location.LocationId).FirstOrDefault();
+                if (existingLocation != null)
+                {
+                    existingLocation.Name = location.Name;
+                    context.Entry(existingLocation).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
+            }
+        }
+        public void DeletetLocation(int id)
+        {
+            using (var context = new UABContext())
+            {
+                var existingLocation = context.Location.Where(a => a.LocationId == id).FirstOrDefault();
+                if (existingLocation != null)
+                {
+                    context.Location.Remove(existingLocation);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable to delete location : It is not there in UAB");
+                }
             }
         }
         public void AddProvider(Provider provider)
