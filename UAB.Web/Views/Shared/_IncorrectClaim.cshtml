@@ -158,7 +158,7 @@
                         </div>
                         <div class="form-control CoderDetails" style="line-height:2.2;overflow:hidden;height:32px;">
                             <span style="white-space:nowrap">
-                                @if (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value))
+                                @if (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) && !(dictQADxCodes?.ElementAt(i).Value).Equals(dictDxCodes?.ElementAt(i).Value))
                                 {
                                     <label style="color: red;">@Dx</label>
                                     <label style="color:green">@QADx</label>
@@ -319,54 +319,58 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                         </div>
-                        <div class="form-control CoderDetails" style="min-width:60px;">
-                            @if (cptCode == qacptCode)
+                        @{
+                            if (codercptCode == qacptCode)
                             {
-                                <span style="color:green">@cptCode</span>
+                                <div class="form-control CoderDetails" style="min-width:60px;">
+                                    <span style="color:green">@codercptCode.Replace("/", "")</span>
+                                </div>
+                                <div class="form-control CoderDetails">
+                                    <span style="color:green">@coderMod.Replace("/", "")</span>
+                                </div>
+                                <div class="form-control CoderDetails">
+                                    <span style="color:green">@coderQty.Replace("/", "")</span>
+                                </div>
+                                <div class="form-control CoderDetails">
+                                    <span style="color:green">@cptLinks1.Replace("/", "")</span>
+                                </div>
                             }
                             else
                             {
-                                <span style="color:red">@cptCode</span>
+                                if (codercptCode == "NA")
+                                    color = "color:fuchsia;";
+                                <div class="form-control CoderDetails" style="min-width:60px;">
+                                    <span style="color:green">@cptCode1.Replace("/", "")</span>
+                                    <br />
+                                    <span style="color:red">@qacptCode</span>
+                                </div>
+                                color = (coderMod != qaMod) ? "color:blue;" : "";
+                                if (coderMod == "NA")
+                                    color = "color:fuchsia;";
+                                <div class="form-control CoderDetails">
+                                    <span style="color:green">@coderMod.Replace("/", "")</span>
+                                    <br />
+                                    <span style="color:red">@qaMod</span>
+                                </div>
+
+                                color = (coderQty != qaQty) ? "color:blue;" : "";
+                                if (coderQty == "NA")
+                                    color = "color:fuchsia;";
+                                <div class="form-control CoderDetails">
+                                    <span style="color:green">@coderQty.Replace("/", "")</span>
+                                    <br />
+                                    <span style="color:red">@qaQty</span>
+                                </div>
+
+                                color = (coderLinks != qaLinks) ? "color:blue;" : "";
+                                if (coderLinks == "NA")
+                                    color = "color:fuchsia;";
+                                <div class="form-control CoderDetails">
+                                    <span style="color:green">@cptLinks1.Replace("/", "")</span><br />
+                                    <span style="color:red">@link</span>
+                                </div>
                             }
-                            <br />
-                            <span style="color:green">@qacptCode</span>
-                        </div>
-                        <div class="form-control CoderDetails">
-                            @if (cptMod == qaMod)
-                            {
-                                <span style="color:green">@cptMod</span>
-                            }
-                            else
-                            {
-                                <span style="color:red">@cptMod</span>
-                            }
-                            <br />
-                            <span style="color:green">@qaMod</span>
-                        </div>
-                        <div class="form-control CoderDetails">
-                            @if (cptQty == qaQty)
-                            {
-                                <span style="color:green">@cptQty</span>
-                            }
-                            else
-                            {
-                                <span style="color:red">@cptQty</span>
-                            }
-                            <br />
-                            <span style="color:green">@qaQty</span>
-                        </div>
-                        <div class="form-control CoderDetails">
-                            @if (cptLinks == link)
-                            {
-                                <span style="color:green">@cptLinks</span>
-                            }
-                            else
-                            {
-                                <span style="color:red">@cptLinks</span>
-                            }
-                            <br />
-                            <span style="color:green">@link</span>
-                        </div>
+                        }
                         <input type="hidden" id="@cptCoderClaim" value="@codercpt^@coderMod^@coderQty^@coderLinks" />
                         <input type="hidden" id="@cptQAClaim" value="@qaCptcodes[0]^@qaCptcodes[1]^@qaCptcodes[2]^@qaCptcodes[3]" />
                     </div>
