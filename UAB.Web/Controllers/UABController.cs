@@ -3010,6 +3010,98 @@ namespace UAB.Controllers
             _logger.LogInformation("Loading Ended for Submit DeleteLocation for User: " + mUserId);
             return RedirectToAction("SettingsLocation");
         }
+        [HttpGet]
+        public IActionResult SettingsListName ()
+        {
+            _logger.LogInformation("Loading Started for SettingsListName for User: " + mUserId);
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            ViewBag.lstnames = clinicalcaseOperations.GetLists();
+            _logger.LogInformation("Loading Ended for SettingsListName for User: " + mUserId);
+            return View();
+        }
+        [HttpGet]
+        public ActionResult Add_EditListName(int id = 0) 
+        {
+            _logger.LogInformation("Loading Started for Add_EditListName for User: " + mUserId);
+            List obj = new List();
+            if (id != 0)
+            {
+                List<List> lstnames = new List<List>();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                lstnames = clinicalcaseOperations.GetLists();
+                var res = lstnames.Where(a => a.ListId == id).FirstOrDefault(); 
+                obj = res;
+            }
+            _logger.LogInformation("Loading Ended for Add_EditListName for User: " + mUserId);
+            return PartialView("_AddEditListName", obj);
+        }
+        [HttpPost]
+        public IActionResult Add_EditListName(List  list)
+        {
+            _logger.LogInformation("Loading Started for Add_EditListName for User: " + mUserId);
+
+            if (ModelState.IsValid)
+            {
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                List<string> lstLocation = clinicalcaseOperations.GetLocations().Select(x => x.Name).ToList();
+                if (!lstLocation.Contains(list.Name))
+                {
+                    if (list.ListId == 0)
+                    {
+                        clinicalcaseOperations.AddListname(list);
+                        TempData["Success"] = "Location \"" + list.Name + "\" Added Successfully!";
+                    }
+                    else
+                    {
+                        clinicalcaseOperations.UpdateListname(list);
+                        TempData["Success"] = "Location \"" + list.Name + "\" Updated Successfully!";
+                    }
+                }
+                else
+                {
+                    TempData["Error"] = "The Location \"" + list.Name + "\" is already present in our Location list!";
+                }
+            }
+            _logger.LogInformation("Loading Ended for Add_EditListName for User: " + mUserId);
+            return RedirectToAction("SettingsListName");
+        }
+        [HttpGet]
+        public IActionResult DeleteListName (int id)
+        {
+            _logger.LogInformation("Loading Started for Fetching DeleteListName for User: " + mUserId);
+            List obj = new List();
+            if (id != 0)
+            {
+                List<List> lstList = new List<List>();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                lstList = clinicalcaseOperations.GetLists();
+                var res = lstList.Where(a => a.ListId == id).FirstOrDefault();
+                obj = res;
+            }
+            _logger.LogInformation("Loading Ended for Fetching DeleteListName for User: " + mUserId);
+            return PartialView("_DeleteListName", obj);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteListName (List  list)
+        {
+            try
+            {
+                _logger.LogInformation("Loading Started for Submit DeleteListName for User: " + mUserId);
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                if (list.ListId != 0)
+                {
+                    clinicalcaseOperations.DeletetListname(list.ListId);
+                    TempData["Success"] = "Location \"" + list.Name + "\" Deleted Successfully!";
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = ex.Message;
+            }
+            _logger.LogInformation("Loading Ended for Submit DeleteListName for User: " + mUserId);
+            return RedirectToAction("SettingsListName");
+        }
 
 
         public IActionResult AddSettingsProvider(Provider provider)

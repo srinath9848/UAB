@@ -4127,6 +4127,7 @@ namespace UAB.DAL
 
             }
         }
+
         public void AddLocation(Location location)
         {
             using (var context = new UABContext())
@@ -4166,6 +4167,55 @@ namespace UAB.DAL
                 else
                 {
                     throw new Exception("Unable to delete location : It is not there in UAB");
+                }
+            }
+        }
+        public List<List>  GetLists()
+        {
+            using (var context = new UABContext())
+            {
+                return context.List.ToList();
+            }
+        }
+        public void AddListname(List  list)
+        {
+            using (var context = new UABContext())
+            {
+                var isexistingList = context.List.Where(a => a.Name == list.Name).FirstOrDefault();
+
+                if (isexistingList == null)
+                {
+                    context.List.Add(list);
+                    context.SaveChanges();
+                }
+            }
+        }
+        public void UpdateListname(List  list)
+        {
+            using (var context = new UABContext())
+            {
+                var existingList = context.List.Where(a => a.ListId == list.ListId).FirstOrDefault();
+                if (existingList != null)
+                {
+                    existingList.Name = list.Name;
+                    context.Entry(existingList).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
+            }
+        }
+        public void DeletetListname (int id)
+        {
+            using (var context = new UABContext())
+            {
+                var existingList = context.List.Where(a => a.ListId == id).FirstOrDefault();
+                if (existingList != null)
+                {
+                    context.List.Remove(existingList);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable to delete list name : It is not there in UAB");
                 }
             }
         }
