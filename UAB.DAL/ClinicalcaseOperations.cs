@@ -895,12 +895,15 @@ namespace UAB.DAL
 
                             chartSummaryDTO.PayorText = Convert.ToString(reader["PayorText"]);
                             chartSummaryDTO.QAPayorText = Convert.ToString(reader["QAPayorText"]);
+                            chartSummaryDTO.ShadowQAPayorText = Convert.ToString(reader["ShadowQAPayorText"]);
 
                             chartSummaryDTO.ProviderText = Convert.ToString(reader["ProviderText"]);
                             chartSummaryDTO.QAProviderText = Convert.ToString(reader["QAProviderText"]);
+                            chartSummaryDTO.ShadowQAProviderText = Convert.ToString(reader["ShadowQAProviderText"]);
 
                             chartSummaryDTO.ProviderFeedbackText = Convert.ToString(reader["FeedbackText"]);
                             chartSummaryDTO.QAProviderFeedbackText = Convert.ToString(reader["QAFeedbackText"]);
+                            chartSummaryDTO.ShadowQAProviderFeedbackText = Convert.ToString(reader["ShadowQAFeedbackText"]);
 
                             chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                             if (reader["QAProviderID"] != DBNull.Value)

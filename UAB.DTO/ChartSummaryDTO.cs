@@ -50,11 +50,13 @@ namespace UAB.DTO
         [Required(ErrorMessage = "*")]
         public int QAPayorID { get; set; }
         public string QAPayorText { get; set; }
+        public string ShadowQAPayorText { get; set; }
         [Required(ErrorMessage = "*")]
         public string QAPayorRemarks { get; set; }
         [Required(ErrorMessage = "*")]
         public int QAProviderID { get; set; }
         public string QAProviderText { get; set; }
+        public string ShadowQAProviderText { get; set; }
         [Required(ErrorMessage = "*")]
         public string QAProviderRemarks { get; set; }
         [Required(ErrorMessage = "*")]
@@ -72,6 +74,7 @@ namespace UAB.DTO
         //[Required(ErrorMessage = "*")]
         public int QAProviderFeedbackID { get; set; }
         public string QAProviderFeedbackText { get; set; }
+        public string ShadowQAProviderFeedbackText { get; set; }
         //[Required(ErrorMessage = "*")]
         public string QAProviderFeedbackRemarks { get; set; }
 
