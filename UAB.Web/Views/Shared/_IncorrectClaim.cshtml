@@ -158,7 +158,7 @@
                         </div>
                         <div class="form-control CoderDetails" style="line-height:2.2;overflow:hidden;height:32px;">
                             <span style="white-space:nowrap">
-                                @if (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) && !(dictDxCodes?.ElementAt(i).Value).Equals(dictQADxCodes?.ElementAt(i).Value))
+                                @if (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value))
                                 {
                                     <label style="color: red;">@Dx</label>
                                     <label style="color:green">@QADx</label>
@@ -391,6 +391,8 @@
                     {
                         if (!string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value))
                             Show = "display:flex";
+                        else
+                            Show = "display:none";
 
                         Accepted = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
                         Rejected = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");

@@ -43,7 +43,7 @@
             var id = $(this).attr('id');
             var tabid = id.split("tabIndex_")[1].split("_ClaimId_")[0];
             var claimId = id.split("tabIndex_")[1].split("_ClaimId_")[1];
-            var ErrorTypeID = $("#ShadowQAErrorType_" + tabid).val();
+            var ErrorTypeID = $("#QAErrorType_" + tabid).val();
             $("#hdnQAErrorTypeID" + tabid).val(ErrorTypeID);
             $("#hdnClaimId" + tabid).val(claimId);
             var ProviderID = "";
@@ -232,6 +232,12 @@
                 }
             };
 
+            if ($("#hdnQADxRemarks" + tabid).val() != "")
+                $("#hdnQAAcceptDxRemarks" + tabid).val('');
+
+            if ($("#hdnQACptRemarks" + tabid).val() != "")
+                $("#hdnQAAcceptCptRemarks" + tabid).val('');
+
         });
 
         // Default Dx & Cpt
@@ -312,6 +318,12 @@
                     $("#hdnQAAcceptCptRemarks").val($("#hdnQAAcceptCptRemarks").val() + "|" + id + "^" + $("#QACptRemarks_" + id).val());
             }
         }
+
+        if ($("#hdnQADxRemarks").val() != "")
+            $("#hdnQAAcceptDxRemarks").val('');
+
+        if ($("#hdnQACptRemarks").val() != "")
+            $("#hdnQAAcceptCptRemarks").val('');
 
         var total = $(".fa-check-circle").length;
         var reject = $(".reject").length;

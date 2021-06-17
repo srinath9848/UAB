@@ -163,12 +163,21 @@
                 {
                     <label class="col-md-3 lessWidth m-t-15"></label>
                 }
-                @{ Accepted = (string.IsNullOrEmpty(dictShadowQADxRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                @{ Rejected = (string.IsNullOrEmpty(dictShadowQADxRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+                @{ Accepted = (string.IsNullOrEmpty(dictQADxRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                @{ Rejected = (string.IsNullOrEmpty(dictQADxRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+                @{ Show = (string.IsNullOrEmpty(dictQADxRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex"); }
 
                 @{string Dx = dictDxCodes.ElementAt(i).Value;}
                 @{string QADx = (dictQADxCodes?.ElementAt(i).Value?.Length > len) ? "/" + dictQADxCodes?.ElementAt(i).Value.Substring(0, len) + ".." : "/" + dictQADxCodes?.ElementAt(i).Value;}
-
+                @{
+                    string ShadowQaDxVal = !string.IsNullOrEmpty(dictShadowQADxCodes?.ElementAt(i).Value) ? dictShadowQADxCodes?.ElementAt(i).Value : !string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? dictQADxCodes?.ElementAt(i).Value : dictDxCodes?.ElementAt(i).Value;
+                    if (QADx.Replace("/", "") == ShadowQaDxVal)
+                    {
+                        Accepted = "fa fa-check-circle fa-lg accept";
+                        Rejected = "fa fa-times-circle fa-lg";
+                        Show = "display:none";
+                    }
+                }
                 <div class="col-md-3 CPTWidth input-group">
                     <div class="input-group-prepend ControlHeight">
                         <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
@@ -186,7 +195,6 @@
                             }
                         </span>
                     </div>
-                    @{ Show = (string.IsNullOrEmpty(dictShadowQADxRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex"); }
 
                     <div class="input-group-append ControlHeight" style="@Show">
                         <span class="input-group-text ControlHeight AcceptRejectWidth">
@@ -200,9 +208,7 @@
                     <div class="input-group-prepend ControlHeight">
                         <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                     </div>
-                    @{
-                        string ShadowQaDxVal = !string.IsNullOrEmpty(dictShadowQADxCodes?.ElementAt(i).Value) ? dictShadowQADxCodes?.ElementAt(i).Value : !string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? dictQADxCodes?.ElementAt(i).Value : dictDxCodes?.ElementAt(i).Value;
-                    }
+
                     <input type="text" style="@Show" id="@string.Format("txtDx{0}Claim_{1}", Model.TabIndex, j)" class="form-control txtDx ControlHeight" autocomplete="off" tabindex="@i" placeholder="Code" value="@ShadowQaDxVal" />
                     <input type="hidden" id="@string.Format("txtQADx{0}Claim_{1}", Model.TabIndex, j)" class="form-control txtDx ControlHeight" value="@dictQADxCodes?.ElementAt(i).Value" />
 
@@ -265,14 +271,14 @@
 
                 @{ string[] coderCptcodes = dictCptCodes?.ElementAt(i).Value.Split("^");}
                 @{ string[] qaCptcodes = dictQACptCodes?.ElementAt(i).Value.Split("^");}
-                @{ string ShadowQaCpt = dictShadowQACptCodes?.ElementAt(i).Value;
+                @{ string ShadowQaCpt = !string.IsNullOrEmpty(dictShadowQACptCodes?.ElementAt(i).Value) ? dictShadowQACptCodes?.ElementAt(i).Value : !string.IsNullOrEmpty(dictQACptCodes?.ElementAt(i).Value) ? dictQACptCodes?.ElementAt(i).Value : dictCptCodes?.ElementAt(i).Value;
                     if (ShadowQaCpt != "")
                     {
                         string[] CptCodes1 = ShadowQaCpt.Split("^");
                         ShadowQaCpt = CptCodes1[0] == "NA" ? "" : CptCodes1[0];
                     }
                 }
-                @{ Show = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex"); }
+                @{ Show = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex"); }
 
                 @if (!string.IsNullOrEmpty(dictQACptCodes?.ElementAt(i).Value))
                 {
@@ -380,9 +386,9 @@
                             }
                             else
                             {
-                                Accepted = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
-                                Rejected = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
-                                Show = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex");
+                                Accepted = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
+                                Rejected = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
+                                Show = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex");
                             }
                         }
                         <input type="hidden" id="@string.Format("txt{0}QACpt_{1}", Model.TabIndex,j)" value="@qacptCode^@qaMod^@qaQty^@qaLinks" />
@@ -416,9 +422,9 @@
                     }
                     else
                     {
-                        Show = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex");
-                        Accepted = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
-                        Rejected = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
+                        Show = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex");
+                        Accepted = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
+                        Rejected = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
                     }
                     <div title="Code : @cptVal, Mod : @coderModVal, Quantity : @qtyVal, Link : @coderLinkAllVal" class="col-md-3 input-group">
                         <div class="input-group-prepend ControlHeight">
@@ -553,30 +559,7 @@
                                 Error Type
                             </label>
                             <div class="col-md-7">
-                                @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-md-12">
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">Shadow QA Details</h4>
-        </div>
-        <div class="card-body">
-            <div class="col-12">
-                <div class="row mb-3">
-                    <div class="col-lg-6">
-                        <div class="form-group row">
-                            <label class="col-md-3 m-t-15">
-                                Error Type
-                            </label>
-                            <div class="col-md-7">
-                                @Html.DropDownListFor(model => model.ShadowQADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight ShadowQAErroryType", @readonly = "readonly", @id = string.Format("ShadowQAErrorType_{0}", tabIndex), @onchange = "ShadowQAErrorType('" + tabIndex + "')" })
+                                @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;", @id = string.Format("QAErrorType_{0}", tabIndex) })
                             </div>
                         </div>
                     </div>
