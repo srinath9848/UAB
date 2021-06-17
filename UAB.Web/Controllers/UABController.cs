@@ -3011,7 +3011,7 @@ namespace UAB.Controllers
             return RedirectToAction("SettingsLocation");
         }
         [HttpGet]
-        public IActionResult SettingsListName ()
+        public IActionResult SettingsListName()
         {
             _logger.LogInformation("Loading Started for SettingsListName for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
@@ -3020,53 +3020,71 @@ namespace UAB.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult Add_EditListName(int id = 0) 
+        public ActionResult AddListName()
         {
-            _logger.LogInformation("Loading Started for Add_EditListName for User: " + mUserId);
+            return PartialView("_AddListName");
+        }
+        [HttpGet]
+        public ActionResult EditListName(long id = 0)
+        {
+            _logger.LogInformation("Loading Started for EditListName for User: " + mUserId);
             List obj = new List();
             if (id != 0)
             {
                 List<List> lstnames = new List<List>();
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 lstnames = clinicalcaseOperations.GetLists();
-                var res = lstnames.Where(a => a.ListId == id).FirstOrDefault(); 
+                var res = lstnames.Where(a => a.ListId == id).FirstOrDefault();
                 obj = res;
             }
-            _logger.LogInformation("Loading Ended for Add_EditListName for User: " + mUserId);
-            return PartialView("_AddEditListName", obj);
+            _logger.LogInformation("Loading Ended for EditListName for User: " + mUserId);
+            return PartialView("_UpdateListName", obj);
         }
         [HttpPost]
-        public IActionResult Add_EditListName(List  list)
+        public IActionResult AddListName(List list)
         {
-            _logger.LogInformation("Loading Started for Add_EditListName for User: " + mUserId);
+            _logger.LogInformation("Loading Started for AddListName for User: " + mUserId);
 
             if (ModelState.IsValid)
             {
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-                List<string> lstLocation = clinicalcaseOperations.GetLocations().Select(x => x.Name).ToList();
-                if (!lstLocation.Contains(list.Name))
+                var lstName = clinicalcaseOperations.GetLists().Where(x => x.ListId == list.ListId && x.Name == list.Name).FirstOrDefault();
+                if (lstName == null)
                 {
-                    if (list.ListId == 0)
-                    {
-                        clinicalcaseOperations.AddListname(list);
-                        TempData["Success"] = "Location \"" + list.Name + "\" Added Successfully!";
-                    }
-                    else
-                    {
-                        clinicalcaseOperations.UpdateListname(list);
-                        TempData["Success"] = "Location \"" + list.Name + "\" Updated Successfully!";
-                    }
+                    clinicalcaseOperations.AddListname(list);
+                    TempData["Success"] = "Location \"" + list.Name + "\" Added Successfully!";
                 }
                 else
                 {
                     TempData["Error"] = "The Location \"" + list.Name + "\" is already present in our Location list!";
                 }
             }
-            _logger.LogInformation("Loading Ended for Add_EditListName for User: " + mUserId);
+            _logger.LogInformation("Loading Ended for AddListName for User: " + mUserId);
+            return RedirectToAction("SettingsListName");
+        }
+        [HttpPost]
+        public IActionResult EditListName(List list)
+        {
+            _logger.LogInformation("Loading Started for EditListName for User: " + mUserId);
+            if (ModelState.IsValid)
+            {
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                var lstName = clinicalcaseOperations.GetLists().Where(x => x.ListId == list.ListId).FirstOrDefault();
+                if (lstName != null)
+                {
+                    clinicalcaseOperations.UpdateListname(list);
+                    TempData["Success"] = "List \"" + list.Name + "\" Updated Successfully!";
+                }
+                else
+                {
+                    TempData["Error"] = "List \"" + list.Name + "\" is already present in our  list Name!";
+                }
+            }
+            _logger.LogInformation("Loading Ended for EditListName for User: " + mUserId);
             return RedirectToAction("SettingsListName");
         }
         [HttpGet]
-        public IActionResult DeleteListName (int id)
+        public IActionResult DeleteListName(long id)
         {
             _logger.LogInformation("Loading Started for Fetching DeleteListName for User: " + mUserId);
             List obj = new List();
@@ -3083,7 +3101,7 @@ namespace UAB.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteListName (List  list)
+        public IActionResult DeleteListName(List list)
         {
             try
             {
@@ -3092,7 +3110,7 @@ namespace UAB.Controllers
                 if (list.ListId != 0)
                 {
                     clinicalcaseOperations.DeletetListname(list.ListId);
-                    TempData["Success"] = "Location \"" + list.Name + "\" Deleted Successfully!";
+                    TempData["Success"] = "List \"" + list.Name + "\" Deleted Successfully!";
                 }
             }
             catch (Exception ex)

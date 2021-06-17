@@ -4174,19 +4174,23 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                return context.List.ToList();
+                return context.List.Where(x=>x.ListId!=0).ToList();
             }
         }
-        public void AddListname(List  list)
+        public void AddListname(List list)
         {
             using (var context = new UABContext())
             {
-                var isexistingList = context.List.Where(a => a.Name == list.Name).FirstOrDefault();
+                var isexistingList = context.List.Where(a => a.Name == list.Name && a.ListId==list.ListId).FirstOrDefault();
 
                 if (isexistingList == null)
                 {
                     context.List.Add(list);
                     context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable to add List Name : It is already exist in UAB");
                 }
             }
         }
@@ -4201,9 +4205,13 @@ namespace UAB.DAL
                     context.Entry(existingList).State = EntityState.Modified;
                     context.SaveChanges();
                 }
+                else
+                {
+                    throw new Exception("Unable to Update List Name : It is already exist in UAB");
+                }
             }
         }
-        public void DeletetListname (int id)
+        public void DeletetListname (long id)
         {
             using (var context = new UABContext())
             {

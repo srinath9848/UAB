@@ -47,19 +47,21 @@
                             <thead>
                                 <tr>
                                     <th style="width: 100px; font-weight:900;">Action</th>
+                                    <th style="width: 100px; font-weight:900;">List Id</th>
                                     <th style="width: 250px; font-weight:900;">Name</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in result)
                                 {
-                                    <tr>
-                                        <td>
-                                            <button type="button" style="cursor: pointer" class="btn btn-sm btn-info btn-fill" onclick="Edit('@item.ListId')"><i class="fa fa-edit"></i>Edit</button>
-                                            <button type="button" style="cursor: pointer" class="btn btn-sm btn-danger btn-fill" onclick="Delete('@item.ListId')"><i class="fa fa-times"></i>Delete</button>
-                                        </td>
-                                        <td>@item.Name</td>
-                                    </tr>
+                                <tr>
+                                    <td>
+                                        <button type="button" style="cursor: pointer" class="btn btn-sm btn-info btn-fill" onclick="Edit('@item.ListId')"><i class="fa fa-edit"></i>Edit</button>
+                                        <button type="button" style="cursor: pointer" class="btn btn-sm btn-danger btn-fill" onclick="Delete('@item.ListId')"><i class="fa fa-times"></i>Delete</button>
+                                    </td>
+                                    <td>@item.ListId</td>
+                                    <td>@item.Name</td>
+                                </tr>
                                 }
                             </tbody>
                         </table>
@@ -85,7 +87,7 @@
     Add= function () {
         $.ajax({
             type: "GET",
-            url: "@Url.Action("Add_EditListName", "UAB")",
+            url: "@Url.Action("AddListName", "UAB")",
             success: function (response) {
                 $("#modalContent").html(response);
             },
@@ -98,7 +100,7 @@
     Edit = function (id) {
         $.ajax({
             type: "GET",
-            url: "@Url.Action("Add_EditListName", "UAB")",
+            url: "@Url.Action("EditListName", "UAB")",
             data: { "id": id},
             success: function (response) {
                 $("#modalContent").html(response);
@@ -111,7 +113,7 @@
     Delete = function (id) {
         $.ajax({
             type: "GET",
-            url: "@Url.Action("DeleteLocation", "UAB")",
+            url: "@Url.Action("DeleteListName", "UAB")",
             data: { "id": id},
             success: function (response) {
                 $("#modalContent").html(response);
