@@ -198,11 +198,18 @@
 
             if (res2.includes('reject') && $(DxClaim1remarks[i]).val() != "") {
                 //$("#hdnStatusId").val('12');
-                if ($("#hdnRejectedDxCodes").val() == "")
-                    $("#hdnRejectedDxCodes").val(rowNumber + "^" + $("#DxClaim_1_Coder_" + rowNumber).val());
-                else
-                    $("#hdnRejectedDxCodes").val($("#hdnRejectedDxCodes").val() + "," + rowNumber + "^" + $("#DxClaim_1_Coder_" + rowNumber).val());
-
+                if ($("#hdnRejectedDxCodes").val() == "") {
+                    if ($("#DxClaim_1_Coder_" + rowNumber).val() != "" && $("#DxClaim_1_Coder_" + rowNumber).val() != "NA")
+                        $("#hdnRejectedDxCodes").val(rowNumber + "^" + $("#DxClaim_1_Coder_" + rowNumber).val());
+                    else
+                        $("#hdnRejectedDxCodes").val(rowNumber + "^" + $("#DxClaim_1_QA_" + rowNumber).val());
+                }
+                else {
+                    if ($("#DxClaim_1_Coder_" + rowNumber).val() != "" && $("#DxClaim_1_Coder_" + rowNumber).val() != "NA")
+                        $("#hdnRejectedDxCodes").val($("#hdnRejectedDxCodes").val() + "," + rowNumber + "^" + $("#DxClaim_1_Coder_" + rowNumber).val());
+                    else
+                        $("#hdnRejectedDxCodes").val($("#hdnRejectedDxCodes").val() + "," + rowNumber + "^" + $("#DxClaim_1_QA_" + rowNumber).val());
+                }
                 if ($("#hdnRejectedDxRemarks").val() == "")
                     $("#hdnRejectedDxRemarks").val(rowNumber + "^" + $(DxClaim1remarks[i]).val());
                 else
@@ -238,10 +245,18 @@
                 //    $("#hdnRejectedDxCodes").val($("#hdnRejectedDxCodes").val() + "," + $("#DxClaim_1_Coder_" + id).val());
             }
             else {
-                if ($("#hdnDxCodes").val() == "")
-                    $("#hdnDxCodes").val(id + "^" + $("#DxClaim_1_QA_" + id).val());
-                else
-                    $("#hdnDxCodes").val($("#hdnDxCodes").val() + "," + id + "^" + $("#DxClaim_1_QA_" + id).val());
+                if ($("#hdnDxCodes").val() == "") {
+                    if ($("#DxClaim_1_QA_" + id).val() != "")
+                        $("#hdnDxCodes").val(id + "^" + $("#DxClaim_1_QA_" + id).val());
+                    else
+                        $("#hdnDxCodes").val(id + "^" + $("#DxClaim_1_Coder_" + id).val());
+                }
+                else {
+                    if ($("#DxClaim_1_QA_" + id).val() != "")
+                        $("#hdnDxCodes").val($("#hdnDxCodes").val() + "|" + id + "^" + $("#DxClaim_1_QA_" + id).val());
+                    else
+                        $("#hdnDxCodes").val($("#hdnDxCodes").val() + "|" + id + "^" + $("#DxClaim_1_Coder_" + id).val());
+                }
             }
         }
 
@@ -302,7 +317,6 @@
             }
         }
 
-
         // Default Claim Dx & Cpt End
 
         // Claim 2 Dx & Cpt Start
@@ -321,10 +335,20 @@
 
             if (res2.includes('reject') && $(DxClaim2remarks[i]).val() != "") {
                 //$("#hdnStatusId").val('12');
-                if ($("#hdnRejectedDxCodes1").val() == "")
-                    $("#hdnRejectedDxCodes1").val(rowNumber + "^" + $("#DxClaim_2_Coder_" + rowNumber).val());
-                else
-                    $("#hdnRejectedDxCodes1").val($("#hdnRejectedDxCodes1").val() + "," + rowNumber + "^" + $("#DxClaim_2_Coder_" + rowNumber).val());
+
+
+                if ($("#hdnRejectedDxCodes1").val() == "") {
+                    if ($("#DxClaim_2_Coder_" + rowNumber).val() != "" && $("#DxClaim_2_Coder_" + rowNumber).val() != "NA")
+                        $("#hdnRejectedDxCodes1").val(rowNumber + "^" + $("#DxClaim_2_Coder_" + rowNumber).val());
+                    else
+                        $("#hdnRejectedDxCodes1").val(rowNumber + "^" + $("#DxClaim_2_QA_" + rowNumber).val());
+                }
+                else {
+                    if ($("#DxClaim_2_Coder_" + rowNumber).val() != "" && $("#DxClaim_2_Coder_" + rowNumber).val() != "NA")
+                        $("#hdnRejectedDxCodes1").val($("#hdnRejectedDxCodes1").val() + "," + rowNumber + "^" + $("#DxClaim_2_Coder_" + rowNumber).val());
+                    else
+                        $("#hdnRejectedDxCodes1").val($("#hdnRejectedDxCodes1").val() + "," + rowNumber + "^" + $("#DxClaim_2_QA_" + rowNumber).val());
+                }
 
                 if ($("#hdnRejectedDxRemarks1").val() == "")
                     $("#hdnRejectedDxRemarks1").val(rowNumber + "^" + $(DxClaim2remarks[i]).val());
@@ -358,10 +382,18 @@
                 //    $("#hdnRejectedDxCodes1").val($("#hdnRejectedDxCodes1").val() + "," + $("#DxClaim_2_Coder_" + id).val());
             }
             else {
-                if ($("#hdnDxCodes1").val() == "")
-                    $("#hdnDxCodes1").val(id + "^" + $("#DxClaim_2_QA_" + id).val());
-                else
-                    $("#hdnDxCodes1").val($("#hdnDxCodes1").val() + "," + id + "^" + $("#DxClaim_2_QA_" + id).val());
+                if ($("#hdnDxCodes1").val() == "") {
+                    if ($("#DxClaim_2_QA_" + id).val() != "")
+                        $("#hdnDxCodes1").val(id + "^" + $("#DxClaim_2_QA_" + id).val());
+                    else
+                        $("#hdnDxCodes1").val(id + "^" + $("#DxClaim_2_Coder_" + id).val());
+                }
+                else {
+                    if ($("#DxClaim_2_QA_" + id).val() != "")
+                        $("#hdnDxCodes1").val($("#hdnDxCodes1").val() + "|" + id + "^" + $("#DxClaim_2_QA_" + id).val());
+                    else
+                        $("#hdnDxCodes1").val($("#hdnDxCodes1").val() + "|" + id + "^" + $("#DxClaim_2_Coder_" + id).val());
+                }
             }
         }
 
@@ -443,7 +475,7 @@
                 if ($("#hdnRejectedDxCodes2").val() == "")
                     $("#hdnRejectedDxCodes2").val(rowNumber + "^" + $("#DxClaim_3_Coder_" + rowNumber).val());
                 else
-                    $("#hdnRejectedDxCodes2").val($("#hdnRejectedDxCodes2").val() + "," + rowNumber + "^" + $("#DxClaim_3_Coder_" + rowNumber).val());
+                    $("#hdnRejectedDxCodes2").val($("#hdnRejectedDxCodes2").val() + "|" + rowNumber + "^" + $("#DxClaim_3_Coder_" + rowNumber).val());
 
                 if ($("#hdnRejectedDxRemarks2").val() == "")
                     $("#hdnRejectedDxRemarks2").val(rowNumber + "^" + $(DxClaim3remarks[i]).val());
@@ -474,13 +506,13 @@
                 if ($("#hdnDxCodes2").val() == "")
                     $("#hdnDxCodes2").val(id + "^" + $("#DxClaim_3_Coder_" + id).val());
                 else
-                    $("#hdnDxCodes2").val($("#hdnDxCodes2").val() + "," + id + "^" + $("#DxClaim_3_Coder_" + id).val());
+                    $("#hdnDxCodes2").val($("#hdnDxCodes2").val() + "|" + id + "^" + $("#DxClaim_3_Coder_" + id).val());
             }
             else {
                 if ($("#hdnDxCodes2").val() == "")
                     $("#hdnDxCodes2").val(id + "^" + $("#DxClaim_3_QA_" + id).val());
                 else
-                    $("#hdnDxCodes2").val($("#hdnDxCodes2").val() + "," + id + "^" + $("#DxClaim_3_QA_" + id).val());
+                    $("#hdnDxCodes2").val($("#hdnDxCodes2").val() + "|" + id + "^" + $("#DxClaim_3_QA_" + id).val());
             }
         }
 
@@ -567,7 +599,7 @@
                 if ($("#hdnRejectedDxCodes3").val() == "")
                     $("#hdnRejectedDxCodes3").val(rowNumber + "^" + $("#DxClaim_4_Coder_" + rowNumber).val());
                 else
-                    $("#hdnRejectedDxCodes3").val($("#hdnRejectedDxCodes3").val() + "," + rowNumber + "^" + $("#DxClaim_4_Coder_" + rowNumber).val());
+                    $("#hdnRejectedDxCodes3").val($("#hdnRejectedDxCodes3").val() + "|" + rowNumber + "^" + $("#DxClaim_4_Coder_" + rowNumber).val());
 
                 if ($("#hdnRejectedDxRemarks3").val() == "")
                     $("#hdnRejectedDxRemarks3").val(rowNumber + "^" + $(DxClaim4remarks[i]).val());
@@ -600,13 +632,13 @@
                 if ($("#hdnDxCodes3").val() == "")
                     $("#hdnDxCodes3").val(id + "^" + $("#DxClaim_4_Coder_" + id).val());
                 else
-                    $("#hdnDxCodes3").val($("#hdnDxCodes3").val() + "," + id + "^" + $("#DxClaim_4_Coder_" + id).val());
+                    $("#hdnDxCodes3").val($("#hdnDxCodes3").val() + "|" + id + "^" + $("#DxClaim_4_Coder_" + id).val());
             }
             else {
                 if ($("#hdnDxCodes3").val() == "")
                     $("#hdnDxCodes3").val(id + "^" + $("#DxClaim_4_QA_" + id).val());
                 else
-                    $("#hdnDxCodes3").val($("#hdnDxCodes3").val() + "," + id + "^" + $("#DxClaim_4_QA_" + id).val());
+                    $("#hdnDxCodes3").val($("#hdnDxCodes3").val() + "|" + id + "^" + $("#DxClaim_4_QA_" + id).val());
             }
         }
 
@@ -672,6 +704,33 @@
         }
 
         // Claim 4 Dx & Cpt End
+
+        if ($("#hdnRejectedDxRemarks").val() != "")
+            $("#hdnAcceptedDxRemarks").val('');
+        else
+            $("#hdnAcceptedDxRemarks").val('');
+
+        if ($("#hdnRejectedCptRemarks").val() != "")
+            $("#hdnAcceptedCptRemarks").val('');
+        else
+            $("#hdnAcceptedCptRemarks").val('');
+
+        $(".tab").each(function () {
+            var id = $(this).attr('id');
+            var tabid = id.split("tabIndex_")[1].split("_ClaimId_")[0];
+            if (tabid != "1") {
+                if ($("#hdnRejectedDxRemarks" + tabid).val() != "")
+                    $("#hdnAcceptedDxRemarks" + tabid).val('');
+                else
+                    $("#hdnAcceptedDxRemarks" + tabid).val('');
+
+                if ($("#hdnRejectedCptRemarks" + tabid).val() != "")
+                    $("#hdnAcceptedCptRemarks" + tabid).val('');
+                else
+                    $("#hdnAcceptedCptRemarks" + tabid).val('');
+            }
+
+        });
 
         var total = $('.CoderCorrections[style="display:flex"]  .fa-check-circle').length;
         var accept = $('.CoderCorrections[style="display:flex"]  .accept').length;
