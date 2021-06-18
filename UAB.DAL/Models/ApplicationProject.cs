@@ -15,7 +15,7 @@ namespace UAB.DAL.Models
         [Required(ErrorMessage = "Project is required.")]
         public string Name { get; set; }
         public bool IsActive { get; set; }
-        public string CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
         public string InputFileLocation { get; set; }
         [StringLength(5, ErrorMessage = "The {0} value cannot exceed {1} characters. ")]
         public string InputFileFormat { get; set; }

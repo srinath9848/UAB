@@ -4178,18 +4178,18 @@ namespace UAB.DAL
                 }
             }
         }
-        public List<List>  GetLists()
+        public List<List> GetLists()
         {
             using (var context = new UABContext())
             {
-                return context.List.Where(x=>x.ListId!=0).ToList();
+                return context.List.Where(x => x.ListId != 0).ToList();
             }
         }
         public void AddListname(List list)
         {
             using (var context = new UABContext())
             {
-                var isexistingList = context.List.Where(a => a.Name == list.Name && a.ListId==list.ListId).FirstOrDefault();
+                var isexistingList = context.List.Where(a => a.Name == list.Name && a.ListId == list.ListId).FirstOrDefault();
 
                 if (isexistingList == null)
                 {
@@ -4202,7 +4202,7 @@ namespace UAB.DAL
                 }
             }
         }
-        public void UpdateListname(List  list)
+        public void UpdateListname(List list)
         {
             using (var context = new UABContext())
             {
@@ -4219,7 +4219,7 @@ namespace UAB.DAL
                 }
             }
         }
-        public void DeletetListname (long id)
+        public void DeletetListname(long id)
         {
             using (var context = new UABContext())
             {
@@ -4727,7 +4727,8 @@ namespace UAB.DAL
                         project.ProjectId = Convert.ToInt32(reader["ProjectId"]);
                         project.Name = Convert.ToString(reader["ProjectName"]);
                         project.IsActive = Convert.ToBoolean(reader["ActiveProject"]);
-                        project.CreatedDate = Convert.ToString(reader["CreatedDate"]);
+                        if (reader["CreatedDate"] != DBNull.Value)
+                            project.CreatedDate = Convert.ToDateTime(reader["CreatedDate"]);
                         project.InputFileLocation = Convert.ToString(reader["InputFileLocation"]);
                         project.InputFileFormat = Convert.ToString(reader["InputFileFormat"]);
                         project.ClientId = Convert.ToInt32(reader["ClientId"]);
@@ -4751,7 +4752,7 @@ namespace UAB.DAL
                 mdl.ClientId = project.ClientId;
                 mdl.Name = project.Name;
                 mdl.IsActive = project.IsActive;
-                mdl.CreatedDate = DateTime.UtcNow.ToString();
+                mdl.CreatedDate = DateTime.UtcNow;
                 mdl.InputFileLocation = project.InputFileLocation;
                 mdl.InputFileFormat = project.InputFileFormat;
                 mdl.ProjectTypeId = project.ProjectTypeId;
@@ -4769,14 +4770,15 @@ namespace UAB.DAL
 
                 UAB.DAL.Models.Project mdl = new Project();
 
-                mdl.ProjectId = project.ProjectId;
+                mdl = context.Project.Where(x => x.ProjectId == project.ProjectId).FirstOrDefault();
+
+                //mdl.ProjectId = project.ProjectId;
                 mdl.ClientId = project.ClientId;
                 mdl.Name = project.Name;
                 mdl.IsActive = project.IsActive;
                 mdl.InputFileLocation = project.InputFileLocation;
                 mdl.InputFileFormat = project.InputFileFormat;
                 mdl.ProjectTypeId = project.ProjectTypeId;
-                mdl.CreatedDate = project.CreatedDate;
                 mdl.SLAInDays = project.SLAInDays;
 
                 context.Entry(mdl).State = EntityState.Modified;
