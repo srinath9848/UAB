@@ -64,6 +64,7 @@
                             @Html.ValidationMessageFor(model => model.SamplePercentage, null, new { @class = "text-danger" })
                         </div>
                         <div id="addbtnerror" style="color:red"></div>
+                        <br />
                         <div class="col-md-10">
                             <button type="button" class="btn btn-sm btn-info btn-fill" id="AddRoleandProject">Add</button>
                         </div>
@@ -104,7 +105,7 @@
         $('#btnsubmit').attr('disabled', true);
         $('#AddRoleandProject').attr('disabled', true);
 
-        $('#projectdd,#roletdd,#samplepercentage').on('keyup keypress change', function () {
+        $('#projectdd,#roledd,#samplepercentage').on('keyup keypress change', function () {
             var Project = $("#projectdd option:selected").text();
             var Role = $("#roledd option:selected").text();
             var SamplePercentage = $("#samplepercentage").val();
@@ -154,12 +155,13 @@
                             $("#hdnProjectAndRole").val(ProjectAndRole);
                         existingrolesandprojects.push(newprojectandrole);
                             $("#tbleProjectwithRoles").show();
-                            $('#btnsubmit').attr('disabled', false);
+                        $('#btnsubmit').attr('disabled', false);
+
                        //}
+                        $("#addbtnerror").html('');
                     }
                     else {
                         $("#addbtnerror").html("This user already have this role in this project");
-                        $("#addbtnerror").fadeOut(10000);
                     }
                 }
                 else {

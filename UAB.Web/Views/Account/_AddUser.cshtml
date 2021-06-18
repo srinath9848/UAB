@@ -28,7 +28,7 @@
 
 <form asp-action="AddUser" asp-controller="Account" method="POST">
     <input type="hidden" name="ProjectAndRole" id="hdnProjectAndRole" />
-    @Html.HiddenFor(model => model.hdnProjectAndRole, new { @id = "hdnProjectAndRoleid" })
+    @*@Html.HiddenFor(model => model.hdnProjectAndRole, new { @id = "hdnProjectAndRoleid" })*@
     @Html.HiddenFor(model => model.UserId, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
     @Html.HiddenFor(model => model.ProjectUserId, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
 
@@ -76,6 +76,7 @@
                         </tr>
                     </table>
                     <div id="addbtnerror" style="color:red"></div>
+                    <br />
                     <div class="col-md-10">
                         <button type="button" class="btn btn-sm btn-info btn-fill" id="AddRoleandProject">Add</button>
                     </div>
@@ -99,7 +100,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit">Save</button>
-                    <button type="button" class="btn btn-sm btn-danger btn-fill" onclick="ModalClose1()">Close</button>
+                    <button type="button" class="btn btn-sm btn-danger btn-fill" id="btnClose">Close</button>
                 </div>
             </div>
         </div>
@@ -111,14 +112,15 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        $("#roledd").change(function () {
-            if ($("#roledd option:selected").text() == 'ShadowQA' || $("#roledd option:selected").text() == 'Manager' || $("#roledd option:selected").text() == 'Supervisor') {
-                $("#samplepercentage").val(0);
-                $("#samplingdiv").hide();
-            } else {
-                $("#samplingdiv").show();
-                $('#samplepercentage').val('');
-            }
+        $('#btnsubmit').attr('disabled', true);
+        $('#AddRoleandProject').attr('disabled', true);
+
+        $('#projectdd,#roledd,#samplepercentage').on('keyup keypress change', function () {
+            var Project = $("#projectdd option:selected").text();
+            var Role = $("#roledd option:selected").text();
+            var SamplePercentage = $("#samplepercentage").val();
+            if (Project != "--Select a Project--" && Role != "--Select a Role--" && (SamplePercentage != '' || SamplePercentage === 0))
+                $('#AddRoleandProject').attr('disabled', false);
         });
 
         $('#samplepercentage').on('keyup keypress change', function (e) {
@@ -129,8 +131,21 @@
                 $('#sampleerror').show();
             }
         });
-        var existingrolesandprojects = ($("#hdnProjectAndRoleid").val()).split(',');
+        $('#btnClose').click(function () {
+            location.reload();
+            $("#modalContent").html('');
+        });
+        $("#roledd").change(function () {
+            if ($("#roledd option:selected").text() == 'ShadowQA' || $("#roledd option:selected").text() == 'Manager' || $("#roledd option:selected").text() == 'Supervisor') {
+                $("#samplepercentage").val(0);
+                $("#samplingdiv").hide();
+            } else {
+                $("#samplingdiv").show();
+                $('#samplepercentage').val('');
+            }
+        });
 
+        var existingrolesandprojects = [];
 
         var ProjectAndRole = [];
         var iCnt = 0;
@@ -141,23 +156,22 @@
                 var ProjectId = $("#projectdd option:selected").text();
                 var RoleId = $("#roledd option:selected").text();
                 var SamplePercentage = $("#samplepercentage").val();
+                debugger;
                 if (ProjectId !== "--Select a Project--" && RoleId !== "--Select a Role--" && SamplePercentage !== "") {
                     var newprojectandrole = ProjectId + "^" + RoleId;
                     if ($.inArray(newprojectandrole, existingrolesandprojects) == -1) {
                         var ProjectAndRolevalue = ProjectId + "^" + RoleId + "^" + SamplePercentage;
-                        if ($.inArray(ProjectAndRolevalue, ProjectAndRole) == -1) {
-                            $("#tableid").append('<tr id="tr' + iCnt + '"><td id="txtproject' + iCnt + '">' + ProjectId + '</td><td id="txtrole' + iCnt + '">' + RoleId + '</td><td id="txtsample' + iCnt + '">' + SamplePercentage + '</td><td><button type="button" id="btndelete" title="btn_' + iCnt + '"  style="cursor: pointer" class="btn btn-sm btn-danger btn-fill"><i class="fa fa-times"></i>Delete</button></td></td></tr >');
-                            ProjectAndRole.push(ProjectAndRolevalue);
-                            $("#hdnProjectAndRole").val(ProjectAndRole);
-                            $("#tbleProjectwithRoles").show();
-                        }
-                        else {
-                            $("#addbtnerror").html("Already You added this role to this project");
-                            $("#addbtnerror").fadeOut(10000);
-                        }
+                        //if ($.inArray(ProjectAndRolevalue, ProjectAndRole) == -1) {
+                        $("#tableid").append('<tr id="tr' + iCnt + '"><td id="txtproject' + iCnt + '">' + ProjectId + '</td><td id="txtrole' + iCnt + '">' + RoleId + '</td><td id="txtsample' + iCnt + '">' + SamplePercentage + '</td><td><button type="button" id="btndelete" title="btn_' + iCnt + '"  style="cursor: pointer" class="btn btn-sm btn-danger btn-fill"><i class="fa fa-times"></i>Delete</button></td></td></tr >');
+                        ProjectAndRole.push(ProjectAndRolevalue);
+                        $("#hdnProjectAndRole").val(ProjectAndRole);
+                        existingrolesandprojects.push(newprojectandrole);
+                        $("#tbleProjectwithRoles").show();
+                        $('#btnsubmit').attr('disabled', false);
+                        $("#addbtnerror").html('');
+                        // }
                     } else {
                         $("#addbtnerror").html("This user already have this role in this project");
-                        $("#addbtnerror").fadeOut(10000);
                     }
                 }
                 else {
@@ -180,13 +194,23 @@
         });
 
         $(document).on('click', '#btndelete', function () {
+            debugger;
             var id = $(this).attr('title').split("btn_")[1];
-            var ProjectId = $("#txtproject" + id).text();
-            var RoleId = $("#txtrole" + id).text();
-            var ProjectAndRolevalue = ProjectId + "^" + RoleId;
+            var Project = $("#txtproject" + id).text();
+            var Role = $("#txtrole" + id).text();
+            var Sample = $("#txtsample" + id).text();
+            var ProjectAndRolevalue = Project + "^" + Role + "^" + Sample;
             ProjectAndRole.splice($.inArray(ProjectAndRolevalue, ProjectAndRole), 1);
+
+            var deleteProjectAndRolevalue = Project + "^" + Role;
+            existingrolesandprojects.indexOf(deleteProjectAndRolevalue) !== -1 && existingrolesandprojects.splice(existingrolesandprojects.indexOf(deleteProjectAndRolevalue), 1)
+
             $("#hdnProjectAndRole").val(ProjectAndRole);
             $('#tr' + id).remove();
+            var rowcount = $('#tbleProjectwithRoles').val().length;
+            if (rowcount < 1) {
+                $('#btnsubmit').attr('disabled', true);
+            }
         });
 
         $('#btnsubmit').click(function (e) {
