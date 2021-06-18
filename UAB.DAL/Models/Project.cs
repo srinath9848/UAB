@@ -17,7 +17,7 @@ namespace UAB.DAL.Models
         public string Name { get; set; }
         public bool IsActive { get; set; }
         public int ProjectTypeId { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
         public string InputFileLocation { get; set; }
         public string InputFileFormat { get; set; }
         public int SLAInDays { get; set; }

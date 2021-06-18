@@ -10,11 +10,11 @@ namespace UAB.DAL.Models
         [Key]
         public int Id { get; set; }
         [Required(ErrorMessage = "EM Code is required.")]
-        [RegularExpression(@"^[0-9]+$", ErrorMessage = "Use Numbers only please")]
+        [RegularExpression(@"^[0-9]+$", ErrorMessage = "only numbers allowed")]
         public string EMCode  { get; set; }
 
         [Required(ErrorMessage = "EM Level is required.")]
-        [RegularExpression(@"^[0-9]+$", ErrorMessage = "Use Numbers only please")]
+        [RegularExpression(@"^[0-9]+$", ErrorMessage = "only numbers allowed")]
         public int EMLevel  { get; set; }
 
     }
