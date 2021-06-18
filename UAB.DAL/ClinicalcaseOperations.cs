@@ -2944,6 +2944,13 @@ namespace UAB.DAL
                             SqlDbType = System.Data.SqlDbType.Bit,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = Isblocked
+                        },
+                        new SqlParameter()
+                        {
+                            ParameterName = "@userId",
+                            SqlDbType = System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = mUserId
                         }
                     };
                     cmd.Parameters.AddRange(param);
