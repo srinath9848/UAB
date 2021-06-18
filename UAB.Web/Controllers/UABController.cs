@@ -2789,18 +2789,17 @@ namespace UAB.Controllers
         [HttpPost]
         public IActionResult UpdateEMCode(EMCodeLevel model)
         {
-            if (model.Id != 0 && !string.IsNullOrWhiteSpace(model.EMCode))
+            try
             {
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 clinicalcaseOperations.UpdateEMCode(model);
                 TempData["Success"] = "Successfully EM Code Updated";
-                return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
             }
-            else
+            catch (Exception ex)
             {
-                TempData["Warning"] = "No changes were detected";
-                return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
+                TempData["Error"] = ex.Message;
             }
+            return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
         }
         [HttpGet]
         public ActionResult AddEMCode(int eMlevel)

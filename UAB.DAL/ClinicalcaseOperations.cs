@@ -3566,13 +3566,18 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                var existingcode = context.EMCodeLevel.Where(a => a.Id == eMCodeLevel.Id).FirstOrDefault();
-
-                if (existingcode != null)
+                var emlevellst = context.EMCodeLevel.Where(a => a.EMLevel == eMCodeLevel.EMLevel).ToList();
+                var otherexistingemlevelcode  = emlevellst.Where(a => a.EMLevel == eMCodeLevel.EMLevel &&a.EMCode==eMCodeLevel.EMCode).FirstOrDefault();
+                var existingcode = emlevellst.Where(a => a.Id == eMCodeLevel.Id).FirstOrDefault();
+                if (existingcode != null && otherexistingemlevelcode==null)
                 {
                     existingcode.EMCode = eMCodeLevel.EMCode;
                     context.Entry(existingcode).State = EntityState.Modified;
                     context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable To update EM Code : This EM Code exist  in EM Level");
                 }
             }
         }
