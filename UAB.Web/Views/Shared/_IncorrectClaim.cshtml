@@ -39,11 +39,11 @@
         </div>
     </div>
     @{ var QAProviderID = string.Format("QAProviderID_{0}", @Model.TabIndex);}
-    @{string Show = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "visibility:hidden" : "display:flex");}
-    @{string Accepted = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-    @{string Rejected = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+    @{string Show = (string.IsNullOrEmpty(Model.QAProviderText) ? "visibility:hidden" : "display:flex");}
+    @{string Accepted = (string.IsNullOrEmpty(Model.QAProviderText) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+    @{string Rejected = (string.IsNullOrEmpty(Model.QAProviderText) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-    <div title="@Model.QAProviderRemarks" class="col-md-2 input-group" style="@Show">
+    <div title="@Model.QAProviderText" class="col-md-2 input-group" style="@Show">
         @{ var QAProviderIDRemarks = string.Format("QAProviderIDRemarks_{0}", Model.TabIndex);}
         <input type="text" id="@QAProviderIDRemarks" class="form-control QARemarks ControlHeight" value="@Model.QAProviderRemarks" />
     </div>
@@ -82,13 +82,13 @@
             </span>
         </div>
     </div>
-    @{Show = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "visibility:hidden" : "display:flex");}
-    @{Accepted = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-    @{Rejected = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+    @{Show = (string.IsNullOrEmpty(Model.QAPayorText) ? "visibility:hidden" : "display:flex");}
+    @{Accepted = (string.IsNullOrEmpty(Model.QAPayorText) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+    @{Rejected = (string.IsNullOrEmpty(Model.QAPayorText) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-    <div title="@Model.QAPayorRemarks" class="col-md-2 input-group" style="@Show">
+    <div title="@Model.QAPayorText" class="col-md-2 input-group" style="@Show">
         @{ var QAPayorIDRemarks = string.Format("QAPayorIDRemarks_{0}", Model.TabIndex);}
-        <input type="text" id="@QAPayorIDRemarks" class="form-control QARemarks" value="@Model.QAPayorRemarks" />
+        <input type="text" id="@QAPayorIDRemarks" class="form-control QARemarks" value="@Model.QAPayorText" />
     </div>
     @{ var QAPayorID = string.Format("QAPayorID_{0}", @Model.TabIndex);}
     @Html.DropDownListFor(model => model.QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = string.Format("QAPayorID_{0}", Model.TabIndex), @class = "form-control QARevised", @style = "display:none" })
@@ -549,13 +549,13 @@
             </span>
         </div>
     </div>
-    @{Show = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "visibility:hidden" : "display:flex");}
-    @{ Accepted = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-    @{ Rejected = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+    @{Show = (string.IsNullOrEmpty(Model.QAProviderFeedbackText) ? "visibility:hidden" : "display:flex");}
+    @{ Accepted = (string.IsNullOrEmpty(Model.QAProviderFeedbackText) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+    @{ Rejected = (string.IsNullOrEmpty(Model.QAProviderFeedbackText) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-    <div title="@Model.QAProviderFeedbackRemarks" class="col-md-2 input-group" style="@Show">
+    <div title="@Model.QAProviderFeedbackText" class="col-md-2 input-group" style="@Show">
         @{ var QAProviderFeedbackRemarks = string.Format("QAProviderFeedbackRemarks_{0}", Model.TabIndex);}
-        <input type="text" id="@QAProviderFeedbackRemarks" class="form-control QARemarks" value="@Model.QAProviderFeedbackRemarks" />
+        <input type="text" id="@QAProviderFeedbackRemarks" class="form-control QARemarks" value="@Model.QAProviderFeedbackText" />
     </div>
     <div class="input-group-append CoderCorrections" style="@Show">
         <span class="input-group-text ControlHeight" style="margin-left:-12px;">
