@@ -19,12 +19,13 @@
                 </div>
                 <div class="modal-body">
                     <div>
-                        @Html.TextBoxFor(model => model.EMCode, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter EM Code " })
+                        @Html.TextBoxFor(model => model.EMCode, new { @id = "txtemcode", @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter EM Code " })
                         @Html.ValidationMessageFor(model => model.EMCode, null, new { @class = "text-danger" })
                     </div>
+                    <label id="updateemerror" style="color:red"></label>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success Available">Update</button>
+                    <button type="submit" class="btn btn-success Available" id="btnUpdate">Update</button>
                     <button type="button" class="btn btn-danger" onclick="ModalClose1()">Close</button>
                 </div>
             </div>
@@ -34,3 +35,19 @@
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
 <script src="~/dashboardassets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var intial = $("#txtemcode").val();
+        $('#btnUpdate').click(function (e) {
+            var final = $("#txtemcode").val();
+        if (intial === final) {
+            $("#updateemerror").html("No Change was detected");
+            $("#updateemerror").fadeOut(10000);
+            e.preventDefault();
+        } else {
+            $("#updateprojectuserform").valid();
+        }
+    });
+    });
+</script>
