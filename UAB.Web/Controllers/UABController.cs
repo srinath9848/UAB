@@ -564,7 +564,7 @@ namespace UAB.Controllers
 
         private void PrepareDxCodes(string dx, DataTable dtDx, int claimId)
         {
-            string[] lstdxs = dx.Split(",");
+            string[] lstdxs = dx.Split("|");
             foreach (var item in lstdxs)
             {
                 string[] lstdxrow = item.Split("^");
@@ -2224,7 +2224,7 @@ namespace UAB.Controllers
             else if (!string.IsNullOrEmpty(hdnShadowQAAcceptDxCodes) && !string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes))
             {
                 dtAudit.Rows.Add("Dx", hdnShadowQAAcceptDxCodes, hdnShadowQAAcceptDxRemarks, Convert.ToInt32(hdnShadowQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), true);
-                dtAudit.Rows.Add("CPTCode", hdnShadowQAAcceptCptCodes, hdnShadowQAAcceptDxRemarks, Convert.ToInt32(hdnShadowQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), true);
+                dtAudit.Rows.Add("CPTCode", hdnShadowQAAcceptCptCodes, hdnShadowQAAcceptCptRemarks, Convert.ToInt32(hdnShadowQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), true);
             }
             // Claim 2 Accept Dx & CPT
             if (!string.IsNullOrEmpty(hdnShadowQAAcceptDxCodes2) && !string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes2) && hdnShadowQAErrorTypeID2 != "0")
@@ -2235,7 +2235,7 @@ namespace UAB.Controllers
             else if (!string.IsNullOrEmpty(hdnShadowQAAcceptDxCodes2) && !string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes2))
             {
                 dtAudit.Rows.Add("Dx", hdnShadowQAAcceptDxCodes2, hdnShadowQAAcceptDxRemarks2, Convert.ToInt32(hdnShadowQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
-                dtAudit.Rows.Add("CPTCode", hdnShadowQAAcceptCptCodes2, hdnShadowQAAcceptDxRemarks2, Convert.ToInt32(hdnShadowQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
+                dtAudit.Rows.Add("CPTCode", hdnShadowQAAcceptCptCodes2, hdnShadowQAAcceptCptRemarks2, Convert.ToInt32(hdnShadowQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
             }
             // Claim 3 Accept Dx & CPT
             if (!string.IsNullOrEmpty(hdnShadowQAAcceptDxCodes3) && !string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes3) && hdnShadowQAErrorTypeID3 != "0")
@@ -2246,7 +2246,7 @@ namespace UAB.Controllers
             else if (!string.IsNullOrEmpty(hdnShadowQAAcceptDxCodes3) && !string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes3))
             {
                 dtAudit.Rows.Add("Dx", hdnShadowQAAcceptDxCodes3, hdnShadowQAAcceptDxRemarks3, Convert.ToInt32(hdnShadowQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
-                dtAudit.Rows.Add("CPTCode", hdnShadowQAAcceptCptCodes3, hdnShadowQAAcceptDxRemarks3, Convert.ToInt32(hdnShadowQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
+                dtAudit.Rows.Add("CPTCode", hdnShadowQAAcceptCptCodes3, hdnShadowQAAcceptCptRemarks3, Convert.ToInt32(hdnShadowQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
             }
             // Claim 4 Accept Dx & CPT
             if (!string.IsNullOrEmpty(hdnShadowQAAcceptDxCodes4) && !string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes4) && hdnShadowQAErrorTypeID4 != "0")
@@ -2257,7 +2257,7 @@ namespace UAB.Controllers
             else if (!string.IsNullOrEmpty(hdnShadowQAAcceptDxCodes4) && !string.IsNullOrEmpty(hdnShadowQAAcceptCptCodes4))
             {
                 dtAudit.Rows.Add("Dx", hdnShadowQAAcceptDxCodes4, hdnShadowQAAcceptDxRemarks4, Convert.ToInt32(hdnShadowQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
-                dtAudit.Rows.Add("CPTCode", hdnShadowQAAcceptCptCodes4, hdnShadowQAAcceptDxRemarks4, Convert.ToInt32(hdnShadowQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
+                dtAudit.Rows.Add("CPTCode", hdnShadowQAAcceptCptCodes4, hdnShadowQAAcceptCptRemarks4, Convert.ToInt32(hdnShadowQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
             }
 
             // Reject Dx & CPT
@@ -2916,6 +2916,212 @@ namespace UAB.Controllers
             }
             return RedirectToAction("ManageEMCodeLevels");
         }
+
+        [HttpGet]
+        public IActionResult SettingsLocation()
+        {
+            _logger.LogInformation("Loading Started for SettingsLocation for User: " + mUserId);
+            List<Location> lstlocation = new List<Location>();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            ViewBag.lstlocation = clinicalcaseOperations.GetLocations();
+            _logger.LogInformation("Loading Ended for SettingsLocation for User: " + mUserId);
+            return View();
+        }
+        [HttpGet]
+        public ActionResult Add_EditLocation(int id = 0)
+        {
+            _logger.LogInformation("Loading Started for Add_EditLocation for User: " + mUserId);
+            Location obj = new Location();
+            if (id != 0)
+            {
+                List<Location> lstLocation = new List<Location>();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                lstLocation = clinicalcaseOperations.GetLocations();
+                var res = lstLocation.Where(a => a.LocationId == id).FirstOrDefault();
+                obj = res;
+            }
+            _logger.LogInformation("Loading Ended for Add_EditLocation for User: " + mUserId);
+            return PartialView("_AddEditLocation", obj);
+        }
+        [HttpPost]
+        public IActionResult Add_EditSettingsLocation(Location location)
+        {
+            _logger.LogInformation("Loading Started for Add_EditSettingsLocation for User: " + mUserId);
+
+            if (ModelState.IsValid)
+            {
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                List<string> lstLocation = clinicalcaseOperations.GetLocations().Select(x => x.Name).ToList();
+                if (!lstLocation.Contains(location.Name))
+                {
+                    if (location.LocationId == 0)
+                    {
+                        clinicalcaseOperations.AddLocation(location);
+                        TempData["Success"] = "Location \"" + location.Name + "\" Added Successfully!";
+                    }
+                    else
+                    {
+                        clinicalcaseOperations.UpdateLocation(location);
+                        TempData["Success"] = "Location \"" + location.Name + "\" Updated Successfully!";
+                    }
+                }
+                else
+                {
+                    TempData["Error"] = "The Location \"" + location.Name + "\" is already present in our Location list!";
+                }
+            }
+            _logger.LogInformation("Loading Ended for Add_EditSettingsLocation for User: " + mUserId);
+            return RedirectToAction("SettingsLocation");
+        }
+        [HttpGet]
+        public IActionResult DeleteLocation(int id)
+        {
+            _logger.LogInformation("Loading Started for Fetching DeleteLocation for User: " + mUserId);
+            Location obj = new Location();
+            if (id != 0)
+            {
+                List<Location> lstLocation = new List<Location>();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                lstLocation = clinicalcaseOperations.GetLocations();
+                var res = lstLocation.Where(a => a.LocationId == id).FirstOrDefault();
+                obj = res;
+            }
+            _logger.LogInformation("Loading Ended for Fetching DeleteLocation for User: " + mUserId);
+            return PartialView("_DeleteLocation", obj);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteLocation(Location location)
+        {
+            try
+            {
+                _logger.LogInformation("Loading Started for Submit DeleteLocation for User: " + mUserId);
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                if (location.LocationId != 0)
+                {
+                    clinicalcaseOperations.DeletetLocation(location.LocationId);
+                    TempData["Success"] = "Location \"" + location.Name + "\" Deleted Successfully!";
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = ex.Message;
+            }
+            _logger.LogInformation("Loading Ended for Submit DeleteLocation for User: " + mUserId);
+            return RedirectToAction("SettingsLocation");
+        }
+        [HttpGet]
+        public IActionResult SettingsListName()
+        {
+            _logger.LogInformation("Loading Started for SettingsListName for User: " + mUserId);
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            ViewBag.lstnames = clinicalcaseOperations.GetLists();
+            _logger.LogInformation("Loading Ended for SettingsListName for User: " + mUserId);
+            return View();
+        }
+        [HttpGet]
+        public ActionResult AddListName()
+        {
+            return PartialView("_AddListName");
+        }
+        [HttpGet]
+        public ActionResult EditListName(long id = 0)
+        {
+            _logger.LogInformation("Loading Started for EditListName for User: " + mUserId);
+            List obj = new List();
+            if (id != 0)
+            {
+                List<List> lstnames = new List<List>();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                lstnames = clinicalcaseOperations.GetLists();
+                var res = lstnames.Where(a => a.ListId == id).FirstOrDefault();
+                obj = res;
+            }
+            _logger.LogInformation("Loading Ended for EditListName for User: " + mUserId);
+            return PartialView("_UpdateListName", obj);
+        }
+        [HttpPost]
+        public IActionResult AddListName(List list)
+        {
+            _logger.LogInformation("Loading Started for AddListName for User: " + mUserId);
+
+            if (ModelState.IsValid)
+            {
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                var lstName = clinicalcaseOperations.GetLists().Where(x => x.ListId == list.ListId && x.Name == list.Name).FirstOrDefault();
+                if (lstName == null)
+                {
+                    clinicalcaseOperations.AddListname(list);
+                    TempData["Success"] = "Location \"" + list.Name + "\" Added Successfully!";
+                }
+                else
+                {
+                    TempData["Error"] = "The Location \"" + list.Name + "\" is already present in our Location list!";
+                }
+            }
+            _logger.LogInformation("Loading Ended for AddListName for User: " + mUserId);
+            return RedirectToAction("SettingsListName");
+        }
+        [HttpPost]
+        public IActionResult EditListName(List list)
+        {
+            _logger.LogInformation("Loading Started for EditListName for User: " + mUserId);
+            if (ModelState.IsValid)
+            {
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                var lstName = clinicalcaseOperations.GetLists().Where(x => x.ListId == list.ListId).FirstOrDefault();
+                if (lstName != null)
+                {
+                    clinicalcaseOperations.UpdateListname(list);
+                    TempData["Success"] = "List \"" + list.Name + "\" Updated Successfully!";
+                }
+                else
+                {
+                    TempData["Error"] = "List \"" + list.Name + "\" is already present in our  list Name!";
+                }
+            }
+            _logger.LogInformation("Loading Ended for EditListName for User: " + mUserId);
+            return RedirectToAction("SettingsListName");
+        }
+        [HttpGet]
+        public IActionResult DeleteListName(long id)
+        {
+            _logger.LogInformation("Loading Started for Fetching DeleteListName for User: " + mUserId);
+            List obj = new List();
+            if (id != 0)
+            {
+                List<List> lstList = new List<List>();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                lstList = clinicalcaseOperations.GetLists();
+                var res = lstList.Where(a => a.ListId == id).FirstOrDefault();
+                obj = res;
+            }
+            _logger.LogInformation("Loading Ended for Fetching DeleteListName for User: " + mUserId);
+            return PartialView("_DeleteListName", obj);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteListName(List list)
+        {
+            try
+            {
+                _logger.LogInformation("Loading Started for Submit DeleteListName for User: " + mUserId);
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                if (list.ListId != 0)
+                {
+                    clinicalcaseOperations.DeletetListname(list.ListId);
+                    TempData["Success"] = "List \"" + list.Name + "\" Deleted Successfully!";
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = ex.Message;
+            }
+            _logger.LogInformation("Loading Ended for Submit DeleteListName for User: " + mUserId);
+            return RedirectToAction("SettingsListName");
+        }
+
+
         public IActionResult AddSettingsProvider(Provider provider)
         {
             _logger.LogInformation("Loading Started for AddSettingsProvider for User: " + mUserId);

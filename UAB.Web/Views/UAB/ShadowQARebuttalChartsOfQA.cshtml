@@ -232,6 +232,12 @@
                 }
             };
 
+            if ($("#hdnQADxRemarks" + tabid).val() != "")
+                $("#hdnQAAcceptDxRemarks" + tabid).val('');
+
+            if ($("#hdnQACptRemarks" + tabid).val() != "")
+                $("#hdnQAAcceptCptRemarks" + tabid).val('');
+
         });
 
         // Default Dx & Cpt
@@ -312,6 +318,12 @@
                     $("#hdnQAAcceptCptRemarks").val($("#hdnQAAcceptCptRemarks").val() + "|" + id + "^" + $("#QACptRemarks_" + id).val());
             }
         }
+
+        if ($("#hdnQADxRemarks").val() != "")
+            $("#hdnQAAcceptDxRemarks").val('');
+
+        if ($("#hdnQACptRemarks").val() != "")
+            $("#hdnQAAcceptCptRemarks").val('');
 
         var total = $(".fa-check-circle").length;
         var reject = $(".reject").length;

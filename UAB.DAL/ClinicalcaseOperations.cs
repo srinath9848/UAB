@@ -895,12 +895,15 @@ namespace UAB.DAL
 
                             chartSummaryDTO.PayorText = Convert.ToString(reader["PayorText"]);
                             chartSummaryDTO.QAPayorText = Convert.ToString(reader["QAPayorText"]);
+                            chartSummaryDTO.ShadowQAPayorText = Convert.ToString(reader["ShadowQAPayorText"]);
 
                             chartSummaryDTO.ProviderText = Convert.ToString(reader["ProviderText"]);
                             chartSummaryDTO.QAProviderText = Convert.ToString(reader["QAProviderText"]);
+                            chartSummaryDTO.ShadowQAProviderText = Convert.ToString(reader["ShadowQAProviderText"]);
 
                             chartSummaryDTO.ProviderFeedbackText = Convert.ToString(reader["FeedbackText"]);
                             chartSummaryDTO.QAProviderFeedbackText = Convert.ToString(reader["QAFeedbackText"]);
+                            chartSummaryDTO.ShadowQAProviderFeedbackText = Convert.ToString(reader["ShadowQAFeedbackText"]);
 
                             chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                             if (reader["QAProviderID"] != DBNull.Value)
@@ -984,12 +987,12 @@ namespace UAB.DAL
                                 chartSummaryDTO.QAPayorID = Convert.ToInt32(reader["QAPayorID"]);
                             chartSummaryDTO.QAPayorRemarks = Convert.ToString(reader["QAPayorIdRemark"]);
                             chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
-                            chartSummaryDTO.QADx = Convert.ToString(reader["QADx"]);
+                            chartSummaryDTO.QADx = Convert.ToString(reader["RebuttedDx"]);//Convert.ToString(reader["QADx"]);
                             chartSummaryDTO.QADxRemarks = Convert.ToString(reader["QADxRemark"]);
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
-                            chartSummaryDTO.QACPTCode = Convert.ToString(reader["QACPTCode"]);
+                            chartSummaryDTO.QACPTCode = Convert.ToString(reader["RebuttedCPTCode"]); //Convert.ToString(reader["QACPTCode"]);
                             chartSummaryDTO.QACPTCodeRemarks = Convert.ToString(reader["QACPTCodeRemark"]);
-                           
+
                             if (reader["ProviderFeedbackID"] != DBNull.Value)
                                 chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackID"]);
                             if (reader["QAProviderFeedbackID"] != DBNull.Value)
@@ -3489,6 +3492,13 @@ namespace UAB.DAL
         }
         #endregion
 
+        public List<Location> GetLocations()
+        {
+            using (var context = new UABContext())
+            {
+                return context.Location.ToList();
+            }
+        }
         public List<Provider> GetProviders()
         {
             Provider provider = new Provider();
@@ -4118,6 +4128,106 @@ namespace UAB.DAL
                     throw new Exception("Unable to delete Block Category : It is already used in UAB,the associated information should delete first");
                 }
 
+            }
+        }
+
+        public void AddLocation(Location location)
+        {
+            using (var context = new UABContext())
+            {
+                var isexistingLocation = context.Location.Where(a => a.Name == location.Name).FirstOrDefault();
+
+                if (isexistingLocation == null)
+                {
+                    context.Location.Add(location);
+                    context.SaveChanges();
+                }
+            }
+        }
+        public void UpdateLocation(Location location)
+        {
+            using (var context = new UABContext())
+            {
+                var existingLocation = context.Location.Where(a => a.LocationId == location.LocationId).FirstOrDefault();
+                if (existingLocation != null)
+                {
+                    existingLocation.Name = location.Name;
+                    context.Entry(existingLocation).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
+            }
+        }
+        public void DeletetLocation(int id)
+        {
+            using (var context = new UABContext())
+            {
+                var existingLocation = context.Location.Where(a => a.LocationId == id).FirstOrDefault();
+                if (existingLocation != null)
+                {
+                    context.Location.Remove(existingLocation);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable to delete location : It is not there in UAB");
+                }
+            }
+        }
+        public List<List>  GetLists()
+        {
+            using (var context = new UABContext())
+            {
+                return context.List.Where(x=>x.ListId!=0).ToList();
+            }
+        }
+        public void AddListname(List list)
+        {
+            using (var context = new UABContext())
+            {
+                var isexistingList = context.List.Where(a => a.Name == list.Name && a.ListId==list.ListId).FirstOrDefault();
+
+                if (isexistingList == null)
+                {
+                    context.List.Add(list);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable to add List Name : It is already exist in UAB");
+                }
+            }
+        }
+        public void UpdateListname(List  list)
+        {
+            using (var context = new UABContext())
+            {
+                var existingList = context.List.Where(a => a.ListId == list.ListId).FirstOrDefault();
+                if (existingList != null)
+                {
+                    existingList.Name = list.Name;
+                    context.Entry(existingList).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable to Update List Name : It is already exist in UAB");
+                }
+            }
+        }
+        public void DeletetListname (long id)
+        {
+            using (var context = new UABContext())
+            {
+                var existingList = context.List.Where(a => a.ListId == id).FirstOrDefault();
+                if (existingList != null)
+                {
+                    context.List.Remove(existingList);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable to delete list name : It is not there in UAB");
+                }
             }
         }
         public void AddProvider(Provider provider)

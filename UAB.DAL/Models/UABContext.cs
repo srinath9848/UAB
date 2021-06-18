@@ -45,6 +45,7 @@ namespace UAB.DAL.Models
         public virtual DbSet<BlockHistory> BlockHistory { get; set; }
         public virtual DbSet<EMCodeLevel> EMCodeLevel { get; set; }
         public virtual DbSet<BlockResponse> BlockResponse { get; set; }
+        public virtual DbSet<Location> Location  { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

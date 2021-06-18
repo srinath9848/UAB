@@ -382,6 +382,9 @@
                 }
             };
 
+            if ($("#hdnQADxRemarks" + tabid).val() != "")
+                $("#hdnQAAcceptDxRemarks" + tabid).val('');
+
             if ($("#hdnQACptRemarks" + tabid).val() != "")
                 $("#hdnQAAcceptCptRemarks" + tabid).val('');
 
@@ -548,6 +551,9 @@
                 }
             }
         }
+
+        if ($("#hdnQADxRemarks").val() != "")
+            $("#hdnQAAcceptDxRemarks").val('');
 
         if ($("#hdnQACptRemarks").val() != "")
             $("#hdnQAAcceptCptRemarks").val('');

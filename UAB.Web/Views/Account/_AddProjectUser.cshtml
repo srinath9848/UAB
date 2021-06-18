@@ -22,6 +22,7 @@
 
 
 <form asp-action="AddProjectUser" asp-controller="Account" method="POST">
+    @*tosend the newly added projectrolesample values to server side*@
     <input type="hidden" name="ProjectAndRole" id="hdnProjectAndRole" />
     @Html.HiddenFor(model => model.UserId)
     @Html.HiddenFor(model => model.hdnProjectAndRole, new { @id = "hdnProjectAndRoleid" })
@@ -99,6 +100,18 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
+        
+        $('#btnsubmit').attr('disabled', true);
+        $('#AddRoleandProject').attr('disabled', true);
+
+        $('#projectdd,#roletdd,#samplepercentage').on('keyup keypress change', function () {
+            var Project = $("#projectdd option:selected").text();
+            var Role = $("#roledd option:selected").text();
+            var SamplePercentage = $("#samplepercentage").val();
+            if (Project != "--Select a Project--" && Role != "--Select a Role--" && (SamplePercentage != '' || SamplePercentage === 0)) 
+                $('#AddRoleandProject').attr('disabled', false);
+        });
+
         $('#samplepercentage').on('keyup keypress change', function (e) {
             this.value = this.value.replace(/[^0-9\.]/g, '');
             if ($('#samplepercentage').val() != '') {
@@ -120,7 +133,7 @@
                 $('#samplepercentage').val('');
             }
         });
-        var existingrolesandprojects = ($("#hdnProjectAndRoleid").val()).split(',');
+        var existingrolesandprojects = $("#hdnProjectAndRoleid").val().split(',');
 
         var ProjectAndRole = [];
         var iCnt = 0;
@@ -134,18 +147,17 @@
                 if (Project !== "--Select a Project--" && Role !== "--Select a Role--" && SamplePercentage !== "") {
                     var newprojectandrole = Project + "^" + Role;
                     if ($.inArray(newprojectandrole, existingrolesandprojects) == -1) {
-                        var ProjectAndRolevalue = Project + "^" + Role + "^" + SamplePercentage;
-                        if ($.inArray(ProjectAndRolevalue, ProjectAndRole) == -1) {
+                       var ProjectAndRolevalue = Project + "^" + Role + "^" + SamplePercentage;
+                       // if ($.inArray(ProjectAndRolevalue, ProjectAndRole) == -1) {
                             $("#tableid").append('<tr id="tr' + iCnt + '"><td id="txtproject' + iCnt + '">' + Project + '</td><td id="txtrole' + iCnt + '">' + Role + '</td><td id="txtsample' + iCnt + '">' + SamplePercentage + '</td><td><button type="button" id="btndelete" title="btn_' + iCnt + '"  style="cursor: pointer" class="btn btn-sm btn-danger btn-fill"><i class="fa fa-times"></i>Delete</button></td></td></tr >');
                             ProjectAndRole.push(ProjectAndRolevalue);
                             $("#hdnProjectAndRole").val(ProjectAndRole);
+                        existingrolesandprojects.push(newprojectandrole);
                             $("#tbleProjectwithRoles").show();
-                        }
-                        else {
-                            $("#addbtnerror").html("Already You added this role to this project");
-                            $("#addbtnerror").fadeOut(10000);
-                        }
-                    } else {
+                            $('#btnsubmit').attr('disabled', false);
+                       //}
+                    }
+                    else {
                         $("#addbtnerror").html("This user already have this role in this project");
                         $("#addbtnerror").fadeOut(10000);
                     }
@@ -176,8 +188,16 @@
             var Sample = $("#txtsample" + id).text();
             var ProjectAndRolevalue = Project + "^" + Role + "^" + Sample;
             ProjectAndRole.splice($.inArray(ProjectAndRolevalue, ProjectAndRole), 1);
+
+            var deleteProjectAndRolevalue = Project + "^" + Role;
+            existingrolesandprojects.indexOf(deleteProjectAndRolevalue) !== -1 && existingrolesandprojects.splice(existingrolesandprojects.indexOf(deleteProjectAndRolevalue), 1)
+
             $("#hdnProjectAndRole").val(ProjectAndRole);
             $('#tr' + id).remove();
+            var rowcount = $('#tbleProjectwithRoles').val().length;
+            if (rowcount < 1) {
+                $('#btnsubmit').attr('disabled', true);
+            }
         });
 
         $('#btnsubmit').click(function (e) {

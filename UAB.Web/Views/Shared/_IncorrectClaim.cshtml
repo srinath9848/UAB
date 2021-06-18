@@ -158,7 +158,7 @@
                         </div>
                         <div class="form-control CoderDetails" style="line-height:2.2;overflow:hidden;height:32px;">
                             <span style="white-space:nowrap">
-                                @if (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) && !(dictDxCodes?.ElementAt(i).Value).Equals(dictQADxCodes?.ElementAt(i).Value))
+                                @if (!string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) && !(dictQADxCodes?.ElementAt(i).Value).Equals(dictDxCodes?.ElementAt(i).Value))
                                 {
                                     <label style="color: red;">@Dx</label>
                                     <label style="color:green">@QADx</label>
@@ -184,55 +184,57 @@
                         </div>
                     </div>
                 }
-                @if (!dictDxCodes.ElementAt(i).Value.Equals(dictQADxCodes.ElementAt(i).Value))
-                {
-                    Show = "display:flex";
-                    Accepted = (string.IsNullOrEmpty(dictQADxRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
-                    Rejected = (string.IsNullOrEmpty(dictQADxRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
+                @*@if (!dictDxCodes.ElementAt(i).Value.Equals(dictQADxCodes.ElementAt(i).Value))
+                    {
+                        Show = "display:flex";
+                        Accepted = (string.IsNullOrEmpty(dictQADxRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
+                        Rejected = (string.IsNullOrEmpty(dictQADxRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
 
-                    <div class="col-md-2 input-group ControlHeight" style="@Show">
-                        <input type="text" id="@string.Format("QADxRemarkss_{0}_{1}", Model.TabIndex, j)" class="form-control QARemarks" value="@dictQADxRemarks?.ElementAt(i).Value" />
-                    </div>
+                        <div class="col-md-2 input-group ControlHeight" style="@Show">
+                            <input type="text" id="@string.Format("QADxRemarkss_{0}_{1}", Model.TabIndex, j)" class="form-control QARemarks" value="@dictQADxRemarks?.ElementAt(i).Value" />
+                        </div>
 
-                    @Html.HiddenFor(model => dictDxCodes.ElementAt(i).Value, new { @class = "form-control", @id = string.Format("DxClaim_{0}_Coder_{1}", Model.TabIndex, @j) })
-                    @Html.HiddenFor(model => dictQADxCodes.ElementAt(i).Value, new { @class = "form-control", @id = string.Format("DxClaim_{0}_QA_{1}", Model.TabIndex, @j) })
-                    <div class="input-group-append CoderCorrections" style="@Show">
-                        <span class="input-group-text ControlHeight" style="margin-left:-12px;">
-                            &nbsp;<i id="@DxClaim" class="@Accepted" aria-hidden="true"></i>
-                            &nbsp;<i id="@DxClaim" class="@Rejected" aria-hidden="true"></i>
-                        </span>
-                    </div>
+                        @Html.HiddenFor(model => dictDxCodes.ElementAt(i).Value, new { @class = "form-control", @id = string.Format("DxClaim_{0}_Coder_{1}", Model.TabIndex, @j) })
+                        @Html.HiddenFor(model => dictQADxCodes.ElementAt(i).Value, new { @class = "form-control", @id = string.Format("DxClaim_{0}_QA_{1}", Model.TabIndex, @j) })
+                        <div class="input-group-append CoderCorrections" style="@Show">
+                            <span class="input-group-text ControlHeight" style="margin-left:-12px;">
+                                &nbsp;<i id="@DxClaim" class="@Accepted" aria-hidden="true"></i>
+                                &nbsp;<i id="@DxClaim" class="@Rejected" aria-hidden="true"></i>
+                            </span>
+                        </div>
 
-                    <div class="col-md-3 input-group CoderCorrections">
-                        <input type="text" id="@DxClaim" class="@DxClaimRemarks" style="@Show" onchange="removevalid('@DxClaimRemarks')" />
-                        <span id="valid_@DxClaim" class="text-danger txtdanger" style="display:none">*</span>
-                    </div>
-                }
-                else
-                {
+                        <div class="col-md-3 input-group CoderCorrections">
+                            <input type="text" id="@DxClaim" class="@DxClaimRemarks" style="@Show" onchange="removevalid('@DxClaimRemarks')" />
+                            <span id="valid_@DxClaim" class="text-danger txtdanger" style="display:none">*</span>
+                        </div>
+                    }
+                    else
+                    {*@
+                @{
                     Show = (string.IsNullOrEmpty(dictQADxRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex");
 
                     Accepted = (string.IsNullOrEmpty(dictQADxRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
                     Rejected = (string.IsNullOrEmpty(dictQADxRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
 
-                    <div class="col-md-2 input-group ControlHeight" style="@Show">
-                        <input type="text" id="@string.Format("QADxRemarkss_{0}_{1}", Model.TabIndex, j)" class="form-control QARemarks" value="@dictQADxRemarks?.ElementAt(i).Value" />
-                    </div>
-
-                    @Html.HiddenFor(model => dictDxCodes.ElementAt(i).Value, new { @class = "form-control", @id = string.Format("DxClaim_{0}_Coder_{1}", Model.TabIndex, @j) })
-                    @Html.HiddenFor(model => dictQADxCodes.ElementAt(i).Value, new { @class = "form-control", @id = string.Format("DxClaim_{0}_QA_{1}", Model.TabIndex, @j) })
-                    <div class="input-group-append CoderCorrections" style="@Show">
-                        <span class="input-group-text ControlHeight" style="margin-left:-12px;">
-                            &nbsp;<i id="@DxClaim" class="@Accepted" aria-hidden="true"></i>
-                            &nbsp;<i id="@DxClaim" class="@Rejected" aria-hidden="true"></i>
-                        </span>
-                    </div>
-
-                    <div class="col-md-3 input-group CoderCorrections">
-                        <input type="text" id="@DxClaim" class="@DxClaimRemarks" style="@Show" onchange="removevalid('@DxClaimRemarks')" />
-                        <span id="valid_@DxClaim" class="text-danger txtdanger" style="display:none">*</span>
-                    </div>
                 }
+                <div class="col-md-2 input-group ControlHeight" style="@Show">
+                    <input type="text" id="@string.Format("QADxRemarkss_{0}_{1}", Model.TabIndex, j)" class="form-control QARemarks" value="@dictQADxRemarks?.ElementAt(i).Value" />
+                </div>
+
+                @Html.HiddenFor(model => dictDxCodes.ElementAt(i).Value, new { @class = "form-control", @id = string.Format("DxClaim_{0}_Coder_{1}", Model.TabIndex, @j) })
+                @Html.HiddenFor(model => dictQADxCodes.ElementAt(i).Value, new { @class = "form-control", @id = string.Format("DxClaim_{0}_QA_{1}", Model.TabIndex, @j) })
+                <div class="input-group-append CoderCorrections" style="@Show">
+                    <span class="input-group-text ControlHeight" style="margin-left:-12px;">
+                        &nbsp;<i id="@DxClaim" class="@Accepted" aria-hidden="true"></i>
+                        &nbsp;<i id="@DxClaim" class="@Rejected" aria-hidden="true"></i>
+                    </span>
+                </div>
+
+                <div class="col-md-3 input-group CoderCorrections">
+                    <input type="text" id="@DxClaim" class="@DxClaimRemarks" style="@Show" onchange="removevalid('@DxClaimRemarks')" />
+                    <span id="valid_@DxClaim" class="text-danger txtdanger" style="display:none">*</span>
+                </div>
+                @*}*@
             </div>
 
             j = j + 1;
@@ -311,161 +313,165 @@
                     string link = !string.IsNullOrEmpty(@qaLinks) || @qaLinks != "null" ? @qaLinks : "Link All";
                     cptLinks1 = cptLinks == link ? "" : coderLinks + "/";
 
-                    if (cptCode == qacptCode)
-                    {
-                        <div title="Code : @cptCode1@qacptCode, Mod : @cptMod1@qaMod, Quantity : @cptQty1@qaQty, Links : @cptLinks1@link" class="col-md-3 lessWidth input-group ControlWidth">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
-                            </div>
-                            <div class="form-control CoderDetails" style="min-width:60px;">
-                                @if (cptCode == qacptCode)
-                                {
-                                    <span style="color:green">@cptCode</span>
-                                }
-                                else
-                                {
-                                    <span style="color:red">@cptCode</span>
-                                }
-                                <br />
-                                <span style="color:green">@qacptCode</span>
-                            </div>
-                            <div class="form-control CoderDetails">
-                                @if (cptMod == qaMod)
-                                {
-                                    <span style="color:green">@cptMod</span>
-                                }
-                                else
-                                {
-                                    <span style="color:red">@cptMod</span>
-                                }
-                                <br />
-                                <span style="color:green">@qaMod</span>
-                            </div>
-                            <div class="form-control CoderDetails">
-                                @if (cptQty == qaQty)
-                                {
-                                    <span style="color:green">@cptQty</span>
-                                }
-                                else
-                                {
-                                    <span style="color:red">@cptQty</span>
-                                }
-                                <br />
-                                <span style="color:green">@qaQty</span>
-                            </div>
-                            <div class="form-control CoderDetails">
-                                @if (cptLinks == link)
-                                {
-                                    <span style="color:green">@cptLinks</span>
-                                }
-                                else
-                                {
-                                    <span style="color:red">@cptLinks</span>
-                                }
-                                <br />
-                                <span style="color:green">@link</span>
-                            </div>
-                            <input type="hidden" id="@cptCoderClaim" value="@codercpt^@coderMod^@coderQty^@coderLinks" />
-                            <input type="hidden" id="@cptQAClaim" value="@qaCptcodes[0]^@qaCptcodes[1]^@qaCptcodes[2]^@qaCptcodes[3]" />
+                    //if (cptCode == qacptCode)
+                    //{
+                    <div title="Code : @cptCode1@qacptCode, Mod : @cptMod1@qaMod, Quantity : @cptQty1@qaQty, Links : @cptLinks1@link" class="col-md-3 lessWidth input-group ControlWidth">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                         </div>
-                        Show = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex");
+                        @{
+                            if (codercptCode == qacptCode)
+                            {
+                                <div class="form-control CoderDetails" style="min-width:60px;">
+                                    <span style="color:green">@codercptCode.Replace("/", "")</span>
+                                </div>
+                                <div class="form-control CoderDetails">
+                                    <span style="color:green">@coderMod.Replace("/", "")</span>
+                                </div>
+                                <div class="form-control CoderDetails">
+                                    <span style="color:green">@coderQty.Replace("/", "")</span>
+                                </div>
+                                <div class="form-control CoderDetails">
+                                    <span style="color:green">@cptLinks1.Replace("/", "")</span>
+                                </div>
+                            }
+                            else
+                            {
+                                if (codercptCode == "NA")
+                                    color = "color:fuchsia;";
+                                <div class="form-control CoderDetails" style="min-width:60px;">
+                                    <span style="color:green">@cptCode1.Replace("/", "")</span>
+                                    <br />
+                                    <span style="color:red">@qacptCode</span>
+                                </div>
+                                color = (coderMod != qaMod) ? "color:blue;" : "";
+                                if (coderMod == "NA")
+                                    color = "color:fuchsia;";
+                                <div class="form-control CoderDetails">
+                                    <span style="color:green">@coderMod.Replace("/", "")</span>
+                                    <br />
+                                    <span style="color:red">@qaMod</span>
+                                </div>
 
-                        Accepted = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
-                        Rejected = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
+                                color = (coderQty != qaQty) ? "color:blue;" : "";
+                                if (coderQty == "NA")
+                                    color = "color:fuchsia;";
+                                <div class="form-control CoderDetails">
+                                    <span style="color:green">@coderQty.Replace("/", "")</span>
+                                    <br />
+                                    <span style="color:red">@qaQty</span>
+                                </div>
 
-                        <div class="col-md-2 input-group ControlHeight" style="@Show">
-                            <input type="text" id="@string.Format("QACptRemarkss_{0}_{1}", Model.TabIndex, j)" class="form-control QARemarks ControlHeight" value="@dictQACptRemarks?.ElementAt(i).Value" />
-                        </div>
-                        <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
-                            <span class="input-group-text ControlHeight" style="margin-left:-12px;">
-                                &nbsp;<i id="@CptClaim" class="@Accepted" aria-hidden="true"></i>
-                                &nbsp;<i id="@CptClaim" class="@Rejected" aria-hidden="true"></i>
-                            </span>
-                        </div>
-                        <div class="col-md-3 input-group CoderCorrections ControlHeight">
-                            <input type="text" id="@CptClaim" class="@CptClaimRemarks ControlHeight" style="@Show" onchange="removevalid('@CptClaimRemarks')" />
-                            <span id="valid_@CptClaim" class="text-danger txtdanger" style="display:none">*</span>
-                        </div>
-                    }
-                    else
-                    {
-                        if (!string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value))
-                            Show = "display:flex";
+                                color = (coderLinks != qaLinks) ? "color:blue;" : "";
+                                if (coderLinks == "NA")
+                                    color = "color:fuchsia;";
+                                <div class="form-control CoderDetails">
+                                    <span style="color:green">@cptLinks1.Replace("/", "")</span><br />
+                                    <span style="color:red">@link</span>
+                                </div>
+                            }
+                        }
+                        <input type="hidden" id="@cptCoderClaim" value="@codercpt^@coderMod^@coderQty^@coderLinks" />
+                        <input type="hidden" id="@cptQAClaim" value="@qaCptcodes[0]^@qaCptcodes[1]^@qaCptcodes[2]^@qaCptcodes[3]" />
+                    </div>
+                    Show = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex");
+
+                    Accepted = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
+                    Rejected = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
+
+                    <div class="col-md-2 input-group ControlHeight" style="@Show">
+                        <input type="text" id="@string.Format("QACptRemarkss_{0}_{1}", Model.TabIndex, j)" class="form-control QARemarks ControlHeight" value="@dictQACptRemarks?.ElementAt(i).Value" />
+                    </div>
+                    <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
+                        <span class="input-group-text ControlHeight" style="margin-left:-12px;">
+                            &nbsp;<i id="@CptClaim" class="@Accepted" aria-hidden="true"></i>
+                            &nbsp;<i id="@CptClaim" class="@Rejected" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <div class="col-md-3 input-group CoderCorrections ControlHeight">
+                        <input type="text" id="@CptClaim" class="@CptClaimRemarks ControlHeight" style="@Show" onchange="removevalid('@CptClaimRemarks')" />
+                        <span id="valid_@CptClaim" class="text-danger txtdanger" style="display:none">*</span>
+                    </div>
+                    @*}
                         else
-                            Show = "display:none";
+                        {
+                            if (!string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value))
+                                Show = "display:flex";
+                            else
+                                Show = "display:none";
 
-                        Accepted = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
-                        Rejected = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
+                            Accepted = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
+                            Rejected = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
 
-                        <div title="Code : @cptCode1@qacptCode, Mod : @cptMod1@qaMod, Quantity : @cptQty1@qaQty, Links : @cptLinks1@link" class="col-md-3 lessWidth input-group ControlWidth">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
+                            <div title="Code : @cptCode1@qacptCode, Mod : @cptMod1@qaMod, Quantity : @cptQty1@qaQty, Links : @cptLinks1@link" class="col-md-3 lessWidth input-group ControlWidth">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
+                                </div>
+                                <div class="form-control CoderDetails" style="min-width:60px;">
+                                    @if (cptCode == qacptCode)
+                                    {
+                                        <span style="color:green">@cptCode</span>
+                                    }
+                                    else
+                                    {
+                                        <span style="color:red">@cptCode</span>
+                                    }
+                                    <br />
+                                    <span style="color:green">@qacptCode</span>
+                                </div>
+                                <div class="form-control CoderDetails">
+                                    @if (cptMod == qaMod)
+                                    {
+                                        <span style="color:green">@cptMod</span>
+                                    }
+                                    else
+                                    {
+                                        <span style="color:red">@cptMod</span>
+                                    }
+                                    <br />
+                                    <span style="color:green">@qaMod</span>
+                                </div>
+                                <div class="form-control CoderDetails">
+                                    @if (cptQty == qaQty)
+                                    {
+                                        <span style="color:green">@cptQty</span>
+                                    }
+                                    else
+                                    {
+                                        <span style="color:red">@cptQty</span>
+                                    }
+                                    <br />
+                                    <span style="color:green">@qaQty</span>
+                                </div>
+                                <div class="form-control CoderDetails">
+                                    @if (cptLinks == link)
+                                    {
+                                        <span style="color:green">@cptLinks</span>
+                                    }
+                                    else
+                                    {
+                                        <span style="color:red">@cptLinks</span>
+                                    }
+                                    <br />
+                                    <span style="color:green">@link</span>
+                                </div>
+                                <input type="hidden" id="@cptCoderClaim" value="@codercpt^@coderMod^@coderQty^@coderLinks" />
+                                <input type="hidden" id="@cptQAClaim" value="@qaCptcodes[0]^@qaCptcodes[1]^@qaCptcodes[2]^@qaCptcodes[3]" />
                             </div>
-                            <div class="form-control CoderDetails" style="min-width:60px;">
-                                @if (cptCode == qacptCode)
-                                {
-                                    <span style="color:green">@cptCode</span>
-                                }
-                                else
-                                {
-                                    <span style="color:red">@cptCode</span>
-                                }
-                                <br />
-                                <span style="color:green">@qacptCode</span>
+                            <div class="col-md-2 input-group ControlHeight" style="@Show">
+                                <input type="text" id="@string.Format("QACptRemarkss_{0}_{1}", Model.TabIndex, j)" class="form-control QARemarks ControlHeight" value="@dictQACptRemarks?.ElementAt(i).Value" />
                             </div>
-                            <div class="form-control CoderDetails">
-                                @if (cptMod == qaMod)
-                                {
-                                    <span style="color:green">@cptMod</span>
-                                }
-                                else
-                                {
-                                    <span style="color:red">@cptMod</span>
-                                }
-                                <br />
-                                <span style="color:green">@qaMod</span>
+                            <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
+                                <span class="input-group-text ControlHeight" style="margin-left:-12px;">
+                                    &nbsp;<i id="@CptClaim" class="@Accepted" aria-hidden="true"></i>
+                                    &nbsp;<i id="@CptClaim" class="@Rejected" aria-hidden="true"></i>
+                                </span>
                             </div>
-                            <div class="form-control CoderDetails">
-                                @if (cptQty == qaQty)
-                                {
-                                    <span style="color:green">@cptQty</span>
-                                }
-                                else
-                                {
-                                    <span style="color:red">@cptQty</span>
-                                }
-                                <br />
-                                <span style="color:green">@qaQty</span>
+                            <div class="col-md-3 input-group CoderCorrections ControlHeight">
+                                <input type="text" id="@CptClaim" class="@CptClaimRemarks ControlHeight" style="@Show" onchange="removevalid('@CptClaimRemarks')" />
+                                <span id="valid_@CptClaim" class="text-danger txtdanger" style="display:none">*</span>
                             </div>
-                            <div class="form-control CoderDetails">
-                                @if (cptLinks == link)
-                                {
-                                    <span style="color:green">@cptLinks</span>
-                                }
-                                else
-                                {
-                                    <span style="color:red">@cptLinks</span>
-                                }
-                                <br />
-                                <span style="color:green">@link</span>
-                            </div>
-                            <input type="hidden" id="@cptCoderClaim" value="@codercpt^@coderMod^@coderQty^@coderLinks" />
-                            <input type="hidden" id="@cptQAClaim" value="@qaCptcodes[0]^@qaCptcodes[1]^@qaCptcodes[2]^@qaCptcodes[3]" />
-                        </div>
-                        <div class="col-md-2 input-group ControlHeight" style="@Show">
-                            <input type="text" id="@string.Format("QACptRemarkss_{0}_{1}", Model.TabIndex, j)" class="form-control QARemarks ControlHeight" value="@dictQACptRemarks?.ElementAt(i).Value" />
-                        </div>
-                        <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
-                            <span class="input-group-text ControlHeight" style="margin-left:-12px;">
-                                &nbsp;<i id="@CptClaim" class="@Accepted" aria-hidden="true"></i>
-                                &nbsp;<i id="@CptClaim" class="@Rejected" aria-hidden="true"></i>
-                            </span>
-                        </div>
-                        <div class="col-md-3 input-group CoderCorrections ControlHeight">
-                            <input type="text" id="@CptClaim" class="@CptClaimRemarks ControlHeight" style="@Show" onchange="removevalid('@CptClaimRemarks')" />
-                            <span id="valid_@CptClaim" class="text-danger txtdanger" style="display:none">*</span>
-                        </div>
-                    }
+                        }*@
                 }
                 else
                 {
