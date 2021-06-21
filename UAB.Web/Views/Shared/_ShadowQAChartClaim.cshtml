@@ -79,12 +79,13 @@
     <div title="@Model.QAProviderRemarks" class="col-md-3 input-group" style="@Show">
         <input type="text" class="@QARemarks" disabled value="@Model.QAProviderRemarks" />
     </div>
+    @{Show = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "display:none" : "display:flex");}
     <div class="col-md-3 input-group">
-        @Html.DropDownListFor(model => model.ShadowQAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = string.Format("ShadowQAProviderID_{0}", Model.TabIndex), @class = string.Format("form-control ProviderID_{0} QARevised_{0} ControlHeight", Model.TabIndex), @style = Show })
+        @Html.DropDownListFor(model => model.ShadowQAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = string.Format("ShadowQAProviderID_{0}", Model.TabIndex), @class = string.Format("form-control ProviderID_{0} QARevised_{0} ControlHeight", Model.TabIndex), @style = "display:none" })
         @Html.ValidationMessageFor(model => model.ShadowQAProviderID, null, new { @class = "text-danger errMsg" })
     </div>
     <div class="col-md-3 input-group">
-        @Html.TextBoxFor(model => model.ShadowQAProviderRemarks, new { @style = Show, @class = string.Format("form-control ProviderID_{0} QARevised_{0} ControlHeight", Model.TabIndex), @id = string.Format("ShadowQAProviderIDRemarks_{0}", Model.TabIndex) })
+        @Html.TextBoxFor(model => model.ShadowQAProviderRemarks, new { @style = "display:none", @class = string.Format("form -control ProviderID_{0} QARevised_{0} ControlHeight", Model.TabIndex), @id = string.Format("ShadowQAProviderIDRemarks_{0}", Model.TabIndex) })
         @Html.ValidationMessageFor(model => model.ShadowQAProviderRemarks, null, new { @class = "text-danger errMsg" })
         <span id="validProvider_@Model.TabIndex" class="text-danger txtdanger" style="display:none">*</span>
     </div>
@@ -123,12 +124,13 @@
     <div title="@Model.QAPayorRemarks" class="col-md-3 input-group" style="@Show">
         <input type="text" class="@QARemarks" disabled value="@Model.QAPayorRemarks" />
     </div>
+    @{Show = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "display:none" : "display:flex");}
     <div class="col-md-3 input-group">
-        @Html.DropDownListFor(model => model.ShadowQAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = string.Format("ShadowQAPayorID_{0}", Model.TabIndex), @class = string.Format("form-control PayorID_{0} QARevised_{0} ControlHeight", Model.TabIndex), @style = Show })
+        @Html.DropDownListFor(model => model.ShadowQAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = string.Format("ShadowQAPayorID_{0}", Model.TabIndex), @class = string.Format("form-control PayorID_{0} QARevised_{0} ControlHeight", Model.TabIndex), @style = "display:none" })
         @Html.ValidationMessageFor(model => model.ShadowQAPayorID, null, new { @class = "text-danger errMsg" })
     </div>
     <div class="col-md-3 input-group">
-        @Html.TextBoxFor(model => model.ShadowQAPayorRemarks, new { @style = Show, @class = string.Format("form-control PayorID_{0} QARevised_{0} ControlHeight", Model.TabIndex), @id = string.Format("ShadowQAPayorIDRemarks_{0}", Model.TabIndex) })
+        @Html.TextBoxFor(model => model.ShadowQAPayorRemarks, new { @style = "display:none", @class = string.Format("form-control PayorID_{0} QARevised_{0} ControlHeight", Model.TabIndex), @id = string.Format("ShadowQAPayorIDRemarks_{0}", Model.TabIndex) })
         @Html.ValidationMessageFor(model => model.ShadowQAPayorRemarks, null, new { @class = "text-danger errMsg" })
         <span id="validPayor_@Model.TabIndex" class="text-danger txtdanger" style="display:none">*</span>
     </div>
@@ -528,12 +530,13 @@
     <div title="@Model.QAProviderFeedbackRemarks" class="col-md-3 input-group" style="@Show">
         <input type="text" class="@QARemarks ControlHeight" disabled value="@Model.QAProviderFeedbackRemarks" />
     </div>
+    @{Show = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "display:none" : "display:flex");}
     <div class="col-md-3 input-group">
-        @Html.DropDownListFor(model => model.ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = Show, @class = string.Format("form-control Feedback_{0} QARevised_{0} ControlHeight", Model.TabIndex), @id = string.Format("ShadowQAProviderFeedback_{0}", Model.TabIndex) })
+        @Html.DropDownListFor(model => model.ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = "display:none", @class = string.Format("form-control Feedback_{0} QARevised_{0} ControlHeight", Model.TabIndex), @id = string.Format("ShadowQAProviderFeedback_{0}", Model.TabIndex) })
         @Html.ValidationMessageFor(model => model.ShadowQAProviderFeedbackID, null, new { @class = "text-danger errMsg" })
     </div>
     <div class="col-md-3 input-group">
-        @Html.TextBoxFor(model => model.ShadowQAProviderFeedbackRemarks, new { @style = Show, @class = string.Format("form-control Feedback_{0} QARevised_{0} ControlHeight", Model.TabIndex), @id = string.Format("ShadowQAProviderFeedbackRemarks_{0}", Model.TabIndex) })
+        @Html.TextBoxFor(model => model.ShadowQAProviderFeedbackRemarks, new { @style = "display:none", @class = string.Format("form -control Feedback_{0} QARevised_{0} ControlHeight", Model.TabIndex), @id = string.Format("ShadowQAProviderFeedbackRemarks_{0}", Model.TabIndex) })
         @Html.ValidationMessageFor(model => model.ShadowQAProviderFeedbackRemarks, null, new { @class = "text-danger errMsg" })
         <span id="validFeedback_@Model.TabIndex" class="text-danger txtdanger" style="display:none">*</span>
     </div>
