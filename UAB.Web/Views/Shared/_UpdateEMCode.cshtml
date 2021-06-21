@@ -38,16 +38,28 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+
+        $('#btnUpdate').attr('disabled', true);
+
+        $('#txtemcode').on('keyup keypress', function (e) {
+            if ($('#txtemcode').val().length < 6) {
+                $("#updateemerror").html('');
+                $('#btnUpdate').attr('disabled', false);
+            } else {
+                $("#updateemerror").html("Please enter numbers upto 5 character length only");
+                $('#btnUpdate').attr('disabled', true);
+            }
+        });
         var intial = $("#txtemcode").val();
         $('#btnUpdate').click(function (e) {
             var final = $("#txtemcode").val();
-        if (intial === final) {
-            $("#updateemerror").html("No Change was detected");
-            $("#updateemerror").fadeOut(10000);
-            e.preventDefault();
-        } else {
-            $("#updateprojectuserform").valid();
-        }
-    });
+            if (intial === final) {
+                $("#updateemerror").html("No Change was detected");
+                e.preventDefault();
+            } else {
+                $("#updateemerror").html('');
+                $("#updateprojectuserform").valid();
+            }
+        });
     });
 </script>
