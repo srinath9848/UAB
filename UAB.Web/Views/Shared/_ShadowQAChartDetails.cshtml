@@ -177,7 +177,7 @@
                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().ShadowQAProviderID, null, new { @class = "text-danger errMsg" })
                                     </div>
                                     <div class="col-md-3 input-group">
-                                        @Html.TextBoxFor(model => model.FirstOrDefault().ShadowQAProviderRemarks, new { @style = "display:none", @class = string.Format("form -control QARevised ControlHeight ProviderID_{0}", @tabIndex), @id = string.Format("ShadowQAProviderIDRemarks_{0}", @tabIndex) })
+                                        @Html.TextBoxFor(model => model.FirstOrDefault().ShadowQAProviderRemarks, new { @style = "display:none", @class = string.Format("form-control QARevised ControlHeight ProviderID_{0}", @tabIndex), @id = string.Format("ShadowQAProviderIDRemarks_{0}", @tabIndex) })
                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().ShadowQAProviderRemarks, null, new { @class = "text-danger errMsg" })
                                         <span id="validProvider_@Model.FirstOrDefault().TabIndex" class="text-danger txtdanger" style="display:none">*</span>
                                     </div>
@@ -221,7 +221,7 @@
                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().ShadowQAPayorID, null, new { @class = "text-danger errMsg" })
                                     </div>
                                     <div class="col-md-3 input-group">
-                                        @Html.TextBoxFor(model => model.FirstOrDefault().ShadowQAPayorRemarks, new { @style = "display:none", @class = string.Format("form -control QARevised ControlHeight PayorID_{0}", @tabIndex), @id = string.Format("ShadowQAPayorIDRemarks_{0}", @tabIndex) })
+                                        @Html.TextBoxFor(model => model.FirstOrDefault().ShadowQAPayorRemarks, new { @style = "display:none", @class = string.Format("form-control QARevised ControlHeight PayorID_{0}", @tabIndex), @id = string.Format("ShadowQAPayorIDRemarks_{0}", @tabIndex) })
                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().ShadowQAPayorRemarks, null, new { @class = "text-danger errMsg" })
                                         <span id="validPayor_@Model.FirstOrDefault().TabIndex" class="text-danger txtdanger" style="display:none">*</span>
                                     </div>
@@ -601,11 +601,11 @@
                                     </div>
                                     @{Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "display:none" : "display:flex");}
                                     <div class="col-md-3 input-group">
-                                        @Html.DropDownListFor(model => model.FirstOrDefault().ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = "display:none", @class = string.Format("form -control QARevised ControlHeight Feedback_{0}", @tabIndex), @id = string.Format("ShadowQAProviderFeedback_{0}", @tabIndex) })
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = "display:none", @class = string.Format("form-control QARevised ControlHeight Feedback_{0}", @tabIndex), @id = string.Format("ShadowQAProviderFeedback_{0}", @tabIndex) })
                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().ShadowQAProviderFeedbackID, null, new { @class = "text-danger errMsg" })
                                     </div>
                                     <div class="col-md-3 input-group">
-                                        @Html.TextBoxFor(model => model.FirstOrDefault().ShadowQAProviderFeedbackRemarks, new { @style = "display:none", @class = string.Format("form -control QARevised ControlHeight Feedback_{0}", @tabIndex), @id = string.Format("ShadowQAProviderFeedbackRemarks_{0}", @tabIndex) })
+                                        @Html.TextBoxFor(model => model.FirstOrDefault().ShadowQAProviderFeedbackRemarks, new { @style = "display:none", @class = string.Format("form-control QARevised ControlHeight Feedback_{0}", @tabIndex), @id = string.Format("ShadowQAProviderFeedbackRemarks_{0}", @tabIndex) })
                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().ShadowQAProviderFeedbackRemarks, null, new { @class = "text-danger errMsg" })
                                         <span id="validFeedback_@Model.FirstOrDefault().TabIndex" class="text-danger txtdanger" style="display:none">*</span>
                                     </div>

@@ -85,7 +85,7 @@
         @Html.ValidationMessageFor(model => model.ShadowQAProviderID, null, new { @class = "text-danger errMsg" })
     </div>
     <div class="col-md-3 input-group">
-        @Html.TextBoxFor(model => model.ShadowQAProviderRemarks, new { @style = "display:none", @class = string.Format("form -control ProviderID_{0} QARevised_{0} ControlHeight", Model.TabIndex), @id = string.Format("ShadowQAProviderIDRemarks_{0}", Model.TabIndex) })
+        @Html.TextBoxFor(model => model.ShadowQAProviderRemarks, new { @style = "display:none", @class = string.Format("form-control ProviderID_{0} QARevised_{0} ControlHeight", Model.TabIndex), @id = string.Format("ShadowQAProviderIDRemarks_{0}", Model.TabIndex) })
         @Html.ValidationMessageFor(model => model.ShadowQAProviderRemarks, null, new { @class = "text-danger errMsg" })
         <span id="validProvider_@Model.TabIndex" class="text-danger txtdanger" style="display:none">*</span>
     </div>
@@ -536,7 +536,7 @@
         @Html.ValidationMessageFor(model => model.ShadowQAProviderFeedbackID, null, new { @class = "text-danger errMsg" })
     </div>
     <div class="col-md-3 input-group">
-        @Html.TextBoxFor(model => model.ShadowQAProviderFeedbackRemarks, new { @style = "display:none", @class = string.Format("form -control Feedback_{0} QARevised_{0} ControlHeight", Model.TabIndex), @id = string.Format("ShadowQAProviderFeedbackRemarks_{0}", Model.TabIndex) })
+        @Html.TextBoxFor(model => model.ShadowQAProviderFeedbackRemarks, new { @style = "display:none", @class = string.Format("form-control Feedback_{0} QARevised_{0} ControlHeight", Model.TabIndex), @id = string.Format("ShadowQAProviderFeedbackRemarks_{0}", Model.TabIndex) })
         @Html.ValidationMessageFor(model => model.ShadowQAProviderFeedbackRemarks, null, new { @class = "text-danger errMsg" })
         <span id="validFeedback_@Model.TabIndex" class="text-danger txtdanger" style="display:none">*</span>
     </div>
