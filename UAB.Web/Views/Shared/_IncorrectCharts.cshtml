@@ -119,13 +119,10 @@
                                     @{string QAProviderText = (Model.FirstOrDefault().QAProviderText?.Length > len) ? "/" + Model.FirstOrDefault().QAProviderText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAProviderText;}
                                     @{string title = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText) ? Model.FirstOrDefault().ProviderText + "/" + Model.FirstOrDefault().QAProviderText : Model.FirstOrDefault().ProviderText);}
                                     @Html.DropDownListFor(model => model.FirstOrDefault().ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails", @id = string.Format("CoderProviderID_{0}", tabIndex), @style = "display:none;" })
-                                    @{string Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                                    @{string Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
                                     <div title="@title" class="col-md-3 lessWidth input-group ControlWidth">
                                         <div class="form-control CoderDetails" style="line-height:2.2;overflow:hidden;height:32px;">
                                             <span style="white-space:nowrap">
-
                                                 @if (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText) && !Model.FirstOrDefault().ProviderText.Equals(Model.FirstOrDefault().QAProviderText))
                                                 {
                                                     <label style="color: red;">@ProviderText</label>
@@ -138,22 +135,48 @@
                                             </span>
                                         </div>
                                     </div>
-                                    @{string Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "visibility:hidden" : "display:flex");}
-                                    @{ var QAProviderIDRemarks = string.Format("QAProviderIDRemarks_{0}", tabIndex);}
-                                    <div title="@Model.FirstOrDefault().QAProviderRemarks" class="col-md-2 input-group" style="@Show">
-                                        <input type="text" id="@QAProviderIDRemarks" class="form-control QARemarks ControlHeight" value="@Model.FirstOrDefault().QAProviderRemarks" />
-                                    </div>
-                                    @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = string.Format("QAProviderID_{0}", tabIndex), @class = "form-control QARevised", @style = "display:none;" })
-                                    <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
-                                        <span class="input-group-text ControlHeight" style="margin-left:-12px;">
-                                            &nbsp;<i id="ProviderID_@Model.FirstOrDefault().TabIndex" class="@Accepted" aria-hidden="true"></i>
-                                            &nbsp;<i id="ProviderID_@Model.FirstOrDefault().TabIndex" class="@Rejected" aria-hidden="true"></i>
-                                        </span>
-                                    </div>
-                                    <div class="col-md-3 input-group CoderCorrections">
-                                        @Html.TextBoxFor(model => model.FirstOrDefault().RevisedProviderRemarks, new { @class = string.Format("form-control Revised RevisedProvider_{0}", @Model.FirstOrDefault().TabIndex), @id = string.Format("CoderProviderIDRemarks_{0}", @tabIndex), @style = @Show })
-                                        <span id="validProvider_@Model.FirstOrDefault().TabIndex" class="text-danger txtdanger" style="display:none">*</span>
-                                    </div>
+                                    @{string Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                                    @{string Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+
+                                    @{string Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText) ? "visibility:hidden" : "display:flex");}
+                                    @if (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText) && !Model.FirstOrDefault().ProviderText.Equals(Model.FirstOrDefault().QAProviderText))
+                                    {
+                                        <div class="col-md-2 input-group" style="@Show">
+                                            <input type="text" id="@string.Format("QAProviderIDRemarks_{0}", tabIndex)" class="form-control QARemarks ControlHeight" value="@Model.FirstOrDefault().QAProviderText" />
+                                        </div>
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = string.Format("QAProviderID_{0}", tabIndex), @class = "form-control QARevised", @style = "display:none" })
+                                        <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
+                                            <span class="input-group-text ControlHeight" style="margin-left:-12px;">
+                                                &nbsp;<i id="ProviderID_@Model.FirstOrDefault().TabIndex" class="@Accepted" aria-hidden="true"></i>
+                                                &nbsp;<i id="ProviderID_@Model.FirstOrDefault().TabIndex" class="@Rejected" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-3 input-group CoderCorrections">
+                                            @Html.TextBoxFor(model => model.FirstOrDefault().RevisedProviderRemarks, new { @class = string.Format("form-control Revised RevisedProvider_{0}", @Model.FirstOrDefault().TabIndex), @id = string.Format("CoderProviderIDRemarks_{0}", @tabIndex), @style = Show })
+                                            <span id="validProvider_@Model.FirstOrDefault().TabIndex" class="text-danger txtdanger" style="display:none">*</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        Accepted = "fa fa-check-circle fa-lg accept";
+                                        Rejected = "fa fa-times-circle fa-lg";
+                                        Show = "display:none";
+
+                                        <div class="col-md-2 input-group" style="@Show">
+                                            <input type="text" id="@string.Format("QAProviderIDRemarks_{0}", tabIndex)" class="form-control QARemarks ControlHeight" value="@Model.FirstOrDefault().QAProviderText" />
+                                        </div>
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = string.Format("QAProviderID_{0}", tabIndex), @class = "form-control QARevised", @style = "display:none" })
+                                        <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
+                                            <span class="input-group-text ControlHeight" style="margin-left:-12px;">
+                                                &nbsp;<i id="ProviderID_@Model.FirstOrDefault().TabIndex" class="@Accepted" aria-hidden="true"></i>
+                                                &nbsp;<i id="ProviderID_@Model.FirstOrDefault().TabIndex" class="@Rejected" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-3 input-group CoderCorrections">
+                                            @Html.TextBoxFor(model => model.FirstOrDefault().RevisedProviderRemarks, new { @class = string.Format("form-control Revised RevisedProvider_{0}", @Model.FirstOrDefault().TabIndex), @id = string.Format("CoderProviderIDRemarks_{0}", @tabIndex), @style = Show })
+                                            <span id="validProvider_@Model.FirstOrDefault().TabIndex" class="text-danger txtdanger" style="display:none">*</span>
+                                        </div>
+                                    }
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 lessWidth m-t-15">Payor</label>
@@ -163,8 +186,6 @@
                                     @{title = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) ? Model.FirstOrDefault().PayorText + "/" + Model.FirstOrDefault().QAPayorText : Model.FirstOrDefault().PayorText);}
                                     @{ var PayorID = string.Format("PayorID_{0}", @Model.FirstOrDefault().TabIndex);}
                                     @Html.DropDownListFor(model => model.FirstOrDefault().PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @style = "display:none", @class = "form-control CoderDetails", @id = string.Format("CoderPayorID_{0}", tabIndex) })
-                                    @{Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                                    @{Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
                                     <div title="@title" class="col-md-3 lessWidth input-group ControlWidth">
                                         <div name="PayorText" class="form-control CoderDetails" style="line-height:2.2;overflow:hidden;height:32px;">
@@ -181,23 +202,47 @@
                                             </span>
                                         </div>
                                     </div>
-                                    @{Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorRemarks) ? "visibility:hidden" : "display:flex");}
-                                    <div title="@Model.FirstOrDefault().QAPayorRemarks" class="col-md-2 input-group" style="@Show">
-                                        @{ var QAPayorIDRemarks = string.Format("QAPayorIDRemarks_{0}", tabIndex);}
-                                        <input type="text" id="@QAPayorIDRemarks" class="form-control QARemarks" value="@Model.FirstOrDefault().QAPayorRemarks" />
-                                    </div>
-                                    @{ var QAPayorID = string.Format("QAPayorID_{0}", @Model.FirstOrDefault().TabIndex);}
-                                    @Html.DropDownListFor(model => model.FirstOrDefault().QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = string.Format("QAPayorID_{0}", tabIndex), @class = "form-control QARevised", @style = "display:none" })
-                                    <div class="input-group-append CoderCorrections" style="@Show">
-                                        <span class="input-group-text ControlHeight" style="margin-left:-12px;">
-                                            &nbsp;<i id="PayorID_@Model.FirstOrDefault().TabIndex" class="@Accepted" aria-hidden="true"></i>
-                                            &nbsp;<i id="PayorID_@Model.FirstOrDefault().TabIndex" class="@Rejected" aria-hidden="true"></i>
-                                        </span>
-                                    </div>
-                                    <div class="col-md-3 input-group CoderCorrections">
-                                        @Html.TextBoxFor(model => model.FirstOrDefault().RevisedPayorRemarks, new { @class = string.Format("form-control Revised RevisedPayor_{0}", @Model.FirstOrDefault().TabIndex), @style = @Show, @id = string.Format("CoderPayorIDRemarks_{0}", tabIndex) })
-                                        <span id="validPayor_@Model.FirstOrDefault().TabIndex" class="text-danger txtdanger" style="display:none">*</span>
-                                    </div>
+                                    @{Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                                    @{Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+                                    @{Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) ? "visibility:hidden" : "display:flex");}
+                                    @if (!string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) && !Model.FirstOrDefault().PayorText.Equals(Model.FirstOrDefault().QAPayorText))
+                                    {
+                                        <div title="@Model.FirstOrDefault().QAPayorRemarks" class="col-md-2 input-group" style="@Show">
+                                            <input type="text" id="@string.Format("QAPayorIDRemarks_{0}", tabIndex)" class="form-control QARemarks" value="@Model.FirstOrDefault().QAPayorText" />
+                                        </div>
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = string.Format("QAPayorID_{0}", tabIndex), @class = "form-control QARevised", @style = "display:none" })
+                                        <div class="input-group-append CoderCorrections" style="@Show">
+                                            <span class="input-group-text ControlHeight" style="margin-left:-12px;">
+                                                &nbsp;<i id="PayorID_@Model.FirstOrDefault().TabIndex" class="@Accepted" aria-hidden="true"></i>
+                                                &nbsp;<i id="PayorID_@Model.FirstOrDefault().TabIndex" class="@Rejected" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-3 input-group CoderCorrections">
+                                            @Html.TextBoxFor(model => model.FirstOrDefault().RevisedPayorRemarks, new { @class = string.Format("form-control Revised RevisedPayor_{0}", @Model.FirstOrDefault().TabIndex), @style = Show, @id = string.Format("CoderPayorIDRemarks_{0}", tabIndex) })
+                                            <span id="validPayor_@Model.FirstOrDefault().TabIndex" class="text-danger txtdanger" style="display:none">*</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        Accepted = "fa fa-check-circle fa-lg accept";
+                                        Rejected = "fa fa-times-circle fa-lg";
+                                        Show = "display:none";
+
+                                        <div title="@Model.FirstOrDefault().QAPayorRemarks" class="col-md-2 input-group" style="@Show">
+                                            <input type="text" id="@string.Format("QAPayorIDRemarks_{0}", tabIndex)" class="form-control QARemarks" value="@Model.FirstOrDefault().QAPayorText" />
+                                        </div>
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = string.Format("QAPayorID_{0}", tabIndex), @class = "form-control QARevised", @style = "display:none" })
+                                        <div class="input-group-append CoderCorrections" style="@Show">
+                                            <span class="input-group-text ControlHeight" style="margin-left:-12px;">
+                                                &nbsp;<i id="PayorID_@Model.FirstOrDefault().TabIndex" class="@Accepted" aria-hidden="true"></i>
+                                                &nbsp;<i id="PayorID_@Model.FirstOrDefault().TabIndex" class="@Rejected" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-3 input-group CoderCorrections">
+                                            @Html.TextBoxFor(model => model.FirstOrDefault().RevisedPayorRemarks, new { @class = string.Format("form-control Revised RevisedPayor_{0}", @Model.FirstOrDefault().TabIndex), @style = Show, @id = string.Format("CoderPayorIDRemarks_{0}", tabIndex) })
+                                            <span id="validPayor_@Model.FirstOrDefault().TabIndex" class="text-danger txtdanger" style="display:none">*</span>
+                                        </div>
+                                    }
                                 </div>
 
                                 <div class="form-group row">
@@ -415,65 +460,65 @@
 
                                                     //if (cptCode == qacptCode)
                                                     //{
-                                            <div title="Code : @cptCode1@qacptCode, Mod : @cptMod1@qaMod, Quantity : @cptQty1@qaQty, Links : @cptLinks1@link" class="col-md-3 lessWidth input-group ControlWidth">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
-                                                </div>
-                                                @{
-                                                    if (codercptCode == qacptCode)
-                                                    {
-                                                        <div class="form-control CoderDetails" style="min-width:60px;">
-                                                            <span style="color:green">@codercptCode.Replace("/", "")</span>
+                                                    <div title="Code : @cptCode1@qacptCode, Mod : @cptMod1@qaMod, Quantity : @cptQty1@qaQty, Links : @cptLinks1@link" class="col-md-3 lessWidth input-group ControlWidth">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                                                         </div>
-                                                        <div class="form-control CoderDetails">
-                                                            <span style="color:green">@coderMod.Replace("/", "")</span>
-                                                        </div>
-                                                        <div class="form-control CoderDetails">
-                                                            <span style="color:green">@coderQty.Replace("/", "")</span>
-                                                        </div>
-                                                        <div class="form-control CoderDetails">
-                                                            <span style="color:green">@cptLinks1.Replace("/", "")</span>
-                                                        </div>
-                                                    }
-                                                    else
-                                                    {
-                                                        if (codercptCode == "NA")
-                                                            color = "color:fuchsia;";
-                                                        <div class="form-control CoderDetails" style="min-width:60px;">
-                                                            <span style="color:green">@cptCode1.Replace("/", "")</span>
-                                                            <br />
-                                                            <span style="color:red">@qacptCode</span>
-                                                        </div>
-                                                        color = (coderMod != qaMod) ? "color:blue;" : "";
-                                                        if (coderMod == "NA")
-                                                            color = "color:fuchsia;";
-                                                        <div class="form-control CoderDetails">
-                                                            <span style="color:green">@coderMod.Replace("/", "")</span>
-                                                            <br />
-                                                            <span style="color:red">@qaMod</span>
-                                                        </div>
+                                                        @{
+                                                            if (codercptCode == qacptCode)
+                                                            {
+                                                                <div class="form-control CoderDetails" style="min-width:60px;">
+                                                                    <span style="color:green">@codercptCode.Replace("/", "")</span>
+                                                                </div>
+                                                                <div class="form-control CoderDetails">
+                                                                    <span style="color:green">@coderMod.Replace("/", "")</span>
+                                                                </div>
+                                                                <div class="form-control CoderDetails">
+                                                                    <span style="color:green">@coderQty.Replace("/", "")</span>
+                                                                </div>
+                                                                <div class="form-control CoderDetails">
+                                                                    <span style="color:green">@cptLinks1.Replace("/", "")</span>
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                if (codercptCode == "NA")
+                                                                    color = "color:fuchsia;";
+                                                                <div class="form-control CoderDetails" style="min-width:60px;">
+                                                                    <span style="color:green">@cptCode1.Replace("/", "")</span>
+                                                                    <br />
+                                                                    <span style="color:red">@qacptCode</span>
+                                                                </div>
+                                                                color = (coderMod != qaMod) ? "color:blue;" : "";
+                                                                if (coderMod == "NA")
+                                                                    color = "color:fuchsia;";
+                                                                <div class="form-control CoderDetails">
+                                                                    <span style="color:green">@coderMod.Replace("/", "")</span>
+                                                                    <br />
+                                                                    <span style="color:red">@qaMod</span>
+                                                                </div>
 
-                                                        color = (coderQty != qaQty) ? "color:blue;" : "";
-                                                        if (coderQty == "NA")
-                                                            color = "color:fuchsia;";
-                                                        <div class="form-control CoderDetails">
-                                                            <span style="color:green">@coderQty.Replace("/", "")</span>
-                                                            <br />
-                                                            <span style="color:red">@qaQty</span>
-                                                        </div>
+                                                                color = (coderQty != qaQty) ? "color:blue;" : "";
+                                                                if (coderQty == "NA")
+                                                                    color = "color:fuchsia;";
+                                                                <div class="form-control CoderDetails">
+                                                                    <span style="color:green">@coderQty.Replace("/", "")</span>
+                                                                    <br />
+                                                                    <span style="color:red">@qaQty</span>
+                                                                </div>
 
-                                                        color = (coderLinks != qaLinks) ? "color:blue;" : "";
-                                                        if (coderLinks == "NA")
-                                                            color = "color:fuchsia;";
-                                                        <div class="form-control CoderDetails">
-                                                            <span style="color:green">@cptLinks1.Replace("/", "")</span><br />
-                                                            <span style="color:red">@link</span>
-                                                        </div>
-                                                    }
-                                                }
-                                                <input type="hidden" id="@cptCoderClaim" value="@codercpt^@coderMod^@coderQty^@coderLinks" />
-                                                <input type="hidden" id="@cptQAClaim" value="@qaCptcodes[0]^@qaCptcodes[1]^@qaCptcodes[2]^@qaCptcodes[3]" />
-                                            </div>
+                                                                color = (coderLinks != qaLinks) ? "color:blue;" : "";
+                                                                if (coderLinks == "NA")
+                                                                    color = "color:fuchsia;";
+                                                                <div class="form-control CoderDetails">
+                                                                    <span style="color:green">@cptLinks1.Replace("/", "")</span><br />
+                                                                    <span style="color:red">@link</span>
+                                                                </div>
+                                                            }
+                                                        }
+                                                        <input type="hidden" id="@cptCoderClaim" value="@codercpt^@coderMod^@coderQty^@coderLinks" />
+                                                        <input type="hidden" id="@cptQAClaim" value="@qaCptcodes[0]^@qaCptcodes[1]^@qaCptcodes[2]^@qaCptcodes[3]" />
+                                                    </div>
 
                                                     Show = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex");
 
@@ -638,7 +683,6 @@
                                     <div title="@title" class="col-md-3 lessWidth input-group ControlWidth">
                                         <div class="form-control CoderDetails" style="line-height:2.2;overflow:hidden;height:32px;">
                                             <span style="white-space:nowrap">
-
                                                 @if (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText) && !Model.FirstOrDefault().ProviderFeedbackText.Equals(Model.FirstOrDefault().QAProviderFeedbackText))
                                                 {
                                                     <label style="color: red;">@ProviderFeedbackText</label>
@@ -651,28 +695,49 @@
                                             </span>
                                         </div>
                                     </div>
-                                    @{Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "visibility:hidden" : "display:flex");}
-                                    @{ Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
-                                    @{ Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+                                    @{Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText) ? "visibility:hidden" : "display:flex");}
+                                    @{ Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                                    @{ Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
-                                    <div title="@Model.FirstOrDefault().QAProviderFeedbackRemarks" class="col-md-2 input-group" style="@Show">
-                                        @{ var QAProviderFeedbackRemarks = string.Format("QAProviderFeedbackRemarks_{0}", tabIndex);}
-                                        <input type="text" id="@QAProviderFeedbackRemarks" class="form-control QARemarks" value="@Model.FirstOrDefault().QAProviderFeedbackRemarks" />
-                                    </div>
-                                    <div class="input-group-append CoderCorrections" style="@Show">
-                                        <span class="input-group-text ControlHeight" style="margin-left:-12px;">
-                                            &nbsp;<i id="ProviderFeedbackID_@Model.FirstOrDefault().TabIndex" class="@Accepted" aria-hidden="true"></i>
-                                            &nbsp;<i id="ProviderFeedbackID_@Model.FirstOrDefault().TabIndex" class="@Rejected" aria-hidden="true"></i>
-                                        </span>
-                                    </div>
-                                    @{ var QAProviderFeedbackID = string.Format("QAProviderFeedbackID_{0}", @Model.FirstOrDefault().TabIndex);}
-                                    @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = "display:none", @class = "form-control QARevised", @id = string.Format("QAProviderFeedback_{0}", tabIndex) })
-                                    <div class="col-md-3 input-group CoderCorrections">
-                                        @Html.TextBoxFor(model => model.FirstOrDefault().RevisedProviderFeedbackRemarks, new { @class = string.Format("form-control Revised RevisedProviderFeedback_{0}", @Model.FirstOrDefault().TabIndex), @id = string.Format("CoderProviderFeedbackRemarks_{0}", tabIndex), @style = @Show })
-                                        <span id="validFeedback_@Model.FirstOrDefault().TabIndex" class="text-danger txtdanger" style="display:none">*</span>
-                                    </div>
+                                    @if (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText) && !Model.FirstOrDefault().ProviderFeedbackText.Equals(Model.FirstOrDefault().QAProviderFeedbackText))
+                                    {
+                                        <div title="@Model.FirstOrDefault().QAProviderFeedbackText" class="col-md-2 input-group" style="@Show">
+                                            <input type="text" id="@string.Format("QAProviderFeedbackRemarks_{0}", tabIndex)" class="form-control QARemarks" value="@Model.FirstOrDefault().QAProviderFeedbackText" />
+                                        </div>
+                                        <div class="input-group-append CoderCorrections" style="@Show">
+                                            <span class="input-group-text ControlHeight" style="margin-left:-12px;">
+                                                &nbsp;<i id="ProviderFeedbackID_@Model.FirstOrDefault().TabIndex" class="@Accepted" aria-hidden="true"></i>
+                                                &nbsp;<i id="ProviderFeedbackID_@Model.FirstOrDefault().TabIndex" class="@Rejected" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = "display:none", @class = "form-control QARevised", @id = string.Format("QAProviderFeedback_{0}", tabIndex) })
+                                        <div class="col-md-3 input-group CoderCorrections">
+                                            @Html.TextBoxFor(model => model.FirstOrDefault().RevisedProviderFeedbackRemarks, new { @class = string.Format("form-control Revised RevisedProviderFeedback_{0}", @Model.FirstOrDefault().TabIndex), @id = string.Format("CoderProviderFeedbackRemarks_{0}", tabIndex), @style = Show })
+                                            <span id="validFeedback_@Model.FirstOrDefault().TabIndex" class="text-danger txtdanger" style="display:none">*</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        Accepted = "fa fa-check-circle fa-lg accept";
+                                        Rejected = "fa fa-times-circle fa-lg";
+                                        Show = "display:none";
+
+                                        <div title="@Model.FirstOrDefault().QAProviderFeedbackText" class="col-md-2 input-group" style="@Show">
+                                            <input type="text" id="@string.Format("QAProviderFeedbackRemarks_{0}", tabIndex)" class="form-control QARemarks" value="@Model.FirstOrDefault().QAProviderFeedbackText" />
+                                        </div>
+                                        <div class="input-group-append CoderCorrections" style="@Show">
+                                            <span class="input-group-text ControlHeight" style="margin-left:-12px;">
+                                                &nbsp;<i id="ProviderFeedbackID_@Model.FirstOrDefault().TabIndex" class="@Accepted" aria-hidden="true"></i>
+                                                &nbsp;<i id="ProviderFeedbackID_@Model.FirstOrDefault().TabIndex" class="@Rejected" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = "display:none", @class = "form-control QARevised", @id = string.Format("QAProviderFeedback_{0}", tabIndex) })
+                                        <div class="col-md-3 input-group CoderCorrections">
+                                            @Html.TextBoxFor(model => model.FirstOrDefault().RevisedProviderFeedbackRemarks, new { @class = string.Format("form-control Revised RevisedProviderFeedback_{0}", @Model.FirstOrDefault().TabIndex), @id = string.Format("CoderProviderFeedbackRemarks_{0}", tabIndex), @style = Show })
+                                            <span id="validFeedback_@Model.FirstOrDefault().TabIndex" class="text-danger txtdanger" style="display:none">*</span>
+                                        </div>
+                                    }
                                 </div>
-
                             </div>
                             <div class="clearfix"></div>
                             <div class="card">

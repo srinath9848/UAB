@@ -987,10 +987,10 @@ namespace UAB.DAL
                                 chartSummaryDTO.QAPayorID = Convert.ToInt32(reader["QAPayorID"]);
                             chartSummaryDTO.QAPayorRemarks = Convert.ToString(reader["QAPayorIdRemark"]);
                             chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
-                            chartSummaryDTO.QADx = Convert.ToString(reader["RebuttedDx"]);//Convert.ToString(reader["QADx"]);
+                            chartSummaryDTO.QADx = Convert.ToString(reader["QADx"]);//Convert.ToString(reader["RebuttedDx"]);
                             chartSummaryDTO.QADxRemarks = Convert.ToString(reader["QADxRemark"]);
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
-                            chartSummaryDTO.QACPTCode = Convert.ToString(reader["RebuttedCPTCode"]); //Convert.ToString(reader["QACPTCode"]);
+                            chartSummaryDTO.QACPTCode = Convert.ToString(reader["QACPTCode"]);//Convert.ToString(reader["RebuttedCPTCode"]); 
                             chartSummaryDTO.QACPTCodeRemarks = Convert.ToString(reader["QACPTCodeRemark"]);
 
                             if (reader["ProviderFeedbackID"] != DBNull.Value)
@@ -3567,9 +3567,9 @@ namespace UAB.DAL
             using (var context = new UABContext())
             {
                 var emlevellst = context.EMCodeLevel.Where(a => a.EMLevel == eMCodeLevel.EMLevel).ToList();
-                var otherexistingemlevelcode  = emlevellst.Where(a => a.EMLevel == eMCodeLevel.EMLevel &&a.EMCode==eMCodeLevel.EMCode).FirstOrDefault();
+                var otherexistingemlevelcode = emlevellst.Where(a => a.EMLevel == eMCodeLevel.EMLevel && a.EMCode == eMCodeLevel.EMCode).FirstOrDefault();
                 var existingcode = emlevellst.Where(a => a.Id == eMCodeLevel.Id).FirstOrDefault();
-                if (existingcode != null && otherexistingemlevelcode==null)
+                if (existingcode != null && otherexistingemlevelcode == null)
                 {
                     existingcode.EMCode = eMCodeLevel.EMCode;
                     context.Entry(existingcode).State = EntityState.Modified;
