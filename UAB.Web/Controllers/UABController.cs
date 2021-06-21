@@ -943,37 +943,61 @@ namespace UAB.Controllers
             // Rejected basic Params
 
             if (!string.IsNullOrEmpty(hdnClaim1))
-                PrepareRejectAudit(hdnClaim1, dtAudit, Convert.ToInt32(hdnQAErrorTypeID1));
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID1))
+                    PrepareRejectAudit(hdnClaim1, dtAudit, Convert.ToInt32(hdnQAErrorTypeID1));
+                else
+                    PrepareRejectAudit(hdnClaim1, dtAudit, 0);
 
             if (!string.IsNullOrEmpty(hdnClaim2))
-                PrepareRejectAudit(hdnClaim2, dtAudit, Convert.ToInt32(hdnQAErrorTypeID2));
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID2))
+                    PrepareRejectAudit(hdnClaim2, dtAudit, Convert.ToInt32(hdnQAErrorTypeID2));
+                else
+                    PrepareRejectAudit(hdnClaim2, dtAudit, 0);
 
             if (!string.IsNullOrEmpty(hdnClaim3))
-                PrepareRejectAudit(hdnClaim3, dtAudit, Convert.ToInt32(hdnQAErrorTypeID3));
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID3))
+                    PrepareRejectAudit(hdnClaim3, dtAudit, Convert.ToInt32(hdnQAErrorTypeID3));
+                else
+                    PrepareRejectAudit(hdnClaim3, dtAudit, 0);
 
             if (!string.IsNullOrEmpty(hdnClaim4))
-                PrepareRejectAudit(hdnClaim4, dtAudit, Convert.ToInt32(hdnQAErrorTypeID4));
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID4))
+                    PrepareRejectAudit(hdnClaim4, dtAudit, Convert.ToInt32(hdnQAErrorTypeID4));
+                else
+                    PrepareRejectAudit(hdnClaim4, dtAudit, 0);
 
             // Rejected Dx Codes
 
             if (!string.IsNullOrEmpty(hdnRejectedDxCodes))
             {
-                dtAudit.Rows.Add("Dx", hdnRejectedDxCodes, hdnRejectedDxRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), false);
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID1))
+                    dtAudit.Rows.Add("Dx", hdnRejectedDxCodes, hdnRejectedDxRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), false);
+                else
+                    dtAudit.Rows.Add("Dx", hdnRejectedDxCodes, hdnRejectedDxRemarks, 0, Convert.ToInt32(hdnClaimId1), false);
             }
 
             if (!string.IsNullOrEmpty(hdnRejectedDxCodes1))
             {
-                dtAudit.Rows.Add("Dx", hdnRejectedDxCodes1, hdnRejectedDxRemarks1, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), false);
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID2))
+                    dtAudit.Rows.Add("Dx", hdnRejectedDxCodes1, hdnRejectedDxRemarks1, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), false);
+                else
+                    dtAudit.Rows.Add("Dx", hdnRejectedDxCodes1, hdnRejectedDxRemarks1, 0, Convert.ToInt32(hdnClaimId2), false);
             }
 
             if (!string.IsNullOrEmpty(hdnRejectedDxCodes2))
             {
-                dtAudit.Rows.Add("Dx", hdnRejectedDxCodes2, hdnRejectedDxRemarks2, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), false);
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID3))
+                    dtAudit.Rows.Add("Dx", hdnRejectedDxCodes2, hdnRejectedDxRemarks2, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), false);
+                else
+                    dtAudit.Rows.Add("Dx", hdnRejectedDxCodes2, hdnRejectedDxRemarks2, 0, Convert.ToInt32(hdnClaimId3), false);
             }
 
             if (!string.IsNullOrEmpty(hdnRejectedDxCodes3))
             {
-                dtAudit.Rows.Add("Dx", hdnRejectedDxCodes3, hdnRejectedDxRemarks3, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), false);
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID4))
+                    dtAudit.Rows.Add("Dx", hdnRejectedDxCodes3, hdnRejectedDxRemarks3, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), false);
+                else
+                    dtAudit.Rows.Add("Dx", hdnRejectedDxCodes3, hdnRejectedDxRemarks3, 0, Convert.ToInt32(hdnClaimId4), false);
             }
 
             // Rejected CPT Codes
