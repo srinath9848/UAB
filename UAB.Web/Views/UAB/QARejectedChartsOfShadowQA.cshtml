@@ -116,6 +116,7 @@
                 ProviderID = $("#ShadowQAProviderID_" + tabid).val();
                 ProviderRemarks = $("#ShadowQAProviderIDRemarks_" + tabid).val();
                 if (ProviderID != "0" && ProviderID != "") {
+                    $("#validProvider_" + tabid).hide();
                     if ($("#hdnAcceptClaim" + tabid).val() == "") {
                         $("#hdnAcceptClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderID" + "," + ProviderID + "," + ProviderRemarks);
                     }
@@ -147,6 +148,7 @@
                 PayorID = $("#ShadowQAPayorID_" + tabid).val();
                 PayorRemarks = $('#ShadowQAPayorIDRemarks_' + tabid).val();
                 if (PayorID != "0" && PayorID != "") {
+                    $("#validPayor_" + tabid).hide();
                     if ($("#hdnAcceptClaim" + tabid).val() == "") {
                         $("#hdnAcceptClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "PayorID" + "," + PayorID + "," + PayorRemarks);
                     } else {
@@ -184,6 +186,7 @@
                 }
             } else {
                 if ($("#ShadowQAProviderFeedback_" + tabid).val() != "") {
+                    $("#validFeedback_" + tabid).hide();
                     ProviderFeedbackID = $("#ShadowQAProviderFeedback_" + tabid).val();
                     FeedbackRemarks = $('#ShadowQAProviderFeedbackRemarks_' + tabid).val();
                 }

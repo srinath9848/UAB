@@ -142,7 +142,7 @@
                                     @if (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText) && !Model.FirstOrDefault().ProviderText.Equals(Model.FirstOrDefault().QAProviderText))
                                     {
                                         <div class="col-md-2 input-group" style="@Show">
-                                            <input type="text" id="@string.Format("QAProviderIDRemarks_{0}", tabIndex)" class="form-control QARemarks ControlHeight" value="@Model.FirstOrDefault().QAProviderText" />
+                                            <input type="text" id="@string.Format("QAProviderIDRemarks_{0}", tabIndex)" class="form-control QARemarks ControlHeight"  disabled value="@Model.FirstOrDefault().QAProviderRemarks" />
                                         </div>
                                         @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = string.Format("QAProviderID_{0}", tabIndex), @class = "form-control QARevised", @style = "display:none" })
                                         <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
@@ -163,7 +163,7 @@
                                         Show = "display:none";
 
                                         <div class="col-md-2 input-group" style="@Show">
-                                            <input type="text" id="@string.Format("QAProviderIDRemarks_{0}", tabIndex)" class="form-control QARemarks ControlHeight" value="@Model.FirstOrDefault().QAProviderText" />
+                                            <input type="text" id="@string.Format("QAProviderIDRemarks_{0}", tabIndex)" class="form-control QARemarks ControlHeight" disabled value="@Model.FirstOrDefault().QAProviderRemarks" />
                                         </div>
                                         @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = string.Format("QAProviderID_{0}", tabIndex), @class = "form-control QARevised", @style = "display:none" })
                                         <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
@@ -208,7 +208,7 @@
                                     @if (!string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) && !Model.FirstOrDefault().PayorText.Equals(Model.FirstOrDefault().QAPayorText))
                                     {
                                         <div title="@Model.FirstOrDefault().QAPayorRemarks" class="col-md-2 input-group" style="@Show">
-                                            <input type="text" id="@string.Format("QAPayorIDRemarks_{0}", tabIndex)" class="form-control QARemarks" value="@Model.FirstOrDefault().QAPayorText" />
+                                            <input type="text" id="@string.Format("QAPayorIDRemarks_{0}", tabIndex)" class="form-control QARemarks" disabled value="@Model.FirstOrDefault().QAPayorRemarks" />
                                         </div>
                                         @Html.DropDownListFor(model => model.FirstOrDefault().QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = string.Format("QAPayorID_{0}", tabIndex), @class = "form-control QARevised", @style = "display:none" })
                                         <div class="input-group-append CoderCorrections" style="@Show">
@@ -229,7 +229,7 @@
                                         Show = "display:none";
 
                                         <div title="@Model.FirstOrDefault().QAPayorRemarks" class="col-md-2 input-group" style="@Show">
-                                            <input type="text" id="@string.Format("QAPayorIDRemarks_{0}", tabIndex)" class="form-control QARemarks" value="@Model.FirstOrDefault().QAPayorText" />
+                                            <input type="text" id="@string.Format("QAPayorIDRemarks_{0}", tabIndex)" class="form-control QARemarks" disabled value="@Model.FirstOrDefault().QAPayorRemarks" />
                                         </div>
                                         @Html.DropDownListFor(model => model.FirstOrDefault().QAPayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = string.Format("QAPayorID_{0}", tabIndex), @class = "form-control QARevised", @style = "display:none" })
                                         <div class="input-group-append CoderCorrections" style="@Show">
@@ -363,7 +363,7 @@
 
                                                 }
                                                 <div class="col-md-2 input-group ControlHeight" style="@Show">
-                                                    <input type="text" id="Dxremarks_@j" class="form-control QARemarks" value="@dictQADxRemarks?.ElementAt(i).Value" />
+                                                    <input type="text" id="Dxremarks_@j" class="form-control QARemarks" disabled value="@dictQADxRemarks?.ElementAt(i).Value" />
                                                 </div>
 
                                                 @Html.HiddenFor(model => dictDxCodes.ElementAt(i).Value, new { @class = "form-control", @id = string.Format("DxClaim_{0}_Coder_{1}", Model.FirstOrDefault().TabIndex, @j) })
@@ -526,7 +526,7 @@
                                                     Rejected = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
 
                                                     <div class="col-md-2 input-group ControlHeight" style="@Show">
-                                                        <input type="text" id="Cptremarks_@j" class="form-control QARemarks ControlHeight" value="@dictQACptRemarks?.ElementAt(i).Value" />
+                                                        <input type="text" id="Cptremarks_@j" class="form-control QARemarks ControlHeight" disabled value="@dictQACptRemarks?.ElementAt(i).Value" />
                                                     </div>
                                                     <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
                                                         <span class="input-group-text ControlHeight" style="margin-left:-12px;">
@@ -702,7 +702,7 @@
                                     @if (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText) && !Model.FirstOrDefault().ProviderFeedbackText.Equals(Model.FirstOrDefault().QAProviderFeedbackText))
                                     {
                                         <div title="@Model.FirstOrDefault().QAProviderFeedbackText" class="col-md-2 input-group" style="@Show">
-                                            <input type="text" id="@string.Format("QAProviderFeedbackRemarks_{0}", tabIndex)" class="form-control QARemarks" value="@Model.FirstOrDefault().QAProviderFeedbackText" />
+                                            <input type="text" id="@string.Format("QAProviderFeedbackRemarks_{0}", tabIndex)" class="form-control QARemarks" disabled value="@Model.FirstOrDefault().QAProviderFeedbackRemarks" />
                                         </div>
                                         <div class="input-group-append CoderCorrections" style="@Show">
                                             <span class="input-group-text ControlHeight" style="margin-left:-12px;">
@@ -723,7 +723,7 @@
                                         Show = "display:none";
 
                                         <div title="@Model.FirstOrDefault().QAProviderFeedbackText" class="col-md-2 input-group" style="@Show">
-                                            <input type="text" id="@string.Format("QAProviderFeedbackRemarks_{0}", tabIndex)" class="form-control QARemarks" value="@Model.FirstOrDefault().QAProviderFeedbackText" />
+                                            <input type="text" id="@string.Format("QAProviderFeedbackRemarks_{0}", tabIndex)" class="form-control QARemarks" disabled value="@Model.FirstOrDefault().QAProviderFeedbackRemarks" />
                                         </div>
                                         <div class="input-group-append CoderCorrections" style="@Show">
                                             <span class="input-group-text ControlHeight" style="margin-left:-12px;">

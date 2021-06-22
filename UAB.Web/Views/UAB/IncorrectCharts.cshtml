@@ -31,6 +31,7 @@
     $('.QACorrections').hide();
     $('.CoderDetails').attr('disabled', true);
 
+
     $('span i').click(function () {
         var id = $(this).attr('id');
         if ($(this).hasClass('fa-check-circle')) {
@@ -49,6 +50,7 @@
 
     $(document).on('click', '#btnsubmit', function (e) {
         $('.CoderDetails').removeAttr('disabled');
+        $('.QARemarks').removeAttr('disabled');
 
         if ($('.CoderCorrections[style="display:flex"] .reject').length > 0)
             $("#hdnStatusId").val('12');
