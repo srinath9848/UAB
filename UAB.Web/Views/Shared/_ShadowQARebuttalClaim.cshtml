@@ -50,7 +50,12 @@
 
         @{string Accepted = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
         @{string Rejected = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
-
+        @if (Model.ShadowQAProviderText.Equals(Model.QAProviderText))
+        {
+            Accepted = "fa fa-check-circle fa-lg accept";
+            Rejected = "fa fa-times-circle fa-lg";
+            Show = "display:none";
+        }
         <div class="input-group-append ControlHeight" style="@Show">
             <span class="input-group-text AcceptRejectWidth_@tabIndex">
                 &nbsp;<i id="ProviderID_@Model.TabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
@@ -97,7 +102,12 @@
 
         @{ Accepted = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
         @{ Rejected = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
-
+        @if (Model.ShadowQAPayorText.Equals(Model.QAPayorText))
+        {
+            Accepted = "fa fa-check-circle fa-lg accept";
+            Rejected = "fa fa-times-circle fa-lg";
+            Show = "display:none";
+        }
         <div class="input-group-append ControlHeight" style="@Show">
             <span class="input-group-text AcceptRejectWidth_@tabIndex">
                 &nbsp;<i id="PayorID_@tabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
@@ -523,7 +533,12 @@
         @{Show = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "display:none" : "display:flex");}
         @{ Accepted = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
         @{ Rejected = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
-
+        @if (Model.ShadowQAProviderFeedbackText.Equals(Model.QAProviderFeedbackText))
+        {
+            Accepted = "fa fa-check-circle fa-lg accept";
+            Rejected = "fa fa-times-circle fa-lg";
+            Show = "display:none";
+        }
         <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
             <span class="input-group-text AcceptRejectWidth_@tabIndex">
                 &nbsp;<i id="Feedback_@tabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>

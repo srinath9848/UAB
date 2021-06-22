@@ -77,7 +77,7 @@
     </div>
     @{Show = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "visibility:hidden" : "display:flex");}
     <div title="@Model.QAProviderRemarks" class="col-md-3 input-group" style="@Show">
-        <input type="text" class="@QARemarks" disabled value="@Model.QAProviderRemarks" />
+        <input type="text" class="@QARemarks" disabled value="@Model.QAProviderRemarks" id="@string.Format("QAProviderIDRemarks_{0}", @tabIndex)" />
     </div>
     @{Show = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "display:none" : "display:flex");}
     <div class="col-md-3 input-group">
@@ -122,7 +122,7 @@
     </div>
     @{Show = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "visibility:hidden" : "display:flex");}
     <div title="@Model.QAPayorRemarks" class="col-md-3 input-group" style="@Show">
-        <input type="text" class="@QARemarks" disabled value="@Model.QAPayorRemarks" />
+        <input type="text" class="@QARemarks" disabled value="@Model.QAPayorRemarks" id="@string.Format("QAPayorIDRemarks_{0}", @tabIndex)" />
     </div>
     @{Show = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "display:none" : "display:flex");}
     <div class="col-md-3 input-group">
@@ -528,7 +528,7 @@
     </div>
     @{Show = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "visibility:hidden" : "display:flex");}
     <div title="@Model.QAProviderFeedbackRemarks" class="col-md-3 input-group" style="@Show">
-        <input type="text" class="@QARemarks ControlHeight" disabled value="@Model.QAProviderFeedbackRemarks" />
+        <input type="text" class="@QARemarks ControlHeight" disabled value="@Model.QAProviderFeedbackRemarks" id="@string.Format("QAProviderFeedbackRemarks_{0}", @tabIndex)" />
     </div>
     @{Show = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "display:none" : "display:flex");}
     <div class="col-md-3 input-group">

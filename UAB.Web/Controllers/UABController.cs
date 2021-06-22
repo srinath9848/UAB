@@ -1918,33 +1918,33 @@ namespace UAB.Controllers
             if (!string.IsNullOrEmpty(hdnAcceptClaim1))
             {
                 if (!string.IsNullOrEmpty(hdnQAErrorTypeID1))
-                    PrepareAcceptAudit(hdnAcceptClaim1, dtAudit, Convert.ToInt32(hdnQAErrorTypeID1));
+                    PrepareAcceptAudit1(hdnAcceptClaim1, dtAudit, Convert.ToInt32(hdnQAErrorTypeID1));
                 else
-                    PrepareAcceptAudit(hdnAcceptClaim1, dtAudit, 0);
+                    PrepareAcceptAudit1(hdnAcceptClaim1, dtAudit, 0);
             }
 
             if (!string.IsNullOrEmpty(hdnAcceptClaim2))
             {
                 if (!string.IsNullOrEmpty(hdnQAErrorTypeID2))
-                    PrepareAcceptAudit(hdnAcceptClaim2, dtAudit, Convert.ToInt32(hdnQAErrorTypeID2));
+                    PrepareAcceptAudit1(hdnAcceptClaim2, dtAudit, Convert.ToInt32(hdnQAErrorTypeID2));
                 else
-                    PrepareAcceptAudit(hdnAcceptClaim2, dtAudit, 0);
+                    PrepareAcceptAudit1(hdnAcceptClaim2, dtAudit, 0);
             }
 
             if (!string.IsNullOrEmpty(hdnAcceptClaim3))
             {
                 if (!string.IsNullOrEmpty(hdnQAErrorTypeID3))
-                    PrepareAcceptAudit(hdnAcceptClaim3, dtAudit, Convert.ToInt32(hdnQAErrorTypeID3));
+                    PrepareAcceptAudit1(hdnAcceptClaim3, dtAudit, Convert.ToInt32(hdnQAErrorTypeID3));
                 else
-                    PrepareAcceptAudit(hdnAcceptClaim3, dtAudit, 0);
+                    PrepareAcceptAudit1(hdnAcceptClaim3, dtAudit, 0);
             }
 
             if (!string.IsNullOrEmpty(hdnAcceptClaim4))
             {
                 if (!string.IsNullOrEmpty(hdnQAErrorTypeID4))
-                    PrepareAcceptAudit(hdnAcceptClaim4, dtAudit, Convert.ToInt32(hdnQAErrorTypeID4));
+                    PrepareAcceptAudit1(hdnAcceptClaim4, dtAudit, Convert.ToInt32(hdnQAErrorTypeID4));
                 else
-                    PrepareAcceptAudit(hdnAcceptClaim4, dtAudit, 0);
+                    PrepareAcceptAudit1(hdnAcceptClaim4, dtAudit, 0);
             }
 
             // basic Reject Params for Claim 1 - Claim 2
@@ -2285,16 +2285,16 @@ namespace UAB.Controllers
             // basic Accept Params for Claim 1 - Claim 2
 
             if (!string.IsNullOrEmpty(hdnAcceptClaim1) && !string.IsNullOrEmpty(hdnShadowQAErrorTypeID1))
-                PrepareAcceptAudit(hdnAcceptClaim1, dtAudit, Convert.ToInt32(hdnShadowQAErrorTypeID1));
+                PrepareAcceptAudit1(hdnAcceptClaim1, dtAudit, Convert.ToInt32(hdnShadowQAErrorTypeID1));
 
             if (!string.IsNullOrEmpty(hdnAcceptClaim2) && !string.IsNullOrEmpty(hdnShadowQAErrorTypeID2))
-                PrepareAcceptAudit(hdnAcceptClaim2, dtAudit, Convert.ToInt32(hdnShadowQAErrorTypeID2));
+                PrepareAcceptAudit1(hdnAcceptClaim2, dtAudit, Convert.ToInt32(hdnShadowQAErrorTypeID2));
 
             if (!string.IsNullOrEmpty(hdnAcceptClaim3) && !string.IsNullOrEmpty(hdnShadowQAErrorTypeID3))
-                PrepareAcceptAudit(hdnAcceptClaim3, dtAudit, Convert.ToInt32(hdnShadowQAErrorTypeID3));
+                PrepareAcceptAudit1(hdnAcceptClaim3, dtAudit, Convert.ToInt32(hdnShadowQAErrorTypeID3));
 
             if (!string.IsNullOrEmpty(hdnAcceptClaim4) && !string.IsNullOrEmpty(hdnShadowQAErrorTypeID4))
-                PrepareAcceptAudit(hdnAcceptClaim4, dtAudit, Convert.ToInt32(hdnShadowQAErrorTypeID4));
+                PrepareAcceptAudit1(hdnAcceptClaim4, dtAudit, Convert.ToInt32(hdnShadowQAErrorTypeID4));
 
             // basic Reject Params for Claim 1 - Claim 2
 

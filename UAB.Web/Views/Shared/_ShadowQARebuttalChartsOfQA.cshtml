@@ -126,7 +126,6 @@
                                     <div title="@title" class="col-md-3 CPTWidth input-group">
                                         <div class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
                                             <span style="white-space:nowrap">
-
                                                 @if (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderText) && !Model.FirstOrDefault().QAProviderText.Equals(Model.FirstOrDefault().ProviderText))
                                                 {
                                                     <label style="color: red;">@ProviderText</label>
@@ -142,6 +141,12 @@
                                         @{string Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
                                         @{string Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "display:none" : "display:flex");}
+                                        @if (Model.FirstOrDefault().ShadowQAProviderText.Equals(Model.FirstOrDefault().QAProviderText))
+                                        {
+                                            Accepted = "fa fa-check-circle fa-lg accept";
+                                            Rejected = "fa fa-times-circle fa-lg";
+                                            Show = "display:none";
+                                        }
                                         <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
                                             <span class="input-group-text AcceptRejectWidth_@tabIndex">
                                                 <i id="ProviderID_@tabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
@@ -187,7 +192,12 @@
                                         @{ Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
 
                                         @{Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorRemarks) ? "display:none" : "display:flex");}
-
+                                        @if (Model.FirstOrDefault().ShadowQAPayorText.Equals(Model.FirstOrDefault().QAPayorText))
+                                        {
+                                            Accepted = "fa fa-check-circle fa-lg accept";
+                                            Rejected = "fa fa-times-circle fa-lg";
+                                            Show = "display:none";
+                                        }
                                         <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
                                             <span class="input-group-text AcceptRejectWidth_@tabIndex">
                                                 &nbsp;<i id="PayorID_@tabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
@@ -611,7 +621,12 @@
                                         @{Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "display:none" : "display:flex");}
                                         @{ Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                                         @{ Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
-
+                                        @if (Model.FirstOrDefault().ShadowQAProviderFeedbackText.Equals(Model.FirstOrDefault().QAProviderFeedbackText))
+                                        {
+                                            Accepted = "fa fa-check-circle fa-lg accept";
+                                            Rejected = "fa fa-times-circle fa-lg";
+                                            Show = "display:none";
+                                        }
                                         <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
                                             <span class="input-group-text AcceptRejectWidth_@tabIndex">
                                                 &nbsp;<i id="Feedback_@tabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>

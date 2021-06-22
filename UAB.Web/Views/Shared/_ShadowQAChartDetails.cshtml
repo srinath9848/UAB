@@ -169,7 +169,7 @@
                                     </div>
                                     @{Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "visibility:hidden" : "display:flex");}
                                     <div title="@Model.FirstOrDefault().QAProviderRemarks" class="col-md-3 input-group" style="@Show">
-                                        <input type="text" class="form-control QARemarks ControlHeight" disabled value="@Model.FirstOrDefault().QAProviderRemarks" />
+                                        <input type="text" class="form-control QARemarks ControlHeight" disabled value="@Model.FirstOrDefault().QAProviderRemarks" id="@string.Format("QAProviderIDRemarks_{0}", @tabIndex)" />
                                     </div>
                                     @{Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderRemarks) ? "display:none" : "display:flex");}
                                     <div class="col-md-3 input-group">
@@ -213,7 +213,7 @@
                                     </div>
                                     @{Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorRemarks) ? "visibility:hidden" : "display:flex");}
                                     <div title="@Model.FirstOrDefault().QAPayorRemarks" class="col-md-3 input-group" style="@Show">
-                                        <input type="text" class="form-control QARemarks ControlHeight" value="@Model.FirstOrDefault().QAPayorRemarks" />
+                                        <input type="text" class="form-control QARemarks ControlHeight" value="@Model.FirstOrDefault().QAPayorRemarks" id="@string.Format("QAPayorIDRemarks_{0}", @tabIndex)" />
                                     </div>
                                     @{Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorRemarks) ? "display:none" : "display:flex");}
                                     <div class="col-md-3 input-group">
@@ -597,7 +597,7 @@
                                     </div>
                                     @{Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "visibility:hidden" : "display:flex");}
                                     <div title="@Model.FirstOrDefault().QAProviderFeedbackRemarks" class="col-md-3 input-group" style="@Show">
-                                        <input type="text" class="form-control QARemarks ControlHeight" disabled value="@Model.FirstOrDefault().QAProviderFeedbackRemarks" />
+                                        <input type="text" class="form-control QARemarks ControlHeight" disabled value="@Model.FirstOrDefault().QAProviderFeedbackRemarks" id="@string.Format("QAProviderFeedbackRemarks_{0}", @tabIndex)" />
                                     </div>
                                     @{Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "display:none" : "display:flex");}
                                     <div class="col-md-3 input-group">
