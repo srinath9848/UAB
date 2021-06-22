@@ -186,6 +186,11 @@
 <script src="~/dashboardassets/extra-libs/DataTables/datatables.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+
+          $('#txtQty_1,#txtLinks_1').on('keyup keypress change', function (e) {
+            this.value = this.value.replace(/[^0-9\.]/g, '');
+        });
+
         PostedByProvider = function () {
 
             $.ajax({
