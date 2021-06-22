@@ -201,14 +201,6 @@
                                 </ul>
                             </li>
                         }
-                        @if (roles.Split(',').ToList().Contains(Roles.Supervisor.ToString()))
-                        {
-                            <li id="dashBoard" class="sidebar-item">
-                                <a class="sidebar-link waves-effect waves-dark sidebar-link" asp-area="" asp-controller="Home" asp-action="GetAgingReport">
-                                    <i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span>
-                                </a>
-                            </li>
-                        }
                         @if (roles.Split(',').ToList().Contains(Roles.Coder.ToString()))
                         {
                             <li id="coding" class="sidebar-item">
