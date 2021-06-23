@@ -63,7 +63,7 @@
 
     $(document).ready(function () {
         BlockClinicalcase = function () {
-            $('#btnBlockClinicalCase').prop('disabled', true);
+            $('#btnBlockClinicalCase').attr('disabled', true);
             if ($("#categorydd").find('option:selected').val() !== "" && $("#txtremarks").val() !== "") {
                 $.ajax({
                     type: "POST",
@@ -89,6 +89,7 @@
                 });
             } else {
                 alert("Please select category and enter remarks");
+                $('#btnBlockClinicalCase').attr('disabled', false);
             }
         }
         ModalClose1 = function () {
