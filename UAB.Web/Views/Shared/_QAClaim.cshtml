@@ -235,8 +235,8 @@
             </div>
             <input type="text" maxlength="5" style="min-width:50px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Code" value="" />
             <input type="text" style="min-width:42px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Mod" value="" />
-            <input type="text" style="max-width:23px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Qty" value="" />
-            <input type="text" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Link All" value="" />
+            <input type="text" style="max-width:23px;" class="form-control CoderDetails cptQtyClaim ControlHeight" autocomplete="off" placeholder="Qty" value="" />
+            <input type="text" class="form-control CoderDetails cptLinksClaim ControlHeight" autocomplete="off" placeholder="Link All" value="" />
             <div class="input-group-append ControlHeight">
                 <span class="input-group-text AcceptRejectWidth_@tabIndex">
                     &nbsp;<i data="@tabIndex" class="fa fa-edit fa-lg AdjustAcceptReject" aria-hidden="true" style="visibility:hidden"></i>
@@ -250,9 +250,9 @@
             </div>
             <input type="text" id="@string.Format("txt{0}Cpt_{1}", Model.TabIndex,totalCptCount)" maxlength="5" style="min-width:50px;" class="form-control ControlHeight Cptclaim_@tabIndex" autocomplete="off" placeholder="Code" value="" />
             <input type="text" id="@string.Format("txt{0}mod_{1}", Model.TabIndex,totalCptCount)" style="min-width:42px;" class="form-control ControlHeight Cptclaim_@tabIndex" autocomplete="off" placeholder="Mod" value="" />
-            <input type="text" id="@string.Format("txt{0}qty_{1}", Model.TabIndex,totalCptCount)" style="max-width:23px;" class="form-control ControlHeight Cptclaim_@tabIndex" autocomplete="off" placeholder="Qty" value="1" />
+            <input type="text" id="@string.Format("txt{0}qty_{1}", Model.TabIndex,totalCptCount)" style="max-width:23px;" class="form-control ControlHeight cptQtyClaim Cptclaim_@tabIndex" autocomplete="off" placeholder="Qty" value="1" />
 
-            <input type="text" id="@string.Format("txt{0}links_{1}", Model.TabIndex,totalCptCount)" class="form-control ControlHeight @Cpt2Link" autocomplete="off" placeholder="Link All" onfocusout="CptClaims('@CptLink')" />
+            <input type="text" id="@string.Format("txt{0}links_{1}", Model.TabIndex,totalCptCount)" class="form-control ControlHeight cptLinksClaim @Cpt2Link" autocomplete="off" placeholder="Link All" onfocusout="CptClaims('@CptLink')" />
         </div>
         <div class="col-md-3 QARevised_@tabIndex input-group @string.Format("Cpt_{0}_{1}", Model.TabIndex,totalCptCount)" id="@Div2CptRow" style="display:none">
             <input type="text" id="@string.Format("CptRemarkss_{0}_{1}", Model.TabIndex,i)" class="form-control ControlHeight" style="display:flex;" />
@@ -325,3 +325,10 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.cptQtyClaim,.cptLinksClaim').on('keyup keypress change', function (e) {
+            this.value = this.value.replace(/[^0-9\.]/g, '');
+        });
+    });
+</script>
