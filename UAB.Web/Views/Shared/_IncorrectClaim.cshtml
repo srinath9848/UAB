@@ -326,6 +326,7 @@
                 {
 
                     string codercptCode = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[0]);
+                    string cCpt = codercptCode;
                     string qacptCode = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[0]);
                     string color = (codercptCode != qacptCode) ? "color:blue;" : "";
                     string codercpt = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[0] : coderCptcodes[0]);
@@ -333,6 +334,7 @@
                     string cptCode1 = cptCode == qacptCode ? "" : codercptCode + "/";
 
                     string coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[1]);
+                    string cMod = coderMod;
                     string qaMod = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[1]);
                     color = (coderMod != qaMod) ? "color:blue;" : "";
                     coderMod = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[1] : coderCptcodes[1]);
@@ -340,6 +342,7 @@
                     string cptMod1 = cptMod == qaMod ? "" : coderMod + "/";
 
                     string coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[2]);
+                    string cQty = coderQty;
                     string qaQty = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[2]);
                     color = (coderQty != qaQty) ? "color:blue;" : "";
                     coderQty = (dictCptCodes?.ElementAt(i).Value == "NA" ? qaCptcodes[2] : coderCptcodes[2]);
@@ -347,6 +350,7 @@
                     string cptQty1 = cptQty == qaQty ? "" : coderQty + "/";
 
                     string coderLinks = (dictCptCodes?.ElementAt(i).Value == "NA" ? "NA" : coderCptcodes[3]);
+                    string cLinks = coderLinks;
                     string qaLinks = (dictQACptCodes?.ElementAt(i).Value == "" ? "" : qaCptcodes[3]);
                     string linkAll = qaLinks == "null" ? "" : qaLinks;
                     string cptLinks = !string.IsNullOrEmpty(coderLinks) ? coderLinks : "";
@@ -382,7 +386,7 @@
                                 if (codercptCode == "NA")
                                     color = "color:fuchsia;";
                                 <div class="form-control CoderDetails" style="min-width:60px;">
-                                    <span style="color:green">@cptCode1.Replace("/", "")</span>
+                                    <span style="color:green">@cCpt.Replace("/", "")</span>
                                     <br />
                                     <span style="color:red">@qacptCode</span>
                                 </div>
@@ -390,7 +394,7 @@
                                 if (coderMod == "NA")
                                     color = "color:fuchsia;";
                                 <div class="form-control CoderDetails">
-                                    <span style="color:green">@coderMod.Replace("/", "")</span>
+                                    <span style="color:green">@cMod.Replace("/", "")</span>
                                     <br />
                                     <span style="color:red">@qaMod</span>
                                 </div>
@@ -399,7 +403,7 @@
                                 if (coderQty == "NA")
                                     color = "color:fuchsia;";
                                 <div class="form-control CoderDetails">
-                                    <span style="color:green">@coderQty.Replace("/", "")</span>
+                                    <span style="color:green">@cQty.Replace("/", "")</span>
                                     <br />
                                     <span style="color:red">@qaQty</span>
                                 </div>
@@ -408,7 +412,7 @@
                                 if (coderLinks == "NA")
                                     color = "color:fuchsia;";
                                 <div class="form-control CoderDetails">
-                                    <span style="color:green">@cptLinks1.Replace("/", "")</span><br />
+                                    <span style="color:green">@cLinks.Replace("/", "")</span><br />
                                     <span style="color:red">@link</span>
                                 </div>
                             }
@@ -422,7 +426,7 @@
                     Rejected = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
 
                     <div class="col-md-2 input-group ControlHeight" style="@Show">
-                        <input type="text" id="@string.Format("QACptRemarkss_{0}_{1}", Model.TabIndex, j)" class="form-control QARemarks ControlHeight" disabled  value="@dictQACptRemarks?.ElementAt(i).Value" />
+                        <input type="text" id="@string.Format("QACptRemarkss_{0}_{1}", Model.TabIndex, j)" class="form-control QARemarks ControlHeight" disabled value="@dictQACptRemarks?.ElementAt(i).Value" />
                     </div>
                     <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
                         <span class="input-group-text ControlHeight" style="margin-left:-12px;">
