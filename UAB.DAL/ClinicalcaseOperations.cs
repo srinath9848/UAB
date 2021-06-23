@@ -3841,6 +3841,15 @@ namespace UAB.DAL
                 return mdl;
             }
         }
+        public void ChangeStatus(int UserId, bool IsActive)
+        {
+            using (var context = new UABContext())
+            {
+                var user = context.User.Where(a => a.UserId == UserId).FirstOrDefault();
+                user.IsActive = IsActive;
+                context.SaveChanges();
+            }
+        }
 
         public int AddUser(ApplicationUser user)
         {

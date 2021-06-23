@@ -226,6 +226,23 @@ namespace UAB.Controllers
             }
             return RedirectToAction("ManageUsers");
         }
+        [HttpPost]
+        public IActionResult changeStatus(int userID, bool IsActive)
+        {
+            try
+            {
+                if (userID != 0)
+                {
+                    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                    clinicalcaseOperations.ChangeStatus(userID, IsActive);
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+            return Content(IsActive == true ? "User Status Changed to Active" : "User Status Changed to InActive");
+        }
 
         [HttpGet]
         public ActionResult AddProjectUser(int userId)
@@ -237,9 +254,9 @@ namespace UAB.Controllers
 
             var UserProjects = clinicalcaseOperations.GetUserProjects(userId);
             string hdnroleproject = null;
-            if (UserProjects.Count >1)
+            if (UserProjects.Count > 1)
             {
-                 hdnroleproject = UserProjects.FirstOrDefault().hdnProjectAndRole.ToString();
+                hdnroleproject = UserProjects.FirstOrDefault().hdnProjectAndRole.ToString();
             }
             ApplicationUser appuser = new ApplicationUser();
             var user = clinicalcaseOperations.Getuser(userId);
