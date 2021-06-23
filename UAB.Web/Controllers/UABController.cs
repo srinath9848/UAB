@@ -1656,16 +1656,28 @@ namespace UAB.Controllers
             // basic Reject Params fro Claim 1 - Claim 2
 
             if (!string.IsNullOrEmpty(hdnClaimData1))
-                PrepareRejectAudit(hdnClaimData1, dtAudit, Convert.ToInt32(hdnQAErrorTypeID1));
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID1))
+                    PrepareRejectAudit(hdnClaimData1, dtAudit, Convert.ToInt32(hdnQAErrorTypeID1));
+                else
+                    PrepareRejectAudit(hdnClaimData1, dtAudit, 0);
 
             if (!string.IsNullOrEmpty(hdnClaimData2))
-                PrepareRejectAudit(hdnClaimData2, dtAudit, Convert.ToInt32(hdnQAErrorTypeID2));
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID2))
+                    PrepareRejectAudit(hdnClaimData2, dtAudit, Convert.ToInt32(hdnQAErrorTypeID2));
+                else
+                    PrepareRejectAudit(hdnClaimData2, dtAudit, 0);
 
             if (!string.IsNullOrEmpty(hdnClaimData3))
-                PrepareRejectAudit(hdnClaimData3, dtAudit, Convert.ToInt32(hdnQAErrorTypeID3));
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID3))
+                    PrepareRejectAudit(hdnClaimData3, dtAudit, Convert.ToInt32(hdnQAErrorTypeID3));
+                else
+                    PrepareRejectAudit(hdnClaimData3, dtAudit, 0);
 
             if (!string.IsNullOrEmpty(hdnClaimData4))
-                PrepareRejectAudit(hdnClaimData4, dtAudit, Convert.ToInt32(hdnQAErrorTypeID4));
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID4))
+                    PrepareRejectAudit(hdnClaimData4, dtAudit, Convert.ToInt32(hdnQAErrorTypeID4));
+                else
+                    PrepareRejectAudit(hdnClaimData4, dtAudit, 0);
 
             var hdnDx = Request.Form["hdnDx"].ToString();
             var hdnDxRemarks = Request.Form["hdnDxRemarks"].ToString();
