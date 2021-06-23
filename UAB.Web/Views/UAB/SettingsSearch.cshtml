@@ -53,11 +53,11 @@
                         @Html.ValidationMessageFor(model => model.ProviderName, null, new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
-                        @Html.TextBoxFor(model => model.DoSFrom, new { @class = "form-control", @type = "text", @autofocus = "autofocus", @id = "txtDoSFrom", @autocomplete = "off", @placeholder = "Enter DOS From", @onfocus = "(this.type='date')", @onblur = "(this.type='text')" })
+                        @Html.TextBoxFor(model => model.DoSFrom, new { @class = "form-control", @type = "text", @autofocus = "autofocus", @id = "txtDoSFrom", @autocomplete = "off", @placeholder = "Enter DOS From", @onfocus = "(this.type='date')", @onblur = "(this.type='date')" })
                         @Html.ValidationMessageFor(model => model.DoSFrom, null, new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
-                        @Html.TextBoxFor(model => model.DoSTo, new { @class = "form-control", @type = "text", @autofocus = "autofocus", @id = "txtDoSTo", @autocomplete = "off", @placeholder = "Enter DOS To", @onfocus = "(this.type='date')", @onblur = "(this.type='text')" })
+                        @Html.TextBoxFor(model => model.DoSTo, new { @class = "form-control", @type = "text", @autofocus = "autofocus", @id = "txtDoSTo", @autocomplete = "off", @placeholder = "Enter DOS To", @onfocus = "(this.type='date')", @onblur = "(this.type='date')" })
                         @Html.ValidationMessageFor(model => model.DoSTo, null, new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
