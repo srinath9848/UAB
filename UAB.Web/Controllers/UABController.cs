@@ -698,7 +698,7 @@ namespace UAB.Controllers
             TempData["Success"] = "Chart Details submitted successfully !";
             return View("CodingSummary", lstDto);
         }
-        public IActionResult codingSubmitPopup(ChartSummaryDTO chartSummaryDTO, string buttonType, string isAuditRequired)
+        public IActionResult codingSubmitPopup(string buttonType, string isAuditRequired)
         {
             _logger.LogInformation("Loading Started for codingSubmitPopup for User: " + mUserId);
 
@@ -707,7 +707,7 @@ namespace UAB.Controllers
 
             _logger.LogInformation("Loading Ended for codingSubmitPopup for User: " + mUserId);
 
-            return PartialView("_CodingSubmitPopup", chartSummaryDTO);
+            return PartialView("_CodingSubmitPopup");
         }
         public IActionResult GetAuditDetails(string chartType, int projectId, string dt)
         {
