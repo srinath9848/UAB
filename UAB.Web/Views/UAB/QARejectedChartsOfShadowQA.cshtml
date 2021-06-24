@@ -232,10 +232,6 @@
                         if (res1.includes('accept')) {
                             if ($("#QADxRemarkss_" + tabid + "_" + id).val() != "" && $("#QADxRemarkss_" + tabid + "_" + id).val() != undefined) {
                                 $("#validDxRemarksClaim_" + tabid + "_" + id).hide();
-                                //        if ($("#ErrorType_" + tabid).val() != "") {
-                                //            $("#ErrorTypeError_" + tabid).html('');
-                                //        }
-
                                 if ($("#hdnQAAcceptDxRemarks" + tabid).val() == "") {
                                     if ($("#SQADxRemarkss_" + tabid + "_" + id).val() == "" && $("#SQADxRemarkss_" + tabid + "_" + id).val() == undefined) {
                                         $("#hdnQAAcceptDxRemarks" + tabid).val(id + "^" + $("#QADxRemarkss_" + tabid + "_" + id).val());
@@ -259,11 +255,6 @@
                                         $("#validDxRemarksClaim_" + tabid + "_" + id).show();
                                     }
                                 }
-                                //if ($("#ErrorType_" + tabid).val() == "") {
-                                //    $("#ErrorType_" + tabid).attr('readonly', false);
-                                //    $("#ErrorType_" + tabid).css("pointer-events", "auto");
-                                //    $("#ErrorTypeError_" + tabid).html('<span id="projectdd-error" class="">ErrorType is required.</span>');
-                                //}
                             }
                         }
                     }
@@ -397,11 +388,11 @@
                 }
             };
 
-            if ($("#hdnQADxRemarks" + tabid).val() != "")
-                $("#hdnQAAcceptDxRemarks" + tabid).val('');
+            //if ($("#hdnQADxRemarks" + tabid).val() != "")
+            //    $("#hdnQAAcceptDxRemarks" + tabid).val('');
 
-            if ($("#hdnQACptRemarks" + tabid).val() != "")
-                $("#hdnQAAcceptCptRemarks" + tabid).val('');
+            //if ($("#hdnQACptRemarks" + tabid).val() != "")
+            //    $("#hdnQAAcceptCptRemarks" + tabid).val('');
 
         });
 
@@ -581,11 +572,11 @@
             }
         }
 
-        if ($("#hdnQADxRemarks").val() != "")
-            $("#hdnQAAcceptDxRemarks").val('');
+        //if ($("#hdnQADxRemarks").val() != "")
+        //    $("#hdnQAAcceptDxRemarks").val('');
 
-        if ($("#hdnQACptRemarks").val() != "")
-            $("#hdnQAAcceptCptRemarks").val('');
+        //if ($("#hdnQACptRemarks").val() != "")
+        //    $("#hdnQAAcceptCptRemarks").val('');
 
 
         var total = $(".fa-check-circle").length;

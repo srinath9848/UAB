@@ -140,24 +140,22 @@
                 for (var i = 0; i < DxNewClaimremarks.length; i++) {
                     var id = parseInt($(DxNewClaimremarks[i]).attr("id").split("_")[2]);
                     var res = $("[id='DxClaim_" + tabid + "_" + id + "']:eq(1)").attr('class');
-                    if ($(DxNewClaimremarks[i]).css("display") == "flex") {
-                        if (res.includes('reject')) {
-                            if ($(DxNewClaimremarks[i]).val() != "") {
-                                if ($("#hdnQADxRemarks" + tabid).val() == "")
-                                    $("#hdnQADxRemarks" + tabid).val(id + "^" + $(DxNewClaimremarks[i]).val());
-                                else
-                                    $("#hdnQADxRemarks" + tabid).val($("#hdnQADxRemarks" + tabid).val() + "|" + id + "^" + $(DxNewClaimremarks[i]).val());
-
-                            }
-                        }
-                        else {
-                            if ($("#hdnQAAcceptDxRemarks" + tabid).val() == "")
-                                $("#hdnQAAcceptDxRemarks" + tabid).val(id + "^" + $(".QADxRemarkss_" + tabid + "_" + id).val());
+                    if ($(DxNewClaimremarks[i]).css("display") == "flex" && res.includes('reject')) {
+                        if ($(DxNewClaimremarks[i]).val() != "") {
+                            if ($("#hdnQADxRemarks" + tabid).val() == "")
+                                $("#hdnQADxRemarks" + tabid).val(id + "^" + $(DxNewClaimremarks[i]).val());
                             else
-                                $("#hdnQAAcceptDxRemarks" + tabid).val($("#hdnQAAcceptDxRemarks" + tabid).val() + "|" + id + "^" + $(".QADxRemarkss_" + tabid + "_" + id).val());
+                                $("#hdnQADxRemarks" + tabid).val($("#hdnQADxRemarks" + tabid).val() + "|" + id + "^" + $(DxNewClaimremarks[i]).val());
                         }
                     }
+                    else {
+                        if ($("#hdnQAAcceptDxRemarks" + tabid).val() == "")
+                            $("#hdnQAAcceptDxRemarks" + tabid).val(id + "^" + $(".QADxRemarkss_" + tabid + "_" + id).val());
+                        else
+                            $("#hdnQAAcceptDxRemarks" + tabid).val($("#hdnQAAcceptDxRemarks" + tabid).val() + "|" + id + "^" + $(".QADxRemarkss_" + tabid + "_" + id).val());
+                    }
                 }
+
 
                 // DxNewClaimcodes
                 var DxNewClaimcodes = $("[id*=txtDx" + tabid + "Claim_]");
@@ -232,11 +230,11 @@
                 }
             };
 
-            if ($("#hdnQADxRemarks" + tabid).val() != "")
-                $("#hdnQAAcceptDxRemarks" + tabid).val('');
+            //if ($("#hdnQADxRemarks" + tabid).val() != "")
+            //    $("#hdnQAAcceptDxRemarks" + tabid).val('');
 
-            if ($("#hdnQACptRemarks" + tabid).val() != "")
-                $("#hdnQAAcceptCptRemarks" + tabid).val('');
+            //if ($("#hdnQACptRemarks" + tabid).val() != "")
+            //    $("#hdnQAAcceptCptRemarks" + tabid).val('');
 
         });
 
@@ -319,11 +317,11 @@
             }
         }
 
-        if ($("#hdnQADxRemarks").val() != "")
-            $("#hdnQAAcceptDxRemarks").val('');
+        //if ($("#hdnQADxRemarks").val() != "")
+        //    $("#hdnQAAcceptDxRemarks").val('');
 
-        if ($("#hdnQACptRemarks").val() != "")
-            $("#hdnQAAcceptCptRemarks").val('');
+        //if ($("#hdnQACptRemarks").val() != "")
+        //    $("#hdnQAAcceptCptRemarks").val('');
 
         var total = $(".fa-check-circle").length;
         var reject = $(".reject").length;
