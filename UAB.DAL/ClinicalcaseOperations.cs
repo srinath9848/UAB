@@ -2831,7 +2831,7 @@ namespace UAB.DAL
             return dto;
         }
 
-        public CodingDTO SubmitQARebuttalChartsOfCoder(ChartSummaryDTO chartSummaryDTO, DataTable dtAudit)
+        public CodingDTO SubmitQARebuttalChartsOfCoder(ChartSummaryDTO chartSummaryDTO, DataTable dtAudit, DataTable dtbasicParams, DataTable dtDx, DataTable dtCpt)
         {
             CodingDTO dto = new CodingDTO();
 
@@ -2855,6 +2855,27 @@ namespace UAB.DAL
                             Direction = System.Data.ParameterDirection.Input,
                             TypeName = "utWorkItemAudit",
                             Value = dtAudit
+                        },
+                          new SqlParameter() {
+                            ParameterName = "@utBasicParams",
+                            SqlDbType =  System.Data.SqlDbType.Structured,
+                            Direction = System.Data.ParameterDirection.Input,
+                            TypeName = "utBasicParams",
+                            Value = dtbasicParams
+                        },
+                          new SqlParameter() {
+                            ParameterName = "@utDxCode",
+                            SqlDbType =  System.Data.SqlDbType.Structured,
+                            Direction = System.Data.ParameterDirection.Input,
+                            TypeName = "utDxCode",
+                            Value = dtDx
+                        },
+                          new SqlParameter() {
+                            ParameterName = "@utCptCode",
+                            SqlDbType =  System.Data.SqlDbType.Structured,
+                            Direction = System.Data.ParameterDirection.Input,
+                            TypeName = "utCptCode",
+                            Value = dtCpt
                         }
                 };
 

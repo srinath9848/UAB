@@ -1599,6 +1599,23 @@ namespace UAB.Controllers
             dtAudit.Columns.Add("ClaimId", typeof(int));
             dtAudit.Columns.Add("IsAccepted", typeof(bool));
 
+            DataTable dtbasicParams = new DataTable();
+            dtbasicParams.Columns.Add("ProviderID", typeof(int));
+            dtbasicParams.Columns.Add("PayorID", typeof(int));
+            dtbasicParams.Columns.Add("ProviderFeedbackID", typeof(int));
+            dtbasicParams.Columns.Add("ClaimId", typeof(int));
+
+            DataTable dtCpt = new DataTable();
+            dtCpt.Columns.Add("CPTCode", typeof(string));
+            dtCpt.Columns.Add("Mod", typeof(string));
+            dtCpt.Columns.Add("Qty", typeof(string));
+            dtCpt.Columns.Add("Links", typeof(string));
+            dtCpt.Columns.Add("ClaimId", typeof(int));
+
+            DataTable dtDx = new DataTable();
+            dtDx.Columns.Add("DxCode", typeof(string));
+            dtDx.Columns.Add("ClaimId", typeof(int));
+
             var hdnClaimId2 = Request.Form["hdnClaimId2"].ToString();
             var hdnClaimId3 = Request.Form["hdnClaimId3"].ToString();
             var hdnClaimId4 = Request.Form["hdnClaimId4"].ToString();
@@ -1622,6 +1639,8 @@ namespace UAB.Controllers
 
             if (!string.IsNullOrEmpty(hdnAcceptClaim1))
             {
+                PrepareBasicParams(hdnAcceptClaim1, dtbasicParams);
+
                 if (!string.IsNullOrEmpty(hdnQAErrorTypeID1))
                     PrepareAcceptAudit(hdnAcceptClaim1, dtAudit, Convert.ToInt32(hdnQAErrorTypeID1));
                 else
@@ -1630,6 +1649,8 @@ namespace UAB.Controllers
 
             if (!string.IsNullOrEmpty(hdnAcceptClaim2))
             {
+                PrepareBasicParams(hdnAcceptClaim2, dtbasicParams);
+
                 if (!string.IsNullOrEmpty(hdnQAErrorTypeID2))
                     PrepareAcceptAudit(hdnAcceptClaim2, dtAudit, Convert.ToInt32(hdnQAErrorTypeID2));
                 else
@@ -1638,6 +1659,8 @@ namespace UAB.Controllers
 
             if (!string.IsNullOrEmpty(hdnAcceptClaim3))
             {
+                PrepareBasicParams(hdnAcceptClaim3, dtbasicParams);
+
                 if (!string.IsNullOrEmpty(hdnQAErrorTypeID3))
                     PrepareAcceptAudit(hdnAcceptClaim3, dtAudit, Convert.ToInt32(hdnQAErrorTypeID3));
                 else
@@ -1646,6 +1669,8 @@ namespace UAB.Controllers
 
             if (!string.IsNullOrEmpty(hdnAcceptClaim4))
             {
+                PrepareBasicParams(hdnAcceptClaim4, dtbasicParams);
+
                 if (!string.IsNullOrEmpty(hdnQAErrorTypeID4))
                     PrepareAcceptAudit(hdnAcceptClaim4, dtAudit, Convert.ToInt32(hdnQAErrorTypeID4));
                 else
@@ -1696,6 +1721,7 @@ namespace UAB.Controllers
             // Accept Claim 1 Dx & CPT
             if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes))
             {
+                PrepareDxCodes(hdnQAAcceptDxCodes, dtDx, 0);
                 if (!string.IsNullOrEmpty(hdnQAErrorTypeID1))
                     dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes, hdnQAAcceptDxRemarks, Convert.ToInt32(hdnQAErrorTypeID1), 0, true);
                 else
@@ -1704,6 +1730,7 @@ namespace UAB.Controllers
 
             if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes))
             {
+                PrepareCptCodes(hdnQAAcceptCptCodes, dtCpt, 0);
                 if (!string.IsNullOrEmpty(hdnQAErrorTypeID1))
                     dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes, hdnQAAcceptCptRemarks, Convert.ToInt32(hdnQAErrorTypeID1), 0, true);
                 else
@@ -1719,6 +1746,7 @@ namespace UAB.Controllers
             // Accept 2 Dx & CPT
             if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes2))
             {
+                PrepareDxCodes(hdnQAAcceptDxCodes2, dtDx, Convert.ToInt32(hdnClaimId2));
                 if (!string.IsNullOrEmpty(hdnQAErrorTypeID2))
                     dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes2, hdnQAAcceptDxRemarks2, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
                 else
@@ -1727,6 +1755,7 @@ namespace UAB.Controllers
 
             if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes2))
             {
+                PrepareCptCodes(hdnQAAcceptCptCodes2, dtCpt, Convert.ToInt32(hdnClaimId2));
                 if (!string.IsNullOrEmpty(hdnQAErrorTypeID2))
                     dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes2, hdnQAAcceptCptRemarks2, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), true);
                 else
@@ -1741,6 +1770,7 @@ namespace UAB.Controllers
             // Accept Claim 3 Dx & CPT
             if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes3))
             {
+                PrepareDxCodes(hdnQAAcceptDxCodes3, dtDx, Convert.ToInt32(hdnClaimId3));
                 if (!string.IsNullOrEmpty(hdnQAErrorTypeID3))
                     dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes3, hdnQAAcceptDxRemarks3, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
                 else
@@ -1748,6 +1778,7 @@ namespace UAB.Controllers
             }
             if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes3))
             {
+                PrepareCptCodes(hdnQAAcceptCptCodes3, dtCpt, Convert.ToInt32(hdnClaimId3));
                 if (!string.IsNullOrEmpty(hdnQAErrorTypeID3))
                     dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes3, hdnQAAcceptCptRemarks3, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), true);
                 else
@@ -1762,6 +1793,7 @@ namespace UAB.Controllers
             // Accept Claim 4 Dx & CPT
             if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes4))
             {
+                PrepareDxCodes(hdnQAAcceptDxCodes4, dtDx, Convert.ToInt32(hdnClaimId4));
                 if (!string.IsNullOrEmpty(hdnQAErrorTypeID4))
                     dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes4, hdnQAAcceptDxRemarks4, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
                 else
@@ -1769,6 +1801,7 @@ namespace UAB.Controllers
             }
             if (!string.IsNullOrEmpty(hdnQAAcceptCptCodes4))
             {
+                PrepareCptCodes(hdnQAAcceptCptCodes4, dtCpt, Convert.ToInt32(hdnClaimId4));
                 if (!string.IsNullOrEmpty(hdnQAErrorTypeID4))
                     dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes4, hdnQAAcceptCptRemarks4, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
                 else
@@ -1837,10 +1870,10 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
             if (string.IsNullOrEmpty(SubmitAndGetNext))
-                clinicalcaseOperations.SubmitQARebuttalChartsOfCoder(chartSummaryDTO, dtAudit);
+                clinicalcaseOperations.SubmitQARebuttalChartsOfCoder(chartSummaryDTO, dtAudit, dtbasicParams, dtDx, dtCpt);
             else
             {
-                clinicalcaseOperations.SubmitQARebuttalChartsOfCoder(chartSummaryDTO, dtAudit);
+                clinicalcaseOperations.SubmitQARebuttalChartsOfCoder(chartSummaryDTO, dtAudit, dtbasicParams, dtDx, dtCpt);
                 return RedirectToAction("GetQARebuttalChartsOfCoder", new { Role = Roles.QA.ToString(), ChartType = "RebuttalOfCoder", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName });
             }
 
