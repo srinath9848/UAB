@@ -3697,47 +3697,6 @@ namespace UAB.Controllers
             _logger.LogInformation("Loading Ended for Fetching DeleteProject for User: " + mUserId);
             return PartialView("_DeleteProject", obj);
         }
-
-        [HttpGet]
-        public IActionResult SettingsFileUpload()
-        {
-            _logger.LogInformation("Loading Started for Fetching SettingsFileUpload for User: " + mUserId);
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-
-            ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
-            _logger.LogInformation("Loading Ended for Fetching SettingsFileUpload for User: " + mUserId);
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult SettingsFileUpload(IFormFile files, int projectid)
-        {
-            _logger.LogInformation("Loading Started for Submit SettingsFileUpload for User: " + mUserId);
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            try
-            {
-                string uploadedFile = Path.Combine(@"D:\\");
-                string fileName = files.FileName;
-                string filePath = Path.Combine(uploadedFile, fileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    files.CopyTo(stream);
-                    clinicalcaseOperations.UploadAndSave(stream, projectid, fileName);
-                }
-                TempData["Success"] = "Data uploaded Successfully!";
-                ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
-                _logger.LogInformation("Loading Ended for Submit SettingsFileUpload for User: " + mUserId);
-                return View();
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
-                TempData["error"] = ex.Message;
-                return View();
-            }
-        }
-
         #endregion
     }
 }
