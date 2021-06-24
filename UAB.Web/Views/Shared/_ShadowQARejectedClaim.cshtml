@@ -342,101 +342,126 @@
 
                     string link = !string.IsNullOrEmpty(@qaLinks) || @qaLinks != "null" ? @qaLinks : "Link All";
                     cptLinks1 = cptLinks == link ? "" : coderLinks + "/";
-                    <div title="Code : @cptCode1@qacptCode, Mod : @cptMod1@mod, Quantity : @cptQty1@qaQty, Link : @cptLinks1@link" class="col-md-3 input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
-                        </div>
-                        @{
-                            if (codercptCode == "NA")
-                                color = "color:fuchsia;";
-                            @if (cptCode == qacptCode)
-                            {
-                                <input type="text" style="color: green" class="form-control CoderDetails ControlHeight" value="@cptCode" disabled="disabled">
-                            }
-                            else
-                            {
-                                <div class="form-control CoderDetails" style="min-width:60px;">
-                                    <span style="color:red">@cptCode</span>
-                                    <br />
-                                    <span style="color:green">@qacptCode</span>
-                                </div>
-                            }
-
-
-                            color = (coderMod != qaMod) ? "color:blue;" : "";
-                            if (coderMod == "NA")
-                                color = "color:fuchsia;";
-
-                            @if (cptMod == mod)
-                            {
-                                <input type="text" style="color: green" class="form-control CoderDetails ControlHeight" value="@cptMod" disabled="disabled">
-                            }
-                            else
-                            {
-                                <div class="form-control CoderDetails">
-                                    <span style="color:red">@cptMod</span>
-                                    <br />
-                                    <span style="color:green">@mod</span>
-                                </div>
-                            }
-
-
-
-                            color = (coderQty != qaQty) ? "color:blue;" : "";
-                            if (coderQty == "NA")
-                                color = "color:fuchsia;";
-
-                            @if (cptQty == qaQty)
-                            {
-                                <input type="text" style="color: green" class="form-control CoderDetails ControlHeight" value="@cptQty" disabled="disabled">
-                            }
-                            else
-                            {
-                                <div class="form-control CoderDetails">
-                                    <span style="color:red">@cptQty</span>
-                                    <br />
-                                    <span style="color:green">@qaQty</span>
-                                </div>
-                            }
-
-
-
-                            color = (coderLinks != qaLinks) ? "color:blue;" : "";
-                            if (coderLinks == "NA")
-                                color = "color:fuchsia;";
-
-                            @if (cptLinks == linkAll)
-                            {
-                                <input type="text" style="color: green" class="form-control CoderDetails ControlHeight" value="@cptLinks" disabled="disabled">
-                            }
-                            else
-                            {
-                                <div class="form-control CoderDetails">
-                                    <span style="color:red">@cptLinks</span>
-                                    <br />
-                                    <span style="color:green">@linkAll</span>
-                                </div>
-                            }
-
-
-                            if (qacptCode == ShadowQaCpt)
-                            {
-                                Accepted = "fa fa-check-circle fa-lg accept";
-                                Rejected = "fa fa-times-circle fa-lg";
-                                Show = "display:none";
-                            }
-                            else
-                            {
-                                Accepted = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
-                                Rejected = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
-                                Show = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex");
-                            }
-
-                            <input type="hidden" id="@string.Format("txt{0}Cpt_{1}", Model.TabIndex,j)" value="@qacptCode^@qaMod^@qaQty^@qaLinks" />
-
-
+            <div title="Code : @cptCode1@qacptCode, Mod : @cptMod1@mod, Quantity : @cptQty1@qaQty, Link : @cptLinks1@link" class="col-md-3 input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
+                </div>
+                @{
+                    if (codercptCode == "NA")
+                        color = "color:fuchsia;";
+                    @if (cptCode == qacptCode)
+                    {
+                        @if (cptCode != "NA")
+                        {
+                            <div class="form-control CoderDetails" style="min-width:60px;">
+                                <span style="color:green">@cptCode</span>
+                                <br />
+                                <span style="color:green">@qacptCode</span>
+                            </div>
                         }
-                    </div>
+                        else
+                        {
+                            <div class="form-control CoderDetails" style="min-width:60px;">
+                                <span style="color:red">@cptCode</span>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="form-control CoderDetails" style="min-width:60px;">
+                            <span style="color:red">@cptCode</span>
+                            <br />
+                            <span style="color:green">@qacptCode</span>
+                        </div>
+                    }
+
+
+                    color = (coderMod != qaMod) ? "color:blue;" : "";
+                    if (coderMod == "NA")
+                        color = "color:fuchsia;";
+
+                    @if (cptMod == mod)
+                    {
+                        <div class="form-control CoderDetails">
+                            <span style="color:green">@cptMod</span>
+                            <br />
+                            <span style="color:green">@mod</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-control CoderDetails">
+                            <span style="color:red">@cptMod</span>
+                            <br />
+                            <span style="color:green">@mod</span>
+                        </div>
+                    }
+
+
+
+                    color = (coderQty != qaQty) ? "color:blue;" : "";
+                    if (coderQty == "NA")
+                        color = "color:fuchsia;";
+
+                    @if (cptQty == qaQty)
+                    {
+                        <div class="form-control CoderDetails">
+                            <span style="color:green">@cptQty</span>
+                            <br />
+                            <span style="color:green">@qaQty</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-control CoderDetails">
+                            <span style="color:red">@cptQty</span>
+                            <br />
+                            <span style="color:green">@qaQty</span>
+                        </div>
+                    }
+
+
+
+                    color = (coderLinks != qaLinks) ? "color:blue;" : "";
+                    if (coderLinks == "NA")
+                        color = "color:fuchsia;";
+
+                    @if (cptLinks == linkAll)
+                    {
+                        <div class="form-control CoderDetails">
+                            <span style="color:green">@cptLinks</span>
+                            <br />
+                            <span style="color:green">@linkAll</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-control CoderDetails">
+                            <span style="color:red">@cptLinks</span>
+                            <br />
+                            <span style="color:green">@linkAll</span>
+                        </div>
+                    }
+
+
+                    if (qacptCode == ShadowQaCpt)
+                    {
+                        Accepted = "fa fa-check-circle fa-lg accept";
+                        Rejected = "fa fa-times-circle fa-lg";
+                        Show = "display:none";
+                    }
+                    else
+                    {
+                        Accepted = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
+                        Rejected = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
+                        Show = (string.IsNullOrEmpty(dictShadowQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex");
+                    }
+
+                    <input type="hidden" id="@string.Format("txt{0}Cpt_{1}", Model.TabIndex,j)" value="@qacptCode^@qaMod^@qaQty^@qaLinks" />
+
+
+                }
+            </div>
                 }
                 else
                 {

@@ -336,7 +336,16 @@
                         <div class="form-control CoderDetails" style="min-width:60px;">
                             @if (cptCode == qacptCode)
                             {
-                                <span style="color:green">@cptCode</span>
+                                @if (cptCode != "NA")
+                                {
+                                    <span style="color:green">@cptCode</span>
+                                    <br />
+                                    <span style="color:green">@qacptCode</span>
+                                }
+                                else
+                                {
+                                    <span style="color:red">@cptCode</span>
+                                }
                             }
                             else
                             {
@@ -350,6 +359,8 @@
                             @if (cptMod == mod)
                             {
                                 <span style="color:green">@cptMod</span>
+                                <br />
+                                <span style="color:green">@mod</span>
                             }
                             else
                             {
@@ -364,6 +375,8 @@
                             @if (cptQty == qaQty)
                             {
                                 <span style="color:green">@cptQty</span>
+                                <br />
+                                <span style="color:green">@qaQty</span>
                             }
                             else
                             {
@@ -378,6 +391,8 @@
                             @if (cptLinks == linkAll)
                             {
                                 <span style="color:green">@cptLinks</span>
+                                <br />
+                                <span style="color:green">@linkAll</span>
                             }
                             else
                             {

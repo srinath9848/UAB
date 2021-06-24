@@ -432,7 +432,20 @@
 
                                                             @if (cptCode == qacptCode)
                                                             {
-                                                                <input type="text" style="color: green" class="form-control CoderDetails ControlHeight" value="@cptCode" disabled="disabled">
+                                                                @if (cptCode != "NA")
+                                                                {
+                                                                    <div class="form-control CoderDetails" style="min-width:60px;">
+                                                                        <span style="color:green">@cptCode</span>
+                                                                        <br />
+                                                                        <span style="color:green">@qacptCode</span>
+                                                                    </div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div class="form-control CoderDetails" style="min-width:60px;">
+                                                                        <span style="color:red">@cptCode</span>
+                                                                    </div>
+                                                                }
                                                             }
                                                             else
                                                             {
@@ -449,7 +462,11 @@
 
                                                             @if (cptMod == mod)
                                                             {
-                                                                <input type="text" style="color: green" class="form-control CoderDetails ControlHeight" value="@cptMod" disabled="disabled">
+                                                                <div class="form-control CoderDetails">
+                                                                    <span style="color:green">@cptMod</span>
+                                                                    <br />
+                                                                    <span style="color:green">@mod</span>
+                                                                </div>
                                                             }
                                                             else
                                                             {
@@ -467,7 +484,11 @@
 
                                                             @if (cptQty == qaQty)
                                                             {
-                                                                <input type="text" style="color: green" class="form-control CoderDetails ControlHeight" value="@cptQty" disabled="disabled">
+                                                                <div class="form-control CoderDetails">
+                                                                    <span style="color:green">@cptQty</span>
+                                                                    <br />
+                                                                    <span style="color:green">@qaQty</span>
+                                                                </div>
                                                             }
                                                             else
                                                             {
@@ -485,7 +506,11 @@
 
                                                             @if (cptLinks == linkAll)
                                                             {
-                                                                <input type="text" style="color: green" class="form-control CoderDetails ControlHeight" value="@cptLinks" disabled="disabled">
+                                                                <div class="form-control CoderDetails">
+                                                                    <span style="color:green">@cptLinks</span>
+                                                                    <br />
+                                                                    <span style="color:green">@linkAll</span>
+                                                                </div>
                                                             }
                                                             else
                                                             {
