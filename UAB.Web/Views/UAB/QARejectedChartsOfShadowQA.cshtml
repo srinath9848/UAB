@@ -252,7 +252,13 @@
                                 }
 
                             } else {
-                                $("#validDxRemarksClaim_" + tabid + "_" + id).show();
+                                if ($(DxNewClaimremarks[i]).css("display") == "flex") {
+                                    if ($("#QADxRemarkss_" + tabid + "_" + id).val() != "" && $("#QADxRemarkss_" + tabid + "_" + id).val() != undefined) {
+                                        $("#validDxRemarksClaim_" + tabid + "_" + id).hide();
+                                    } else {
+                                        $("#validDxRemarksClaim_" + tabid + "_" + id).show();
+                                    }
+                                }
                                 //if ($("#ErrorType_" + tabid).val() == "") {
                                 //    $("#ErrorType_" + tabid).attr('readonly', false);
                                 //    $("#ErrorType_" + tabid).css("pointer-events", "auto");
@@ -365,7 +371,13 @@
                                 }
                             }
                             else {
-                                $("#validCptRemarksClaim_" + tabid + "_" + id).show();
+                                if ($("#QACptRemarkss_" + tabid + "_" + id).css("display") == "flex") {
+                                    if ($("#QACptRemarkss_" + tabid + "_" + id).val() != "" && $("#QACptRemarkss_" + tabid + "_" + id).val() != undefined) {
+                                        $("#validCptRemarksClaim_" + tabid + "_" + id).hide();
+                                    } else {
+                                        $("#validCptRemarksClaim_" + tabid + "_" + id).show();
+                                    }
+                                }
                                 //if ($("#ErrorType_" + tabid).val() == "") {
                                 //    $("#ErrorType_" + tabid).attr('readonly', false);
                                 //    $("#ErrorType_" + tabid).css("pointer-events", "auto");
@@ -459,7 +471,14 @@
                 }
                 else {
                     // $("#DxRemarks_" + id).focus();
-                    $("#validDx_" + id).show();
+                    if ($("#DxRemarks_" + id).css("display") == "flex") {
+                        if ($("#DxRemarks_" + id).val() != "" && $("#DxRemarks_" + id).val() != undefined) {
+                            $("#validDx_" + id).hide();
+                        }
+                        else {
+                            $("#validDx_" + id).show();
+                        }
+                    }
                     //if ($("#ErrorType_1").val() == "") {
                     //    $("#ErrorType_1").attr('readonly', false);
                     //    $("#ErrorType_1").css("pointer-events", "auto");
@@ -539,7 +558,14 @@
                 }
                 else {
                     //$("#txtCpt_" + id).focus();
-                    $("#validCpt_" + id).show();
+                    if ($("#QACptRemarks_" + id).css("display") == "flex") {
+                        if ($("#QACptRemarks_" + id).val() != "" && $("#QACptRemarks_" + id).val() != undefined) {
+                            $("#validCpt_" + id).hide();
+                        }
+                        else {
+                            $("#validCpt_" + id).show();
+                        }
+                    }
                     //if ($("#ErrorType_1").val() == "") {
                     //    $("#ErrorType_1").attr('readonly', false);
                     //    $("#ErrorType_1").css("pointer-events", "auto");

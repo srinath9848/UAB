@@ -1019,7 +1019,7 @@ namespace UAB.Controllers
 
             if (!string.IsNullOrEmpty(hdnRejectedCptCodes2))
             {
-                if (!string.IsNullOrEmpty(hdnQAErrorTypeID2))
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID3))
                     dtAudit.Rows.Add("CPTCode", hdnRejectedCptCodes2, hdnRejectedCptRemarks2, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), false);
                 else
                     dtAudit.Rows.Add("CPTCode", hdnRejectedCptCodes2, hdnRejectedCptRemarks2, 0, Convert.ToInt32(hdnClaimId3), false);
@@ -1762,7 +1762,7 @@ namespace UAB.Controllers
             // Accept Claim 4 Dx & CPT
             if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes4))
             {
-                if (!string.IsNullOrEmpty(hdnQAErrorTypeID3))
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID4))
                     dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes4, hdnQAAcceptDxRemarks4, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), true);
                 else
                     dtAudit.Rows.Add("Dx", hdnQAAcceptDxCodes4, hdnQAAcceptDxRemarks4, 0, Convert.ToInt32(hdnClaimId4), true);
