@@ -19,7 +19,7 @@ BEGIN
  INNER JOIN Clinicalcase CC ON W.ClinicalcaseId = CC.ClinicalcaseId     
  INNER JOIN ProviderPosted PP ON PP.ClinicalCaseId=CC.ClinicalCaseId    
  LEFT JOIN List L ON L.ListId = CC.ListId    
- LEFT JOIN Provider P ON P.ProviderId = PP.ProviderId   
+ LEFT JOIN Provider P ON P.ProviderId = CC.ProviderId   
   LEFT JOIN WorkItemProvider Wip ON Wip.ClinicalCaseId = CC.ClinicalCaseId
  LEFT JOIN Provider Pro ON Pro.ProviderID = Wip.ProviderId 
  WHERE (W.ProjectId = @ProjectId OR (W.ProjectID = ISNULL(@ProjectId,W.ProjectId)))        
@@ -34,7 +34,7 @@ BEGIN
  INNER JOIN Clinicalcase CC ON W.ClinicalcaseId = CC.ClinicalcaseId    
  INNER JOIN ProviderPosted PP ON PP.ClinicalCaseId=CC.ClinicalCaseId    
  LEFT JOIN List L ON L.ListId = CC.ListId    
- LEFT JOIN Provider P ON P.ProviderId = PP.ProviderId    
+ LEFT JOIN Provider P ON P.ProviderId = CC.ProviderId    
    LEFT JOIN WorkItemProvider Wip ON Wip.ClinicalCaseId = CC.ClinicalCaseId
  LEFT JOIN Provider Pro ON Pro.ProviderID = Wip.ProviderId 
  WHERE (W.ProjectId = @ProjectId OR (W.ProjectID = ISNULL(@ProjectId,W.ProjectId)))        
@@ -52,7 +52,7 @@ SELECT CC.DateOfService AS DateOfService,L.Name AS ListName,CC.ClinicalCaseId AS
  INNER JOIN Clinicalcase CC ON W.ClinicalcaseId = CC.ClinicalcaseId    
  INNER JOIN ProviderPosted PP ON PP.ClinicalCaseId=CC.ClinicalCaseId    
  LEFT JOIN List L ON L.ListId = CC.ListId    
- LEFT JOIN Provider P ON P.ProviderId = PP.ProviderId  
+ LEFT JOIN Provider P ON P.ProviderId = CC.ProviderId  
    LEFT JOIN WorkItemProvider Wip ON Wip.ClinicalCaseId = CC.ClinicalCaseId
  LEFT JOIN Provider Pro ON Pro.ProviderID = Wip.ProviderId   
  WHERE (W.ProjectId = @ProjectId OR (W.ProjectID = ISNULL(@ProjectId,W.ProjectId)))        
