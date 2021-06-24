@@ -82,18 +82,18 @@
 
            if ($("#chkWrongProvider").is(":checked")) {
                $("#hdnWrongProvider").val("true");
-               $("#pr1").css("pointer-events", "auto");
-               $("#pr1").css("background-color", "");
-               $("#pr1").val("");
+               $("#ProviderID").css("pointer-events", "auto");
+               $("#ProviderID").css("background-color", "");
+               $("#ProviderID").val("");
                var original = $("#InitialProviderID").val();
-               $("#pr1 option[value='" + original + "']").attr("disabled", "disabled");
+               $("#ProviderID option[value='" + original + "']").attr("disabled", "disabled");
                EnableButton();
            }
            else {
                $("#hdnWrongProvider").val("false");
-               $("#pr1").css("pointer-events", "none");
-               $("#pr1").css("background-color", "#e9ecef");
-               $("#pr1").val($("#InitialProviderID").val());
+               $("#ProviderID").css("pointer-events", "none");
+               $("#ProviderID").css("background-color", "#e9ecef");
+               $("#ProviderID").val($("#InitialProviderID").val());
                EnableButton();
            }
        }
@@ -552,7 +552,7 @@
                         url: "@Url.Action("AddNewClaim", "UAB")",
                         data: {
                             "claimID": id,
-                            "pid1": $("#pr1").val(),
+                            "pid1": $("#ProviderID").val(),
                             "pid2": $('#Providers_2').val(),
                             "pid3": $('#Providers_3').val(),
                             "pid4": $('#Providers_4').val()
@@ -879,7 +879,7 @@
         });
 
         EnableButtonForClaim2 = function () {
-            if ($('#PayorID').val() !== "" && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== ""
+            if ($('#PayorID').val() !== "" && $('#ProviderID').val() !== "" && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== ""
                 && $('#Providers_2').val() !== "" && $('#Payors_2').val() !== "" && $('#txtDx2Claim_1').val() !== "" && $('#txt2Cpt_1').val() !== ""
                 && $('#Providers_3').val() === undefined && $('#Providers_4').val() === undefined) {
                 $('#codingSubmit').prop('disabled', false);
@@ -936,7 +936,7 @@
     });
 
     EnableButtonForClaim3 = function () {
-        if ($('#PayorID').val() !== "" && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== ""
+        if ($('#PayorID').val() !== "" && $('#ProviderID').val() !== "" && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== ""
             && $('#Providers_2').val() !== "" && $('#Payors_2').val() !== "" && $('#txtDx2Claim_1').val() !== "" && $('#txt2Cpt_1').val() !== ""
             && $('#Providers_3').val() !== "" && $('#Payors_3').val() !== "" && $('.Dxclaim_3').val() !== "" && $('#txt3Cpt_1').val() !== ""
             && $('#Providers_4').val() !== "" && $('#Payors_4').val() !== "" && $('.Dxclaim_4').val() !== "" && $('#txt4Cpt_1').val() !== "") {
