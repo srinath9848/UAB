@@ -334,71 +334,45 @@
                             <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                         </div>
                         @{
-                            if (codercptCode == "NA")
-                                color = "color:fuchsia;";
-
-                            @if (cptCode == qacptCode)
+                            if (codercptCode == qacptCode)
                             {
-                                <input type="text" style="color: green;min-width:65px;" class="form-control CoderDetails ControlHeight" value="@cptCode" disabled="disabled">
+                                <input type="text" style="color: green;min-width: 65px;" class="form-control CoderDetails ControlHeight" value="@cptCode" disabled="disabled">
+                                <input type="text" style="color: green" class="form-control CoderDetails ControlHeight" value="@cptMod" disabled="disabled">
+                                <input type="text" style="color: green" class="form-control CoderDetails ControlHeight" value="@cptQty" disabled="disabled">
+                                <input type="text" style="color: green" class="form-control CoderDetails ControlHeight" value="@coderLinks" disabled="disabled">
                             }
                             else
                             {
+                                if (codercptCode == "NA")
+                                    color = "color:fuchsia;";
                                 <div class="form-control CoderDetails" style="min-width:60px;">
-                                    <span style="color:red">@cptCode</span>
+                                    <span style="color:red">@cptCode1.Replace("/", "")</span>
                                     <br />
                                     <span style="color:green">@qacptCode</span>
                                 </div>
-                            }
-
-                            color = (coderMod != qaMod) ? "color:blue;" : "";
-                            if (coderMod == "NA")
-                                color = "color:fuchsia;";
-
-                            @if (cptMod == mod)
-                            {
-                                <input type="text" style="color: green" class="form-control CoderDetails ControlHeight" value="@cptMod" disabled="disabled">
-                            }
-                            else
-                            {
+                                color = (coderMod != qaMod) ? "color:blue;" : "";
+                                if (coderMod == "NA")
+                                    color = "color:fuchsia;";
                                 <div class="form-control CoderDetails">
-                                    <span style="color:red">@cptMod</span>
+                                    <span style="color:red">@coderMod.Replace("/", "")</span>
                                     <br />
-                                    <span style="color:green">@mod</span>
+                                    <span style="color:green">@qaMod</span>
                                 </div>
-                            }
 
-
-                            color = (coderQty != qaQty) ? "color:blue;" : "";
-                            if (coderQty == "NA")
-                                color = "color:fuchsia;";
-
-                            @if (cptQty == qaQty)
-                            {
-                                <input type="text" style="color: green" class="form-control CoderDetails ControlHeight" value="@cptQty" disabled="disabled">
-                            }
-                            else
-                            {
+                                color = (coderQty != qaQty) ? "color:blue;" : "";
+                                if (coderQty == "NA")
+                                    color = "color:fuchsia;";
                                 <div class="form-control CoderDetails">
-                                    <span style="color:red">@cptQty</span>
+                                    <span style="color:red">@coderQty.Replace("/", "")</span>
                                     <br />
                                     <span style="color:green">@qaQty</span>
                                 </div>
-                            }
 
-
-                            color = (coderLinks != qaLinks) ? "color:blue;" : "";
-                            if (coderLinks == "NA")
-                                color = "color:fuchsia;";
-
-                            @if (cptLinks == linkAll)
-                            {
-                                <input type="text" style="color: green" class="form-control CoderDetails ControlHeight" value="@cptLinks" disabled="disabled">
-                            }
-                            else
-                            {
+                                color = (coderLinks != qaLinks) ? "color:blue;" : "";
+                                if (coderLinks == "NA")
+                                    color = "color:fuchsia;";
                                 <div class="form-control CoderDetails">
-                                    <span style="color:red">@cptLinks</span>
-                                    <br />
+                                    <span style="color:red">@coderLinks.Replace("/", "")</span><br />
                                     <span style="color:green">@linkAll</span>
                                 </div>
                             }
