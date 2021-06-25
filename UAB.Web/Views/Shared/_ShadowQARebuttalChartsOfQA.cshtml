@@ -409,7 +409,7 @@
                                                     color = (coderLinks != qaLinks) ? "color:blue;" : "";
                                                     if (coderLinks == "NA")
                                                         color = "color:fuchsia;";
-                                                    string linkAll = qaLinks == "null" ? "" : qaLinks;
+                                                    string linkAll = qaLinks == "null" ? "null" : "null";
                                                     string cptLinks = !string.IsNullOrEmpty(coderLinks) ? coderLinks : "";
                                                     string cptLinks1 = !string.IsNullOrEmpty(coderLinks) ? coderLinks + "/" : "";
 
@@ -419,76 +419,76 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                                                         </div>
-                                                        <div class="form-control CoderDetails" style="min-width:60px;">
+                                                        @{
+                                                            if (codercptCode == "NA")
+                                                                color = "color:fuchsia;";
+
                                                             @if (cptCode == qacptCode)
                                                             {
-                                                                @if (cptCode != "NA")
-                                                                {
-                                                                    <span style="color:green">@cptCode</span>
+                                                                <input type="text" style="color: green;min-width:65px;" class="form-control CoderDetails ControlHeight" value="@cptCode" disabled="disabled">
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="form-control CoderDetails" style="min-width:60px;">
+                                                                    <span style="color:red">@cptCode</span>
                                                                     <br />
                                                                     <span style="color:green">@qacptCode</span>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <span style="color:red">@cptCode</span>
-                                                                }
+                                                                </div>
                                                             }
-                                                            else
-                                                            {
-                                                                <span style="color:red">@cptCode</span>
-                                                                <br />
-                                                                <span style="color:green">@qacptCode</span>
-                                                            }
-                                                        </div>
 
-                                                        <div class="form-control CoderDetails">
+                                                            color = (coderMod != qaMod) ? "color:blue;" : "";
+                                                            if (coderMod == "NA")
+                                                                color = "color:fuchsia;";
+
                                                             @if (cptMod == mod)
                                                             {
-                                                                <span style="color:green">@cptMod</span>
-                                                                <br />
-                                                                <span style="color:green">@mod</span>
+                                                                <input type="text" style="color: green" class="form-control CoderDetails ControlHeight" value="@cptMod" disabled="disabled">
                                                             }
                                                             else
                                                             {
-                                                                <span style="color:red">@cptMod</span>
-                                                                <br />
-                                                                <span style="color:green">@mod</span>
+                                                                <div class="form-control CoderDetails">
+                                                                    <span style="color:red">@cptMod</span>
+                                                                    <br />
+                                                                    <span style="color:green">@mod</span>
+                                                                </div>
                                                             }
 
-                                                        </div>
 
-                                                        <div class="form-control CoderDetails">
+                                                            color = (coderQty != qaQty) ? "color:blue;" : "";
+                                                            if (coderQty == "NA")
+                                                                color = "color:fuchsia;";
+
                                                             @if (cptQty == qaQty)
                                                             {
-                                                                <span style="color:green">@cptQty</span>
-                                                                <br />
-                                                                <span style="color:green">@qaQty</span>
+                                                                <input type="text" style="color: green" class="form-control CoderDetails ControlHeight" value="@cptQty" disabled="disabled">
                                                             }
                                                             else
                                                             {
-                                                                <span style="color:red">@cptQty</span>
-                                                                <br />
-                                                                <span style="color:green">@qaQty</span>
+                                                                <div class="form-control CoderDetails">
+                                                                    <span style="color:red">@cptQty</span>
+                                                                    <br />
+                                                                    <span style="color:green">@qaQty</span>
+                                                                </div>
                                                             }
 
-                                                        </div>
 
-                                                        <div class="form-control CoderDetails">
+                                                            color = (coderLinks != qaLinks) ? "color:blue;" : "";
+                                                            if (coderLinks == "NA")
+                                                                color = "color:fuchsia;";
+
                                                             @if (cptLinks == linkAll)
                                                             {
-                                                                <span style="color:green">@cptLinks</span>
-                                                                <br />
-                                                                <span style="color:green">@linkAll</span>
+                                                                <input type="text" style="color: green" class="form-control CoderDetails ControlHeight" value="@cptLinks" disabled="disabled">
                                                             }
                                                             else
                                                             {
-                                                                <span style="color:red">@cptLinks</span>
-                                                                <br />
-                                                                <span style="color:green">@linkAll</span>
+                                                                <div class="form-control CoderDetails">
+                                                                    <span style="color:red">@cptLinks</span>
+                                                                    <br />
+                                                                    <span style="color:green">@linkAll</span>
+                                                                </div>
                                                             }
 
-                                                        </div>
-                                                        @{
                                                             if (qacptCode == ShadowQaCpt)
                                                             {
                                                                 Accepted = "fa fa-check-circle fa-lg accept";
