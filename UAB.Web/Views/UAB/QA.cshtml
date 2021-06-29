@@ -706,13 +706,16 @@
         var id = parseInt(txt_0.split("_")[1]) + parseInt(1);
         var claimid = parseInt(txt_0.split("_")[2]);
         var seqno = parseInt($("#" + txt_0).val()) + parseInt(1);
+        var isseqno = isNaN(seqno);
+        if (isseqno)
+            seqno = id;
         if (claimid == 2) {
             if (txt_0.split("_")[1] !== undefined) {
                 var currId = parseInt(id) - parseInt(1);
                 var val = $("#txtDx2Claim_" + currId).val();
                 if (val !== "" && val !== null) {
-                    if ($.inArray(val, dxArray2) == -1) {
-                        dxArray2.push(val);
+                    //if ($.inArray(val, dxArray2) == -1) {
+                    //    dxArray2.push(val);
                         //$("#hdnDxCodes1").val(dxArray2);
                         var text = "'" + "txt" + claimid + "Dx_" + seqno + "_" + parseInt(2) + "'";
                         var deleteDx = "'" + "Div2DxRow_" + claimid + "_" + seqno + "'";
@@ -720,7 +723,7 @@
                         $("#txtDx2Claim_" + currId).removeAttr("onfocusout", "");
                         $("#txtDx2Claim_1").removeAttr("onfocusout", "");
                         $("#txtDx2Claim_" + seqno).focus();
-                    }
+                    //}
                 }
                 else {
                     $("#txt2Cpt_1").focus();
@@ -958,11 +961,11 @@
         var index = id.split('_')[1];
         var claimId = id.split('_')[2];
         var val = $("#txtDx" + index+"Claim_" + claimId).val();
-        dxArray2.splice($.inArray(val, dxArray2), 1);
-        //$("#hdnDxCodes1").val(dxArray2);
-        dxArray3.splice($.inArray(val, dxArray3), 1);
-        //$("#hdndxcodes2").val(dxArray3);
-        dxArray4.splice($.inArray(val, dxArray4), 1);
+        //dxArray2.splice($.inArray(val, dxArray2), 1);
+        ////$("#hdnDxCodes1").val(dxArray2);
+        //dxArray3.splice($.inArray(val, dxArray3), 1);
+        ////$("#hdndxcodes2").val(dxArray3);
+        //dxArray4.splice($.inArray(val, dxArray4), 1);
         //$("#hdndxcodes3").val(dxArray4);
         $('#' + id).remove();
         $(".dx" + index+"index").each(function () {
@@ -972,14 +975,14 @@
             }
         });
 
-        $(".txt" + index+"Dx").each(function () {
+        $(".claim_" + index).each(function () {
             if (Cnt <= 100) {
                 Cnt = Cnt + 1;
-                $(this).attr('id', 'txtDx' + index+'Claim_' + Cnt);
+                $(this).attr('id', 'txtDx' + index + "" + 'Claim_' + Cnt);
             }
         });
-        var lastindex = $(".txt" + index +"Dx").last().attr('id');
-        $("#" + lastindex).attr("onfocusout", "DxClaims('" + "txt" + claimId + "Dx_"+iCnt+"_" + claimId + "')");
+        var lastindex = $(".claim_" + index).last().attr('id');
+        $("#" + lastindex).attr("onfocusout", "DxClaims('" + "txt" + index + "Dx_" + Cnt + "_" + index+ "')");
     };
 
     DeleteCptClaims = function (id) {
