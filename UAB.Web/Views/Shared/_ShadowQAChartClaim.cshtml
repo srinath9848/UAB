@@ -187,7 +187,7 @@
                 }
                 <div title="@title" class="col-md-3 input-group">
                     <div class="input-group-prepend ControlHeight">
-                        <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
+                        <span class="input-group-text @string.Format("dx{0}index", @Model.TabIndex) AdjustSerialNumber" id="basic-addon1">@j</span>
                     </div>
                     <div class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
                         <span style="white-space:nowrap">
@@ -333,7 +333,7 @@
                     cptLinks1 = cptLinks == link ? "" : coderLinks + "/";
                     <div title="Code : @cptCode1@qacptCode, Mod : @cptMod1@mod, Quantity : @cptQty1@qaQty, Link : @cptLinks1@link" class="col-md-3 input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
+                            <span class="input-group-text @string.Format("cpt{0}index", Model.TabIndex) AdjustSerialNumber" id="basic-addon1">@j</span>
                         </div>
                         @{
                             if (codercptCode == qacptCode)
