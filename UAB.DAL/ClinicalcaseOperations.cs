@@ -13,13 +13,14 @@ using ExcelDataReader;
 using System.Data.Entity.Infrastructure;
 using Version = UAB.DAL.Models.Version;
 using System.Reflection;
-
+using Microsoft.Extensions.Configuration;
 namespace UAB.DAL
 {
     public class ClinicalcaseOperations
     {
         int mUserId;
         string mUserRole;
+        string _conStr = null;
         public ClinicalcaseOperations(int UserId)
         {
             mUserId = UserId;
@@ -4745,7 +4746,34 @@ namespace UAB.DAL
                 return context.Project.Where(x => x.ProjectId == pid).Select(x => x.Name).FirstOrDefault();
             }
         }
+        public List<int> GetTpicprojectids()
+        {
+            var builder = new ConfigurationBuilder()
+               .SetBasePath(Directory.GetCurrentDirectory())
+               .AddJsonFile("appsettings.json");
 
+            var configuration = builder.Build();
+            _conStr = configuration.GetSection("ConnectionString").GetSection("DataConnectiontoTpic").Value;
+
+
+            using (var cnn = new SqlConnection(_conStr))
+            {
+                var cmm = cnn.CreateCommand();
+                cmm.CommandType = System.Data.CommandType.Text;
+                cmm.CommandText = "select Id from Project where QuickbooksClientName like '%UAB Health System%' ";
+                cmm.Connection = cnn;
+                cnn.Open();
+                var reader = cmm.ExecuteReader();
+                int id = 0;
+                List<int> ids = new List<int>();
+                while (reader.Read())
+                {
+                    id = Convert.ToInt32(reader.GetInt32(0));
+                    ids.Add(id);
+                }
+                return ids;
+            }
+        }
         public List<ApplicationProject> GetProjects()
         {
             ApplicationProject project = new ApplicationProject();
@@ -4778,10 +4806,13 @@ namespace UAB.DAL
                         project.ProjectTypeId = Convert.ToInt32(reader["ProjectTypeId"]);
                         project.ProjectTypeName = Convert.ToString(reader["ProjectTypeName"]);
                         project.SLAInDays = Convert.ToInt32(reader["SLAInDays"]);
+                        project.TpicProjectId = Convert.ToInt32(reader["TPICProjectId"]);
 
                         lstProject.Add(project);
+
                     }
                 }
+
             }
             return lstProject;
         }
@@ -4790,18 +4821,28 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                UAB.DAL.Models.Project mdl = new Project();
-                mdl.ClientId = project.ClientId;
-                mdl.Name = project.Name;
-                mdl.IsActive = project.IsActive;
-                mdl.CreatedDate = DateTime.UtcNow;
-                mdl.InputFileLocation = project.InputFileLocation;
-                mdl.InputFileFormat = project.InputFileFormat;
-                mdl.ProjectTypeId = project.ProjectTypeId;
-                mdl.SLAInDays = project.SLAInDays;
+                var tpicids = GetTpicprojectids();
 
-                context.Project.Add(mdl);
-                context.SaveChanges();
+                if (tpicids.Contains(project.TpicProjectId))
+                {
+                    UAB.DAL.Models.Project mdl = new Project();
+                    mdl.ClientId = project.ClientId;
+                    mdl.Name = project.Name;
+                    mdl.IsActive = project.IsActive;
+                    mdl.CreatedDate = DateTime.UtcNow;
+                    mdl.InputFileLocation = project.InputFileLocation;
+                    mdl.InputFileFormat = project.InputFileFormat;
+                    mdl.ProjectTypeId = project.ProjectTypeId;
+                    mdl.SLAInDays = project.SLAInDays;
+                    mdl.TPICProjectId = project.TpicProjectId;
+
+                    context.Project.Add(mdl);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable to Add Project : TPIC Project Id is Invalid");
+                }
             }
         }
 
@@ -4809,22 +4850,32 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
+                var tpicids = GetTpicprojectids();
 
-                UAB.DAL.Models.Project mdl = new Project();
+                if (tpicids.Contains(project.TpicProjectId))
+                {
 
-                mdl = context.Project.Where(x => x.ProjectId == project.ProjectId).FirstOrDefault();
+                    UAB.DAL.Models.Project mdl = new Project();
 
-                //mdl.ProjectId = project.ProjectId;
-                mdl.ClientId = project.ClientId;
-                mdl.Name = project.Name;
-                mdl.IsActive = project.IsActive;
-                mdl.InputFileLocation = project.InputFileLocation;
-                mdl.InputFileFormat = project.InputFileFormat;
-                mdl.ProjectTypeId = project.ProjectTypeId;
-                mdl.SLAInDays = project.SLAInDays;
+                    mdl = context.Project.Where(x => x.ProjectId == project.ProjectId).FirstOrDefault();
 
-                context.Entry(mdl).State = EntityState.Modified;
-                context.SaveChanges();
+                    //mdl.ProjectId = project.ProjectId;
+                    mdl.ClientId = project.ClientId;
+                    mdl.Name = project.Name;
+                    mdl.IsActive = project.IsActive;
+                    mdl.InputFileLocation = project.InputFileLocation;
+                    mdl.InputFileFormat = project.InputFileFormat;
+                    mdl.ProjectTypeId = project.ProjectTypeId;
+                    mdl.SLAInDays = project.SLAInDays;
+                    mdl.TPICProjectId = project.TpicProjectId;
+
+                    context.Entry(mdl).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable to Update Project : TPIC Project Id is Invalid");
+                }
             }
         }
 

@@ -3648,28 +3648,35 @@ namespace UAB.Controllers
         public IActionResult AddSettingsProject(ApplicationProject project)
         {
             _logger.LogInformation("Loading Started for AddSettingsProject for User: " + mUserId);
-            if (ModelState.IsValid)
+            try
             {
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-                List<string> lstProvider = clinicalcaseOperations.GetProjectNames();
-
-                if (project.ProjectId == 0)
+                if (ModelState.IsValid)
                 {
-                    if (!lstProvider.Contains(project.Name.ToLower()))
+                    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                    List<string> lstProvider = clinicalcaseOperations.GetProjectNames();
+
+                    if (project.ProjectId == 0)
                     {
-                        clinicalcaseOperations.AddProject(project);
-                        TempData["Success"] = "Provider \"" + project.Name + "\" Added Successfully!";
+                        if (!lstProvider.Contains(project.Name.ToLower()))
+                        {
+                            clinicalcaseOperations.AddProject(project);
+                            TempData["Success"] = "Project \"" + project.Name + "\" Added Successfully!";
+                        }
+                        else
+                        {
+                            TempData["Error"] = "The Project \"" + project.Name + "\" is already present in our Project list!";
+                        }
                     }
                     else
                     {
-                        TempData["Error"] = "The Provider \"" + project.Name + "\" is already present in our Provider list!";
+                        clinicalcaseOperations.UpdateProject(project); // Update
+                        TempData["Success"] = "Project \"" + project.Name + "\" Updated Successfully!";
                     }
                 }
-                else
-                {
-                    clinicalcaseOperations.UpdateProject(project); // Update
-                    TempData["Success"] = "Provider \"" + project.Name + "\" Updated Successfully!";
-                }
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = ex.Message;
             }
             _logger.LogInformation("Loading Ended for AddSettingsProject for User: " + mUserId);
             return RedirectToAction("SettingsProject");
