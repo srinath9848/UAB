@@ -735,8 +735,8 @@
                 var currId = parseInt(id) - parseInt(1);
                 var val = $("#txtDx3Claim_" + currId).val();
                 if (val !== "" && val !== null) {
-                    if ($.inArray(val, dxArray3) == -1) {
-                        dxArray3.push(val);
+                    //if ($.inArray(val, dxArray3) == -1) {
+                        //dxArray3.push(val);
                         //$("#hdnDxCodes2").val(dxArray3);
                         var text = "'" + "txt" + claimid + "Dx_" + seqno + "_" + parseInt(3) + "'";
                         var deleteDx = "'" + "Div3DxRow_" + id + "_" + claimid + "'";
@@ -744,7 +744,7 @@
                         $("#txtDx3Claim_" + currId).removeAttr("onfocusout", "");
                         $("#txtDx3Claim_1").removeAttr("onfocusout", "");
                         $("#txtDx3Claim_" + seqno).focus();
-                    }
+                    //}
                 } else {
                     $("#txt3Cpt_1").focus();
                 }
@@ -755,8 +755,8 @@
                 var currId = parseInt(id) - parseInt(1);
                 var val = $("#txtDx4Claim_" + currId).val();
                 if (val !== "" && val !== null) {
-                    if ($.inArray(val, dxArray4) == -1) {
-                        dxArray4.push(val);
+                    //if ($.inArray(val, dxArray4) == -1) {
+                        //dxArray4.push(val);
                         //$("#hdnDxCodes3").val(dxArray4);
                         var text = "'" + "txt" + claimid + "Dx_" + seqno + "_" + parseInt(4) + "'";
                         var deleteDx = "'" + "Div4DxRow_" + id + "_" + claimid + "'";
@@ -764,7 +764,7 @@
                         $("#txtDx4Claim_" + currId).removeAttr("onfocusout", "");
                         $("#txtDx4Claim_1").removeAttr("onfocusout", "");
                         $("#txtDx4Claim_" + seqno).focus();
-                    }
+                    //}
                 } else {
                     $("#txt4Cpt_1").focus();
                 }
@@ -947,7 +947,7 @@
 
         $(".txtLinks").each(function () {
             if (Cnt <= 100) {
-                Cnt = Cnt + 1;
+                Cnt = iCnt + 1;
                 $(this).attr('id', 'txtLinks_' + Cnt);
             }
         });
