@@ -112,6 +112,10 @@
                 if ($("#hdnClaimData" + tabid).val() == "") {
                     $("#hdnClaimData" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderID" + "," + ProviderID + "," + ProviderRemarks);
                 }
+
+                if ($("#hdnAcceptClaim" + tabid).val() == "") {
+                    $("#hdnAcceptClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderID" + "," + ProviderID + "," + ProviderRemarks);
+                }
             }
             else {
                 ProviderID = $("#CoderProviderID_" + tabid).val();
@@ -132,6 +136,13 @@
                 } else {
                     $("#hdnClaimData" + tabid).val($("#hdnClaimData" + tabid).val() + "^" + "PayorID" + "," + PayorID + "," + payorRemarks);
                 }
+
+                if ($("#hdnAcceptClaim" + tabid).val() == "") {
+                    $("#hdnAcceptClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "PayorID" + "," + PayorID);
+                } else {
+                    $("#hdnAcceptClaim" + tabid).val($("#hdnAcceptClaim" + tabid).val() + "^" + "PayorID" + "," + PayorID);
+                }
+
             } else {
                 PayorID = $("#CoderPayorID_" + tabid).val();
                 payorRemarks = $('#CoderPayorIDRemarks_' + tabid).val();
@@ -157,9 +168,15 @@
                 } else {
                     $("#hdnClaimData" + tabid).val($("#hdnClaimData" + tabid).val() + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID + "," + FeedbackRemarks);
                 }
+
+                if ($("#hdnAcceptClaim" + tabid).val() == "") {
+                    $("#hdnAcceptClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID);
+                } else {
+                    $("#hdnAcceptClaim" + tabid).val($("#hdnAcceptClaim" + tabid).val() + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID);
+                }
             }
             else {
-                if ($("#CoderFeedback_" + tabid).val() != "" && $('#CoderProviderFeedbackRemarks_' + tabid).val() != "") {
+                if ($("#CoderFeedback_" + tabid).val() != "") {
                     ProviderFeedbackID = $("#CoderFeedback_" + tabid).val();
                     FeedbackRemarks = $('#CoderProviderFeedbackRemarks_' + tabid).val();
                 }
@@ -214,17 +231,17 @@
                             if ($("#CoderDxCodes_" + tabid + "_" + id).val() != undefined) {
                                 $("#hdnQAAcceptDxCodes" + tabid).val(id + "^" + $("#CoderDxCodes_" + tabid + "_" + id).val());
                             }
-                            else {
-                                if ($("#CoderDxCodes_" + tabid + "_" + id).val() != undefined) {
-                                    $("#hdnQAAcceptDxCodes" + tabid).val($("#hdnQAAcceptDxCodes" + tabid).val() + "|" + id + "^" + $("#CoderDxCodes_" + tabid + "_" + id).val());
-                                }
+                        }
+                        else {
+                            if ($("#CoderDxCodes_" + tabid + "_" + id).val() != undefined) {
+                                $("#hdnQAAcceptDxCodes" + tabid).val($("#hdnQAAcceptDxCodes" + tabid).val() + "|" + id + "^" + $("#CoderDxCodes_" + tabid + "_" + id).val());
                             }
                         }
 
-                        //if ($("#hdnQAAcceptDxRemarks" + tabid).val() == "")
-                        //    $("#hdnQAAcceptDxRemarks" + tabid).val(id + "^" + $(".CoderDXRemarks_" + tabid + "_" + id).val());
-                        //else
-                        //    $("#hdnQAAcceptDxRemarks" + tabid).val($("#hdnQAAcceptDxRemarks" + tabid).val() + "|" + id + "^" + $(".CoderDXRemarks_" + tabid + "_" + id).val());
+                        if ($("#hdnQAAcceptDxRemarks" + tabid).val() == "")
+                            $("#hdnQAAcceptDxRemarks" + tabid).val(id + "^" + $(".CoderDXRemarks_" + tabid + "_" + id).val());
+                        else
+                            $("#hdnQAAcceptDxRemarks" + tabid).val($("#hdnQAAcceptDxRemarks" + tabid).val() + "|" + id + "^" + $(".CoderDXRemarks_" + tabid + "_" + id).val());
 
                     }
 
@@ -276,12 +293,10 @@
                             }
                         }
 
-                        //if ($("#hdnQAAcceptCptRemarks" + tabid).val() == "")
-                        //    $("#hdnQAAcceptCptRemarks" + tabid).val(id + "^" + $(".CoderCptRemarks_" + tabid + "_" + id).val());
-                        //else
-                        //    $("#hdnQAAcceptCptRemarks" + tabid).val($("#hdnQAAcceptCptRemarks" + tabid).val() + "|" + id + "^" + $(".CoderCptRemarks_" + tabid + "_" + id).val());
-
-
+                        if ($("#hdnQAAcceptCptRemarks" + tabid).val() == "")
+                            $("#hdnQAAcceptCptRemarks" + tabid).val(id + "^" + $(".CoderCptRemarks_" + tabid + "_" + id).val());
+                        else
+                            $("#hdnQAAcceptCptRemarks" + tabid).val($("#hdnQAAcceptCptRemarks" + tabid).val() + "|" + id + "^" + $(".CoderCptRemarks_" + tabid + "_" + id).val());
                     }
                 }
             }
@@ -336,16 +351,16 @@
                     }
                 }
 
-                //if ($("#hdnQAAcceptDxRemarks").val() == "") {
-                //    if ($(".CoderDXRemarks_" + id).val() != "") {
-                //        $("#hdnQAAcceptDxRemarks").val(id + "^" + $(".CoderDXRemarks_" + id).val());
-                //    }
-                //}
-                //else {
-                //    if ($(".CoderDXRemarks_" + id).val() != "") {
-                //        $("#hdnQAAcceptDxRemarks").val($("#hdnQAAcceptDxRemarks").val() + "|" + id + "^" + $(".CoderDXRemarks_" + id).val());
-                //    }
-                //}
+                if ($("#hdnQAAcceptDxRemarks").val() == "") {
+                    if ($(".CoderDXRemarks_" + id).val() != "") {
+                        $("#hdnQAAcceptDxRemarks").val(id + "^" + $(".CoderDXRemarks_" + id).val());
+                    }
+                }
+                else {
+                    if ($(".CoderDXRemarks_" + id).val() != "") {
+                        $("#hdnQAAcceptDxRemarks").val($("#hdnQAAcceptDxRemarks").val() + "|" + id + "^" + $(".CoderDXRemarks_" + id).val());
+                    }
+                }
             }
         }
 
@@ -395,16 +410,16 @@
                     }
                 }
 
-                //if ($("#hdnQAAcceptCptRemarks").val() == "") {
-                //    if ($(".CoderCptRemarks_" + id).val() != "") {
-                //        $("#hdnQAAcceptCptRemarks").val(id + "^" + $(".CoderCptRemarks_" + id).val());
-                //    }
-                //}
-                //else {
-                //    if ($(".CoderCptRemarks_" + id).val() != "") {
-                //        $("#hdnQAAcceptCptRemarks").val($("#hdnQAAcceptCptRemarks").val() + "|" + id + "^" + $(".CoderCptRemarks_" + id).val());
-                //    }
-                //}
+                if ($("#hdnQAAcceptCptRemarks").val() == "") {
+                    if ($(".CoderCptRemarks_" + id).val() != "") {
+                        $("#hdnQAAcceptCptRemarks").val(id + "^" + $(".CoderCptRemarks_" + id).val());
+                    }
+                }
+                else {
+                    if ($(".CoderCptRemarks_" + id).val() != "") {
+                        $("#hdnQAAcceptCptRemarks").val($("#hdnQAAcceptCptRemarks").val() + "|" + id + "^" + $(".CoderCptRemarks_" + id).val());
+                    }
+                }
 
             }
         }
