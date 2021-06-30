@@ -424,7 +424,12 @@
 
                     Accepted = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
                     Rejected = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
-
+                    if (codercptCode == qacptCode)
+                    {
+                        Accepted = "fa fa-check-circle fa-lg accept";
+                        Rejected = "fa fa-times-circle fa-lg";
+                        Show = "display:none";
+                    }
                     <div class="col-md-2 input-group ControlHeight" style="@Show">
                         <input type="text" id="@string.Format("QACptRemarkss_{0}_{1}", Model.TabIndex, j)" class="form-control QARemarks ControlHeight" disabled value="@dictQACptRemarks?.ElementAt(i).Value" />
                     </div>
