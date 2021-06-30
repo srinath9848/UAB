@@ -209,7 +209,7 @@
                                                 </div>
                                                 <div class="col-md-3 QADxRevised_@tabIndex input-group Dx_@i" style="display:none">
                                                     <div class="input-group-prepend ControlHeight">
-                                                        <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
+                                                        <span class="input-group-text dxindex AdjustSerialNumber" id="basic-addon1">@i</span>
                                                     </div>
                                                     <input type="hidden" class="txtQADx_@i" value="@item" />
                                                     <input type="text" id="txtDx_@i" class="form-control ControlHeight txtDx Dx_@i" autocomplete="off" placeholder="Code" value="@item" style="display:none" />
@@ -240,7 +240,7 @@
                                         </div>
                                         <div class="col-md-3 QADxRevised_@tabIndex newlyDxCpt_@tabIndex input-group Dx_@totalDxCount" style="display:none">
                                             <div class="input-group-prepend ControlHeight">
-                                                <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@totalDxCount</span>
+                                                <span class="input-group-text dxindex AdjustSerialNumber" id="basic-addon1">@totalDxCount</span>
                                             </div>
                                             <input type="text" id="txtDx_@totalDxCount" class="form-control ControlHeight txtDx Dx_@totalDxCount" autocomplete="off" placeholder="Code" onfocusout="DxFunction('txtDx_@totalDxCount')" value="" style="display:none" />
                                         </div>
@@ -273,7 +273,7 @@
                                                 @{string link = !string.IsNullOrEmpty(@linkAllVal) || @linkAllVal != "null" || @linkAllVal != "" ? @linkAllVal : "Link All"; }
                                                 <div title="Code : @cptVal, Mod : @modVal, Quantity : @qtyVal, Links : @link" class="col-md-3 CptlessWidth input-group">
                                                     <div class="input-group-prepend ControlHeight">
-                                                        <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
+                                                        <span class="input-group-text cptindex AdjustSerialNumber" id="basic-addon1">@i</span>
                                                     </div>
                                                     <input type="text" maxlength="5" style="min-width:50px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Code" value="@cptVal" />
                                                     <input type="text" style="min-width:42px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Mod" value="@modVal" />
@@ -289,12 +289,12 @@
                                                 <input type="hidden" class="txtQACpt_@i" value="@cptVal^@modVal^@qtyVal^@linkAllVal" />
                                                 <div class="col-md-3 QACptRevised_@tabIndex CptlessWidth input-group Cpt_@i" style="display:none">
                                                     <div class="input-group-prepend ControlHeight">
-                                                        <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
+                                                        <span class="input-group-text cptindex AdjustSerialNumber" id="basic-addon1">@i</span>
                                                     </div>
                                                     <input type="text" maxlength="5" style="min-width:50px;" class="form-control ControlHeight" id="txtCpt_@i" autocomplete="off" placeholder="Code" value="@cptVal" />
                                                     <input type="text" style="min-width:42px;" class="form-control ControlHeight" id="txtMod_@i" autocomplete="off" placeholder="Mod" value="@modVal" />
                                                     <input type="text" style="max-width:23px;" class="form-control ControlHeight cptQtyClaim" id="txtQty_@i" autocomplete="off" placeholder="Qty" value="@qtyVal" />
-                                                    <input type="text" class="form-control ControlHeight cptLinksClaim" id="txtLinks_@i" autocomplete="off" placeholder="Link All" value="@linkAllVal" />
+                                                    <input type="text" class="form-control ControlHeight cptLinksClaim txtLinks" id="txtLinks_@i" autocomplete="off" placeholder="Link All" value="@linkAllVal" />
                                                 </div>
 
                                                 <div class="col-md-3 input-group">
@@ -329,7 +329,7 @@
                                             <input type="text" maxlength="5" style="min-width:50px;" class="form-control ControlHeight" id="txtCpt_@totalCptCount" autocomplete="off" placeholder="Code" value="" />
                                             <input type="text" style="min-width:42px;" class="form-control ControlHeight" id="txtMod_@totalCptCount" autocomplete="off" placeholder="Mod" value="" />
                                             <input type="text" style="max-width:23px;" class="form-control ControlHeight cptQtyClaim" id="txtQty_@totalCptCount" autocomplete="off" placeholder="Qty" value="1" />
-                                            <input type="text" class="form-control ControlHeight cptLinksClaim" id="txtLinks_@totalCptCount" autocomplete="off" placeholder="Link All" onfocusout="CptFunction('txtLinks_@totalCptCount+')" />
+                                            <input type="text" class="form-control ControlHeight txtLinks cptLinksClaim" id="txtLinks_@totalCptCount" autocomplete="off" placeholder="Link All" onfocusout="CptFunction('txtLinks_@totalCptCount+')" />
                                         </div>
                                         <div class="col-md-3 input-group Cpt_@totalCptCount" id="CptRemarks_@i" style="display:none">
                                             <input type="text" id="CptRemarks_@i" class="form-control QACptRevised_@tabIndex ControlHeight CptRemarks_@i Cpt_@i" style="display:none" />

@@ -116,7 +116,7 @@
                 }
                 <div title="@item" class="col-md-3 input-group">
                     <div class="input-group-prepend ControlHeight">
-                        <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
+                        <span class="@string.Format("input-group-text dx{0}index AdjustSerialNumber", Model.TabIndex)" id="basic-addon1">@i</span>
                     </div>
                     <input class="form-control CoderDetails ControlHeight valid" type="text" value="@item">
                     <div class="input-group-append ControlHeight">
@@ -131,7 +131,7 @@
                     <div class="input-group-prepend ControlHeight">
                         <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
                     </div>
-                    <input type="text" id="@string.Format("txtDx{0}Claim_{1}", Model.TabIndex,i)" class="form-control ControlHeight txtDx @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" autocomplete="off" placeholder="Code" value="@item" style="display:none" />
+                    <input type="text" id="@string.Format("txtDx{0}Claim_{1}", Model.TabIndex,i)" class="form-control ControlHeight claim_@tabIndex @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" autocomplete="off" placeholder="Code" value="@item" style="display:none" />
                 </div>
                 <div class="col-md-3 input-group">
                     @{ var dxRemarks = string.Format("DxRemarkss_{0}_{1}", Model.TabIndex, i);}
@@ -148,7 +148,7 @@
         <label class="col-md-3 lessWidth m-t-15"></label>
         <div class="col-md-3 input-group">
             <div class="input-group-prepend ControlHeight">
-                <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@totalDxCount</span>
+                <span class="@string.Format("input-group-text dx{0}index AdjustSerialNumber", Model.TabIndex)" id="basic-addon1">@totalDxCount</span>
             </div>
             <input class="form-control CoderDetails ControlHeight valid" type="text" value="">
             <div class="input-group-append ControlHeight">
@@ -160,9 +160,9 @@
         </div>
         <div class="col-md-3 newlyDxCpt_@tabIndex QARevised_@tabIndex input-group @string.Format("DxClaim_{0}_{1}", Model.TabIndex,totalDxCount)" id="@Div2DxRow" style="display:none">
             <div class="input-group-prepend ControlHeight">
-                <span class="input-group-text AdjustSerialNumber @dx2index" id="basic-addon1">@totalDxCount</span>
+                <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@totalDxCount</span>
             </div>
-            <input type="text" id="@string.Format("txtDx{0}Claim_{1}", Model.TabIndex,totalDxCount)" onfocusout="DxClaims('txtDx_1_@tabIndex')" class="form-control ControlHeight @Dx2Claim Dxclaim_@tabIndex" autocomplete="off" placeholder="Code" />
+            <input type="text" id="@string.Format("txtDx{0}Claim_{1}", Model.TabIndex,totalDxCount)" onfocusout="DxClaims('txtDx_1_@totalDxCount')" class="form-control ControlHeight @Dx2Claim claim_@tabIndex" autocomplete="off" placeholder="Code" />
         </div>
         <div class="col-md-3 QARevised_@tabIndex input-group @string.Format("DxClaim_{0}_{1}", Model.TabIndex,totalDxCount)" id="@Div2DxRow" style="display:none">
             <input type="text" id="@string.Format("DxRemarkss_{0}_{1}", Model.TabIndex, totalDxCount)" class="form-control ControlHeight" style="display:flex;" />
@@ -193,7 +193,7 @@
                 @{string link = !string.IsNullOrEmpty(@linkAllVal) || @linkAllVal != "null" || @linkAllVal != "" ? @linkAllVal : "Link All"; }
                 <div title="Code : @cptVal, Mod : @modVal, Quantity : @qtyVal, Links : @link" class="col-md-3 CptlessWidth input-group">
                     <div class="input-group-prepend ControlHeight">
-                        <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@i</span>
+                        <span class="input-group-text AdjustSerialNumber @string.Format("cpt{0}index", Model.TabIndex)" id="basic-addon1">@i</span>
                     </div>
                     <input type="text" maxlength="5" style="min-width:50px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Code" value="@cptVal" />
                     <input type="text" style="min-width:42px;" class="form-control CoderDetails ControlHeight" autocomplete="off" placeholder="Mod" value="@modVal" />
