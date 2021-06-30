@@ -309,8 +309,8 @@
                             }
                         </div>
 
-                        <input type="hidden" id="@string.Format("CoderCptCodes_{0}_{1}", Model.TabIndex, j)" value="@qacptCode^@qaMod^@qaQty^@qaLinks" />
-                        <input type="hidden" id="CoderCptCodes_@j" value="@cptCode^@cptMod^@cptQty^@cptLinks" />
+                        @*<input type="hidden" id="@string.Format("CoderCptCodes_{0}_{1}", Model.TabIndex, j)" value="@qacptCode^@qaMod^@qaQty^@qaLinks" />*@
+                        <input type="hidden" id="@string.Format("CoderCptCodes_{0}_{1}", Model.TabIndex, j)" value="@cptCode^@cptMod^@cptQty^@cptLinks" />
                     </div>
                 }
                 else

@@ -765,6 +765,16 @@
         else
             $("#hdnAcceptedCptRemarks").val('');
 
+        if ($("#hdnRejectedDxRemarks1").val() != "")
+            $("#hdnAcceptedDxRemarks1").val('');
+        else
+            $("#hdnAcceptedDxRemarks1").val('');
+
+        if ($("#hdnRejectedCptRemarks1").val() != "")
+            $("#hdnAcceptedCptRemarks1").val('');
+        else
+            $("#hdnAcceptedCptRemarks1").val('');
+
         $(".tab").each(function () {
             var id = $(this).attr('id');
             var tabid = id.split("tabIndex_")[1].split("_ClaimId_")[0];

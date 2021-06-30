@@ -401,12 +401,12 @@
             else {
                 if ($("#hdnQAAcceptCptCodes").val() == "") {
                     if ($("#CoderCptCodes_" + id).val() != "") {
-                        $("#hdnQAAcceptCptCodes").val(id + "^" + $("#txtCPTCode_" + id).val());
+                        $("#hdnQAAcceptCptCodes").val(id + "^" + $("#CoderCptCodes_" + id).val());
                     }
                 }
                 else {
                     if ($("#CoderCptCodes_" + id).val() != "") {
-                        $("#hdnQAAcceptCptCodes").val($("#hdnQAAcceptCptCodes").val() + "|" + id + "^" + $("#txtCPTCode_" + id).val());
+                        $("#hdnQAAcceptCptCodes").val($("#hdnQAAcceptCptCodes").val() + "|" + id + "^" + $("#CoderCptCodes_" + id).val());
                     }
                 }
 
