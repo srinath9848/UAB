@@ -162,7 +162,10 @@
             <div class="input-group-prepend ControlHeight">
                 <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@totalDxCount</span>
             </div>
-            <input type="text" id="@string.Format("txtDx{0}Claim_{1}", Model.TabIndex,totalDxCount)" onfocusout="DxClaims('txtDx_1_@totalDxCount')" class="form-control ControlHeight @Dx2Claim claim_@tabIndex" autocomplete="off" placeholder="Code" />
+            @{
+                string DxClaims = string.Format("txtDx_1_{0}", tabIndex);
+            }
+            <input type="text" id="@string.Format("txtDx{0}Claim_{1}", Model.TabIndex,totalDxCount)" onfocusout="DxClaims('@DxClaims')" class="form-control ControlHeight @Dx2Claim claim_@tabIndex" autocomplete="off" placeholder="Code" />
         </div>
         <div class="col-md-3 QARevised_@tabIndex input-group @string.Format("DxClaim_{0}_{1}", Model.TabIndex,totalDxCount)" id="@Div2DxRow" style="display:none">
             <input type="text" id="@string.Format("DxRemarkss_{0}_{1}", Model.TabIndex, totalDxCount)" class="form-control ControlHeight" style="display:flex;" />
