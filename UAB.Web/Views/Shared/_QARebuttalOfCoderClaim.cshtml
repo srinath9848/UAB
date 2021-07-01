@@ -381,14 +381,14 @@
                     </div>
                 </div>
 
-                <div class="col-md-3 input-group" style="@Show">
-                    <input type="text" class="form-control ControlHeight" id="@string.Format("CptRemarks_{0}_{1}", Model.TabIndex, j)" value="@dictQACptRemarks?.ElementAt(i).Value" />
+                <div class="col-md-3 input-group">
+                    <input type="text" style="@Show" class="form-control ControlHeight" id="@string.Format("CptRemarks_{0}_{1}", Model.TabIndex, j)" value="@dictQACptRemarks?.ElementAt(i).Value" />
                     <span id="@string.Format("validCptRemarksClaim_{0}_{1}", Model.TabIndex, j)" class="text-danger txtdanger" style="display:none">*</span>
 
                 </div>
 
-                <div class="col-md-3 input-group CoderCorrections" style="@Show">
-                    <input type="text" class="@string.Format("form-control ControlHeight CoderCptRemarks_{0}_{1}", Model.TabIndex, j)" value="@dictRevisedCptRemarks?.ElementAt(i).Value" />
+                <div class="col-md-3 input-group CoderCorrections">
+                    <input type="text" style="@Show" class="@string.Format("form-control ControlHeight CoderCptRemarks_{0}_{1}", Model.TabIndex, j)" value="@dictRevisedCptRemarks?.ElementAt(i).Value" />
                 </div>
             </div>
             j = j + 1;

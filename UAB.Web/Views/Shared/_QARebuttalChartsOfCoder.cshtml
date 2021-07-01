@@ -242,7 +242,7 @@
                                                     <div class="input-group-prepend ControlHeight">
                                                         <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                                                     </div>
-                                                    <input id="txtDxCode_@j" type="text" class="form-control ControlHeight" autocomplete="off" tabindex="@j" placeholder="Code" value="@dictQADxCodes.ElementAt(i).Value" />
+                                                    <input id="QADxCodes_@j" type="text" class="form-control ControlHeight" autocomplete="off" tabindex="@j" placeholder="Code" value="@dictQADxCodes.ElementAt(i).Value" />
                                                     <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
                                                         @{
                                                             Accepted = (string.IsNullOrEmpty(dictRevisedDxRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
@@ -257,7 +257,7 @@
                                                 </div>
 
                                                 <div class="col-md-3 input-group">
-                                                    <input type="text" id="DxRemarks_@j" style="@Show" class="form-control QARevised ControlHeight" value="@dictQADxRemarks?.ElementAt(i).Value" />
+                                                    <input type="text" id="QADxRemarks_@j" style="@Show" class="form-control QARevised ControlHeight" value="@dictQADxRemarks?.ElementAt(i).Value" />
                                                     <span id="validDx_@j" class="text-danger txtdanger" style="display:none">*</span>
                                                 </div>
                                                 <div class="col-md-3 input-group CoderCorrections">
@@ -482,8 +482,8 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-3 input-group" style="@Show">
-                                                    <input type="text" class="form-control ControlHeight" id="CptRemarks_@j" value="@dictQACptRemarks?.ElementAt(i).Value" />
+                                                <div class="col-md-3 input-group">
+                                                    <input type="text" class="form-control ControlHeight" style="@Show" id="CptRemarks_@j" value="@dictQACptRemarks?.ElementAt(i).Value" />
                                                 </div>
 
                                                 <div class="col-md-3 input-group">
