@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[List] (
+    [ListId] BIGINT        NOT NULL,
+    [Name]   VARCHAR (255) NOT NULL,
+    CONSTRAINT [PK__List__E3832805059D2D91] PRIMARY KEY CLUSTERED ([ListId] ASC)
+);
+
