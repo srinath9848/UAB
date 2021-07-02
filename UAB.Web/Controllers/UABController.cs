@@ -1808,6 +1808,8 @@ namespace UAB.Controllers
                     dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes4, hdnQAAcceptCptRemarks4, 0, Convert.ToInt32(hdnClaimId4), true);
             }
 
+            // Reject Claim 1-4 Dx & CPT
+
             if (!string.IsNullOrEmpty(hdnDx) && !string.IsNullOrEmpty(hdnDxRemarks))
                 if (!string.IsNullOrEmpty(hdnQAErrorTypeID1))
                     dtAudit.Rows.Add("Dx", hdnDx, hdnDxRemarks, Convert.ToInt32(hdnQAErrorTypeID1), 0, false);

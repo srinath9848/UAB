@@ -158,6 +158,8 @@
             var res2 = $("[id=" + "ProviderFeedbackID_" + tabid + "]:eq(1)").attr('class');
             if (res2.includes('reject') && $("#CoderProviderFeedbackRemarks_" + tabid).css("display") == "flex") {
                 ProviderFeedbackID = $("#CoderFeedback_" + tabid).val();
+                if (ProviderFeedbackID == "")
+                    ProviderFeedbackID = $("#QAProviderFeedback_" + tabid).val();
                 FeedbackRemarks = $('#CoderProviderFeedbackRemarks_' + tabid).val();
                 if ($('#CoderProviderFeedbackRemarks_' + tabid).val() != "") {
                     FeedbackRemarks = $('#CoderProviderFeedbackRemarks_' + tabid).val();

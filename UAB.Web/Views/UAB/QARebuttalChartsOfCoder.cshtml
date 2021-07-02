@@ -507,6 +507,31 @@
         }
         //Reading Dx,CPT in Default Claim is Ended
 
+        $(".tab").each(function () {
+            var id = $(this).attr('id');
+            var tabid = id.split("tabIndex_")[1].split("_ClaimId_")[0];
+
+            if ($("#hdnDxRemarks").val() != "")
+                $("#hdnQAAcceptDxRemarks").val('');
+            else
+                $("#hdnQAAcceptDxRemarks").val('');
+
+            if ($("#hdnCptRemarks").val() != "")
+                $("#hdnQAAcceptCptRemarks").val('');
+            else
+                $("#hdnQAAcceptCptRemarks").val('');
+
+            if ($("#hdnDxRemarks" + tabid).val() != "")
+                $("#hdnQAAcceptDxRemarks" + tabid).val('');
+            else
+                $("#hdnQAAcceptDxRemarks" + tabid).val('');
+
+            if ($("#hdnCptRemarks" + tabid).val() != "")
+                $("#hdnQAAcceptCptRemarks" + tabid).val('');
+            else
+                $("#hdnQAAcceptCptRemarks" + tabid).val('');
+        });
+
         var total = $('.CoderCorrections[style="display:flex"]  .fa-check-circle').length;
         var accept = $('.CoderCorrections[style="display:flex"]  .accept').length;
         var reject = $('.CoderCorrections[style="display:flex"]  .reject').length;
