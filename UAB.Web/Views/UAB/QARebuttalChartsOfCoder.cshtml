@@ -282,9 +282,9 @@
 
                     if (res.includes('reject')) {
                         if ($("#hdnCpt" + tabid).val() == "")
-                            $("#hdnCpt" + tabid).val(id + "^" + $("#txtCpt_" + tabid + "_" + id).val() + "^" + $("#txtMod_" + tabid + "_" + id).val() + "^" + $("#txtQty_" + tabid + "_" + id).val() + "^" + $("#txtLinks_" + tabid + "_" + id).val());
+                            $("#hdnCpt" + tabid).val(id + "^" + $("#CoderCptCodes_" + tabid + "_" + id).val());
                         else
-                            $("#hdnCpt" + tabid).val($("#hdnCpt" + tabid).val() + "|" + id + "^" + $("#txtCpt_" + tabid + "_" + id).val() + "^" + $("#txtMod_" + tabid + "_" + id).val() + "^" + $("#txtQty_" + tabid + "_" + id).val() + "^" + $("#txtLinks_" + tabid + "_" + id).val());
+                            $("#hdnCpt" + tabid).val($("#hdnCpt" + tabid).val() + "|" + id + "^" + $("#CoderCptCodes_" + tabid + "_" + id).val());
                         if ($("#CptRemarks_" + tabid + "_" + id).val() != "") {
                             $("#validCptRemarksClaim_" + tabid + "_" + id).hide();
                             if ($("#ErrorType_" + tabid).val() != "") {
@@ -358,21 +358,21 @@
 
             if (res.includes('reject')) {
                 if ($("#hdnDx").val() == "")
-                    $("#hdnDx").val(id + "^" + $("#QADxCodes_" + id).val());
+                    $("#hdnDx").val(id + "^" + $("#CoderDxCodes_" + id).val());
                 else
-                    $("#hdnDx").val($("#hdnDx").val() + "|" + id + "^" + $("#QADxCodes_" + id).val());
+                    $("#hdnDx").val($("#hdnDx").val() + "|" + id + "^" + $("#CoderDxCodes_" + id).val());
 
-                if ($(".CoderDXRemarks_" + id).val() != "") {
+                if ($("#QADxRemarks_" + id).val() != "") {
                     $("#validDx_" + id).hide();
                     if ($("#ErrorType_" + id).val() != "") {
                         $("#ErrorTypeError_" + id).html('');
                     }
                     if ($("#hdnDxRemarks").val() == "")
-                        $("#hdnDxRemarks").val(id + "^" + $(".CoderDXRemarks_" + id).val());
+                        $("#hdnDxRemarks").val(id + "^" + $("#QADxRemarks_" + id).val());
                     else
-                        $("#hdnDxRemarks").val($("#hdnDxRemarks").val() + "|" + id + "^" + $(".CoderDXRemarks_" + id).val());
+                        $("#hdnDxRemarks").val($("#hdnDxRemarks").val() + "|" + id + "^" + $("#QADxRemarks_" + id).val());
                 } else {
-                    $(".CoderDXRemarks_" + id).focus();
+                    $("#QADxRemarks_" + id).focus();
                     $("#validDx_" + id).show();
                     if ($("#ErrorType_" + id).val() == "") {
                         $("#ErrorType_" + id).attr('readonly', false);
@@ -440,9 +440,9 @@
 
             if (res.includes('reject')) {
                 if ($("#hdnCpt").val() == "")
-                    $("#hdnCpt").val(id + "^" + $("#txtCpt_" + id).val() + "^" + $("#txtMod_" + id).val() + "^" + $("#txtQty_" + id).val() + "^" + $("#txtLinks_" + id).val());
+                    $("#hdnCpt").val(id + "^" + $("#CoderCptCodes_" + id).val());
                 else
-                    $("#hdnCpt").val($("#hdnCpt").val() + "|" + id + "^" + $("#txtCpt_" + id).val() + "^" + $("#txtMod_" + id).val() + "^" + $("#txtQty_" + id).val() + "^" + $("#txtLinks_" + id).val());
+                    $("#hdnCpt").val($("#hdnCpt").val() + "|" + id + "^" + $("#CoderCptCodes_" + id).val());
 
                 if ($("#CptRemarks_" + id).val() != "") {
                     $("#validCpt_" + id).hide();

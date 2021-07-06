@@ -283,12 +283,13 @@
                                 else
                                     $("#hdnQAAcceptDxCodes" + tabid).val($("#hdnQAAcceptDxCodes" + tabid).val() + "|" + id + "^" + $("#txtSQADx" + tabid + "Claim_" + id).val());
                             }
-                        } else {
-                            if ($("#hdnQAAcceptDxCodes" + tabid).val() == "")
-                                $("#hdnQAAcceptDxCodes" + tabid).val(id + "^" + $("#txtSQADx" + tabid + "Claim_" + id).val());
-                            else
-                                $("#hdnQAAcceptDxCodes" + tabid).val($("#hdnQAAcceptDxCodes" + tabid).val() + "|" + id + "^" + $("#txtSQADx" + tabid + "Claim_" + id).val());
                         }
+                        //else {
+                        //    if ($("#hdnQAAcceptDxCodes" + tabid).val() == "")
+                        //        $("#hdnQAAcceptDxCodes" + tabid).val(id + "^" + $("#txtSQADx" + tabid + "Claim_" + id).val());
+                        //    else
+                        //        $("#hdnQAAcceptDxCodes" + tabid).val($("#hdnQAAcceptDxCodes" + tabid).val() + "|" + id + "^" + $("#txtSQADx" + tabid + "Claim_" + id).val());
+                        //}
                     }
                 }
 
