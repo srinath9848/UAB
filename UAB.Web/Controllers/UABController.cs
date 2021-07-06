@@ -2601,15 +2601,21 @@ namespace UAB.Controllers
                 PrepareRejectAudit(hdnClaim4, dtAudit, Convert.ToInt32(hdnQAErrorTypeID4));
 
             // Reject Claim 1 Dx & CPT
-            if (!string.IsNullOrEmpty(hdnQADxCodes) && !string.IsNullOrEmpty(hdnQADxRemarks) && !string.IsNullOrEmpty(hdnQAErrorTypeID1))
-                dtAudit.Rows.Add("Dx", hdnQADxCodes, hdnQADxRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), false);
-            else
-                dtAudit.Rows.Add("Dx", hdnQADxCodes, hdnQADxRemarks, 0, Convert.ToInt32(hdnClaimId1), false);
+            if (!string.IsNullOrEmpty(hdnQADxCodes) && !string.IsNullOrEmpty(hdnQADxRemarks))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID1))
+                    dtAudit.Rows.Add("Dx", hdnQADxCodes, hdnQADxRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), false);
+                else
+                    dtAudit.Rows.Add("Dx", hdnQADxCodes, hdnQADxRemarks, 0, Convert.ToInt32(hdnClaimId1), false);
+            }
 
-            if (!string.IsNullOrEmpty(hdnQACptCodes) && !string.IsNullOrEmpty(hdnQACptRemarks) && !string.IsNullOrEmpty(hdnQAErrorTypeID1))
-                dtAudit.Rows.Add("CPTCode", hdnQACptCodes, hdnQACptRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), false);
-            else
-                dtAudit.Rows.Add("CPTCode", hdnQACptCodes, hdnQACptRemarks, 0, Convert.ToInt32(hdnClaimId1), false);
+            if (!string.IsNullOrEmpty(hdnQACptCodes) && !string.IsNullOrEmpty(hdnQACptRemarks))
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID1))
+                    dtAudit.Rows.Add("CPTCode", hdnQACptCodes, hdnQACptRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), false);
+                else
+                    dtAudit.Rows.Add("CPTCode", hdnQACptCodes, hdnQACptRemarks, 0, Convert.ToInt32(hdnClaimId1), false);
+            }
 
             // Accept Claim 1 Dx & CPT
             if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes))

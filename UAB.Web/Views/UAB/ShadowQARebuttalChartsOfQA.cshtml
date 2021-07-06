@@ -263,15 +263,41 @@
                 }
             }
             else {
-                if ($("#hdnQAAcceptDxCodes").val() == "")
-                    $("#hdnQAAcceptDxCodes").val(id + "^" + $("#txtQADxCode_" + id).val());
-                else
-                    $("#hdnQAAcceptDxCodes").val($("#hdnQAAcceptDxCodes").val() + "|" + id + "^" + $("#txtQADxCode_" + id).val());
+                if ($("#DxRemarks_" + id).css("display") == "flex") {
+                    if ($("#hdnQAAcceptDxCodes").val() == "") {
+                        if ($("#txtQADxCode_" + id).val() != "NA")
+                            $("#hdnQAAcceptDxCodes").val(id + "^" + $("#txtQADxCode_" + id).val());
+                    }
+                    else {
+                        if ($("#txtQADxCode_" + id).val() != "NA")
+                            $("#hdnQAAcceptDxCodes").val($("#hdnQAAcceptDxCodes").val() + "|" + id + "^" + $("#txtQADxCode_" + id).val());
+                    }
 
-                if ($("#hdnQAAcceptDxRemarks").val() == "")
-                    $("#hdnQAAcceptDxRemarks").val(id + "^" + $("#DxRemarks_" + id).val());
-                else
-                    $("#hdnQAAcceptDxRemarks").val($("#hdnQAAcceptDxRemarks").val() + "|" + id + "^" + $("#DxRemarks_" + id).val());
+                    if ($("#hdnQAAcceptDxRemarks").val() == "") {
+                        if ($("#txtQADxCode_" + id).val() != "NA")
+                            $("#hdnQAAcceptDxRemarks").val(id + "^" + $("#DxRemarks_" + id).val());
+                    }
+                    else {
+                        if ($("#txtQADxCode_" + id).val() != "NA")
+                            $("#hdnQAAcceptDxRemarks").val($("#hdnQAAcceptDxRemarks").val() + "|" + id + "^" + $("#DxRemarks_" + id).val());
+                    }
+
+                } else {
+                    if ($("#hdnQAAcceptDxCodes").val() == "")
+                        $("#hdnQAAcceptDxCodes").val(id + "^" + $("#txtDxCode_" + id).val());
+                    else
+                        $("#hdnQAAcceptDxCodes").val($("#hdnQAAcceptDxCodes").val() + "|" + id + "^" + $("#txtDxCode_" + id).val());
+
+                    if ($("#hdnQAAcceptDxRemarks").val() == "")
+                        $("#hdnQAAcceptDxRemarks").val(id + "^" + $("#DxRemarks_" + id).val());
+                    else
+                        $("#hdnQAAcceptDxRemarks").val($("#hdnQAAcceptDxRemarks").val() + "|" + id + "^" + $("#DxRemarks_" + id).val());
+                }
+
+                //if ($("#hdnQAAcceptDxRemarks").val() == "")
+                //    $("#hdnQAAcceptDxRemarks").val(id + "^" + $("#DxRemarks_" + id).val());
+                //else
+                //    $("#hdnQAAcceptDxRemarks").val($("#hdnQAAcceptDxRemarks").val() + "|" + id + "^" + $("#DxRemarks_" + id).val());
             }
         }
 
@@ -305,15 +331,35 @@
                 }
             }
             else {
-                if ($("#hdnQAAcceptCptCodes").val() == "")
-                    $("#hdnQAAcceptCptCodes").val(id + "^" + $("#txtCPTCode_" + id).val());
-                else
-                    $("#hdnQAAcceptCptCodes").val($("#hdnQAAcceptCptCodes").val() + "|" + id + "^" + $("#txtCPTCode_" + id).val());
+                if ($("#QACptRemarks_" + id).css("display") == "flex") {
+                    if ($("#hdnQAAcceptCptCodes").val() == "") {
+                        if ($("#txtCPTCode_" + id).val() != "NA^^^")
+                            $("#hdnQAAcceptCptCodes").val(id + "^" + $("#txtCPTCode_" + id).val());
+                    }
+                    else {
+                        if ($("#txtCPTCode_" + id).val() != "NA^^^")
+                            $("#hdnQAAcceptCptCodes").val($("#hdnQAAcceptCptCodes").val() + "|" + id + "^" + $("#txtCPTCode_" + id).val());
+                    }
+                    if ($("#hdnQAAcceptCptRemarks").val() == "") {
+                        if ($("#txtCPTCode_" + id).val() != "NA^^^")
+                            $("#hdnQAAcceptCptRemarks").val(id + "^" + $("#QACptRemarks_" + id).val());
+                    }
+                    else {
+                        if ($("#txtCPTCode_" + id).val() != "NA^^^")
+                            $("#hdnQAAcceptCptRemarks").val($("#hdnQAAcceptCptRemarks").val() + "|" + id + "^" + $("#QACptRemarks_" + id).val());
+                    }
+                }
+                else {
+                    if ($("#hdnQAAcceptCptCodes").val() == "")
+                        $("#hdnQAAcceptCptCodes").val(id + "^" + $("#txtCPTCode_" + id).val());
+                    else
+                        $("#hdnQAAcceptCptCodes").val($("#hdnQAAcceptCptCodes").val() + "|" + id + "^" + $("#txtCPTCode_" + id).val());
 
-                if ($("#hdnQAAcceptCptRemarks").val() == "")
-                    $("#hdnQAAcceptCptRemarks").val(id + "^" + $("#QACptRemarks_" + id).val());
-                else
-                    $("#hdnQAAcceptCptRemarks").val($("#hdnQAAcceptCptRemarks").val() + "|" + id + "^" + $("#QACptRemarks_" + id).val());
+                    if ($("#hdnQAAcceptCptRemarks").val() == "")
+                        $("#hdnQAAcceptCptRemarks").val(id + "^" + $("#QACptRemarks_" + id).val());
+                    else
+                        $("#hdnQAAcceptCptRemarks").val($("#hdnQAAcceptCptRemarks").val() + "|" + id + "^" + $("#QACptRemarks_" + id).val());
+                }
             }
         }
 
