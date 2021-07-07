@@ -389,6 +389,14 @@
                                 Rejected = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
                                 Show = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex");
                             }
+                            if (qacptCode == "NA")
+                            {
+                                <input type="hidden" id="@string.Format("txt{0}QACpt_{1}", Model.TabIndex,j)" value="@qacptCode^NA^NA^NA" />
+                            }
+                            else
+                            {
+                                <input type="hidden" id="@string.Format("txt{0}QACpt_{1}", Model.TabIndex,j)" value="@qacptCode^@qaMod^@qaQty^@qaLinks" />
+                            }
                         }
                         <input type="hidden" id="@string.Format("txt{0}QACpt_{1}", Model.TabIndex,j)" value="@qacptCode^@qaMod^@qaQty^@qaLinks" />
                         <div class="input-group-append CoderCorrections" style="@Show">

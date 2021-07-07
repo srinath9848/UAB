@@ -415,75 +415,83 @@
 
                                                     string link = !string.IsNullOrEmpty(@qaLinks) || @qaLinks != "null" ? @qaLinks : "Link All";
                                                     cptLinks1 = cptLinks == link ? "" : coderLinks + "/";
-                                            <div title="Code : @cptCode1@qacptCode, Mod : @cptMod1@mod, Quantity : @cptQty1@qaQty, Link : @cptLinks1@link" class="col-md-3 input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
-                                                </div>
-                                                @{
-                                                    if (codercptCode == qacptCode)
-                                                    {
-                                                        <input type="text" style="color: green;min-width: 65px;" class="form-control CoderDetails ControlHeight" value="@cptCode" disabled="disabled">
-                                                        <input type="text" style="color: green" class="form-control CoderDetails ControlHeight" value="@cptMod" disabled="disabled">
-                                                        <input type="text" style="color: green" class="form-control CoderDetails ControlHeight" value="@cptQty" disabled="disabled">
-                                                        <input type="text" style="color: green" class="form-control CoderDetails ControlHeight" value="@coderLinks" disabled="disabled">
-                                                    }
-                                                    else
-                                                    {
-                                                        if (codercptCode == "NA")
-                                                            color = "color:fuchsia;";
-                                                        <div class="form-control CoderDetails" style="min-width:60px;">
-                                                            <span style="color:red">@cptCode1.Replace("/", "")</span>
-                                                            <br />
-                                                            <span style="color:green">@qacptCode</span>
+                                                    <div title="Code : @cptCode1@qacptCode, Mod : @cptMod1@mod, Quantity : @cptQty1@qaQty, Link : @cptLinks1@link" class="col-md-3 input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
                                                         </div>
-                                                        color = (coderMod != qaMod) ? "color:blue;" : "";
-                                                        if (coderMod == "NA")
-                                                            color = "color:fuchsia;";
-                                                        <div class="form-control CoderDetails">
-                                                            <span style="color:red">@coderMod.Replace("/", "")</span>
-                                                            <br />
-                                                            <span style="color:green">@qaMod</span>
-                                                        </div>
+                                                        @{
+                                                            if (codercptCode == qacptCode)
+                                                            {
+                                                                <input type="text" style="color: green;min-width: 65px;" class="form-control CoderDetails ControlHeight" value="@cptCode" disabled="disabled">
+                                                                <input type="text" style="color: green" class="form-control CoderDetails ControlHeight" value="@cptMod" disabled="disabled">
+                                                                <input type="text" style="color: green" class="form-control CoderDetails ControlHeight" value="@cptQty" disabled="disabled">
+                                                                <input type="text" style="color: green" class="form-control CoderDetails ControlHeight" value="@coderLinks" disabled="disabled">
+                                                            }
+                                                            else
+                                                            {
+                                                                if (codercptCode == "NA")
+                                                                    color = "color:fuchsia;";
+                                                                <div class="form-control CoderDetails" style="min-width:60px;">
+                                                                    <span style="color:red">@cptCode1.Replace("/", "")</span>
+                                                                    <br />
+                                                                    <span style="color:green">@qacptCode</span>
+                                                                </div>
+                                                                color = (coderMod != qaMod) ? "color:blue;" : "";
+                                                                if (coderMod == "NA")
+                                                                    color = "color:fuchsia;";
+                                                                <div class="form-control CoderDetails">
+                                                                    <span style="color:red">@coderMod.Replace("/", "")</span>
+                                                                    <br />
+                                                                    <span style="color:green">@qaMod</span>
+                                                                </div>
 
-                                                        color = (coderQty != qaQty) ? "color:blue;" : "";
-                                                        if (coderQty == "NA")
-                                                            color = "color:fuchsia;";
-                                                        <div class="form-control CoderDetails">
-                                                            <span style="color:red">@coderQty.Replace("/", "")</span>
-                                                            <br />
-                                                            <span style="color:green">@qaQty</span>
-                                                        </div>
+                                                                color = (coderQty != qaQty) ? "color:blue;" : "";
+                                                                if (coderQty == "NA")
+                                                                    color = "color:fuchsia;";
+                                                                <div class="form-control CoderDetails">
+                                                                    <span style="color:red">@coderQty.Replace("/", "")</span>
+                                                                    <br />
+                                                                    <span style="color:green">@qaQty</span>
+                                                                </div>
 
-                                                        color = (coderLinks != qaLinks) ? "color:blue;" : "";
-                                                        if (coderLinks == "NA")
-                                                            color = "color:fuchsia;";
-                                                        <div class="form-control CoderDetails">
-                                                            <span style="color:red">@coderLinks.Replace("/", "")</span><br />
-                                                            <span style="color:green">@linkAll</span>
-                                                        </div>
-                                                    }
+                                                                color = (coderLinks != qaLinks) ? "color:blue;" : "";
+                                                                if (coderLinks == "NA")
+                                                                    color = "color:fuchsia;";
+                                                                <div class="form-control CoderDetails">
+                                                                    <span style="color:red">@coderLinks.Replace("/", "")</span><br />
+                                                                    <span style="color:green">@linkAll</span>
+                                                                </div>
+                                                            }
 
-                                                    if (qacptCode == ShadowQaCpt)
-                                                    {
-                                                        Accepted = "fa fa-check-circle fa-lg accept";
-                                                        Rejected = "fa fa-times-circle fa-lg";
-                                                        Show = "display:none";
-                                                    }
-                                                    else
-                                                    {
-                                                        Accepted = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
-                                                        Rejected = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
-                                                        Show = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex");
-                                                    }
-                                                }
-                                                <input type="hidden" id="txtCPTCode_@j" value="@qacptCode^@qaMod^@qaQty^@qaLinks" />
-                                                <div class="input-group-append CoderCorrections" style="@Show">
-                                                    <span class="input-group-text AcceptRejectWidth">
-                                                        &nbsp;<i id="Cpt_@j" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
-                                                        &nbsp;<i id="Cpt_@j" class="@Rejected" aria-hidden="true"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
+                                                            if (qacptCode == ShadowQaCpt)
+                                                            {
+                                                                Accepted = "fa fa-check-circle fa-lg accept";
+                                                                Rejected = "fa fa-times-circle fa-lg";
+                                                                Show = "display:none";
+                                                            }
+                                                            else
+                                                            {
+                                                                Accepted = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");
+                                                                Rejected = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");
+                                                                Show = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex");
+                                                            }
+                                                            if (qacptCode == "NA")
+                                                            {
+                                                                <input type="hidden" id="txtCPTCode_@j" value="@qacptCode^NA^NA^NA" />
+                                                            }
+                                                            else
+                                                            {
+                                                                <input type="hidden" id="txtCPTCode_@j" value="@qacptCode^@qaMod^@qaQty^@qaLinks" />
+                                                            }
+                                                        }
+
+                                                        <div class="input-group-append CoderCorrections" style="@Show">
+                                                            <span class="input-group-text AcceptRejectWidth">
+                                                                &nbsp;<i id="Cpt_@j" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
+                                                                &nbsp;<i id="Cpt_@j" class="@Rejected" aria-hidden="true"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
                                                 }
                                                 else
                                                 {
