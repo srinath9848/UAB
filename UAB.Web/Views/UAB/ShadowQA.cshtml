@@ -653,6 +653,8 @@
                                     var mod = $("#txt" + tabid + "mod_" + index).val() != "" ? $("#txt" + tabid + "mod_" + index).val() : null;
                                     var qty = $("#txt" + tabid + "qty_" + index).val() != "" ? $("#txt" + tabid + "qty_" + index).val() : null;
                                     var links = $("#txt" + tabid + "links_" + index).val() != "" ? $("#txt" + tabid + "links_" + index).val() : null;
+                                    if (links == undefined)
+                                        links = null;
                                     $("#hdnShadowQACptCodes" + tabid).val(id + "^" + $("#txt" + tabid + "Cpt_" + index).val() + "^" + mod + "^" + qty + "^" + links);
                                     $("#hdnShadowQAErrorTypeID" + tabid).val(ErrorTypeID);
                                 }
@@ -663,6 +665,8 @@
                                     var mod = $("#txt" + tabid + "mod_" + index).val() != "" ? $("#txt" + tabid + "mod_" + index).val() : null;
                                     var qty = $("#txt" + tabid + "qty_" + index).val() != "" ? $("#txt" + tabid + "qty_" + index).val() : null;
                                     var links = $("#txt" + tabid + "links_" + index).val() != "" ? $("#txt" + tabid + "links_" + index).val() : null;
+                                    if (links == undefined)
+                                        links = null;
                                     $("#hdnShadowQACptCodes" + tabid).val($("#hdnShadowQACptCodes" + tabid).val() + "|" + id + "^" + $("#txt" + tabid + "Cpt_" + index).val() + "^" + mod + "^" + qty + "^" + links);
                                     $("#hdnShadowQAErrorTypeID" + tabid).val(ErrorTypeID);
                                 }
@@ -987,7 +991,7 @@
         //Cnt = Cnt - 1;
         //var lastindex = $(".txtDx").last().attr('id');
        // $("#txtDx_" + Cnt).attr("onfocusout", "DxFunction('" + "txtDx_" + Cnt + "')");
-        $(".txtDx").last().attr("onfocusout", "DxFunction('" + "txtDx_" + Cnt + "')");
+        $(".txtDx").last().attr("onfocusout", "DxFunction('" + "txtDx_" + iCnt + "')");
     };
 
     DeleteCptCodes = function (id) {
