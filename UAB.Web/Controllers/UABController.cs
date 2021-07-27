@@ -33,7 +33,7 @@ namespace UAB.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         public UABController(IHttpContextAccessor httpContextAccessor, ILogger<UABController> logger)
         {
-            mUserId = Convert.ToInt32(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value);
+            mUserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value != null ? Convert.ToInt32(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value) : 0;
             mUserRole = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Role)?.Value;
             _httpContextAccessor = httpContextAccessor;
             _logger = logger;
