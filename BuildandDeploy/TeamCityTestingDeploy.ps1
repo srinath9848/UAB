@@ -66,7 +66,7 @@ foreach ($webServer in $destComputers) {
     # create new dir
     mkdir $destUnc > $null
     # copy the files
-    copy-item '..\ToDeploy\Web\*' $destUnc -recurse -PassThru | select-object FullName
+    copy-item '\ToDeploy\Web\*' $destUnc -recurse -PassThru | select-object FullName
 	$UncCrystalReportLibrariesPath = (getUnc $webServer $crystalReportLibrariesPath)
 	# copy the crystal reports runtime files
 	copy-item $UncCrystalReportLibrariesPath $destUnc -recurse -PassThru | select-object FullName
