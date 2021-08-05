@@ -79,7 +79,8 @@ foreach ($webServer in $destComputers) {
     echo "Upgrading web site on $webServer"
     
     $success = RepointIIS $webServer "$webPath$targetFolder" $siteAndVDir
-    
+    Write-Host "$success"
+	$success
     if($success -ne $true) {
         throw "Failed to upgrade the website on $webServer."
     }
