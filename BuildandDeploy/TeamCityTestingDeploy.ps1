@@ -41,7 +41,7 @@ function RepointIIS($webServer, $physPath, $siteAndVDir)
     Invoke-Command -session $session -ScriptBlock {
     	param([string] $physPath, [string] $siteAndVDir)
     	$ErrorActionPreference = 'Stop';
-    	$success = $false
+    	#$success = $false
 
         #need to send the "right" set of `quotes` in case $siteAndVDir has spaces or $physPath has spaces
         c:\windows\system32\inetsrv\appcmd.exe set vdir `"$siteAndVDir`" `"/physicalPath:$physPath`" | Write-Host
