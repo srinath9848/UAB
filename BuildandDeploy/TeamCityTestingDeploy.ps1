@@ -1,4 +1,4 @@
-param( [int] $deployNum, [int] $buildNum)
+param($deployNum, $buildNum)
 
 $destComputers = @("VD-TSTPC10-WEB") # Testing Environment Server (Web Server), Hosted the ProCoder Reporting application in this server. 
 $retentionPeriod = New-TimeSpan -Days 2
