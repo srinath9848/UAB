@@ -66,7 +66,7 @@ foreach ($webServer in $destComputers) {
     # create new dir
     mkdir $destUnc > $null
     # copy the files
-    copy-item '..\UAB.Web\ToDeploy\Web\*' $destUnc -recurse -PassThru | select-object FullName
+    copy-item '..\UAB.Web\*' $destUnc -recurse -PassThru | select-object FullName
 	$UncCrystalReportLibrariesPath = (getUnc $webServer $crystalReportLibrariesPath)
 	# copy the crystal reports runtime files
 	copy-item $UncCrystalReportLibrariesPath $destUnc -recurse -PassThru | select-object FullName
@@ -78,7 +78,7 @@ $webPathForCleanUp = $webPath
 foreach ($webServer in $destComputers) {
     echo "Upgrading web site on $webServer"
     
-    $success = RepointIIS $webServer "$webPath$targetFolder" $siteAndVDir -dv
+    $success = RepointIIS $webServer "$webPath$targetFolder" $siteAndVDir
     Write-Host "$success"
 	$success
     if($success -ne $true) {
