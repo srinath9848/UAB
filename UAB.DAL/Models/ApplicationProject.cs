@@ -22,5 +22,6 @@ namespace UAB.DAL.Models
         public string ClientName { get; set; }
         public string ProjectTypeName { get; set; }
         public int SLAInDays { get; set; }
+        public int TpicProjectId  { get; set; }
     }
 }

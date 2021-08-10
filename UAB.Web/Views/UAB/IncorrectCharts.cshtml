@@ -158,6 +158,8 @@
             var res2 = $("[id=" + "ProviderFeedbackID_" + tabid + "]:eq(1)").attr('class');
             if (res2.includes('reject') && $("#CoderProviderFeedbackRemarks_" + tabid).css("display") == "flex") {
                 ProviderFeedbackID = $("#CoderFeedback_" + tabid).val();
+                if (ProviderFeedbackID == "")
+                    ProviderFeedbackID = $("#QAProviderFeedback_" + tabid).val();
                 FeedbackRemarks = $('#CoderProviderFeedbackRemarks_' + tabid).val();
                 if ($('#CoderProviderFeedbackRemarks_' + tabid).val() != "") {
                     FeedbackRemarks = $('#CoderProviderFeedbackRemarks_' + tabid).val();
@@ -755,6 +757,8 @@
 
         // Claim 4 Dx & Cpt End
 
+        // Default Claim  Dx & Cpt
+
         if ($("#hdnRejectedDxRemarks").val() != "")
             $("#hdnAcceptedDxRemarks").val('');
         else
@@ -764,6 +768,42 @@
             $("#hdnAcceptedCptRemarks").val('');
         else
             $("#hdnAcceptedCptRemarks").val('');
+
+        // Claim 1 Dx & Cpt
+
+        if ($("#hdnRejectedDxRemarks1").val() != "")
+            $("#hdnAcceptedDxRemarks1").val('');
+        else
+            $("#hdnAcceptedDxRemarks1").val('');
+
+        if ($("#hdnRejectedCptRemarks1").val() != "")
+            $("#hdnAcceptedCptRemarks1").val('');
+        else
+            $("#hdnAcceptedCptRemarks1").val('');
+
+        // Claim 2 Dx & Cpt
+
+        if ($("#hdnRejectedDxRemarks2").val() != "")
+            $("#hdnAcceptedDxRemarks2").val('');
+        else
+            $("#hdnAcceptedDxRemarks2").val('');
+
+        if ($("#hdnRejectedCptRemarks2").val() != "")
+            $("#hdnAcceptedCptRemarks2").val('');
+        else
+            $("#hdnAcceptedCptRemarks2").val('');
+
+        // Claim 3 Dx & Cpt
+
+        if ($("#hdnRejectedDxRemarks3").val() != "")
+            $("#hdnAcceptedDxRemarks3").val('');
+        else
+            $("#hdnAcceptedDxRemarks3").val('');
+
+        if ($("#hdnRejectedCptRemarks3").val() != "")
+            $("#hdnAcceptedCptRemarks3").val('');
+        else
+            $("#hdnAcceptedCptRemarks3").val('');
 
         $(".tab").each(function () {
             var id = $(this).attr('id');

@@ -21,6 +21,8 @@ namespace UAB.DAL.Models
         public string InputFileLocation { get; set; }
         public string InputFileFormat { get; set; }
         public int SLAInDays { get; set; }
+        [Required(ErrorMessage = "TPIC Project Id is required.")]
+        public int TPICProjectId { get; set; }
         //public string ClientName { get; set; }
         //public string ProjectTypeName { get; set; }
         public virtual Client Client { get; set; }

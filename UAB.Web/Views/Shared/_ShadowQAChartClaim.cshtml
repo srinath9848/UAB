@@ -187,7 +187,7 @@
                 }
                 <div title="@title" class="col-md-3 input-group">
                     <div class="input-group-prepend ControlHeight">
-                        <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
+                        <span class="input-group-text @string.Format("dx{0}index", @Model.TabIndex) AdjustSerialNumber" id="basic-addon1">@j</span>
                     </div>
                     <div class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
                         <span style="white-space:nowrap">
@@ -227,7 +227,8 @@
                         var DxClaim_QA = string.Format("DxClaim_{0}_QA_{1}", Model.TabIndex, j);
                     }
                     <input type="hidden" class="@string.Format("txQADx_{0}_{1}", Model.TabIndex, j)" value="@QaDxVal" />
-                    <input type="text" id="@string.Format("txtDx{0}Claim_{1}", Model.TabIndex, j)" class="form-control txtDx ControlHeight" autocomplete="off" placeholder="Code" value="@QaDxVal" />
+                    <input type="text" id="@string.Format("txtDx{0}Claim_{1}", Model.TabIndex, j)" class="form-control ControlHeight claim_@tabIndex @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" autocomplete="off" placeholder="Code" value="@QaDxVal" />
+                    @*<input type="text" id="@string.Format("txtDx{0}Claim_{1}", Model.TabIndex,i)" class="form-control ControlHeight claim_@tabIndex @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" autocomplete="off" placeholder="Code" value="@item" style="display:none" />*@
                 </div>
                 <div class="col-md-3 input-group">
                     @{ var dxRemarks = string.Format("DxRemarkss_{0}_{1}", Model.TabIndex, j);}
@@ -244,7 +245,7 @@
         <label class="col-md-3 lessWidth m-t-15"></label>
         <div class="col-md-3 input-group">
             <div class="input-group-prepend ControlHeight">
-                <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@totalDxCount</span>
+                <span class="@string.Format("input-group-text dx{0}index AdjustSerialNumber", Model.TabIndex)" id="basic-addon1">@totalDxCount</span>
             </div>
             <input class="form-control CoderDetails ControlHeight valid" disabled type="text" value="">
             <div class="input-group-append ControlHeight">
@@ -258,9 +259,10 @@
         <div title="" class="col-md-3 input-group" style="display:flex"></div>
         <div class="col-md-3 @QARevised newlyDxCpt_@tabIndex input-group @string.Format("DxClaim_{0}_{1}", Model.TabIndex, totalDxCount)" id="@Div2DxRow" style="display:none">
             <div class="input-group-prepend ControlHeight">
-                <span class="input-group-text AdjustSerialNumber @dx2index" id="basic-addon1">@totalDxCount</span>
+                <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@totalDxCount</span>
             </div>
-            <input type="text" id="@string.Format("txtDx{0}Claim_{1}", Model.TabIndex,totalDxCount)" onfocusout="DxClaims('txtDx_1_@tabIndex')" class="form-control ControlHeight @Dx2Claim Dxclaim_@tabIndex" autocomplete="off" placeholder="Code" />
+            <input type="text" id="@string.Format("txtDx{0}Claim_{1}", Model.TabIndex,totalDxCount)" onfocusout="DxClaims('txtDx_1_@tabIndex')" class="form-control ControlHeight @Dx2Claim claim_@tabIndex" autocomplete="off" placeholder="Code" />
+            @*<input type="text" id="@string.Format("txtDx{0}Claim_{1}", Model.TabIndex,totalDxCount)" onfocusout="DxClaims('txtDx_1_@totalDxCount')" class="form-control ControlHeight @Dx2Claim claim_@tabIndex" autocomplete="off" placeholder="Code" />*@
         </div>
         <div class="col-md-3 @QARevised input-group @string.Format("DxClaim_{0}_{1}", Model.TabIndex,totalDxCount)" id="@Div2DxRow" style="display:none">
             <input type="text" id="@string.Format("DxRemarkss_{0}_{1}", Model.TabIndex, j)" class="form-control DxRemarkss_@Model.TabIndex ControlHeight" style="display:flex;" />
@@ -333,7 +335,7 @@
                     cptLinks1 = cptLinks == link ? "" : coderLinks + "/";
                     <div title="Code : @cptCode1@qacptCode, Mod : @cptMod1@mod, Quantity : @cptQty1@qaQty, Link : @cptLinks1@link" class="col-md-3 input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text AdjustSerialNumber" id="basic-addon1">@j</span>
+                            <span class="input-group-text @string.Format("cpt{0}index", Model.TabIndex) AdjustSerialNumber" id="basic-addon1">@j</span>
                         </div>
                         @{
                             if (codercptCode == qacptCode)
@@ -348,7 +350,7 @@
                                     <span style="color:green">@coderQty.Replace("/", "")</span>
                                 </div>
                                 <div class="form-control CoderDetails">
-                                    <span style="color:green">@cptLinks1.Replace("/", "")</span>
+                                    <span style="color:green">@link</span>
                                 </div>
                             }
                             else

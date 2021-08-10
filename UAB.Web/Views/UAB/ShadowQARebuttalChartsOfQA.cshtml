@@ -71,7 +71,10 @@
                         $("#hdnAcceptClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderID" + "," + ProviderID + "," + ProviderRemarks);
                     }
                 } else {
-                    ProviderID = 0;
+                    if ($("#ShadowQAProviderID_" + tabid).val() != "")
+                        ProviderID = $("#ShadowQAProviderID_" + tabid).val();
+                    else
+                        ProviderID = 0;
                     ProviderRemarks = "";
                     if ($("#hdnAcceptClaim" + tabid).val() == "") {
                         $("#hdnAcceptClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderID" + "," + ProviderID + "," + ProviderRemarks);
@@ -97,7 +100,10 @@
                         $("#hdnAcceptClaim" + tabid).val($("#hdnAcceptClaim" + tabid).val() + "^" + "PayorID" + "," + PayorID + "," + payorRemarks);
                     }
                 } else {
-                    PayorID = 0;
+                    if ($("#ShadowQAPayorID_" + tabid).val() != "")
+                        PayorID = $("#ShadowQAPayorID_" + tabid).val();
+                    else
+                        PayorID = 0;
                     payorRemarks = "";
                     if ($("#hdnAcceptClaim" + tabid).val() == "") {
                         $("#hdnAcceptClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "PayorID" + "," + PayorID + "," + payorRemarks);
@@ -125,7 +131,10 @@
                     FeedbackRemarks = $('#QAProviderFeedbackRemarks_' + tabid).val();
                 }
                 else
-                    ProviderFeedbackID = 0;
+                    if ($("#ShadowQAProviderFeedback_" + tabid).val() != "")
+                        ProviderFeedbackID = $("#ShadowQAProviderFeedback_" + tabid).val();
+                    else
+                        ProviderFeedbackID = 0;
 
                 if ($("#hdnAcceptClaim" + tabid).val() == "") {
                     $("#hdnAcceptClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "ProviderFeedbackID" + "," + ProviderFeedbackID + "," + FeedbackRemarks);
@@ -172,10 +181,21 @@
                         }
                     }
                     else {
-                        if ($("#hdnQAAcceptDxCodes" + tabid).val() == "")
-                            $("#hdnQAAcceptDxCodes" + tabid).val(id + "^" + $("#txtQADx" + tabid + "Claim_" + id).val());
-                        else
-                            $("#hdnQAAcceptDxCodes" + tabid).val($("#hdnQAAcceptDxCodes" + tabid).val() + "|" + id + "^" + $("#txtQADx" + tabid + "Claim_" + id).val());
+                        if ($("#ShadowQADxRemarkss_" + tabid + "_" + id).css("display") == "flex") {
+                            if ($("#hdnQAAcceptDxCodes" + tabid).val() == "") {
+                                if ($("#txtQADx" + tabid + "Claim_" + id).val() != "NA")
+                                    $("#hdnQAAcceptDxCodes" + tabid).val(id + "^" + $("#txtQADx" + tabid + "Claim_" + id).val());
+                            }
+                            else {
+                                if ($("#txtQADx" + tabid + "Claim_" + id).val() != "NA")
+                                    $("#hdnQAAcceptDxCodes" + tabid).val($("#hdnQAAcceptDxCodes" + tabid).val() + "|" + id + "^" + $("#txtQADx" + tabid + "Claim_" + id).val());
+                            }
+                        } else {
+                            if ($("#hdnQAAcceptDxCodes" + tabid).val() == "")
+                                $("#hdnQAAcceptDxCodes" + tabid).val(id + "^" + $("#txtDx" + tabid + "Claim_" + id).val());
+                            else
+                                $("#hdnQAAcceptDxCodes" + tabid).val($("#hdnQAAcceptDxCodes" + tabid).val() + "|" + id + "^" + $("#txtDx" + tabid + "Claim_" + id).val());
+                        }
                     }
                 }
 
@@ -214,17 +234,36 @@
                         }
                     }
                     else {
-                        if ($("#hdnQAAcceptCptCodes" + tabid).val() == "") {
-                            $("#hdnQAAcceptCptCodes" + tabid).val(id + "^" + $("#txt" + tabid + "QACpt_" + id).val());
+                        if ($("#SQACptRemarkss_" + tabid + "_" + id).css("display") == "flex") {
+                            if ($("#hdnQAAcceptCptCodes" + tabid).val() == "") {
+                                if ($("#txt" + tabid + "QACpt_" + id).val() != "NA^NA^NA^NA")
+                                    $("#hdnQAAcceptCptCodes" + tabid).val(id + "^" + $("#txt" + tabid + "QACpt_" + id).val());
+                            }
+                            else {
+                                if ($("#txt" + tabid + "QACpt_" + id).val() != "NA^NA^NA^NA")
+                                    $("#hdnQAAcceptCptCodes" + tabid).val($("#hdnQAAcceptCptCodes" + tabid).val() + "|" + id + "^" + $("#txt" + tabid + "QACpt_" + id).val());
+                            }
+
+                            if ($("#hdnQAAcceptCptRemarks" + tabid).val() == "") {
+                                if ($("#txt" + tabid + "QACpt_" + id).val() != "NA^NA^NA^NA")
+                                    $("#hdnQAAcceptCptRemarks" + tabid).val(id + "^" + $(".QACptRemarkss_" + tabid + "_" + id).val());
+                            }
+                            else {
+                                if ($("#txt" + tabid + "QACpt_" + id).val() != "NA^NA^NA^NA")
+                                    $("#hdnQAAcceptCptRemarks" + tabid).val($("#hdnQAAcceptCptRemarks" + tabid).val() + "|" + id + "^" + $(".QACptRemarkss_" + tabid + "_" + id).val());
+                            }
                         }
                         else {
-                            $("#hdnQAAcceptCptCodes" + tabid).val($("#hdnQAAcceptCptCodes" + tabid).val() + "|" + id + "^" + $("#txt" + tabid + "QACpt_" + id).val());
-                        }
+                            if ($("#hdnQAAcceptCptCodes" + tabid).val() == "")
+                                $("#hdnQAAcceptCptCodes" + tabid).val(id + "^" + $("#txt" + tabid + "QACpt_" + id).val());
+                            else
+                                $("#hdnQAAcceptCptCodes" + tabid).val($("#hdnQAAcceptCptCodes" + tabid).val() + "|" + id + "^" + $("#txt" + tabid + "QACpt_" + id).val());
 
-                        if ($("#hdnQAAcceptCptRemarks" + tabid).val() == "")
-                            $("#hdnQAAcceptCptRemarks" + tabid).val(id + "^" + $(".QACptRemarkss_" + tabid + "_" + id).val());
-                        else
-                            $("#hdnQAAcceptCptRemarks" + tabid).val($("#hdnQAAcceptCptRemarks" + tabid).val() + "|" + id + "^" + $(".QACptRemarkss_" + tabid + "_" + id).val());
+                            if ($("#hdnQAAcceptCptRemarks" + tabid).val() == "")
+                                $("#hdnQAAcceptCptRemarks" + tabid).val(id + "^" + $(".QACptRemarkss_" + tabid + "_" + id).val());
+                            else
+                                $("#hdnQAAcceptCptRemarks" + tabid).val($("#hdnQAAcceptCptRemarks" + tabid).val() + "|" + id + "^" + $(".QACptRemarkss_" + tabid + "_" + id).val());
+                        }
                     }
                     index = index + parseInt(1);
                 }
@@ -263,15 +302,41 @@
                 }
             }
             else {
-                if ($("#hdnQAAcceptDxCodes").val() == "")
-                    $("#hdnQAAcceptDxCodes").val(id + "^" + $("#txtQADxCode_" + id).val());
-                else
-                    $("#hdnQAAcceptDxCodes").val($("#hdnQAAcceptDxCodes").val() + "|" + id + "^" + $("#txtQADxCode_" + id).val());
+                if ($("#DxRemarks_" + id).css("display") == "flex") {
+                    if ($("#hdnQAAcceptDxCodes").val() == "") {
+                        if ($("#txtQADxCode_" + id).val() != "NA")
+                            $("#hdnQAAcceptDxCodes").val(id + "^" + $("#txtQADxCode_" + id).val());
+                    }
+                    else {
+                        if ($("#txtQADxCode_" + id).val() != "NA")
+                            $("#hdnQAAcceptDxCodes").val($("#hdnQAAcceptDxCodes").val() + "|" + id + "^" + $("#txtQADxCode_" + id).val());
+                    }
 
-                if ($("#hdnQAAcceptDxRemarks").val() == "")
-                    $("#hdnQAAcceptDxRemarks").val(id + "^" + $("#DxRemarks_" + id).val());
-                else
-                    $("#hdnQAAcceptDxRemarks").val($("#hdnQAAcceptDxRemarks").val() + "|" + id + "^" + $("#DxRemarks_" + id).val());
+                    if ($("#hdnQAAcceptDxRemarks").val() == "") {
+                        if ($("#txtQADxCode_" + id).val() != "NA")
+                            $("#hdnQAAcceptDxRemarks").val(id + "^" + $("#DxRemarks_" + id).val());
+                    }
+                    else {
+                        if ($("#txtQADxCode_" + id).val() != "NA")
+                            $("#hdnQAAcceptDxRemarks").val($("#hdnQAAcceptDxRemarks").val() + "|" + id + "^" + $("#DxRemarks_" + id).val());
+                    }
+
+                } else {
+                    if ($("#hdnQAAcceptDxCodes").val() == "")
+                        $("#hdnQAAcceptDxCodes").val(id + "^" + $("#txtDxCode_" + id).val());
+                    else
+                        $("#hdnQAAcceptDxCodes").val($("#hdnQAAcceptDxCodes").val() + "|" + id + "^" + $("#txtDxCode_" + id).val());
+
+                    if ($("#hdnQAAcceptDxRemarks").val() == "")
+                        $("#hdnQAAcceptDxRemarks").val(id + "^" + $("#DxRemarks_" + id).val());
+                    else
+                        $("#hdnQAAcceptDxRemarks").val($("#hdnQAAcceptDxRemarks").val() + "|" + id + "^" + $("#DxRemarks_" + id).val());
+                }
+
+                //if ($("#hdnQAAcceptDxRemarks").val() == "")
+                //    $("#hdnQAAcceptDxRemarks").val(id + "^" + $("#DxRemarks_" + id).val());
+                //else
+                //    $("#hdnQAAcceptDxRemarks").val($("#hdnQAAcceptDxRemarks").val() + "|" + id + "^" + $("#DxRemarks_" + id).val());
             }
         }
 
@@ -305,15 +370,35 @@
                 }
             }
             else {
-                if ($("#hdnQAAcceptCptCodes").val() == "")
-                    $("#hdnQAAcceptCptCodes").val(id + "^" + $("#txtCPTCode_" + id).val());
-                else
-                    $("#hdnQAAcceptCptCodes").val($("#hdnQAAcceptCptCodes").val() + "|" + id + "^" + $("#txtCPTCode_" + id).val());
+                if ($("#QACptRemarks_" + id).css("display") == "flex") {
+                    if ($("#hdnQAAcceptCptCodes").val() == "") {
+                        if ($("#txtCPTCode_" + id).val() != "NA^NA^NA^NA")
+                            $("#hdnQAAcceptCptCodes").val(id + "^" + $("#txtCPTCode_" + id).val());
+                    }
+                    else {
+                        if ($("#txtCPTCode_" + id).val() != "NA^NA^NA^NA")
+                            $("#hdnQAAcceptCptCodes").val($("#hdnQAAcceptCptCodes").val() + "|" + id + "^" + $("#txtCPTCode_" + id).val());
+                    }
+                    if ($("#hdnQAAcceptCptRemarks").val() == "") {
+                        if ($("#txtCPTCode_" + id).val() != "NA^NA^NA^NA")
+                            $("#hdnQAAcceptCptRemarks").val(id + "^" + $("#QACptRemarks_" + id).val());
+                    }
+                    else {
+                        if ($("#txtCPTCode_" + id).val() != "NA^NA^NA^NA")
+                            $("#hdnQAAcceptCptRemarks").val($("#hdnQAAcceptCptRemarks").val() + "|" + id + "^" + $("#QACptRemarks_" + id).val());
+                    }
+                }
+                else {
+                    if ($("#hdnQAAcceptCptCodes").val() == "")
+                        $("#hdnQAAcceptCptCodes").val(id + "^" + $("#txtCPTCode_" + id).val());
+                    else
+                        $("#hdnQAAcceptCptCodes").val($("#hdnQAAcceptCptCodes").val() + "|" + id + "^" + $("#txtCPTCode_" + id).val());
 
-                if ($("#hdnQAAcceptCptRemarks").val() == "")
-                    $("#hdnQAAcceptCptRemarks").val(id + "^" + $("#QACptRemarks_" + id).val());
-                else
-                    $("#hdnQAAcceptCptRemarks").val($("#hdnQAAcceptCptRemarks").val() + "|" + id + "^" + $("#QACptRemarks_" + id).val());
+                    if ($("#hdnQAAcceptCptRemarks").val() == "")
+                        $("#hdnQAAcceptCptRemarks").val(id + "^" + $("#QACptRemarks_" + id).val());
+                    else
+                        $("#hdnQAAcceptCptRemarks").val($("#hdnQAAcceptCptRemarks").val() + "|" + id + "^" + $("#QACptRemarks_" + id).val());
+                }
             }
         }
 

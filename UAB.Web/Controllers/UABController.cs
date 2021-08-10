@@ -1808,6 +1808,8 @@ namespace UAB.Controllers
                     dtAudit.Rows.Add("CPTCode", hdnQAAcceptCptCodes4, hdnQAAcceptCptRemarks4, 0, Convert.ToInt32(hdnClaimId4), true);
             }
 
+            // Reject Claim 1-4 Dx & CPT
+
             if (!string.IsNullOrEmpty(hdnDx) && !string.IsNullOrEmpty(hdnDxRemarks))
                 if (!string.IsNullOrEmpty(hdnQAErrorTypeID1))
                     dtAudit.Rows.Add("Dx", hdnDx, hdnDxRemarks, Convert.ToInt32(hdnQAErrorTypeID1), 0, false);
@@ -2600,10 +2602,20 @@ namespace UAB.Controllers
 
             // Reject Claim 1 Dx & CPT
             if (!string.IsNullOrEmpty(hdnQADxCodes) && !string.IsNullOrEmpty(hdnQADxRemarks))
-                dtAudit.Rows.Add("Dx", hdnQADxCodes, hdnQADxRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), false);
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID1))
+                    dtAudit.Rows.Add("Dx", hdnQADxCodes, hdnQADxRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), false);
+                else
+                    dtAudit.Rows.Add("Dx", hdnQADxCodes, hdnQADxRemarks, 0, Convert.ToInt32(hdnClaimId1), false);
+            }
 
             if (!string.IsNullOrEmpty(hdnQACptCodes) && !string.IsNullOrEmpty(hdnQACptRemarks))
-                dtAudit.Rows.Add("CPTCode", hdnQACptCodes, hdnQACptRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), false);
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID1))
+                    dtAudit.Rows.Add("CPTCode", hdnQACptCodes, hdnQACptRemarks, Convert.ToInt32(hdnQAErrorTypeID1), Convert.ToInt32(hdnClaimId1), false);
+                else
+                    dtAudit.Rows.Add("CPTCode", hdnQACptCodes, hdnQACptRemarks, 0, Convert.ToInt32(hdnClaimId1), false);
+            }
 
             // Accept Claim 1 Dx & CPT
             if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes))
@@ -2623,10 +2635,20 @@ namespace UAB.Controllers
             }
             // Reject 2 Dx & CPT
             if (!string.IsNullOrEmpty(hdnQADxCodes2) && !string.IsNullOrEmpty(hdnQADxRemarks2))
-                dtAudit.Rows.Add("Dx", hdnQADxCodes2, hdnQADxRemarks2, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), false);
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID2))
+                    dtAudit.Rows.Add("Dx", hdnQADxCodes2, hdnQADxRemarks2, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), false);
+                else
+                    dtAudit.Rows.Add("Dx", hdnQADxCodes2, hdnQADxRemarks2, 0, Convert.ToInt32(hdnClaimId2), false);
+            }
 
             if (!string.IsNullOrEmpty(hdnQACptCodes2) && !string.IsNullOrEmpty(hdnQACptRemarks2))
-                dtAudit.Rows.Add("CPTCode", hdnQACptCodes2, hdnQACptRemarks2, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), false);
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID2))
+                    dtAudit.Rows.Add("CPTCode", hdnQACptCodes2, hdnQACptRemarks2, Convert.ToInt32(hdnQAErrorTypeID2), Convert.ToInt32(hdnClaimId2), false);
+                else
+                    dtAudit.Rows.Add("CPTCode", hdnQACptCodes2, hdnQACptRemarks2, 0, Convert.ToInt32(hdnClaimId2), false);
+            }
 
             // Accept 2 Dx & CPT
             if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes2))
@@ -2645,10 +2667,20 @@ namespace UAB.Controllers
             }
             // Reject Claim 3 Dx & CPT
             if (!string.IsNullOrEmpty(hdnQADxCodes3) && !string.IsNullOrEmpty(hdnQADxRemarks3))
-                dtAudit.Rows.Add("Dx", hdnQADxCodes3, hdnQADxRemarks3, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), false);
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID3))
+                    dtAudit.Rows.Add("Dx", hdnQADxCodes3, hdnQADxRemarks3, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), false);
+                else
+                    dtAudit.Rows.Add("Dx", hdnQADxCodes3, hdnQADxRemarks3, 0, Convert.ToInt32(hdnClaimId3), false);
+            }
 
             if (!string.IsNullOrEmpty(hdnQACptCodes3) && !string.IsNullOrEmpty(hdnQACptRemarks3))
-                dtAudit.Rows.Add("CPTCode", hdnQACptCodes3, hdnQACptRemarks3, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), false);
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID3))
+                    dtAudit.Rows.Add("CPTCode", hdnQACptCodes3, hdnQACptRemarks3, Convert.ToInt32(hdnQAErrorTypeID3), Convert.ToInt32(hdnClaimId3), false);
+                else
+                    dtAudit.Rows.Add("CPTCode", hdnQACptCodes3, hdnQACptRemarks3, 0, Convert.ToInt32(hdnClaimId3), false);
+            }
 
             // Accept Claim 3 Dx & CPT
             if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes3))
@@ -2667,10 +2699,20 @@ namespace UAB.Controllers
             }
             // Reject Claim 4 Dx & CPT
             if (!string.IsNullOrEmpty(hdnQADxCodes4) && !string.IsNullOrEmpty(hdnQADxRemarks4))
-                dtAudit.Rows.Add("Dx", hdnQADxCodes4, hdnQADxRemarks4, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), false);
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID4))
+                    dtAudit.Rows.Add("Dx", hdnQADxCodes4, hdnQADxRemarks4, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), false);
+                else
+                    dtAudit.Rows.Add("Dx", hdnQADxCodes4, hdnQADxRemarks4, 0, Convert.ToInt32(hdnClaimId4), false);
+            }
 
             if (!string.IsNullOrEmpty(hdnQACptCodes4) && !string.IsNullOrEmpty(hdnQACptRemarks4))
-                dtAudit.Rows.Add("CPTCode", hdnQACptCodes4, hdnQACptRemarks4, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), false);
+            {
+                if (!string.IsNullOrEmpty(hdnQAErrorTypeID4))
+                    dtAudit.Rows.Add("CPTCode", hdnQACptCodes4, hdnQACptRemarks4, Convert.ToInt32(hdnQAErrorTypeID4), Convert.ToInt32(hdnClaimId4), false);
+                else
+                    dtAudit.Rows.Add("CPTCode", hdnQACptCodes4, hdnQACptRemarks4, 0, Convert.ToInt32(hdnClaimId4), false);
+            }
 
             // Accept Claim 4 Dx & CPT
             if (!string.IsNullOrEmpty(hdnQAAcceptDxCodes4))
@@ -3648,28 +3690,35 @@ namespace UAB.Controllers
         public IActionResult AddSettingsProject(ApplicationProject project)
         {
             _logger.LogInformation("Loading Started for AddSettingsProject for User: " + mUserId);
-            if (ModelState.IsValid)
+            try
             {
-                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-                List<string> lstProvider = clinicalcaseOperations.GetProjectNames();
-
-                if (project.ProjectId == 0)
+                if (ModelState.IsValid)
                 {
-                    if (!lstProvider.Contains(project.Name.ToLower()))
+                    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                    List<string> lstProvider = clinicalcaseOperations.GetProjectNames();
+
+                    if (project.ProjectId == 0)
                     {
-                        clinicalcaseOperations.AddProject(project);
-                        TempData["Success"] = "Provider \"" + project.Name + "\" Added Successfully!";
+                        if (!lstProvider.Contains(project.Name.ToLower()))
+                        {
+                            clinicalcaseOperations.AddProject(project);
+                            TempData["Success"] = "Project \"" + project.Name + "\" Added Successfully!";
+                        }
+                        else
+                        {
+                            TempData["Error"] = "The Project \"" + project.Name + "\" is already present in our Project list!";
+                        }
                     }
                     else
                     {
-                        TempData["Error"] = "The Provider \"" + project.Name + "\" is already present in our Provider list!";
+                        clinicalcaseOperations.UpdateProject(project); // Update
+                        TempData["Success"] = "Project \"" + project.Name + "\" Updated Successfully!";
                     }
                 }
-                else
-                {
-                    clinicalcaseOperations.UpdateProject(project); // Update
-                    TempData["Success"] = "Provider \"" + project.Name + "\" Updated Successfully!";
-                }
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = ex.Message;
             }
             _logger.LogInformation("Loading Ended for AddSettingsProject for User: " + mUserId);
             return RedirectToAction("SettingsProject");

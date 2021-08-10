@@ -99,6 +99,13 @@
         string linkAll = "";
         string qtyVal = "";
         string links = "";
+        if (coderCptcodes[0] == "NA")
+        {
+            cptVal = coderCptcodes[0] == "null" ? "" : coderCptcodes[0];
+            mod = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];
+            qtyVal = coderCptcodes[2] == "null" ? "" : coderCptcodes[2];
+            linkAll = coderCptcodes[3] == "null" ? "" : coderCptcodes[3];
+        }
         if (cptVal != "")
         {
             mod = coderCptcodes[1] == "null" ? "" : coderCptcodes[1];

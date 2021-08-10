@@ -55,34 +55,36 @@
                                     <th style="font-weight:900;">Client</th>
                                     <th style="font-weight:900;">Type</th>
                                     <th style="font-weight:900;">SLA in Days</th>
+                                    <th style="font-weight:900;">TPIC Project Id</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in result)
                                 {
-                                <tr>
-                                    <td>
-                                        <button type="button" style="cursor: pointer" class="btn btn-sm btn-info btn-fill" onclick="Edit('@item.ProjectId')"><i class="fa fa-edit"></i>Edit</button>
-                                        <button type="button" style="cursor: pointer" class="btn btn-sm btn-danger btn-fill" onclick="Delete('@item.ProjectId')"><i class="fa fa-times"></i>Delete</button>
-                                    </td>
-                                    <td>@item.Name</td>
-                                    <td>
-                                        @if (item.IsActive == true)
-                                        {
-                                            <span>Active</span>
-                                        }
-                                        else
-                                        {
-                                            <span>Inactive</span>
-                                        }
-                                    </td>
-                                    <td>@item.CreatedDate</td>
-                                    <td>@item.InputFileLocation</td>
-                                    <td>@item.InputFileFormat</td>
-                                    <td>@item.ClientName</td>
-                                    <td>@item.ProjectTypeName</td>
-                                    <td>@item.SLAInDays</td>
-                                </tr>
+                                    <tr>
+                                        <td>
+                                            <button type="button" style="cursor: pointer" class="btn btn-sm btn-info btn-fill" onclick="Edit('@item.ProjectId')"><i class="fa fa-edit"></i>Edit</button>
+                                            <button type="button" style="cursor: pointer" class="btn btn-sm btn-danger btn-fill" onclick="Delete('@item.ProjectId')"><i class="fa fa-times"></i>Delete</button>
+                                        </td>
+                                        <td>@item.Name</td>
+                                        <td>
+                                            @if (item.IsActive == true)
+                                            {
+                                                <span>Active</span>
+                                            }
+                                            else
+                                            {
+                                                <span>Inactive</span>
+                                            }
+                                        </td>
+                                        <td>@item.CreatedDate</td>
+                                        <td>@item.InputFileLocation</td>
+                                        <td>@item.InputFileFormat</td>
+                                        <td>@item.ClientName</td>
+                                        <td>@item.ProjectTypeName</td>
+                                        <td>@item.SLAInDays</td>
+                                        <td>@item.TpicProjectId</td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
