@@ -131,6 +131,7 @@ namespace UAB.DTO
         public string CoderComment { get; set; }
         public string CCIDs { get; set; }
         public bool isWrongProvider { get; set; }
+        public AuditDTO auditDTO { get; set; }
     }
 
     public class LelvellingReportDTO
