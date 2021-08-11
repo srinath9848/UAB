@@ -69,6 +69,9 @@
 
     $(document).ready(function () {
 
+        $("#hdnAuditProviders").val("@Model.auditDTO.ProviderIDs");
+        $("#hdnAuditCPTCodes").val("@Model.auditDTO.CPTCodes");
+
         ProviderPostedClinicalcase = function () {
             $("#_providerPostedId").val($("#providerPostedId").val());
             $("#_txtPostingDate").val($("#txtPostingDate").val());
@@ -119,10 +122,28 @@
         });
     }
 
+
     $('#codingSubmit,#codingSubmitAndGetNext,#btnProviderPosted').click(function (e) {
+
+        var arrProviders = [];
+        var arrCPTCodes = [];
+
+        if ($("#hdnAuditProviders").val() != "")
+            arrProviders = $("#hdnAuditProviders").val().split(",");
+
+        if ($("#hdnAuditCPTCodes").val() != "")
+            arrCPTCodes = $("#hdnAuditCPTCodes").val().split(",");
+
+        var auditMandatory = "";
+
+        if (arrProviders.length !=0 && jQuery.inArray($("#ProviderID").val(), arrProviders) != -1)
+            auditMandatory = "1";
+
         var claimArray = [];
         $(".AlignCross .tab").each(function () {
             var tabid = $(this).attr('id');
+            if (arrProviders.length != 0 && jQuery.inArray($("#Providers_" + tabid).val(), arrProviders) != -1)
+                auditMandatory = "1";
             claimArray.push($("#Providers_" + tabid).val() + "^" + $("#Payors_" + tabid).val() + "^" + $("#NoteTitle_" + tabid).val() + "^" + $("#ProviderFeedbacks_" + tabid).val());
             $("#hdnClaim" + tabid).val(claimArray);
             claimArray = [];
@@ -185,6 +206,9 @@
         var CptCodes = $("[id*=DivCptRow_]");
         for (var i = 1; i <= CptCodes.length; i++) {
 
+            if (arrCPTCodes.length != 0 && jQuery.inArray($("#txtCpt_" + i).val(), arrCPTCodes) != -1)
+                auditMandatory = "1";
+
             if ($("#hdnCptCodes").val() == "") {
                 if ($("#txtCpt_" + i).val() != "") {
                     var mod = $("#txtMod_" + i).val() != "" ? $("#txtMod_" + i).val() : null;
@@ -211,6 +235,9 @@
 
 
             for (var i = 1; i <= CptClaimCodes.length; i++) {
+
+                if (arrCPTCodes.length != 0 && jQuery.inArray($("#txt" + j + "Cpt_" + i).val(), arrCPTCodes) != -1)
+                    auditMandatory = "1";
 
                 if ($("#hdnCptCodes" + (j-1)).val() == "") {
                     if ($("#txt"+ j +"Cpt_" + i).val() != "") {
@@ -262,33 +289,44 @@
         else {
             var isAuditRequired;
 
-            if ($("#hdnIsAuditRequired").val() == "") {
-                $.ajax({
-                    type: "GET",
-                    url: "@Url.Action("GetAuditDetails", "UAB")",
-                    data: {
-                        "chartType": "Coding",
-                        "projectId": $("#ProjectID").val(),
-                        "dt": datetime
-                    },
-                    success: function (response) {
-
-                        isAuditRequired = response;
-
-                        if (isAuditRequired == true)
-                            $("#hdnIsAuditRequired").val("true");
-                        else
-                            $("#hdnIsAuditRequired").val("false");
-
-                        ShowSubmitPopup(buttonType);
-                    },
-                    failure: function (response) {
-                        alert(response);
-                    }
-                });
-            }
-            else
+            if (auditMandatory == "1") {
+                $("#hdnIsAuditRequired").val("true");
                 ShowSubmitPopup();
+            }
+            else {
+                $("#hdnIsAuditRequired").val("");
+
+                if ($("#hdnIsAuditCalculated").val() == "") {
+
+                    $("#hdnIsAuditCalculated").val("1");
+
+                    $.ajax({
+                        type: "GET",
+                        url: "@Url.Action("GetAuditDetails", "UAB")",
+                        data: {
+                            "chartType": "Coding",
+                            "projectId": $("#ProjectID").val(),
+                            "dt": datetime
+                        },
+                        success: function (response) {
+
+                            isAuditRequired = response;
+
+                            if (isAuditRequired == true)
+                                $("#hdnIsAuditRequired").val("true");
+                            else
+                                $("#hdnIsAuditRequired").val("false");
+
+                            ShowSubmitPopup(buttonType);
+                        },
+                        failure: function (response) {
+                            alert(response);
+                        }
+                    });
+                }
+                else
+                    ShowSubmitPopup();
+            }
         }
         EnableButton();
         EnableButtonForClaim2();
