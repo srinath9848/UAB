@@ -1,10 +1,105 @@
 ﻿@model UAB.DAL.Models.Provider
 
-<style>
+
+<style type="text/css">
+
     .modal-content {
         margin-top: 63px;
     }
+
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 24px;
+        margin-top: 10px;
+    }
+
+
+
+        .switch input {
+            display: none;
+        }
+
+
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+    }
+
+
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+        }
+
+
+
+    /* include generated hidden field here */
+    input[type="checkbox"]:checked + input[type="hidden"] + .slider,
+    input[type="checkbox"]:checked + .slider {
+        background-color: #2196F3;
+    }
+
+
+
+    /* include generated hidden field here */
+    input[type="checkbox"]:focus + input[type="hidden"] + .slider,
+    input[type="checkbox"]:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+
+
+    /* include generated hidden field here */
+    input[type="checkbox"]:checked + input[type="hidden"] + .slider:before,
+    input[type="checkbox"]:checked + .slider:before {
+        transform: translateX(26px);
+    }
+
+
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+    .round {
+        line-height: 48px;
+        color: #fff;
+        width: 50px;
+        height: 25px;
+        display: inline-block;
+        font-weight: 400;
+        text-align: center;
+        border-radius: 100%;
+        line-height: 52px;
+    }
 </style>
+
+
+
 <form asp-action="AddSettingsProvider" asp-controller="UAB" method="POST">
     @Html.HiddenFor(model => model.ProviderId, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
     <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
@@ -28,6 +123,14 @@
                         @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter Provider Name " })
                         @Html.ValidationMessageFor(model => model.Name, null, new { @class = "text-danger" })
                     </div>
+                    <div>
+                        <label class="switch">
+                            @Html.CheckBoxFor(model => model.IsAuditNeeded, new { @class = "custom-control-input ShadowQADetails", @id = "customControlAutosizing1" })
+                            <div class="slider round" style="top:15px">
+                            </div>
+                        </label>
+                        <label id="labelSwitch"></label>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     @if (Model.ProviderId != 0)
@@ -47,3 +150,13 @@
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
 <script src="~/dashboardassets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var isaudit = $("#customControlAutosizing1").is(":checked");
+        $("#labelSwitch").text(isaudit);
+        $("#customControlAutosizing1").change(function () {
+            $("#labelSwitch").text($("#customControlAutosizing1").is(":checked"));
+        });
+    });
+</script>

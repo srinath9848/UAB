@@ -3540,26 +3540,30 @@ namespace UAB.DAL
 
             using (var context = new UABContext())
             {
-                using (var cnn = context.Database.GetDbConnection())
-                {
-                    var cmm = cnn.CreateCommand();
-                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmm.CommandText = "[dbo].[UspGetProvider]";
-                    //cmm.Parameters.AddRange(param);
-                    cmm.Connection = cnn;
-                    cnn.Open();
-                    var reader = cmm.ExecuteReader();
+                //using (var cnn = context.Database.GetDbConnection())
+                //{
+                //    var cmm = cnn.CreateCommand();
+                //    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                //    cmm.CommandText = "[dbo].[UspGetProvider]";
+                //    //cmm.Parameters.AddRange(param);
+                //    cmm.Connection = cnn;
+                //    cnn.Open();
+                //    var reader = cmm.ExecuteReader();
 
-                    while (reader.Read())
-                    {
-                        provider = new Provider();
-                        provider.ProviderId = Convert.ToInt32(reader["ProviderID"]);
-                        provider.Name = Convert.ToString(reader["Name"]);
-                        lstProvider.Add(provider);
-                    }
-                }
+                //    while (reader.Read())
+                //    {
+                //        provider = new Provider();
+                //        provider.ProviderId = Convert.ToInt32(reader["ProviderID"]);
+                //        provider.Name = Convert.ToString(reader["Name"]);
+                //        provider.IsAuditNeeded = Convert.ToBoolean(reader["IsAuditNeeded"]);
+
+                //        lstProvider.Add(provider);
+                //    }
+                //}
+
+                return context.Provider.ToList();
             }
-            return lstProvider;
+           // return lstProvider;
         }
         public List<User> GetManageUsers()
         {
@@ -4282,22 +4286,9 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                using (var cnn = context.Database.GetDbConnection())
-                {
-                    //SqlCommand cmd = new SqlCommand("UspAddProvider");
-                    var cmm = cnn.CreateCommand();
-                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmm.CommandText = "[dbo].[UspAddProvider]";
-                    cmm.Connection = cnn;
 
-                    SqlParameter name = new SqlParameter();
-                    name.ParameterName = "@Name";
-                    name.Value = provider.Name;
-                    cmm.Parameters.Add(name);
-
-                    cnn.Open();
-                    cmm.ExecuteNonQuery();
-                }
+                context.Provider.Add(provider);
+                context.SaveChanges();
             }
         }
 
@@ -4305,32 +4296,17 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                using (var cnn = context.Database.GetDbConnection())
+                var isexisit = context.Provider.Where(x => x.ProviderId == provider.ProviderId).FirstOrDefault();
+                if (isexisit != null)
                 {
-                    //SqlCommand cmd = new SqlCommand("UspAddProvider");
-                    var cmm = cnn.CreateCommand();
-                    //SqlCommand cmd = new SqlCommand("[dbo].[UspUpdateProvider]", cnn);
-                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmm.CommandText = "[dbo].[UspUpdateProvider]";
-                    cmm.Connection = cnn;
-
-                    SqlParameter param1 = new SqlParameter();
-                    param1.ParameterName = "@Name";
-                    param1.Value = provider.Name;
-                    SqlParameter param2 = new SqlParameter();
-                    param2.ParameterName = "@ProviderID";
-                    param2.Value = provider.ProviderId;
-                    cmm.Parameters.Add(param1);
-                    cmm.Parameters.Add(param2);
-
-
-                    //SqlParameter name = new SqlParameter();
-                    //name.ParameterName = "@Name";
-                    //name.Value = provider.Name;
-                    //cmm.Parameters.Add(name);
-
-                    cnn.Open();
-                    cmm.ExecuteNonQuery();
+                    isexisit.Name = provider.Name;
+                    isexisit.IsAuditNeeded = provider.IsAuditNeeded;
+                    context.Entry(isexisit).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable to Update Provider : Provider Id is Invalid");
                 }
             }
         }
