@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UAB", "UAB.Web\UAB.csproj", "{9E301DCA-AC70-4ECC-887D-C68A09433C03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UAB.Web", "UAB.Web\UAB.csproj", "{9E301DCA-AC70-4ECC-887D-C68A09433C03}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UAB.DAL", "UAB.DAL\UAB.DAL.csproj", "{72F9EC25-2147-4B53-AE6C-2A1BA1B2A41F}"
 EndProject

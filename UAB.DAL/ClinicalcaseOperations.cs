@@ -4800,7 +4800,7 @@ namespace UAB.DAL
                 return context.Project.Where(x => x.ProjectId == pid).Select(x => x.Name).FirstOrDefault();
             }
         }
-        public List<int> GetTpicprojectids()
+        public int CheckTpicProjectId(int tpicprojectid)
         {
             var builder = new ConfigurationBuilder()
                .SetBasePath(Directory.GetCurrentDirectory())
@@ -4812,20 +4812,22 @@ namespace UAB.DAL
 
             using (var cnn = new SqlConnection(_conStr))
             {
+                int id = 0;
                 var cmm = cnn.CreateCommand();
                 cmm.CommandType = System.Data.CommandType.Text;
-                cmm.CommandText = "select Id from Project where QuickbooksClientName like '%UAB Health System%' ";
+                SqlParameter param1 = new SqlParameter();
+                param1.ParameterName = "@Id";
+                param1.Value = tpicprojectid;
+                cmm.CommandText = "select 1 from Project where QuickbooksClientName = 'UAB Health System' AND Id =" + tpicprojectid + "";
                 cmm.Connection = cnn;
                 cnn.Open();
                 var reader = cmm.ExecuteReader();
-                int id = 0;
-                List<int> ids = new List<int>();
+               
                 while (reader.Read())
                 {
                     id = Convert.ToInt32(reader.GetInt32(0));
-                    ids.Add(id);
                 }
-                return ids;
+                return id;
             }
         }
         public List<ApplicationProject> GetProjects()
@@ -4875,9 +4877,8 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                var tpicids = GetTpicprojectids();
-
-                if (tpicids.Contains(project.TpicProjectId))
+                int isexisit = CheckTpicProjectId(project.TpicProjectId);
+                if (isexisit != 0)
                 {
                     UAB.DAL.Models.Project mdl = new Project();
                     mdl.ClientId = project.ClientId;
@@ -4904,11 +4905,9 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                var tpicids = GetTpicprojectids();
-
-                if (tpicids.Contains(project.TpicProjectId))
+                int isexisit = CheckTpicProjectId(project.TpicProjectId);
+                if (isexisit != 0)
                 {
-
                     UAB.DAL.Models.Project mdl = new Project();
 
                     mdl = context.Project.Where(x => x.ProjectId == project.ProjectId).FirstOrDefault();

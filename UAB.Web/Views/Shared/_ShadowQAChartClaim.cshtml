@@ -227,7 +227,7 @@
                         var DxClaim_QA = string.Format("DxClaim_{0}_QA_{1}", Model.TabIndex, j);
                     }
                     <input type="hidden" class="@string.Format("txQADx_{0}_{1}", Model.TabIndex, j)" value="@QaDxVal" />
-                    <input type="text" id="@string.Format("txtDx{0}Claim_{1}", Model.TabIndex, j)" class="form-control txtDx ControlHeight claim_@tabIndex @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" autocomplete="off" placeholder="Code" value="@QaDxVal" />
+                    <input type="text" id="@string.Format("txtDx{0}Claim_{1}", Model.TabIndex, j)" class="form-control ControlHeight claim_@tabIndex @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" autocomplete="off" placeholder="Code" value="@QaDxVal" />
                     @*<input type="text" id="@string.Format("txtDx{0}Claim_{1}", Model.TabIndex,i)" class="form-control ControlHeight claim_@tabIndex @string.Format("DxClaim_{0}_{1}", Model.TabIndex,i)" autocomplete="off" placeholder="Code" value="@item" style="display:none" />*@
                 </div>
                 <div class="col-md-3 input-group">
@@ -350,7 +350,7 @@
                                     <span style="color:green">@coderQty.Replace("/", "")</span>
                                 </div>
                                 <div class="form-control CoderDetails">
-                                    <span style="color:green">@cptLinks1.Replace("/", "")</span>
+                                    <span style="color:green">@link</span>
                                 </div>
                             }
                             else

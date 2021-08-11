@@ -203,9 +203,9 @@
 
                     if (res.includes('reject')) {
                         if ($("#hdnDx" + tabid).val() == "")
-                            $("#hdnDx" + tabid).val(id + "^" + $("#txtDxCode_" + tabid + "_" + id).val());
+                            $("#hdnDx" + tabid).val(id + "^" + $("#CoderDxCodes_" + tabid + "_" + id).val());
                         else
-                            $("#hdnDx" + tabid).val($("#hdnDx" + tabid).val() + "|" + id + "^" + $("#txtDxCode_" + tabid + "_" + id).val());
+                            $("#hdnDx" + tabid).val($("#hdnDx" + tabid).val() + "|" + id + "^" + $("#CoderDxCodes_" + tabid + "_" + id).val());
 
                         if ($("#DxRemarks_" + tabid + "_" + id).val() != "") {
                             $("#validDxRemarksClaim_" + tabid + "_" + id).hide();

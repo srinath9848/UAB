@@ -46,15 +46,9 @@
                         @Html.CheckBoxFor(model => model.IsActive, new { @id = "customControlAutosizing1" })
                         <label for="customControlAutosizing1">Is Active</label>
                     </div>
-                    <br />
                     <div>
                         @Html.TextBoxFor(model => model.InputFileLocation, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter File Location " })
                         @Html.ValidationMessageFor(model => model.InputFileLocation, null, new { @class = "text-danger" })
-                    </div>
-                    <br />
-                    <div>
-                        @Html.TextBoxFor(model => model.InputFileFormat, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "File Format must be less than 5 character" })
-                        @Html.ValidationMessageFor(model => model.InputFileFormat, null, new { @class = "text-danger" })
                     </div>
                     <br />
                     <div>

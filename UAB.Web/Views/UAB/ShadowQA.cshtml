@@ -219,15 +219,15 @@
             var currId = parseInt(id) - parseInt(1);
             var val = $("#txtDx_" + currId).val();
             if (val !== "" && val !== null) {
-                if ($.inArray(val, dxArray) == -1) {
-                    dxArray.push(val);
-                    $("#Dx").val(dxArray);
+                //if ($.inArray(val, dxArray) == -1) {
+                //    dxArray.push(val);
+                //    $("#Dx").val(dxArray);
                     var text = "'" + "txtDx_" + id + "'";
                     var deleteDx = "'" + "DivDxRow_" + id + "'";
                     $("#DivDx").append('<div id="DivDxRow_' + id + '" class="form-group row"><label class= "col-md-3 lessWidth m-t-15" ></label><div class="col-md-3 input-group"></div><div class="col-md-3 input-group"></div ><div class="col-md-3 input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text dxindex AdjustSerialNumber" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" tabindex="' + id + '" onfocusout="DxFunction(' + text + ')" class="form-control CoderDetails ControlHeight txtDx" id="txtDx_' + id + '" /><button type="button" id="DeleteDxCodes_' + id + '" class="btn btn-sm" style="max-width:18px;padding-left:5px;margin-left:-5px;" onclick="DeleteDxCodes(' + deleteDx + ')"><i class="fa fa-times"></i></button></div><div class="col-md-3 input-group"><input type = "text" style="display: flex;" id ="DxRemarks_' + id + '" class="form-control ControlHeight DxRemarks_' + id + '" />  <span id="validDx_' + id + '" class="text-danger txtdanger DxRemarks_' + id + '" style="display: none;">*</span></div></div>');
                     $("#txtDx_" + currId).removeAttr("onfocusout", "");
                     $("#txtDx_" + id).focus();
-                }
+                //}
             } else {
                 $("#txtCpt_1").focus();
                 //var id2 = parseInt(id) - parseInt(1);
@@ -337,9 +337,9 @@
                 val4 = $("#txtLinks_" + id1).val().replace(",", "|");
 
             if (val1 !== "") {
-                if ($.inArray(val1, cptArray) == -1) {
-                    cptArray.push(val1 + "^" + val2 + "^" + val3 + "^" + val4);
-                    $("#CPTCode").val(cptArray);
+                //if ($.inArray(val1, cptArray) == -1) {
+                //    cptArray.push(val1 + "^" + val2 + "^" + val3 + "^" + val4);
+                //    $("#CPTCode").val(cptArray);
                     var count = id + parseInt(1);
                     var txtLinks = "'" + "txtLinks_" + id + "'";
                     var deleteCpt = "'" + "DivCptRow_" + id + "'";
@@ -347,10 +347,10 @@
                     var tabindex2 = parseInt(10) + parseInt(id) + parseInt(count) + parseInt(val1);
                     var tabindex3 = parseInt(11) + parseInt(id) + parseInt(count) + parseInt(val1);
                     var tabindex4 = parseInt(12) + parseInt(id) + parseInt(count) + parseInt(val1);
-                    $("#DivCpt").append('<div id="DivCptRow_' + id + '" class="form-group row"><label class="col-md-3 lessWidth m-t-15"></label><div class="col-md-3 input-group"></div > <div class="col-md-3 input-group"></div ><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text cptindex AdjustSerialNumber" id="basic-addon1">' + id + '</span></div><input tabindex = "' + tabindex1 + '" type = "text" placeholder = "Code" style="min-width:50px;" class= "form-control CoderDetails ControlHeight txtCpt" id = "txtCpt_' + id + '" /><input tabindex="' + tabindex2 + '" type="text" class="form-control CoderDetails ControlHeight" placeholder="Mod" style="min-width:42px;" id="txtMod_' + id + '"/><input tabindex="' + tabindex3 + '" type="text" class="form-control CoderDetails cptQtyClaim ControlHeight" style="max-width:23px;" placeholder="Qty" value="1" id="txtQty_' + id + '"/><input tabindex="' + tabindex4 + '" type="text" class="form-control CoderDetails cptLinksClaim ControlHeight" placeholder="Link All" onfocusout="CptFunction(' + txtLinks + ')" id="txtLinks_' + id + '"/><button type="button" class="btn btn-sm" style="max-width:18px;padding-left:5px;margin-left:-5px;" onclick="DeleteCptCodes(' + deleteCpt + ')"><i class="fa fa-times"></i></button></div><div class="col-md-3 input-group"><input type="text" style="display: flex;" id="CptRemarks_' + id + '" class="form-control ControlHeight CptRemarks_' + id + '" /><span id="validCpt_' + id + '" class="text-danger txtdanger" style="display:none">*</span></div></div>');
+                $("#DivCpt").append('<div id="DivCptRow_' + id + '" class="form-group row"><label class="col-md-3 lessWidth m-t-15"></label><div class="col-md-3 input-group"></div > <div class="col-md-3 input-group"></div ><div class="col-md-3 CptlessWidth input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text cptindex AdjustSerialNumber" id="basic-addon1">' + id + '</span></div><input tabindex = "' + tabindex1 + '" type = "text" placeholder = "Code" style="min-width:50px;" class= "form-control CoderDetails ControlHeight txtCpt" id = "txtCpt_' + id + '" /><input tabindex="' + tabindex2 + '" type="text" class="form-control CoderDetails ControlHeight" placeholder="Mod" style="min-width:42px;" id="txtMod_' + id + '"/><input tabindex="' + tabindex3 + '" type="text" class="form-control CoderDetails cptQtyClaim ControlHeight" style="max-width:23px;" placeholder="Qty" value="1" id="txtQty_' + id + '"/><input tabindex="' + tabindex4 + '" type="text" class="form-control CoderDetails cptLinks ControlHeight" placeholder="Link All" onfocusout="CptFunction(' + txtLinks + ')" id="txtLinks_' + id + '"/><button type="button" class="btn btn-sm" style="max-width:18px;padding-left:5px;margin-left:-5px;" onclick="DeleteCptCodes(' + deleteCpt + ')"><i class="fa fa-times"></i></button></div><div class="col-md-3 input-group"><input type="text" style="display: flex;" id="CptRemarks_' + id + '" class="form-control ControlHeight CptRemarks_' + id + '" /><span id="validCpt_' + id + '" class="text-danger txtdanger" style="display:none">*</span></div></div>');
                     $("#txtLinks_" + id1).removeAttr("onfocusout", "");
                     $("#txtCpt_" + id).focus();
-                }
+                //}
 
             } else {
                 $("#ProviderFeedbackID").focus();
@@ -653,6 +653,8 @@
                                     var mod = $("#txt" + tabid + "mod_" + index).val() != "" ? $("#txt" + tabid + "mod_" + index).val() : null;
                                     var qty = $("#txt" + tabid + "qty_" + index).val() != "" ? $("#txt" + tabid + "qty_" + index).val() : null;
                                     var links = $("#txt" + tabid + "links_" + index).val() != "" ? $("#txt" + tabid + "links_" + index).val() : null;
+                                    if (links == undefined)
+                                        links = null;
                                     $("#hdnShadowQACptCodes" + tabid).val(id + "^" + $("#txt" + tabid + "Cpt_" + index).val() + "^" + mod + "^" + qty + "^" + links);
                                     $("#hdnShadowQAErrorTypeID" + tabid).val(ErrorTypeID);
                                 }
@@ -663,6 +665,8 @@
                                     var mod = $("#txt" + tabid + "mod_" + index).val() != "" ? $("#txt" + tabid + "mod_" + index).val() : null;
                                     var qty = $("#txt" + tabid + "qty_" + index).val() != "" ? $("#txt" + tabid + "qty_" + index).val() : null;
                                     var links = $("#txt" + tabid + "links_" + index).val() != "" ? $("#txt" + tabid + "links_" + index).val() : null;
+                                    if (links == undefined)
+                                        links = null;
                                     $("#hdnShadowQACptCodes" + tabid).val($("#hdnShadowQACptCodes" + tabid).val() + "|" + id + "^" + $("#txt" + tabid + "Cpt_" + index).val() + "^" + mod + "^" + qty + "^" + links);
                                     $("#hdnShadowQAErrorTypeID" + tabid).val(ErrorTypeID);
                                 }
@@ -966,8 +970,8 @@
         var Cnt = 0;
         var index = id.split('_')[1];
         var val = $("#" + index).val();
-        dxArray.splice($.inArray(val, dxArray), 1);
-        $("#hdnDxCodes").val(dxArray);
+        //dxArray.splice($.inArray(val, dxArray), 1);
+        //$("#hdnDxCodes").val(dxArray);
         $('#' + id).remove();
         $(".dxindex").each(function () {
             if (iCnt <= 100) {
@@ -981,9 +985,13 @@
                 Cnt = Cnt + 1;
                 $(this).attr('id', 'txtDx_' + Cnt);
             }
+            if (iCnt == Cnt)
+                return false;
         });
-        var lastindex = $(".txtDx").last().attr('id');
-        $("#" + lastindex).attr("onfocusout", "DxFunction('" + "txt_" + Cnt + "')");
+        //Cnt = Cnt - 1;
+        //var lastindex = $(".txtDx").last().attr('id');
+       // $("#txtDx_" + Cnt).attr("onfocusout", "DxFunction('" + "txtDx_" + Cnt + "')");
+        $(".txtDx").last().attr("onfocusout", "DxFunction('" + "txtDx_" + iCnt + "')");
     };
 
     DeleteCptCodes = function (id) {
@@ -992,7 +1000,7 @@
         var index = id.split('_')[1];
         var val = $("#" + index).val();
         cptArray.splice($.inArray(val, cptArray), 1);
-        //$("#hdnCptCodes").val(cptArray);
+        $("#hdnCptCodes").val(cptArray);
         $('#' + id).remove();
         $(".cptindex").each(function () {
             if (iCnt <= 100) {
@@ -1001,14 +1009,18 @@
             }
         });
 
-        $(".txtLinks").each(function () {
+        $(".cptLinks").each(function () {
             if (Cnt <= 100) {
                 Cnt = Cnt + 1;
                 $(this).attr('id', 'txtLinks_' + Cnt);
             }
+            if (iCnt == Cnt)
+                return false;
         });
-        var lastindex = $(".txtLinks").last().attr('id');
-        $("#" + lastindex).attr("onfocusout", "CptFunction('" + "txtLinks_" + Cnt + "')");
+       // Cnt = Cnt - 1;
+        //var lastindex = $(".cptLinks").last().attr('id');
+        //$("#" + lastindex).attr("onfocusout", "CptFunction('" + "txtLinks_" + Cnt + "')");
+        $(".cptLinks").last().attr("onfocusout", "CptFunction('" + "txtLinks_" + Cnt + "')");
     };
 
     DeleteDxClaims = function (id) {

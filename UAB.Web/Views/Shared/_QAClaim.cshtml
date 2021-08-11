@@ -228,8 +228,7 @@
             i = i + 1;
         }
     }
-    @{ string CptLink = string.Format("txt{0}links_{1}_{2}", Model.TabIndex, totalCptCount, Model.TabIndex);}
-    <input type="hidden" id="@CptLink" value="@totalCptCount" />
+    <input type="hidden" id="@string.Format("txtLinks_1_{0}", tabIndex)" value="@totalCptCount" />
     <div class="form-group row">
         <label class="col-md-3 lessWidth m-t-15"></label>
         <div class="col-md-3 CptlessWidth input-group">
@@ -255,7 +254,7 @@
             <input type="text" id="@string.Format("txt{0}mod_{1}", Model.TabIndex,totalCptCount)" style="min-width:42px;" class="form-control ControlHeight Cptclaim_@tabIndex" autocomplete="off" placeholder="Mod" value="" />
             <input type="text" id="@string.Format("txt{0}qty_{1}", Model.TabIndex,totalCptCount)" style="max-width:23px;" class="form-control ControlHeight cptQtyClaim Cptclaim_@tabIndex" autocomplete="off" placeholder="Qty" value="1" />
 
-            <input type="text" id="@string.Format("txt{0}links_{1}", Model.TabIndex,totalCptCount)" class="form-control ControlHeight cptLinksClaim @Cpt2Link" autocomplete="off" placeholder="Link All" onfocusout="CptClaims('@CptLink')" />
+            <input type="text" id="@string.Format("txt{0}links_{1}", Model.TabIndex,totalCptCount)" class="form-control ControlHeight cptLinksClaim @Cpt2Link" autocomplete="off" placeholder="Link All" onfocusout="CptClaims('txtLinks_1_@tabIndex')" />
         </div>
         <div class="col-md-3 QARevised_@tabIndex input-group @string.Format("Cpt_{0}_{1}", Model.TabIndex,totalCptCount)" id="@Div2CptRow" style="display:none">
             <input type="text" id="@string.Format("CptRemarkss_{0}_{1}", Model.TabIndex,i)" class="form-control ControlHeight" style="display:flex;" />
