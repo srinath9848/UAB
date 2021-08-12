@@ -46,6 +46,8 @@ namespace UAB.DAL.Models
         public virtual DbSet<EMCodeLevel> EMCodeLevel { get; set; }
         public virtual DbSet<BlockResponse> BlockResponse { get; set; }
         public virtual DbSet<Location> Location  { get; set; }
+        public virtual DbSet<CptAudit> CptAudit   { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -1,0 +1,105 @@
+﻿@model UAB.DAL.Models.CptAudit
+
+<style>
+    .modal-content {
+        margin-top: 63px;
+    }
+
+    .custom-control-label:after {
+        position: static;
+    }
+
+    .custom-control-label:before {
+        position: static;
+    }
+</style>
+<form asp-action="AddSettingsCptAudit" asp-controller="UAB" method="POST" id="addorupdatecptcodeform">
+    <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
+        <div class="modal-dialog">
+            @Html.HiddenFor(model => model.CPTAuditId, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off" })
+            <div class="modal-content" style="width: 500px;">
+                <div class="modal-header" style="background: #27a9e3;color: white;">
+                    @if (Model.CPTAuditId != 0)
+                    {
+                        <h5 class="modal-title" style="width:300px">Update CPT Code</h5>
+                    }
+                    else
+                    {
+                        <h5 class="modal-title" style="width:300px">Add CPT Code</h5>
+                    }
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ModalClose1()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        @Html.TextBoxFor(model => model.CPTCode, new { @id = "cptcode", @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter CPT Code" })
+                        @Html.ValidationMessageFor(model => model.CPTCode, null, new { @class = "text-danger" })
+                    </div>
+                    <br />
+                    <div>
+                        @Html.DropDownListFor(model => model.ProjectId, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select a Project--", new { @id = "projectid", @class = "form-control CoderDetails" })
+                        @Html.ValidationMessageFor(model => model.ProjectId, null, new { @class = "text-danger" })
+                    </div>
+                    <div style="margin-top:10px;">
+                        @Html.CheckBoxFor(model => model.IsActive, new { @id = "customControlAutosizing1" })
+                        <label for="customControlAutosizing1">Is Active</label>
+                    </div>
+                </div>
+                <br />
+                <div id="error" style="color:red;max-height:20px;margin-left:80px"></div>
+
+                <div class="modal-footer">
+                    @if (Model.CPTAuditId != 0)
+                    {
+                        <button type="submit" class="btn btn-success Available" id="btnUpdate">Update</button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-success Available">Add</button>
+                    }
+                    <button type="button" class="btn btn-danger" onclick="ModalClose1()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
+<script src="~/dashboardassets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#slindays,#tpicprojectid").bind('keyup paste', function () {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        $("#projectdd").change(function () {
+            var projectid = $("#projectid option:selected").text();
+            if (projectid !== "--Select a Project--")
+                $("#validproject").html('');
+
+        });
+        var intialcptcode = $("#cptcode").val();
+        var intialproject = $("#projectid").find('option:selected').val();
+        var intialisactive = $("#customControlAutosizing1").is(":checked");
+
+        $('#btnUpdate').click(function (e) {
+
+            var finalcptcode = $("#cptcode").val();
+            var finalproject = $("#projectid").find('option:selected').val();
+            var finalisactive = $("#customControlAutosizing1").is(":checked");
+
+            if (finalcptcode === intialcptcode && finalproject === intialproject &&finalisactive == intialisactive) {
+                $("#addorupdatecptcodeform").valid();
+                e.preventDefault();
+                $("#error").html("No Change in cpt code or project or  status");
+                $("#error").fadeOut(10000);
+            } else {
+                $("#updateprojectuserform").valid();
+            }
+        });
+
+
+
+    });
+</script>

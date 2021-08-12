@@ -3401,7 +3401,7 @@ namespace UAB.DAL
 
                 return context.Provider.ToList();
             }
-           // return lstProvider;
+            // return lstProvider;
         }
         public List<User> GetManageUsers()
         {
@@ -4582,7 +4582,7 @@ namespace UAB.DAL
                 cmm.Connection = cnn;
                 cnn.Open();
                 var reader = cmm.ExecuteReader();
-               
+
                 while (reader.Read())
                 {
                     id = Convert.ToInt32(reader.GetInt32(0));
@@ -4590,6 +4590,14 @@ namespace UAB.DAL
                 return id;
             }
         }
+        public List<CptAudit> GetCptAudits()
+        {
+            using (var context = new UABContext())
+            {
+                return context.CptAudit.ToList();
+            }
+        }
+
         public List<ApplicationProject> GetProjects()
         {
             ApplicationProject project = new ApplicationProject();
@@ -4632,7 +4640,59 @@ namespace UAB.DAL
             }
             return lstProject;
         }
+        public void AddCptAudit(CptAudit cptAudit)
+        {
+            using (var context=new UABContext())
+            {
+                var exisit = context.CptAudit.Where(x => x.CPTCode == cptAudit.CPTCode && x.ProjectId == cptAudit.ProjectId).FirstOrDefault();
+                if (exisit == null)
+                {
+                    context.CptAudit.Add(cptAudit);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable to Add CPT Audit Code : CPT Audit Code Already there");
 
+                }
+            }
+        }
+        public void UpdateCptAudit(CptAudit cptAudit)
+        {
+            using (var context = new UABContext())
+            {
+                var existingcptcode  = context.CptAudit.Where(a => a.CPTAuditId == cptAudit.CPTAuditId).FirstOrDefault();
+
+                if (existingcptcode != null)
+                {
+                    existingcptcode.CPTCode = cptAudit.CPTCode;
+                    existingcptcode.ProjectId = cptAudit.ProjectId;
+                    context.Entry(existingcptcode).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable to Update CPT Audit Code : CPT audit code not there");
+
+                }
+            }
+        }
+        public void DeleteCptAudit(CptAudit cptAudit)
+        {
+            using (var context = new UABContext())
+            {
+                var existingcptcode = context.CptAudit.Where(a => a.CPTAuditId == cptAudit.CPTAuditId).FirstOrDefault();
+                if (existingcptcode != null)
+                {
+                    context.CptAudit.Remove(existingcptcode);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Unable to delete CPT Code : this CPT  code not there");
+                }
+            }
+        }
         public void AddProject(ApplicationProject project)
         {
             using (var context = new UABContext())
