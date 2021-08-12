@@ -11,7 +11,7 @@ namespace UAB.DTO
         public string PatientMRN { get; set; }
         public string Name { get; set; }
         public string DateOfService { get; set; }
-        public string ListName  { get; set; }
+        public string ListName { get; set; }
         public string Provider { get; set; }
     }
     public class BlockResponseDTO
@@ -44,6 +44,11 @@ namespace UAB.DTO
         //[Required(ErrorMessage = "Error Type is required.")]
         public int? ErrorType { get; set; }
         public string NotesfromJen { get; set; }
-        public bool OkaytoPost  { get; set; }
+        public bool OkaytoPost { get; set; }
+    }
+    public class AuditDTO
+    {
+        public string ProviderIDs { get; set; }
+        public string CPTCodes { get; set; }
     }
 }
