@@ -4625,6 +4625,8 @@ namespace UAB.DAL
                 {
                     existingcptcode.CPTCode = cptAudit.CPTCode;
                     existingcptcode.ProjectId = cptAudit.ProjectId;
+                    existingcptcode.IsActive = cptAudit.IsActive;
+
                     context.Entry(existingcptcode).State = EntityState.Modified;
                     context.SaveChanges();
                 }
