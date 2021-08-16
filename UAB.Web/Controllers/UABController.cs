@@ -3646,6 +3646,104 @@ namespace UAB.Controllers
             return PartialView("_AddEditProject", obj);
         }
 
+
+        [HttpGet]
+        public IActionResult SettingsCptAudit ()
+        {
+            _logger.LogInformation("Loading Started for SettingsCptAudit for User: " + mUserId);
+
+            List<CptAudit> lst = new List<CptAudit>(); 
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            lst = clinicalcaseOperations.GetCptAudits();
+            ViewBag.lstcptaudit = lst;
+            ViewBag.projects = clinicalcaseOperations.GetProjects();
+            _logger.LogInformation("Loading Ended for SettingsCptAudit for User: " + mUserId);
+            return View();
+        }
+        [HttpGet]
+        public ActionResult Add_EditCptAudit (int id = 0)
+        {
+            _logger.LogInformation("Loading Started for Add_EditCptAudit for User: " + mUserId);
+            CptAudit obj = new CptAudit();
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            ViewBag.Projects = clinicalcaseOperations.GetProjects();
+            if (id != 0)
+            {
+                List<CptAudit> lstaudit = new List<CptAudit>();
+                lstaudit = clinicalcaseOperations.GetCptAudits();
+                var res = lstaudit.Where(a => a.CPTAuditId == id).FirstOrDefault();
+                obj = res;
+                _logger.LogInformation("Loading Ended for Add_EditCptAudit for User: " + mUserId);
+                return PartialView("_Add_EditCptAudit", obj);
+            }
+            _logger.LogInformation("Loading Ended for Add_EditCptAudit for User: " + mUserId);
+            return PartialView("_Add_EditCptAudit", obj);
+        }
+        [HttpPost]
+        public IActionResult AddSettingsCptAudit (CptAudit cptAudit) 
+        {
+            _logger.LogInformation("Loading Started for AddSettingsCptAudit for User: " + mUserId);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                    if (cptAudit.CPTAuditId == 0)
+                    {
+                            clinicalcaseOperations.AddCptAudit(cptAudit);
+                        TempData["Success"] = "CPT Code \"" + cptAudit.CPTCode + "\" Added Successfully!";
+
+                    }
+                    else
+                    {
+                        clinicalcaseOperations.UpdateCptAudit(cptAudit); // Update
+                        TempData["Success"] = "CPT Code \"" + cptAudit.CPTCode + "\" Updated Successfully!";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = ex.Message;
+            }
+            _logger.LogInformation("Loading Ended for AddSettingsCptAudit for User: " + mUserId);
+            return RedirectToAction("SettingsCptAudit");
+        }
+        [HttpGet]
+        public IActionResult DeleteCptAudit (int id)
+        {
+            _logger.LogInformation("Loading Started for Fetching DeleteCptAudit for User: " + mUserId);
+            CptAudit obj = new CptAudit();
+            if (id != 0)
+            {
+                List<CptAudit> lst = new List<CptAudit>();
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                lst = clinicalcaseOperations.GetCptAudits();
+                var res = lst.Where(a => a.CPTAuditId == id).FirstOrDefault();
+                obj = res;
+            }
+            _logger.LogInformation("Loading Ended for Fetching DeleteCptAudit for User: " + mUserId);
+            return PartialView("_DeleteCptAudit", obj);
+        }
+        [HttpPost]
+        public IActionResult DeleteCptAudit (CptAudit cptAudit)
+        {
+            try
+            {
+                _logger.LogInformation("Loading Started for Submit DeleteCptAudit for User: " + mUserId);
+                ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+                if (cptAudit.CPTAuditId != 0)
+                    clinicalcaseOperations.DeleteCptAudit(cptAudit); 
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = ex.Message;
+            }
+            _logger.LogInformation("Loading Ended for Submit DeleteCptAudit for User: " + mUserId);
+            return RedirectToAction("SettingsCptAudit");
+        }
+
+
+
         [HttpPost]
         public IActionResult DeleteProject(ApplicationProject project)
         {
