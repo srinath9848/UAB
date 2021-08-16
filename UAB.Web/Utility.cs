@@ -165,7 +165,7 @@ namespace UAB
 
         public static Dictionary<int, string> GetCptCodes(string cptCodes)
         {
-            List<string> lstdxCodes = cptCodes.Split('|').OrderBy(q => q).Distinct().ToList();
+            List<string> lstdxCodes = cptCodes.Split('|').Distinct().ToList();
 
             Dictionary<int, string> dictCptCodes = new Dictionary<int, string>();
 
