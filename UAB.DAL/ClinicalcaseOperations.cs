@@ -1726,6 +1726,55 @@ namespace UAB.DAL
             return ds;
         }
 
+        public DataSet GetDetailedChartSummaryReport(int projectID, DateTime StartDate, DateTime EndDate, string dateType)
+        {
+            DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
+            using (var context = new UABContext())
+            {
+                var param = new SqlParameter[] {
+                     new SqlParameter() {
+                            ParameterName = "@ProjectId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = projectID
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@DoSStart",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = StartDate
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@DoSEnd",
+                            SqlDbType =  System.Data.SqlDbType.Date,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = EndDate
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@DateType",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = dateType
+                        }
+                };
+
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[Rpt_GenerateDetailedChartSummaryReport]";
+                    cmd.Parameters.AddRange(param);
+                    cmd.Connection = con;
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+                    dt.Load(reader);
+                    ds.Tables.Add(dt);
+                }
+            }
+            return ds;
+        }
+
         public DataSet GetPostedChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate, double timeZoneOffSet)
         {
             DataTable dt = new DataTable();

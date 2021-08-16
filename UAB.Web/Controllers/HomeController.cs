@@ -454,6 +454,7 @@ namespace UAB.Controllers
             ViewBag.StartDate = StartDate;
             ViewBag.EndDate = EndDate;
             ViewBag.ProjectType = projectType;
+            ViewBag.DateType = dateType;
             _logger.LogInformation("Loading Ended for GetChartSummaryReport for User: " + mUserId);
             return PartialView("_ChartSummaryReport", lstChartSummaryReport);
         }
@@ -462,6 +463,16 @@ namespace UAB.Controllers
             _logger.LogInformation("Loading Started for ExportChartSummaryReport for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var lstChartSummaryReport = clinicalcaseOperations.GetChartSummaryReport(ProjectId, StartDate, EndDate, dateType);
+
+            _logger.LogInformation("Loading Ended for ExportChartSummaryReport for User: " + mUserId);
+            return ExportToExcel(lstChartSummaryReport.Tables[0]);
+        }
+
+        public IActionResult ExportDetailedChartSummaryReport(int ProjectId, DateTime StartDate, DateTime EndDate, string dateType)
+        {
+            _logger.LogInformation("Loading Started for ExportChartSummaryReport for User: " + mUserId);
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var lstChartSummaryReport = clinicalcaseOperations.GetDetailedChartSummaryReport(ProjectId, StartDate, EndDate, dateType);
 
             _logger.LogInformation("Loading Ended for ExportChartSummaryReport for User: " + mUserId);
             return ExportToExcel(lstChartSummaryReport.Tables[0]);
