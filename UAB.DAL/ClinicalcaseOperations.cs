@@ -3336,30 +3336,9 @@ namespace UAB.DAL
 
             using (var context = new UABContext())
             {
-                //using (var cnn = context.Database.GetDbConnection())
-                //{
-                //    var cmm = cnn.CreateCommand();
-                //    cmm.CommandType = System.Data.CommandType.StoredProcedure;
-                //    cmm.CommandText = "[dbo].[UspGetProvider]";
-                //    //cmm.Parameters.AddRange(param);
-                //    cmm.Connection = cnn;
-                //    cnn.Open();
-                //    var reader = cmm.ExecuteReader();
-
-                //    while (reader.Read())
-                //    {
-                //        provider = new Provider();
-                //        provider.ProviderId = Convert.ToInt32(reader["ProviderID"]);
-                //        provider.Name = Convert.ToString(reader["Name"]);
-                //        provider.IsAuditNeeded = Convert.ToBoolean(reader["IsAuditNeeded"]);
-
-                //        lstProvider.Add(provider);
-                //    }
-                //}
 
                 return context.Provider.ToList();
             }
-            // return lstProvider;
         }
         public List<User> GetManageUsers()
         {
@@ -3375,13 +3354,65 @@ namespace UAB.DAL
                 return context.EMCodeLevel.Select(x => x.EMLevel).Distinct().ToList();
             }
         }
-        public List<EMCodeLevel> GetEMCodeLevelDetails(int eMLevel)
+        public List<EMLevelDTO> GetManageEMCLevelsByProjectId()
+        {
+            EMLevelDTO eMLevelDTO = new EMLevelDTO();
+            List<EMLevelDTO> lsteMLevelDTO = new List<EMLevelDTO>();
+
+            using (var context = new UABContext())
+            {
+                using (var cnn = context.Database.GetDbConnection())
+                {
+                    var cmm = cnn.CreateCommand();
+                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspGetEMLevelsByProjectId]";
+                    //var param = new SqlParameter()
+                    //{
+                    //    ParameterName = "@ProjectId",
+                    //    SqlDbType = System.Data.SqlDbType.Int,
+                    //    Direction = System.Data.ParameterDirection.Input,
+                    //    Value = projectid
+                    //};
+                    //cmm.Parameters.Add(param);
+                    cmm.Connection = cnn;
+                    cnn.Open();
+                    var reader = cmm.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        eMLevelDTO = new EMLevelDTO();
+                        eMLevelDTO.EMLevelId = Convert.ToInt32(reader["Id"]);
+                        eMLevelDTO.EMLevel = Convert.ToInt32(reader["Level"]);
+                        eMLevelDTO.ProjectName = Convert.ToString(reader["Name"]);
+                        lsteMLevelDTO.Add(eMLevelDTO);
+                    }
+                }
+            }
+            return lsteMLevelDTO;
+        }
+
+        public List<EMCodeLevel> GetEMCodeLevelDetails(int eMLevelId )
         {
             using (var context = new UABContext())
             {
-                return context.EMCodeLevel.Where(x => x.EMLevel == eMLevel).ToList();
+                return context.EMCodeLevel.Where(x => x.EMLevel == eMLevelId).ToList();
             }
         }
+
+        //public List<EMLevel> GetManageEMCLevelsByProjectId (int projectid)
+        //{
+        //    using (var context = new UABContext())
+        //    {
+        //        return context.EMLevel.Where(x=>x.ProjectId==projectid).ToList();
+        //    }
+        //}
+        //public List<EMCodeLevel> GetEMCodeLevelDetails(int eMLevel)
+        //{
+        //    using (var context = new UABContext())
+        //    {
+        //        return context.EMCodeLevel.Where(x => x.EMLevel == eMLevel).ToList();
+        //    }
+        //}
         public EMCodeLevel GetEMCodeById(int Id)
         {
             using (var context = new UABContext())
@@ -3412,11 +3443,11 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                var isexistingcode = context.EMCodeLevel.Where(a => a.EMCode == eMCodeLevel.EMCode && a.EMLevel == eMCodeLevel.EMLevel).FirstOrDefault();
+                var isexistingcode = context.EMCodeLevel.Where(a => a.EMCode == eMCodeLevel.EMCode && a.EMLevel == eMCodeLevel.Id).FirstOrDefault();
                 EMCodeLevel emc = new EMCodeLevel()
                 {
                     EMCode = eMCodeLevel.EMCode,
-                    EMLevel = eMCodeLevel.EMLevel
+                    EMLevel = eMCodeLevel.Id
                 };
                 if (isexistingcode == null)
                 {
@@ -3465,34 +3496,25 @@ namespace UAB.DAL
 
             }
         }
-        public void AddEMLevel(EMCodeLevel eMCodeLevel)
+        public void AddEMLevel(EMLevelDTO eMCodeLevel)
         {
             using (var context = new UABContext())
             {
-                var isexisting = context.EMCodeLevel.ToList();
-                var iscodeexist = isexisting.Where(x => x.EMCode == eMCodeLevel.EMCode).FirstOrDefault();
-                var islevelexist = isexisting.Where(x => x.EMLevel == eMCodeLevel.EMLevel).FirstOrDefault();
-                EMCodeLevel emc = new EMCodeLevel()
+                var isexisting = context.EMLevel.Where(x=>x.Level==eMCodeLevel.EMLevel &&x.ProjectId==eMCodeLevel.ProjectId).FirstOrDefault();
+               
+                EMLevel emc = new EMLevel()
                 {
-                    EMCode = eMCodeLevel.EMCode,
-                    EMLevel = eMCodeLevel.EMLevel
+                    Level = eMCodeLevel.EMLevel,
+                    ProjectId=eMCodeLevel.ProjectId
                 };
-                if (iscodeexist == null && islevelexist == null)
+                if (isexisting == null)
                 {
-                    context.EMCodeLevel.Add(emc);
+                    context.EMLevel.Add(emc);
                     context.SaveChanges();
                 }
                 else
                 {
-                    if (iscodeexist != null)
-                    {
-                        throw new Exception("Unable To Add EM Level or Code : THis EM Code Alreday There  in EM Level");
-                    }
-                    else if (islevelexist != null)
-                    {
                         throw new Exception("Unable To Add EM Level or Code : THis EM Level Alreday There  in EM Level");
-                    }
-
                 }
             }
         }
@@ -4600,7 +4622,7 @@ namespace UAB.DAL
         }
         public void AddCptAudit(CptAudit cptAudit)
         {
-            using (var context=new UABContext())
+            using (var context = new UABContext())
             {
                 var exisit = context.CptAudit.Where(x => x.CPTCode == cptAudit.CPTCode && x.ProjectId == cptAudit.ProjectId).FirstOrDefault();
                 if (exisit == null)
@@ -4619,7 +4641,7 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                var existingcptcode  = context.CptAudit.Where(a => a.CPTAuditId == cptAudit.CPTAuditId).FirstOrDefault();
+                var existingcptcode = context.CptAudit.Where(a => a.CPTAuditId == cptAudit.CPTAuditId).FirstOrDefault();
 
                 if (existingcptcode != null)
                 {

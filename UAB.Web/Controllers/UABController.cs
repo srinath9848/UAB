@@ -2840,25 +2840,34 @@ namespace UAB.Controllers
         }
 
         [HttpGet]
-        public IActionResult ManageEMCodeLevels()
+        public IActionResult ManageEMCodeLevels(string selctedproject=null)
         {
             _logger.LogInformation("Loading Started for ManageEMCodeLevels for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var eMCodeLevels = clinicalcaseOperations.GetManageEMCodeLevels();
-            ViewBag.eMCodeLevels = eMCodeLevels;
+            //var emlevels = clinicalcaseOperations.GetManageEMCLevelsByProjectId(1);
+            var emlevels = clinicalcaseOperations.GetManageEMCLevelsByProjectId();
+            if(selctedproject!=null)
+            emlevels.Where(x => x.ProjectId == Convert.ToInt32(selctedproject)).ToList();
+            ViewBag.emlevels = emlevels;
+            var lstProject = clinicalcaseOperations.GetProjects();
+            ViewBag.lstProject = lstProject;
             _logger.LogInformation("Loading Ended for ManageEMCodeLevels for User: " + mUserId);
             return View();
         }
         [HttpGet]
         [Route("UAB/EMLevelDetails")]
         [Route("EMLevelDetails/{eMLevel}")]
-        public ActionResult EMLevelDetails(int eMLevel)
+        [Route("EMLevelDetails/{eMLevelId}/{eMLevel}/{projectname}")]
+        public ActionResult EMLevelDetails(int eMLevelId ,int eMLevel,string projectname)
         {
-            if (eMLevel != 0)
+            if (eMLevelId != 0)
             {
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-                var emleveldetails = clinicalcaseOperations.GetEMCodeLevelDetails(eMLevel);
+                var emleveldetails = clinicalcaseOperations.GetEMCodeLevelDetails(eMLevelId);
                 ViewBag.emleveldetails = emleveldetails;
+                ViewBag.projectname = projectname;
+                ViewBag.eMLevel = eMLevel;
+                ViewBag.eMLevelId = eMLevelId;
                 return View("EMLevelDetails", emleveldetails);
             }
             return RedirectToAction("ManageEMCodeLevels");
@@ -2886,11 +2895,11 @@ namespace UAB.Controllers
             return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
         }
         [HttpGet]
-        public ActionResult AddEMCode(int eMlevel)
+        public ActionResult AddEMCode(int eMLevelId)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             EMCodeLevel model = new EMCodeLevel();
-            model.EMLevel = eMlevel;
+            model.Id = eMLevelId;
             return PartialView("_AddEMCode", model);
         }
 
@@ -2898,7 +2907,7 @@ namespace UAB.Controllers
         public ActionResult AddEMCode(EMCodeLevel model)
         {
 
-            if (model.EMLevel != 0 && !string.IsNullOrEmpty(model.EMCode))
+            if (model.Id != 0 && !string.IsNullOrEmpty(model.EMCode))
             {
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
 
@@ -2912,7 +2921,7 @@ namespace UAB.Controllers
                 {
                     TempData["Error"] = ex.Message;
                 }
-                return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
+                return RedirectToAction("EMLevelDetails", new { eMLevelId = model.EMLevel });
             }
             return RedirectToAction("ManageEMCodeLevels");
         }
@@ -2975,19 +2984,23 @@ namespace UAB.Controllers
         [HttpGet]
         public ActionResult AddEMLevel()
         {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var lstProject = clinicalcaseOperations.GetProjects();
+            ViewBag.lstProject = lstProject;
+
             return PartialView("_AddEMLevel");
         }
         [HttpPost]
-        public ActionResult AddEMLevel(EMCodeLevel model)
+        public ActionResult AddEMLevel(EMLevelDTO model)
         {
-            if (model.EMLevel != 0 && !string.IsNullOrEmpty(model.EMCode))
+            if (model.EMLevel != 0 && model.ProjectId!=0)
             {
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 try
                 {
                     clinicalcaseOperations.AddEMLevel(model);
                     TempData["Success"] = "Successfully EM Level Added";
-                    return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
+                    //return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
                 }
                 catch (Exception ex)
                 {

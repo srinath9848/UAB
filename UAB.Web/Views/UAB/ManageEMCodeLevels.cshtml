@@ -1,8 +1,7 @@
-﻿@model UAB.DAL.Models.EMCodeLevel
+﻿@model UAB.DTO.EMLevelDTO;
 @{
-    ViewData["Title"] = "Manage EM Code Levels";
-    //var result = (List<UAB.DAL.Models.EMCodeLevel>)ViewBag.eMCodeLevels;
-    var result = (List<int>)ViewBag.eMCodeLevels;
+    ViewData["Title"] = "Manage EM Levels";
+    var result = (List<UAB.DTO.EMLevelDTO>)ViewBag.emlevels;
 }
 
 <style>
@@ -38,11 +37,15 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card" style="text-align: center; font-size: 20px;" id="manageusertitle">Manage Em Code Levels</h5>
+                    <h5 class="card" style="text-align: center; font-size: 20px;" id="manageusertitle">Manage Em Levels</h5>
                     @await Html.PartialAsync("_Msg")
                     <h5><button type="button" id="Addbtn" style="cursor: pointer" class="btn btn-sm btn-info btn-fill" onclick="Add('')"><i class="fa fa-plus"></i>Add EM Level</button></h5>
                     <br />
-                    <br />
+                    <div>
+                        <label>Project</label>
+                        @Html.DropDownListFor(model => model.ProjectId, new SelectList(@ViewBag.lstProject, "ProjectId", "Name"), new { @id = "projectdd" ,@style = "width:250px" })
+                        @Html.ValidationMessageFor(model => model.ProjectId, null, new { @class = "text-danger" })
+                    </div>
                     <div id="modalContent"></div>
                     <br />
                     <div class="table-responsive col-12">
@@ -50,7 +53,8 @@
                             <thead>
                                 <tr>
                                     <th style="width: 250px; font-weight:900;">Action</th>
-                                    <th style="width: 250px; font-weight:900;">EM Code Level</th>
+                                    <th style="width: 250px; font-weight:900;">EM Level</th>
+                                    <th style="width: 250px; font-weight:900;">Project</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -60,12 +64,13 @@
                                         <td>
                                             <a asp-action="EMLevelDetails"
                                                asp-controller="UAB" class="btn btn-sm btn-info btn-fill"
-                                               asp-route-eMLevel="@item">
+                                               asp-route-eMLevelId="@item.EMLevelId" asp-route-eMLevel="@item.EMLevel" asp-route-projectname="@item.ProjectName">
                                                 <i class="fa fa-edit">Details</i>
                                             </a>
                                             <button type="button" style="cursor: pointer" class="btn btn-sm btn-danger btn-fill" onclick="Delete('@item')"><i class="fa fa-times"></i>Delete</button>
                                         </td>
-                                        <td>@item</td>
+                                        <td>@item.EMLevel</td>
+                                        <td>@item.ProjectName</td>
                                     </tr>
                                 }
                             </tbody>
@@ -88,6 +93,27 @@
     $("#Users_filter").html('');
 
     $(document).ready(function () {
+
+
+
+        $("#projectdd").change(function () {
+            debugger;
+            var selctedproject = $("#projectdd").find('option:selected').val();
+           
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("ManageEMCodeLevels", "UAB")",
+                data: { "selctedproject": selctedproject },
+                success: function (response) {
+                    $("#modalContent").html(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+
+        });
+
 
         Add= function () {
             $.ajax({

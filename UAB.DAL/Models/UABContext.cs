@@ -44,6 +44,8 @@ namespace UAB.DAL.Models
         public virtual DbSet<BlockCategory> BlockCategory { get; set; }
         public virtual DbSet<BlockHistory> BlockHistory { get; set; }
         public virtual DbSet<EMCodeLevel> EMCodeLevel { get; set; }
+        public virtual DbSet<EMLevel> EMLevel { get; set; } 
+
         public virtual DbSet<BlockResponse> BlockResponse { get; set; }
         public virtual DbSet<Location> Location  { get; set; }
         public virtual DbSet<CptAudit> CptAudit   { get; set; }

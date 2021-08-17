@@ -1,4 +1,4 @@
-﻿@model UAB.DAL.Models.EMCodeLevel
+﻿@model UAB.DTO.EMLevelDTO;
 
 <style>
     .modal-content {
@@ -17,13 +17,13 @@
                 </div>
                 <div class="modal-body">
                     <div>
-                        @Html.TextBoxFor(model => model.EMLevel, new { @id="txtemlevel",@class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter EM Level " })
+                        @Html.TextBoxFor(model => model.EMLevel, new { @id = "txtemlevel", @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter EM Level " })
                         @Html.ValidationMessageFor(model => model.EMLevel, null, new { @class = "text-danger" })
                     </div>
                     <br />
                     <div>
-                        @Html.TextBoxFor(model => model.EMCode, new { @id="txtemcode",@class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter EM Code " })
-                        @Html.ValidationMessageFor(model => model.EMCode, null, new { @class = "text-danger" })
+                        @Html.DropDownListFor(model => model.ProjectId, new SelectList(@ViewBag.lstProject,"ProjectId", "Name"), "--Select a Project--", new { @id = "projectdd", @class = "form-control " })
+                        @Html.ValidationMessageFor(model => model.ProjectId, null, new { @class = "text-danger" })
                     </div>
                     <label id="updateemerror" style="color:red"></label>
                 </div>
@@ -43,8 +43,8 @@
 
         $('#btnadd').attr('disabled', true);
 
-        $('#txtemcode,#txtemlevel').on('keyup keypress', function (e) {
-            if ($('#txtemcode').val().length < 6 && $('#txtemlevel').val().length < 6) {
+        $('#projectdd,#txtemlevel').on('keyup keypress,change', function (e) {
+            if ($("#projectdd").find('option:selected').val() != "--Select a Project--" && $('#txtemlevel').val().length < 6) {
                 $("#updateemerror").html('');
                 $('#btnadd').attr('disabled', false);
             } else {
