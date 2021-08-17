@@ -77,11 +77,14 @@
     $('#Provider').DataTable();
     $("#Provider_length").html('');
     $("#Provider_filter").html('');
+    $('#Provider').dataTable({
+        "oLanguage": {
+            "bSort": false
+        },
+        "bDestroy": true
+    });
 
     $(document).ready(function () {
-
-
-
     Add= function () {
         $.ajax({
             type: "GET",
