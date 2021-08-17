@@ -41,10 +41,14 @@
                     @await Html.PartialAsync("_Msg")
                     <h5><button type="button" id="Addbtn" style="cursor: pointer" class="btn btn-sm btn-info btn-fill" onclick="Add('')"><i class="fa fa-plus"></i>Add EM Level</button></h5>
                     <br />
-                    <div>
-                        <label>Project</label>
-                        @Html.DropDownListFor(model => model.ProjectId, new SelectList(@ViewBag.lstProject, "ProjectId", "Name"), new { @id = "projectdd" ,@style = "width:250px" })
-                        @Html.ValidationMessageFor(model => model.ProjectId, null, new { @class = "text-danger" })
+                    <div class="form-group row">
+                        <div class="col-md-2">
+                            <label>Project</label>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(model => model.ProjectId, new SelectList(@ViewBag.lstProject, "ProjectId", "Name"), "--Select Project--", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ProjectId, null, new { @class = "text-danger" })
+                        </div>
                     </div>
                     <div id="modalContent"></div>
                     <br />
@@ -57,20 +61,29 @@
                                     <th style="width: 250px; font-weight:900;">Project</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach (var item in result)
+                            <tbody id="UpdateContent">
+                                @if (result.Count != 0)
+                                {
+                                    foreach (var item in result)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <a asp-action="EMLevelDetails"
+                                                   asp-controller="UAB" class="btn btn-sm btn-info btn-fill"
+                                                   asp-route-eMLevelId="@item.EMLevelId" asp-route-eMLevel="@item.EMLevel" asp-route-projectname="@item.ProjectName">
+                                                    <i class="fa fa-edit">Details</i>
+                                                </a>
+                                                <button type="button" style="cursor: pointer" class="btn btn-sm btn-danger btn-fill" onclick="Delete('@item')"><i class="fa fa-times"></i>Delete</button>
+                                            </td>
+                                            <td>@item.EMLevel</td>
+                                            <td>@item.ProjectName</td>
+                                        </tr>
+                                    }
+                                }
+                                else
                                 {
                                     <tr>
-                                        <td>
-                                            <a asp-action="EMLevelDetails"
-                                               asp-controller="UAB" class="btn btn-sm btn-info btn-fill"
-                                               asp-route-eMLevelId="@item.EMLevelId" asp-route-eMLevel="@item.EMLevel" asp-route-projectname="@item.ProjectName">
-                                                <i class="fa fa-edit">Details</i>
-                                            </a>
-                                            <button type="button" style="cursor: pointer" class="btn btn-sm btn-danger btn-fill" onclick="Delete('@item')"><i class="fa fa-times"></i>Delete</button>
-                                        </td>
-                                        <td>@item.EMLevel</td>
-                                        <td>@item.ProjectName</td>
+                                        <td colspan="3" style="text-align:center;">No records found !</td>
                                     </tr>
                                 }
                             </tbody>
@@ -94,24 +107,18 @@
 
     $(document).ready(function () {
 
-
-
-        $("#projectdd").change(function () {
-            debugger;
-            var selctedproject = $("#projectdd").find('option:selected').val();
-           
+        $("#ProjectId").change(function () {
             $.ajax({
                 type: "GET",
-                url: "@Url.Action("ManageEMCodeLevels", "UAB")",
-                data: { "selctedproject": selctedproject },
+                url: "@Url.Action("GetEMCodeLevelsbyId", "UAB")",
+                data: { "ProjectId": $("#ProjectId option:selected").val() },
                 success: function (response) {
-                    $("#modalContent").html(response);
+                    $("#UpdateContent").html(response);
                 },
                 failure: function (response) {
                     alert(response);
                 }
             });
-
         });
 
 
@@ -140,6 +147,7 @@
                 }
             });
         };
+
     ModalClose1 = function () {
         $("#modalContent").html('');
         }

@@ -3440,6 +3440,43 @@ namespace UAB.DAL
             return lsteMLevelDTO;
         }
 
+        public List<EMLevelDTO> GetEMCodeLevelsbyId(int ProjectId)
+        {
+            EMLevelDTO eMLevelDTO = new EMLevelDTO();
+            List<EMLevelDTO> lsteMLevelDTO = new List<EMLevelDTO>();
+
+            using (var context = new UABContext())
+            {
+                using (var cnn = context.Database.GetDbConnection())
+                {
+                    var cmm = cnn.CreateCommand();
+                    cmm.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmm.CommandText = "[dbo].[UspGetEMCodeLevelsbyId]";
+                    var param = new SqlParameter()
+                    {
+                        ParameterName = "@ProjectId",
+                        SqlDbType = System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input,
+                        Value = ProjectId
+                    };
+                    cmm.Parameters.Add(param);
+                    cmm.Connection = cnn;
+                    cnn.Open();
+                    var reader = cmm.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        eMLevelDTO = new EMLevelDTO();
+                        eMLevelDTO.EMLevelId = Convert.ToInt32(reader["Id"]);
+                        eMLevelDTO.EMLevel = Convert.ToInt32(reader["Level"]);
+                        eMLevelDTO.ProjectName = Convert.ToString(reader["Name"]);
+                        lsteMLevelDTO.Add(eMLevelDTO);
+                    }
+                }
+            }
+            return lsteMLevelDTO;
+        }
+
         public List<EMCodeLevel> GetEMCodeLevelDetails(int eMLevelId )
         {
             using (var context = new UABContext())

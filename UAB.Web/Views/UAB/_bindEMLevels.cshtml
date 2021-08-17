@@ -1,0 +1,42 @@
+﻿@{
+    var result = (List<UAB.DTO.EMLevelDTO>)ViewBag.emlevels;
+}
+
+
+@if (result.Count != 0)
+{
+    foreach (var item in result)
+    {
+        <tr>
+            <td>
+                <a asp-action="EMLevelDetails"
+                   asp-controller="UAB" class="btn btn-sm btn-info btn-fill"
+                   asp-route-eMLevelId="@item.EMLevelId" asp-route-eMLevel="@item.EMLevel" asp-route-projectname="@item.ProjectName">
+                    <i class="fa fa-edit">Details</i>
+                </a>
+                <button type="button" style="cursor: pointer" class="btn btn-sm btn-danger btn-fill" onclick="Delete('@item')"><i class="fa fa-times"></i>Delete</button>
+            </td>
+            <td>@item.EMLevel</td>
+            <td>@item.ProjectName</td>
+        </tr>
+    }
+}
+else
+{
+    <tr>
+        <td colspan="3" style="text-align:center;">No records found !</td>
+    </tr>
+}
+
+@*<script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="~/dashboardassets/extra-libs/DataTables/datatables.js"></script>
+    <script type="text/javascript">
+            $(document).ready(function () {
+                $("#settings").addClass('selected');
+
+                $('#Users').DataTable();
+                $("#Users_length").html('');
+                $("#Users_filter").html('');
+            });
+
+        </script>*@
