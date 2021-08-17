@@ -27,6 +27,15 @@
         height: 32px;
         line-height: 2;
         max-width: 62px;
+        padding-left: 10px;
+        color: white;
+        cursor: pointer;
+    }
+    .linkToButton1 {
+        background-color: #2255a4;
+        height: 32px;
+        line-height: 2;
+        max-width: 165px;
         color: white;
         cursor: pointer;
     }
@@ -46,16 +55,22 @@
                 <div class="card-body">
 
                     <div class="col-12 row">
-                        <div class="col-11">
+                        <div class="col-9">
                             <h5 class="card">Chart Summary Report</h5>
                         </div>
-                        <div class="col-1 linkToButton">
-                            @Html.ActionLink("Export", "ExportChartSummaryReport", "Home", new { projectId = @ViewBag.ProjectId, StartDate = @ViewBag.StartDate, EndDate = @ViewBag.EndDate }, new { @class = "whiteLink" })
+                        <div class="col-1">
+                            <div class="linkToButton">
+                                @Html.ActionLink("Export", "ExportChartSummaryReport", "Home", new { projectId = @ViewBag.ProjectId, StartDate = @ViewBag.StartDate, EndDate = @ViewBag.EndDate, dateType= @ViewBag.DateType }, new { @class = "whiteLink" })
+                            </div>
+                        </div>
+                        <div class="col-2 linkToButton1">
+                            @Html.ActionLink("Export Detailed Report", "ExportDetailedChartSummaryReport", "Home", new { projectId = @ViewBag.ProjectId, StartDate = @ViewBag.StartDate, EndDate = @ViewBag.EndDate, dateType = @ViewBag.DateType }, new { @class = "whiteLink" })
                         </div>
                         <input id="projectId" type="hidden" value="@ViewBag.ProjectId" />
                         <input id="rangeId" type="hidden" value="@ViewBag.range" />
                         <input id="startDate" type="hidden" value="@ViewBag.StartDate" />
                         <input id="endDate" type="hidden" value="@ViewBag.EndDate" />
+                        <input id="dateType" type="hidden" value="@ViewBag.DateType" />
                     </div>
 
 
