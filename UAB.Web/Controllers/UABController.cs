@@ -2840,25 +2840,36 @@ namespace UAB.Controllers
         }
 
         [HttpGet]
-        public IActionResult ManageEMCodeLevels(string selctedproject=null)
+        public IActionResult ManageEMCodeLevels()
         {
             _logger.LogInformation("Loading Started for ManageEMCodeLevels for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             //var emlevels = clinicalcaseOperations.GetManageEMCLevelsByProjectId(1);
             var emlevels = clinicalcaseOperations.GetManageEMCLevelsByProjectId();
-            if(selctedproject!=null)
-            emlevels.Where(x => x.ProjectId == Convert.ToInt32(selctedproject)).ToList();
             ViewBag.emlevels = emlevels;
             var lstProject = clinicalcaseOperations.GetProjects();
             ViewBag.lstProject = lstProject;
             _logger.LogInformation("Loading Ended for ManageEMCodeLevels for User: " + mUserId);
             return View();
         }
+
+
+        [HttpGet]
+        public IActionResult GetEMCodeLevelsbyId(int ProjectId)
+        {
+            _logger.LogInformation("Loading Started for GetEMCodeLevelsbyId for User: " + mUserId);
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            ViewBag.emlevels = clinicalcaseOperations.GetEMCodeLevelsbyId(ProjectId);
+            _logger.LogInformation("Loading Ended for GetEMCodeLevelsbyId for User: " + mUserId);
+            return PartialView("_bindEMLevels");
+        }
+
+
         [HttpGet]
         [Route("UAB/EMLevelDetails")]
         [Route("EMLevelDetails/{eMLevel}")]
         [Route("EMLevelDetails/{eMLevelId}/{eMLevel}/{projectname}")]
-        public ActionResult EMLevelDetails(int eMLevelId ,int eMLevel,string projectname)
+        public ActionResult EMLevelDetails(int eMLevelId, int eMLevel, string projectname)
         {
             if (eMLevelId != 0)
             {
@@ -2993,7 +3004,7 @@ namespace UAB.Controllers
         [HttpPost]
         public ActionResult AddEMLevel(EMLevelDTO model)
         {
-            if (model.EMLevel != 0 && model.ProjectId!=0)
+            if (model.EMLevel != 0 && model.ProjectId != 0)
             {
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 try
@@ -3661,11 +3672,11 @@ namespace UAB.Controllers
 
 
         [HttpGet]
-        public IActionResult SettingsCptAudit ()
+        public IActionResult SettingsCptAudit()
         {
             _logger.LogInformation("Loading Started for SettingsCptAudit for User: " + mUserId);
 
-            List<CptAudit> lst = new List<CptAudit>(); 
+            List<CptAudit> lst = new List<CptAudit>();
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             lst = clinicalcaseOperations.GetCptAudits();
             ViewBag.lstcptaudit = lst;
@@ -3674,7 +3685,7 @@ namespace UAB.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult Add_EditCptAudit (int id = 0)
+        public ActionResult Add_EditCptAudit(int id = 0)
         {
             _logger.LogInformation("Loading Started for Add_EditCptAudit for User: " + mUserId);
             CptAudit obj = new CptAudit();
@@ -3693,7 +3704,7 @@ namespace UAB.Controllers
             return PartialView("_Add_EditCptAudit", obj);
         }
         [HttpPost]
-        public IActionResult AddSettingsCptAudit (CptAudit cptAudit) 
+        public IActionResult AddSettingsCptAudit(CptAudit cptAudit)
         {
             _logger.LogInformation("Loading Started for AddSettingsCptAudit for User: " + mUserId);
             try
@@ -3703,7 +3714,7 @@ namespace UAB.Controllers
                     ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                     if (cptAudit.CPTAuditId == 0)
                     {
-                            clinicalcaseOperations.AddCptAudit(cptAudit);
+                        clinicalcaseOperations.AddCptAudit(cptAudit);
                         TempData["Success"] = "CPT Code \"" + cptAudit.CPTCode + "\" Added Successfully!";
 
                     }
@@ -3722,7 +3733,7 @@ namespace UAB.Controllers
             return RedirectToAction("SettingsCptAudit");
         }
         [HttpGet]
-        public IActionResult DeleteCptAudit (int id)
+        public IActionResult DeleteCptAudit(int id)
         {
             _logger.LogInformation("Loading Started for Fetching DeleteCptAudit for User: " + mUserId);
             CptAudit obj = new CptAudit();
@@ -3738,14 +3749,14 @@ namespace UAB.Controllers
             return PartialView("_DeleteCptAudit", obj);
         }
         [HttpPost]
-        public IActionResult DeleteCptAudit (CptAudit cptAudit)
+        public IActionResult DeleteCptAudit(CptAudit cptAudit)
         {
             try
             {
                 _logger.LogInformation("Loading Started for Submit DeleteCptAudit for User: " + mUserId);
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 if (cptAudit.CPTAuditId != 0)
-                    clinicalcaseOperations.DeleteCptAudit(cptAudit); 
+                    clinicalcaseOperations.DeleteCptAudit(cptAudit);
             }
             catch (Exception ex)
             {
