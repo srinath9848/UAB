@@ -103,7 +103,7 @@
        }
 });
 
-    function ShowSubmitPopup(buttonType)
+    function ShowSubmitPopup(buttonType,isAduditRequired)
     {
         $.ajax({
             type: "GET",
@@ -111,7 +111,7 @@
             data: {
                 "chartSummaryDTO": "@Model",
                 "buttonType": buttonType,
-                "isAuditRequired": $("#hdnIsAuditRequired").val()
+                "isAuditRequired": isAduditRequired
             },
             success: function (response) {
                 $("#modalContent").html(response);
@@ -290,13 +290,11 @@
             var isAuditRequired;
 
             if (auditMandatory == "1") {
-                $("#hdnIsAuditRequired").val("true");
-                ShowSubmitPopup();
+                ShowSubmitPopup('',"true");
             }
             else {
-                $("#hdnIsAuditRequired").val("");
 
-                if ($("#hdnIsAuditCalculated").val() == "") {
+              if ($("#hdnIsAuditCalculated").val() == "") {
 
                     $("#hdnIsAuditCalculated").val("1");
 
@@ -317,7 +315,7 @@
                             else
                                 $("#hdnIsAuditRequired").val("false");
 
-                            ShowSubmitPopup(buttonType);
+                            ShowSubmitPopup(buttonType, $("#hdnIsAuditRequired").val());
                         },
                         failure: function (response) {
                             alert(response);
@@ -325,7 +323,7 @@
                     });
                 }
                 else
-                    ShowSubmitPopup();
+                  ShowSubmitPopup('', $("#hdnIsAuditRequired").val());
             }
         }
         EnableButton();
