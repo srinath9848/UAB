@@ -3234,22 +3234,22 @@ namespace UAB.Controllers
             {
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                 List<string> lstProvider = clinicalcaseOperations.GetProviderNames();
-                if (!lstProvider.Contains(provider.Name.ToLower()))
+                if (provider.ProviderId == 0)
                 {
-                    if (provider.ProviderId == 0)
+                    if (!lstProvider.Contains(provider.Name.ToLower()))
                     {
                         clinicalcaseOperations.AddProvider(provider);
                         TempData["Success"] = "Provider \"" + provider.Name + "\" Added Successfully!";
                     }
                     else
                     {
-                        clinicalcaseOperations.UpdateProvider(provider); // Update
-                        TempData["Success"] = "Provider \"" + provider.Name + "\" Updated Successfully!";
+                        TempData["Error"] = "The Provider \"" + provider.Name + "\" is already present in our Provider list!";
                     }
                 }
                 else
                 {
-                    TempData["Error"] = "The Provider \"" + provider.Name + "\" is already present in our Provider list!";
+                    clinicalcaseOperations.UpdateProvider(provider); // Update
+                    TempData["Success"] = "Provider \"" + provider.Name + "\" Updated Successfully!";
                 }
             }
             _logger.LogInformation("Loading Ended for AddSettingsProvider for User: " + mUserId);
