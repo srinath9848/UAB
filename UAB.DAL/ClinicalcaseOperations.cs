@@ -1625,7 +1625,7 @@ namespace UAB.DAL
             return lst;
         }
 
-        public List<ChartSummaryDTO> GetChartSummaryReportDetails(int projectID, DateTime CurrentDos, string ColumnName)
+        public List<ChartSummaryDTO> GetChartSummaryReportDetails(int projectID, DateTime CurrentDos, string ColumnName, string DateType)
         {
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
@@ -1644,12 +1644,16 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Date,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = CurrentDos
-                        }
-                        ,   new SqlParameter() {
+                        },   new SqlParameter() {
                             ParameterName = "@ColumnName",
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = ColumnName
+                        },   new SqlParameter() {
+                            ParameterName = "@DateType",
+                            SqlDbType =  System.Data.SqlDbType.VarChar,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = DateType
                         }
                     };
                 using (var con = context.Database.GetDbConnection())
@@ -1668,7 +1672,7 @@ namespace UAB.DAL
                         chartSummaryDTO.CodingDTO.ListName = Convert.ToString(reader["ListName"]);
                         chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
                         chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
-                        var dos = Convert.ToDateTime(reader["DateOfService"]);
+                        var dos = Convert.ToDateTime(reader["Date"]);
                         chartSummaryDTO.CodingDTO.DateOfService = dos.ToString("MM/dd/yyyy");
                         chartSummaryDTO.ProviderName = Convert.ToString(reader["Provider"]);
                         lst.Add(chartSummaryDTO);

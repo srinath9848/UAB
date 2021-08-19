@@ -94,7 +94,7 @@
                                     <tr class="body">
                                         @for (int j = 0; j < Model.Tables[0].Columns.Count; j++)
                                         {
-                                            @if (@Model.Tables[0].Columns[j].ColumnName != "ProjectName" && @Model.Tables[0].Columns[j].ColumnName != "DateOfService")
+                                            @if (@Model.Tables[0].Columns[j].ColumnName != "ProjectName" && @Model.Tables[0].Columns[j].ColumnName != "DateOfService" && @Model.Tables[0].Columns[j].ColumnName != "CreatedDate")
                                             {
                                                 @if (@Model.Tables[0].Rows[i][j].ToString() != "0")
                                                 {
@@ -153,7 +153,8 @@
 
     $(document).ready(function () {
 
-        ClickOnCell = function (p1, p2,p3) {
+        ClickOnCell = function (p1, p2, p3) {
+            debugger;
             if (p3 != 0 && p1 != 'ProjectName' && p1 !='DateOfService') {
                  $.ajax({
                 type: "GET",
@@ -161,7 +162,8 @@
                 data: {
                     "ColumnName": p1,
                     "dos": p2,
-                    "ProjectId":@ViewBag.ProjectId
+                    "ProjectId":@ViewBag.ProjectId,
+                    "DateType":'@ViewBag.DateType'
                 },
                 success: function (response) {
                     $("#modalContent1").html(response);

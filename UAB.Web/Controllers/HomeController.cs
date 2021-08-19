@@ -479,11 +479,11 @@ namespace UAB.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetChartSummaryReportDetails(string ColumnName, DateTime dos, int ProjectId)
+        public IActionResult GetChartSummaryReportDetails(string ColumnName, DateTime dos, int ProjectId, string DateType)
         {
             _logger.LogInformation("Loading Started for GetChartSummaryReportDetails for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstChartSummaryReportDetails = clinicalcaseOperations.GetChartSummaryReportDetails(ProjectId, dos, ColumnName);
+            var lstChartSummaryReportDetails = clinicalcaseOperations.GetChartSummaryReportDetails(ProjectId, dos, ColumnName,DateType);
             string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.Name).FirstOrDefault();
             string projectType = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.ProjectTypeName).FirstOrDefault();
 
@@ -492,14 +492,15 @@ namespace UAB.Controllers
             ViewBag.projectname = projectname;
             ViewBag.projectType = projectType;
             ViewBag.ProjectId = ProjectId;
+            ViewBag.DateType = DateType;
             _logger.LogInformation("Loading Ended for GetChartSummaryReportDetails for User: " + mUserId);
             return PartialView("_ChartSummaryReportDetails", lstChartSummaryReportDetails);
         }
-        public IActionResult ExportChartSummaryReportDetails(string ColumnName, DateTime dos, int ProjectId)
+        public IActionResult ExportChartSummaryReportDetails(string ColumnName, DateTime dos, int ProjectId, string DateType)
         {
             _logger.LogInformation("Loading Started for ExportChartSummaryReportDetails for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstChartSummaryReportDetails = clinicalcaseOperations.GetChartSummaryReportDetails(ProjectId, dos, ColumnName);
+            var lstChartSummaryReportDetails = clinicalcaseOperations.GetChartSummaryReportDetails(ProjectId, dos, ColumnName, DateType);
             string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.Name).FirstOrDefault();
             string projectType = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.ProjectTypeName).FirstOrDefault();
             List<CodingDTO> chartSummaryList = new List<CodingDTO>();
