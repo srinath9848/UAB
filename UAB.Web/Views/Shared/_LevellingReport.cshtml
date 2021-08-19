@@ -116,14 +116,32 @@
                                         {
                                             var emCode = Model.Tables[1].Rows[x][y].ToString();
                                             <td>
-                                                @{ decimal row = Model.Tables[1].Rows[x][y].ToString() != "" ? Convert.ToDecimal(Model.Tables[1].Rows[x][y]) : 0;
-                                                    if (emCode.Contains("00"))
+                                                @if (@Model.Tables[1].Columns[y].ColumnName == "EMCode")
+                                                {
                                                     {
-                                                        <span>@Decimal.Truncate(row)%</span>
+                                                        decimal row = Model.Tables[1].Rows[x][y].ToString() != "" ? Convert.ToDecimal(Model.Tables[1].Rows[x][y]) : 0;
+                                                        if (emCode.Contains("00"))
+                                                        {
+                                                            <span>@Decimal.Truncate(row)</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="@row">@row</span>
+                                                        }
                                                     }
-                                                    else
+                                                }
+                                                else
+                                                {
                                                     {
-                                                        <span class="@row">@row%</span>
+                                                        decimal row = Model.Tables[1].Rows[x][y].ToString() != "" ? Convert.ToDecimal(Model.Tables[1].Rows[x][y]) : 0;
+                                                        if (emCode.Contains("00"))
+                                                        {
+                                                            <span>@Decimal.Truncate(row)%</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="@row">@row%</span>
+                                                        }
                                                     }
                                                 }
                                             </td>
