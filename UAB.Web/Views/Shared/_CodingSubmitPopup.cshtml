@@ -54,6 +54,10 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+
+       var isAuditRequired = @ViewBag.isAuditRequired;
+        $("#hdnIsAuditRequired").val(isAuditRequired);
+
         $("#submitAndPost").click(function (e) {
             $("#hdnSubmitAndPost").val($(this).attr("id"));
         });
