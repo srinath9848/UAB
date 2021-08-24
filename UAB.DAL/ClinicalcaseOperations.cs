@@ -271,6 +271,7 @@ namespace UAB.DAL
                     con.Open();
                     var reader = cmd.ExecuteReader();
 
+                    chartSummaryDTO.blockHistories = new List<BlockDTO>();
                     while (reader.Read())
                     {
                         chartSummaryDTO.CodingDTO.ClinicalCaseID = Convert.ToInt32(reader["ClinicalCaseID"]);
@@ -287,10 +288,13 @@ namespace UAB.DAL
 
                         if (Role == "Coder" && ChartType == "Block")
                         {
-                            chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
-                            chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
-                            chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie);
                             chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
+                            chartSummaryDTO.blockHistories.Add(new BlockDTO
+                            {
+                                Name = Convert.ToString(reader["BlockCategory"]),
+                                Remarks = Convert.ToString(reader["BlockRemarks"]),
+                                CreateDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie)
+                            });
                         }
                     }
                     reader.NextResult();
@@ -369,17 +373,17 @@ namespace UAB.DAL
                                 chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                         }
 
-                        if (Role == "Coder" && ChartType == "Block")
-                        {
-                            chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
-                            chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
-                            chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie);
-                        }
+                        //if (Role == "Coder" && ChartType == "Block")
+                        //{
+                        //    chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
+                        //    chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
+                        //    chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie);
+                        //}
                         else if (Role == "QA" && ChartType == "Block")
                         {
-                            chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
-                            chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
-                            chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie);
+                            //chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
+                            //chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
+                            //chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie);
 
                             chartSummaryDTO.CodedBy = Convert.ToString(reader["CodedBy"]);
                             if (reader["ClaimId"] != DBNull.Value)
@@ -553,9 +557,9 @@ namespace UAB.DAL
                         else if (Role == "ShadowQA" && ChartType == "Block")
                         {
                             chartSummaryDTO.ProjectID = Convert.ToInt32(reader["ProjectId"]);
-                            chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
-                            chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
-                            chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie);
+                            //chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
+                            //chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
+                            //chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie);
 
                             chartSummaryDTO.CodedBy = Convert.ToString(reader["CodedBy"]);
                             if (reader["ClaimId"] != DBNull.Value)
@@ -843,6 +847,18 @@ namespace UAB.DAL
                     {
                         lstchartSummaryDTO.ForEach(x => x.CCIDs = Convert.ToString(reader["CCIDs"]));
                         //chartSummaryDTO.CCIDs = Convert.ToString(reader["CCIDs"]);
+                    }
+
+                    reader.NextResult();
+                    //Below code is for Getting Block history in QA screen
+                    while (reader.Read())
+                    {
+                        lstchartSummaryDTO.FirstOrDefault().blockHistories.Add(new BlockDTO
+                        {
+                            Name = Convert.ToString(reader["BlockCategory"]),
+                            Remarks = Convert.ToString(reader["BlockRemarks"]),
+                            CreateDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie)
+                        });
                     }
                 }
                 return lstchartSummaryDTO;

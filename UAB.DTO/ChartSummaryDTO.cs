@@ -13,6 +13,7 @@ namespace UAB.DTO
             QADTO = new QADTO();
             ShadowQADTO = new ShadowQADTO();
             BlockResponseDTO = new BlockResponseDTO();
+            blockHistories = new List<BlockDTO>();
         }
         //[Required(ErrorMessage = "Feedback Provider is required.")]
         public int? ProviderFeedbackID { get; set; }
@@ -132,8 +133,8 @@ namespace UAB.DTO
         public string CCIDs { get; set; }
         public bool isWrongProvider { get; set; }
         public AuditDTO auditDTO { get; set; }
+        public List<BlockDTO> blockHistories { get; set; }
     }
-
     public class LelvellingReportDTO
     {
         [Required(ErrorMessage = "*")]
