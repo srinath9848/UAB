@@ -2261,40 +2261,33 @@ namespace UAB.DAL
                 DataTable dtCPT = GetCpt(chartSummaryDTO.CPTCode);
 
                 var param = new SqlParameter[] {
-                     new SqlParameter() {
-                            ParameterName = "@PayorID",
-                            SqlDbType =  System.Data.SqlDbType.Int,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.PayorID
-                        },
-                      new SqlParameter() {
-                            ParameterName = "@NoteTitle",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.NoteTitle
-                        },
-                        new SqlParameter() {
-                            ParameterName = "@ProviderID",
-                            SqlDbType =  System.Data.SqlDbType.Int,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.ProviderID
-                        },
-                         new SqlParameter() {
-                            ParameterName = "@utCpt",
-                            SqlDbType =  System.Data.SqlDbType.Structured,
-                            Direction = System.Data.ParameterDirection.Input,
-                            TypeName = "utCpt",
-                            Value = dtCPT
-                        },
-
-                new SqlParameter()
-                {
-                    ParameterName = "@Mod",
-                    SqlDbType = System.Data.SqlDbType.VarChar,
+             new SqlParameter() {
+                    SqlDbType =  System.Data.SqlDbType.Int,
+                    ParameterName = "@PayorID",
                     Direction = System.Data.ParameterDirection.Input,
-                    Value = chartSummaryDTO.Mod
-                }
-                ,  new SqlParameter()
+                    Value = chartSummaryDTO.PayorID
+                },
+              new SqlParameter() {
+                    ParameterName = "@NoteTitle",
+                    SqlDbType =  System.Data.SqlDbType.VarChar,
+                    Direction = System.Data.ParameterDirection.Input,
+                    Value = chartSummaryDTO.NoteTitle
+                },
+                new SqlParameter() {
+                    ParameterName = "@ProviderID",
+                    SqlDbType =  System.Data.SqlDbType.Int,
+                    Direction = System.Data.ParameterDirection.Input,
+                    Value = chartSummaryDTO.ProviderID
+                },
+                 new SqlParameter() {
+                    ParameterName = "@utCpt",
+                    SqlDbType =  System.Data.SqlDbType.Structured,
+                    Direction = System.Data.ParameterDirection.Input,
+                    TypeName = "utCpt",
+                    Value = dtCPT
+                },
+
+                  new SqlParameter()
                  {
                      ParameterName = "@Dx",
                      SqlDbType = System.Data.SqlDbType.VarChar,
@@ -2306,12 +2299,6 @@ namespace UAB.DAL
                      SqlDbType = System.Data.SqlDbType.Int,
                      Direction = System.Data.ParameterDirection.Input,
                      Value = chartSummaryDTO.ProviderFeedbackID
-                 }, new SqlParameter()
-                 {
-                     ParameterName = "@CoderQuestion",
-                     SqlDbType = System.Data.SqlDbType.VarChar,
-                     Direction = System.Data.ParameterDirection.Input,
-                     Value = chartSummaryDTO.CoderQuestion
                  } ,   new SqlParameter()
                  {
                      ParameterName = "@ClinicalcaseID",
@@ -2343,11 +2330,11 @@ namespace UAB.DAL
                     Value = dtCpt1
                  },
                  new SqlParameter() {
-                            ParameterName = "@ProviderPostedId",
-                            SqlDbType =  System.Data.SqlDbType.Int,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = providerPostedId
-                        },
+                   ParameterName = "@ProviderPostedId",
+                   SqlDbType =  System.Data.SqlDbType.Int,
+                   Direction = System.Data.ParameterDirection.Input,
+                   Value = providerPostedId
+                 },
                   new SqlParameter() {
                     ParameterName = "@PostedDate",
                     SqlDbType = System.Data.SqlDbType.DateTime2,
@@ -3481,7 +3468,7 @@ namespace UAB.DAL
             return lsteMLevelDTO;
         }
 
-        public List<EMCodeLevel> GetEMCodeLevelDetails(int eMLevelId )
+        public List<EMCodeLevel> GetEMCodeLevelDetails(int eMLevelId)
         {
             using (var context = new UABContext())
             {
@@ -3590,12 +3577,12 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                var isexisting = context.EMLevel.Where(x=>x.Level==eMCodeLevel.EMLevel &&x.ProjectId==eMCodeLevel.ProjectId).FirstOrDefault();
-               
+                var isexisting = context.EMLevel.Where(x => x.Level == eMCodeLevel.EMLevel && x.ProjectId == eMCodeLevel.ProjectId).FirstOrDefault();
+
                 EMLevel emc = new EMLevel()
                 {
                     Level = eMCodeLevel.EMLevel,
-                    ProjectId=eMCodeLevel.ProjectId
+                    ProjectId = eMCodeLevel.ProjectId
                 };
                 if (isexisting == null)
                 {
@@ -3604,7 +3591,7 @@ namespace UAB.DAL
                 }
                 else
                 {
-                        throw new Exception("Unable To Add EM Level or Code : THis EM Level Alreday There  in EM Level");
+                    throw new Exception("Unable To Add EM Level or Code : THis EM Level Alreday There  in EM Level");
                 }
             }
         }
