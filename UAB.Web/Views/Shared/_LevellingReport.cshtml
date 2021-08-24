@@ -220,7 +220,7 @@
                 avgsum += parseFloat($(this).text());
             });
             avg = (avgsum / rowCount);
-            $("#avgtotal_" + x).text(avg.toFixed(2));
+            $("#avgtotal_" + x).text(avg.toFixed(2)+"%");
             avgsum = 0;
             avg = 0;
         }
