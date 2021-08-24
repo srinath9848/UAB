@@ -773,14 +773,14 @@
             });
         };
         BlockHistory = function () {
+
+             var data = JSON.parse('@Html.Raw(Json.Serialize(Model.FirstOrDefault().blockHistories))');
+
             $.ajax({
-                type: "GET",
+                type: "POST",
                 url: "@Url.Action("BlockHistory", "UAB")",
-                data: {
-                    "name": "@Model.FirstOrDefault().BlockCategory",
-                    "remarks": "@Model.FirstOrDefault().BlockRemarks",
-                    "createdate": "@Model.FirstOrDefault().BlockedDate"
-                    },
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
                 success: function (response) {
                     $("#modalContent").html(response);
                 },

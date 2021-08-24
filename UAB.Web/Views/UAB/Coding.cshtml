@@ -37,7 +37,6 @@
 
     var isBlocked = @(ViewBag.IsBlocked == null ? "0": "1");
     if (isBlocked == 1) {
-        $("#btnBlock").hide();
         $("#btnBlockHistory").show();
         $("#btnProviderPosted").hide();
 
@@ -69,8 +68,8 @@
 
     $(document).ready(function () {
 
-        $("#hdnAuditProviders").val("@Model.auditDTO.ProviderIDs");
-        $("#hdnAuditCPTCodes").val("@Model.auditDTO.CPTCodes");
+        $("#hdnAuditProviders").val("@Model.auditDTO?.ProviderIDs");
+        $("#hdnAuditCPTCodes").val("@Model.auditDTO?.CPTCodes");
 
         ProviderPostedClinicalcase = function () {
             $("#_providerPostedId").val($("#providerPostedId").val());

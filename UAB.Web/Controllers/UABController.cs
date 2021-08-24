@@ -130,22 +130,16 @@ namespace UAB.Controllers
 
             return PartialView("_ViewHistory", reslut);
         }
-        [HttpGet]
-        public IActionResult BlockHistory(string name, string remarks, string createdate)
+        [HttpPost]
+        public IActionResult BlockHistory([FromBody] List<BlockDTO> historyDto)
         {
             _logger.LogInformation("Loading Started for BlockHistory for User: " + mUserId);
 
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            BlockDTO dt = new BlockDTO()
-            {
-                Name = name,
-                Remarks = remarks,
-                CreateDate = Convert.ToDateTime(createdate)
-            };
+
 
             _logger.LogInformation("Loading Ended for BlockHistory for User: " + mUserId);
 
-            return PartialView("_BlockHistory", dt);
+            return PartialView("_BlockHistory", historyDto);
         }
         public IActionResult GetBlockedChart(string Role, string ChartType, int ProjectID, string ccids, string ProjectName, int CurrCCId = 0, string Previous = "", string Next = "", string showAll = "")
         {
