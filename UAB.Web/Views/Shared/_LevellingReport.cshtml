@@ -107,8 +107,10 @@
                                                 <th style="font-weight:900;">@clmn.ColumnName</th>
                                             }
                                         }
+                                        <th style="font-weight:900;">Average</th>
                                     </tr>
                                 </thead>
+
                                 @for (int x = 0; x < Model.Tables[1].Rows.Count; x++)
                                 {
                                     <tr class="body" data="@Model.Tables[1].Rows[x][0]">
@@ -118,36 +120,37 @@
                                             <td>
                                                 @if (@Model.Tables[1].Columns[y].ColumnName == "EMCode")
                                                 {
+                                                    decimal row = Model.Tables[1].Rows[x][y].ToString() != "" ? Convert.ToDecimal(Model.Tables[1].Rows[x][y]) : 0;
+                                                    if (emCode.Contains("00"))
                                                     {
-                                                        decimal row = Model.Tables[1].Rows[x][y].ToString() != "" ? Convert.ToDecimal(Model.Tables[1].Rows[x][y]) : 0;
-                                                        if (emCode.Contains("00"))
-                                                        {
-                                                            <span>@Decimal.Truncate(row)</span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span class="@row">@row</span>
-                                                        }
+                                                        <span>@Decimal.Truncate(row)</span>
                                                     }
+                                                    else
+                                                    {
+                                                        <span class="@row">@row</span>
+                                                    }
+
                                                 }
                                                 else
                                                 {
+                                                    decimal row = Model.Tables[1].Rows[x][y].ToString() != "" ? Convert.ToDecimal(Model.Tables[1].Rows[x][y]) : 0;
+                                                    if (emCode.Contains("00"))
                                                     {
-                                                        decimal row = Model.Tables[1].Rows[x][y].ToString() != "" ? Convert.ToDecimal(Model.Tables[1].Rows[x][y]) : 0;
-                                                        if (emCode.Contains("00"))
-                                                        {
-                                                            <span>@Decimal.Truncate(row)%</span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span class="@row">@row%</span>
-                                                        }
+                                                        <span style="display:none;" class="avg_@x">@Decimal.Truncate(row)</span>
+                                                        <span>@Decimal.Truncate(row)%</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span style="display:none;" class="avg_@x">@row</span>
+                                                        <span>@row%</span>
                                                     }
                                                 }
                                             </td>
                                         }
+                                        <td id="avgtotal_@x">0.00%</td>
                                     </tr>
                                 }
+
                             }
                             else
                             {
@@ -189,6 +192,7 @@
 
     var ModelCount = $("#ModelCount").val();
     var ModelTableCount = $("#ModelTableCount").val();
+    var rowCount = parseInt(ModelTableCount) - 2;
     var sum = 0;
     var total = 0;
     if (ModelCount != undefined) {
@@ -208,7 +212,20 @@
             var res = $("#LevellingDetailedReport tr td:first-child :eq(" + i + ")").attr('class');
             $("." + res).text(res);
         }
+
+        var avgsum = 0;
+        var avg = 0;
+        for (var x = 0; x <= rowCount; x++) {
+            $(".avg_" + x).each(function () {
+                avgsum += parseFloat($(this).text());
+            });
+            avg = (avgsum / rowCount);
+            $("#avgtotal_" + x).text(avg.toFixed(2));
+            avgsum = 0;
+            avg = 0;
+        }
     }
+
 
 </script>
 
