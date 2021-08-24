@@ -434,6 +434,19 @@ namespace UAB.Controllers
             }
         }
 
+        private void PrepareCpt1(string cpt, DataTable dtCPT, int claimId)
+        {
+            string[] lstcpts = cpt.Split("|");
+            foreach (var item in lstcpts.OrderBy(a => a.Split("^")[0]).Distinct().ToList())
+            {
+                if (!string.IsNullOrEmpty(item))
+                {
+                    string[] lstcptrow = item.Split("^");
+                    dtCPT.Rows.Add(lstcptrow[0], lstcptrow[1], lstcptrow[2], lstcptrow[3], claimId);
+                }
+            }
+        }
+
         private void PrepareDxCodes(string dx, DataTable dtDx, int claimId)
         {
             string[] lstdxs = dx.Split("|");
@@ -441,6 +454,20 @@ namespace UAB.Controllers
             {
                 string[] lstdxrow = item.Split("^");
                 dtDx.Rows.Add(lstdxrow[1], claimId);
+            }
+        }
+
+        private void PrepareDx(string dx, DataTable dtDx, int claimId)
+        {
+            string[] lstdxs = dx.Split(",");
+            foreach (var item in lstdxs)
+            {
+                if (!string.IsNullOrEmpty(item))
+                {
+                    var dataRows = dtDx.Select("DxCode='" + item + "'");
+                    if (dataRows.Count() == 0)
+                        dtDx.Rows.Add(item, claimId);
+                }
             }
         }
 
@@ -521,7 +548,23 @@ namespace UAB.Controllers
 
             if (providerPosted != "")
             {
-                clinicalcaseOperations.SubmitProviderPostedChart(chartSummaryDTO, dtClaim, dtCpt, providerPostedId, txtPostingDate, txtCoderComment);
+                DataTable dtCpt1 = new DataTable();
+                dtCpt1.Columns.Add("CPTCode", typeof(string));
+                dtCpt1.Columns.Add("Mod", typeof(string));
+                dtCpt1.Columns.Add("Qty", typeof(string));
+                dtCpt1.Columns.Add("Links", typeof(string));
+                dtCpt1.Columns.Add("ClaimId", typeof(int));
+
+                DataTable dtDx = new DataTable();
+                dtDx.Columns.Add("DxCode", typeof(string));
+                dtDx.Columns.Add("ClaimId", typeof(int));
+
+                string hdnProDxCodes = Request.Form["hdnProDxCodes"].ToString();
+                PrepareDx(hdnProDxCodes, dtDx, 0);
+                string hdnProCptCodes = Request.Form["hdnProCptCodes"].ToString();
+                PrepareCpt1(hdnProCptCodes, dtCpt1, 0);
+
+                clinicalcaseOperations.SubmitProviderPostedChart(chartSummaryDTO, providerPostedId, dtDx, dtCpt1, txtPostingDate, txtCoderComment);
             }
             else
             {

@@ -17,6 +17,35 @@
     .roledddwith {
         width: 215px;
     }
+
+    .col-md-3 {
+        margin-left: 10px !important;
+    }
+
+    .form-control {
+        padding: 0 !important;
+    }
+
+    div.CptlessWidth {
+        max-width: 20% !important;
+    }
+
+    .ControlHeight {
+        height: 32px !important;
+    }
+
+    label.lessWidth {
+        max-width: 12% !important;
+    }
+
+    .AlignControl {
+        margin-right: -115px;
+    }
+
+    .AdjustSerialNumber {
+        max-width: 25px;
+        padding-left: 5px;
+    }
 </style>
 <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
     <div class="modal-dialog">
@@ -27,6 +56,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            @Html.Hidden("hdnProDxCodes")
+            @Html.Hidden("hdnProCptCodes")
             <div class="modal-body">
                 <input type="hidden" id="ccid" value="@ViewBag.ccid" />
                 <input type="hidden" id="statusid" value="@ViewBag.statusid" />
@@ -38,6 +69,33 @@
                 <div class="col-md-12 form-group">
                     @Html.TextBoxFor(model => model.PostingDate, new { @class = "form-control", @type = "date", @autofocus = "autofocus", @id = "txtPostingDate", @autocomplete = "off", @placeholder = "Enter Posting Date", @style = "padding: 0.375rem 0.75rem!important;" })
                     @Html.ValidationMessageFor(model => model.PostingDate, null, new { @class = "text-danger" })
+                </div>
+                <div id="DivDx">
+                    <div class="col-md-6 form-group" id="DivDxRow_1">
+                        @*<label class="col-md-3 m-t-15 AlignControl">Provider Dx</label>*@
+                        <div class="input-group">
+                            <div class="input-group-prepend ControlHeight">
+                                <span class="input-group-text dxindex AdjustSerialNumber" id="basic-addon1">1</span>
+                            </div>
+                            @Html.TextBoxFor(model => model.Dx, new { @class = "form-control CoderDetails txtDx ControlHeight", @autocomplete = "off", @id = "txtDx_1", @placeholder = "Code", @onfocusout = "ProDxFunction('txtDx_1')" })
+                            @Html.ValidationMessageFor(model => model.Dx, null, new { @class = "text-danger Dxerror" })
+                        </div>
+                    </div>
+                </div>
+                <div id="DivCpt">
+                    <div class="col-md-6 form-group" id="DivCptRow_1">
+                        @*<label class="col-md-3 m-t-15 AlignControl">Provider CPT</label>*@
+                        <div class="input-group">
+                            <div class="input-group-prepend ControlHeight">
+                                <span class="input-group-text cptindex AdjustSerialNumber" id="basic-addon1">1</span>
+                            </div>
+                            @Html.TextBoxFor(model => model.CPTCode, new { @class = "form-control CoderDetails txtCpt ControlHeight", @autocomplete = "off", @placeholder = "Code", @id = "txtCpt_1", @tabindex = "1", @style = "max-width:55px;", @maxlength = "5" })
+                            <input type="text" class="form-control CoderDetails txtMod" id="txtMod_1" autocomplete="off" placeholder="Mod" tabindex="2" style="max-width:50px;" />
+                            <input type="text" id="txtQty_1" class="form-control CoderDetails cptQtyClaim txtQty" autocomplete="off" placeholder="Qty" value="1" tabindex="3" style="max-width:25px;" />
+                            <input type="text" id="txtLinks_1" onfocusout="ProCptFunction('txtLinks_1')" class="form-control CoderDetails cptLinksClaim txtLinks" autocomplete="off" placeholder="Link All" tabindex="4" style="min-width:63px;" />
+                            @Html.ValidationMessageFor(model => model.CPTCode, null, new { @class = "text-danger Dxerror" })
+                        </div>
+                    </div>
                 </div>
                 <br />
                 <div class="col-md-12 form-group">
@@ -84,8 +142,108 @@
 
         today = yyyy + '-' + mm + '-' + dd;
         $("#txtPostingDate").attr("max", today);
-
     });
+
+    var dxArray = [];
+    function ProDxFunction(txt_0) {
+        var id = parseInt(txt_0.split("_")[1]) + parseInt(1);
+        if (txt_0.split("_")[1] !== undefined) {
+            var currId = parseInt(id) - parseInt(1);
+            var val = $("#txtDx_" + currId).val();
+            if (val !== "" && val !== null) {
+                if ($.inArray(val, dxArray) == -1) {
+                    dxArray.push(val);
+                    $("#hdnDxCodes").val(dxArray);
+                    var text = "'" + "txt_" + id + "'";
+                    var deleteDx = "'" + "DivDxRow_" + id + "'";
+                    $("#DivDx").append('<div id="DivDxRow_' + id + '" class="col-md-6 form-group"><div class="input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text dxindex AdjustSerialNumber" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="ProDxFunction(' + text + ')" class="form-control CoderDetails txtDx" id="txtDx_' + id + '" /><button type="button" id="DeleteDxCodes_' + id + '" class="btn btn-sm" style="max-width:18px;padding-left:5px;margin-left:-5px;" onclick="DeleteDxCodes(' + deleteDx + ')"><i class="fa fa-times"></i></button></div></div>');
+                    $("#txtDx_" + currId).removeAttr("onfocusout", "");
+                    $("#txtDx_1").removeAttr("onfocusout", "");
+                    $("#txtDx_" + id).focus();
+                } else {
+                    //$("#txtDx_" + currId).addClass('text-danger');
+                }
+            } else {
+                $("#txtCpt_1").focus();
+            }
+        }
+    }
+
+    var cptArray = [];
+    function ProCptFunction(txtCpt_0) {
+        var id = parseInt(txtCpt_0.split("_")[1]) + parseInt(1);
+        if (txtCpt_0.split("_")[1] !== undefined) {
+            var id1 = parseInt(id) - parseInt(1);
+            var val1 = $("#txtCpt_" + id1).val();
+
+            var val2 = null;
+            if ($("#txtMod_" + id1).val() != "")
+                val2 = $("#txtMod_" + id1).val();
+
+            var val3 = null;
+            if ($("#txtQty_" + id1).val() != "")
+                val3 = $("#txtQty_" + id1).val();
+
+            var val4 = null;
+            if ($("#txtLinks_" + id1).val() != "")
+                val4 = $("#txtLinks_" + id1).val();
+
+            if (val1 !== "") {
+                if ($.inArray(val1, cptArray) == -1) {
+                    cptArray.push(val1 + "^" + val2 + "^" + val3 + "^" + val4);
+                    $("#hdnCptCodes").val(cptArray);
+                    var count = id + parseInt(1);
+                    var txtLinks = "'" + "txtLinks_" + id + "'";
+                    var deleteCpt = "'" + "DivCptRow_" + id + "'";
+                    var tabindex1 = parseInt(1) + parseInt(id) + parseInt(count) + parseInt(val1);
+                    var tabindex2 = parseInt(2) + parseInt(id) + parseInt(count) + parseInt(val1);
+                    var tabindex3 = parseInt(3) + parseInt(id) + parseInt(count) + parseInt(val1);
+                    var tabindex4 = parseInt(4) + parseInt(id) + parseInt(count) + parseInt(val1);
+                    $("#DivCpt").append('<div id="DivCptRow_' + id + '" class="col-md-6 form-group"><div class="input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text cptindex AdjustSerialNumber" id="basic-addon1">' + id + '</span></div><input tabindex = "' + tabindex1 + '" type = "text" placeholder = "Code" style="max-width:55px;" maxlength="5" class= "form-control CoderDetails txtCpt" id = "txtCpt_' + id + '" /><input tabindex="' + tabindex2 + '" type="text" class="form-control CoderDetails" style="max-width:50px;" placeholder="Mod" id="txtMod_' + id + '"/><input tabindex="' + tabindex3 + '" type="text" class="form-control CoderDetails cptQtyClaim" style="max-width:25px;" placeholder="Qty" value="1" id="txtQty_' + id + '"/><input tabindex="' + tabindex4 + '" type="text" class="form-control CoderDetails cptLinksClaim txtLinks" placeholder="Link All" onfocusout="ProCptFunction(' + txtLinks + ')" id="txtLinks_' + id + '"/><button type="button" class="btn btn-sm" style="max-width:18px;padding-left:5px;margin-left:-5px;" onclick="DeleteCptCodes(' + deleteCpt + ')"><i class="fa fa-times"></i></button></div></div>');
+                    $("#txtLinks_" + id1).removeAttr("onfocusout", "");
+                    $("#txtLinks_1").removeAttr("onfocusout", "");
+                    $("#txtCpt_" + id).focus();
+                }
+            } else {
+                //$("#ProviderFeedbackID").focus();
+            }
+        }
+    }
+    $('#btnsubmit').click(function (e) {
+        alert('Pop Up');
+        var DxCodes = $("[id*=txtDx_]");
+        $("#hdnProDxCodes").val("");
+        for (var i = 0; i < DxCodes.length; i++) {
+            if ($("#" + $(DxCodes[i]).attr("id")).val() != "") {
+                if ($("#hdnProDxCodes").val() == "")
+                    $("#hdnProDxCodes").val($(DxCodes[i]).val());
+                else
+                    $("#hdnProDxCodes").val($("#hdnProDxCodes").val() + "," + $(DxCodes[i]).val());
+            }
+        }
+
+
+        $("#hdnProCptCodes").val("");
+        var CptCodes = $("[id*=DivCptRow_]");
+        for (var i = 1; i <= CptCodes.length; i++) {
+            if ($("#hdnProCptCodes").val() == "") {
+                if ($("#txtCpt_" + i).val() != "") {
+                    var mod = $("#txtMod_" + i).val() != "" ? $("#txtMod_" + i).val() : null;
+                    var qty = $("#txtQty_" + i).val() != "" ? $("#txtQty_" + i).val() : null;
+                    var links = $("#txtLinks_" + i).val() != "" ? $("#txtLinks_" + i).val() : null;
+                    $("#hdnProCptCodes").val($("#txtCpt_" + i).val() + "^" + mod + "^" + qty + "^" + links);
+                }
+            } else {
+                if ($("#txtCpt_" + i).val() != "" && $("#txtCpt_" + i).val() != undefined) {
+                    var mod = $("#txtMod_" + i).val() != "" ? $("#txtMod_" + i).val() : null;
+                    var qty = $("#txtQty_" + i).val() != "" ? $("#txtQty_" + i).val() : null;
+                    var links = $("#txtLinks_" + i).val() != "" ? $("#txtLinks_" + i).val() : null;
+                    $("#hdnProCptCodes").val($("#hdnProCptCodes").val() + "|" + $("#txtCpt_" + i).val() + "^" + mod + "^" + qty + "^" + links);
+                }
+            }
+        }
+    });
+
 
 
 

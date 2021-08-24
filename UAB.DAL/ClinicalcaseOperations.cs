@@ -2254,12 +2254,10 @@ namespace UAB.DAL
             }
             return dtCPT;
         }
-        public void SubmitProviderPostedChart(ChartSummaryDTO chartSummaryDTO, DataTable dtClaim, DataTable dtCpt1, int providerPostedId, DateTime postedDate, string coderComment)
+        public void SubmitProviderPostedChart(ChartSummaryDTO chartSummaryDTO, int providerPostedId, DataTable dtDx, DataTable dtCPT, DateTime postedDate, string coderComment)
         {
             using (var context = new UABContext())
             {
-                DataTable dtCPT = GetCpt(chartSummaryDTO.CPTCode);
-
                 var param = new SqlParameter[] {
              new SqlParameter() {
                     SqlDbType =  System.Data.SqlDbType.Int,
@@ -2279,21 +2277,9 @@ namespace UAB.DAL
                     Direction = System.Data.ParameterDirection.Input,
                     Value = chartSummaryDTO.ProviderID
                 },
-                 new SqlParameter() {
-                    ParameterName = "@utCpt",
-                    SqlDbType =  System.Data.SqlDbType.Structured,
-                    Direction = System.Data.ParameterDirection.Input,
-                    TypeName = "utCpt",
-                    Value = dtCPT
-                },
+                
 
-                  new SqlParameter()
-                 {
-                     ParameterName = "@Dx",
-                     SqlDbType = System.Data.SqlDbType.VarChar,
-                     Direction = System.Data.ParameterDirection.Input,
-                     Value = chartSummaryDTO.Dx
-                 } , new SqlParameter()
+                   new SqlParameter()
                  {
                      ParameterName = "@ProviderFeedbackID",
                      SqlDbType = System.Data.SqlDbType.Int,
@@ -2313,22 +2299,7 @@ namespace UAB.DAL
                      Direction = System.Data.ParameterDirection.Input,
                      Value = mUserId
                  }
-                ,
-                 new SqlParameter() {
-                    ParameterName = "@utClaim1",
-                    SqlDbType =  System.Data.SqlDbType.Structured,
-                    Direction = System.Data.ParameterDirection.Input,
-                    TypeName = "utClaim",
-                    Value = dtClaim
-                 },
-
-                 new SqlParameter() {
-                    ParameterName = "@utCpt1",
-                    SqlDbType =  System.Data.SqlDbType.Structured,
-                    Direction = System.Data.ParameterDirection.Input,
-                    TypeName = "utCpt",
-                    Value = dtCpt1
-                 },
+              ,
                  new SqlParameter() {
                    ParameterName = "@ProviderPostedId",
                    SqlDbType =  System.Data.SqlDbType.Int,
