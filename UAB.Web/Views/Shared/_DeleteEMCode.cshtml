@@ -7,17 +7,15 @@
         <div class="modal-dialog">
             <div class="modal-content" style="width: 500px;">
                 <div class="modal-header" style="background: #27a9e3;color: white;">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Delete EM Code Confirm ?</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Delete EM Code: @Model.EMCode</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ModalClose1()">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-horizontal" action="">
-                        <div class="col-sm-12">
-                            <strong>EM Code</strong>&nbsp;&nbsp;<label>@Model.EMCode</label>
-                            <br />
-                            <b>If you delete this, then associated information will also get deleted.</b>
+                        <div class="col-sm-12">                            
+                            <b>Are you sure to delete the EM Code?</b>
                         </div>
                     </div>
                 </div>

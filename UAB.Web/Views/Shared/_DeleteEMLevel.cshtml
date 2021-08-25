@@ -1,12 +1,12 @@
-﻿@model UAB.DAL.Models.EMCodeLevel
+﻿@model UAB.DAL.Models.EMLevel
 
 <form asp-action="DeleteEMLevel" asp-controller="UAB" method="POST">
-    @Html.HiddenFor(m => m.EMLevel)
+    @Html.HiddenFor(m => m.Level)
     <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
         <div class="modal-dialog">
             <div class="modal-content" style="width: 500px;">
                 <div class="modal-header" style="background: #27a9e3;color: white;">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Delete EM Level</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Delete EM Level: @Model.Level</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ModalClose1()">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -14,11 +14,7 @@
                 <div class="modal-body">
                     <div class="form-horizontal" action="">
                         <div class="col-sm-12">
-
-                            <strong>EM Level</strong>&nbsp;&nbsp;<label>@Model.EMLevel</label>
-                            <br />
-                            <b>If you delete this, then associated information will also get deleted.</b>
-
+                            <b>If you delete the EM Level, the associated EM Codes will also be deleted. Are you sure?</b>
                         </div>
                     </div>
                 </div>

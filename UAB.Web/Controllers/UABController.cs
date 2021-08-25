@@ -2990,7 +2990,7 @@ namespace UAB.Controllers
                 {
                     ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                     clinicalcaseOperations.DeletetEMCode(model);
-                    TempData["Success"] = "Successfully EM Code  Deleted";
+                    TempData["Success"] = "EM Code Deleted Successfully";
                     return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
                 }
                 return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
@@ -3004,9 +3004,9 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult DeleteEMLevel(int emlevel)
         {
-            EMCodeLevel eml = new EMCodeLevel
+            EMLevel eml = new EMLevel
             {
-                EMLevel = emlevel
+                Level = emlevel
             };
             return PartialView("_DeleteEMLevel", eml);
         }
@@ -3019,7 +3019,7 @@ namespace UAB.Controllers
                 {
                     ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                     clinicalcaseOperations.DeletetEMCode(emlevel);
-                    TempData["Success"] = "Successfully EM Level  Deleted";
+                    TempData["Success"] = "EM Level Deleted Successfully";
                     return RedirectToAction("ManageEMCodeLevels");
                 }
             }
