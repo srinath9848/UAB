@@ -38,7 +38,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card" style="margin-bottom: 10px;">Levelling Report</h5>
+                    <h5 class="card" style="margin-bottom: 10px;">Leveling Report</h5>
                     <div id="modalContent"></div>
                     <input type="hidden" id="ModelCount" value="@Model.Tables.Count" />
                     <div class="table-responsive col-12">
@@ -93,7 +93,8 @@
                             }
                         </table>
                     </div>
-                    <h5 class="card" style="margin-bottom: 10px;">Levelling Detailed Report</h5>
+                    <h5 class="card" style="margin-bottom: 10px;">Leveling Detailed Report</h5>
+                    <input type="hidden" id="ModelCount1" value="@Model.Tables[1].Rows.Count" />
                     <div class="table-responsive col-12">
                         <table id="LevellingDetailedReport" class="table table-striped table-bordered">
                             @if (Model.Tables.Count != 0)
@@ -192,7 +193,9 @@
 
     var ModelCount = $("#ModelCount").val();
     var ModelTableCount = $("#ModelTableCount").val();
-    var rowCount = parseInt(ModelTableCount) - 2;
+    var ModelCount1 = $("#ModelCount1").val();
+    var ColumnCount = parseInt(ModelTableCount)-2;
+    var rowCount = parseInt(ModelCount1);
     var sum = 0;
     var total = 0;
     if (ModelCount != undefined) {
@@ -219,7 +222,7 @@
             $(".avg_" + x).each(function () {
                 avgsum += parseFloat($(this).text());
             });
-            avg = (avgsum / rowCount);
+            avg = (avgsum / ColumnCount);
             $("#avgtotal_" + x).text(avg.toFixed(2)+"%");
             avgsum = 0;
             avg = 0;
