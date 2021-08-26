@@ -1075,6 +1075,7 @@ namespace UAB.DAL
                         var item = lst.Where(x => x.CodingDTO.ClinicalCaseID == CCId).FirstOrDefault();
                         item.blockHistories.Add(new BlockDTO()
                         {
+                            ClinicalCaseId = Convert.ToInt32(reader["ClinicalCaseId"]),
                             Name = Convert.ToString(reader["BlockCategory"]),
                             Remarks = Convert.ToString(reader["BlockRemarks"]),
                             CreateDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie)
