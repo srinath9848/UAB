@@ -579,7 +579,7 @@ namespace UAB.Controllers
                 string hdnProCptCodes = Request.Form["hdnProCptCodes"].ToString();
                 PrepareCpt1(hdnProCptCodes, dtProCpt, 0);
 
-                clinicalcaseOperations.SubmitProviderPostedChart(chartSummaryDTO, providerPostedId, dtProDx, dtProCpt);
+                clinicalcaseOperations.SubmitProviderPostedChart(chartSummaryDTO, dtProDx, dtProCpt);
             }
             else
             {

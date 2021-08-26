@@ -49,7 +49,7 @@
 </style>
 <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
     <div class="modal-dialog">
-        <div class="modal-content" style="width: 500px;">
+        <div class="modal-content" style="width: 500px; margin-top:0px;">
             <div class="modal-header" style="background: #27a9e3;color: white;">
                 <h5 class="modal-title" id="exampleModalLongTitle">Provider Posted Clinical case</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ModalClose1()">
@@ -63,12 +63,12 @@
                 <input type="hidden" id="statusid" value="@ViewBag.statusid" />
                 <div class="col-md-12 form-group">
                     <label>Provider</label>
-                    @Html.DropDownListFor(model => model.ProviderPostedId, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select a Provider--", new { @id = "providerPostedId", @class = "form-control" })
+                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select a Provider--", new { @id = "providerPostedId", @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.ProviderID, null, new { @class = "text-danger" })
                 </div>
                 <div class="col-md-12 form-group">
                     <label>Payor</label>
-                    @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select a Provider--", new { @id = "providerPostedId", @class = "form-control" })
+                    @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select a Provider--", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.PayorID, null, new { @class = "text-danger" })
                 </div>
                 <div class="col-md-12 form-group">

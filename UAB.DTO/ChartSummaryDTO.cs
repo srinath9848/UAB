@@ -127,8 +127,9 @@ namespace UAB.DTO
         public bool SubmitAndPostAlso { get; set; }
 
         public int ProviderPostedId { get; set; }
+        [Required(ErrorMessage = "*")]
         public DateTime PostingDate { get; set; }
-        [Required(ErrorMessage = "Coder Comment is Required")]
+        [Required(ErrorMessage = "*")]
         public string CoderComment { get; set; }
         public string CCIDs { get; set; }
         public bool isWrongProvider { get; set; }
