@@ -131,6 +131,17 @@ namespace UAB.Controllers
             return PartialView("_ViewHistory", reslut);
         }
         [HttpPost]
+        public IActionResult BlockHistoryFromAging([FromBody] List<BlockDTO> historyDto)
+        {
+            _logger.LogInformation("Loading Started for BlockHistory for User: " + mUserId);
+
+            int CCId = Convert.ToInt32(Request.Form["hdnCCID"]);
+
+            _logger.LogInformation("Loading Ended for BlockHistory for User: " + mUserId);
+
+            return PartialView("_BlockHistory", historyDto);
+        }
+        [HttpPost]
         public IActionResult BlockHistory([FromBody] List<BlockDTO> historyDto)
         {
             _logger.LogInformation("Loading Started for BlockHistory for User: " + mUserId);
@@ -307,9 +318,14 @@ namespace UAB.Controllers
         }
 
         [HttpGet]
-        public IActionResult BlockClinicalcase(string ccid)
+        public IActionResult BlockClinicalcase(string ccid, bool isFromAgingReport)
         {
             _logger.LogInformation("Loading Started for Fetching BlockClinicalcase for User: " + mUserId);
+
+            if (isFromAgingReport)
+                ViewBag.fromAging = true;
+            else
+                ViewBag.fromAging = false;
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ViewBag.BlockCategories = clinicalcaseOperations.GetBlockCategories();
