@@ -2270,7 +2270,7 @@ namespace UAB.DAL
             }
             return dtCPT;
         }
-        public void SubmitProviderPostedChart(ChartSummaryDTO chartSummaryDTO, int providerPostedId, DataTable dtDx, DataTable dtCPT, DateTime postedDate, string coderComment)
+        public void SubmitProviderPostedChart(ChartSummaryDTO chartSummaryDTO, int providerPostedId, DataTable dtDx, DataTable dtCpt)
         {
             using (var context = new UABContext())
             {
@@ -2293,8 +2293,20 @@ namespace UAB.DAL
                     Direction = System.Data.ParameterDirection.Input,
                     Value = chartSummaryDTO.ProviderID
                 },
-                
-
+                  new SqlParameter() {
+                     ParameterName = "@utDxCode",
+                     SqlDbType =  System.Data.SqlDbType.Structured,
+                     Direction = System.Data.ParameterDirection.Input,
+                     TypeName = "utDxCode",
+                     Value = dtDx
+                 },
+                   new SqlParameter() {
+                     ParameterName = "@utCptCode",
+                     SqlDbType =  System.Data.SqlDbType.Structured,
+                     Direction = System.Data.ParameterDirection.Input,
+                     TypeName = "utCptCode",
+                     Value = dtCpt
+                 },
                    new SqlParameter()
                  {
                      ParameterName = "@ProviderFeedbackID",
@@ -2326,13 +2338,13 @@ namespace UAB.DAL
                     ParameterName = "@PostedDate",
                     SqlDbType = System.Data.SqlDbType.DateTime2,
                      Direction = System.Data.ParameterDirection.Input,
-                     Value = postedDate
+                     Value = chartSummaryDTO.PostingDate
                  },
                   new SqlParameter() {
                     ParameterName = "@CoderComment",
                     SqlDbType = System.Data.SqlDbType.VarChar,
                      Direction = System.Data.ParameterDirection.Input,
-                     Value = coderComment
+                     Value = chartSummaryDTO.CoderComment
                  },
                   new SqlParameter() {
                     ParameterName = "@IsWrongProvider",

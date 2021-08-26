@@ -301,6 +301,11 @@ namespace UAB.Controllers
 
             ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
 
+            if (_httpContextAccessor.HttpContext.Session.GetString("PayorsList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("PayorsList", JsonConvert.SerializeObject(clinicalcaseOperations.GetPayorsList()));
+
+            ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
+
             _logger.LogInformation("Loading Ended for ProviderPostedClinicalcase for User: " + mUserId);
 
             return PartialView("_ProviderPosted");
@@ -542,23 +547,23 @@ namespace UAB.Controllers
 
             if (providerPosted != "")
             {
-                DataTable dtCpt1 = new DataTable();
-                dtCpt1.Columns.Add("CPTCode", typeof(string));
-                dtCpt1.Columns.Add("Mod", typeof(string));
-                dtCpt1.Columns.Add("Qty", typeof(string));
-                dtCpt1.Columns.Add("Links", typeof(string));
-                dtCpt1.Columns.Add("ClaimId", typeof(int));
+                DataTable dtProCpt = new DataTable();
+                dtProCpt.Columns.Add("CPTCode", typeof(string));
+                dtProCpt.Columns.Add("Mod", typeof(string));
+                dtProCpt.Columns.Add("Qty", typeof(string));
+                dtProCpt.Columns.Add("Links", typeof(string));
+                dtProCpt.Columns.Add("ClaimId", typeof(int));
 
-                DataTable dtDx = new DataTable();
-                dtDx.Columns.Add("DxCode", typeof(string));
-                dtDx.Columns.Add("ClaimId", typeof(int));
+                DataTable dtProDx = new DataTable();
+                dtProDx.Columns.Add("DxCode", typeof(string));
+                dtProDx.Columns.Add("ClaimId", typeof(int));
 
                 string hdnProDxCodes = Request.Form["hdnProDxCodes"].ToString();
-                PrepareDx(hdnProDxCodes, dtDx, 0);
+                PrepareDx(hdnProDxCodes, dtProDx, 0);
                 string hdnProCptCodes = Request.Form["hdnProCptCodes"].ToString();
-                PrepareCpt1(hdnProCptCodes, dtCpt1, 0);
+                PrepareCpt1(hdnProCptCodes, dtProCpt, 0);
 
-                clinicalcaseOperations.SubmitProviderPostedChart(chartSummaryDTO, providerPostedId, dtDx, dtCpt1, txtPostingDate, txtCoderComment);
+                clinicalcaseOperations.SubmitProviderPostedChart(chartSummaryDTO, providerPostedId, dtProDx, dtProCpt);
             }
             else
             {

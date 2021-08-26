@@ -49,6 +49,7 @@ namespace UAB.DAL.Models
         public virtual DbSet<BlockResponse> BlockResponse { get; set; }
         public virtual DbSet<Location> Location  { get; set; }
         public virtual DbSet<CptAudit> CptAudit   { get; set; }
+        public virtual DbSet<ProviderPosted> ProviderPosted { get; set; }
         public virtual DbSet<ProviderCptCode> ProviderCptCode { get; set; }
         public virtual DbSet<ProviderDxCode> ProviderDxCode { get; set; }
 
