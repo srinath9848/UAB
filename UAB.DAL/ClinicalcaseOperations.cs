@@ -1063,8 +1063,22 @@ namespace UAB.DAL
                         chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
                         chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
                         chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie);
-                        chartSummaryDTO.Blockedbyuser = Convert.ToString(reader["Name"]);
+                        chartSummaryDTO.Blockedbyuser = Convert.ToString(reader["BlockedByUser"]);
                         lst.Add(chartSummaryDTO);
+                    }
+
+                    reader.NextResult();
+
+                    while (reader.Read())
+                    {
+                        int CCId = Convert.ToInt32(reader["ClinicalCaseId"]);
+                        var item = lst.Where(x => x.CodingDTO.ClinicalCaseID == CCId).FirstOrDefault();
+                        item.blockHistories.Add(new BlockDTO()
+                        {
+                            Name = Convert.ToString(reader["BlockCategory"]),
+                            Remarks = Convert.ToString(reader["BlockRemarks"]),
+                            CreateDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie)
+                        });
                     }
                 }
             }

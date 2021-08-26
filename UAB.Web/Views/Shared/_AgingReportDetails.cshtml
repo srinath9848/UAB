@@ -19,9 +19,10 @@
     }
 </style>
 <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
+    <input id="hdnCCID" name="hdnCCID" type="hidden" value="" />
     <div class="modal-dialog">
 
-        <div class="modal-content" style="width: 1100px;max-height: 800px;margin-left: -200px;">
+        <div class="modal-content" style="width: 1250px;max-height: 800px;margin-left: -280px;">
             <div class="modal-header" style="background-color: #27a9e3;color: white;">
                 <h5 class="modal-title" id="exampleModalLongTitle">Aging Chart Report Details</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ModalClose1()">
@@ -72,7 +73,13 @@
 
                                 </td>
                                 <td>
-                                    <button type="button" id="btn1" style="cursor: pointer" class="btn btn-sm btn-success" onclick="SaveOrUnblock('@item.CodingDTO.ClinicalCaseID','Unblock')">Unblock</button>
+                                    <div style="margin-bottom:5px;">
+                                        <button id="btnBlock" type="button" class="btn btn-sm btn-danger" onclick="Block('@item.CodingDTO.ClinicalCaseID')">Block</button>
+                                    </div>
+                                    <div style="margin-bottom:5px;">
+                                        <button id="btn1" type="button" style="cursor: pointer" class="btn btn-sm btn-success" onclick="SaveOrUnblock('@item.CodingDTO.ClinicalCaseID','Unblock')">Unblock</button>
+                                    </div>
+                                    <button id="btnBlockHistory" type="button" class="btn btn-sm btn-danger" onclick="BlockHistory('@item.CodingDTO.ClinicalCaseID')">Block History</button>
                                 </td>
                             </tr>
                         }
@@ -94,8 +101,57 @@
 
     $(document).ready(function () {
         ModalClose1 = function () {
-            $("#modalContent1").html('');
+            $("#modalContent").html('');
         }
+
+        BlockHistory = function (ccId) {
+
+            $("#hdnCCID").val(ccId);
+
+            var data = JSON.parse('@Html.Raw(Json.Serialize(Model.Select(x=>x.blockHistories)))');
+            //not working
+            var data1 = JSON.parse('@Html.Raw(Json.Serialize(Model.Where(x=>x.CodingDTO.ClinicalCaseID==1337
+                            ).Select(x=>x.blockHistories).ToList()))');
+            //working
+             var data2 = JSON.parse('@Html.Raw(Json.Serialize(Model.FirstOrDefault().blockHistories))');
+            //alert(JSON.stringify(data));
+            //alert(JSON.stringify(data1));
+            console.log(data1);
+            console.log(data2);
+
+            //var data = '@Html.Raw(Model)';
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("BlockHistoryFromAging", "UAB")",
+                data: JSON.stringify(data2),
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    $("#modalContent").html(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        };
+
+        Block = function (ccId) {
+
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("BlockClinicalcase", "UAB")",
+                data: {
+                    "ccid": ccId,
+                    "isFromAgingReport": 'true'
+                },
+                success: function (response) {
+                    $("#modalContent").html(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        };
 
         SaveOrUnblock = function (p1, p2) {
             if ($("#txt_" + p1).val() != "") {
