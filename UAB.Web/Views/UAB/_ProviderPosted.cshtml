@@ -96,7 +96,7 @@
                             <div class="input-group-prepend ControlHeight">
                                 <span class="input-group-text dxindex AdjustSerialNumber" id="basic-addon1">1</span>
                             </div>
-                            @Html.TextBoxFor(model => model.Dx, new { @class = "form-control CoderDetails txtDx ControlHeight", @autocomplete = "off", @id = "txtProDx_1", @placeholder = "Code", @onfocusout = "ProDxFunction('txtProDx_1')" })
+                            @Html.TextBoxFor(model => model.Dx, new { @class = "form-control CoderDetails txtProDx ControlHeight", @autocomplete = "off", @id = "txtProDx_1", @placeholder = "Code", @onfocusout = "ProDxFunction('txtProDx_1')" })
                             @Html.ValidationMessageFor(model => model.Dx, null, new { @class = "text-danger Dxerror" })
                         </div>
                     </div>
@@ -179,10 +179,10 @@
             if (val !== "" && val !== null) {
                 if ($.inArray(val, dxArray) == -1) {
                     dxArray.push(val);
-                    $("#hdnDxCodes").val(dxArray);
+                    $("#hdnProDxCodes").val(dxArray);
                     var text = "'" + "txt_" + id + "'";
                     var deleteDx = "'" + "DivDxRow_" + id + "'";
-                    $("#DivDx_Pro").append('<div id="DivDxRow_' + id + '" class="col-md-12 form-group"><div class="input-group"><label class="col-md-5"></label><div class="input-group-prepend ControlHeight"><span class="input-group-text dxindex AdjustSerialNumber" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="ProDxFunction(' + text + ')" class="form-control CoderDetails txtDx" id="txtProDx_' + id + '" /><button type="button" id="DeleteDxCodes_' + id + '" class="btn btn-sm" style="max-width:18px;padding-left:5px;margin-left:-5px;" onclick="DeleteDxCodes(' + deleteDx + ')"><i class="fa fa-times"></i></button></div></div>');
+                    $("#DivDx_Pro").append('<div id="DivDxRow_' + id + '" class="col-md-12 form-group"><div class="input-group"><label class="col-md-5"></label><div class="input-group-prepend ControlHeight"><span class="input-group-text dxindex AdjustSerialNumber" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="ProDxFunction(' + text + ')" class="form-control CoderDetails txtProDx" id="txtProDx_' + id + '" /><button type="button" id="DeleteProDxCodes_' + id + '" class="btn btn-sm" style="max-width:18px;padding-left:5px;margin-left:-5px;" onclick="DeleteProDxCodes(' + deleteDx + ')"><i class="fa fa-times"></i></button></div></div>');
                     $("#txtProDx_" + currId).removeAttr("onfocusout", "");
                     $("#txtProDx_1").removeAttr("onfocusout", "");
                     $("#txtProDx_" + id).focus();
@@ -235,6 +235,32 @@
             }
         }
     }
+
+    DeleteProDxCodes = function (id) {
+        var iCnt = 0;
+        var Cnt = 0;
+        var index = id.split('_')[1];
+        var val = $("#" + index).val();
+        dxArray.splice($.inArray(val, dxArray), 1);
+        $("#hdnProDxCodes").val(dxArray);
+        $('#' + id).remove();
+        $(".dxindex").each(function () {
+            if (iCnt <= 100) {
+                iCnt = iCnt + 1;
+                $(this).text(iCnt);
+            }
+        });
+
+        $(".txtProDx").each(function () {
+            if (Cnt <= 100) {
+                Cnt = Cnt + 1;
+                $(this).attr('id', 'txtProDx_' + Cnt);
+            }
+        });
+        var lastindex = $(".txtProDx").last().attr('id');
+        $("#" + lastindex).attr("onfocusout", "ProDxFunction('" + "txt_" + Cnt + "')");
+    };
+
     $('#btnsubmit').click(function (e) {
         var DxCodes = $("[id*=txtProDx_]");
         $("#hdnProDxCodes").val("");
