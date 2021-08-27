@@ -20,6 +20,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Diagnostics;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace UAB.Controllers
 {
@@ -68,9 +69,6 @@ namespace UAB.Controllers
             chartSummary = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID, timeZoneCookie);
             chartSummary.ProjectName = ProjectName;
 
-            AuditDTO auditDTO = clinicalcaseOperations.GetAuditInfoForCPTAndProvider(ProjectID);
-            chartSummary.auditDTO = auditDTO;
-
             #region binding data
             if (_httpContextAccessor.HttpContext.Session.GetString("PayorsList") == null)
                 _httpContextAccessor.HttpContext.Session.SetString("PayorsList", JsonConvert.SerializeObject(clinicalcaseOperations.GetPayorsList()));
@@ -93,6 +91,16 @@ namespace UAB.Controllers
                 TempData["Toast"] = "There are no charts available";
                 return RedirectToAction("CodingSummary");
             }
+
+            //Below code is to get the Audit based on CPT, Provider configuration
+            AuditDTO auditDTO = clinicalcaseOperations.GetAuditInfoForCPTAndProvider(ProjectID);
+            chartSummary.auditDTO = auditDTO;
+
+            //Below code is to get the Audit based on sample percentage
+            string currDt = DateTime.Now.ToLocalDate(timeZoneCookie).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+            bool audit = IsAuditRequired("Coding", chartSummary.ProjectID, currDt);
+            chartSummary.IsAuditRequired = audit;
+
             var res = clinicalcaseOperations.GetBlockResponseBycid(chartSummary.CodingDTO.ClinicalCaseID);
             if (res != null)
             {
@@ -130,22 +138,16 @@ namespace UAB.Controllers
 
             return PartialView("_ViewHistory", reslut);
         }
-        [HttpGet]
-        public IActionResult BlockHistory(string name, string remarks, string createdate)
+        [HttpPost]
+        public IActionResult BlockHistory([FromBody] List<BlockDTO> historyDto)
         {
             _logger.LogInformation("Loading Started for BlockHistory for User: " + mUserId);
 
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            BlockDTO dt = new BlockDTO()
-            {
-                Name = name,
-                Remarks = remarks,
-                CreateDate = Convert.ToDateTime(createdate)
-            };
+
 
             _logger.LogInformation("Loading Ended for BlockHistory for User: " + mUserId);
 
-            return PartialView("_BlockHistory", dt);
+            return PartialView("_BlockHistory", historyDto);
         }
         public IActionResult GetBlockedChart(string Role, string ChartType, int ProjectID, string ccids, string ProjectName, int CurrCCId = 0, string Previous = "", string Next = "", string showAll = "")
         {
@@ -248,6 +250,8 @@ namespace UAB.Controllers
                     else
                     {
                         chartSummaryDTO.ProjectName = ProjectName;
+                        AuditDTO auditDTO = clinicalcaseOperations.GetAuditInfoForCPTAndProvider(ProjectID);
+                        chartSummaryDTO.auditDTO = auditDTO;
 
                         if (ccids == null && chartSummaryDTO.CCIDs.Split(",").Length > 1)
                         {
@@ -307,15 +311,30 @@ namespace UAB.Controllers
 
             ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
 
+            if (_httpContextAccessor.HttpContext.Session.GetString("PayorsList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("PayorsList", JsonConvert.SerializeObject(clinicalcaseOperations.GetPayorsList()));
+
+            ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
+
+            if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
+                _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
+
+            ViewBag.ProviderFeedbacks = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
+
             _logger.LogInformation("Loading Ended for ProviderPostedClinicalcase for User: " + mUserId);
 
             return PartialView("_ProviderPosted");
         }
 
         [HttpGet]
-        public IActionResult BlockClinicalcase(string ccid)
+        public IActionResult BlockClinicalcase(string ccid, bool isFromAgingReport)
         {
             _logger.LogInformation("Loading Started for Fetching BlockClinicalcase for User: " + mUserId);
+
+            if (isFromAgingReport)
+                ViewBag.fromAging = true;
+            else
+                ViewBag.fromAging = false;
 
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ViewBag.BlockCategories = clinicalcaseOperations.GetBlockCategories();
@@ -434,6 +453,19 @@ namespace UAB.Controllers
             }
         }
 
+        private void PrepareCpt1(string cpt, DataTable dtCPT, int claimId)
+        {
+            string[] lstcpts = cpt.Split("|");
+            foreach (var item in lstcpts.OrderBy(a => a.Split("^")[0]).Distinct().ToList())
+            {
+                if (!string.IsNullOrEmpty(item))
+                {
+                    string[] lstcptrow = item.Split("^");
+                    dtCPT.Rows.Add(lstcptrow[0], lstcptrow[1], lstcptrow[2], lstcptrow[3], claimId);
+                }
+            }
+        }
+
         private void PrepareDxCodes(string dx, DataTable dtDx, int claimId)
         {
             string[] lstdxs = dx.Split("|");
@@ -441,6 +473,20 @@ namespace UAB.Controllers
             {
                 string[] lstdxrow = item.Split("^");
                 dtDx.Rows.Add(lstdxrow[1], claimId);
+            }
+        }
+
+        private void PrepareDx(string dx, DataTable dtDx, int claimId)
+        {
+            string[] lstdxs = dx.Split(",");
+            foreach (var item in lstdxs)
+            {
+                if (!string.IsNullOrEmpty(item))
+                {
+                    var dataRows = dtDx.Select("DxCode='" + item + "'");
+                    if (dataRows.Count() == 0)
+                        dtDx.Rows.Add(item, claimId);
+                }
             }
         }
 
@@ -521,7 +567,23 @@ namespace UAB.Controllers
 
             if (providerPosted != "")
             {
-                clinicalcaseOperations.SubmitProviderPostedChart(chartSummaryDTO, dtClaim, dtCpt, providerPostedId, txtPostingDate, txtCoderComment);
+                DataTable dtProCpt = new DataTable();
+                dtProCpt.Columns.Add("CPTCode", typeof(string));
+                dtProCpt.Columns.Add("Mod", typeof(string));
+                dtProCpt.Columns.Add("Qty", typeof(string));
+                dtProCpt.Columns.Add("Links", typeof(string));
+                dtProCpt.Columns.Add("ClaimId", typeof(int));
+
+                DataTable dtProDx = new DataTable();
+                dtProDx.Columns.Add("DxCode", typeof(string));
+                dtProDx.Columns.Add("ClaimId", typeof(int));
+
+                string hdnProDxCodes = Request.Form["hdnProDxCodes"].ToString();
+                PrepareDx(hdnProDxCodes, dtProDx, 0);
+                string hdnProCptCodes = Request.Form["hdnProCptCodes"].ToString();
+                PrepareCpt1(hdnProCptCodes, dtProCpt, 0);
+
+                clinicalcaseOperations.SubmitProviderPostedChart(chartSummaryDTO, dtProDx, dtProCpt);
             }
             else
             {
@@ -581,16 +643,27 @@ namespace UAB.Controllers
 
             return PartialView("_CodingSubmitPopup");
         }
-        public IActionResult GetAuditDetails(string chartType, int projectId, string dt)
+        public IActionResult ConfirmUnpostChart()
         {
-            _logger.LogInformation("Loading Started for GetAuditDetails for User: " + mUserId);
+            _logger.LogInformation("Loading Started for ConfirmUnpostChart for User: " + mUserId);
 
-            bool auditFlag = IsAuditRequired(chartType, projectId, dt);
+            //ViewBag.buttonType = buttonType;
+            //ViewBag.isAuditRequired = isAuditRequired;
 
-            _logger.LogInformation("Loading Ended for GetAuditDetails for User: " + mUserId);
+            _logger.LogInformation("Loading Ended for ConfirmUnpostChart for User: " + mUserId);
 
-            return new JsonResult(auditFlag);
+            return PartialView("_UnPostChartPopup");
         }
+        //public IActionResult GetAuditDetails(string chartType, int projectId, string dt)
+        //{
+        //    _logger.LogInformation("Loading Started for GetAuditDetails for User: " + mUserId);
+
+        //    bool auditFlag = IsAuditRequired(chartType, projectId, dt);
+
+        //    _logger.LogInformation("Loading Ended for GetAuditDetails for User: " + mUserId);
+
+        //    return new JsonResult(auditFlag);
+        //}
         public bool IsAuditRequired(string chartType, int projectId, string currDate)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
@@ -2953,7 +3026,7 @@ namespace UAB.Controllers
                 {
                     ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                     clinicalcaseOperations.DeletetEMCode(model);
-                    TempData["Success"] = "Successfully EM Code  Deleted";
+                    TempData["Success"] = "EM Code Deleted Successfully";
                     return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
                 }
                 return RedirectToAction("EMLevelDetails", new { eMLevel = model.EMLevel });
@@ -2967,9 +3040,9 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult DeleteEMLevel(int emlevel)
         {
-            EMCodeLevel eml = new EMCodeLevel
+            EMLevel eml = new EMLevel
             {
-                EMLevel = emlevel
+                Level = emlevel
             };
             return PartialView("_DeleteEMLevel", eml);
         }
@@ -2982,7 +3055,7 @@ namespace UAB.Controllers
                 {
                     ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
                     clinicalcaseOperations.DeletetEMCode(emlevel);
-                    TempData["Success"] = "Successfully EM Level  Deleted";
+                    TempData["Success"] = "EM Level Deleted Successfully";
                     return RedirectToAction("ManageEMCodeLevels");
                 }
             }

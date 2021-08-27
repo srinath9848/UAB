@@ -49,6 +49,9 @@ namespace UAB.DAL.Models
         public virtual DbSet<BlockResponse> BlockResponse { get; set; }
         public virtual DbSet<Location> Location  { get; set; }
         public virtual DbSet<CptAudit> CptAudit   { get; set; }
+        public virtual DbSet<ProviderPosted> ProviderPosted { get; set; }
+        public virtual DbSet<ProviderCptCode> ProviderCptCode { get; set; }
+        public virtual DbSet<ProviderDxCode> ProviderDxCode { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -241,6 +244,36 @@ namespace UAB.DAL.Models
                     .HasMaxLength(255)
                     .IsUnicode(false);
             });
+
+            modelBuilder.Entity<ProviderCptCode>(entity =>
+            {
+                entity.Property(e => e.Cptcode)
+                    .IsRequired()
+                    .HasColumnName("CPTCode")
+                    .HasMaxLength(5)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Links)
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Modifier)
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Qty)
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<ProviderDxCode>(entity =>
+            {
+                entity.Property(e => e.DxCode)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+            });
+
 
             modelBuilder.Entity<Role>(entity =>
             {

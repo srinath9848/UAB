@@ -271,6 +271,7 @@ namespace UAB.DAL
                     con.Open();
                     var reader = cmd.ExecuteReader();
 
+                    chartSummaryDTO.blockHistories = new List<BlockDTO>();
                     while (reader.Read())
                     {
                         chartSummaryDTO.CodingDTO.ClinicalCaseID = Convert.ToInt32(reader["ClinicalCaseID"]);
@@ -287,10 +288,13 @@ namespace UAB.DAL
 
                         if (Role == "Coder" && ChartType == "Block")
                         {
-                            chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
-                            chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
-                            chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie);
                             chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
+                            chartSummaryDTO.blockHistories.Add(new BlockDTO
+                            {
+                                Name = Convert.ToString(reader["BlockCategory"]),
+                                Remarks = Convert.ToString(reader["BlockRemarks"]),
+                                CreateDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie)
+                            });
                         }
                     }
                     reader.NextResult();
@@ -369,17 +373,17 @@ namespace UAB.DAL
                                 chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                         }
 
-                        if (Role == "Coder" && ChartType == "Block")
-                        {
-                            chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
-                            chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
-                            chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie);
-                        }
+                        //if (Role == "Coder" && ChartType == "Block")
+                        //{
+                        //    chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
+                        //    chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
+                        //    chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie);
+                        //}
                         else if (Role == "QA" && ChartType == "Block")
                         {
-                            chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
-                            chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
-                            chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie);
+                            //chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
+                            //chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
+                            //chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie);
 
                             chartSummaryDTO.CodedBy = Convert.ToString(reader["CodedBy"]);
                             if (reader["ClaimId"] != DBNull.Value)
@@ -553,9 +557,9 @@ namespace UAB.DAL
                         else if (Role == "ShadowQA" && ChartType == "Block")
                         {
                             chartSummaryDTO.ProjectID = Convert.ToInt32(reader["ProjectId"]);
-                            chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
-                            chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
-                            chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie);
+                            //chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
+                            //chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
+                            //chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie);
 
                             chartSummaryDTO.CodedBy = Convert.ToString(reader["CodedBy"]);
                             if (reader["ClaimId"] != DBNull.Value)
@@ -844,6 +848,18 @@ namespace UAB.DAL
                         lstchartSummaryDTO.ForEach(x => x.CCIDs = Convert.ToString(reader["CCIDs"]));
                         //chartSummaryDTO.CCIDs = Convert.ToString(reader["CCIDs"]);
                     }
+
+                    reader.NextResult();
+                    //Below code is for Getting Block history in QA screen
+                    while (reader.Read())
+                    {
+                        lstchartSummaryDTO.FirstOrDefault().blockHistories.Add(new BlockDTO
+                        {
+                            Name = Convert.ToString(reader["BlockCategory"]),
+                            Remarks = Convert.ToString(reader["BlockRemarks"]),
+                            CreateDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie)
+                        });
+                    }
                 }
                 return lstchartSummaryDTO;
 
@@ -1047,8 +1063,23 @@ namespace UAB.DAL
                         chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
                         chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
                         chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie);
-                        chartSummaryDTO.Blockedbyuser = Convert.ToString(reader["Name"]);
+                        chartSummaryDTO.Blockedbyuser = Convert.ToString(reader["BlockedByUser"]);
                         lst.Add(chartSummaryDTO);
+                    }
+
+                    reader.NextResult();
+
+                    while (reader.Read())
+                    {
+                        int CCId = Convert.ToInt32(reader["ClinicalCaseId"]);
+                        var item = lst.Where(x => x.CodingDTO.ClinicalCaseID == CCId).FirstOrDefault();
+                        item.blockHistories.Add(new BlockDTO()
+                        {
+                            ClinicalCaseId = Convert.ToInt32(reader["ClinicalCaseId"]),
+                            Name = Convert.ToString(reader["BlockCategory"]),
+                            Remarks = Convert.ToString(reader["BlockRemarks"]),
+                            CreateDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie)
+                        });
                     }
                 }
             }
@@ -2254,65 +2285,44 @@ namespace UAB.DAL
             }
             return dtCPT;
         }
-        public void SubmitProviderPostedChart(ChartSummaryDTO chartSummaryDTO, DataTable dtClaim, DataTable dtCpt1, int providerPostedId, DateTime postedDate, string coderComment)
+        public void SubmitProviderPostedChart(ChartSummaryDTO chartSummaryDTO, DataTable dtDx, DataTable dtCpt)
         {
             using (var context = new UABContext())
             {
-                DataTable dtCPT = GetCpt(chartSummaryDTO.CPTCode);
-
                 var param = new SqlParameter[] {
-                     new SqlParameter() {
-                            ParameterName = "@PayorID",
-                            SqlDbType =  System.Data.SqlDbType.Int,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.PayorID
-                        },
-                      new SqlParameter() {
-                            ParameterName = "@NoteTitle",
-                            SqlDbType =  System.Data.SqlDbType.VarChar,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.NoteTitle
-                        },
-                        new SqlParameter() {
-                            ParameterName = "@ProviderID",
-                            SqlDbType =  System.Data.SqlDbType.Int,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = chartSummaryDTO.ProviderID
-                        },
-                         new SqlParameter() {
-                            ParameterName = "@utCpt",
-                            SqlDbType =  System.Data.SqlDbType.Structured,
-                            Direction = System.Data.ParameterDirection.Input,
-                            TypeName = "utCpt",
-                            Value = dtCPT
-                        },
-
-                new SqlParameter()
-                {
-                    ParameterName = "@Mod",
-                    SqlDbType = System.Data.SqlDbType.VarChar,
+             new SqlParameter() {
+                    SqlDbType =  System.Data.SqlDbType.Int,
+                    ParameterName = "@PayorID",
                     Direction = System.Data.ParameterDirection.Input,
-                    Value = chartSummaryDTO.Mod
-                }
-                ,  new SqlParameter()
-                 {
-                     ParameterName = "@Dx",
-                     SqlDbType = System.Data.SqlDbType.VarChar,
+                    Value = chartSummaryDTO.PayorID
+                },
+              new SqlParameter() {
+                    ParameterName = "@NoteTitle",
+                    SqlDbType =  System.Data.SqlDbType.VarChar,
+                    Direction = System.Data.ParameterDirection.Input,
+                    Value = chartSummaryDTO.NoteTitle
+                },
+                new SqlParameter() {
+                    ParameterName = "@ProviderID",
+                    SqlDbType =  System.Data.SqlDbType.Int,
+                    Direction = System.Data.ParameterDirection.Input,
+                    Value = chartSummaryDTO.ProviderID
+                },
+                  new SqlParameter() {
+                     ParameterName = "@utDxCode",
+                     SqlDbType =  System.Data.SqlDbType.Structured,
                      Direction = System.Data.ParameterDirection.Input,
-                     Value = chartSummaryDTO.Dx
-                 } , new SqlParameter()
-                 {
-                     ParameterName = "@ProviderFeedbackID",
-                     SqlDbType = System.Data.SqlDbType.Int,
+                     TypeName = "utDxCode",
+                     Value = dtDx
+                 },
+                   new SqlParameter() {
+                     ParameterName = "@utCptCode",
+                     SqlDbType =  System.Data.SqlDbType.Structured,
                      Direction = System.Data.ParameterDirection.Input,
-                     Value = chartSummaryDTO.ProviderFeedbackID
-                 }, new SqlParameter()
-                 {
-                     ParameterName = "@CoderQuestion",
-                     SqlDbType = System.Data.SqlDbType.VarChar,
-                     Direction = System.Data.ParameterDirection.Input,
-                     Value = chartSummaryDTO.CoderQuestion
-                 } ,   new SqlParameter()
+                     TypeName = "utCptCode",
+                     Value = dtCpt
+                 },
+                    new SqlParameter()
                  {
                      ParameterName = "@ClinicalcaseID",
                      SqlDbType = System.Data.SqlDbType.Int,
@@ -2326,39 +2336,25 @@ namespace UAB.DAL
                      Direction = System.Data.ParameterDirection.Input,
                      Value = mUserId
                  }
-                ,
-                 new SqlParameter() {
-                    ParameterName = "@utClaim1",
-                    SqlDbType =  System.Data.SqlDbType.Structured,
-                    Direction = System.Data.ParameterDirection.Input,
-                    TypeName = "utClaim",
-                    Value = dtClaim
-                 },
-
-                 new SqlParameter() {
-                    ParameterName = "@utCpt1",
-                    SqlDbType =  System.Data.SqlDbType.Structured,
-                    Direction = System.Data.ParameterDirection.Input,
-                    TypeName = "utCpt",
-                    Value = dtCpt1
-                 },
-                 new SqlParameter() {
-                            ParameterName = "@ProviderPostedId",
-                            SqlDbType =  System.Data.SqlDbType.Int,
-                            Direction = System.Data.ParameterDirection.Input,
-                            Value = providerPostedId
-                        },
+              ,
+                  new SqlParameter()
+                 {
+                     ParameterName = "@ProviderFeedbackID",
+                     SqlDbType = System.Data.SqlDbType.Int,
+                     Direction = System.Data.ParameterDirection.Input,
+                     Value = chartSummaryDTO.ProviderFeedbackID
+                 } ,
                   new SqlParameter() {
                     ParameterName = "@PostedDate",
                     SqlDbType = System.Data.SqlDbType.DateTime2,
                      Direction = System.Data.ParameterDirection.Input,
-                     Value = postedDate
+                     Value = chartSummaryDTO.PostingDate
                  },
                   new SqlParameter() {
                     ParameterName = "@CoderComment",
                     SqlDbType = System.Data.SqlDbType.VarChar,
                      Direction = System.Data.ParameterDirection.Input,
-                     Value = coderComment
+                     Value = chartSummaryDTO.CoderComment
                  },
                   new SqlParameter() {
                     ParameterName = "@IsWrongProvider",
@@ -3481,7 +3477,7 @@ namespace UAB.DAL
             return lsteMLevelDTO;
         }
 
-        public List<EMCodeLevel> GetEMCodeLevelDetails(int eMLevelId )
+        public List<EMCodeLevel> GetEMCodeLevelDetails(int eMLevelId)
         {
             using (var context = new UABContext())
             {
@@ -3590,12 +3586,12 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                var isexisting = context.EMLevel.Where(x=>x.Level==eMCodeLevel.EMLevel &&x.ProjectId==eMCodeLevel.ProjectId).FirstOrDefault();
-               
+                var isexisting = context.EMLevel.Where(x => x.Level == eMCodeLevel.EMLevel && x.ProjectId == eMCodeLevel.ProjectId).FirstOrDefault();
+
                 EMLevel emc = new EMLevel()
                 {
                     Level = eMCodeLevel.EMLevel,
-                    ProjectId=eMCodeLevel.ProjectId
+                    ProjectId = eMCodeLevel.ProjectId
                 };
                 if (isexisting == null)
                 {
@@ -3604,7 +3600,7 @@ namespace UAB.DAL
                 }
                 else
                 {
-                        throw new Exception("Unable To Add EM Level or Code : THis EM Level Alreday There  in EM Level");
+                    throw new Exception("Unable To Add EM Level or Code : THis EM Level Alreday There  in EM Level");
                 }
             }
         }

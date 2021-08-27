@@ -21,10 +21,10 @@
 <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
     <div class="modal-dialog">
 
-        <div class="modal-content" style="width: 1100px;max-height: 800px;margin-left: -200px;">
+        <div class="modal-content" style="width: 1250px;max-height: 800px;margin-left: -280px;">
             <div class="modal-header" style="background-color: #27a9e3;color: white;">
                 <h5 class="modal-title" id="exampleModalLongTitle">Aging Chart Report Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="ModalClose1()">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="AgingPopupClose()">
                     <span aria-hidden="true">&times;</span>
                 </button>
 
@@ -72,7 +72,13 @@
 
                                 </td>
                                 <td>
-                                    <button type="button" id="btn1" style="cursor: pointer" class="btn btn-sm btn-success" onclick="SaveOrUnblock('@item.CodingDTO.ClinicalCaseID','Unblock')">Unblock</button>
+                                    <div style="margin-bottom:5px;">
+                                        <button id="btnBlock" type="button" class="btn btn-sm btn-danger" onclick="Block('@item.CodingDTO.ClinicalCaseID')">Block</button>
+                                    </div>
+                                    <div style="margin-bottom:5px;">
+                                        <button id="btn1" type="button" style="cursor: pointer" class="btn btn-sm btn-success" onclick="SaveOrUnblock('@item.CodingDTO.ClinicalCaseID','Unblock')">Unblock</button>
+                                    </div>
+                                    <button id="btnBlockHistory" type="button" class="btn btn-sm btn-danger" onclick="BlockHistory('@item.CodingDTO.ClinicalCaseID')">Block History</button>
                                 </td>
                             </tr>
                         }
@@ -80,7 +86,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-danger btn-fill" onclick="ModalClose1()">Close</button>
+                <button type="button" class="btn btn-sm btn-danger btn-fill" onclick="AgingPopupClose()">Close</button>
             </div>
         </div>
     </div>
@@ -93,9 +99,50 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        ModalClose1 = function () {
-            $("#modalContent1").html('');
-        }
+        
+
+        BlockHistory = function (ccId) {
+
+            var data = JSON.parse('@Html.Raw(Json.Serialize(Model.SelectMany(x=>x.blockHistories)))');
+
+            var filteredData = [];
+            data.find((o, i) => {
+                if (o.clinicalCaseId === parseInt(ccId)) {
+                    filteredData.push(data[i]);
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("BlockHistory", "UAB")",
+                data: JSON.stringify(filteredData),
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    $("#modalContent").html(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        };
+
+        Block = function (ccId) {
+
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("BlockClinicalcase", "UAB")",
+                data: {
+                    "ccid": ccId,
+                    "isFromAgingReport": 'true'
+                },
+                success: function (response) {
+                    $("#modalContent").html(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        };
 
         SaveOrUnblock = function (p1, p2) {
             if ($("#txt_" + p1).val() != "") {
