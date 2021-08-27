@@ -56,62 +56,79 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="overflow-y: scroll; max-height:560px;">
                 <input type="hidden" id="hdnProDxCodes" name="hdnProDxCodes" />
                 <input type="hidden" id="hdnProCptCodes" name="hdnProCptCodes" />
                 <input type="hidden" id="ccid" value="@ViewBag.ccid" />
                 <input type="hidden" id="statusid" value="@ViewBag.statusid" />
                 <div class="col-md-12 form-group">
-                    <label>Provider</label>
-                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select a Provider--", new { @id = "providerPostedId", @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.ProviderID, null, new { @class = "text-danger" })
+                    <div class="input-group">
+                        <label class="col-md-5">Provider</label>
+                        @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = "providerPostedId", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ProviderID, null, new { @class = "text-danger" })
+                    </div>
                 </div>
                 <div class="col-md-12 form-group">
-                    <label>Payor</label>
-                    @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select a Provider--", new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.PayorID, null, new { @class = "text-danger" })
+                    <div class="input-group">
+                        <label class="col-md-5">Payor</label>
+                        @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.PayorID, null, new { @class = "text-danger" })
+                    </div>
                 </div>
                 <div class="col-md-12 form-group">
-                    <label>Provider NoteTitle</label>
-                    @Html.TextBoxFor(model => model.NoteTitle, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter NoteTitle", @style = "padding: 0.375rem 0.75rem!important;" })
-                    @Html.ValidationMessageFor(model => model.NoteTitle, null, new { @class = "text-danger" })
+                    <div class="input-group">
+                        <label class="col-md-5">Provider NoteTitle</label>
+                        @Html.TextBoxFor(model => model.NoteTitle, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter NoteTitle", @style = "padding: 0.375rem 0.75rem!important;" })
+                        @Html.ValidationMessageFor(model => model.NoteTitle, null, new { @class = "text-danger" })
+                    </div>
                 </div>
                 <div class="col-md-12 form-group">
-                    <label>Provider PostingDate</label>
-                    @Html.TextBoxFor(model => model.PostingDate, new { @class = "form-control", @type = "date", @autofocus = "autofocus", @id = "txtPostingDate", @autocomplete = "off", @placeholder = "Enter Posting Date", @style = "padding: 0.375rem 0.75rem!important;" })
-                    @Html.ValidationMessageFor(model => model.PostingDate, null, new { @class = "text-danger" })
+                    <div class="input-group">
+                        <label class="col-md-5">Posting Date</label>
+                        @Html.TextBoxFor(model => model.PostingDate, new { @class = "form-control", @type = "date", @autofocus = "autofocus", @id = "txtPostingDate", @autocomplete = "off", @placeholder = "Enter Posting Date", @style = "padding: 0.375rem 0.75rem!important;" })
+                        @Html.ValidationMessageFor(model => model.PostingDate, null, new { @class = "text-danger" })
+                    </div>
                 </div>
-                <div id="DivDx">
-                    <div class="col-md-6 form-group" id="DivDxRow_1">
-                        <label>Provider Dx</label>
+                <div id="DivDx_Pro">
+                    <div class="col-md-12 form-group" id="DivDxRow_1">
                         <div class="input-group">
+                            <label class="col-md-5">Provider Dx</label>
                             <div class="input-group-prepend ControlHeight">
                                 <span class="input-group-text dxindex AdjustSerialNumber" id="basic-addon1">1</span>
                             </div>
-                            @Html.TextBoxFor(model => model.Dx, new { @class = "form-control CoderDetails txtDx ControlHeight", @autocomplete = "off", @id = "txtDx_1", @placeholder = "Code", @onfocusout = "ProDxFunction('txtDx_1')" })
+                            @Html.TextBoxFor(model => model.Dx, new { @class = "form-control CoderDetails txtDx ControlHeight", @autocomplete = "off", @id = "txtProDx_1", @placeholder = "Code", @onfocusout = "ProDxFunction('txtProDx_1')" })
                             @Html.ValidationMessageFor(model => model.Dx, null, new { @class = "text-danger Dxerror" })
                         </div>
                     </div>
                 </div>
                 <div id="DivCpt">
-                    <div class="col-md-6 form-group" id="DivCptRow_1">
-                        <label>Provider CPT</label>
+                    <div class="col-md-12 form-group" id="DivCptRow_1">
                         <div class="input-group">
+                            <label class="col-md-5">Provider CPT</label>
                             <div class="input-group-prepend ControlHeight">
                                 <span class="input-group-text cptindex AdjustSerialNumber" id="basic-addon1">1</span>
                             </div>
-                            @Html.TextBoxFor(model => model.CPTCode, new { @class = "form-control CoderDetails txtCpt ControlHeight", @autocomplete = "off", @placeholder = "Code", @id = "txtCpt_1", @tabindex = "1", @style = "max-width:55px;", @maxlength = "5" })
-                            <input type="text" class="form-control CoderDetails txtMod" id="txtMod_1" autocomplete="off" placeholder="Mod" tabindex="2" style="max-width:50px;" />
-                            <input type="text" id="txtQty_1" class="form-control CoderDetails cptQtyClaim txtQty" autocomplete="off" placeholder="Qty" value="1" tabindex="3" style="max-width:25px;" />
-                            <input type="text" id="txtLinks_1" onfocusout="ProCptFunction('txtLinks_1')" class="form-control CoderDetails cptLinksClaim txtLinks" autocomplete="off" placeholder="Link All" tabindex="4" style="min-width:63px;" />
+                            @Html.TextBoxFor(model => model.CPTCode, new { @class = "form-control CoderDetails txtCpt ControlHeight", @autocomplete = "off", @placeholder = "Code", @id = "txtCpt_1", @style = "max-width:55px;", @maxlength = "5" })
+                            <input type="text" class="form-control CoderDetails txtMod" id="txtMod_1" autocomplete="off" placeholder="Mod" style="max-width:50px;" />
+                            <input type="text" id="txtQty_1" class="form-control CoderDetails cptQtyClaim txtQty" autocomplete="off" placeholder="Qty" value="1" style="max-width:25px;" />
+                            <input type="text" id="txtLinks_1" onfocusout="ProCptFunction('txtLinks_1')" class="form-control CoderDetails cptLinksClaim txtLinks" autocomplete="off" placeholder="Link All" style="min-width:63px;" />
                             @Html.ValidationMessageFor(model => model.CPTCode, null, new { @class = "text-danger Dxerror" })
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12 form-group">
-                    <label>Provider Comment</label>
-                    @Html.TextAreaFor(model => model.CoderComment, new { @id = "txtCoderComment", @placeholder = "Enter a Coder Comments here", @class = "form-control", @autocomplete = "off", @style = "padding: 0.375rem 0.75rem!important;" })
-                    @Html.ValidationMessageFor(model => model.CoderComment, null, new { @class = "text-danger" })
+                    <div class="input-group">
+                        <label class="col-md-5">Provider Feedback</label>
+                        @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new {@class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ProviderFeedbackID, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-12 form-group">
+                    <div class="input-group">
+                        <label class="col-md-5">Provider Comment</label>
+                        @Html.TextAreaFor(model => model.CoderComment, new { @id = "txtCoderComment", @placeholder = "Enter a Coder Comments here", @class = "form-control", @autocomplete = "off", @style = "padding: 0.375rem 0.75rem!important;" })
+                        @Html.ValidationMessageFor(model => model.CoderComment, null, new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
             <div id="assignerror" style="color:red"></div>
@@ -158,17 +175,17 @@
         var id = parseInt(txt_0.split("_")[1]) + parseInt(1);
         if (txt_0.split("_")[1] !== undefined) {
             var currId = parseInt(id) - parseInt(1);
-            var val = $("#txtDx_" + currId).val();
+            var val = $("#txtProDx_" + currId).val();
             if (val !== "" && val !== null) {
                 if ($.inArray(val, dxArray) == -1) {
                     dxArray.push(val);
                     $("#hdnDxCodes").val(dxArray);
                     var text = "'" + "txt_" + id + "'";
                     var deleteDx = "'" + "DivDxRow_" + id + "'";
-                    $("#DivDx").append('<div id="DivDxRow_' + id + '" class="col-md-6 form-group"><div class="input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text dxindex AdjustSerialNumber" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="ProDxFunction(' + text + ')" class="form-control CoderDetails txtDx" id="txtDx_' + id + '" /><button type="button" id="DeleteDxCodes_' + id + '" class="btn btn-sm" style="max-width:18px;padding-left:5px;margin-left:-5px;" onclick="DeleteDxCodes(' + deleteDx + ')"><i class="fa fa-times"></i></button></div></div>');
-                    $("#txtDx_" + currId).removeAttr("onfocusout", "");
-                    $("#txtDx_1").removeAttr("onfocusout", "");
-                    $("#txtDx_" + id).focus();
+                    $("#DivDx_Pro").append('<div id="DivDxRow_' + id + '" class="col-md-12 form-group"><div class="input-group"><label class="col-md-5"></label><div class="input-group-prepend ControlHeight"><span class="input-group-text dxindex AdjustSerialNumber" id="basic-addon1">' + id + '</span></div><input type="text" placeholder="Code" onfocusout="ProDxFunction(' + text + ')" class="form-control CoderDetails txtDx" id="txtProDx_' + id + '" /><button type="button" id="DeleteDxCodes_' + id + '" class="btn btn-sm" style="max-width:18px;padding-left:5px;margin-left:-5px;" onclick="DeleteDxCodes(' + deleteDx + ')"><i class="fa fa-times"></i></button></div></div>');
+                    $("#txtProDx_" + currId).removeAttr("onfocusout", "");
+                    $("#txtProDx_1").removeAttr("onfocusout", "");
+                    $("#txtProDx_" + id).focus();
                 } else {
                     //$("#txtDx_" + currId).addClass('text-danger');
                 }
@@ -208,18 +225,18 @@
                     var tabindex2 = parseInt(2) + parseInt(id) + parseInt(count) + parseInt(val1);
                     var tabindex3 = parseInt(3) + parseInt(id) + parseInt(count) + parseInt(val1);
                     var tabindex4 = parseInt(4) + parseInt(id) + parseInt(count) + parseInt(val1);
-                    $("#DivCpt").append('<div id="DivCptRow_' + id + '" class="col-md-6 form-group"><div class="input-group"><div class="input-group-prepend ControlHeight"><span class="input-group-text cptindex AdjustSerialNumber" id="basic-addon1">' + id + '</span></div><input tabindex = "' + tabindex1 + '" type = "text" placeholder = "Code" style="max-width:55px;" maxlength="5" class= "form-control CoderDetails txtCpt" id = "txtCpt_' + id + '" /><input tabindex="' + tabindex2 + '" type="text" class="form-control CoderDetails" style="max-width:50px;" placeholder="Mod" id="txtMod_' + id + '"/><input tabindex="' + tabindex3 + '" type="text" class="form-control CoderDetails cptQtyClaim" style="max-width:25px;" placeholder="Qty" value="1" id="txtQty_' + id + '"/><input tabindex="' + tabindex4 + '" type="text" class="form-control CoderDetails cptLinksClaim txtLinks" placeholder="Link All" onfocusout="ProCptFunction(' + txtLinks + ')" id="txtLinks_' + id + '"/><button type="button" class="btn btn-sm" style="max-width:18px;padding-left:5px;margin-left:-5px;" onclick="DeleteCptCodes(' + deleteCpt + ')"><i class="fa fa-times"></i></button></div></div>');
+                    $("#DivCpt").append('<div id="DivCptRow_' + id + '" class="col-md-12 form-group"><div class="input-group"><label class="col-md-5"></label><div class="input-group-prepend ControlHeight"><span class="input-group-text cptindex AdjustSerialNumber" id="basic-addon1">' + id + '</span></div><input tabindex = "' + tabindex1 + '" type = "text" placeholder = "Code" style="max-width:55px;" maxlength="5" class= "form-control CoderDetails txtCpt" id = "txtCpt_' + id + '" /><input tabindex="' + tabindex2 + '" type="text" class="form-control CoderDetails" style="max-width:50px;" placeholder="Mod" id="txtMod_' + id + '"/><input tabindex="' + tabindex3 + '" type="text" class="form-control CoderDetails cptQtyClaim" style="max-width:25px;" placeholder="Qty" value="1" id="txtQty_' + id + '"/><input tabindex="' + tabindex4 + '" type="text" class="form-control CoderDetails cptLinksClaim txtLinks" placeholder="Link All" onfocusout="ProCptFunction(' + txtLinks + ')" id="txtLinks_' + id + '"/><button type="button" class="btn btn-sm" style="max-width:18px;padding-left:5px;margin-left:-5px;" onclick="DeleteCptCodes(' + deleteCpt + ')"><i class="fa fa-times"></i></button></div></div>');
                     $("#txtLinks_" + id1).removeAttr("onfocusout", "");
                     $("#txtLinks_1").removeAttr("onfocusout", "");
                     $("#txtCpt_" + id).focus();
                 }
             } else {
-                //$("#ProviderFeedbackID").focus();
+                $("#ProviderFeedbackID").focus();
             }
         }
     }
     $('#btnsubmit').click(function (e) {
-        var DxCodes = $("[id*=txtDx_]");
+        var DxCodes = $("[id*=txtProDx_]");
         $("#hdnProDxCodes").val("");
         for (var i = 0; i < DxCodes.length; i++) {
             if ($("#" + $(DxCodes[i]).attr("id")).val() != "") {
