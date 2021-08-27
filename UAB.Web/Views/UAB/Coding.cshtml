@@ -256,13 +256,6 @@
             }
         }
 
-
-        var currentdate = new Date();
-        //Format: DD/MM/YYYY
-        var datetime = currentdate.getDate() + "/"
-            + (currentdate.getMonth() + 1) + "/"
-            + currentdate.getFullYear();
-
         var buttonType = $(this).attr("name");
         $("#hdnButtonType").val(buttonType);
         if (buttonType === "btnProviderPosted") {
@@ -286,43 +279,13 @@
                      });
         }
         else {
-            var isAuditRequired;
+            var isAuditRequired = (@Model.IsAuditRequired.ToString().ToLower());
 
             if (auditMandatory == "1") {
                 ShowSubmitPopup('',"true");
             }
             else {
-
-              if ($("#hdnIsAuditCalculated").val() == "") {
-
-                    $("#hdnIsAuditCalculated").val("1");
-
-                    $.ajax({
-                        type: "GET",
-                        url: "@Url.Action("GetAuditDetails", "UAB")",
-                        data: {
-                            "chartType": "Coding",
-                            "projectId": $("#ProjectID").val(),
-                            "dt": datetime
-                        },
-                        success: function (response) {
-
-                            isAuditRequired = response;
-
-                            if (isAuditRequired == true)
-                                $("#hdnIsAuditRequired").val("true");
-                            else
-                                $("#hdnIsAuditRequired").val("false");
-
-                            ShowSubmitPopup(buttonType, $("#hdnIsAuditRequired").val());
-                        },
-                        failure: function (response) {
-                            alert(response);
-                        }
-                    });
-                }
-                else
-                  ShowSubmitPopup('', $("#hdnIsAuditRequired").val());
+                ShowSubmitPopup('', isAuditRequired);
             }
         }
         EnableButton();

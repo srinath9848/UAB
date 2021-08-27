@@ -28,7 +28,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            @{string show = "", msg = "";}
+            @{string show = "", msg = "", showUnpostNo = "";}
             @{ if (ViewBag.isAuditRequired == "true")
                 {
                     show = "display:none";
@@ -36,6 +36,7 @@
                 }
                 else
                 {
+                    showUnpostNo = "display:none";
                     msg = "Confirm if the chart is posted?";
                 }
             }
@@ -45,6 +46,7 @@
             <div class="modal-footer">
                 <button type="submit" id="submitAndPost" name="submitAndPost" class="btn btn-sm btn-danger btn-fill">Yes</button>
                 <button style="@show" onclick="ClosePopup()" type="button" class="btn btn-sm btn-danger btn-fill">No</button>
+                <button id="btnNo" style="@showUnpostNo" type="button" class="btn btn-sm btn-danger btn-fill" onclick="UnpostChartConfirm()">No</button>
             </div>
         </div>
     </div>
@@ -65,6 +67,25 @@
         ClosePopup = function () {
             $("#modalContent").html('');
         }
+
+        CloseUnpostConfirmPopup = function () {
+            $("#modalContent1").html('');
+        }
+
+         UnpostChartConfirm = function () {
+
+             $.ajax({
+                 type: "GET",
+                 url: "@Url.Action("ConfirmUnpostChart", "UAB")",               
+                success: function (response) {
+                    $("#modalContent1").html(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        };
+
     });
 
 </script>

@@ -20,6 +20,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Diagnostics;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace UAB.Controllers
 {
@@ -68,9 +69,6 @@ namespace UAB.Controllers
             chartSummary = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID, timeZoneCookie);
             chartSummary.ProjectName = ProjectName;
 
-            AuditDTO auditDTO = clinicalcaseOperations.GetAuditInfoForCPTAndProvider(ProjectID);
-            chartSummary.auditDTO = auditDTO;
-
             #region binding data
             if (_httpContextAccessor.HttpContext.Session.GetString("PayorsList") == null)
                 _httpContextAccessor.HttpContext.Session.SetString("PayorsList", JsonConvert.SerializeObject(clinicalcaseOperations.GetPayorsList()));
@@ -93,6 +91,16 @@ namespace UAB.Controllers
                 TempData["Toast"] = "There are no charts available";
                 return RedirectToAction("CodingSummary");
             }
+
+            //Below code is to get the Audit based on CPT, Provider configuration
+            AuditDTO auditDTO = clinicalcaseOperations.GetAuditInfoForCPTAndProvider(ProjectID);
+            chartSummary.auditDTO = auditDTO;
+
+            //Below code is to get the Audit based on sample percentage
+            string currDt = DateTime.Now.ToLocalDate(timeZoneCookie).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+            bool audit = IsAuditRequired("Coding", chartSummary.ProjectID, currDt);
+            chartSummary.IsAuditRequired = audit;
+
             var res = clinicalcaseOperations.GetBlockResponseBycid(chartSummary.CodingDTO.ClinicalCaseID);
             if (res != null)
             {
@@ -242,6 +250,8 @@ namespace UAB.Controllers
                     else
                     {
                         chartSummaryDTO.ProjectName = ProjectName;
+                        AuditDTO auditDTO = clinicalcaseOperations.GetAuditInfoForCPTAndProvider(ProjectID);
+                        chartSummaryDTO.auditDTO = auditDTO;
 
                         if (ccids == null && chartSummaryDTO.CCIDs.Split(",").Length > 1)
                         {
@@ -633,16 +643,27 @@ namespace UAB.Controllers
 
             return PartialView("_CodingSubmitPopup");
         }
-        public IActionResult GetAuditDetails(string chartType, int projectId, string dt)
+        public IActionResult ConfirmUnpostChart()
         {
-            _logger.LogInformation("Loading Started for GetAuditDetails for User: " + mUserId);
+            _logger.LogInformation("Loading Started for ConfirmUnpostChart for User: " + mUserId);
 
-            bool auditFlag = IsAuditRequired(chartType, projectId, dt);
+            //ViewBag.buttonType = buttonType;
+            //ViewBag.isAuditRequired = isAuditRequired;
 
-            _logger.LogInformation("Loading Ended for GetAuditDetails for User: " + mUserId);
+            _logger.LogInformation("Loading Ended for ConfirmUnpostChart for User: " + mUserId);
 
-            return new JsonResult(auditFlag);
+            return PartialView("_UnPostChartPopup");
         }
+        //public IActionResult GetAuditDetails(string chartType, int projectId, string dt)
+        //{
+        //    _logger.LogInformation("Loading Started for GetAuditDetails for User: " + mUserId);
+
+        //    bool auditFlag = IsAuditRequired(chartType, projectId, dt);
+
+        //    _logger.LogInformation("Loading Ended for GetAuditDetails for User: " + mUserId);
+
+        //    return new JsonResult(auditFlag);
+        //}
         public bool IsAuditRequired(string chartType, int projectId, string currDate)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations();
