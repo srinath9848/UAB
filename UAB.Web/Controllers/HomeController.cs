@@ -123,8 +123,35 @@ namespace UAB.Controllers
             _logger.LogInformation("Loading Started for GetLevellingReport for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var lstLelvellingReportDTO = clinicalcaseOperations.GetLevellingReport(ProjectId, StartDate, EndDate, dateType);
+
+            ViewBag.ProjectId = ProjectId;
+            ViewBag.StartDate = StartDate;
+            ViewBag.EndDate = EndDate;
+            ViewBag.DateType = dateType;
             _logger.LogInformation("Loading Ended for GetLevellingReport for User: " + mUserId);
             return PartialView("_LevellingReport", lstLelvellingReportDTO);
+        }
+
+        public IActionResult ExportLevellingReport(int ProjectId, DateTime StartDate, DateTime EndDate, string dateType)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            var lstLelvellingReportDTO = clinicalcaseOperations.GetLevellingReport(ProjectId, StartDate, EndDate, dateType);
+            int count = lstLelvellingReportDTO.Tables.Count;
+            for(int i = 0; i < lstLelvellingReportDTO.Tables.Count; i++)
+            {
+                for(int x = 0; x < lstLelvellingReportDTO.Tables[i].Rows.Count; x++)
+                {
+                    for (int y = 1; y < lstLelvellingReportDTO.Tables[i].Columns.Count; y++)
+                    {
+                        if (string.IsNullOrEmpty(lstLelvellingReportDTO.Tables[i].Rows[x][y].ToString()))
+                        {
+                            lstLelvellingReportDTO.Tables[i].Rows[x][y] = "0";
+                        }
+                    }
+                }
+            }
+
+            return ExportToExcelForLevellingReport(lstLelvellingReportDTO);
         }
 
         [HttpGet]
@@ -154,6 +181,50 @@ namespace UAB.Controllers
                     wb.SaveAs(stream);
                     _logger.LogInformation("Loading Ended for ExportToExcel for User: " + mUserId);
                     return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"Export_{dataTable.TableName}_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.xlsx");
+                }
+            }
+        }
+
+        [HttpGet]
+        public IActionResult ExportToExcelForLevellingReport(DataSet dataSet)
+        {
+            _logger.LogInformation("Loading Started for ExportToExcelForLevellingReport for User: " + mUserId);
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                IXLWorksheet ws = wb.Worksheets.Add("Levelling Report");
+                int colCount = dataSet.Tables[0].Columns.Count;
+                var firstRow = ws.Row(1);
+                firstRow.Cell(1).Value = "Levelling Report";
+
+                var secondRow = ws.Row(2);
+                for (int i = 0; i < colCount; i++)
+                {
+                    secondRow.Cell(i+1).Value = dataSet.Tables[0].Columns[i].ToString();
+                }
+                var thirdRow = ws.Row(3);
+                thirdRow.Cell(1).Value = dataSet.Tables[0];
+
+                int lastRow = ws.RowsUsed().Count();
+
+                var firstRowForPercentage = ws.Row(lastRow + 3);
+                firstRowForPercentage.Cell(1).Value = "Levelling Report Percentage";
+
+                var secondRowForPercentage = ws.Row(lastRow + 4);
+                int colCountForPercentage = dataSet.Tables[1].Columns.Count;
+
+                for (int i = 0; i < colCountForPercentage; i++)
+                {
+                    secondRowForPercentage.Cell(i + 1).Value = dataSet.Tables[1].Columns[i].ToString();
+                }
+                var thirdRowForPercentage = ws.Row(lastRow + 5);
+                thirdRowForPercentage.Cell(1).Value = dataSet.Tables[1];
+                
+                string fileName = $"Export_{dataSet.Tables[0].TableName}_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.xlsx";
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    _logger.LogInformation("Loading Ended for ExportToExcelForLevellingReport for User: " + mUserId);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
                 }
             }
         }
