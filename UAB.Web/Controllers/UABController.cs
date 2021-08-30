@@ -316,11 +316,6 @@ namespace UAB.Controllers
 
             ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
 
-            if (_httpContextAccessor.HttpContext.Session.GetString("FeedbackList") == null)
-                _httpContextAccessor.HttpContext.Session.SetString("FeedbackList", JsonConvert.SerializeObject(clinicalcaseOperations.GetProviderFeedbacksList()));
-
-            ViewBag.ProviderFeedbacks = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
-
             _logger.LogInformation("Loading Ended for ProviderPostedClinicalcase for User: " + mUserId);
 
             return PartialView("_ProviderPosted");
@@ -490,7 +485,7 @@ namespace UAB.Controllers
             }
         }
 
-        public IActionResult SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDTO, string codingSubmitAndGetNext, int providerPostedId, DateTime txtPostingDate, string txtCoderComment)
+        public IActionResult SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDto, string codingSubmitAndGetNext, int providerPostedId, int payorPostedId, DateTime txtPostingDate, string txtCoderComment)
         {
             _logger.LogInformation("Loading Started for SubmitCodingAvailableChart for User: " + mUserId);
 
@@ -504,30 +499,30 @@ namespace UAB.Controllers
             string IsWrongProvider = Request.Form["hdnWrongProvider"].ToString();
 
             if (IsWrongProvider == "true")
-                chartSummaryDTO.isWrongProvider = true;
+                chartSummaryDto.isWrongProvider = true;
             else
-                chartSummaryDTO.isWrongProvider = false;
+                chartSummaryDto.isWrongProvider = false;
             //string submitType = Request.Form["hdnSubmitAndPost"];
             string hdnIsAuditRequired = Request.Form["hdnIsAuditRequired"];
 
             if (hdnIsAuditRequired == "true")
             {
-                chartSummaryDTO.IsAuditRequired = true;
-                chartSummaryDTO.SubmitAndPostAlso = false;
+                chartSummaryDto.IsAuditRequired = true;
+                chartSummaryDto.SubmitAndPostAlso = false;
             }
             else
             {
-                chartSummaryDTO.IsAuditRequired = false;
-                chartSummaryDTO.SubmitAndPostAlso = true;
+                chartSummaryDto.IsAuditRequired = false;
+                chartSummaryDto.SubmitAndPostAlso = true;
             }
 
             if (string.IsNullOrEmpty(codingSubmitAndGetNext))
                 codingSubmitAndGetNext = Request.Form["hdnButtonType"];
 
             string hdnDxCodes = Request.Form["hdnDxCodes"].ToString();
-            chartSummaryDTO.Dx = hdnDxCodes;
+            chartSummaryDto.Dx = hdnDxCodes;
             string hdnCptCodes = Request.Form["hdnCptCodes"].ToString();
-            chartSummaryDTO.CPTCode = hdnCptCodes;
+            chartSummaryDto.CPTCode = hdnCptCodes;
 
             string hdnClaim1 = Request.Form["hdnClaim2"].ToString();
             string hdnDxClaim1 = Request.Form["hdnDxCodes1"].ToString();
@@ -563,7 +558,7 @@ namespace UAB.Controllers
             if (!string.IsNullOrEmpty(hdnClaim3))
                 PrepareClaim(hdnClaim3, hdnDxClaim3, hdnCptClaim3, 3, ref dtClaim, ref dtCpt);
 
-            List<DashboardDTO> lstDto = new List<DashboardDTO>();
+            List<DashboardDTO> lstDto;
 
             if (providerPosted != "")
             {
@@ -578,20 +573,22 @@ namespace UAB.Controllers
                 dtProDx.Columns.Add("DxCode", typeof(string));
                 dtProDx.Columns.Add("ClaimId", typeof(int));
 
+                PrepareCpt(hdnCptCodes, dtCpt, 1);
+
                 string hdnProDxCodes = Request.Form["hdnProDxCodes"].ToString();
                 PrepareDx(hdnProDxCodes, dtProDx, 0);
                 string hdnProCptCodes = Request.Form["hdnProCptCodes"].ToString();
                 PrepareCpt1(hdnProCptCodes, dtProCpt, 0);
 
-                clinicalcaseOperations.SubmitProviderPostedChart(chartSummaryDTO, dtProDx, dtProCpt);
+                clinicalcaseOperations.SubmitProviderPostedChart(chartSummaryDto, providerPostedId,payorPostedId, dtClaim, dtCpt, dtProDx, dtProCpt);
             }
             else
             {
                 if (codingSubmitAndGetNext == "codingSubmit")
-                    clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDTO, dtClaim, dtCpt);
+                    clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDto, dtClaim, dtCpt);
                 else
                 {
-                    clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDTO, dtClaim, dtCpt);
+                    clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDto, dtClaim, dtCpt);
 
                     if (hdnIsBlocked == "1" && hdnBlockedCCIds != "" && hdnCurrentCCId != "")
                     {
@@ -615,13 +612,13 @@ namespace UAB.Controllers
                         else
                         {
                             _logger.LogInformation("Loading Ended for SubmitCodingAvailableChart for User: " + mUserId);
-                            return RedirectToAction("GetBlockedChart", new { Role = Roles.Coder.ToString(), ChartType = "Block", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName, ccids = ((CurrentIndex == blockedCCIds.Count) || CurrentIndex == 0) ? null : string.Join<int>(",", blockedCCIds), Next = "1", CurrCCId = currCCId });
+                            return RedirectToAction("GetBlockedChart", new { Role = Roles.Coder.ToString(), ChartType = "Block", ProjectID = chartSummaryDto.ProjectID, ProjectName = chartSummaryDto.ProjectName, ccids = ((CurrentIndex == blockedCCIds.Count) || CurrentIndex == 0) ? null : string.Join<int>(",", blockedCCIds), Next = "1", CurrCCId = currCCId });
                         }
                     }
                     else
                     {
                         _logger.LogInformation("Loading Ended for SubmitCodingAvailableChart for User: " + mUserId);
-                        return RedirectToAction("GetCodingAvailableChart", new { Role = Roles.Coder.ToString(), ChartType = "Available", ProjectID = chartSummaryDTO.ProjectID, ProjectName = chartSummaryDTO.ProjectName });
+                        return RedirectToAction("GetCodingAvailableChart", new { Role = Roles.Coder.ToString(), ChartType = "Available", ProjectID = chartSummaryDto.ProjectID, ProjectName = chartSummaryDto.ProjectName });
                     }
                 }
             }
