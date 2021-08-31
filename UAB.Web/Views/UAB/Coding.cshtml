@@ -8,6 +8,7 @@
             <partial name="_InitialData" model=Model />
             <partial name="_CodingDetails" model=Model />
             <input type="hidden" id="_providerPostedId" name="providerPostedId" />
+            <input type="hidden" id="_payorPostedId" name="payorPostedId" />
             <input type="hidden" id="_txtPostingDate" name="txtPostingDate" />
             <input type="hidden" id="_txtCoderComment" name="txtCoderComment" />
             @if (Model.BlockResponseDTO.ResponseRemarks != null && Model.BlockResponseDTO.BlockedInQueueKind == "Coding")
@@ -73,6 +74,7 @@
 
         ProviderPostedClinicalcase = function () {
             $("#_providerPostedId").val($("#providerPostedId").val());
+            $("#_payorPostedId").val($("#payorPostedId").val());
             $("#_txtPostingDate").val($("#txtPostingDate").val());
             $("#_txtCoderComment").val($("#txtCoderComment").val());
             $("#frmSubmitCodingAvailableChart").submit();

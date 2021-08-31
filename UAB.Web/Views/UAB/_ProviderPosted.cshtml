@@ -63,30 +63,16 @@
                 <input type="hidden" id="statusid" value="@ViewBag.statusid" />
                 <div class="col-md-12 form-group">
                     <div class="input-group">
-                        <label class="col-md-5">Provider</label>
-                        @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = "providerPostedId", @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.ProviderID, null, new { @class = "text-danger" })
+                        <label class="col-md-5">Posted Provider</label>
+                        @Html.DropDownListFor(model => model.PostedProviderId, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = "providerPostedId", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.PostedProviderId, null, new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="col-md-12 form-group">
                     <div class="input-group">
                         <label class="col-md-5">Payor</label>
-                        @Html.DropDownListFor(model => model.PayorID, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.PayorID, null, new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="col-md-12 form-group">
-                    <div class="input-group">
-                        <label class="col-md-5">Provider NoteTitle</label>
-                        @Html.TextBoxFor(model => model.NoteTitle, new { @class = "form-control", @autofocus = "autofocus", @autocomplete = "off", @placeholder = "Enter NoteTitle", @style = "padding: 0.375rem 0.75rem!important;" })
-                        @Html.ValidationMessageFor(model => model.NoteTitle, null, new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="col-md-12 form-group">
-                    <div class="input-group">
-                        <label class="col-md-5">Posting Date</label>
-                        @Html.TextBoxFor(model => model.PostingDate, new { @class = "form-control", @type = "date", @autofocus = "autofocus", @id = "txtPostingDate", @autocomplete = "off", @placeholder = "Enter Posting Date", @style = "padding: 0.375rem 0.75rem!important;" })
-                        @Html.ValidationMessageFor(model => model.PostingDate, null, new { @class = "text-danger" })
+                        @Html.DropDownListFor(model => model.PostedPayorId, new SelectList(@ViewBag.Payors, "ID", "Name"), "--Select--", new { @id = "payorPostedId", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.PostedPayorId, null, new { @class = "text-danger" })
                     </div>
                 </div>
                 <div id="DivDx_Pro">
@@ -96,8 +82,8 @@
                             <div class="input-group-prepend ControlHeight">
                                 <span class="input-group-text dxindex AdjustSerialNumber" id="basic-addon1">1</span>
                             </div>
-                            @Html.TextBoxFor(model => model.Dx, new { @class = "form-control CoderDetails txtProDx ControlHeight", @autocomplete = "off", @id = "txtProDx_1", @placeholder = "Code", @onfocusout = "ProDxFunction('txtProDx_1')" })
-                            @Html.ValidationMessageFor(model => model.Dx, null, new { @class = "text-danger Dxerror" })
+                            @Html.TextBoxFor(model => model.PostedDx, new { @class = "form-control CoderDetails txtProDx ControlHeight", @autocomplete = "off", @id = "txtProDx_1", @placeholder = "Code", @onfocusout = "ProDxFunction('txtProDx_1')" })
+                            @Html.ValidationMessageFor(model => model.PostedDx, null, new { @class = "text-danger Dxerror" })
                         </div>
                     </div>
                 </div>
@@ -108,24 +94,24 @@
                             <div class="input-group-prepend ControlHeight">
                                 <span class="input-group-text cptindex AdjustSerialNumber" id="basic-addon1">1</span>
                             </div>
-                            @Html.TextBoxFor(model => model.CPTCode, new { @class = "form-control CoderDetails txtCpt ControlHeight", @autocomplete = "off", @placeholder = "Code", @id = "txtCpt_1", @style = "max-width:55px;", @maxlength = "5" })
-                            <input type="text" class="form-control CoderDetails txtMod" id="txtMod_1" autocomplete="off" placeholder="Mod" style="max-width:50px;" />
-                            <input type="text" id="txtQty_1" class="form-control CoderDetails cptQtyClaim txtQty" autocomplete="off" placeholder="Qty" value="1" style="max-width:25px;" />
-                            <input type="text" id="txtLinks_1" onfocusout="ProCptFunction('txtLinks_1')" class="form-control CoderDetails cptLinksClaim txtLinks" autocomplete="off" placeholder="Link All" style="min-width:63px;" />
-                            @Html.ValidationMessageFor(model => model.CPTCode, null, new { @class = "text-danger Dxerror" })
+                            @Html.TextBoxFor(model => model.PostedCpt, new { @class = "form-control CoderDetails txtProCpt ControlHeight", @autocomplete = "off", @placeholder = "Code", @id = "txtProCpt_1", @style = "max-width:55px;", @maxlength = "5" })
+                            <input type="text" class="form-control CoderDetails txtMod" id="txtProMod_1" autocomplete="off" placeholder="Mod" style="max-width:50px;" />
+                            <input type="text" id="txtProQty_1" class="form-control CoderDetails cptQtyClaim txtQty" autocomplete="off" placeholder="Qty" value="1" style="max-width:25px;" />
+                            <input type="text" id="txtProLinks_1" onfocusout="ProCptFunction('txtProLinks_1')" class="form-control CoderDetails cptLinksClaim txtLinks" autocomplete="off" placeholder="Link All" style="min-width:63px;" />
+                            @Html.ValidationMessageFor(model => model.PostedCpt, null, new { @class = "text-danger Dxerror" })
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12 form-group">
                     <div class="input-group">
-                        <label class="col-md-5">Provider Feedback</label>
-                        @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new {@class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.ProviderFeedbackID, null, new { @class = "text-danger" })
+                        <label class="col-md-5">Posting Date</label>
+                        @Html.TextBoxFor(model => model.PostingDate, new { @class = "form-control", @type = "date", @autofocus = "autofocus", @id = "txtPostingDate", @autocomplete = "off", @placeholder = "Enter Posting Date", @style = "padding: 0.375rem 0.75rem!important;" })
+                        @Html.ValidationMessageFor(model => model.PostingDate, null, new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="col-md-12 form-group">
                     <div class="input-group">
-                        <label class="col-md-5">Provider Comment</label>
+                        <label class="col-md-5">Comment</label>
                         @Html.TextAreaFor(model => model.CoderComment, new { @id = "txtCoderComment", @placeholder = "Enter a Coder Comments here", @class = "form-control", @autocomplete = "off", @style = "padding: 0.375rem 0.75rem!important;" })
                         @Html.ValidationMessageFor(model => model.CoderComment, null, new { @class = "text-danger" })
                     </div>
@@ -133,7 +119,7 @@
             </div>
             <div id="assignerror" style="color:red"></div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit" name="btnsubmit">Save</button>
+                <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit" onclick="ProviderPostedClinicalcase()" name="btnsubmit">Save</button>
                 <button type="button" class="btn btn-sm btn-danger btn-fill" onclick="ModalClose1()">Cancel</button>
             </div>
         </div>
@@ -160,10 +146,10 @@
         var mm = today.getMonth() + 1; //January is 0!
         var yyyy = today.getFullYear();
         if (dd < 10) {
-            dd = '0' + dd
+            dd = '0' + dd;
         }
         if (mm < 10) {
-            mm = '0' + mm
+            mm = '0' + mm;
         }
 
         today = yyyy + '-' + mm + '-' + dd;
@@ -190,7 +176,7 @@
                     //$("#txtDx_" + currId).addClass('text-danger');
                 }
             } else {
-                $("#txtCpt_1").focus();
+                $("#txtProCpt_1").focus();
             }
         }
     }
@@ -200,38 +186,38 @@
         var id = parseInt(txtCpt_0.split("_")[1]) + parseInt(1);
         if (txtCpt_0.split("_")[1] !== undefined) {
             var id1 = parseInt(id) - parseInt(1);
-            var val1 = $("#txtCpt_" + id1).val();
+            var val1 = $("#txtProCpt_" + id1).val();
 
             var val2 = null;
-            if ($("#txtMod_" + id1).val() != "")
-                val2 = $("#txtMod_" + id1).val();
+            if ($("#txtProMod_" + id1).val() != "")
+                val2 = $("#txtProMod_" + id1).val();
 
             var val3 = null;
-            if ($("#txtQty_" + id1).val() != "")
-                val3 = $("#txtQty_" + id1).val();
+            if ($("#txtProQty_" + id1).val() != "")
+                val3 = $("#txtProQty_" + id1).val();
 
             var val4 = null;
-            if ($("#txtLinks_" + id1).val() != "")
-                val4 = $("#txtLinks_" + id1).val();
+            if ($("#txtProLinks_" + id1).val() != "")
+                val4 = $("#txtProLinks_" + id1).val();
 
             if (val1 !== "") {
                 if ($.inArray(val1, cptArray) == -1) {
                     cptArray.push(val1 + "^" + val2 + "^" + val3 + "^" + val4);
-                    $("#hdnCptCodes").val(cptArray);
+                    $("#hdnProCptCodes").val(cptArray);
                     var count = id + parseInt(1);
-                    var txtLinks = "'" + "txtLinks_" + id + "'";
+                    var txtLinks = "'" + "txtProLinks_" + id + "'";
                     var deleteCpt = "'" + "DivCptRow_" + id + "'";
                     var tabindex1 = parseInt(1) + parseInt(id) + parseInt(count) + parseInt(val1);
                     var tabindex2 = parseInt(2) + parseInt(id) + parseInt(count) + parseInt(val1);
                     var tabindex3 = parseInt(3) + parseInt(id) + parseInt(count) + parseInt(val1);
                     var tabindex4 = parseInt(4) + parseInt(id) + parseInt(count) + parseInt(val1);
-                    $("#DivCpt").append('<div id="DivCptRow_' + id + '" class="col-md-12 form-group"><div class="input-group"><label class="col-md-5"></label><div class="input-group-prepend ControlHeight"><span class="input-group-text cptindex AdjustSerialNumber" id="basic-addon1">' + id + '</span></div><input tabindex = "' + tabindex1 + '" type = "text" placeholder = "Code" style="max-width:55px;" maxlength="5" class= "form-control CoderDetails txtCpt" id = "txtCpt_' + id + '" /><input tabindex="' + tabindex2 + '" type="text" class="form-control CoderDetails" style="max-width:50px;" placeholder="Mod" id="txtMod_' + id + '"/><input tabindex="' + tabindex3 + '" type="text" class="form-control CoderDetails cptQtyClaim" style="max-width:25px;" placeholder="Qty" value="1" id="txtQty_' + id + '"/><input tabindex="' + tabindex4 + '" type="text" class="form-control CoderDetails cptLinksClaim txtLinks" placeholder="Link All" onfocusout="ProCptFunction(' + txtLinks + ')" id="txtLinks_' + id + '"/><button type="button" class="btn btn-sm" style="max-width:18px;padding-left:5px;margin-left:-5px;" onclick="DeleteCptCodes(' + deleteCpt + ')"><i class="fa fa-times"></i></button></div></div>');
-                    $("#txtLinks_" + id1).removeAttr("onfocusout", "");
-                    $("#txtLinks_1").removeAttr("onfocusout", "");
-                    $("#txtCpt_" + id).focus();
+                    $("#DivCpt").append('<div id="DivCptRow_' + id + '" class="col-md-12 form-group"><div class="input-group"><label class="col-md-5"></label><div class="input-group-prepend ControlHeight"><span class="input-group-text cptindex AdjustSerialNumber" id="basic-addon1">' + id + '</span></div><input tabindex = "' + tabindex1 + '" type = "text" placeholder = "Code" style="max-width:55px;" maxlength="5" class= "form-control CoderDetails txtCpt" id = "txtProCpt_' + id + '" /><input tabindex="' + tabindex2 + '" type="text" class="form-control CoderDetails" style="max-width:50px;" placeholder="Mod" id="txtProMod_' + id + '"/><input tabindex="' + tabindex3 + '" type="text" class="form-control CoderDetails cptQtyClaim" style="max-width:25px;" placeholder="Qty" value="1" id="txtProQty_' + id + '"/><input tabindex="' + tabindex4 + '" type="text" class="form-control CoderDetails cptLinksClaim txtLinks" placeholder="Link All" onfocusout="ProCptFunction(' + txtLinks + ')" id="txtProLinks_' + id + '"/><button type="button" class="btn btn-sm" style="max-width:18px;padding-left:5px;margin-left:-5px;" onclick="DeleteCptCodes(' + deleteCpt + ')"><i class="fa fa-times"></i></button></div></div>');
+                    $("#txtProLinks_" + id1).removeAttr("onfocusout", "");
+                    $("#txtProLinks_1").removeAttr("onfocusout", "");
+                    $("#txtProCpt_" + id).focus();
                 }
             } else {
-                $("#ProviderFeedbackID").focus();
+                $("#providerPostedId").focus();
             }
         }
     }
@@ -278,18 +264,18 @@
         var CptCodes = $("[id*=DivCptRow_]");
         for (var i = 1; i <= CptCodes.length; i++) {
             if ($("#hdnProCptCodes").val() == "") {
-                if ($("#txtCpt_" + i).val() != "") {
-                    var mod = $("#txtMod_" + i).val() != "" ? $("#txtMod_" + i).val() : null;
-                    var qty = $("#txtQty_" + i).val() != "" ? $("#txtQty_" + i).val() : null;
-                    var links = $("#txtLinks_" + i).val() != "" ? $("#txtLinks_" + i).val() : null;
-                    $("#hdnProCptCodes").val($("#txtCpt_" + i).val() + "^" + mod + "^" + qty + "^" + links);
+                if ($("#txtProCpt_" + i).val() != "") {
+                    var mod = $("#txtProMod_" + i).val() != "" ? $("#txtProMod_" + i).val() : null;
+                    var qty = $("#txtProQty_" + i).val() != "" ? $("#txtProQty_" + i).val() : null;
+                    var links = $("#txtProLinks_" + i).val() != "" ? $("#txtLinks_" + i).val() : null;
+                    $("#hdnProCptCodes").val($("#txtProCpt_" + i).val() + "^" + mod + "^" + qty + "^" + links);
                 }
             } else {
-                if ($("#txtCpt_" + i).val() != "" && $("#txtCpt_" + i).val() != undefined) {
-                    var mod = $("#txtMod_" + i).val() != "" ? $("#txtMod_" + i).val() : null;
-                    var qty = $("#txtQty_" + i).val() != "" ? $("#txtQty_" + i).val() : null;
-                    var links = $("#txtLinks_" + i).val() != "" ? $("#txtLinks_" + i).val() : null;
-                    $("#hdnProCptCodes").val($("#hdnProCptCodes").val() + "|" + $("#txtCpt_" + i).val() + "^" + mod + "^" + qty + "^" + links);
+                if ($("#txtProCpt_" + i).val() != "" && $("#txtProCpt_" + i).val() != undefined) {
+                    var mod = $("#txtProMod_" + i).val() != "" ? $("#txtProMod_" + i).val() : null;
+                    var qty = $("#txtProQty_" + i).val() != "" ? $("#txtProQty_" + i).val() : null;
+                    var links = $("#txtLinks_" + i).val() != "" ? $("#txtProLinks_" + i).val() : null;
+                    $("#hdnProCptCodes").val($("#hdnProCptCodes").val() + "|" + $("#txtProCpt_" + i).val() + "^" + mod + "^" + qty + "^" + links);
                 }
             }
         }
