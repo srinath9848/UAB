@@ -172,6 +172,7 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult ExportToExcel(DataTable dataTable)
         {
+
             _logger.LogInformation("Loading Started for ExportToExcel for User: " + mUserId);
             using (XLWorkbook wb = new XLWorkbook())
             {
@@ -896,6 +897,12 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var lstChartReport = clinicalcaseOperations.GetProvidedpostedchartsChartsReport(ProjectId, range, StartDate, EndDate);
 
+            if (range == "Per Week")
+            {
+                lstChartReport.Tables[0].Columns.Remove("StartDate");
+                lstChartReport.Tables[0].Columns.Remove("EndDate");
+            }
+            
             _logger.LogInformation("Loading Ended for ExportProvidedpostedchartsChartsReport for User: " + mUserId);
             return ExportToExcel(lstChartReport.Tables[0]);
         }

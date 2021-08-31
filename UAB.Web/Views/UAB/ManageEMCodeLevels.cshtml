@@ -46,7 +46,7 @@
                             <label>Project</label>
                         </div>
                         <div class="col-md-4">
-                            @Html.DropDownListFor(model => model.ProjectId, new SelectList(@ViewBag.lstProject, "ProjectId", "Name"), "--Select Project--", new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.ProjectId, new SelectList(@ViewBag.lstProject, "ProjectId", "Name"), "", new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.ProjectId, null, new { @class = "text-danger" })
                         </div>
                     </div>
@@ -57,8 +57,8 @@
                             <thead>
                                 <tr>
                                     <th style="min-width: 180px; font-weight:900;">Action</th>
-                                    <th style="min-width: 80px; font-weight:900;">EM Level</th>
-                                    <th style="min-width: 700px; font-weight:900;">Project</th>
+                                    <th style="min-width: 300px; font-weight:900;">EM Level</th>
+                                    <th style="min-width: 400px; font-weight:900;">Project</th>
                                 </tr>
                             </thead>
                             <tbody id="UpdateContent">
@@ -70,7 +70,7 @@
                                             <td>
                                                 <a asp-action="EMLevelDetails"
                                            asp-controller="UAB" class="btn btn-sm btn-info btn-fill"
-                                           asp-route-eMLevelId="@item.EMLevelId" asp-route-eMLevel="@item.EMLevelId" asp-route-projectname="@item.ProjectName">
+                                           asp-route-eMLevelId="@item.EMLevelId" asp-route-eMLevel="@item.EMLevel" asp-route-projectname="@item.ProjectName">
                                                     <i class="fa fa-edit">Details</i>
                                                 </a>
                                                 <button type="button" style="cursor: pointer" class="btn btn-sm btn-danger btn-fill" onclick="Delete('@item.EMLevel')"><i class="fa fa-times"></i>Delete</button>
