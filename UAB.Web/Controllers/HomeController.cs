@@ -17,6 +17,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Diagnostics;
 using ClosedXML.Excel;
 using FastMember;
+using System.Globalization;
 
 namespace UAB.Controllers
 {
@@ -196,31 +197,111 @@ namespace UAB.Controllers
                 int colCount = dataSet.Tables[0].Columns.Count;
                 var firstRow = ws.Row(1);
                 firstRow.Cell(1).Value = "Levelling Report";
+                firstRow.Cell(1).Style.Font.SetBold();
+                firstRow.Cell(1).Style.Font.SetFontColor(XLColor.DarkRed);
 
                 var secondRow = ws.Row(2);
+                //secondRow.Style.DateFormat.Format = "mm/dd";
+                    //ws.Style.DateFormat.Format = "mm/dd";
                 for (int i = 0; i < colCount; i++)
                 {
-                    secondRow.Cell(i+1).Value = dataSet.Tables[0].Columns[i].ToString();
+                    secondRow.Cell(i + 1).Value = "'"+dataSet.Tables[0].Columns[i].ToString();
                 }
+                secondRow.Cell(colCount + 1).Value = "Total";
                 var thirdRow = ws.Row(3);
                 thirdRow.Cell(1).Value = dataSet.Tables[0];
 
-                int lastRow = ws.RowsUsed().Count();
+                int lastRow = ws.LastRowUsed().RowNumber();
+                int lastColumn = ws.LastColumnUsed().CellCount();
+
+                decimal total;
+                int col = 0;
+                for (int x = 3; x <= lastRow; x++)
+                {
+                    total = 0;
+                    for (int y = 3; y <= colCount; y++)
+                    {
+                        total = total + Convert.ToDecimal(ws.Row(x).Cell(y).Value);
+                        col = y;
+                    }
+                    ws.Row(x).Cell(col + 1).Value = total.ToString();
+                }
+
+                ws.Row(lastRow + 1).Cell(2).Value = "Total";
+
+                for (int x = 3; x <= colCount + 1; x++)
+                {
+                    total = 0;
+                    for (int y = 3; y <= lastRow; y++)
+                    {
+                        total = total + Convert.ToDecimal(ws.Row(y).Cell(x).Value);
+                        col = y;
+                    }
+                    ws.Row(col + 1).Cell(x).Value = total.ToString();
+                }
 
                 var firstRowForPercentage = ws.Row(lastRow + 3);
                 firstRowForPercentage.Cell(1).Value = "Levelling Report Percentage";
+                firstRowForPercentage.Cell(1).Style.Font.SetBold();
+                firstRowForPercentage.Cell(1).Style.Font.SetFontColor(XLColor.DarkRed);
 
                 var secondRowForPercentage = ws.Row(lastRow + 4);
                 int colCountForPercentage = dataSet.Tables[1].Columns.Count;
-
+                secondRowForPercentage.Style.DateFormat.Format = "mm/dd";
                 for (int i = 0; i < colCountForPercentage; i++)
                 {
-                    secondRowForPercentage.Cell(i + 1).Value = dataSet.Tables[1].Columns[i].ToString();
+                    secondRowForPercentage.Cell(i + 1).Value = "'"+dataSet.Tables[1].Columns[i].ToString();
                 }
+                secondRowForPercentage.Cell(colCountForPercentage + 1).Value = "Average";
                 var thirdRowForPercentage = ws.Row(lastRow + 5);
                 thirdRowForPercentage.Cell(1).Value = dataSet.Tables[1];
-                
-                string fileName = $"Export_{dataSet.Tables[0].TableName}_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.xlsx";
+
+                NumberFormatInfo setPrecision = new NumberFormatInfo();
+                setPrecision.NumberDecimalDigits = 2;
+
+                int lastRowForPercentage = ws.LastRowUsed().RowNumber();
+                decimal avg;
+                for (int x = lastRow + 5; x <= lastRowForPercentage; x++)
+                {
+                    total = 0;
+                    for(int y = 3; y <= colCountForPercentage; y++)
+                    {
+                        total = total + Convert.ToDecimal(ws.Row(x).Cell(y).Value);
+                        col = y;
+                    }
+                    avg = total / (colCountForPercentage - 2);
+                    ws.Row(x).Cell(col + 1).Value = avg.ToString("N", setPrecision);
+                }
+
+                for (int x = lastRow + 5; x <= lastRowForPercentage; x++)
+                {
+                    total = 0;
+                    for (int y = 3; y <= colCountForPercentage+1; y++)
+                    {
+                        ws.Row(x).Cell(y).Value= ws.Row(x).Cell(y).Value+"%";
+                        col = y;
+                    }
+                }
+
+                //ws.Style.DateFormat.Format = "mm/dd";
+
+                var range = ws.Range(2, 1, lastRow + 1, colCount + 1);
+
+                // create the actual table
+                var table = range.CreateTable();
+
+                // apply style
+                table.Theme = XLTableTheme.TableStyleLight9;
+
+                var range1 = ws.Range(lastRow + 4, 1, lastRowForPercentage + 1, colCountForPercentage + 1);
+
+                // create the actual table
+                var table1 = range1.CreateTable();
+
+                // apply style
+                table1.Theme = XLTableTheme.TableStyleLight9;
+
+                string fileName = $"Export_LevellingReport_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.xlsx";
                 using (MemoryStream stream = new MemoryStream())
                 {
                     wb.SaveAs(stream);

@@ -79,6 +79,15 @@ namespace UAB.DTO
         //[Required(ErrorMessage = "*")]
         public string QAProviderFeedbackRemarks { get; set; }
 
+        [Required(ErrorMessage = "*")]
+        public int PostedProviderId { get; set; }
+
+        [Required(ErrorMessage = "*")]
+        public int PostedPayorId { get; set; }
+        [Required(ErrorMessage = "*")]
+        public string PostedDx { get; set; }
+        [Required(ErrorMessage = "*")]
+        public string PostedCpt { get; set; }
         public int ProjectID { get; set; }
         public string ProjectName { get; set; }
         [Required(ErrorMessage = "*")]
