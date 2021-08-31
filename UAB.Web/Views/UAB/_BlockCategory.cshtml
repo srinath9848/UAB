@@ -39,7 +39,7 @@
                 <br />
                 <div class="col-md-12">
                     <label>Comments</label>
-                    @Html.TextAreaFor(model => model.Remarks, new { @id = "txtremarks", @placeholder = "Enter a Block Comments here", @class = "form-control ", @autocomplete = "off" })
+                    @Html.TextAreaFor(model => model.Remarks, new { @id = "txtremarks", @placeholder = "Enter a Block Comments here", @class = "form-control ", @autocomplete = "off", @maxlength = "250" })
                     @Html.ValidationMessageFor(model => model.Remarks, null, new { @class = "text-danger" })
                 </div>
             </div>

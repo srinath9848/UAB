@@ -2,11 +2,11 @@
 
 
     <style>
-        .table td, .table th {
+      /*  .table td, .table th {
             padding: 10px !important;
             vertical-align: top;
             border-top: 1px solid #dee2e6;
-        }
+        }*/
     </style>
 
 <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
@@ -18,8 +18,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <table>
+            <div class="modal-body" style="max-height:400px;overflow-y:scroll">
+                <table class="table table-bordered">
                     <tr>
                         <th>Block Date</th>
                         <td>@Model.BlockResponseDTO.BlockedDate.ToString("MM/dd/yyyy")</td>
@@ -34,7 +34,7 @@
                     </tr>
                     <tr>
                         <th>Block Remarks</th>
-                        <td>@Model.BlockResponseDTO.BlockRemarks</td>
+                        <td style="overflow-wrap:anywhere;width:250px">@Model.BlockResponseDTO.BlockRemarks</td>
                     </tr>
                     <tr></tr>
                     <tr>
