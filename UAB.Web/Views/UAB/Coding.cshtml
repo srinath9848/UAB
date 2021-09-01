@@ -89,9 +89,7 @@
                $("#hdnWrongProvider").val("true");
                $("#ProviderID").css("pointer-events", "auto");
                $("#ProviderID").css("background-color", "");
-               $("#ProviderID").val("");
-               var original = $("#InitialProviderID").val();
-               $("#ProviderID option[value='" + original + "']").attr("disabled", "disabled");
+               $("#ProviderID").prop("selectedIndex", 0).val();
                EnableButton();
            }
            else {
