@@ -2952,9 +2952,28 @@ namespace UAB.DAL
                             ProjectName = Convert.ToString(reader["ProjectName"]),
                             Status = Convert.ToString(reader["Status"]),
                             IncludeBlocked = Convert.ToString(reader["IsBlocked"]),
-                            Assigneduser = Convert.ToString(reader["AssignedTo"])
+                            Assigneduser = Convert.ToString(reader["AssignedTo"]),
+                            CodedBy = Convert.ToString(reader["CodedByName"]),
+                            QABy = Convert.ToString(reader["QAByName"]),
+                            ShadowQABy = Convert.ToString(reader["ShadowQAByName"])
                         };
                         lstDto.Add(dto);
+                    }
+                    reader.NextResult();
+
+                    while (reader.Read())
+                    {
+                        string CCID = Convert.ToString(reader["ClinicalCaseID"]);
+                        var item = lstDto.Where(x => x.ClinicalCaseId == CCID).FirstOrDefault();
+                        item.PostedBy = Convert.ToString(reader["PostedBy"]);
+                        item.PostedDate = Convert.ToString(reader["PostingDate"]);
+
+                        item.CPTDxInfo.Add(new CPTAndDxInfo
+                        {
+                            CPTCodes = Convert.ToString(reader["CPTCode"]),
+                            DxCodes = Convert.ToString(reader["DxCode"]),
+                            ClaimOrder = Convert.ToInt32(reader["ClaimOrder"]),
+                        });
                     }
                 }
             }

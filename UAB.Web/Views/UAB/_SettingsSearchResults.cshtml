@@ -35,6 +35,7 @@
     .tableresponsiveforroles {
         max-height: 400px;
     }
+
     .page-item.active .page-link {
         background-color: #27a9e3;
     }
@@ -58,11 +59,18 @@
                                     {
                                         <th style="width: 100px; font-weight: 900;">Action</th>
                                     }
-                                    <th style="width: 100px; font-weight:900;">MRN</th>
-                                    <th style="width: 100px; font-weight:900;">First Name</th>
-                                    <th style="width: 100px; font-weight:900;">Last Name</th>
-                                    <th style="width: 200px; font-weight:900;">Provider</th>
                                     <th style="width: 100px; font-weight:900;">DOS</th>
+                                    <th style="width: 100px; font-weight:900;">MRN</th>
+                                    <th style="width: 100px; font-weight:900;">Patient Name</th>
+                                    @*<th style="width: 100px; font-weight:900;">Last Name</th>*@
+                                    <th style="width: 200px; font-weight:900;">Provider</th>
+                                    <th style="width: 200px; font-weight:900;">DxCodes</th>
+                                    <th style="width: 200px; font-weight:900;">CPTCodes</th>
+                                    <th style="width: 200px; font-weight:900;">PostedBy</th>
+                                    <th style="width: 200px; font-weight:900;">PostedDate</th>
+                                    <th style="width: 200px; font-weight:900;">CodedBy</th>
+                                    <th style="width: 200px; font-weight:900;">QABy</th>
+                                    <th style="width: 200px; font-weight:900;">ShadowQABy</th>
                                     <th style="width: 200px; font-weight:900;">Project Name</th>
                                     <th style="width: 200px; font-weight:900;">Status</th>
                                 </tr>
@@ -80,13 +88,39 @@
 
                                                 }
                                             }
-                                             <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit" onclick="ViewHistory('@item.ClinicalCaseId')">History</button>
-                                            </td>
-                                        <td>@item.MRN</td>
-                                        <td>@item.FirstName</td>
-                                        <td>@item.LastName</td>
-                                        <td>@item.ProviderName</td>
+                                            <button type="submit" class="btn btn-sm btn-info btn-fill" id="btnsubmit" onclick="ViewHistory('@item.ClinicalCaseId')">History</button>
+                                        </td>
                                         <td>@item.DoS.ToString("MM/dd/yyyy")</td>
+                                        <td>@item.MRN</td>
+                                        <td>@item.FirstName&nbsp;@item.LastName </td>
+                                        @*<td>@item.LastName</td>*@
+                                        <td>@item.ProviderName</td>
+                                        <td>
+                                            @foreach (var Dx in item.CPTDxInfo)
+                                            {
+                                                @if (item.CPTDxInfo.Count > 1)
+                                                {
+                                                    <span><b>Claim:@Dx.ClaimOrder</b>:</span>
+                                                }
+                                                <span>@Dx.DxCodes</span><br />
+                                            }
+                                        </td>
+                                        <td>
+                                            @foreach (var CPT in item.CPTDxInfo)
+                                            {
+                                                @if (item.CPTDxInfo.Count > 1)
+                                                {
+                                                    <span><b>Claim:@CPT.ClaimOrder</b>:</span>
+                                                }
+                                                <span>@CPT.CPTCodes</span><br />
+                                            }
+                                        </td>
+
+                                        <td>@item.PostedBy</td>
+                                        <td>@item.PostedDate</td>
+                                        <td>@item.CodedBy</td>
+                                        <td>@item.QABy</td>
+                                        <td>@item.ShadowQABy</td>
                                         <td>@item.ProjectName</td>
                                         <td>@item.Status</td>
                                     </tr>
@@ -117,7 +151,7 @@
         "bDestroy": true
     });
 
-    
+
 
 
     $(document).ready(function () {
