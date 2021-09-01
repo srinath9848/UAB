@@ -1211,7 +1211,7 @@ namespace UAB.DAL
             }
             return ds;
         }
-        public List<ChartSummaryDTO> GetReceivedChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range, double timeZoneOffSet, DateTime StartDate, DateTime EndDate)
+        public List<ChartSummaryDTO> GetReceivedChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range, double timeZoneOffSet, DateTime StartDate, DateTime EndDate, DateTime weekStartDate, DateTime weekEndDate)
         {
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
@@ -1273,6 +1273,17 @@ namespace UAB.DAL
                             Direction = System.Data.ParameterDirection.Input,
                             Value = EndDate
                         }
+                        ,   new SqlParameter() {
+                            ParameterName = "@WeekStartDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = weekStartDate
+                        } ,   new SqlParameter() {
+                            ParameterName = "@WeekEndDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = weekEndDate
+                        }
                     };
                 using (var con = context.Database.GetDbConnection())
                 {
@@ -1300,7 +1311,7 @@ namespace UAB.DAL
             return lst;
         }
 
-        public List<ChartSummaryDTO> GetCodedChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range, double timeZoneOffSet, DateTime StartDate, DateTime EndDate)
+        public List<ChartSummaryDTO> GetCodedChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range, double timeZoneOffSet, DateTime StartDate, DateTime EndDate, DateTime weekStartDate, DateTime weekEndDate)
         {
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
@@ -1360,6 +1371,17 @@ namespace UAB.DAL
                             Direction = System.Data.ParameterDirection.Input,
                             Value = EndDate
                         }
+                        ,   new SqlParameter() {
+                            ParameterName = "@WeekStartDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = weekStartDate
+                        } ,   new SqlParameter() {
+                            ParameterName = "@WeekEndDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = weekEndDate
+                        }
                     };
                 using (var con = context.Database.GetDbConnection())
                 {
@@ -1393,7 +1415,7 @@ namespace UAB.DAL
             return lst;
         }
 
-        public List<ChartSummaryDTO> GetQAChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range, double timeZoneOffSet, DateTime StartDate, DateTime EndDate)
+        public List<ChartSummaryDTO> GetQAChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range, double timeZoneOffSet, DateTime StartDate, DateTime EndDate, DateTime weekStartDate, DateTime weekEndDate)
         {
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
@@ -1454,6 +1476,16 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.DateTime,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = EndDate
+                        },   new SqlParameter() {
+                            ParameterName = "@WeekStartDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = weekStartDate
+                        } ,   new SqlParameter() {
+                            ParameterName = "@WeekEndDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = weekEndDate
                         }
                     };
                 using (var con = context.Database.GetDbConnection())
@@ -1488,7 +1520,7 @@ namespace UAB.DAL
             return lst;
         }
 
-        public List<ChartSummaryDTO> GetPostedChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range, double timeZoneOffSet, DateTime StartDate, DateTime EndDate)
+        public List<ChartSummaryDTO> GetPostedChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range, double timeZoneOffSet, DateTime StartDate, DateTime EndDate, DateTime weekStartDate, DateTime weekEndDate)
         {
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
@@ -1549,6 +1581,16 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Decimal,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = timeZoneOffSet
+                        },   new SqlParameter() {
+                            ParameterName = "@WeekStartDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = weekStartDate
+                        } ,   new SqlParameter() {
+                            ParameterName = "@WeekEndDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = weekEndDate
                         }
                     };
                 using (var con = context.Database.GetDbConnection())
@@ -1583,7 +1625,7 @@ namespace UAB.DAL
             return lst;
         }
 
-        public List<ChartSummaryDTO> GetProviderPostedChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range)
+        public List<ChartSummaryDTO> GetProviderPostedChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range, DateTime weekStartDate, DateTime weekEndDate)
         {
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
@@ -1628,6 +1670,17 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = year
+                        },   new SqlParameter() {
+                            ParameterName = "@WeekStartDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = weekStartDate
+                        }
+                        ,   new SqlParameter() {
+                            ParameterName = "@WeekEndDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = weekEndDate
                         }
                     };
                 using (var con = context.Database.GetDbConnection())
@@ -2019,6 +2072,16 @@ namespace UAB.DAL
             }
             return ds;
         }
+
+        public void RemoveStartAndEndDate(DataSet dataSet, string range)
+        {
+            if (range == "PerWeek")
+            {
+                dataSet.Tables[0].Columns.Remove("Week Start Date");
+                dataSet.Tables[0].Columns.Remove("Week End Date");
+            }
+        }
+
         public DataSet GetQAChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate, double timeZoneOffSet)
         {
             DataTable dt = new DataTable();
@@ -2176,7 +2239,7 @@ namespace UAB.DAL
             }
             return ds;
         }
-        public List<ChartSummaryDTO> GetPendingReportDetails(DateTime date, int week, string month, string year, int projectID, string range, double timeZoneOffSet, DateTime StartDate, DateTime EndDate)
+        public List<ChartSummaryDTO> GetPendingReportDetails(DateTime date, int week, string month, string year, int projectID, string range, double timeZoneOffSet, DateTime StartDate, DateTime EndDate, DateTime weekStartDate, DateTime weekEndDate)
         {
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
@@ -2236,6 +2299,16 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.DateTime,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = EndDate
+                        },   new SqlParameter() {
+                            ParameterName = "@WeekStartDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = weekStartDate
+                        } ,   new SqlParameter() {
+                            ParameterName = "@WeekEndDate",
+                            SqlDbType =  System.Data.SqlDbType.DateTime,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = weekEndDate
                         }
                     };
                 using (var con = context.Database.GetDbConnection())
@@ -2285,7 +2358,7 @@ namespace UAB.DAL
             }
             return dtCPT;
         }
-        public void SubmitProviderPostedChart(ChartSummaryDTO chartSummaryDto,int providerPostedId,int payorPostedId, DataTable dtClaim, DataTable dtCpt, DataTable dtProDx, DataTable dtProCpt)
+        public void SubmitProviderPostedChart(ChartSummaryDTO chartSummaryDto, int providerPostedId, int payorPostedId, DataTable dtClaim, DataTable dtCpt, DataTable dtProDx, DataTable dtProCpt)
         {
             using var context = new UABContext();
             var param = new SqlParameter[] {
@@ -2377,7 +2450,7 @@ namespace UAB.DAL
                     SqlDbType =  System.Data.SqlDbType.Int,
                     Direction = System.Data.ParameterDirection.Input,
                     Value = providerPostedId
-                } 
+                }
                 ,
                 new SqlParameter() {
                     ParameterName = "@PayorPostedId",

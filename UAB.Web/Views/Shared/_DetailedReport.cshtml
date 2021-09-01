@@ -50,7 +50,7 @@
                     <h6 class="modal-title" id="exampleModalLongTitle"><span>Project : @ViewBag.projectname</span></h6>
                 </div>
                 <div class="col-2 linkToButton">
-                    @Html.ActionLink("Export", "ExportDetailedReport", "Home", new { date = @ViewBag.date, week = @ViewBag.week, month = @ViewBag.month, year = @ViewBag.year, ProjectId = @ViewBag.ProjectId, range = @ViewBag.range, ChartName = @ViewBag.ChartName, StartDate = @ViewBag.StartDate, EndDate = @ViewBag.EndDate,ProjectType= @ViewBag.projectType },new { @class= "whiteLink" })
+                    @Html.ActionLink("Export", "ExportDetailedReport", "Home", new { date = @ViewBag.date, week = @ViewBag.week, month = @ViewBag.month, year = @ViewBag.year, ProjectId = @ViewBag.ProjectId, range = @ViewBag.range, ChartName = @ViewBag.ChartName, StartDate = @ViewBag.StartDate, EndDate = @ViewBag.EndDate,ProjectType= @ViewBag.projectType ,weekStartDate=@ViewBag.WeekStartDate, weekEndDate = @ViewBag.WeekEndDate },new { @class= "whiteLink" })
                 </div>
                 <input type="hidden" id="ColumnName" value="@ViewBag.ColumnName" />
                 <input type="hidden" id="ProjectName" value="@ViewBag.projectname" />

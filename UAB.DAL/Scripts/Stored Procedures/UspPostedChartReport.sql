@@ -1,4 +1,4 @@
-ALTER PROCEDURE [dbo].[UspPostedChartReport] --NULL,'PerDay'      
+CREATE PROCEDURE [dbo].[UspPostedChartReport] --NULL,'PerDay'      
 @ProjectId INT = NULL,      
 @RangeType VARCHAR(100),    
 @StartDate Datetime,    
@@ -25,9 +25,11 @@ BEGIN
 END      
 ELSE IF @RangeType = 'PerWeek'      
 BEGIN      
- SELECT distinct DATEPART(ISO_WEEK, DATEADD(Second, @TimeZoneOffset * 60 * 60, VersionDate)) AS [Week Number],      
- DATENAME(month, DATEADD(Second, @TimeZoneOffset * 60 * 60, VersionDate)) AS [Month Name],      
- DATEPART(yyyy, DATEADD(Second, @TimeZoneOffset * 60 * 60, VersionDate)) AS [Year],      
+ SELECT distinct 
+ CONVERT(varchar(50), (DATEADD(dd, @@DATEFIRST - DATEPART(dw, VersionDate) - 6, VersionDate)), 101) AS [Week Start Date],
+ CONVERT(varchar(50), (DATEADD(dd, @@DATEFIRST - DATEPART(dw, VersionDate), VersionDate)), 101) AS [Week End Date],
+ FORMAT(CAST(CONVERT(varchar(50), (DATEADD(dd, @@DATEFIRST - DATEPART(dw, VersionDate) - 6, VersionDate)), 101) AS DATETIME),'dd MMM')
+ +'-'+FORMAT(CAST(CONVERT(varchar(50), (DATEADD(dd, @@DATEFIRST - DATEPART(dw, VersionDate), VersionDate)), 101) AS DATETIME),'dd MMM yyy') AS [Start Date - End Date],      
  COUNT(*) AS Total,      
  COUNT(*)*100/SUM(COUNT(*)) OVER() AS [Percentage]      
  FROM WorkItem W       
@@ -37,9 +39,12 @@ BEGIN
  AND v.StatusId in (16)    
  AND DATEADD(Second, @TimeZoneOffset * 60 * 60, VersionDate) >= @StartDate  
  AND DATEADD(Second, @TimeZoneOffset * 60 * 60, VersionDate) <= @EndDate    
- GROUP BY DATEPART(ISO_WEEK, DATEADD(Second, @TimeZoneOffset * 60 * 60, VersionDate)),      
-   DATENAME(month, DATEADD(Second, @TimeZoneOffset * 60 * 60, VersionDate)),      
- DATEPART(yyyy, DATEADD(Second, @TimeZoneOffset * 60 * 60, VersionDate))     
+ GROUP BY 
+ CONVERT(varchar(50), (DATEADD(dd, @@DATEFIRST - DATEPART(dw, VersionDate) - 6, VersionDate)), 101),
+ CONVERT(varchar(50), (DATEADD(dd, @@DATEFIRST - DATEPART(dw, VersionDate), VersionDate)), 101),
+ FORMAT(CAST(CONVERT(varchar(50), (DATEADD(dd, @@DATEFIRST - DATEPART(dw, VersionDate) - 6, VersionDate)), 101) AS DATETIME),'dd MMM')
+ +'-'+FORMAT(CAST(CONVERT(varchar(50), (DATEADD(dd, @@DATEFIRST - DATEPART(dw, VersionDate), VersionDate)), 101) AS DATETIME),'dd MMM yyy')
+ order by CONVERT(varchar(50), (DATEADD(dd, @@DATEFIRST - DATEPART(dw, VersionDate) - 6, VersionDate)), 101)
 END      
 ELSE IF @RangeType = 'PerMonth'      
 BEGIN       

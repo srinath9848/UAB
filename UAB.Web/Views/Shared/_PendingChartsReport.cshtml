@@ -67,7 +67,18 @@
                                 <tr>
                                     @foreach (DataColumn clmn in Model.Tables[0].Columns)
                                     {
-                                        <th style="width: 250px; font-weight:900;">@clmn.ColumnName</th>
+                                        if (clmn.ColumnName == "Week Start Date" || clmn.ColumnName == "Week End Date")
+                                        {
+
+                                        }
+                                        else if (clmn.ColumnName == "Start Date - End Date")
+                                        {
+                                            <th style="width: 500px !important; font-weight:900;">@clmn.ColumnName</th>
+                                        }
+                                        else
+                                        {
+                                            <th style="width: 250px; font-weight:900;">@clmn.ColumnName</th>
+                                        }
                                     }
                                 </tr>
                             </thead>
@@ -98,6 +109,10 @@
                                                     <td>
                                                         <span onclick="ClickOnCell('@Model.Tables[0].Rows[i][3]','@Model.Tables[0].Rows[i][0]','@Model.Tables[0].Rows[i][1]','@Model.Tables[0].Rows[i][2]')" style="cursor:pointer;text-decoration:underline;color:cornflowerblue;">@Model.Tables[0].Rows[i][j]</span>
                                                     </td>
+                                                }
+                                                else if (@Model.Tables[0].Columns[j].ColumnName == "Week Start Date" || @Model.Tables[0].Columns[j].ColumnName == "Week End Date")
+                                                {
+
                                                 }
                                                 else
                                                 {
@@ -185,9 +200,8 @@
                     url: "@Url.Action("GetPendingReportDetails", "Home")",
                     data: {
                         "Total": p1,
-                        "week": p2,
-                        "month": p3,
-                        "year":p4,
+                        "weekStartDate": p2,
+                        "weekEndDate": p3,
                         "ProjectId":projectId,
                         "range": range,
                         "StartDate": $("#StartDate").val(),
