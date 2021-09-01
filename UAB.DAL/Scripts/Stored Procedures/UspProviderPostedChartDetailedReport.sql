@@ -28,7 +28,7 @@ BEGIN
  --LEFT JOIN Provider Pro ON Pro.ProviderID = Wip.ProviderId 
  WHERE (W.ProjectId = @ProjectId OR (W.ProjectID = ISNULL(@ProjectId,W.ProjectId)))        
  AND W.StatusId =17    
- AND CONVERT(VARCHAR, PostingDate, 1) = @Date        
+ AND CONVERT(VARCHAR, W.PostingDate, 1) = @Date        
 END          
 ELSE IF @RangeType = 'PerWeek'          
 BEGIN          
@@ -45,8 +45,8 @@ BEGIN
  --LEFT JOIN Provider Pro ON Pro.ProviderID = Wip.ProviderId
  WHERE (W.ProjectId = @ProjectId OR (W.ProjectID = ISNULL(@ProjectId,W.ProjectId)))        
  AND W.StatusId =17    
- AND PostingDate >= @WeekStartDate
- AND PostingDate <= @WeekEndDate
+ AND W.PostingDate >= @WeekStartDate
+ AND W.PostingDate <= @WeekEndDate
 END          
 ELSE IF @RangeType = 'PerMonth'          
 BEGIN         
@@ -64,8 +64,8 @@ SELECT CC.DateOfService AS DateOfService,L.Name AS ListName,CC.ClinicalCaseId AS
  --LEFT JOIN Provider Pro ON Pro.ProviderID = Wip.ProviderId
  WHERE (W.ProjectId = @ProjectId OR (W.ProjectID = ISNULL(@ProjectId,W.ProjectId)))        
  AND W.StatusId =17    
- AND DATENAME(month, PostingDate) = @Month    
-  AND  DATEPART(yyyy , PostingDate) = @Year    
+ AND DATENAME(month, W.PostingDate) = @Month    
+  AND  DATEPART(yyyy , W.PostingDate) = @Year    
 END          
           
 END

@@ -66,8 +66,8 @@
                                 <table id="Users" class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
-                                            <th style="width: 20px; font-weight:900;">Action</th>
-                                            <th style="width: 250px; font-weight:900;">EM Codes</th>
+                                            <th style="min-width: 180px; font-weight:900;">Action</th>
+                                            <th style="width: 750px; font-weight:900;">EM Code</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -102,7 +102,6 @@
 <script src="~/dashboardassets/extra-libs/DataTables/datatables.js"></script>
 
 <script type="text/javascript">
-    $("#settings").addClass('selected');
     $(document).ready(function () {
         Add= function () {
             $.ajax({

@@ -173,6 +173,7 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult ExportToExcel(DataTable dataTable)
         {
+
             _logger.LogInformation("Loading Started for ExportToExcel for User: " + mUserId);
             using (XLWorkbook wb = new XLWorkbook())
             {
