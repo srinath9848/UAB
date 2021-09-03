@@ -1213,6 +1213,7 @@ namespace UAB.DAL
         }
         public List<ChartSummaryDTO> GetReceivedChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range, double timeZoneOffSet, DateTime StartDate, DateTime EndDate, DateTime weekStartDate, DateTime weekEndDate)
         {
+            DateValueMustNotBeLessThanCertainDate(ref weekStartDate, ref weekEndDate);
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO.ProjectID = projectID;
@@ -1313,6 +1314,7 @@ namespace UAB.DAL
 
         public List<ChartSummaryDTO> GetCodedChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range, double timeZoneOffSet, DateTime StartDate, DateTime EndDate, DateTime weekStartDate, DateTime weekEndDate)
         {
+            DateValueMustNotBeLessThanCertainDate(ref weekStartDate, ref weekEndDate);
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO.ProjectID = projectID;
@@ -1417,6 +1419,7 @@ namespace UAB.DAL
 
         public List<ChartSummaryDTO> GetQAChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range, double timeZoneOffSet, DateTime StartDate, DateTime EndDate, DateTime weekStartDate, DateTime weekEndDate)
         {
+            DateValueMustNotBeLessThanCertainDate(ref weekStartDate, ref weekEndDate);
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO.ProjectID = projectID;
@@ -1522,6 +1525,7 @@ namespace UAB.DAL
 
         public List<ChartSummaryDTO> GetPostedChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range, double timeZoneOffSet, DateTime StartDate, DateTime EndDate, DateTime weekStartDate, DateTime weekEndDate)
         {
+            DateValueMustNotBeLessThanCertainDate(ref weekStartDate, ref weekEndDate);
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO.ProjectID = projectID;
@@ -1627,6 +1631,7 @@ namespace UAB.DAL
 
         public List<ChartSummaryDTO> GetProviderPostedChartReportDetails(DateTime date, int week, string month, string year, int projectID, string range, DateTime weekStartDate, DateTime weekEndDate)
         {
+            DateValueMustNotBeLessThanCertainDate(ref weekStartDate, ref weekEndDate);
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO.ProjectID = projectID;
@@ -2241,6 +2246,7 @@ namespace UAB.DAL
         }
         public List<ChartSummaryDTO> GetPendingReportDetails(DateTime date, int week, string month, string year, int projectID, string range, double timeZoneOffSet, DateTime StartDate, DateTime EndDate, DateTime weekStartDate, DateTime weekEndDate)
         {
+            DateValueMustNotBeLessThanCertainDate(ref weekStartDate, ref weekEndDate);
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
             ChartSummaryDTO chartSummaryDTO = new ChartSummaryDTO();
             chartSummaryDTO.ProjectID = projectID;
@@ -5012,6 +5018,18 @@ namespace UAB.DAL
                 }
             }
             return providers;
+        }
+
+        public void DateValueMustNotBeLessThanCertainDate(ref DateTime weekStartDate,ref DateTime weekEndDate)
+        {
+            if (weekStartDate < new DateTime(1753, 01, 01))
+            {
+                weekStartDate = DateTime.Now;
+            }
+            if (weekEndDate < new DateTime(1753, 01, 01))
+            {
+                weekEndDate = DateTime.Now;
+            }
         }
     }
 }
