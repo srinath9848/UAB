@@ -1821,7 +1821,6 @@ namespace UAB.DAL
 
         public DataSet GetDetailedChartSummaryReport(int projectID, DateTime StartDate, DateTime EndDate, string dateType)
         {
-            DataTable dt = new DataTable();
             DataSet ds = new DataSet();
             using (var context = new UABContext())
             {
@@ -1833,13 +1832,13 @@ namespace UAB.DAL
                             Value = projectID
                         },
                         new SqlParameter() {
-                            ParameterName = "@DoSStart",
+                            ParameterName = "@StartDate",
                             SqlDbType =  System.Data.SqlDbType.Date,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = StartDate
                         },
                         new SqlParameter() {
-                            ParameterName = "@DoSEnd",
+                            ParameterName = "@EndDate",
                             SqlDbType =  System.Data.SqlDbType.Date,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = EndDate
@@ -1856,13 +1855,36 @@ namespace UAB.DAL
                 {
                     var cmd = con.CreateCommand();
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.CommandText = "[dbo].[Rpt_GenerateDetailedChartSummaryReport]";
+                    cmd.CommandText = "[dbo].[USPGetChartSummaryReportAllData]";
                     cmd.Parameters.AddRange(param);
                     cmd.Connection = con;
                     con.Open();
-                    var reader = cmd.ExecuteReader();
-                    dt.Load(reader);
-                    ds.Tables.Add(dt);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        do
+                        {
+                            DataTable dt = new DataTable();
+                            dt.Load(reader);
+                            ds.Tables.Add(dt);
+                        } while (!reader.IsClosed);
+                    }
+
+                    if (ds.Tables[1].Rows.Count > 0)
+                    {
+                        ds.Tables[0].Columns["DX"].MaxLength = 200;
+                        ds.Tables[0].Columns["CPT"].MaxLength = 500;
+                        foreach (DataRow row in ds.Tables[1].Rows)
+                        {
+                            DataRow[] dataRows = ds.Tables[0].Select("ClinicalCaseID='" + row["ClinicalCaseID"].ToString() + "'");
+                            if (dataRows.Count() > 0)
+                            {
+                                DataRow dr = dataRows.FirstOrDefault();
+                                dr["DX"] += "Claim" + row["ClaimOrder"].ToString() + ": " + row["DxCode"].ToString() + "  ";
+                                dr["CPT"] += "Claim" + row["ClaimOrder"].ToString() + ": " + row["CPTCode"].ToString() + "  ";
+                            }
+                        }
+                    }
                 }
             }
             return ds;
