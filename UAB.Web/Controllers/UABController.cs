@@ -65,7 +65,6 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             ChartSummaryDTO chartSummary = new ChartSummaryDTO();
 
-
             chartSummary = clinicalcaseOperations.GetNext(Role, ChartType, ProjectID, timeZoneCookie);
             chartSummary.ProjectName = ProjectName;
 
@@ -487,146 +486,157 @@ namespace UAB.Controllers
 
         public IActionResult SubmitCodingAvailableChart(ChartSummaryDTO chartSummaryDto, string codingSubmitAndGetNext, int providerPostedId, int payorPostedId, DateTime txtPostingDate, string txtCoderComment)
         {
-            _logger.LogInformation("Loading Started for SubmitCodingAvailableChart for User: " + mUserId);
-
-            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            string providerPosted = Request.Form["hdnProviderPosted"].ToString();
-
-            //Below 3 fields are related to Block->Next & Previous functionality
-            string hdnBlockedCCIds = Request.Form["CCIDs"].ToString();
-            string hdnCurrentCCId = Request.Form["hdnCurrentCCId"].ToString();
-            string hdnIsBlocked = Request.Form["hdnIsBlocked"].ToString();
-            string IsWrongProvider = Request.Form["hdnWrongProvider"].ToString();
-
-            if (IsWrongProvider == "true")
-                chartSummaryDto.isWrongProvider = true;
-            else
-                chartSummaryDto.isWrongProvider = false;
-            //string submitType = Request.Form["hdnSubmitAndPost"];
-            string hdnIsAuditRequired = Request.Form["hdnIsAuditRequired"];
-
-            if (hdnIsAuditRequired == "true")
-            {
-                chartSummaryDto.IsAuditRequired = true;
-                chartSummaryDto.SubmitAndPostAlso = false;
-            }
-            else
-            {
-                chartSummaryDto.IsAuditRequired = false;
-                chartSummaryDto.SubmitAndPostAlso = true;
-            }
-
-            if (string.IsNullOrEmpty(codingSubmitAndGetNext))
-                codingSubmitAndGetNext = Request.Form["hdnButtonType"];
-
-            string hdnDxCodes = Request.Form["hdnDxCodes"].ToString();
-            chartSummaryDto.Dx = hdnDxCodes;
-            string hdnCptCodes = Request.Form["hdnCptCodes"].ToString();
-            chartSummaryDto.CPTCode = hdnCptCodes;
-
-            string hdnClaim1 = Request.Form["hdnClaim2"].ToString();
-            string hdnDxClaim1 = Request.Form["hdnDxCodes1"].ToString();
-            string hdnCptClaim1 = Request.Form["hdnCptCodes1"].ToString();
-
-            DataTable dtClaim = new DataTable();
-            dtClaim.Columns.Add("RNO", typeof(int));
-            dtClaim.Columns.Add("ProviderId", typeof(int));
-            dtClaim.Columns.Add("PayorId", typeof(int));
-            dtClaim.Columns.Add("NoteTitle", typeof(string));
-            dtClaim.Columns.Add("ProviderFeedbackId", typeof(string));
-            dtClaim.Columns.Add("Dx", typeof(string));
-
-            DataTable dtCpt = new DataTable();
-            dtCpt.Columns.Add("RNO", typeof(int));
-            dtCpt.Columns.Add("CPTCode", typeof(string));
-            dtCpt.Columns.Add("Mod", typeof(string));
-            dtCpt.Columns.Add("Qty", typeof(string));
-            dtCpt.Columns.Add("Links", typeof(string));
-            if (!string.IsNullOrEmpty(hdnClaim1))
-                PrepareClaim(hdnClaim1, hdnDxClaim1, hdnCptClaim1, 1, ref dtClaim, ref dtCpt);
-
-            string hdnClaim2 = Request.Form["hdnClaim3"].ToString();
-            string hdnDxClaim2 = Request.Form["hdnDxCodes2"].ToString();
-            string hdnCptClaim2 = Request.Form["hdnCptCodes2"].ToString();
-
-            if (!string.IsNullOrEmpty(hdnClaim2))
-                PrepareClaim(hdnClaim2, hdnDxClaim2, hdnCptClaim2, 2, ref dtClaim, ref dtCpt);
-
-            string hdnClaim3 = Request.Form["hdnClaim4"].ToString();
-            string hdnDxClaim3 = Request.Form["hdnDxCodes3"].ToString();
-            string hdnCptClaim3 = Request.Form["hdnCptCodes3"].ToString();
-            if (!string.IsNullOrEmpty(hdnClaim3))
-                PrepareClaim(hdnClaim3, hdnDxClaim3, hdnCptClaim3, 3, ref dtClaim, ref dtCpt);
-
             List<DashboardDTO> lstDto;
-
-            if (providerPosted != "")
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
+            try
             {
-                DataTable dtProCpt = new DataTable();
-                dtProCpt.Columns.Add("CPTCode", typeof(string));
-                dtProCpt.Columns.Add("Mod", typeof(string));
-                dtProCpt.Columns.Add("Qty", typeof(string));
-                dtProCpt.Columns.Add("Links", typeof(string));
-                dtProCpt.Columns.Add("ClaimId", typeof(int));
+                _logger.LogInformation("Loading Started for SubmitCodingAvailableChart for User: " + mUserId);
 
-                DataTable dtProDx = new DataTable();
-                dtProDx.Columns.Add("DxCode", typeof(string));
-                dtProDx.Columns.Add("ClaimId", typeof(int));
 
-                PrepareCpt(hdnCptCodes, dtCpt, 1);
+                string providerPosted = Request.Form["hdnProviderPosted"].ToString();
+                //Below 3 fields are related to Block->Next & Previous functionality
+                string hdnBlockedCCIds = Request.Form["CCIDs"].ToString();
+                string hdnCurrentCCId = Request.Form["hdnCurrentCCId"].ToString();
+                string hdnIsBlocked = Request.Form["hdnIsBlocked"].ToString();
+                string IsWrongProvider = Request.Form["hdnWrongProvider"].ToString();
 
-                string hdnProDxCodes = Request.Form["hdnProDxCodes"].ToString();
-                PrepareDx(hdnProDxCodes, dtProDx, 0);
-                string hdnProCptCodes = Request.Form["hdnProCptCodes"].ToString();
-                PrepareCpt1(hdnProCptCodes, dtProCpt, 0);
+                if (IsWrongProvider == "true")
+                    chartSummaryDto.isWrongProvider = true;
+                else
+                    chartSummaryDto.isWrongProvider = false;
+                //string submitType = Request.Form["hdnSubmitAndPost"];
+                string hdnIsAuditRequired = Request.Form["hdnIsAuditRequired"];
 
-                clinicalcaseOperations.SubmitProviderPostedChart(chartSummaryDto, providerPostedId,payorPostedId, dtClaim, dtCpt, dtProDx, dtProCpt);
-            }
-            else
-            {
-                if (codingSubmitAndGetNext == "codingSubmit")
-                    clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDto, dtClaim, dtCpt);
+                if (hdnIsAuditRequired == "true")
+                {
+                    chartSummaryDto.IsAuditRequired = true;
+                    chartSummaryDto.SubmitAndPostAlso = false;
+                }
                 else
                 {
-                    clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDto, dtClaim, dtCpt);
+                    chartSummaryDto.IsAuditRequired = false;
+                    chartSummaryDto.SubmitAndPostAlso = true;
+                }
 
-                    if (hdnIsBlocked == "1" && hdnBlockedCCIds != "" && hdnCurrentCCId != "")
+                if (string.IsNullOrEmpty(codingSubmitAndGetNext))
+                    codingSubmitAndGetNext = Request.Form["hdnButtonType"];
+
+                string hdnDxCodes = Request.Form["hdnDxCodes"].ToString();
+                chartSummaryDto.Dx = hdnDxCodes;
+                string hdnCptCodes = Request.Form["hdnCptCodes"].ToString();
+                chartSummaryDto.CPTCode = hdnCptCodes;
+
+                string hdnClaim1 = Request.Form["hdnClaim2"].ToString();
+                string hdnDxClaim1 = Request.Form["hdnDxCodes1"].ToString();
+                string hdnCptClaim1 = Request.Form["hdnCptCodes1"].ToString();
+
+                DataTable dtClaim = new DataTable();
+                dtClaim.Columns.Add("RNO", typeof(int));
+                dtClaim.Columns.Add("ProviderId", typeof(int));
+                dtClaim.Columns.Add("PayorId", typeof(int));
+                dtClaim.Columns.Add("NoteTitle", typeof(string));
+                dtClaim.Columns.Add("ProviderFeedbackId", typeof(string));
+                dtClaim.Columns.Add("Dx", typeof(string));
+
+                DataTable dtCpt = new DataTable();
+                dtCpt.Columns.Add("RNO", typeof(int));
+                dtCpt.Columns.Add("CPTCode", typeof(string));
+                dtCpt.Columns.Add("Mod", typeof(string));
+                dtCpt.Columns.Add("Qty", typeof(string));
+                dtCpt.Columns.Add("Links", typeof(string));
+                if (!string.IsNullOrEmpty(hdnClaim1))
+                    PrepareClaim(hdnClaim1, hdnDxClaim1, hdnCptClaim1, 1, ref dtClaim, ref dtCpt);
+
+                string hdnClaim2 = Request.Form["hdnClaim3"].ToString();
+                string hdnDxClaim2 = Request.Form["hdnDxCodes2"].ToString();
+                string hdnCptClaim2 = Request.Form["hdnCptCodes2"].ToString();
+
+                if (!string.IsNullOrEmpty(hdnClaim2))
+                    PrepareClaim(hdnClaim2, hdnDxClaim2, hdnCptClaim2, 2, ref dtClaim, ref dtCpt);
+
+                string hdnClaim3 = Request.Form["hdnClaim4"].ToString();
+                string hdnDxClaim3 = Request.Form["hdnDxCodes3"].ToString();
+                string hdnCptClaim3 = Request.Form["hdnCptCodes3"].ToString();
+                if (!string.IsNullOrEmpty(hdnClaim3))
+                    PrepareClaim(hdnClaim3, hdnDxClaim3, hdnCptClaim3, 3, ref dtClaim, ref dtCpt);
+
+                if (providerPosted != "")
+                {
+                    DataTable dtProCpt = new DataTable();
+                    dtProCpt.Columns.Add("CPTCode", typeof(string));
+                    dtProCpt.Columns.Add("Mod", typeof(string));
+                    dtProCpt.Columns.Add("Qty", typeof(string));
+                    dtProCpt.Columns.Add("Links", typeof(string));
+                    dtProCpt.Columns.Add("ClaimId", typeof(int));
+
+                    DataTable dtProDx = new DataTable();
+                    dtProDx.Columns.Add("DxCode", typeof(string));
+                    dtProDx.Columns.Add("ClaimId", typeof(int));
+
+                    PrepareCpt(hdnCptCodes, dtCpt, 1);
+
+                    string hdnProDxCodes = Request.Form["hdnProDxCodes"].ToString();
+                    PrepareDx(hdnProDxCodes, dtProDx, 0);
+                    string hdnProCptCodes = Request.Form["hdnProCptCodes"].ToString();
+                    PrepareCpt1(hdnProCptCodes, dtProCpt, 0);
+
+                    clinicalcaseOperations.SubmitProviderPostedChart(chartSummaryDto, providerPostedId, payorPostedId, dtClaim, dtCpt, dtProDx, dtProCpt);
+                }
+                else
+                {
+                    if (codingSubmitAndGetNext == "codingSubmit")
+                        clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDto, dtClaim, dtCpt);
+                    else
                     {
-                        List<int> blockedCCIds = hdnBlockedCCIds.Split(",").Select(int.Parse).ToList();
+                        clinicalcaseOperations.SubmitCodingAvailableChart(chartSummaryDto, dtClaim, dtCpt);
 
-                        int CurrentIndex = blockedCCIds.IndexOf(Convert.ToInt32(hdnCurrentCCId));
-
-                        string currCCId = "";
-                        if (CurrentIndex > 0)
-                            currCCId = blockedCCIds[CurrentIndex - 1].ToString();
-
-                        blockedCCIds.RemoveAll(item => item == Convert.ToInt32(hdnCurrentCCId));
-
-                        if (blockedCCIds.Count == 0 || hdnCurrentCCId == "0")//(CurrentIndex + 1) == blockedCCIds.Count ||
+                        if (hdnIsBlocked == "1" && hdnBlockedCCIds != "" && hdnCurrentCCId != "")
                         {
-                            _logger.LogInformation("Loading Ended for SubmitCodingAvailableChart for User: " + mUserId);
-                            TempData["Toast"] = "There are no charts available";
-                            lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
-                            return RedirectToAction("CodingSummary", lstDto);
+                            List<int> blockedCCIds = hdnBlockedCCIds.Split(",").Select(int.Parse).ToList();
+
+                            int CurrentIndex = blockedCCIds.IndexOf(Convert.ToInt32(hdnCurrentCCId));
+
+                            string currCCId = "";
+                            if (CurrentIndex > 0)
+                                currCCId = blockedCCIds[CurrentIndex - 1].ToString();
+
+                            blockedCCIds.RemoveAll(item => item == Convert.ToInt32(hdnCurrentCCId));
+
+                            if (blockedCCIds.Count == 0 || hdnCurrentCCId == "0")//(CurrentIndex + 1) == blockedCCIds.Count ||
+                            {
+                                _logger.LogInformation("Loading Ended for SubmitCodingAvailableChart for User: " + mUserId);
+                                TempData["Toast"] = "There are no charts available";
+                                lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
+                                return RedirectToAction("CodingSummary", lstDto);
+                            }
+                            else
+                            {
+                                _logger.LogInformation("Loading Ended for SubmitCodingAvailableChart for User: " + mUserId);
+                                return RedirectToAction("GetBlockedChart", new { Role = Roles.Coder.ToString(), ChartType = "Block", ProjectID = chartSummaryDto.ProjectID, ProjectName = chartSummaryDto.ProjectName, ccids = ((CurrentIndex == blockedCCIds.Count) || CurrentIndex == 0) ? null : string.Join<int>(",", blockedCCIds), Next = "1", CurrCCId = currCCId });
+                            }
                         }
                         else
                         {
                             _logger.LogInformation("Loading Ended for SubmitCodingAvailableChart for User: " + mUserId);
-                            return RedirectToAction("GetBlockedChart", new { Role = Roles.Coder.ToString(), ChartType = "Block", ProjectID = chartSummaryDto.ProjectID, ProjectName = chartSummaryDto.ProjectName, ccids = ((CurrentIndex == blockedCCIds.Count) || CurrentIndex == 0) ? null : string.Join<int>(",", blockedCCIds), Next = "1", CurrCCId = currCCId });
+                            return RedirectToAction("GetCodingAvailableChart", new { Role = Roles.Coder.ToString(), ChartType = "Available", ProjectID = chartSummaryDto.ProjectID, ProjectName = chartSummaryDto.ProjectName });
                         }
                     }
-                    else
-                    {
-                        _logger.LogInformation("Loading Ended for SubmitCodingAvailableChart for User: " + mUserId);
-                        return RedirectToAction("GetCodingAvailableChart", new { Role = Roles.Coder.ToString(), ChartType = "Available", ProjectID = chartSummaryDto.ProjectID, ProjectName = chartSummaryDto.ProjectName });
-                    }
                 }
+                TempData["Success"] = "Chart Details submitted successfully !";
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("This chart is no longer available in the coding queue"))
+                    TempData["Error"] = "This chart is no longer available in the coding queue";
+
+                if (TempData["Error"] == null)
+                    TempData["Error"] = ex.Message;
+                _logger.LogInformation("This chart is no longer available in the coding queue for User: " + mUserId);
             }
             lstDto = clinicalcaseOperations.GetChartCountByRole(Roles.Coder.ToString());
 
             _logger.LogInformation("Loading Ended for SubmitCodingAvailableChart for User: " + mUserId);
 
-            TempData["Success"] = "Chart Details submitted successfully !";
             return View("CodingSummary", lstDto);
         }
         public IActionResult codingSubmitPopup(string buttonType, string isAuditRequired)
