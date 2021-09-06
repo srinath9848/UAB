@@ -9,10 +9,13 @@ namespace UAB.DTO
     {
         [Required]
         public int BlockCategoryId { get; set; }
-        public int ClinicalCaseId  { get; set; }
+        public int ClinicalCaseId { get; set; }
         public string Name { get; set; }
         [Required]
-        public string Remarks   { get; set; }
-        public DateTime ?CreateDate { get; set; }
+        public string Remarks { get; set; }
+        public DateTime? CreateDate { get; set; }
+        public string BlockedBy { get; set; }
+        public string Queue { get; set; }
+
     }
 }

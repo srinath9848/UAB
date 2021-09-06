@@ -293,10 +293,12 @@ namespace UAB.DAL
                             {
                                 Name = Convert.ToString(reader["BlockCategory"]),
                                 Remarks = Convert.ToString(reader["BlockRemarks"]),
+                                Queue = Convert.ToString(reader["Queue"]),
+                                BlockedBy = Convert.ToString(reader["BlockedBy"]),
                                 CreateDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie)
                             });
                         }
-                    }
+                    }   
                     reader.NextResult();
 
                     while (reader.Read())
@@ -857,6 +859,8 @@ namespace UAB.DAL
                         {
                             Name = Convert.ToString(reader["BlockCategory"]),
                             Remarks = Convert.ToString(reader["BlockRemarks"]),
+                            Queue = Convert.ToString(reader["Queue"]),
+                            BlockedBy = Convert.ToString(reader["BlockedBy"]),
                             CreateDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie)
                         });
                     }
@@ -1077,6 +1081,8 @@ namespace UAB.DAL
                         {
                             ClinicalCaseId = Convert.ToInt32(reader["ClinicalCaseId"]),
                             Name = Convert.ToString(reader["BlockCategory"]),
+                            Queue = Convert.ToString(reader["Queue"]),
+                            BlockedBy = Convert.ToString(reader["BlockedBy"]),
                             Remarks = Convert.ToString(reader["BlockRemarks"]),
                             CreateDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie)
                         });
