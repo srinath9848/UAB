@@ -573,8 +573,6 @@ namespace UAB.Controllers
                     dtProDx.Columns.Add("DxCode", typeof(string));
                     dtProDx.Columns.Add("ClaimId", typeof(int));
 
-                    PrepareCpt(hdnCptCodes, dtCpt, 1);
-
                     string hdnProDxCodes = Request.Form["hdnProDxCodes"].ToString();
                     PrepareDx(hdnProDxCodes, dtProDx, 0);
                     string hdnProCptCodes = Request.Form["hdnProCptCodes"].ToString();

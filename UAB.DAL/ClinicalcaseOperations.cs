@@ -2392,8 +2392,10 @@ namespace UAB.DAL
             }
             return dtCPT;
         }
-        public void SubmitProviderPostedChart(ChartSummaryDTO chartSummaryDto, int providerPostedId, int payorPostedId, DataTable dtClaim, DataTable dtCpt, DataTable dtProDx, DataTable dtProCpt)
+        public void SubmitProviderPostedChart(ChartSummaryDTO chartSummaryDto, int providerPostedId, int payorPostedId, DataTable dtClaim, DataTable dtCpt1, DataTable dtProDx, DataTable dtProCpt)
         {
+            var dtCpt = GetCpt(chartSummaryDto.CPTCode);
+
             using var context = new UABContext();
             var param = new SqlParameter[] {
                 new SqlParameter() {
@@ -2427,7 +2429,7 @@ namespace UAB.DAL
                     SqlDbType =  System.Data.SqlDbType.Structured,
                     Direction = System.Data.ParameterDirection.Input,
                     TypeName = "utCpt",
-                    Value = dtCpt
+                    Value = dtCpt1
                 },
                 new SqlParameter()
                 {
