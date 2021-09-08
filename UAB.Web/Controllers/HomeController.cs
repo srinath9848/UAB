@@ -1032,6 +1032,51 @@ namespace UAB.Controllers
             return PartialView("_DetailedReport", lstPendingReportDetails);
         }
 
+        public IActionResult ExportSearchedItem(string fname, string lname, string mrn, string dosfrom, string dosto, string status, string project, string provider, bool includeblocked)
+        {
+            SearchParametersDTO searchParametersDTO = new SearchParametersDTO()
+            {
+                FirstName = fname,
+                LastName = lname,
+                MRN = mrn,
+                DoSFrom = Convert.ToDateTime(dosfrom),
+                DoSTo = Convert.ToDateTime(dosto),
+                StatusName = status,
+                ProjectName = project,
+                ProviderName = provider,
+                IncludeBlocked = includeblocked
+            };
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId, mUserRole);
+            var searchData = clinicalcaseOperations.GetSearchData(searchParametersDTO);
+            List<ExportSearchResultDTO> lstSearch = new List<ExportSearchResultDTO>();
+
+            foreach(var result in searchData)
+            {
+                ExportSearchResultDTO searchResult = new ExportSearchResultDTO();
+                searchResult.DoS = result.DoS;
+                searchResult.MRN = result.MRN;
+                searchResult.PatientName = result.FirstName + " " + result.LastName;
+                searchResult.ProviderName = result.ProviderName;
+                searchResult.DxCodes = clinicalcaseOperations.GetDxCodes(result.CPTDxInfo);
+                searchResult.CptCodes = clinicalcaseOperations.GetCptCodes(result.CPTDxInfo);
+                searchResult.PostedBy = result.PostedBy;
+                searchResult.PostedDate = result.PostedDate;
+                searchResult.CodedBy = result.CodedBy;
+                searchResult.QABy = result.QABy;
+                searchResult.ShadowQABy = result.ShadowQABy;
+                searchResult.ProjectName = result.ProjectName;
+                searchResult.Status = result.Status;
+
+                lstSearch.Add(searchResult);
+            }
+
+            var table = clinicalcaseOperations.ToDataTable<ExportSearchResultDTO>(lstSearch);
+            table.TableName = "SearchResult";
+            table.Columns.Remove("CPTDxInfo");
+            _logger.LogInformation("Loading Ended for Submit SettingsSearch for User: " + mUserId);
+            return ExportToExcel(table);
+        }
+
         public IActionResult Privacy()
         {
             return View();

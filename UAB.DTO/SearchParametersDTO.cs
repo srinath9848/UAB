@@ -34,6 +34,29 @@ namespace UAB.DTO
         public int StatusId { get; set; }
         public string StatusName { get; set; }
     }
+
+    public class ExportSearchResultDTO
+    {
+        public ExportSearchResultDTO()
+        {
+            CPTDxInfo = new List<CPTAndDxInfo>();
+        }
+        public DateTime DoS { get; set; }
+        public string MRN { get; set; }
+        public string PatientName { get; set; }
+        public string ProviderName { get; set; }
+        public string DxCodes { get; set; }
+        public string CptCodes { get; set; }
+        public string PostedBy { get; set; }
+        public string PostedDate { get; set; }
+        public string CodedBy { get; set; }
+        public string QABy { get; set; }
+        public string ShadowQABy { get; set; }
+        public string ProjectName { get; set; }
+        public string Status { get; set; }
+        public List<CPTAndDxInfo> CPTDxInfo { get; set; }
+    }
+
     public class SearchResultDTO
     {
         public SearchResultDTO()

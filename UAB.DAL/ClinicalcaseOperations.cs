@@ -298,7 +298,7 @@ namespace UAB.DAL
                                 CreateDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie)
                             });
                         }
-                    }   
+                    }
                     reader.NextResult();
 
                     while (reader.Read())
@@ -3014,6 +3014,34 @@ namespace UAB.DAL
             return lstDto;
         }
 
+        public string GetDxCodes(List<CPTAndDxInfo> cptAndDxInfo)
+        {
+            string DxCodes = null;
+            foreach (var Dx in cptAndDxInfo)
+            {
+                if (cptAndDxInfo.Count > 1)
+                {
+                    DxCodes += "\n Claim " + Dx.ClaimOrder+": ";
+                }
+                DxCodes += Dx.DxCodes + "\n ";
+            }
+            return DxCodes;
+        }
+
+        public string GetCptCodes(List<CPTAndDxInfo> cptAndDxInfo)
+        {
+            string CptCodes = null;
+            foreach (var Dx in cptAndDxInfo)
+            {
+                if (cptAndDxInfo.Count > 1)
+                {
+                    CptCodes += "\n Claim " + Dx.ClaimOrder+": ";
+                }
+                CptCodes += Dx.CPTCodes + "\n ";
+            }
+            return CptCodes;
+        }
+
         public CodingDTO SubmitQARejectedChartsOfShadowQA(ChartSummaryDTO chartSummaryDTO, DataTable dtAudit, int statusId)
         {
             CodingDTO dto = new CodingDTO();
@@ -5067,7 +5095,7 @@ namespace UAB.DAL
             return providers;
         }
 
-        public void DateValueMustNotBeLessThanCertainDate(ref DateTime weekStartDate,ref DateTime weekEndDate)
+        public void DateValueMustNotBeLessThanCertainDate(ref DateTime weekStartDate, ref DateTime weekEndDate)
         {
             if (weekStartDate < new DateTime(1753, 01, 01))
             {

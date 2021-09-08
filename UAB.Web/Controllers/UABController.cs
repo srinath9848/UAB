@@ -2812,6 +2812,15 @@ namespace UAB.Controllers
                 ProviderName = provider,
                 IncludeBlocked = includeblocked
             };
+            ViewBag.fname = fname;
+            ViewBag.lname = lname;
+            ViewBag.mrn = mrn;
+            ViewBag.dosfrom = dosfrom;
+            ViewBag.dosto = dosto;
+            ViewBag.status = status;
+            ViewBag.project = project;
+            ViewBag.provider = provider;
+            ViewBag.includeblocked = includeblocked;
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId, mUserRole);
             var searchData = clinicalcaseOperations.GetSearchData(searchParametersDTO);
             _logger.LogInformation("Loading Ended for Submit SettingsSearch for User: " + mUserId);
