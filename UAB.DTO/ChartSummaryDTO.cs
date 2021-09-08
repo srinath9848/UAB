@@ -26,8 +26,11 @@ namespace UAB.DTO
 
         [Required(ErrorMessage = "*")]
         public int ProviderID { get; set; }
+        [Required(ErrorMessage = "*")]
+        public int BillingProviderID { get; set; }
         public string ProviderName { get; set; }
         public string ProviderText { get; set; }
+        public string BillingProviderText { get; set; }
         [Required(ErrorMessage = "*")]
         public string CPTCode { get; set; }
         public string RejectedCpt { get; set; }
@@ -56,10 +59,15 @@ namespace UAB.DTO
         public string QAPayorRemarks { get; set; }
         [Required(ErrorMessage = "*")]
         public int QAProviderID { get; set; }
+        [Required(ErrorMessage = "*")]
+        public int QABillingProviderID { get; set; }
         public string QAProviderText { get; set; }
+        public string QABillingProviderText { get; set; }
         public string ShadowQAProviderText { get; set; }
         [Required(ErrorMessage = "*")]
         public string QAProviderRemarks { get; set; }
+        [Required(ErrorMessage = "*")]
+        public string QABillingProviderRemarks { get; set; }
         [Required(ErrorMessage = "*")]
         public string QAMod { get; set; }
         [Required(ErrorMessage = "*")]
@@ -90,6 +98,8 @@ namespace UAB.DTO
         public string PostedCpt { get; set; }
         public int ProjectID { get; set; }
         public string ProjectName { get; set; }
+        public string ProjectTypename { get; set; }
+
         [Required(ErrorMessage = "*")]
         public int ShadowQAPayorID { get; set; }
         [Required(ErrorMessage = "*")]
@@ -97,7 +107,11 @@ namespace UAB.DTO
         [Required(ErrorMessage = "*")]
         public int ShadowQAProviderID { get; set; }
         [Required(ErrorMessage = "*")]
+        public int ShadowQABillingProviderID { get; set; }
+        [Required(ErrorMessage = "*")]
         public string ShadowQAProviderRemarks { get; set; }
+        [Required(ErrorMessage = "*")]
+        public string ShadowQABillingProviderRemarks { get; set; }
         [Required(ErrorMessage = "*")]
         public string ShadowQAMod { get; set; }
         [Required(ErrorMessage = "*")]

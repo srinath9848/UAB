@@ -33,6 +33,16 @@
         @Html.ValidationMessageFor(model => model.ProviderID, null, new { @class = "text-danger" })
     </div>
 </div>
+@if (ViewBag.ProjectTypename.ToUpper() != "IP")
+{
+    <div class="form-group row">
+        <label class="col-md-3 m-t-15 AlignControl">Billing Provider</label>
+        <div class="col-md-3" style="display:inherit;">
+            @Html.DropDownListFor(model => model.BillingProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("BillingProviders_{0}", claimID) })
+            @Html.ValidationMessageFor(model => model.BillingProviderID, null, new { @class = "text-danger" })
+        </div>
+    </div>
+}
 <div class="form-group row">
     <label class="col-md-3 m-t-15 AlignControl">Payor</label>
     <div class="col-md-3" style="display:inherit;">

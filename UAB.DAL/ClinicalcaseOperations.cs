@@ -284,6 +284,7 @@ namespace UAB.DAL
                         {
                             if (reader["ProviderId"] != DBNull.Value)
                                 chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
+                            chartSummaryDTO.ProjectTypename = Convert.ToString(reader["ProjectTypename"]);
                         }
 
                         if (Role == "Coder" && ChartType == "Block")
@@ -369,11 +370,11 @@ namespace UAB.DAL
                         chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
                         chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
                         chartSummaryDTO.CodingDTO.DateOfService = Convert.ToString(reader["DateOfService"]);
-                        if (Role == "Coder" && ChartType == "Available")
-                        {
-                            if (reader["ProviderId"] != DBNull.Value)
-                                chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
-                        }
+                        //if (Role == "Coder" && ChartType == "Available")
+                        //{
+                        //    if (reader["ProviderId"] != DBNull.Value)
+                        //        chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
+                        //}
 
                         //if (Role == "Coder" && ChartType == "Block")
                         //{
@@ -381,7 +382,8 @@ namespace UAB.DAL
                         //    chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
                         //    chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie);
                         //}
-                        else if (Role == "QA" && ChartType == "Block")
+                        //else
+                        if (Role == "QA" && ChartType == "Block")
                         {
                             //chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
                             //chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
@@ -440,8 +442,11 @@ namespace UAB.DAL
                                 chartSummaryDTO.ClaimId = null;
                             if (reader["ProviderId"] != DBNull.Value)
                                 chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
+                            if (reader["BillingProviderId"] != DBNull.Value)
+                                chartSummaryDTO.BillingProviderID = Convert.ToInt32(reader["BillingProviderId"]);
                             if (reader["PayorId"] != DBNull.Value)
                                 chartSummaryDTO.PayorID = Convert.ToInt32(reader["PayorId"]);
+                            chartSummaryDTO.ProjectTypename = Convert.ToString(reader["ProjectTypename"]);
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
                             chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
@@ -449,6 +454,7 @@ namespace UAB.DAL
                             if (reader["ProviderFeedbackId"] != DBNull.Value)
                                 chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
                             chartSummaryDTO.ProviderText = Convert.ToString(reader["ProviderText"]);
+                            chartSummaryDTO.BillingProviderText = Convert.ToString(reader["BillingProviderText"]);
                             chartSummaryDTO.PayorText = Convert.ToString(reader["PayorText"]);
                             chartSummaryDTO.ProviderFeedbackText = Convert.ToString(reader["ProviderFeedbackText"]);
                         }
@@ -518,6 +524,10 @@ namespace UAB.DAL
                             chartSummaryDTO.QAProviderText = Convert.ToString(reader["QAProviderText"]);
                             chartSummaryDTO.QAProviderRemarks = Convert.ToString(reader["QAProviderIDRemark"]);
 
+                            chartSummaryDTO.BillingProviderText = Convert.ToString(reader["BillingProviderText"]);
+                            chartSummaryDTO.QABillingProviderText = Convert.ToString(reader["QABillingProviderText"]);
+                            chartSummaryDTO.QABillingProviderRemarks = Convert.ToString(reader["QABillingProviderIDRemark"]);
+
                             chartSummaryDTO.QACPTCode = Convert.ToString(reader["QACPTCode"]);
                             chartSummaryDTO.QACPTCodeRemarks = Convert.ToString(reader["QACPTCodeRemark"]);
 
@@ -530,6 +540,10 @@ namespace UAB.DAL
                             if (reader["QAProviderID"] != DBNull.Value)
                                 chartSummaryDTO.QAProviderID = Convert.ToInt32(reader["QAProviderID"]);
                             chartSummaryDTO.QAProviderRemarks = Convert.ToString(reader["QAProviderIDRemark"]);
+
+                            if (reader["QABillingProviderID"] != DBNull.Value)
+                                chartSummaryDTO.QABillingProviderID = Convert.ToInt32(reader["QABillingProviderID"]);
+                            chartSummaryDTO.QABillingProviderRemarks = Convert.ToString(reader["QABillingProviderIDRemark"]);
 
                             if (reader["QAPayorID"] != DBNull.Value)
                                 chartSummaryDTO.QAPayorID = Convert.ToInt32(reader["QAPayorID"]);
@@ -552,6 +566,7 @@ namespace UAB.DAL
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
                             chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
                             chartSummaryDTO.CPTCode = Convert.ToString(reader["CPTCode"]);
+                            chartSummaryDTO.ProjectTypename = Convert.ToString(reader["ProjectTypename"]);
 
                             //if (reader["ProviderFeedbackId"] != DBNull.Value)
                             //    chartSummaryDTO.ProviderFeedbackID = Convert.ToInt32(reader["ProviderFeedbackId"]);
@@ -2415,6 +2430,12 @@ namespace UAB.DAL
                     SqlDbType =  System.Data.SqlDbType.Int,
                     Direction = System.Data.ParameterDirection.Input,
                     Value = chartSummaryDto.ProviderID
+                } ,
+                new SqlParameter() {
+                    ParameterName = "@BillingProviderID",
+                    SqlDbType =  System.Data.SqlDbType.Int,
+                    Direction = System.Data.ParameterDirection.Input,
+                    Value = chartSummaryDto.BillingProviderID
                 }  ,
                 new SqlParameter() {
                     ParameterName = "@utClaim1",
@@ -2548,6 +2569,12 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.Int,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = chartSummaryDTO.ProviderID
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@BillingProviderID",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = chartSummaryDTO.BillingProviderID
                         },
                          new SqlParameter() {
                             ParameterName = "@utCpt",

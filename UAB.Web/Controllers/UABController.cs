@@ -80,6 +80,7 @@ namespace UAB.Controllers
 
             ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
             ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
+            ViewBag.BillingProviders = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
             ViewBag.ProviderFeedbacks = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
             #endregion
 
@@ -421,7 +422,7 @@ namespace UAB.Controllers
         private void PrepareClaim(string basicParams, string dx, string cpt, int rno, ref DataTable dtClaim, ref DataTable dtCpt)
         {
             string[] lstbasicParams = basicParams.Split("^");
-            dtClaim.Rows.Add(rno, lstbasicParams[0], lstbasicParams[1], lstbasicParams[2], lstbasicParams[3], dx);
+            dtClaim.Rows.Add(rno, lstbasicParams[0], lstbasicParams[1], lstbasicParams[2], lstbasicParams[3], lstbasicParams[4], dx);
             PrepareCpt(cpt, dtCpt, rno);
         }
 
@@ -533,6 +534,7 @@ namespace UAB.Controllers
                 DataTable dtClaim = new DataTable();
                 dtClaim.Columns.Add("RNO", typeof(int));
                 dtClaim.Columns.Add("ProviderId", typeof(int));
+                dtClaim.Columns.Add("BillingProviderId", typeof(int));
                 dtClaim.Columns.Add("PayorId", typeof(int));
                 dtClaim.Columns.Add("NoteTitle", typeof(string));
                 dtClaim.Columns.Add("ProviderFeedbackId", typeof(string));
@@ -1144,7 +1146,7 @@ namespace UAB.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddNewClaim(int claimID, int pid1, int pid2, int pid3, int pid4)
+        public IActionResult AddNewClaim(int claimID, int pid1, int pid2, int pid3, int pid4, string ProjectTypeName)
         {
             _logger.LogInformation("Loading Started for AddNewClaim for User: " + mUserId);
 
@@ -1166,6 +1168,7 @@ namespace UAB.Controllers
             ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
             ViewBag.ProviderFeedbacks = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
             ViewBag.ClaimId = claimID;
+            ViewBag.ProjectTypeName = ProjectTypeName;
 
             _logger.LogInformation("Loading Ended for AddNewClaim for User: " + mUserId);
 

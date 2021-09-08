@@ -34,8 +34,8 @@
 <div class="col-md-12">
     <div class="card">
         @*<div class="card-body">
-            <h4 class="card-title"><span>Chart ID : <label style="color: black;">@Model.CodingDTO.ClinicalCaseID</label></span></h4>
-        </div>*@
+                <h4 class="card-title"><span>Chart ID : <label style="color: black;">@Model.CodingDTO.ClinicalCaseID</label></span></h4>
+            </div>*@
         @Html.HiddenFor(model => model.Links)
         @Html.HiddenFor(model => model.ProjectName)
         @Html.HiddenFor(model => model.ProjectID)
@@ -102,6 +102,16 @@
                                 </div>
                             }
                         </div>
+                        @if (@Model.ProjectTypename.ToUpper() != "IP")
+                        {
+                            <div class="form-group row">
+                                <label class="col-md-3 m-t-15 AlignControl">Billing Provider</label>
+                                <div class="col-md-3" style="display:inherit;">
+                                    @Html.DropDownListFor(model => model.BillingProviderID, new SelectList(@ViewBag.BillingProviders, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight" })
+                                    @Html.ValidationMessageFor(model => model.BillingProviderID, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        }
                         <div class="form-group row">
                             <label class="col-md-3 m-t-15 AlignControl">Payor</label>
                             <div class="col-md-3" style="display:inherit;">
@@ -253,7 +263,7 @@
         });
 
         EnableButton = function () {
-            if ($('#ProviderID').val() !== "" && $('#PayorID').val() !== "" && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== "" && $('#Providers_2').val() === undefined && $('#Providers_3').val() === undefined && $('#Providers_4').val() === undefined) {
+            if ($('#BillingProviderID').val() !== "" && $('#ProviderID').val() !== "" && $('#PayorID').val() !== "" && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== "" && $('#Providers_2').val() === undefined && $('#Providers_3').val() === undefined && $('#Providers_4').val() === undefined) {
                 $('#codingSubmit').prop('disabled', false);
                 $('#codingSubmitAndGetNext').prop('disabled', false);
                 $('#btnProviderPosted').prop('disabled', false);
@@ -266,6 +276,9 @@
         }
 
         $('#ProviderID').change(function () {
+            EnableButton();
+        });
+        $('#BillingProviderID').change(function () {
             EnableButton();
         });
         $('#Providers_2').change(function () {
@@ -282,8 +295,8 @@
         });
 
         EnableButtonForClaim2 = function () {
-            if ($('#PayorID').val() !== "" && $('#ProviderID').val() !== "" && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== ""
-                && $('#Providers_2').val() !== "" && $('#Payors_2').val() !== "" && $('#txtDx2Claim_1').val() !== "" && $('#txt2Cpt_1').val() !== "" && $('#Providers_3').val() === undefined && $('#Providers_4').val() === undefined) {
+            if ($('#PayorID').val() !== "" && $('#ProviderID').val() !== "" && $('#BillingProviderID').val() !== "" && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== ""
+                && $('#Providers_2').val() !== "" && $('#BillingProviders_2').val() !== "" && $('#Payors_2').val() !== "" && $('#txtDx2Claim_1').val() !== "" && $('#txt2Cpt_1').val() !== "" && $('#Providers_3').val() === undefined && $('#Providers_4').val() === undefined && $('#BillingProviders_3').val() === undefined && $('#BillingProviders_4').val() === undefined) {
                 $('#codingSubmit').prop('disabled', false);
                 $('#codingSubmitAndGetNext').prop('disabled', false);
                 $('#btnProviderPosted').prop('disabled', false);

@@ -144,6 +144,30 @@
                                         <span id="validProvider_@Model.FirstOrDefault().TabIndex" class="text-danger txtdanger" style="display:none">*</span>
                                     </div>
                                 </div>
+                                @if (Model.FirstOrDefault().ProjectTypename.ToUpper() != "IP")
+                                {
+                                    <div class="form-group row">
+                                        <label class="col-md-3 lessWidth m-t-15">Billing Provider</label>
+                                        <div title="@Model.FirstOrDefault().BillingProviderText" class="col-md-3 input-group">
+                                            @Html.DropDownListFor(model => model.FirstOrDefault().BillingProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("CoderBillingProviderID_{0}", tabIndex) })
+                                            <div class="input-group-append QACorrections ControlHeight">
+                                                <span class="input-group-text AcceptRejectWidth_@tabIndex">
+                                                    &nbsp;<i id="BillingProviderID_@tabIndex" data="@tabIndex" class="fa fa-check-circle fa-lg AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                                                    &nbsp;<i id="BillingProviderID_@tabIndex" data="@tabIndex" class="fa fa-times-circle fa-lg AdjustReject_@tabIndex" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 input-group">
+                                            @Html.DropDownListFor(model => model.FirstOrDefault().QABillingProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = string.Format("form-control QARevised ControlHeight BillingProviderID_{0}", tabIndex), @style = "display:none", @id = string.Format("QABillingProviderID_{0}", tabIndex) })
+                                            @Html.ValidationMessageFor(model => model.FirstOrDefault().QABillingProviderID, null, new { @class = "text-danger errMsg" })
+                                        </div>
+                                        <div class="col-md-3 input-group">
+                                            @Html.TextBoxFor(model => model.FirstOrDefault().QABillingProviderRemarks, new { @title = Model.FirstOrDefault().QABillingProviderRemarks, @style = "display:none", @class = string.Format("form-control QARevised ControlHeight BillingProviderID_{0}", tabIndex), @id = string.Format("QABillingProviderIDRemarks_{0}", tabIndex) })
+                                            @Html.ValidationMessageFor(model => model.FirstOrDefault().QABillingProviderRemarks, null, new { @class = "text-danger errMsg" })
+                                            <span id="validBillingProvider_@Model.FirstOrDefault().TabIndex" class="text-danger txtdanger" style="display:none">*</span>
+                                        </div>
+                                    </div>
+                                }
                                 <div class="form-group row">
                                     <label class="col-md-3 lessWidth m-t-15">Payor</label>
                                     @{ len = ((!string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) && !Model.FirstOrDefault().PayorText.Equals(Model.FirstOrDefault().QAPayorText)) ? 10 : 20); }
