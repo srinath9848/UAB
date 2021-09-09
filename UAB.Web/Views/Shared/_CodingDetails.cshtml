@@ -107,7 +107,7 @@
                             <div class="form-group row">
                                 <label class="col-md-3 m-t-15 AlignControl">Billing Provider</label>
                                 <div class="col-md-3" style="display:inherit;">
-                                    @Html.DropDownListFor(model => model.BillingProviderID, new SelectList(@ViewBag.BillingProviders, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight" })
+                                    @Html.DropDownListFor(model => model.BillingProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight" })
                                     @Html.ValidationMessageFor(model => model.BillingProviderID, null, new { @class = "text-danger" })
                                 </div>
                             </div>

@@ -80,7 +80,7 @@ namespace UAB.Controllers
 
             ViewBag.Payors = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("PayorsList"));
             ViewBag.Providers = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
-            ViewBag.BillingProviders = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
+            //ViewBag.BillingProviders = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("ProvidersList"));
             ViewBag.ProviderFeedbacks = JsonConvert.DeserializeObject<List<BindDTO>>(_httpContextAccessor.HttpContext.Session.GetString("FeedbackList"));
             #endregion
 
@@ -252,6 +252,11 @@ namespace UAB.Controllers
                         chartSummaryDTO.ProjectName = ProjectName;
                         AuditDTO auditDTO = clinicalcaseOperations.GetAuditInfoForCPTAndProvider(ProjectID);
                         chartSummaryDTO.auditDTO = auditDTO;
+
+                        //Below code is to get the Audit based on sample percentage
+                        string currDt = DateTime.Now.ToLocalDate(timeZoneCookie).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        bool audit = IsAuditRequired("Coding", chartSummaryDTO.ProjectID, currDt);
+                        chartSummaryDTO.IsAuditRequired = audit;
 
                         if (ccids == null && chartSummaryDTO.CCIDs.Split(",").Length > 1)
                         {

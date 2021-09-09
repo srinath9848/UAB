@@ -280,11 +280,12 @@ namespace UAB.DAL
                         chartSummaryDTO.CodingDTO.PatientMRN = Convert.ToString(reader["PatientMRN"]);
                         chartSummaryDTO.CodingDTO.Name = Convert.ToString(reader["Name"]);
                         chartSummaryDTO.CodingDTO.DateOfService = Convert.ToString(reader["DateOfService"]);
+                        chartSummaryDTO.ProjectTypename = Convert.ToString(reader["ProjectTypename"]);
+
                         if (Role == "Coder" && ChartType == "Available")
                         {
                             if (reader["ProviderId"] != DBNull.Value)
                                 chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
-                            chartSummaryDTO.ProjectTypename = Convert.ToString(reader["ProjectTypename"]);
                         }
 
                         if (Role == "Coder" && ChartType == "Block")
@@ -385,6 +386,10 @@ namespace UAB.DAL
                         //else
                         if (Role == "QA" && ChartType == "Block")
                         {
+                            //if (reader["BillingProviderId"] != DBNull.Value)
+                            //    chartSummaryDTO.BillingProviderID = Convert.ToInt32(reader["BillingProviderId"]);
+                            chartSummaryDTO.ProjectTypename = Convert.ToString(reader["ProjectTypename"]);
+
                             //chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
                             //chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
                             //chartSummaryDTO.BlockedDate = Convert.ToDateTime(reader["BlockedDate"]).ToLocalDate(timeZoneCookie);
@@ -396,6 +401,8 @@ namespace UAB.DAL
                                 chartSummaryDTO.ClaimId = null;
                             if (reader["ProviderId"] != DBNull.Value)
                                 chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
+                            if (reader["BillingProviderId"] != DBNull.Value)
+                                chartSummaryDTO.BillingProviderID = Convert.ToInt32(reader["BillingProviderId"]);
                             if (reader["PayorId"] != DBNull.Value)
                                 chartSummaryDTO.PayorID = Convert.ToInt32(reader["PayorId"]);
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
@@ -573,6 +580,8 @@ namespace UAB.DAL
                         }
                         else if (Role == "ShadowQA" && ChartType == "Block")
                         {
+                            chartSummaryDTO.ProjectTypename = Convert.ToString(reader["ProjectTypename"]);
+
                             chartSummaryDTO.ProjectID = Convert.ToInt32(reader["ProjectId"]);
                             //chartSummaryDTO.BlockCategory = Convert.ToString(reader["BlockCategory"]);
                             //chartSummaryDTO.BlockRemarks = Convert.ToString(reader["BlockRemarks"]);
@@ -3050,7 +3059,7 @@ namespace UAB.DAL
             {
                 if (cptAndDxInfo.Count > 1)
                 {
-                    DxCodes += "\n Claim " + Dx.ClaimOrder+": ";
+                    DxCodes += "\n Claim " + Dx.ClaimOrder + ": ";
                 }
                 DxCodes += Dx.DxCodes + "\n ";
             }
@@ -3064,7 +3073,7 @@ namespace UAB.DAL
             {
                 if (cptAndDxInfo.Count > 1)
                 {
-                    CptCodes += "\n Claim " + Dx.ClaimOrder+": ";
+                    CptCodes += "\n Claim " + Dx.ClaimOrder + ": ";
                 }
                 CptCodes += Dx.CPTCodes + "\n ";
             }
