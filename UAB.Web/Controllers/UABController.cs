@@ -794,7 +794,7 @@ namespace UAB.Controllers
         {
             string[] items = basicFields.Split("^");
             int claimId = Convert.ToInt32(items[0].Split(",")[1]);
-            dtbasicParams.Rows.Add(items[1].Split(",")[1], items[2].Split(",")[1], items[3].Split(",")[1], claimId);
+            dtbasicParams.Rows.Add(items[1].Split(",")[1], items[2].Split(",")[1], items[3].Split(",")[1], items[4].Split(",")[1], claimId);
         }
         public IActionResult SubmitCodingIncorrectChart(ChartSummaryDTO chartSummaryDTO)
         {
@@ -827,6 +827,7 @@ namespace UAB.Controllers
 
             DataTable dtbasicParams = new DataTable();
             dtbasicParams.Columns.Add("ProviderID", typeof(int));
+            dtbasicParams.Columns.Add("BillingProviderID", typeof(int));
             dtbasicParams.Columns.Add("PayorID", typeof(int));
             dtbasicParams.Columns.Add("ProviderFeedbackID", typeof(int));
             dtbasicParams.Columns.Add("ClaimId", typeof(int));
@@ -1588,6 +1589,7 @@ namespace UAB.Controllers
 
             DataTable dtbasicParams = new DataTable();
             dtbasicParams.Columns.Add("ProviderID", typeof(int));
+            dtbasicParams.Columns.Add("BillingProviderID", typeof(int));
             dtbasicParams.Columns.Add("PayorID", typeof(int));
             dtbasicParams.Columns.Add("ProviderFeedbackID", typeof(int));
             dtbasicParams.Columns.Add("ClaimId", typeof(int));

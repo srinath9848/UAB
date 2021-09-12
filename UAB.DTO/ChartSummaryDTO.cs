@@ -134,6 +134,7 @@ namespace UAB.DTO
 
         public string RevisedPayorRemarks { get; set; }
         public string RevisedProviderRemarks { get; set; }
+        public string RevisedBillingProviderRemarks { get; set; }
         public string RevisedCPTRemarks { get; set; }
         public string RevisedModRemarks { get; set; }
         public string RevisedDXRemarks { get; set; }

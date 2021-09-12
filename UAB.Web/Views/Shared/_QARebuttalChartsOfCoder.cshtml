@@ -144,6 +144,39 @@
                                         @Html.TextBoxFor(model => model.FirstOrDefault().RevisedProviderRemarks, new { @class = "form-control ControlHeight", @id = string.Format("CoderProviderIDRemarks_{0}", tabIndex) })
                                     </div>
                                 </div>
+                                @if (Model.FirstOrDefault().ProjectTypename.ToUpper() != "IP")
+                                {
+                                    <div class="form-group row">
+                                        <label class="col-md-3 lessWidth m-t-15">Billing Provider</label>
+                                        @{len = ((!string.IsNullOrEmpty(Model.FirstOrDefault().QABillingProviderText) && !Model.FirstOrDefault().BillingProviderText.Equals(Model.FirstOrDefault().QABillingProviderText)) ? 10 : 20); }
+                                        @{string BillingProviderText = (Model.FirstOrDefault().BillingProviderText?.Length > len) ? Model.FirstOrDefault().BillingProviderText.Substring(0, len) + ".." : Model.FirstOrDefault().BillingProviderText;}
+                                        @{string QABillingProviderText = (Model.FirstOrDefault().QABillingProviderText?.Length > len) ? "/" + Model.FirstOrDefault().QABillingProviderText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QABillingProviderText;}
+                                        @{title = (!string.IsNullOrEmpty(Model.FirstOrDefault().QABillingProviderText) ? Model.FirstOrDefault().BillingProviderText + "/" + Model.FirstOrDefault().QABillingProviderText : Model.FirstOrDefault().BillingProviderText);}
+                                        <div title="@title" class="col-md-3 input-group">
+                                            @{Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().RevisedBillingProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+                                            @{Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().RevisedBillingProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+                                            @Html.DropDownListFor(model => model.FirstOrDefault().BillingProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = string.Format("CoderBillingProviderID_{0}", tabIndex), @class = "form-control CoderDetails ControlHeight" })
+                                        </div>
+                                        @{ Show = (string.IsNullOrEmpty(Model.FirstOrDefault().RevisedBillingProviderRemarks) ? "display:none" : "display:flex");}
+                                        <div class="col-md-3 input-group">
+                                            @Html.DropDownListFor(model => model.FirstOrDefault().QABillingProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = string.Format("QABillingProviderID_{0}", tabIndex), @class = "form-control QARevised ControlHeight", @style = Show })
+                                            @Html.ValidationMessageFor(model => model.FirstOrDefault().QABillingProviderID, null, new { @class = "text-danger errMsg" })
+                                            <div class="input-group-append CoderCorrections" style="@Show">
+                                                <span class="input-group-text ControlHeight AcceptRejectWidth">
+                                                    &nbsp;<i id="BillingProviderID_@tabIndex" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
+                                                    &nbsp;<i id="BillingProviderID_@tabIndex" class="@Rejected" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div title="model.FirstOrDefault().QABillingProviderRemarks" class="col-md-3 input-group">
+                                            @Html.TextBoxFor(model => model.FirstOrDefault().QABillingProviderRemarks, new { @title = Model.FirstOrDefault().QABillingProviderRemarks, @style = Show, @class = "form-control QARevised ControlHeight", @id = string.Format("QABillingProviderIDRemarks_{0}", tabIndex) })
+                                            @Html.ValidationMessageFor(model => model.FirstOrDefault().QABillingProviderRemarks, null, new { @class = "text-danger errMsg" })
+                                        </div>
+                                        <div title="model.FirstOrDefault().RevisedBillingProviderRemarks" class="col-md-3 input-group CoderCorrections" style="@Show">
+                                            @Html.TextBoxFor(model => model.FirstOrDefault().RevisedBillingProviderRemarks, new { @class = "form-control ControlHeight", @id = string.Format("CoderBillingProviderIDRemarks_{0}", tabIndex) })
+                                        </div>
+                                    </div>
+                                }
                                 <div class="form-group row">
                                     <label class="col-md-3 lessWidth m-t-15">Payor</label>
                                     @{ len = ((!string.IsNullOrEmpty(Model.FirstOrDefault().QAPayorText) && !Model.FirstOrDefault().PayorText.Equals(Model.FirstOrDefault().QAPayorText)) ? 10 : 20); }
@@ -639,6 +672,7 @@
 <script type="text/javascript">
     $("#PayorID1").attr('title', $("#PayorID1 option:selected").text());
     $("#ProviderID").attr('title', $("#ProviderID option:selected").text());
+    $("#BillingProviderID").attr('title', $("#BillingProviderID option:selected").text());
     $("#ProviderFeedbackID").attr('title', $("#ProviderFeedbackID option:selected").text());
     var dxArray = [];
     function DxFunction(txt_0) {
