@@ -237,7 +237,7 @@
             var payorRemarks = "";
             var FeedbackRemarks = "";
             $("#hdnClaim" + tabid).val('');
-            $("#hdnAcceptedClaim" + tabid).val('');
+            $("#hdnAcceptClaim" + tabid).val('');
             var res2 = $("[id=" + "ProviderID_" + tabid + "]:eq(1)").attr('class');
             if (res2.includes('reject') && $("#QAProviderIDRemarks_" + tabid).css("display") == "flex") {
                 ProviderID = $("#QAProviderID_" + tabid).val();
@@ -353,6 +353,7 @@
                 var DxNewClaimremarks = $("[id*=DxRemarkss_" + tabid + "_]");
                 $("#hdnQADxCodes" + tabid).val("");
                 $("#hdnQADxRemarks" + tabid).val("");
+                $("#hdnQAAcceptDxCodes" + tabid).val("");
                 var index = 1;
                 for (var i = 0; i < DxNewClaimremarks.length; i++) {
                     var id = parseInt($(DxNewClaimremarks[i]).attr("id").split("_")[2]);
@@ -410,6 +411,7 @@
                 var CptNewClaimRemarks = $("[id*=CptRemarkss_" + tabid + "_]");
                 $("#hdnQACptRemarks" + tabid).val("");
                 $("#hdnQACptCodes" + tabid).val("");
+                $("#hdnQAAcceptCptCodes" + tabid).val("");
                 var index = 1;
                 for (var i = 0; i < CptNewClaimRemarks.length; i++) {
                     var id = parseInt($(CptNewClaimRemarks[i]).attr("id").split("_")[2]);
@@ -480,6 +482,8 @@
 
         //Ending of reading Claim2 to Claim4 Data
 
+        $("#hdnQAAcceptCptCodes").val("");
+        $("#hdnQAAcceptDxCodes").val("");
         //Dx Remarks
         var Dxremarks = $("#claim1 [class*=DxRemarks_]");
         $("#hdnQADxRemarks").val("");
