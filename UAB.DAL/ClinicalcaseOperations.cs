@@ -605,6 +605,8 @@ namespace UAB.DAL
                                 chartSummaryDTO.ClaimId = null;
                             if (reader["ProviderId"] != DBNull.Value)
                                 chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
+                            if (reader["BillingProviderId"] != DBNull.Value)
+                                chartSummaryDTO.ProviderID = Convert.ToInt32(reader["BillingProviderId"]);
                             if (reader["PayorId"] != DBNull.Value)
                                 chartSummaryDTO.PayorID = Convert.ToInt32(reader["PayorId"]);
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
@@ -622,6 +624,10 @@ namespace UAB.DAL
                             chartSummaryDTO.ProviderText = Convert.ToString(reader["ProviderText"]);
                             chartSummaryDTO.QAProviderText = Convert.ToString(reader["QAProviderText"]);
                             chartSummaryDTO.QAProviderRemarks = Convert.ToString(reader["QAProviderIDRemark"]);
+
+                            chartSummaryDTO.BillingProviderText = Convert.ToString(reader["BillingProviderText"]);
+                            chartSummaryDTO.QABillingProviderText = Convert.ToString(reader["QABillingProviderText"]);
+                            chartSummaryDTO.QABillingProviderRemarks = Convert.ToString(reader["QABillingProviderIDRemark"]);
 
                             chartSummaryDTO.QACPTCode = Convert.ToString(reader["QACPTCode"]);
                             chartSummaryDTO.QACPTCodeRemarks = Convert.ToString(reader["QACPTCodeRemark"]);
