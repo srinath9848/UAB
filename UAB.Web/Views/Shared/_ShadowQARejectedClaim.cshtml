@@ -79,6 +79,61 @@
         @Html.TextBoxFor(model => model.ShadowQAProviderRemarks, new { @style = @Show, @class = "form-control QARevised ControlHeight", @id = string.Format("ShadowQAProviderIDRemarks_{0}", @tabIndex) })
     </div>
 </div>
+@if (Model.ProjectTypename.ToUpper() != "IP")
+{
+    <div class="form-group row">
+        <label class="col-md-3 lessWidth m-t-15">Billing Provider</label>
+        @{ len = ((!string.IsNullOrEmpty(Model.QABillingProviderText) && !Model.BillingProviderText.Equals(Model.QABillingProviderText)) ? 10 : 20); }
+        @{string BillingProviderText = (Model.BillingProviderText?.Length > len) ? Model.BillingProviderText.Substring(0, len) + ".." : Model.BillingProviderText;}
+        @{string QABillingProviderText = (Model.QABillingProviderText?.Length > len) ? "/" + Model.QABillingProviderText.Substring(0, len) + ".." : "/" + Model.QABillingProviderText;}
+        @{ title = (!string.IsNullOrEmpty(Model.QABillingProviderText) ? Model.BillingProviderText + "/" + Model.QABillingProviderText : Model.BillingProviderText);}
+        @Html.DropDownListFor(model => Model.QABillingProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @id = string.Format("QABillingProviderID_{0}", tabIndex), @style = "display:none", @class = "form-control CoderDetails" })
+
+        <div title="@title" class="col-md-3 input-group">
+            <div class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
+                <span style="white-space:nowrap">
+                    @if (!string.IsNullOrEmpty(Model.QABillingProviderText) && !Model.BillingProviderText.Equals(Model.QABillingProviderText))
+                    {
+                        <label style="color: red;">@BillingProviderText</label>
+                        <label style="color: green">@QABillingProviderText</label>
+                    }
+                    else
+                    {
+                        <label style="color: green;">@BillingProviderText</label>
+                    }
+                </span>
+            </div>
+            @{Show = (string.IsNullOrEmpty(Model.ShadowQABillingProviderRemarks) ? "display:none" : "display:flex");}
+
+            @{Accepted = (string.IsNullOrEmpty(Model.ShadowQABillingProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
+            @{Rejected = (string.IsNullOrEmpty(Model.ShadowQABillingProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
+            @if (Model.ShadowQABillingProviderText.Equals(Model.QABillingProviderText))
+            {
+                Accepted = "fa fa-check-circle fa-lg accept";
+                Rejected = "fa fa-times-circle fa-lg";
+                Show = "display:none";
+            }
+
+        </div>
+        <div class="col-md-3 input-group CoderCorrections BillingProviderID" style="@Show">
+            @Html.TextBoxFor(model => Model.QABillingProviderRemarks, new { @class = "form-control ControlHeight", @id = string.Format("QABillingProviderIDRemarks_{0}", @tabIndex) })
+            <span id="validBillingProvider_@Model.TabIndex" class="text-danger txtdanger" style="display:none">*</span>
+        </div>
+
+        <div class="col-md-3 input-group">
+            @Html.DropDownListFor(model => Model.ShadowQABillingProviderID, new SelectList(@ViewBag.Providers, "ID", "Name"), "--Select--", new { @style = @Show, @id = string.Format("ShadowQABillingProviderID_{0}", @tabIndex), @class = "form-control CoderDetails ControlHeight" })
+            <div class="input-group-append ControlHeight" style="@Show">
+                <span class="input-group-text AcceptRejectWidth AcceptRejectWidth_@tabIndex">
+                    &nbsp;<i id="BillingProviderID_@Model.TabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
+                    &nbsp;<i id="BillingProviderID_@Model.TabIndex" data="@tabIndex" class="@Rejected AdjustReject_@tabIndex" aria-hidden="true"></i>
+                </span>
+            </div>
+        </div>
+        <div title="@Model.ShadowQABillingProviderRemarks" class="col-md-3 input-group">
+            @Html.TextBoxFor(model => model.ShadowQABillingProviderRemarks, new { @style = @Show, @class = "form-control QARevised ControlHeight", @id = string.Format("ShadowQABillingProviderIDRemarks_{0}", @tabIndex) })
+        </div>
+    </div>
+}
 <div class="form-group row">
     <label class="col-md-3 lessWidth m-t-15">Payor</label>
     @{ len = ((!string.IsNullOrEmpty(Model.QAPayorText) && !Model.PayorText.Equals(Model.QAPayorText)) ? 10 : 20);}

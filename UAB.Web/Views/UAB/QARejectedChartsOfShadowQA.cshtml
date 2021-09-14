@@ -89,14 +89,16 @@
             $("#hdnQAErrorTypeID" + tabid).val(ErrorTypeID);
             $("#hdnClaimId" + tabid).val(claimId);
             var ProviderID = "";
+            var BillingProviderID = "";
             var PayorID = "";
             var ProviderFeedbackID = "";
             var ProviderRemarks = "";
+            var BillingProviderRemarks = "";
             var PayorRemarks = "";
             var FeedbackRemarks = "";
 
             $("#hdnClaim" + tabid).val('');
-            $("#hdnAcceptedClaim" + tabid).val('');
+            $("#hdnAcceptClaim" + tabid).val('');
             var res2 = $("[id=" + "ProviderID_" + tabid + "]:eq(1)").attr('class');
             if (res2.includes('reject')) {
                 ProviderID = $("#QAProviderID_" + tabid).val();
@@ -128,6 +130,45 @@
                     }
                 }
             }
+            if ($("#BillingProviderID_" + tabid).length) {
+                var res2 = $("[id=" + "BillingProviderID_" + tabid + "]:eq(1)").attr('class');
+                if (res2.includes('reject')) {
+                    BillingProviderID = $("#QABillingProviderID_" + tabid).val();
+                    BillingProviderRemarks = $('#QABillingProviderIDRemarks_' + tabid).val();
+                    if ($('#QABillingProviderIDRemarks_' + tabid).val() != "") {
+                        $("#validBillingProvider_" + tabid).hide();
+                        if ($("#hdnClaim" + tabid).val() == "") {
+                            $("#hdnClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "BillingProviderID" + "," + BillingProviderID + "," + BillingProviderRemarks);
+                        } else {
+                            $("#hdnClaim" + tabid).val($("#hdnClaim" + tabid).val() + "^" + "BillingProviderID" + "," + BillingProviderID + "," + BillingProviderRemarks);
+                        }
+                    } else {
+                        $('#QABillingProviderIDRemarks_' + tabid).focus();
+                        $("#validBillingProvider_" + tabid).show();
+                    }
+                }
+                else {
+                    BillingProviderID = $("#ShadowQABillingProviderID_" + tabid).val();
+                    BillingProviderRemarks = $('#ShadowQABillingProviderIDRemarks_' + tabid).val();
+                    if (BillingProviderID != "0" && BillingProviderID != "") {
+                        $("#validBillingProvider_" + tabid).hide();
+                        if ($("#hdnAcceptClaim" + tabid).val() == "") {
+                            $("#hdnAcceptClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "BillingProviderID" + "," + BillingProviderID + "," + BillingProviderRemarks);
+                        } else {
+                            $("#hdnAcceptClaim" + tabid).val($("#hdnAcceptClaim" + tabid).val() + "^" + "BillingProviderID" + "," + BillingProviderID + "," + BillingProviderRemarks);
+                        }
+                    } else {
+                        BillingProviderID = 0;
+                        BillingProviderRemarks = "";
+                        if ($("#hdnAcceptClaim" + tabid).val() == "") {
+                            $("#hdnAcceptClaim" + tabid).val("ClaimId" + "," + claimId + "^" + "BillingProviderID" + "," + BillingProviderID + "," + BillingProviderRemarks);
+                        } else {
+                            $("#hdnAcceptClaim" + tabid).val($("#hdnAcceptClaim" + tabid).val() + "^" + "BillingProviderID" + "," + BillingProviderID + "," + BillingProviderRemarks);
+                        }
+                    }
+                }
+            }
+
             var res2 = $("[id=" + "PayorID_" + tabid + "]:eq(1)").attr('class');
             if (res2.includes('reject')) {
                 PayorID = $("#QAPayorID_" + tabid).val();
@@ -203,6 +244,7 @@
 
                 var DxNewClaimremarks = $("[id*=QADxRemarkss_" + tabid + "_]");
                 $("#hdnQADxRemarks" + tabid).val("");
+                $("#hdnQAAcceptDxRemarks" + tabid).val("");
                 for (var i = 0; i < DxNewClaimremarks.length; i++) {
                     var id = parseInt($(DxNewClaimremarks[i]).attr("id").split("_")[2]);
                     var res1 = $("[id='DxClaim_" + tabid + "_" + id + "']:eq(0)").attr('class');
@@ -263,6 +305,7 @@
                 // DxNewClaimcodes
                 var DxNewClaimcodes = $("[id*=txtDx" + tabid + "Claim_]");
                 $("#hdnQADxCodes" + tabid).val("");
+                $("#hdnQAAcceptDxCodes" + tabid).val("");
                 for (var i = 0; i < DxNewClaimcodes.length; i++) {
                     var id = parseInt($(DxNewClaimcodes[i]).attr("id").split("_")[1]);
                     var res1 = $("[id='DxClaim_" + tabid + "_" + id + "']:eq(0)").attr('class');
@@ -300,6 +343,8 @@
                 var CptNewClaimRemarks = $("[id*=QACptRemarkss_" + tabid + "_]");
                 $("#hdnQACptRemarks" + tabid).val("");
                 $("#hdnQACptCodes" + tabid).val("");
+                $("#hdnQAAcceptCptCodes" + tabid).val("");
+                $("#hdnQAAcceptCptRemarks" + tabid).val("");
                 var index = 1;
                 for (var i = 0; i < CptNewClaimRemarks.length; i++) {
                     //$("#validCptRemarksClaim_" + tabid + "_" + id).hide();
@@ -405,6 +450,8 @@
         var Dxcodes = $("[id*=DxRemarks_]");
         $("#hdnQADxCodes").val('');
         $("#hdnQADxRemarks").val('');
+        $("#hdnQAAcceptDxCodes").val('');
+        $("#hdnQAAcceptDxRemarks").val('');
         for (var i = 0; i < Dxcodes.length; i++) {
             var id = parseInt($(Dxcodes[i]).attr("id").split("_")[1]);
             var res1 = $("[id='Dx_" + id + "']:eq(0)").attr('class');
@@ -491,6 +538,8 @@
         var CPTcodes = $("[id*=QACptRemarks_]");
         $("#hdnQACptCodes").val('');
         $("#hdnQACptRemarks").val('');
+        $("#hdnQAAcceptCptCodes").val('');
+        $("#hdnQAAcceptCptRemarks").val('');
         for (var i = 0; i < CPTcodes.length; i++) {
             var id = parseInt($(CPTcodes[i]).attr("id").split("_")[1]);
             var res1 = $("[id='Cpt_" + id + "']:eq(0)").attr('class');

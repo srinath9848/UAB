@@ -64,6 +64,7 @@ namespace UAB.DTO
         public string QAProviderText { get; set; }
         public string QABillingProviderText { get; set; }
         public string ShadowQAProviderText { get; set; }
+        public string ShadowQABillingProviderText { get; set; }
         [Required(ErrorMessage = "*")]
         public string QAProviderRemarks { get; set; }
         [Required(ErrorMessage = "*")]
