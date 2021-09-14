@@ -359,6 +359,7 @@ namespace UAB.Controllers
                 agingList.Add(data);
             }
             var table = clinicalcaseOperations.ToDataTable<CodingDTO>(agingList);
+            table.TableName = "AgingBreakdownDetailedReport";
             table.Columns.Remove("ClinicalCaseID");
             if (ProjectType != "IP")
             {
@@ -383,6 +384,7 @@ namespace UAB.Controllers
                 agingList.Add(data);
             }
             var table = clinicalcaseOperations.ToDataTable<CodingDTO>(agingList);
+            table.TableName = "AgingBreakdownDetailedReport";
             table.Columns.Remove("ClinicalCaseID");
             if (ProjectType != "IP")
             {
@@ -635,6 +637,13 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var lstChartSummaryReport = clinicalcaseOperations.GetDetailedChartSummaryReport(ProjectId, StartDate, EndDate, dateType);
             lstChartSummaryReport.Tables[0].TableName = "ChartSummaryReportAllColumn";
+            lstChartSummaryReport.Tables[0].Columns.Remove("ClinicalCaseID");
+            lstChartSummaryReport.Tables[0].Columns.Remove("IsBlocked");
+            lstChartSummaryReport.Tables[0].Columns.Remove("AssignedTo");
+            lstChartSummaryReport.Tables[0].Columns.Remove("QABy");
+            lstChartSummaryReport.Tables[0].Columns.Remove("ShadowQABy");
+            lstChartSummaryReport.Tables[0].Columns.Remove("ProjectId");
+            lstChartSummaryReport.Tables[0].Columns.Remove("providerorder");
             _logger.LogInformation("Loading Ended for ExportChartSummaryReport for User: " + mUserId);
             return ExportToExcel(lstChartSummaryReport.Tables[0]);
         }
