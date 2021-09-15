@@ -15,38 +15,39 @@
                           data-ajax-update="#modalContent">
                         <div class="card-body">
                             <div class="form-group row">
-                                <label class="control-label col-form-label">Select Project</label>
-                                <div class="col-sm-2">
+                                <label class="control-label col-form-label">Select Project</label>&nbsp;&nbsp;&nbsp;
+                                <span class="">
                                     @Html.DropDownListFor(model => model.ProjectID, new SelectList(@ViewBag.Projects, "ProjectId", "Name"), "--Select--", new { @class = "form-control ControlHeight", @id = "ProjectID1" })
                                     @Html.ValidationMessageFor(model => model.ProjectID, null, new { @class = "text-danger" })
-                                </div>
+                                </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                                <label class="control-label1 col-form-label">Range</label>
-                                <div class="col-sm-2">
+                                <label class="control-label1 col-form-label">Range</label>&nbsp;&nbsp;&nbsp;
+                                <span class="">
                                     @{var listItems = new List<SelectListItem>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {
           new SelectListItem { Text = "Per Day", Value="PerDay" },
           new SelectListItem { Text = "Per Week", Value="PerWeek" },
           new SelectListItem { Text = "Per Month", Value="PerMonth" }
     };
                                     }
                                     @Html.DropDownList("range", new SelectList(listItems, "Value", "Text"), new { @class = "form-control ControlHeight", @id = "rangeType" })
-                                </div>
-                                <label class="col-sm-1 control-label col-form-label">Start Date</label>
-                                <div class="col-sm-2">
+                                </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label class="control-label col-form-label">Start Date</label>&nbsp;&nbsp;&nbsp;
+                                <span class="">
                                     @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control ControlHeight", @autocomplete = "off", @type = "date" })
                                     @Html.ValidationMessageFor(model => model.StartDate, null, new { @class = "text-danger" })
-                                </div>
-                                <label class="col-sm-1 control-label col-form-label">End Date </label>
-                                <div class="col-sm-2">
+                                </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label class="control-label col-form-label">End Date </label>&nbsp;&nbsp;&nbsp;
+                                <span class="">
                                     @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control ControlHeight", @autocomplete = "off", @type = "date" })
                                     @Html.ValidationMessageFor(model => model.EndDate, null, new { @class = "text-danger" })
-                                </div>
-                                <div class="clearfix"></div><br />
-                            </div>
-                            <div class="col-md-12 row flex-row-reverse">
+                                </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <button type="submit" class="btn btn-success">Submit</button>
+                                @*<div class="clearfix"></div><br />*@
                             </div>
+                            @*<div class="">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>*@
                         </div>
                     </form>
                 </div>
