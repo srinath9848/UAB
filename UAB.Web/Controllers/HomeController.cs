@@ -138,9 +138,9 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var lstLelvellingReportDTO = clinicalcaseOperations.GetLevellingReport(ProjectId, StartDate, EndDate, dateType);
             int count = lstLelvellingReportDTO.Tables.Count;
-            for(int i = 0; i < lstLelvellingReportDTO.Tables.Count; i++)
+            for (int i = 0; i < lstLelvellingReportDTO.Tables.Count; i++)
             {
-                for(int x = 0; x < lstLelvellingReportDTO.Tables[i].Rows.Count; x++)
+                for (int x = 0; x < lstLelvellingReportDTO.Tables[i].Rows.Count; x++)
                 {
                     for (int y = 1; y < lstLelvellingReportDTO.Tables[i].Columns.Count; y++)
                     {
@@ -202,10 +202,10 @@ namespace UAB.Controllers
 
                 var secondRow = ws.Row(2);
                 //secondRow.Style.DateFormat.Format = "mm/dd";
-                    //ws.Style.DateFormat.Format = "mm/dd";
+                //ws.Style.DateFormat.Format = "mm/dd";
                 for (int i = 0; i < colCount; i++)
                 {
-                    secondRow.Cell(i + 1).Value = "'"+dataSet.Tables[0].Columns[i].ToString();
+                    secondRow.Cell(i + 1).Value = "'" + dataSet.Tables[0].Columns[i].ToString();
                 }
                 secondRow.Cell(colCount + 1).Value = "Total";
                 var thirdRow = ws.Row(3);
@@ -250,7 +250,7 @@ namespace UAB.Controllers
                 secondRowForPercentage.Style.DateFormat.Format = "mm/dd";
                 for (int i = 0; i < colCountForPercentage; i++)
                 {
-                    secondRowForPercentage.Cell(i + 1).Value = "'"+dataSet.Tables[1].Columns[i].ToString();
+                    secondRowForPercentage.Cell(i + 1).Value = "'" + dataSet.Tables[1].Columns[i].ToString();
                 }
                 secondRowForPercentage.Cell(colCountForPercentage + 1).Value = "Average";
                 var thirdRowForPercentage = ws.Row(lastRow + 5);
@@ -264,7 +264,7 @@ namespace UAB.Controllers
                 for (int x = lastRow + 5; x <= lastRowForPercentage; x++)
                 {
                     total = 0;
-                    for(int y = 3; y <= colCountForPercentage; y++)
+                    for (int y = 3; y <= colCountForPercentage; y++)
                     {
                         total = total + Convert.ToDecimal(ws.Row(x).Cell(y).Value);
                         col = y;
@@ -276,9 +276,9 @@ namespace UAB.Controllers
                 for (int x = lastRow + 5; x <= lastRowForPercentage; x++)
                 {
                     total = 0;
-                    for (int y = 3; y <= colCountForPercentage+1; y++)
+                    for (int y = 3; y <= colCountForPercentage + 1; y++)
                     {
-                        ws.Row(x).Cell(y).Value= ws.Row(x).Cell(y).Value+"%";
+                        ws.Row(x).Cell(y).Value = ws.Row(x).Cell(y).Value + "%";
                         col = y;
                     }
                 }
@@ -459,7 +459,7 @@ namespace UAB.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetReceivedReportDetails(DateTime date, int week, string month, string year, int ProjectId, string range, DateTime StartDate, DateTime EndDate,DateTime weekStartDate, DateTime weekEndDate)
+        public IActionResult GetReceivedReportDetails(DateTime date, int week, string month, string year, int ProjectId, string range, DateTime StartDate, DateTime EndDate, DateTime weekStartDate, DateTime weekEndDate)
         {
             _logger.LogInformation("Loading Started for GetReceivedReportDetails for User: " + mUserId);
             string createdDate = date.ToString();
@@ -485,7 +485,7 @@ namespace UAB.Controllers
             return PartialView("_DetailedReport", lstReceivedReportDetails);
         }
 
-        public IActionResult ExportDetailedReport(DateTime date, int week, string month, string year, int ProjectId, string range, string ChartName, DateTime StartDate, DateTime EndDate,string ProjectType,DateTime weekStartDate,DateTime weekEndDate)
+        public IActionResult ExportDetailedReport(DateTime date, int week, string month, string year, int ProjectId, string range, string ChartName, DateTime StartDate, DateTime EndDate, string ProjectType, DateTime weekStartDate, DateTime weekEndDate)
         {
             _logger.LogInformation("Loading Started for ExportDetailedReport for User: " + mUserId);
             string createdDate = date.ToString();
@@ -653,7 +653,7 @@ namespace UAB.Controllers
         {
             _logger.LogInformation("Loading Started for GetChartSummaryReportDetails for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
-            var lstChartSummaryReportDetails = clinicalcaseOperations.GetChartSummaryReportDetails(ProjectId, dos, ColumnName,DateType);
+            var lstChartSummaryReportDetails = clinicalcaseOperations.GetChartSummaryReportDetails(ProjectId, dos, ColumnName, DateType);
             string projectname = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.Name).FirstOrDefault();
             string projectType = clinicalcaseOperations.GetProjects().Where(x => x.ProjectId == ProjectId).Select(x => x.ProjectTypeName).FirstOrDefault();
 
@@ -838,7 +838,7 @@ namespace UAB.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetCodedReportDetails(DateTime date, int week, string month, string year, int ProjectId, string range, DateTime StartDate, DateTime EndDate,DateTime weekStartDate,DateTime weekEndDate)
+        public IActionResult GetCodedReportDetails(DateTime date, int week, string month, string year, int ProjectId, string range, DateTime StartDate, DateTime EndDate, DateTime weekStartDate, DateTime weekEndDate)
         {
             _logger.LogInformation("Loading Started for GetCodedReportDetails for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
@@ -868,7 +868,7 @@ namespace UAB.Controllers
             _logger.LogInformation("Loading Started for GetQAChartsReport for User: " + mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId);
             var lstqaChartReport = clinicalcaseOperations.GetQAChartsReport(ProjectId, range, StartDate, EndDate.AddHours(23).AddMinutes(59).AddSeconds(59), Convert.ToDouble(timeZoneCookie));
-            
+
             ViewBag.ProjectId = ProjectId;
             ViewBag.range = range;
             ViewBag.StartDate = StartDate;
@@ -1056,10 +1056,10 @@ namespace UAB.Controllers
                 IncludeBlocked = includeblocked
             };
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId, mUserRole);
-            var searchData = clinicalcaseOperations.GetSearchData(searchParametersDTO);
+            var searchData = clinicalcaseOperations.GetSearchData(searchParametersDTO, timeZoneCookie);
             List<ExportSearchResultDTO> lstSearch = new List<ExportSearchResultDTO>();
 
-            foreach(var result in searchData)
+            foreach (var result in searchData)
             {
                 ExportSearchResultDTO searchResult = new ExportSearchResultDTO();
                 searchResult.DoS = result.DoS;

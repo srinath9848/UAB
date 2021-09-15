@@ -2830,7 +2830,7 @@ namespace UAB.Controllers
             ViewBag.provider = provider;
             ViewBag.includeblocked = includeblocked;
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(mUserId, mUserRole);
-            var searchData = clinicalcaseOperations.GetSearchData(searchParametersDTO);
+            var searchData = clinicalcaseOperations.GetSearchData(searchParametersDTO, timeZoneCookie);
             _logger.LogInformation("Loading Ended for Submit SettingsSearch for User: " + mUserId);
             return PartialView("_SettingsSearchResults", searchData);
         }
