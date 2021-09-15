@@ -421,12 +421,17 @@ namespace UAB.DAL
                                 chartSummaryDTO.ClaimId = null;
                             chartSummaryDTO.CodedBy = Convert.ToString(reader["CodedBy"]);
 
+                            chartSummaryDTO.ProjectTypename = Convert.ToString(reader["projecttypename"]);
+
                             if (reader["ProviderId"] != DBNull.Value)
                                 chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
+                            if (reader["BillingProviderId"] != DBNull.Value)
+                                chartSummaryDTO.BillingProviderID = Convert.ToInt32(reader["BillingProviderId"]);
                             if (reader["PayorId"] != DBNull.Value)
                                 chartSummaryDTO.PayorID = Convert.ToInt32(reader["PayorId"]);
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
                             chartSummaryDTO.ProviderText = Convert.ToString(reader["ProviderText"]);
+                            chartSummaryDTO.BillingProviderText = Convert.ToString(reader["BillingProviderText"]);
                             chartSummaryDTO.PayorText = Convert.ToString(reader["PayorText"]);
                             chartSummaryDTO.ProviderFeedbackText = Convert.ToString(reader["ProviderFeedbackText"]);
                             chartSummaryDTO.Dx = Convert.ToString(reader["DxCode"]);
@@ -2988,7 +2993,7 @@ namespace UAB.DAL
             return dto;
         }
 
-        public List<SearchResultDTO> GetSearchData(SearchParametersDTO searchParametersDTO)
+        public List<SearchResultDTO> GetSearchData(SearchParametersDTO searchParametersDTO, string timeZoneCookie)
         {
             List<SearchResultDTO> lstDto = new List<SearchResultDTO>();
             StringBuilder parameterBuilder = new StringBuilder();
@@ -3103,7 +3108,7 @@ namespace UAB.DAL
                         string CCID = Convert.ToString(reader["ClinicalCaseID"]);
                         var item = lstDto.Where(x => x.ClinicalCaseId == CCID).FirstOrDefault();
                         item.PostedBy = Convert.ToString(reader["PostedBy"]);
-                        item.PostedDate = Convert.ToString(reader["PostingDate"]);
+                        item.PostedDate = Convert.ToString(Convert.ToDateTime(reader["PostingDate"]).ToLocalDate(timeZoneCookie));
 
                         item.CPTDxInfo.Add(new CPTAndDxInfo
                         {
