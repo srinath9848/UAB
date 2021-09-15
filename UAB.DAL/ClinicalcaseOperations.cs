@@ -606,7 +606,7 @@ namespace UAB.DAL
                             if (reader["ProviderId"] != DBNull.Value)
                                 chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
                             if (reader["BillingProviderId"] != DBNull.Value)
-                                chartSummaryDTO.ProviderID = Convert.ToInt32(reader["BillingProviderId"]);
+                                chartSummaryDTO.BillingProviderID = Convert.ToInt32(reader["BillingProviderId"]);
                             if (reader["PayorId"] != DBNull.Value)
                                 chartSummaryDTO.PayorID = Convert.ToInt32(reader["PayorId"]);
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
