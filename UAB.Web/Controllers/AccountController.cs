@@ -27,7 +27,46 @@ namespace UAB.Controllers
         }
         public IActionResult Index()
         {
+            var email = User.Identity.Name;
+            var userInfo = _mAuthenticationService.GetUserInfoByEmail(email);
+            if (userInfo.Email != null)
+            {
+                //string offSet = Request.Form["hdnOffset"].ToString();
+                //CreateCookie(offSet);
+                mUserId = userInfo.UserId;
+                var claims = new List<Claim>
+                        {
+                            new Claim(ClaimTypes.Sid, userInfo.UserId.ToString()),
+                            new Claim(ClaimTypes.Email, email),
+                            new Claim(ClaimTypes.Role, userInfo.RoleName)
+                        };
 
+                var claimsIdentity = new ClaimsIdentity(
+                    claims,
+                    CookieAuthenticationDefaults.AuthenticationScheme);
+
+                HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity),
+                    new AuthenticationProperties
+                    {
+                        IsPersistent = true,
+                        ExpiresUtc = DateTime.UtcNow.AddMinutes(20)
+                    });
+
+                if (userInfo.RoleName.Split(",").Contains("Manager"))
+                    return RedirectToAction("GetAgingReport", "Home");
+                else if (userInfo.RoleName.Split(",").Contains("Supervisor"))
+                    return RedirectToAction("GetAgingReport", "Home");
+                else if (userInfo.RoleName.Split(",").Contains("Coder"))
+                    return RedirectToAction("CodingSummary", "UAB");
+                else if (userInfo.RoleName.Split(",").Contains("QA"))
+                    return RedirectToAction("QASummary", "UAB");
+                else if (userInfo.RoleName.Split(",").Contains("ShadowQA"))
+                    return RedirectToAction("ShadowQASummary", "UAB");
+
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
         [HttpGet]
