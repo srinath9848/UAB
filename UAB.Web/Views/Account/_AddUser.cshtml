@@ -46,12 +46,15 @@
                         <tr>
                             <td>Email</td>
                             <td>
-                                @Html.DropDownListFor(model => model.Email, new SelectList(@ViewBag.Identityusers, "Email"), "--Select a Email--", new
-                                {
-                                @style = "width:420px",
-                                @id = "emaildd"
-                                })
+                                @Html.TextBoxFor(model => model.Email, new { @style = "height:25px;", @class = "form-control ControlHeight", @id = "emaildd" })
                             </td>
+                            @*<td>
+                                    @Html.DropDownListFor(model => model.Email, new SelectList(@ViewBag.Identityusers, "Email"), "--Select a Email--", new
+                                    {
+                                    @style = "width:420px",
+                                    @id = "emaildd"
+                                    })
+                                </td>*@
                         </tr>
                         <tr>
                             <td>Project</td>
@@ -216,11 +219,11 @@
         });
 
         $('#btnsubmit').click(function (e) {
-            var Email = $("#emaildd option:selected").text();
+            var Email = $("#emaildd").val();
             var ProjectId = $("#projectdd option:selected").text();
             var RoleId = $("#roledd option:selected").text();
             var SamplePercentage = $("#samplepercentage").val();
-            if (Email === "--Select a Email--" && ProjectId === "--Select a Project--" && RoleId === "--Select a Role--") {
+            if (Email === "" && ProjectId === "--Select a Project--" && RoleId === "--Select a Role--") {
                 $("#AddUserForm").valid();
                 e.preventDefault();
             }
@@ -238,7 +241,7 @@
                     $("#sampleerror").html("SamplePercentage is required :");
                 else
                     $("#sampleerror").html('');
-                if (Email !== "--Select a Email--" && ProjectId !== "--Select a Project--" && RoleId !== "--Select a Role--")
+                if (Email !== "" && ProjectId !== "--Select a Project--" && RoleId !== "--Select a Role--")
                     $("#ErrorMessage").text('Please click on the add button, before save');
                 e.preventDefault();
             }

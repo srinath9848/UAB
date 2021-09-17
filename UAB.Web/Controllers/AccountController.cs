@@ -13,6 +13,12 @@ using System.Security.Principal;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Http;
+using identity = Microsoft.Identity.Client;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace UAB.Controllers
 {
@@ -144,6 +150,48 @@ namespace UAB.Controllers
 
             return PartialView("_AddUser");
         }
+        bool ValidateEmaildID(string emailID, ref AzureADResult azureADResult)
+        {
+            var configurationBuilder = new ConfigurationBuilder();
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
+            configurationBuilder.AddJsonFile(path, false);
+
+            var root = configurationBuilder.Build();
+            string SecretKey = @"-m2XU-K8~n2bghSP5VB6d3-_sPEOeHaAeQ";// root.GetSection("SecretKey").Value;
+            string clientId = root.GetSection("AzureAd:ClientId").Value;
+            string tenant = root.GetSection("AzureAd:TenantId").Value;
+
+            identity.IConfidentialClientApplication confidentialClientApplication = identity.ConfidentialClientApplicationBuilder
+                            .Create(clientId)
+                            .WithTenantId(tenant)
+                            .WithClientSecret(SecretKey)
+                            .Build();
+
+            string[] scopes = new string[] { "https://graph.microsoft.com/.default" };
+
+            var confidentialClient = confidentialClientApplication.AcquireTokenForClient(scopes).ExecuteAsync();
+
+            var httpClient = new HttpClient();
+
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", confidentialClient.Result.AccessToken);
+
+            string environmentsUri = "https://graph.microsoft.com/v1.0/users/" + emailID;
+
+            var response = httpClient.GetAsync(environmentsUri).Result;
+            var content = response.Content.ReadAsStringAsync().Result;
+            azureADResult = JsonConvert.DeserializeObject<AzureADResult>(content);
+
+            return response.IsSuccessStatusCode;
+        }
+        public class AzureADResult
+        {
+            //equal to FirstName in Azure Portal
+            public string givenName { get; set; }
+            //equal to LastName in Azure Portal
+            public string surname { get; set; }
+            //equal to User Office Phone in Azure Portal
+            public List<string> businessPhones { get; set; }
+        }
         [HttpPost]
         public ActionResult AddUser(ApplicationUser model, string ProjectAndRole = null)
         {
@@ -153,28 +201,39 @@ namespace UAB.Controllers
                 {
                     ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(_mUserId);
 
+                    AzureADResult azureADResult = new AzureADResult();
+                    bool emailFound = ValidateEmaildID(model.Email, ref azureADResult);
 
-                    int UserId = clinicalcaseOperations.AddUser(model); //adding user to user table
-
-                    if (UserId != 0)
+                    if (emailFound)
                     {
-                        foreach (string item in ProjectAndRole.Split(','))
+                        model.FirstName = azureADResult.givenName;
+                        model.LastName = azureADResult.surname;
+
+                        int UserId = clinicalcaseOperations.AddUser(model); //adding user to user table
+
+                        if (UserId != 0)
                         {
-                            model.ProjectName = item.Split('^')[0];
-                            model.RoleName = item.Split('^')[1];
-                            model.SamplePercentage = item.Split('^')[2];
+                            foreach (string item in ProjectAndRole.Split(','))
+                            {
+                                model.ProjectName = item.Split('^')[0];
+                                model.RoleName = item.Split('^')[1];
+                                model.SamplePercentage = item.Split('^')[2];
 
-                            model.UserId = UserId;
+                                model.UserId = UserId;
 
-                            clinicalcaseOperations.AddProjectUser(model); //adding user to projectuser table
+                                clinicalcaseOperations.AddProjectUser(model); //adding user to projectuser table
+                            }
+                            TempData["Success"] = "Successfully Added User";
                         }
-                        TempData["Success"] = "Successfully Added User";
+                        else
+                        {
+                            TempData["Warning"] = "Unable to add user to projects :User not there in UAB";
+                        }
                     }
                     else
                     {
-                        TempData["Warning"] = "Unable to add user to projects :User not there in UAB";
+                        TempData["Error"] = "Unable to add user : Email not existed in AzureAD";
                     }
-
                 }
                 else
                 {
