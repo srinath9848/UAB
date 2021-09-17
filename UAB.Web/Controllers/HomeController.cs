@@ -28,7 +28,7 @@ namespace UAB.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly int _mUserId;
-        private string timeZoneCookie;
+        private readonly string timeZoneCookie;
         private readonly string _mUserRole;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IAuthenticationService1 _mAuthenticationService;
@@ -36,18 +36,10 @@ namespace UAB.Controllers
         {
             _mAuthenticationService = mAuthenticationService;
             _httpContextAccessor = httpContextAccessor;
-
-            if (_mUserId != 0) return;
-            var userInfo =
-                _mAuthenticationService.GetUserInfoByEmail(_httpContextAccessor.HttpContext.User.Identity.Name);
-            if (userInfo == null) return;
-            _mUserId = userInfo.UserId;
-            _mUserRole = userInfo.RoleName;
+            _mUserId = Convert.ToInt32(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value);
+            _mUserRole = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Role)?.Value;
             _logger = logger;
             timeZoneCookie = _httpContextAccessor.HttpContext.Request.Cookies["UAB_TimeZoneOffset"];
-
-            //_mUserId = Convert.ToInt32(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value);
-            //_mUserRole = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Role)?.Value;
         }
 
         public IActionResult Index()
@@ -170,7 +162,6 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult GetAgingReport()
         {
-            ViewBag.roles = _mUserRole;
             _logger.LogInformation("Loading Started for GetAgingReport for User: " + _mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(_mUserId);
             var lstagingtDTO = clinicalcaseOperations.GetAgingReport();

@@ -1,20 +1,19 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Runtime.InteropServices.ComTypes;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using UAB.DAL.LoginDTO;
+using UAB.DAL.Models;
 
 namespace UAB
 {
@@ -34,6 +33,7 @@ namespace UAB
             services.AddSingleton<IPasswordAlgorithmFactory, PasswordAlgorithmFactory>();
             services.AddSingleton<IClock, Clock>();
             services.AddSingleton<IPasswordAlgorithm, PasswordAlgorithm>();
+            services.AddSingleton<AuthenticationService, AuthenticationService>();
             services.AddMvc();
             services.AddSession();
             services.AddHttpContextAccessor();
@@ -44,7 +44,31 @@ namespace UAB
             //});
 
             services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
-                .AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAd"));
+                    .AddMicrosoftIdentityWebApp(
+                        options =>
+                        {
+                            Configuration.Bind("AzureAd", options);
+                            options.Events = new OpenIdConnectEvents
+                            {
+                                OnTokenValidated = async ctx =>
+                                {
+                                    var context = ctx.HttpContext.RequestServices.GetRequiredService<AuthenticationService>();
+                                    var userInfo = context.GetUserInfoByEmail(ctx.Principal.Identity.Name);
+                                    if (userInfo != null)
+                                    {
+                                        var claims = new List<Claim>
+                                    {
+                                        new Claim(ClaimTypes.Sid, userInfo.UserId.ToString()),
+                                        new Claim(ClaimTypes.Email, userInfo.Email),
+                                        new Claim(ClaimTypes.Role, userInfo.RoleName)
+                                    };
+                                        var appIdentity = new ClaimsIdentity(claims);
+                                        ctx.Principal.AddIdentity(appIdentity);
+                                    }
+                                }
+                            };
+                        }
+                    );
 
             services.AddControllersWithViews(options =>
             {
@@ -88,16 +112,16 @@ namespace UAB
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "login",
-                    pattern: "{controller=Account}/{action=Index}");
+                    name: "SignIn",
+                    pattern: "{controller=Account}/{action=SignIn}");
             });
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllerRoute(
+            //        name: "default",
+            //        pattern: "{controller=Home}/{action=Index}/{id?}");
+            //});
         }
     }
 }

@@ -29,26 +29,17 @@ namespace UAB.Controllers
     public class UABController : Controller
     {
         private readonly int _mUserId;
-        private string timeZoneCookie;
+        private readonly string timeZoneCookie;
         private readonly string _mUserRole;
         private ILogger _logger;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IAuthenticationService1 _mAuthenticationService;
-        public UABController(IHttpContextAccessor httpContextAccessor, ILogger<UABController> logger, IAuthenticationService1 mAuthenticationService)
+        public UABController(IHttpContextAccessor httpContextAccessor, ILogger<UABController> logger)
         {
-            _mAuthenticationService = mAuthenticationService;
+            _mUserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value != null ? Convert.ToInt32(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value) : 0;
+            _mUserRole = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Role)?.Value;
             _httpContextAccessor = httpContextAccessor;
-            if (_mUserId != 0) return;
-            var userInfo =
-                _mAuthenticationService.GetUserInfoByEmail(_httpContextAccessor.HttpContext.User.Identity.Name);
-            if (userInfo == null) return;
-            _mUserId = userInfo.UserId;
-            _mUserRole = userInfo.RoleName;
             _logger = logger;
             timeZoneCookie = _httpContextAccessor.HttpContext.Request.Cookies["UAB_TimeZoneOffset"];
-
-            //_mUserId = Convert.ToInt32(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value);
-            //_mUserRole = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Role)?.Value;
         }
 
         #region Coding

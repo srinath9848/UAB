@@ -168,47 +168,35 @@ namespace UAB.DAL.LoginDTO
         {
             public int UserId { get; set; }
             public string Email { get; set; }
-            public bool IsActiveUser { get; set; }
-            public int RoleId { get; set; }
             public string RoleName { get; set; }
-            public int ProjectId { get; set; }
-            public bool IsActiveInProject { get; set; }
         }
 
-        public UserInfo GetUserInfoByEmail(string Email)
+        public UserInfo GetUserInfoByEmail(string email)
         {
-            UserInfo userInfo = new UserInfo();
+            var userInfo = new UserInfo();
 
             using (var context = new UABContext())
             {
-                using (var cnn = context.Database.GetDbConnection())
+                using var cnn = context.Database.GetDbConnection();
+                var cmm = cnn.CreateCommand();
+                cmm.CommandType = CommandType.StoredProcedure;
+                cmm.CommandText = "[dbo].[UspGetUserInfo]";
+                cmm.Connection = cnn;
+                cnn.Open();
+
+                var param = new SqlParameter { ParameterName = "@Email", Value = email };
+                cmm.Parameters.Add(param);
+
+                var reader = cmm.ExecuteReader();
+
+                while (reader.Read())
                 {
-                    var cmm = cnn.CreateCommand();
-                    cmm.CommandType = CommandType.StoredProcedure;
-                    cmm.CommandText = "[dbo].[UspGetUserInfo]";
-                    cmm.Connection = cnn;
-                    cnn.Open();
-
-                    SqlParameter param = new SqlParameter();
-                    param.ParameterName = "@Email";
-                    param.Value = Email;
-                    cmm.Parameters.Add(param);
-
-
-                    var reader = cmm.ExecuteReader();
-
-                    while (reader.Read())
+                    userInfo = new UserInfo
                     {
-                        userInfo = new UserInfo();
-                        userInfo.UserId = Convert.ToInt32(reader["UserId"]);
-                        userInfo.Email = reader["Email"].ToString();
-                        //userInfo.IsActiveUser = Convert.ToBoolean(reader["IsActive"]);
-                        //userInfo.RoleId = Convert.ToInt32(reader["RoleId"]);
-                        userInfo.RoleName = reader["RoleName"].ToString();
-                        //userInfo.ProjectId = Convert.ToInt32(reader["ProjectId"]);
-                        // userInfo.IsActiveInProject = Convert.ToBoolean(reader["IsActive"]);
-
-                    }
+                        UserId = Convert.ToInt32(reader["UserId"]),
+                        Email = reader["Email"].ToString(),
+                        RoleName = reader["RoleName"].ToString()
+                    };
                 }
             }
             return userInfo;

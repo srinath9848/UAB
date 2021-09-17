@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication;
 using System.Linq;
 using System.Security.Principal;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Http;
 
 namespace UAB.Controllers
@@ -26,15 +27,11 @@ namespace UAB.Controllers
         {
             _mAuthenticationService = mAuthenticationService;
             _httpContextAccessor = httpContextAccessor;
-            if (_mUserId != 0) return;
-            var userInfo =
-                _mAuthenticationService.GetUserInfoByEmail(_httpContextAccessor.HttpContext.User.Identity.Name);
-            if (userInfo == null) return;
-            _mUserId = userInfo.UserId;
-            _mUserRole = userInfo.RoleName;
+            _mUserId = Convert.ToInt32(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value);
+            _mUserRole = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Role)?.Value;
         }
 
-        public IActionResult Index()
+        public IActionResult SignIn()
         {
             if (_mUserRole.Split(",").Contains("Manager"))
                 return RedirectToAction("GetAgingReport", "Home");
@@ -67,7 +64,7 @@ namespace UAB.Controllers
             //}
             //else
             //{
-            //    var userInfo = _mAuthenticationService.GetUserInfoByEmail(Email);
+            //   var userInfo = _mAuthenticationService.GetUserInfoByEmail(Email);
             //    if (userInfo.Email != null)
             //    {
             //        string offSet = Request.Form["hdnOffset"].ToString();
@@ -129,7 +126,6 @@ namespace UAB.Controllers
         [HttpGet]
         public IActionResult ManageUsers()
         {
-            ViewBag.roles = _mUserRole;
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(_mUserId);
 
             var users = clinicalcaseOperations.GetManageUsers();
@@ -384,10 +380,13 @@ namespace UAB.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> SignOut()
         {
             await HttpContext.SignOutAsync(
-                        CookieAuthenticationDefaults.AuthenticationScheme);
+                OpenIdConnectDefaults.AuthenticationScheme);
+
+            //await HttpContext.SignOutAsync(
+            //            CookieAuthenticationDefaults.AuthenticationScheme);
 
             HttpContext.User = new GenericPrincipal(new GenericIdentity(string.Empty), null);
             _httpContextAccessor.HttpContext.Session.Remove("PayorsList");

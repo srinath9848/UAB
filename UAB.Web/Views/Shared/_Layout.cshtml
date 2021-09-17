@@ -1,11 +1,14 @@
 ﻿@using UAB.enums
-@*@using System.Security.Claims;*@
+@using System.Security.Claims;
 @{
     string title = ViewBag.title;
+    string roles = null;
 
-    //   var identity = (ClaimsIdentity)User.Identity;
-    string roles = ViewBag.roles; //identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
-
+    var identity = User.Identities.LastOrDefault();
+    if (identity != null)
+    {
+        roles = identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+    }
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -109,7 +112,7 @@
                                     <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignOut">Log out</a>
-                                    @*<a class="dropdown-item" asp-action="Logout" asp-controller="Account"> Log Out </a>*@
+                                    @*<a class="dropdown-item" asp-action="SignOut" asp-controller="Account"> Log Out </a>*@
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" asp-action="Changepassword" asp-controller="Account">Change Password </a>
                                     <div class="dropdown-divider"></div>
