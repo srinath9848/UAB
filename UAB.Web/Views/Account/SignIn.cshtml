@@ -1,0 +1,30 @@
+﻿@model UAB.DAL.LoginDTO.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<form id="loginForm" asp-action="SignIn" asp-controller="Account" method="POST">
+    <input type="hidden" name="offSet" id="hdnOffset" />
+</form>
+</body>
+</html>
+<script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //https://blog.webnersolutions.com/conversion-of-datetime-value/
+
+        var current_date = new Date();
+        // Convert minutes Offset in hours offset
+        var utc_offset_hours = current_date.getTimezoneOffset() / 60;
+        utc_offset_hours = (-1) * utc_offset_hours;
+
+        $("#hdnOffset").val(utc_offset_hours);
+
+        $("#loginForm").submit();
+    });
+</script>

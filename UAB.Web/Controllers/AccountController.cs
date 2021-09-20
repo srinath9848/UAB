@@ -39,9 +39,16 @@ namespace UAB.Controllers
             _mUserRole = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Role)?.Value;
         }
 
+
+        [HttpGet]
         public IActionResult SignIn()
         {
-            string offSet = Request.Form["hdnOffset"].ToString();
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult SignIn(string offSet)
+        {
             CreateCookie(offSet);
             if (_mUserRole.Split(",").Contains("Manager"))
                 return RedirectToAction("GetAgingReport", "Home");
@@ -54,71 +61,6 @@ namespace UAB.Controllers
             else if (_mUserRole.Split(",").Contains("ShadowQA"))
                 return RedirectToAction("ShadowQASummary", "UAB");
 
-            return RedirectToAction("Index", "Home");
-        }
-
-        [HttpGet]
-        public IActionResult Login()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> LoginAsync(string Email, string Password)
-        {
-            //var signInResult = _mAuthenticationService.SignIn(Email, Password);
-            //if (signInResult.Result != 0)
-            //{
-            //    TempData["Error"] = "Invalid sign-in. Please try again.";
-            //    return View();
-            //}
-            //else
-            //{
-            //   var userInfo = _mAuthenticationService.GetUserInfoByEmail(Email);
-            //    if (userInfo.Email != null)
-            //    {
-            //        string offSet = Request.Form["hdnOffset"].ToString();
-            //        CreateCookie(offSet);
-            //        _mUserId = userInfo.UserId;
-            //        var claims = new List<Claim>
-            //            {
-            //                new Claim(ClaimTypes.Sid, userInfo.UserId.ToString()),
-            //                new Claim(ClaimTypes.Email, Email),
-            //                new Claim(ClaimTypes.Role, userInfo.RoleName)
-            //            };
-
-            //        var claimsIdentity = new ClaimsIdentity(
-            //            claims,
-            //            CookieAuthenticationDefaults.AuthenticationScheme);
-
-            //        await HttpContext.SignInAsync(
-            //            CookieAuthenticationDefaults.AuthenticationScheme,
-            //            new ClaimsPrincipal(claimsIdentity),
-            //            new AuthenticationProperties
-            //            {
-            //                IsPersistent = true,
-            //                ExpiresUtc = DateTime.UtcNow.AddMinutes(20)
-            //            });
-
-            //        if (userInfo.RoleName.Split(",").Contains("Manager"))
-            //            return RedirectToAction("GetAgingReport", "Home");
-            //        else if (userInfo.RoleName.Split(",").Contains("Supervisor"))
-            //            return RedirectToAction("GetAgingReport", "Home");
-            //        else if (userInfo.RoleName.Split(",").Contains("Coder"))
-            //            return RedirectToAction("CodingSummary", "UAB");
-            //        else if (userInfo.RoleName.Split(",").Contains("QA"))
-            //            return RedirectToAction("QASummary", "UAB");
-            //        else if (userInfo.RoleName.Split(",").Contains("ShadowQA"))
-            //            return RedirectToAction("ShadowQASummary", "UAB");
-
-            //        return RedirectToAction("Index", "Home");
-            //    }
-            //    else
-            //    {
-            //        TempData["Error"] = "Invalid sign-in.You are not a UAB user.";
-            //        return View();
-            //    }
-            //}
             return RedirectToAction("Index", "Home");
         }
         void CreateCookie(string offSet)
@@ -442,8 +384,6 @@ namespace UAB.Controllers
             return RedirectToAction("UserDetails", new { UserId = model.UserId });
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> SignOut()
         public void SignOut()
         {
             HttpContext.SignOutAsync(
@@ -456,7 +396,6 @@ namespace UAB.Controllers
             _httpContextAccessor.HttpContext.Session.Remove("PayorsList");
             _httpContextAccessor.HttpContext.Session.Remove("ProvidersList");
             _httpContextAccessor.HttpContext.Session.Remove("FeedbackList");
-            // return RedirectToAction("Login", "Account");
         }
     }
 }

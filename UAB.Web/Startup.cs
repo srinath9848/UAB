@@ -37,12 +37,7 @@ namespace UAB
             services.AddMvc();
             services.AddSession();
             services.AddHttpContextAccessor();
-            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            //.AddCookie(options =>
-            //{
-
-            //});
-
+           
             services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
                     .AddMicrosoftIdentityWebApp(
                         options =>
@@ -115,13 +110,6 @@ namespace UAB
                     name: "SignIn",
                     pattern: "{controller=Account}/{action=SignIn}");
             });
-
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllerRoute(
-            //        name: "default",
-            //        pattern: "{controller=Home}/{action=Index}/{id?}");
-            //});
         }
     }
 }
