@@ -15,17 +15,17 @@
                 <div class="modal-body">
                     <div class="form-horizontal" action="">
                         <div class="form-group" style="font-size: 15px">
-                            <label style="width:90px;"><bold>Email :</bold></label>
+                            <label style="width:100px;"><bold>Email :</bold></label>
                             <span>@Model.Email</span>
                         </div>
                         <br />
                         <div class="form-group" style="font-size: 15px">
-                            <label style="width:90px;"><bold>Project :</bold></label>
+                            <label style="width:100px;"><bold>Project :</bold></label>
                             <span>@Model.ProjectName</span>
                         </div>
                         <br />
                         <div class="form-group" style="font-size: 15px">
-                            <label style="width:90px;"><bold>Role :</bold></label>
+                            <label style="width:100px;"><bold>Role :</bold></label>
                             <span>
                                 @Html.DropDownListFor(model => model.RoleId, new SelectList(@ViewBag.Roles, "RoleId", "Name"), "--Select a Role--", new { @id = "roledd" })
                             </span>
@@ -34,7 +34,7 @@
                         </div>
                         <br />
                         <div class="form-group" style="font-size: 15px" id="samplingdiv">
-                            <label style="width:90px;"><bold>Sampling % :</bold></label>
+                            <label style="width:100px;"><bold>Sampling % :</bold></label>
                             <span>
                                 @Html.TextBoxFor(model => model.SamplePercentage, new { @class = "", style = "width:136px", @autofocus = "autofocus", @autocomplete = "off", @id = "samplepercentage", @placeholder = "Enter Sampling %" })
                             </span>
