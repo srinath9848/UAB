@@ -7,7 +7,6 @@ CREATE PROCEDURE [dbo].[UspPostedChartReport] --NULL,'PerDay'
 AS      
 BEGIN      
       
-      
 IF @RangeType = 'PerDay'      
 BEGIN      
  SELECT    distinct   
@@ -49,7 +48,7 @@ END
 ELSE IF @RangeType = 'PerMonth'      
 BEGIN       
  SELECT distinct 
- DATEPART(mm, DATEADD(Second, @TimeZoneOffset * 60 * 60, VersionDate)) AS [Month Number],
+ --DATEPART(mm, DATEADD(Second, @TimeZoneOffset * 60 * 60, VersionDate)) AS [Month Number],
  DATENAME(month, DATEADD(Second, @TimeZoneOffset * 60 * 60, VersionDate)) AS [Month Name],      
  --DATEPART(mm, VersionDate) AS [Month Number],      
  DATEPART(yyyy, DATEADD(Second, @TimeZoneOffset * 60 * 60, VersionDate)) AS [Year],      
@@ -65,8 +64,7 @@ BEGIN
  GROUP BY DATENAME(month, DATEADD(Second, @TimeZoneOffset * 60 * 60, VersionDate)),      
     DATEPART(yyyy , DATEADD(Second, @TimeZoneOffset * 60 * 60, VersionDate)),      
     DATEPART(mm, DATEADD(Second, @TimeZoneOffset * 60 * 60, VersionDate))      
- ORDER BY DATEPART(mm, DATEADD(Second, @TimeZoneOffset * 60 * 60, VersionDate))      
+ ORDER BY [Month Name]
 END      
       
-END      
-GO
+END

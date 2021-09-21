@@ -2,8 +2,13 @@
 @using UAB.enums
 @using System.Security.Claims;
 @{
-    var identity = (ClaimsIdentity)User.Identity;
-    string roles = identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+    string roles = null;
+
+    var identity = User.Identities.LastOrDefault();
+    if (identity != null)
+    {
+        roles = identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+    }
 }
 <style>
     .table td, .table th {
