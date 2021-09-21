@@ -188,7 +188,7 @@ LEFT JOIN List L ON L.ListId = CC.ListId
 WHERE wi.StatusId < 16 --only not posted items    
 AND pt.ProjectTypeName = @ProjectTypeName    
 AND p.ProjectId=@ProjectId    
-AND wi.StatusId IN (4, 5, 12) AND wi.isBlocked = 0    
+AND wi.StatusId IN (4, 5, 11, 12) AND wi.isBlocked = 0    
 END    
 ELSE IF @ColumnName = 'In ShadowQA'    
 BEGIN    

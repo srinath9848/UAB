@@ -42,7 +42,7 @@ SELECT p.[Name] AS ProjectName, pt.ProjectTypeName
  (pt.ProjectTypeName = 'IP' AND DATEDIFF(DAY, cc.DateOfService, GETDATE()) > 5)  
 ) THEN 1 ELSE 0 END) AS ReadyForCoding  
 , SUM(CASE WHEN wi.StatusId IN (2, 14) AND wi.isBlocked = 0 THEN 1 ELSE 0 END) AS InCoding  
-, SUM(CASE WHEN wi.StatusId IN (4, 5, 12) AND wi.isBlocked = 0 THEN 1 ELSE 0 END) AS InQA  
+, SUM(CASE WHEN wi.StatusId IN (4, 5, 11, 12) AND wi.isBlocked = 0 THEN 1 ELSE 0 END) AS InQA  
 , SUM(CASE WHEN wi.StatusId IN (8, 9, 13) AND wi.isBlocked = 0 THEN 1 ELSE 0 END) AS InShadowQA  
 , SUM(CASE WHEN wi.StatusId = 15 THEN 1 ELSE 0 END) AS ReadyForPosting  
 , SUM(CASE WHEN wi.isBlocked = 1 THEN 1 ELSE 0 END) AS Blocked  
