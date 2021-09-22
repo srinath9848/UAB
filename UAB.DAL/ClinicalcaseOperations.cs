@@ -3107,8 +3107,10 @@ namespace UAB.DAL
                     {
                         string CCID = Convert.ToString(reader["ClinicalCaseID"]);
                         var item = lstDto.Where(x => x.ClinicalCaseId == CCID).FirstOrDefault();
-                        item.PostedBy = Convert.ToString(reader["PostedBy"]);
-                        item.PostedDate = Convert.ToString(Convert.ToDateTime(reader["PostingDate"]).ToLocalDate(timeZoneCookie));
+                        if (reader["PostedBy"] != DBNull.Value)
+                            item.PostedBy = Convert.ToString(reader["PostedBy"]);
+                        if (reader["PostingDate"] != DBNull.Value)
+                            item.PostedDate = Convert.ToString(Convert.ToDateTime(reader["PostingDate"]).ToLocalDate(timeZoneCookie));
 
                         item.CPTDxInfo.Add(new CPTAndDxInfo
                         {
