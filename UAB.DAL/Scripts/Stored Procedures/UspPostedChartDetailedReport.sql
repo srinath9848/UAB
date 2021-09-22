@@ -67,9 +67,9 @@ BEGIN
 	WHERE (W.ProjectId = @ProjectId OR (W.ProjectID = ISNULL(@ProjectId,W.ProjectId)))          
 	AND v.StatusId in (16)        
 	AND DATEADD(Second, @TimeZoneOffset * 60 * 60, Versiondate) >= @StartDate      
-	AND  DATEADD(Second, @TimeZoneOffset * 60 * 60, Versiondate) <= DATEADD(Hour,23,DATEADD(MINUTE,59,DATEADD(SECOND,59,@Enddate)))      
-	AND DATENAME(month, DATEADD(Second, @TimeZoneOffset * 60 * 60, Versiondate)) = @Month         
-	AND   DATEPART(yyyy , DATEADD(Second, @TimeZoneOffset * 60 * 60, Versiondate)) = @Year        
+	AND DATEADD(Second, @TimeZoneOffset * 60 * 60, Versiondate) <= DATEADD(Hour,23,DATEADD(MINUTE,59,DATEADD(SECOND,59,@Enddate)))      
+	AND MONTH(DATEADD(Second, @TimeZoneOffset * 60 * 60, Versiondate)) = MONTH(@Month + ' 1 2021')
+	AND DATEPART(yyyy , DATEADD(Second, @TimeZoneOffset * 60 * 60, Versiondate)) = @Year
 )
 SELECT * FROM DataSet WHERE rn = 1
 END          
