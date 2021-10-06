@@ -35,6 +35,8 @@
                         Internal
                         @Html.RadioButtonFor(model => model.BlockType, "External")
                         External
+                        <br />
+                        @Html.ValidationMessageFor(model => model.BlockType, null, new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="modal-footer">
