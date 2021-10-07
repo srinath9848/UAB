@@ -3517,22 +3517,22 @@ namespace UAB.Controllers
             _logger.LogInformation("Loading Started for AddSettingsErrorType for User: " + _mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(_mUserId);
             List<string> lstErrorType = clinicalcaseOperations.GetErrorTypeNames();
-            if (!lstErrorType.Contains(errorType.Name.ToLower()))
+            if (!lstErrorType.Contains(errorType.Name.Trim().ToLower()))
             {
                 if (errorType.ErrorTypeId == 0)
                 {
                     clinicalcaseOperations.AddErrorType(errorType);
-                    TempData["Success"] = "Error Type \"" + errorType.Name + "\" Added Successfully!";
+                    TempData["Success"] = "Error Type \"" + errorType.Name.Trim() + "\" Added Successfully!";
                 }
                 else
                 {
                     clinicalcaseOperations.UpdateErrorType(errorType); // Update
-                    TempData["Success"] = "Error Type \"" + errorType.Name + "\" Updated Successfully!";
+                    TempData["Success"] = "Error Type \"" + errorType.Name.Trim() + "\" Updated Successfully!";
                 }
             }
             else
             {
-                TempData["Error"] = "The Error Type \"" + errorType.Name + "\" is already present in our Error Type list!";
+                TempData["Error"] = "The Error Type \"" + errorType.Name.Trim() + "\" is already present in our Error Type list!";
             }
             _logger.LogInformation("Loading Ended for AddSettingsErrorType for User: " + _mUserId);
             return RedirectToAction("SettingsErrorType");
@@ -3606,27 +3606,27 @@ namespace UAB.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddSettingsProviderFeedback(BindDTO providerFeedback)
+        public IActionResult AddSettingsProviderFeedback(ProviderFeedback providerFeedback)
         {
             _logger.LogInformation("Loading Started for AddSettingsProviderFeedback for User: " + _mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(_mUserId);
             List<string> lstFeedback = clinicalcaseOperations.GetProviderFeedbackNames();
-            if (!lstFeedback.Contains(providerFeedback.Name.ToLower()))
+            if (!lstFeedback.Contains(providerFeedback.Feedback.Trim().ToLower()))
             {
-                if (providerFeedback.ID == 0)
+                if (providerFeedback.ProviderFeedbackId == 0)
                 {
                     clinicalcaseOperations.AddProviderFeedback(providerFeedback);
-                    TempData["Success"] = "Provider Feedback \"" + providerFeedback.Name + "\" Added Successfully!";
+                    TempData["Success"] = "Provider Feedback \"" + providerFeedback.Feedback.Trim() + "\" Added Successfully!";
                 }
                 else
                 {
                     clinicalcaseOperations.UpdateProviderFeedback(providerFeedback); // Update
-                    TempData["Success"] = "Provider Feedback \"" + providerFeedback.Name + "\" Updated Successfully!";
+                    TempData["Success"] = "Provider Feedback \"" + providerFeedback.Feedback.Trim() + "\" Updated Successfully!";
                 }
             }
             else
             {
-                TempData["Error"] = "The Provider Feedback \"" + providerFeedback.Name + "\" is already present in our Provider feedback list!";
+                TempData["Error"] = "The Provider Feedback \"" + providerFeedback.Feedback.Trim() + "\" is already present in our Provider feedback list!";
             }
             _logger.LogInformation("Loading Ended for AddSettingsProviderFeedback for User: " + _mUserId);
             return RedirectToAction("SettingsProviderFeedback");
@@ -3646,14 +3646,14 @@ namespace UAB.Controllers
         public ActionResult Add_EditProviderFeedback(int id = 0)
         {
             _logger.LogInformation("Loading Started for Add_EditProviderFeedback for User: " + _mUserId);
-            BindDTO obj = new BindDTO();
+            ProviderFeedback obj = new ProviderFeedback();
             if (id != 0)
             {
-                List<BindDTO> lstproviderFeedback = new List<BindDTO>();
+                List<ProviderFeedback> lstproviderFeedback = new List<ProviderFeedback>();
                 ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(_mUserId);
 
-                lstproviderFeedback = clinicalcaseOperations.GetProviderFeedbacksList();
-                var res = lstproviderFeedback.Where(a => a.ID == id).FirstOrDefault();
+                lstproviderFeedback = clinicalcaseOperations.GetProviderFeedbacks();
+                var res = lstproviderFeedback.Where(a => a.ProviderFeedbackId == id).FirstOrDefault();
                 obj = res;
             }
             _logger.LogInformation("Loading Ended for Add_EditProviderFeedback for User: " + _mUserId);

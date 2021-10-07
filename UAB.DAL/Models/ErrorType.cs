@@ -9,7 +9,7 @@ namespace UAB.DAL.Models
     {
         public int ErrorTypeId { get; set; }
         [Required(ErrorMessage = "Error Type is required.")]
-        [RegularExpression(@"^(([A-za-z0-9]+[\s]{1}[A-za-z0-9]+)|([A-Za-z0-9]+))$", ErrorMessage = "Special Character not allowed")]
+        [RegularExpression(@"^(?!\s*$).+", ErrorMessage = "Empty String Not Allowed")]
         public string Name { get; set; }
     }
 }
