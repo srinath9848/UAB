@@ -230,6 +230,7 @@
 
     dictQADxCodes = (dictQADxCodes == null) ? new Dictionary<int, string>() : dictQADxCodes;
     dictQADxRemarks = (dictQADxRemarks == null) ? new Dictionary<int, string>() : dictQADxRemarks;
+    Dictionary<int, string> dictRevisedDxRemarks = Utility.GetQAOrShadowQADxRemarks(Model.RevisedDXRemarks);
 
     int count = Math.Max(dictDxCodes.Count(), Math.Max(dictQADxCodes.Count(), 0));
 
@@ -343,8 +344,8 @@
                 </div>
 
                 <div class="col-md-3 input-group CoderCorrections">
-                    <input type="text" id="@DxClaim" class="@DxClaimRemarks" style="@Show" onchange="removevalid('@DxClaimRemarks')" />
-                    <span id="valid_@DxClaim" class="text-danger txtdanger" style="display:none">*</span>
+                    <input type="text" id="@DxClaim" class="@DxClaimRemarks" style="@Show" onchange="removevalid('@DxClaimRemarks')" value="@dictRevisedDxRemarks?.ElementAt(i).Value" />
+                    <span id="valid_@DxClaim" class="text-danger txtdanger" style="display: none">*</span>
                 </div>
                 @*}*@
             </div>
@@ -360,6 +361,8 @@
 
     dictQACptCodes = (dictQACptCodes == null) ? new Dictionary<int, string>() : dictQACptCodes;
     dictQACptRemarks = (dictQACptRemarks == null) ? new Dictionary<int, string>() : dictQACptRemarks;
+    Dictionary<int, string> dictRevisedCptRemarks = Utility.GetQAOrShadowQADxRemarks(Model.RevisedCPTRemarks);
+
 
     count = Math.Max(dictCptCodes.Count(), Math.Max(dictQACptCodes.Count(), 0));
 
@@ -428,6 +431,7 @@
 
                     string link = !string.IsNullOrEmpty(@qaLinks) || @qaLinks != "null" ? @qaLinks : "Link All";
                     cptLinks1 = cptLinks == link ? "" : coderLinks + "/";
+                    string finalCptCode = ""; string finalCptMod = ""; string finalCptQty = ""; string finalCptLinks = "";
 
                     //if (cptCode == qacptCode)
                     //{
@@ -450,9 +454,18 @@
                                 <div class="form-control CoderDetails">
                                     <span style="color:green">@cptLinks1.Replace("/", "")</span>
                                 </div>
+                                finalCptCode = codercptCode.Replace("/", "");
+                                finalCptMod = coderMod.Replace("/", "");
+                                finalCptQty = coderQty.Replace("/", "");
+                                finalCptLinks = cptLinks1.Replace("/", "");
                             }
                             else
                             {
+                                finalCptCode = cCpt.Replace("/", "");
+                                finalCptMod = cMod.Replace("/", "");
+                                finalCptQty = cQty.Replace("/", "");
+                                finalCptLinks = cLinks.Replace("/", "");
+
                                 if (codercptCode == "NA")
                                     color = "color:fuchsia;";
                                 <div class="form-control CoderDetails" style="min-width:60px;">
@@ -487,7 +500,7 @@
                                 </div>
                             }
                         }
-                        <input type="hidden" id="@cptCoderClaim" value="@codercpt^@coderMod^@coderQty^@coderLinks" />
+                        <input type="hidden" id="@cptCoderClaim" value="@finalCptCode^@finalCptMod^@finalCptQty^@finalCptLinks" />
                         <input type="hidden" id="@cptQAClaim" value="@qaCptcodes[0]^@qaCptcodes[1]^@qaCptcodes[2]^@qaCptcodes[3]" />
                     </div>
                     Show = (string.IsNullOrEmpty(dictQACptRemarks?.ElementAt(i).Value) ? "display:none" : "display:flex");
@@ -510,7 +523,7 @@
                         </span>
                     </div>
                     <div class="col-md-3 input-group CoderCorrections ControlHeight">
-                        <input type="text" id="@CptClaim" class="@CptClaimRemarks ControlHeight" style="@Show" onchange="removevalid('@CptClaimRemarks')" />
+                        <input type="text" id="@CptClaim" class="@CptClaimRemarks ControlHeight" style="@Show" onchange="removevalid('@CptClaimRemarks')" value="@dictRevisedCptRemarks?.ElementAt(i).Value" />
                         <span id="valid_@CptClaim" class="text-danger txtdanger" style="display:none">*</span>
                     </div>
                     @*}

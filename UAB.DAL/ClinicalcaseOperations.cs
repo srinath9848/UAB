@@ -528,6 +528,13 @@ namespace UAB.DAL
                                 chartSummaryDTO.QADTO.ErrorType = Convert.ToInt32(reader["QAErrorTypeId"]);
 
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
+
+                            chartSummaryDTO.RevisedPayorRemarks = Convert.ToString(reader["RebuttedPayorIdRemark"]);
+                            chartSummaryDTO.RevisedProviderRemarks = Convert.ToString(reader["RebuttedProviderIDRemark"]);
+                            chartSummaryDTO.RevisedBillingProviderRemarks = Convert.ToString(reader["RebuttedBillingProviderIDRemark"]);
+                            chartSummaryDTO.RevisedCPTRemarks = Convert.ToString(reader["RebuttedCPTCodeRemark"]);
+                            chartSummaryDTO.RevisedDXRemarks = Convert.ToString(reader["RebuttedDxRemark"]);
+                            chartSummaryDTO.RevisedProviderFeedbackRemarks = Convert.ToString(reader["RebuttedProviderFeedbackIDRemark"]);
                         }
                         else if (Role == "ShadowQA" && ChartType == "Available")
                         {

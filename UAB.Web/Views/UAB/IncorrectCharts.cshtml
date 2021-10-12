@@ -327,6 +327,14 @@
                 //    $("#hdnRejectedDxCodes").val($("#DxClaim_1_Coder_" + id).val());
                 //else
                 //    $("#hdnRejectedDxCodes").val($("#hdnRejectedDxCodes").val() + "," + $("#DxClaim_1_Coder_" + id).val());
+                if ($("#DxClaim_1_Coder_" + id).val() != "NA") {
+                    if ($("#hdnDxCodes").val() == "") {
+                        $("#hdnDxCodes").val(id + "^" + $("#DxClaim_1_Coder_" + id).val());
+                    }
+                    else {
+                        $("#hdnDxCodes").val($("#hdnDxCodes").val() + "|" + id + "^" + $("#DxClaim_1_Coder_" + id).val());
+                    }
+                }
             }
             else {
                 if ($("#hdnDxCodes").val() == "") {
@@ -366,6 +374,13 @@
                     $("#hdnRejectedCptRemarks").val(rowNumber + "^" + $(Cptremarks[i]).val());
                 else
                     $("#hdnRejectedCptRemarks").val($("#hdnRejectedCptRemarks").val() + "|" + rowNumber + "^" + $(Cptremarks[i]).val());
+
+                if ($("#CptClaim_1_Coder_" + rowNumber).val() != "NA^NA^NA^NA") {
+                    if ($("#hdnCptCodes").val() == "")
+                        $("#hdnCptCodes").val(rowNumber + "^" + $("#CptClaim_1_Coder_" + rowNumber).val());
+                    else
+                        $("#hdnCptCodes").val($("#hdnCptCodes").val() + "|" + rowNumber + "^" + $("#CptClaim_1_Coder_" + rowNumber).val());
+                }
             }
             if (res1.includes('accept')) {
                 // $("#hdnStatusId").val('15');
@@ -436,7 +451,7 @@
                     if ($("#DxClaim_2_Coder_" + rowNumber).val() != "" && $("#DxClaim_2_Coder_" + rowNumber).val() != "NA")
                         $("#hdnRejectedDxCodes1").val($("#hdnRejectedDxCodes1").val() + "," + rowNumber + "^" + $("#DxClaim_2_Coder_" + rowNumber).val());
                     else
-                        $("#hdnRejectedDxCodes1").val($("#hdnRejectedDxCodes1").val() + "," + rowNumber + "^" + $("#DxClaim_2_QA_" + rowNumber).val());
+                        $("#hdnRejectedDxCodes1").val($("#hdnRejectedDxCodes1").val() + "," + rowNumber + "^" + $("#DxClaim_2_Coder_" + rowNumber).val());
                 }
 
                 if ($("#hdnRejectedDxRemarks1").val() == "")
@@ -477,6 +492,14 @@
                 //    $("#hdnRejectedDxCodes1").val($("#DxClaim_2_Coder_" + id).val());
                 //else
                 //    $("#hdnRejectedDxCodes1").val($("#hdnRejectedDxCodes1").val() + "," + $("#DxClaim_2_Coder_" + id).val());
+                if ($("#DxClaim_2_Coder_" + id).val() != "NA") {
+                    if ($("#hdnDxCodes1").val() == "") {
+                        $("#hdnDxCodes1").val(id + "^" + $("#DxClaim_2_Coder_" + id).val());
+                    }
+                    else {
+                        $("#hdnDxCodes1").val($("#hdnDxCodes1").val() + "|" + id + "^" + $("#DxClaim_2_Coder_" + id).val());
+                    }
+                }
             }
             else {
                 if ($("#hdnDxCodes1").val() == "") {
@@ -516,6 +539,13 @@
                     $("#hdnRejectedCptRemarks1").val(rowNumber + "^" + $(Cptremarks[i]).val());
                 else
                     $("#hdnRejectedCptRemarks1").val($("#hdnRejectedCptRemarks1").val() + "|" + rowNumber + "^" + $(Cptremarks[i]).val());
+
+                if ($("#CptClaim_2_Coder_" + rowNumber).val() != "NA^NA^NA^NA") {
+                    if ($("#hdnCptCodes1").val() == "")
+                        $("#hdnCptCodes1").val(rowNumber + "^" + $("#CptClaim_2_Coder_" + rowNumber).val());
+                    else
+                        $("#hdnCptCodes1").val($("#hdnCptCodes1").val() + "|" + rowNumber + "^" + $("#CptClaim_2_Coder_" + rowNumber).val());
+                }
             }
             if (res1.includes('accept')) {
                 // $("#hdnStatusId").val('15');
@@ -561,7 +591,7 @@
 
         // Claim 3 Dx & Cpt Start
 
-        var DxClaim3remarks = $('[class*=DxClaim_3_Remarks_][style="display:flex"]')
+        var DxClaim3remarks = $('[class*=DxClaim_3_Remarks_][style="display:flex"]');
         $("#hdnDxCodes2").val("");
         $("#hdnRejectedDxCodes2").val("");
         $("#hdnRejectedDxRemarks2").val("");
