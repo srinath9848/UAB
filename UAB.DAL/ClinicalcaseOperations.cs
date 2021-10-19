@@ -528,6 +528,13 @@ namespace UAB.DAL
                                 chartSummaryDTO.QADTO.ErrorType = Convert.ToInt32(reader["QAErrorTypeId"]);
 
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
+
+                            chartSummaryDTO.RevisedPayorRemarks = Convert.ToString(reader["RebuttedPayorIdRemark"]);
+                            chartSummaryDTO.RevisedProviderRemarks = Convert.ToString(reader["RebuttedProviderIDRemark"]);
+                            chartSummaryDTO.RevisedBillingProviderRemarks = Convert.ToString(reader["RebuttedBillingProviderIDRemark"]);
+                            chartSummaryDTO.RevisedCPTRemarks = Convert.ToString(reader["RebuttedCPTCodeRemark"]);
+                            chartSummaryDTO.RevisedDXRemarks = Convert.ToString(reader["RebuttedDxRemark"]);
+                            chartSummaryDTO.RevisedProviderFeedbackRemarks = Convert.ToString(reader["RebuttedProviderFeedbackIDRemark"]);
                         }
                         else if (Role == "ShadowQA" && ChartType == "Available")
                         {
@@ -3643,7 +3650,33 @@ namespace UAB.DAL
                 return iduseremail.Except(uabuseremail).ToList();
             }
         }
+        public List<ProviderFeedback> GetProviderFeedbacks()
+        {
+            List<ProviderFeedback> lstDto = new List<ProviderFeedback>();
+            using (var context = new UABContext())
+            {
+                using (var con = context.Database.GetDbConnection())
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[UspGetProviderFeedback]";
+                    cmd.Connection = con;
 
+                    con.Open();
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        ProviderFeedback dto = new ProviderFeedback()
+                        {
+                            ProviderFeedbackId = Convert.ToInt32(reader["ProviderFeedbackId"]),
+                            Feedback = Convert.ToString(reader["Feedback"])
+                        };
+                        lstDto.Add(dto);
+                    }
+                }
+            }
+            return lstDto;
+        }
         public List<BindDTO> GetProviderFeedbacksList()
         {
             List<BindDTO> lstDto = new List<BindDTO>();
@@ -4587,7 +4620,7 @@ namespace UAB.DAL
             return feedbacks;
         }
 
-        public void AddProviderFeedback(BindDTO providerFeedback)
+        public void AddProviderFeedback(ProviderFeedback providerFeedback)
         {
             using (var context = new UABContext())
             {
@@ -4601,7 +4634,7 @@ namespace UAB.DAL
 
                     SqlParameter feedback = new SqlParameter();
                     feedback.ParameterName = "@Feedback";
-                    feedback.Value = providerFeedback.Name;
+                    feedback.Value = providerFeedback.Feedback.Trim();
                     cmm.Parameters.Add(feedback);
 
                     cnn.Open();
@@ -4610,7 +4643,7 @@ namespace UAB.DAL
             }
         }
 
-        public void UpdateProviderFeedback(BindDTO providerFeedback)
+        public void UpdateProviderFeedback(ProviderFeedback providerFeedback)
         {
             using (var context = new UABContext())
             {
@@ -4625,10 +4658,10 @@ namespace UAB.DAL
 
                     SqlParameter param1 = new SqlParameter();
                     param1.ParameterName = "@Feedback";
-                    param1.Value = providerFeedback.Name;
+                    param1.Value = providerFeedback.Feedback.Trim();
                     SqlParameter param2 = new SqlParameter();
                     param2.ParameterName = "@ProviderFeedbackID";
-                    param2.Value = providerFeedback.ID;
+                    param2.Value = providerFeedback.ProviderFeedbackId;
                     cmm.Parameters.Add(param1);
                     cmm.Parameters.Add(param2);
 
@@ -4868,7 +4901,7 @@ namespace UAB.DAL
 
                     SqlParameter name = new SqlParameter();
                     name.ParameterName = "@Name";
-                    name.Value = errorType.Name;
+                    name.Value = errorType.Name.Trim();
                     cmm.Parameters.Add(name);
 
                     cnn.Open();
