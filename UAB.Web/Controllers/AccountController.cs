@@ -81,6 +81,18 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(_mUserId);
 
             var users = clinicalcaseOperations.GetManageUsers();
+            ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
+            ViewBag.users = users;
+
+            return View();
+        }
+        [HttpPost]
+        public IActionResult ManageUsers(string projId)
+        {
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(_mUserId);
+
+            var users = clinicalcaseOperations.GetManageUsers(Convert.ToInt32(projId));
+            ViewBag.Projects = clinicalcaseOperations.GetProjectsList();
             ViewBag.users = users;
 
             return View();

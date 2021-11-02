@@ -3738,11 +3738,12 @@ namespace UAB.DAL
                 return context.Provider.ToList();
             }
         }
-        public List<User> GetManageUsers()
+        public List<User> GetManageUsers(int Projectid = 0)
         {
             using (var context = new UABContext())
             {
-                return context.User.ToList();
+                List<int> userIds = context.ProjectUser.Where(x => (Projectid == 0 || x.ProjectId == Projectid)).Select(x => x.UserId).ToList();
+                return context.User.Where(x => userIds.Contains(x.UserId)).ToList();
             }
         }
         public List<int> GetManageEMCodeLevels()
