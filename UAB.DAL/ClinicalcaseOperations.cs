@@ -3093,6 +3093,7 @@ namespace UAB.DAL
                         SearchResultDTO dto = new SearchResultDTO()
                         {
                             ClinicalCaseId = Convert.ToString(reader["ClinicalCaseID"]),
+                            ProjectId = Convert.ToInt32(reader["ProjectId"]),
                             FirstName = Convert.ToString(reader["FirstName"]),
                             LastName = Convert.ToString(reader["LastName"]),
                             MRN = Convert.ToString(reader["PatientMRN"]),
@@ -3126,6 +3127,19 @@ namespace UAB.DAL
                             ClaimOrder = Convert.ToInt32(reader["ClaimOrder"]),
                         });
                     }
+                    reader.NextResult();
+
+                    List<ProjUser> lstProjectuser = new List<ProjUser>();
+
+                    while (reader.Read())
+                    {
+                        lstProjectuser.Add(new ProjUser
+                        {
+                            ProjectId = Convert.ToInt32(reader["ProjectId"]),
+                            RoleId = Convert.ToInt32(reader["RoleId"])
+                        });
+                    }
+                    lstDto.ForEach(x => x.ProjectUser = lstProjectuser);
                 }
             }
             return lstDto;

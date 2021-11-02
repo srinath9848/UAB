@@ -62,8 +62,10 @@ namespace UAB.DTO
         public SearchResultDTO()
         {
             CPTDxInfo = new List<CPTAndDxInfo>();
+            ProjectUser = new List<ProjUser>();
         }
         public string ClinicalCaseId { get; set; }
+        public int ProjectId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MRN { get; set; }
@@ -85,7 +87,13 @@ namespace UAB.DTO
         public string CodedBy { get; set; }
         public string QABy { get; set; }
         public string ShadowQABy { get; set; }
+        public List<ProjUser> ProjectUser { get; set; }
 
+    }
+    public class ProjUser
+    {
+        public int ProjectId { get; set; }
+        public int RoleId { get; set; }
     }
     public class CPTAndDxInfo
     {
