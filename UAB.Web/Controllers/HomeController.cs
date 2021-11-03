@@ -640,6 +640,12 @@ namespace UAB.Controllers
             _logger.LogInformation("Loading Started for ExportChartSummaryReport for User: " + _mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(_mUserId);
             var lstChartSummaryReport = clinicalcaseOperations.GetDetailedChartSummaryReport(ProjectId, StartDate, EndDate, dateType);
+
+            if (lstChartSummaryReport.Tables[0].Rows[0]["ProjectTypeName"].ToString().ToUpper() == "AMBULATORY")
+                lstChartSummaryReport.Tables[0].Columns.Remove("ListName");
+            else if (lstChartSummaryReport.Tables[0].Rows[0]["ProjectTypeName"].ToString().ToUpper() == "IP")
+                lstChartSummaryReport.Tables[0].Columns.Remove("Billing Provider");
+
             lstChartSummaryReport.Tables[0].TableName = "ChartSummaryReportAllColumn";
             lstChartSummaryReport.Tables[0].Columns.Remove("ClinicalCaseID");
             lstChartSummaryReport.Tables[0].Columns.Remove("IsBlocked");
@@ -647,6 +653,7 @@ namespace UAB.Controllers
             lstChartSummaryReport.Tables[0].Columns.Remove("QABy");
             lstChartSummaryReport.Tables[0].Columns.Remove("ShadowQABy");
             lstChartSummaryReport.Tables[0].Columns.Remove("ProjectId");
+            lstChartSummaryReport.Tables[0].Columns.Remove("ProjectTypeName");
             lstChartSummaryReport.Tables[0].Columns.Remove("providerorder");
             _logger.LogInformation("Loading Ended for ExportChartSummaryReport for User: " + _mUserId);
             return ExportToExcel(lstChartSummaryReport.Tables[0]);
