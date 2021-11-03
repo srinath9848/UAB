@@ -155,7 +155,8 @@ namespace UAB.Controllers
                     }
                 }
             }
-
+            lstLelvellingReportDTO.Tables[0].Columns.Remove("EMLevel");
+            lstLelvellingReportDTO.Tables[1].Columns.Remove("EMLevel");
             return ExportToExcelForLevellingReport(lstLelvellingReportDTO);
         }
 
@@ -231,9 +232,9 @@ namespace UAB.Controllers
                     ws.Row(x).Cell(col + 1).Value = total.ToString();
                 }
 
-                ws.Row(lastRow + 1).Cell(2).Value = "Total";
+                ws.Row(lastRow + 1).Cell(1).Value = "Total";
 
-                for (int x = 3; x <= colCount + 1; x++)
+                for (int x = 2; x <= colCount + 1; x++)
                 {
                     total = 0;
                     for (int y = 3; y <= lastRow; y++)
@@ -280,7 +281,7 @@ namespace UAB.Controllers
                 for (int x = lastRow + 5; x <= lastRowForPercentage; x++)
                 {
                     total = 0;
-                    for (int y = 3; y <= colCountForPercentage + 1; y++)
+                    for (int y = 2; y <= colCountForPercentage + 1; y++)
                     {
                         ws.Row(x).Cell(y).Value = ws.Row(x).Cell(y).Value + "%";
                         col = y;
