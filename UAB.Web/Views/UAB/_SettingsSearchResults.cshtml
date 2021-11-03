@@ -44,6 +44,7 @@
     .page-item.active .page-link {
         background-color: #27a9e3;
     }
+
     .linkToButton {
         background-color: #2255a4;
         height: 32px;
@@ -104,11 +105,13 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @{List<int> searchIds = new List<int>() { 4, 5 };}
+
                                 @foreach (var item in Model)
                                 {
                                     <tr>
                                         <td>
-                                            @if (roles.Split(',').ToList().Contains(Roles.Manager.ToString()))
+                                            @if (item.ProjectUser.Any(x => x.ProjectId == item.ProjectId && searchIds.Contains(x.RoleId)))
                                             {
                                                 @if (!@item.Status.Contains("Ready for Posting") && !@item.Status.Contains("Posting Completed") && !@item.Status.Contains("Provider Posted"))
                                                 {
