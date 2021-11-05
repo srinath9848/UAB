@@ -158,7 +158,9 @@
                         <div class="form-group row">
                             <label class="col-md-3 m-t-15 AlignControl"> Provider Feedback</label>
                             <div class="col-md-3">
-                                @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight" })
+                                @Html.ListBoxFor(model => model.ProviderFeedbackID, new MultiSelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight", @multiple = "multiple", @id = "ProviderFeedbackId" })
+
+                                @*@Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight" })*@
                                 @Html.ValidationMessageFor(model => model.ProviderFeedbackID, null, new { @class = "text-danger" })
                             </div>
                         </div>
@@ -195,16 +197,30 @@
         </div>
     </div>
 </div>
+<style>
+    #mutildrop {
+        background-color: none !important;
+        color: none !important;
+    }
+</style>
+<link href="~/css/bootstrap-multiselect.css" rel="stylesheet" />
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
+<script src="~/js/bootstrap-multiselect.js"></script>
 <script src="~/dashboardassets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
 <script src="~/dashboardassets/extra-libs/DataTables/datatables.js"></script>
 <script type="text/javascript">
+
+    $('#ProviderFeedbackId').multiselect({
+        includeSelectAllOption: true,
+        nonSelectedText: 'Select Provider Feedbacks'
+    });
     $(document).ready(function () {
 
         $('#txtQty_1,#txtLinks_1,.cptQtyClaim,.cptLinksClaim').on('keyup keypress change', function (e) {
             this.value = this.value.replace(/[^0-9\.]/g, '');
         });
+
 
         PostedByProvider = function () {
 
@@ -263,7 +279,7 @@
         });
 
         EnableButton = function () {
-            if ($('#BillingProviderID').val() !== "" && $('#ProviderID').val() !== "" && $('#PayorID').val() !== "" && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== "" && $('#Providers_2').val() === undefined && $('#Providers_3').val() === undefined && $('#Providers_4').val() === undefined) {
+            if ($('#BillingProviderID').val() !== "" && $('#ProviderID').val() !== "" && $('#PayorID').val() !== "" && $('#ProviderFeedbackId option:selected').val() !=="" && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== "" && $('#Providers_2').val() === undefined && $('#Providers_3').val() === undefined && $('#Providers_4').val() === undefined) {
                 $('#codingSubmit').prop('disabled', false);
                 $('#codingSubmitAndGetNext').prop('disabled', false);
                 $('#btnProviderPosted').prop('disabled', false);

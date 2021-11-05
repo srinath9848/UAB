@@ -86,14 +86,34 @@
 <div class="form-group row">
     <label class="col-md-3 m-t-15 AlignControl">Provider Feedback</label>
     <div class="col-md-3">
-        @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("ProviderFeedbacks_{0}", claimID) })
+        @Html.ListBoxFor(model => model.ProviderFeedbackID, new MultiSelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight", @multiple = "multiple", @id = string.Format("ProviderFeedbacks_{0}", claimID) })
+
+        @*@Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("ProviderFeedbacks_{0}", claimID) })*@
         @Html.ValidationMessageFor(model => model.ProviderFeedbackID, null, new { @class = "text-danger" })
     </div>
 </div>
+<link href="~/css/bootstrap-multiselect.css" rel="stylesheet" />
+<script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
+<script src="~/js/bootstrap-multiselect.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#@cptQtyClaim,#@cptLinksClaim,.cptQtyClaim,.cptLinksClaim').on('keyup keypress change', function (e) {
             this.value = this.value.replace(/[^0-9\.]/g, '');
+        });
+
+        $('#ProviderFeedbacks_2').multiselect({
+            includeSelectAllOption: true,
+            nonSelectedText: 'Select Provider Feedbacks'
+        });
+
+        $('#ProviderFeedbacks_3').multiselect({
+            includeSelectAllOption: true,
+            nonSelectedText: 'Select Provider Feedbacks'
+        });
+
+        $('#ProviderFeedbacks_4').multiselect({
+            includeSelectAllOption: true,
+            nonSelectedText: 'Select Provider Feedbacks'
         });
     });
 </script>

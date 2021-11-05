@@ -234,7 +234,15 @@
                                         @{string ProviderFeedbackText = (Model.FirstOrDefault().ProviderFeedbackText?.Length > len) ? Model.FirstOrDefault().ProviderFeedbackText.Substring(0, len) + ".." : Model.FirstOrDefault().ProviderFeedbackText;}
                                         @{title = Model.FirstOrDefault().ProviderFeedbackText;}
                                         <div title="@title" class="col-md-3">
-                                            @Html.DropDownListFor(Model => Model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight" })
+                                            @if (ProviderFeedbackText != null)
+                                            {
+                                                @Html.DropDownListFor(Model => Model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight" })
+                                            }
+                                            else
+                                            {
+                                                @Html.DropDownListFor(Model => Model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight" })
+
+                                            }
                                             @Html.ValidationMessageFor(Model => Model.FirstOrDefault().ProviderFeedbackID, null, new { @class = "text-danger" })
                                         </div>
                                     </div>
