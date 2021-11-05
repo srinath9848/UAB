@@ -849,7 +849,15 @@
                                                         Error Type
                                                     </label>
                                                     <div class="col-md-7">
-                                                        @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight CoderDetails", @id = string.Format("ErrorType_{0}", tabIndex) })
+                                                        @if (Model.FirstOrDefault().QADTO.ErrorType != null)
+                                                        {
+                                                            <input type="hidden" id="ErrorType_@tabIndex" value="@Model.FirstOrDefault().QADTO.ErrorType" />
+                                                            @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), Model.FirstOrDefault().QAErrorTypeText.Split(',')[0], new { @class = "form-control ControlHeight CoderDetails", @id = string.Format("ErrorTypes_{0}", tabIndex) })
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight CoderDetails", @id = string.Format("ErrorType_{0}", tabIndex) })
+                                                        }
                                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().QADTO.ErrorType, null, new { @class = "text-danger ErrorType" })
                                                     </div>
                                                 </div>
@@ -900,12 +908,12 @@
     }
 
     /*     #sortable-1 li {
-                                margin: 0 3px 3px 3px;
-                                padding: 0.4em;
-                                padding-left: 1.5em;
-                                font-size: 17px;
-                                height: 16px;
-                            }*/
+                                                    margin: 0 3px 3px 3px;
+                                                    padding: 0.4em;
+                                                    padding-left: 1.5em;
+                                                    font-size: 17px;
+                                                    height: 16px;
+                                                }*/
 
     .default {
         background: #cedc98;

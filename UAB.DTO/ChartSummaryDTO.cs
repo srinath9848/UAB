@@ -84,6 +84,8 @@ namespace UAB.DTO
         //[Required(ErrorMessage = "*")]
         public string QAProviderFeedbackID { get; set; }
         public string QAProviderFeedbackText { get; set; }
+        public string QAErrorTypeText { get; set; }
+        public string ShadowQAErrorTypeText { get; set; }
         public string ShadowQAProviderFeedbackText { get; set; }
         //[Required(ErrorMessage = "*")]
         public string QAProviderFeedbackRemarks { get; set; }

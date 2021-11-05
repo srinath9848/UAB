@@ -525,7 +525,10 @@ namespace UAB.DAL
                                 chartSummaryDTO.QAProviderFeedbackID = Convert.ToString(reader["QAProviderFeedbackID"]);
                             chartSummaryDTO.QAProviderFeedbackRemarks = Convert.ToString(reader["QAProviderFeedbackIDRemark"]);
                             if (reader["QAErrorTypeId"] != DBNull.Value)
+                            {
                                 chartSummaryDTO.QADTO.ErrorType = Convert.ToString(reader["QAErrorTypeId"]);
+                                chartSummaryDTO.QAErrorTypeText = Convert.ToString(reader["QAErrorTypeText"]);
+                            }
 
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
 
@@ -893,7 +896,10 @@ namespace UAB.DAL
                                 chartSummaryDTO.QAProviderFeedbackID = Convert.ToString(reader["QAProviderFeedbackID"]);
                             chartSummaryDTO.QAProviderFeedbackRemarks = Convert.ToString(reader["QAProviderFeedbackIDRemark"]);
                             if (reader["QAErrorTypeId"] != DBNull.Value)
+                            {
                                 chartSummaryDTO.QADTO.ErrorType = Convert.ToString(reader["QAErrorTypeId"]);
+                                chartSummaryDTO.QAErrorTypeText = Convert.ToString(reader["QAErrorTypeText"]);
+                            }
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
                             chartSummaryDTO.ProviderText = Convert.ToString(reader["ProviderText"]);
                             chartSummaryDTO.BillingProviderText = Convert.ToString(reader["BillingProviderText"]);
@@ -2859,10 +2865,10 @@ namespace UAB.DAL
                             Value = statusId
                         },
                           new SqlParameter() {
-                            ParameterName = "@utWorkItemAudit",
+                            ParameterName = "@utWorkItemAudit1",
                             SqlDbType =  System.Data.SqlDbType.Structured,
                             Direction = System.Data.ParameterDirection.Input,
-                            TypeName = "utWorkItemAudit",
+                            TypeName = "utWorkItemAudit1",
                             Value = dtAudit
                         },
                           new SqlParameter() {
@@ -2956,10 +2962,10 @@ namespace UAB.DAL
                             Value = mUserId
                         },
                           new SqlParameter() {
-                            ParameterName = "@utWorkItemAudit",
+                            ParameterName = "@utWorkItemAudit1",
                             SqlDbType =  System.Data.SqlDbType.Structured,
                             Direction = System.Data.ParameterDirection.Input,
-                            TypeName = "utWorkItemAudit",
+                            TypeName = "utWorkItemAudit1",
                             Value = dtAudit
                         },
                           new SqlParameter() {
