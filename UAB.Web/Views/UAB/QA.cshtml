@@ -226,7 +226,7 @@
             //if (id != "1") {
             var tabid = id.split("tabIndex_")[1].split("_ClaimId_")[0];
             var claimId = id.split("tabIndex_")[1].split("_ClaimId_")[1];
-            var ErrorTypeID = $("#ErrorType_" + tabid).val();
+            var ErrorTypeID = $("#ErrorType_" + tabid + ' option:selected').toArray().map(item => item.value).join();
             $("#hdnQAErrorTypeID" + tabid).val(ErrorTypeID);
             $("#hdnClaimId" + tabid).val(claimId);
             var ProviderID = "";

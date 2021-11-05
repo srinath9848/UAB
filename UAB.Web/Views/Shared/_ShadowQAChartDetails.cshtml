@@ -725,7 +725,7 @@
                                                                 Error Type
                                                             </label>
                                                             <div class="col-md-7">
-                                                                @Html.DropDownListFor(model => model.FirstOrDefault().ShadowQADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight", @id = string.Format("ShadowQAErrorType_{0}", tabIndex), @onchange = "ShadowQAErrorType('" + tabIndex + "')" })
+                                                                @Html.ListBoxFor(model => model.FirstOrDefault().ShadowQADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), new { @class = "form-control ControlHeight", @id = string.Format("ShadowQAErrorType_{0}", tabIndex), @onchange = "ShadowQAErrorType('" + tabIndex + "')" })
                                                                 @Html.ValidationMessageFor(model => model.FirstOrDefault().ShadowQADTO.ErrorType, null, new { @class = "text-danger ErrorType", @id = string.Format("ShadowQAErrorTypeError_{0}", tabIndex) })
                                                             </div>
                                                         </div>
@@ -836,6 +836,12 @@
     $('#ShadowQAProviderFeedback_1').multiselect({
         includeSelectAllOption: true,
     });
+
+    $('#ShadowQAErrorType_1').multiselect({
+        includeSelectAllOption: true,
+        nonSelectedText: '--Select--'
+    });
+
     $(document).ready(function () {
         $('#txtQty_1,#txtLinks_1').on('keyup keypress change', function (e) {
             this.value = this.value.replace(/[^0-9\.]/g, '');

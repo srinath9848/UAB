@@ -654,7 +654,7 @@
                                 Error Type
                             </label>
                             <div class="col-md-7">
-                                @Html.DropDownListFor(model => model.ShadowQADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight", @id = string.Format("ShadowQAErrorType_{0}", tabIndex), @onchange = "ShadowQAErrorType('" + tabIndex + "')" })
+                                @Html.ListBoxFor(model => model.ShadowQADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), new { @class = "form-control ControlHeight", @id = string.Format("ShadowQAErrorType_{0}", tabIndex), @onchange = "ShadowQAErrorType('" + tabIndex + "')" })
                                 @Html.ValidationMessageFor(model => model.ShadowQADTO.ErrorType, null, new { @class = "text-danger ErrorType", @id = string.Format("ShadowQAErrorTypeError_{0}", tabIndex) })
                             </div>
                         </div>
@@ -691,6 +691,22 @@
     $('#ShadowQAProviderFeedback_4').multiselect({
         includeSelectAllOption: true,
     });
+
+    $('#ShadowQAErrorType_2').multiselect({
+        includeSelectAllOption: true,
+        nonSelectedText: '--Select--'
+    });
+
+    $('#ShadowQAErrorType_3').multiselect({
+        includeSelectAllOption: true,
+        nonSelectedText: '--Select--'
+    });
+
+    $('#ShadowQAErrorType_4').multiselect({
+        includeSelectAllOption: true,
+        nonSelectedText: '--Select--'
+    });
+
     $(document).ready(function () {
         $('.cptQtyClaim,.cptLinksClaim').on('keyup keypress change', function (e) {
             this.value = this.value.replace(/[^0-9\.]/g, '');
