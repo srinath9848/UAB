@@ -215,6 +215,10 @@
         includeSelectAllOption: true,
         nonSelectedText: 'Select Provider Feedbacks'
     });
+
+    $('#ProviderFeedbackId').change(function () {
+        EnableButton();
+    });
     $(document).ready(function () {
 
         $('#txtQty_1,#txtLinks_1,.cptQtyClaim,.cptLinksClaim').on('keyup keypress change', function (e) {
@@ -279,7 +283,7 @@
         });
 
         EnableButton = function () {
-            if ($('#BillingProviderID').val() !== "" && $('#ProviderID').val() !== "" && $('#PayorID').val() !== "" && $('#ProviderFeedbackId option:selected').val() !=="" && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== "" && $('#Providers_2').val() === undefined && $('#Providers_3').val() === undefined && $('#Providers_4').val() === undefined) {
+            if ($('#BillingProviderID').val() !== "" && $('#ProviderID').val() !== "" && $('#PayorID').val() !== "" && $('#ProviderFeedbackId').val() != "" && $('#ProviderFeedbackId option:selected').val() !== undefined && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== "" && $('#Providers_2').val() === undefined && $('#Providers_3').val() === undefined && $('#Providers_4').val() === undefined && $('#ProviderFeedbacks_2 option:selected').val() === undefined && $('#ProviderFeedbacks_3 option:selected').val() === undefined && $('#ProviderFeedbacks_4 option:selected').val() === undefined ) {
                 $('#codingSubmit').prop('disabled', false);
                 $('#codingSubmitAndGetNext').prop('disabled', false);
                 $('#btnProviderPosted').prop('disabled', false);
@@ -311,8 +315,8 @@
         });
 
         EnableButtonForClaim2 = function () {
-            if ($('#PayorID').val() !== "" && $('#ProviderID').val() !== "" && $('#BillingProviderID').val() !== "" && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== ""
-                && $('#Providers_2').val() !== "" && $('#BillingProviders_2').val() !== "" && $('#Payors_2').val() !== "" && $('#txtDx2Claim_1').val() !== "" && $('#txt2Cpt_1').val() !== "" && $('#Providers_3').val() === undefined && $('#Providers_4').val() === undefined && $('#BillingProviders_3').val() === undefined && $('#BillingProviders_4').val() === undefined) {
+            if ($('#PayorID').val() !== "" && $('#ProviderID').val() !== "" && $('#BillingProviderID').val() !== "" && $('#ProviderFeedbackId').val() != "" && $('#ProviderFeedbackId option:selected').val() !== undefined && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== ""
+                && $('#Providers_2').val() !== "" && $('#BillingProviders_2').val() !== "" && $('#Payors_2').val() !== "" && $('#txtDx2Claim_1').val() !== "" && $('#txt2Cpt_1').val() !== "" && $('#Providers_3').val() === undefined && $('#Providers_4').val() === undefined && $('#BillingProviders_3').val() === undefined && $('#BillingProviders_4').val() === undefined && $('#ProviderFeedbacks_2 option:selected').val() !== undefined && $('#ProviderFeedbacks_3 option:selected').val() === undefined && $('#ProviderFeedbacks_4 option:selected').val() === undefined) {
                 $('#codingSubmit').prop('disabled', false);
                 $('#codingSubmitAndGetNext').prop('disabled', false);
                 $('#btnProviderPosted').prop('disabled', false);
