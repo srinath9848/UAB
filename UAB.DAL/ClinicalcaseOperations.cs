@@ -590,7 +590,10 @@ namespace UAB.DAL
                             chartSummaryDTO.QAProviderFeedbackText = Convert.ToString(reader["QAProviderFeedbackText"]);
 
                             if (reader["QAErrorTypeId"] != DBNull.Value)
+                            {
                                 chartSummaryDTO.QADTO.ErrorType = Convert.ToString(reader["QAErrorTypeId"]);
+                                chartSummaryDTO.QAErrorTypeText = Convert.ToString(reader["QAErrorTypeText"]);
+                            }
 
                             //if (reader["ProviderId"] != DBNull.Value)
                             //    chartSummaryDTO.ProviderID = Convert.ToInt32(reader["ProviderId"]);
@@ -745,10 +748,16 @@ namespace UAB.DAL
                             chartSummaryDTO.ShadowQAProviderFeedbackRemarks = Convert.ToString(reader["ShadowQAProviderFeedbackIDRemark"]);
 
                             if (reader["QAErrorTypeId"] != DBNull.Value)
+                            {
                                 chartSummaryDTO.QADTO.ErrorType = Convert.ToString(reader["QAErrorTypeId"]);
+                                chartSummaryDTO.QAErrorTypeText = Convert.ToString(reader["QAErrorTypeText"]);
+                            }
 
                             if (reader["ShadowQAErrorTypeId"] != DBNull.Value)
-                                chartSummaryDTO.ShadowQADTO.ErrorType = Convert.ToInt32(reader["ShadowQAErrorTypeId"]);
+                            {
+                                chartSummaryDTO.ShadowQADTO.ErrorType = Convert.ToString(reader["ShadowQAErrorTypeId"]);
+                                chartSummaryDTO.ShadowQAErrorTypeText = Convert.ToString(reader["ShadowQAErrorTypeText"]);
+                            }
 
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
 
@@ -835,10 +844,16 @@ namespace UAB.DAL
                             chartSummaryDTO.ShadowQACPTCodeRemarks = Convert.ToString(reader["ShadowQACPTCodeRemark"]);
 
                             if (reader["QAErrorTypeId"] != DBNull.Value)
+                            {
                                 chartSummaryDTO.QADTO.ErrorType = Convert.ToString(reader["QAErrorTypeId"]);
+                                chartSummaryDTO.QAErrorTypeText = Convert.ToString(reader["QAErrorTypeText"]);
+                            }
 
                             if (reader["ShadowQAErrorTypeId"] != DBNull.Value)
-                                chartSummaryDTO.ShadowQADTO.ErrorType = Convert.ToInt32(reader["ShadowQAErrorTypeId"]);
+                            {
+                                chartSummaryDTO.ShadowQADTO.ErrorType = Convert.ToString(reader["ShadowQAErrorTypeId"]);
+                                chartSummaryDTO.ShadowQAErrorTypeText = Convert.ToString(reader["ShadowQAErrorTypeText"]);
+                            }
 
                             if (reader["ShadowQAProviderFeedbackID"] != DBNull.Value)
                                 chartSummaryDTO.ShadowQAProviderFeedbackID = Convert.ToString(reader["ShadowQAProviderFeedbackID"]);
@@ -3204,10 +3219,10 @@ namespace UAB.DAL
                             Value = statusId
                         },
                           new SqlParameter() {
-                            ParameterName = "@utWorkItemAudit",
+                            ParameterName = "@utWorkItemAudit1",
                             SqlDbType =  System.Data.SqlDbType.Structured,
                             Direction = System.Data.ParameterDirection.Input,
-                            TypeName = "utWorkItemAudit",
+                            TypeName = "utWorkItemAudit1",
                             Value = dtAudit
                         }
 

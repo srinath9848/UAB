@@ -709,7 +709,15 @@
                                                                 Error Type
                                                             </label>
                                                             <div class="col-md-7">
-                                                                @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;", @id = string.Format("ErrorType_{0}", tabIndex), @onchange = "ErrorType('" + tabIndex + "')" })
+                                                                @if (Model.FirstOrDefault().QADTO.ErrorType != null)
+                                                                {
+                                                                    <input type="hidden" id="ErrorType_@tabIndex" value="@Model.FirstOrDefault().QADTO.ErrorType" />
+                                                                    @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), Model.FirstOrDefault().QAErrorTypeText.Split(',')[0], new { @class = "form-control ControlHeight CoderDetails", @readonly = "readonly", @style = "pointer-events: none;", @id = string.Format("ErrorTypes_{0}", tabIndex), @onchange = "ErrorType('" + tabIndex + "')" })
+                                                                }
+                                                                else
+                                                                {
+                                                                    @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight CoderDetails", @readonly = "readonly", @style = "pointer-events: none;", @id = string.Format("ErrorType_{0}", tabIndex), @onchange = "ErrorType('" + tabIndex + "')" })
+                                                                }
                                                                 @Html.ValidationMessageFor(model => model.FirstOrDefault().QADTO.ErrorType, null, new { @class = "text-danger ErrorType", @id = string.Format("ErrorTypeError_{0}", tabIndex) })
                                                             </div>
                                                         </div>

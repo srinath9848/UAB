@@ -1926,7 +1926,7 @@ namespace UAB.Controllers
             dtAudit.Columns.Add("FieldName", typeof(string));
             dtAudit.Columns.Add("FieldValue", typeof(string));
             dtAudit.Columns.Add("Remark", typeof(string));
-            dtAudit.Columns.Add("ErrorTypeId", typeof(int));
+            dtAudit.Columns.Add("ErrorTypeId", typeof(string));
             dtAudit.Columns.Add("ClaimId", typeof(int));
             dtAudit.Columns.Add("IsAccepted", typeof(bool));
 

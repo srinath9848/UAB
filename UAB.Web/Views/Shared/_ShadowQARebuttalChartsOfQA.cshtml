@@ -712,7 +712,15 @@
                                                                 Error Type
                                                             </label>
                                                             <div class="col-md-7">
-                                                                @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;", @id = string.Format("QAErrorType_{0}", tabIndex) })
+                                                                @if (Model.FirstOrDefault().QADTO.ErrorType != null)
+                                                                {
+                                                                    <input type="hidden" id="QAErrorType_@tabIndex" value="@Model.FirstOrDefault().QADTO.ErrorType" />
+                                                                    @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), Model.FirstOrDefault().QAErrorTypeText.Split(',')[0], new { @class = "form-control ControlHeight CoderDetails", @readonly = "readonly", @style = "pointer-events: none;", @id = string.Format("QAErrorTypes_{0}", tabIndex), @onchange = "ErrorType('" + tabIndex + "')" })
+                                                                }
+                                                                else
+                                                                {
+                                                                    @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;", @id = string.Format("QAErrorType_{0}", tabIndex) })
+                                                                }
                                                             </div>
                                                         </div>
                                                     </div>
