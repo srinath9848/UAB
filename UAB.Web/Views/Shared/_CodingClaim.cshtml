@@ -115,5 +115,17 @@
             includeSelectAllOption: true,
             nonSelectedText: 'Select Provider Feedbacks'
         });
+
+        $(document).on('change', '#ProviderFeedbacks_2', function () {
+            EnableButtonForClaim2();
+        });
+
+        $(document).on('change', '#ProviderFeedbacks_3', function () {
+            EnableButtonForClaim3();
+        });
+
+        $(document).on('change', '#ProviderFeedbacks_4', function () {
+            EnableButtonForClaim3();
+        });
     });
 </script>

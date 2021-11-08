@@ -509,9 +509,11 @@
                             $("#txt2links_" + id1).removeAttr("onfocusout", "");
                             $("#txt2links_1").removeAttr("onfocusout", "");
                             $("#txt2Cpt_" + id).focus();
-                            EnableButton();
-                            EnableButtonForClaim2();
-                            EnableButtonForClaim3();
+                            if ($('#ProviderFeedbacks_2 option:selected').val() !== undefined) {
+                                EnableButton();
+                                EnableButtonForClaim2();
+                                EnableButtonForClaim3();
+                            }
                         }
                     }
                 }
@@ -534,9 +536,11 @@
                             $("#txt3links_" + id1).removeAttr("onfocusout", "");
                             $("#txt3links_1").removeAttr("onfocusout", "");
                             $("#txt3Cpt_" + id).focus();
-                            EnableButton();
-                            EnableButtonForClaim2();
-                            EnableButtonForClaim3();
+                            if ($('#ProviderFeedbacks_3 option:selected').val() !== undefined) {
+                                EnableButton();
+                                EnableButtonForClaim2();
+                                EnableButtonForClaim3();
+                            }
                         }
                     }
                 }
@@ -559,9 +563,11 @@
                             $("#txt4links_" + id1).removeAttr("onfocusout", "");
                             $("#txt4links_1").removeAttr("onfocusout", "");
                             $("#txt4Cpt_" + id).focus();
-                            EnableButton();
-                            EnableButtonForClaim2();
-                            EnableButtonForClaim3();
+                            if ($('#ProviderFeedbacks_4 option:selected').val() !== undefined) {
+                                EnableButton();
+                                EnableButtonForClaim2();
+                                EnableButtonForClaim3();
+                            }
                         }
                     }
                 }
@@ -934,10 +940,6 @@
     });
     $(document).on('change', '#txt2Cpt_1', function () {
             EnableButtonForClaim2();
-    });
-    $('#ProviderFeedbacks_2').change(function () {
-        alert('test');
-        EnableButtonForClaim2();
     });
 
         EnableButtonForClaim2 = function () {
