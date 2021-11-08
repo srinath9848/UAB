@@ -39,6 +39,17 @@
                                     <input type="radio" name="dateType" value="CreatedDate" />
                                     <label style="margin-top:-7px;" class="control-label col-form-label">Loading Date</label>
                                 </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                @*<button style="height:34px;" type="submit" class="btn btn-success">Submit</button>*@
+                            </div>
+                            <div class="form-group row">
+                                <label class="control-label col-form-label">List Name</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span class="">
+                                    @Html.DropDownListFor(model => model.ListID, new SelectList(@ViewBag.ListName, "ListId", "Name"), "--Select--", new { @class = "form-control ControlHeight dropdownWidth" })
+                                </span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label class="control-label col-form-label">Provider</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span class="">
+                                    @Html.DropDownListFor(model => model.ProviderID, new SelectList(@ViewBag.Providers, "ProviderId", "Name"), "--Select--", new { @class = "form-control ControlHeight dropdownWidth" })
+                                </span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <button style="height:34px;" type="submit" class="btn btn-success">Submit</button>
                             </div>
                         </div>
@@ -54,6 +65,9 @@
 <style>
     .ControlHeight {
         height: 32px !important;
+    }
+    .dropdownWidth{
+        width:232px;
     }
 </style>
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>

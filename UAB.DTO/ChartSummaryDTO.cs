@@ -169,5 +169,7 @@ namespace UAB.DTO
         public DateTime StartDate { get; set; }
         [Required(ErrorMessage = "*")]
         public DateTime EndDate { get; set; }
+        public int? ProviderID { get; set; }
+        public int? ListID { get; set; }
     }
 }
