@@ -631,7 +631,15 @@
                                 Error Type
                             </label>
                             <div class="col-md-7">
-                                @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;" })
+                                @if (Model.QADTO.ErrorType != null)
+                                {
+                                    <input type="hidden" id="QAErrorType_@tabIndex" value="@Model.QADTO.ErrorType" />
+                                    @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), Model.QAErrorTypeText.Split(',')[0], new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;" })
+                                }
+                                else
+                                {
+                                    @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;" })
+                                }
                             </div>
                         </div>
                     </div>
@@ -654,15 +662,7 @@
                                 Error Type
                             </label>
                             <div class="col-md-7">
-                                @if (Model.ShadowQADTO.ErrorType != null)
-                                {
-                                    <input type="hidden" id="ShadowQAErrorTypeError_@Model.TabIndex" value="@Model.ShadowQADTO.ErrorType" />
-                                    @Html.DropDownListFor(model => model.ShadowQADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), Model.ShadowQAErrorTypeText.Split(',')[0], new { @class = "form-control ControlHeight", @id = string.Format("ShadowQAErrorTypeErrors_{0}", Model.TabIndex), @onchange = "ShadowQAErrorType('" + tabIndex + "')" })
-                                }
-                                else
-                                {
-                                    @Html.DropDownListFor(model => model.ShadowQADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), new { @class = "form-control ControlHeight", @id = string.Format("ShadowQAErrorTypeError_{0}", tabIndex), @onchange = "ShadowQAErrorType('" + tabIndex + "')" })
-                                }
+                                @Html.ListBoxFor(model => model.ShadowQADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), new { @class = "form-control ControlHeight", @id = string.Format("ShadowQAErrorType_{0}", tabIndex), @onchange = "ShadowQAErrorType('" + tabIndex + "')" })
                                 @Html.ValidationMessageFor(model => model.ShadowQADTO.ErrorType, null, new { @class = "text-danger ErrorType", @id = string.Format("ShadowQAErrorTypeError_{0}", tabIndex) })
                             </div>
                         </div>
