@@ -3306,10 +3306,10 @@ namespace UAB.DAL
                             Value = statusId
                         }
                         ,  new SqlParameter() {
-                            ParameterName = "@utWorkItemAudit",
+                            ParameterName = "@utWorkItemAudit1",
                             SqlDbType =  System.Data.SqlDbType.Structured,
                             Direction = System.Data.ParameterDirection.Input,
-                            TypeName = "utWorkItemAudit",
+                            TypeName = "utWorkItemAudit1",
                             Value = dtAudit
                         }
 
