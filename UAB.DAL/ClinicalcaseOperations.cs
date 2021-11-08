@@ -1947,9 +1947,11 @@ namespace UAB.DAL
             return ds;
         }
 
-        public DataSet GetDetailedChartSummaryReport(int projectID, DateTime StartDate, DateTime EndDate, string dateType)
+        public DataTable GetDetailedChartSummaryReport(int projectID, DateTime StartDate, DateTime EndDate, string dateType)
         {
+            DataTable finalResult = new DataTable();
             DataSet ds = new DataSet();
+
             using (var context = new UABContext())
             {
                 var param = new SqlParameter[] {
@@ -1998,26 +2000,76 @@ namespace UAB.DAL
                         } while (!reader.IsClosed);
                     }
 
+                    ds.Tables[0].Columns["DX"].MaxLength = 500;
+                    ds.Tables[0].Columns["CPT"].MaxLength = 500;
+                    ds.Tables[0].Columns["Mod"].MaxLength = 100;
+                    ds.Tables[0].Columns["Qty"].MaxLength = 100;
+                    ds.Tables[0].Columns["Links"].MaxLength = 100;
+
+                    finalResult = ds.Tables[0].Clone();
+
                     if (ds.Tables[1].Rows.Count > 0)
                     {
-                        ds.Tables[0].Columns["DX"].MaxLength = 200;
-                        ds.Tables[0].Columns["CPT"].MaxLength = 500;
-                        foreach (DataRow row in ds.Tables[1].Rows)
+                        foreach (DataRow row in ds.Tables[0].Rows)
                         {
-                            DataRow[] dataRows = ds.Tables[0].Select("ClinicalCaseID='" + row["ClinicalCaseID"].ToString() + "'");
-                            if (dataRows.Count() > 0)
+                            DataRow[] dataDxInfo = ds.Tables[1].Select("ClinicalCaseID='" + row["ClinicalCaseID"].ToString() + "'");
+
+                            if (dataDxInfo.Count() > 0)
                             {
-                                DataRow dr = dataRows.FirstOrDefault();
-                                dr["DX"] += "Claim" + row["ClaimOrder"].ToString() + ": " + row["DxCode"].ToString() + "  ";
-                                dr["CPT"] += "Claim" + row["ClaimOrder"].ToString() + ": " + row["CPTCode"].ToString() + "  ";
+                                for (int i = 0; i < dataDxInfo.Count(); i++)
+                                {
+                                    row["DX"] = "Claim" + dataDxInfo[i]["ClaimOrder"].ToString() + ": " + dataDxInfo[i]["DxCode"].ToString();
+
+                                    foreach (var cpt in dataDxInfo[i]["CPTCode"].ToString().Split("|"))
+                                    {
+                                        if (cpt != "NA-NA-NA-NA")
+                                        {
+                                            string[] lstCpt = cpt.Split("-");
+
+                                            row["DX"] = "Claim" + dataDxInfo[i]["ClaimOrder"].ToString() + ": " + GetDxInfoByLink(dataDxInfo[i]["DxCode"].ToString(), (lstCpt.Count() > 3 ? lstCpt[3] : ""));
+
+                                            row["CPT"] = "Claim" + dataDxInfo[i]["ClaimOrder"].ToString() + ": " + (lstCpt.Count() > 0 ? lstCpt[0] : "");
+                                            row["Mod"] = lstCpt.Count() > 1 ? lstCpt[1] : "";
+                                            row["Qty"] = lstCpt.Count() > 2 ? lstCpt[2] : "";
+                                            row["Links"] = lstCpt.Count() > 3 ? ((lstCpt[3] == "" || lstCpt[3] == "null") ? "All" : lstCpt[3]) : "";
+
+                                            finalResult.Rows.Add(row.ItemArray);
+                                        }
+                                    }
+                                }
                             }
+                            else
+                                finalResult.Rows.Add(row.ItemArray);
                         }
                     }
                 }
             }
-            return ds;
+            return finalResult;
         }
+        string GetDxInfoByLink(string dx, string linkAll)
+        {
+            List<string> lstResult = new List<string>();
 
+            if (linkAll == "" || linkAll == "null")
+                return dx;
+            else
+            {
+                foreach (var item in linkAll.Split(","))
+                {
+                    var isNumeric = !string.IsNullOrEmpty(item) && item.All(Char.IsDigit);
+
+                    if (isNumeric)
+                    {
+                        int index = Convert.ToInt32(item);
+
+                        if (dx.Split(",").Count() > (index - 1))
+                            lstResult.Add(dx.Split(",")[index - 1]);
+                    }
+                }
+            }
+
+            return string.Join(",", lstResult);
+        }
         public DataSet GetPostedChartsReport(int projectID, string rangeType, DateTime startDate, DateTime endDate, double timeZoneOffSet)
         {
             DataTable dt = new DataTable();
