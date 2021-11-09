@@ -370,8 +370,8 @@
                                     <div title="@title" class="col-md-3 input-group">
                                         @{ Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                                         @{ Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
-
-                                        @Html.DropDownListFor(model => model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("CoderFeedback_{0}", tabIndex) })
+                                        <input type="hidden" id="CoderFeedback_@tabIndex" value="@Model.FirstOrDefault().ProviderFeedbackID"/>
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new {@class = "form-control CoderDetails ControlHeight", @id = string.Format("CoderFeedbacks_{0}", tabIndex) })
                                         <div class="input-group-append ControlHeight">
                                             <span class="input-group-text AcceptRejectWidth_@tabIndex QACorrections">
                                                 &nbsp;<i id="Feedback_@tabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
@@ -381,9 +381,37 @@
                                     </div>
                                     @{Show = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "display:none" : "display:flex");}
                                     <div class="col-md-3 input-group">
-                                        @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = Show, @class = string.Format("form-control QARevised ControlHeight Feedback_{0}", tabIndex), @id = string.Format("QAProviderFeedback_{0}", tabIndex) })
+                                        <select id="QAProviderFeedback_1" name="QAProviderFeedback1" multiple="multiple" class="form-control ControlHeight">
+                                            @if (ViewBag.ProviderFeedbacks != null)
+                                            {
+                                                foreach (var item in ViewBag.ProviderFeedbacks)
+                                                {
+                                                    if (item.Name != null)
+                                                    {
+                                                        var lst = Model.FirstOrDefault().ProviderFeedbackID.Split(',').ToList();
+                                                        bool exist = lst.Contains(item.ID.ToString());
+                                                        if (!exist)
+                                                        {
+                                                            <option value="@item.ID"> @item.Name </option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.ID" selected="selected"> @item.Name </option>
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                        </select>
+                                        @*@Html.DropDownListFor(model => model.FirstOrDefault().QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), Model.FirstOrDefault().QAProviderFeedbackID, new { @style = Show, @multiple = "multiple", @class = string.Format("form-control QARevised ControlHeight Feedback_{0}", tabIndex), @id = string.Format("QAProviderFeedback_{0}", tabIndex) })*@
                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().QAProviderFeedbackID, null, new { @class = "text-danger errMsg" })
                                     </div>
+                                    @*<div class="col-md-3 input-group">
+                                            @Html.ListBoxFor(model => model.FirstOrDefault().QAProviderFeedbackID, new MultiSelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @style = Show, @class = string.Format("form-control QARevised ControlHeight Feedback_{0}", tabIndex), @multiple = "multiple", @id = string.Format("QAProviderFeedback_{0}", tabIndex) })
+
+                                            @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = Show, @class = string.Format("form-control QARevised ControlHeight Feedback_{0}", tabIndex), @id = string.Format("QAProviderFeedback_{0}", tabIndex) })
+                                            @Html.ValidationMessageFor(model => model.FirstOrDefault().QAProviderFeedbackID, null, new { @class = "text-danger errMsg" })
+                                        </div>*@
                                     <div class="col-md-3 input-group">
                                         @Html.TextBoxFor(model => model.FirstOrDefault().QAProviderFeedbackRemarks, new { @title = Model.FirstOrDefault().QAProviderFeedbackRemarks, @style = Show, @class = string.Format("form-control QARevised ControlHeight Feedback_{0}", tabIndex), @id = string.Format("QAProviderFeedbackRemarks_{0}", tabIndex) })
                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().QAProviderFeedbackRemarks, null, new { @class = "text-danger errMsg" })
@@ -406,7 +434,7 @@
                                                         Error Type
                                                     </label>
                                                     <div class="col-md-7">
-                                                        @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight", @id = string.Format("ErrorType_{0}", tabIndex), @onchange = "ErrorType('" + tabIndex + "')" })
+                                                        @Html.ListBoxFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), new { @class = "form-control ControlHeight", @id = string.Format("ErrorType_{0}", tabIndex), @onchange = "ErrorType('" + tabIndex + "')" })
                                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().QADTO.ErrorType, null, new { @class = "text-danger ErrorType", @id = string.Format("ErrorTypeError_{0}", tabIndex) })
                                                     </div>
                                                 </div>
@@ -504,12 +532,29 @@
         max-width: 25px;
         padding-left: 5px;
     }
+
+    #mutildrop{
+        background-color: none !important;
+        color: none !important;
+    }
+
 </style>
+<link href="~/css/bootstrap-multiselect.css" rel="stylesheet" />
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
+<script src="~/js/bootstrap-multiselect.js"></script>
 <script type="text/javascript">
     $("#PayorID1").attr('title', $("#PayorID1 option:selected").text());
     $("#ProviderID").attr('title', $("#ProviderID option:selected").text());
     $("#ProviderFeedbackID").attr('title', $("#ProviderFeedbackID option:selected").text());
+
+    $('#QAProviderFeedback_1').multiselect({
+        includeSelectAllOption: true
+    });
+
+    $('#ErrorType_1').multiselect({
+        includeSelectAllOption: true,
+        nonSelectedText: '--Select--'
+    });
 
     $(document).ready(function () {
         $('#txtQty_1,#txtLinks_1,.cptQtyClaim,.cptLinksClaim').on('keyup keypress change', function (e) {

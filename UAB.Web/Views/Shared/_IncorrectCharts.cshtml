@@ -772,7 +772,8 @@
                                     @{string QAProviderFeedbackText = (Model.FirstOrDefault().QAProviderFeedbackText?.Length > len) ? "/" + Model.FirstOrDefault().QAProviderFeedbackText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAProviderFeedbackText;}
                                     @{title = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText) ? Model.FirstOrDefault().ProviderFeedbackText + "/" + Model.FirstOrDefault().QAProviderFeedbackText : Model.FirstOrDefault().ProviderFeedbackText);}
                                     @{ var ProviderFeedbackID = string.Format("ProviderFeedbackID_{0}", @Model.FirstOrDefault().TabIndex);}
-                                    @Html.DropDownListFor(model => model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = "display:none", @class = "form-control CoderDetails", @id = string.Format("CoderFeedback_{0}", tabIndex) })
+                                    @Html.DropDownListFor(model => model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = "display:none", @class = "form-control CoderDetails", @id = string.Format("CoderFeedbacks_{0}", tabIndex) })
+                                    <input type="hidden" id="CoderFeedback_@tabIndex" value="@Model.FirstOrDefault().ProviderFeedbackID" />
                                     <input type="hidden" id="ProviderFeedbackText_@tabIndex" value="@ProviderFeedbackText" />
                                     <div title="@title" class="col-md-3 lessWidth input-group ControlWidth">
                                         <div class="form-control CoderDetails" style="line-height:2.2;overflow:hidden;height:32px;">
@@ -804,7 +805,8 @@
                                                 &nbsp;<i id="ProviderFeedbackID_@Model.FirstOrDefault().TabIndex" class="@Rejected" aria-hidden="true"></i>
                                             </span>
                                         </div>
-                                        @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = "display:none", @class = "form-control QARevised", @id = string.Format("QAProviderFeedback_{0}", tabIndex) })
+                                        <input type="hidden" id="QAProviderFeedback_@tabIndex" value="@Model.FirstOrDefault().QAProviderFeedbackID" />
+                                        @Html.DropDownListFor(model => model.FirstOrDefault().QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = "display:none", @class = "form-control QARevised", @id = string.Format("QAProviderFeedbacks_{0}", tabIndex) })
                                         <div class="col-md-3 input-group CoderCorrections">
                                             @Html.TextBoxFor(model => model.FirstOrDefault().RevisedProviderFeedbackRemarks, new { @class = string.Format("form-control Revised RevisedProviderFeedback_{0}", @Model.FirstOrDefault().TabIndex), @id = string.Format("CoderProviderFeedbackRemarks_{0}", tabIndex), @style = Show })
                                             <span id="validFeedback_@Model.FirstOrDefault().TabIndex" class="text-danger txtdanger" style="display:none">*</span>
@@ -847,7 +849,15 @@
                                                         Error Type
                                                     </label>
                                                     <div class="col-md-7">
-                                                        @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight CoderDetails", @id = string.Format("ErrorType_{0}", tabIndex) })
+                                                        @if (Model.FirstOrDefault().QADTO.ErrorType != null)
+                                                        {
+                                                            <input type="hidden" id="ErrorType_@tabIndex" value="@Model.FirstOrDefault().QADTO.ErrorType" />
+                                                            @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), Model.FirstOrDefault().QAErrorTypeText.Split(',')[0], new { @class = "form-control ControlHeight CoderDetails", @id = string.Format("ErrorTypes_{0}", tabIndex) })
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight CoderDetails", @id = string.Format("ErrorType_{0}", tabIndex) })
+                                                        }
                                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().QADTO.ErrorType, null, new { @class = "text-danger ErrorType" })
                                                     </div>
                                                 </div>
@@ -898,12 +908,12 @@
     }
 
     /*     #sortable-1 li {
-                                margin: 0 3px 3px 3px;
-                                padding: 0.4em;
-                                padding-left: 1.5em;
-                                font-size: 17px;
-                                height: 16px;
-                            }*/
+                                                    margin: 0 3px 3px 3px;
+                                                    padding: 0.4em;
+                                                    padding-left: 1.5em;
+                                                    font-size: 17px;
+                                                    height: 16px;
+                                                }*/
 
     .default {
         background: #cedc98;

@@ -646,22 +646,23 @@ namespace UAB.Controllers
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(_mUserId);
             var lstChartSummaryReport = clinicalcaseOperations.GetDetailedChartSummaryReport(ProjectId, StartDate, EndDate, dateType);
 
-            if (lstChartSummaryReport.Tables[0].Rows[0]["ProjectTypeName"].ToString().ToUpper() == "AMBULATORY")
-                lstChartSummaryReport.Tables[0].Columns.Remove("ListName");
-            else if (lstChartSummaryReport.Tables[0].Rows[0]["ProjectTypeName"].ToString().ToUpper() == "IP")
-                lstChartSummaryReport.Tables[0].Columns.Remove("Billing Provider");
+            if (lstChartSummaryReport.Rows[0]["ProjectTypeName"].ToString().ToUpper() == "AMBULATORY")
+                lstChartSummaryReport.Columns.Remove("ListName");
+            else if (lstChartSummaryReport.Rows[0]["ProjectTypeName"].ToString().ToUpper() == "IP")
+                lstChartSummaryReport.Columns.Remove("Billing Provider");
 
-            lstChartSummaryReport.Tables[0].TableName = "ChartSummaryReportAllColumn";
-            lstChartSummaryReport.Tables[0].Columns.Remove("ClinicalCaseID");
-            lstChartSummaryReport.Tables[0].Columns.Remove("IsBlocked");
-            lstChartSummaryReport.Tables[0].Columns.Remove("AssignedTo");
-            lstChartSummaryReport.Tables[0].Columns.Remove("QABy");
-            lstChartSummaryReport.Tables[0].Columns.Remove("ShadowQABy");
-            lstChartSummaryReport.Tables[0].Columns.Remove("ProjectId");
-            lstChartSummaryReport.Tables[0].Columns.Remove("ProjectTypeName");
-            lstChartSummaryReport.Tables[0].Columns.Remove("providerorder");
+            lstChartSummaryReport.TableName = "ChartSummaryReportAllColumn";
+            lstChartSummaryReport.Columns.Remove("ClinicalCaseID");
+            lstChartSummaryReport.Columns.Remove("IsBlocked");
+            lstChartSummaryReport.Columns.Remove("AssignedTo");
+            lstChartSummaryReport.Columns.Remove("QABy");
+            lstChartSummaryReport.Columns.Remove("ShadowQABy");
+            lstChartSummaryReport.Columns.Remove("ProjectId");
+            lstChartSummaryReport.Columns.Remove("ProjectTypeName");
+            lstChartSummaryReport.Columns.Remove("providerorder");
             _logger.LogInformation("Loading Ended for ExportChartSummaryReport for User: " + _mUserId);
-            return ExportToExcel(lstChartSummaryReport.Tables[0]);
+
+            return ExportToExcel(lstChartSummaryReport);
         }
 
         [HttpGet]

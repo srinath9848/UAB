@@ -162,7 +162,14 @@
     @{string ProviderFeedbackText = (Model.ProviderFeedbackText?.Length > len) ? Model.ProviderFeedbackText.Substring(0, len) + ".." : Model.ProviderFeedbackText;}
     @{title = Model.ProviderFeedbackText;}
     <div title="@title" class="col-md-3">
-        @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight" })
+        @if (ProviderFeedbackText != null)
+        {
+            @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), ProviderFeedbackText, new { @class = "form-control CoderDetails ControlHeight" })
+        }
+        else
+        {
+            @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails ControlHeight" })
+        }
         @Html.ValidationMessageFor(model => model.ProviderFeedbackID, null, new { @class = "text-danger" })
     </div>
 </div>

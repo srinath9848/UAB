@@ -16,7 +16,7 @@ namespace UAB.DTO
             blockHistories = new List<BlockDTO>();
         }
         //[Required(ErrorMessage = "Feedback Provider is required.")]
-        public int? ProviderFeedbackID { get; set; }
+        public string ProviderFeedbackID { get; set; }
         public string ProviderFeedbackText { get; set; }
         public int AssignedTo { get; set; }
         [Required(ErrorMessage = "*")]
@@ -82,8 +82,10 @@ namespace UAB.DTO
         [Required(ErrorMessage = "*")]
         public string QACPTCodeRemarks { get; set; }
         //[Required(ErrorMessage = "*")]
-        public int QAProviderFeedbackID { get; set; }
+        public string QAProviderFeedbackID { get; set; }
         public string QAProviderFeedbackText { get; set; }
+        public string QAErrorTypeText { get; set; }
+        public string ShadowQAErrorTypeText { get; set; }
         public string ShadowQAProviderFeedbackText { get; set; }
         //[Required(ErrorMessage = "*")]
         public string QAProviderFeedbackRemarks { get; set; }
@@ -126,7 +128,7 @@ namespace UAB.DTO
         [Required(ErrorMessage = "*")]
         public string ShadowQACPTCodeRemarks { get; set; }
         [Required(ErrorMessage = "*")]
-        public int ShadowQAProviderFeedbackID { get; set; }
+        public string ShadowQAProviderFeedbackID { get; set; }
         [Required(ErrorMessage = "*")]
         public string ShadowQAProviderFeedbackRemarks { get; set; }
         public string CodedBy { get; set; }

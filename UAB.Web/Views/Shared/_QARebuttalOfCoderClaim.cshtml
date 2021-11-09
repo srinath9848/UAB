@@ -437,11 +437,40 @@
     <div title="@title" class="col-md-3 input-group">
         @{ Accepted = (string.IsNullOrEmpty(Model.RevisedProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
         @{ Rejected = (string.IsNullOrEmpty(Model.RevisedProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
-        @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @id = string.Format("CoderFeedback_{0}", tabIndex), @class = "form-control CoderDetails ControlHeight" })
+        <input type="hidden" id="CoderFeedback_@tabIndex" value="@Model.ProviderFeedbackID" />
+        @if (ProviderFeedbackText != null)
+        {
+            @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), Model.ProviderFeedbackText, new { @id = string.Format("CoderFeedback_{0}", tabIndex), @class = "form-control CoderDetails ControlHeight" })
+        }
+        else
+        {
+            @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @id = string.Format("CoderFeedback_{0}", tabIndex), @class = "form-control CoderDetails ControlHeight" })
+        }
     </div>
     @{Show = (string.IsNullOrEmpty(Model.RevisedProviderFeedbackRemarks) ? "display:none" : "display:flex");}
     <div class="col-md-3 input-group">
-        @Html.DropDownListFor(model => model.QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = Show, @class = "form-control QARevised ControlHeight", @id = string.Format("QAProviderFeedback_{0}", tabIndex) })
+        <select id="QAProviderFeedback_@tabIndex" name="QAProviderFeedback" multiple="multiple" class="form-control ControlHeight">
+            @if (ViewBag.ProviderFeedbacks != null)
+            {
+                foreach (var item in ViewBag.ProviderFeedbacks)
+                {
+                    if (item.Name != null)
+                    {
+                        var lst = Model.QAProviderFeedbackID.Split(',').ToList();
+                        bool exist = lst.Contains(item.ID.ToString());
+                        if (!exist)
+                        {
+                            <option value="@item.ID"> @item.Name </option>
+                        }
+                        else
+                        {
+                            <option value="@item.ID" selected="selected"> @item.Name </option>
+                        }
+                    }
+                }
+            }
+        </select>
+        @*@Html.DropDownListFor(model => model.QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = Show, @class = "form-control QARevised ControlHeight", @id = string.Format("QAProviderFeedback_{0}", tabIndex) })*@
         @Html.ValidationMessageFor(model => model.QAProviderFeedbackID, null, new { @class = "text-danger errMsg" })
         <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
             <span class="input-group-text ControlHeight AcceptRejectWidth">
@@ -473,7 +502,15 @@
                             Error Type
                         </label>
                         <div class="col-md-7">
-                            @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;", @id = string.Format("ErrorType_{0}", Model.TabIndex), @onchange = "ErrorType('" + tabIndex + "')" })
+                            @if (Model.QADTO.ErrorType != null)
+                            {
+                                <input type="hidden" id="ErrorType_@Model.TabIndex" value="@Model.QADTO.ErrorType" />
+                                @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), Model.QAErrorTypeText.Split(',')[0], new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;", @id = string.Format("ErrorTypes_{0}", Model.TabIndex), @onchange = "ErrorType('" + tabIndex + "')" })
+                            }
+                            else
+                            {
+                                @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;", @id = string.Format("ErrorType_{0}", Model.TabIndex), @onchange = "ErrorType('" + tabIndex + "')" })
+                            }
                             @Html.ValidationMessageFor(model => model.QADTO.ErrorType, null, new { @class = "text-danger ErrorType", @id = string.Format("ErrorTypeError_{0}", Model.TabIndex) })
 
                             @*@Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight CoderDetails", @id = string.Format("ErrorType_{0}", tabIndex) })*@
@@ -493,3 +530,17 @@
         </div>
     </div>
 </div>
+<link href="~/css/bootstrap-multiselect.css" rel="stylesheet" />
+<script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
+<script src="~/js/bootstrap-multiselect.js"></script>
+<script type="text/javascript">
+    $('#QAProviderFeedback_2').multiselect({
+        includeSelectAllOption: true
+    });
+    $('#QAProviderFeedback_3').multiselect({
+        includeSelectAllOption: true
+    });
+    $('#QAProviderFeedback_4').multiselect({
+        includeSelectAllOption: true
+    });
+</script>

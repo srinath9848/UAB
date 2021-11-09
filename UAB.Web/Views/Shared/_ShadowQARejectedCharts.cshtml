@@ -649,7 +649,8 @@
                                     @{string ProviderFeedbackText = (Model.FirstOrDefault().ProviderFeedbackText?.Length > len) ? Model.FirstOrDefault().ProviderFeedbackText.Substring(0, len) + ".." : Model.FirstOrDefault().ProviderFeedbackText;}
                                     @{string QAProviderFeedbackText = (Model.FirstOrDefault().QAProviderFeedbackText?.Length > len) ? "/" + Model.FirstOrDefault().QAProviderFeedbackText.Substring(0, len) + ".." : "/" + Model.FirstOrDefault().QAProviderFeedbackText;}
                                     @{title = (!string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackText) ? Model.FirstOrDefault().ProviderFeedbackText + "/" + Model.FirstOrDefault().QAProviderFeedbackText : Model.FirstOrDefault().ProviderFeedbackText);}
-                                    @Html.DropDownListFor(model => Model.FirstOrDefault().QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails", @id = string.Format("QAFeedback_{0}", tabIndex), @style = "display:none;" })
+                                    <input type="hidden" id="QAFeedback_@tabIndex" value="@Model.FirstOrDefault().QAProviderFeedbackID" />
+                                    @Html.DropDownListFor(model => Model.FirstOrDefault().QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails", @id = string.Format("QAFeedbacks_{0}", tabIndex), @style = "display:none;" })
 
                                     <div title="@title" class="col-md-3 input-group">
                                         <div class="form-control CoderDetails ControlHeight" style="line-height:2.5;overflow:hidden">
@@ -680,7 +681,8 @@
                                         <span id="validFeedback_@Model.FirstOrDefault().TabIndex" class="text-danger txtdanger" style="display:none">*</span>
                                     </div>
                                     <div class="col-md-3 input-group">
-                                        @Html.DropDownListFor(model => Model.FirstOrDefault().ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = @Show, @id = string.Format("ShadowQAProviderFeedback_{0}", @tabIndex), @class = "form-control QARevised ControlHeight" })
+                                        <input type="hidden" id="ShadowQAProviderFeedback_@tabIndex" value="@Model.FirstOrDefault().ShadowQAProviderFeedbackID" />
+                                        @Html.DropDownListFor(model => Model.FirstOrDefault().ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = @Show, @id = string.Format("ShadowQAProviderFeedbacks_{0}", @tabIndex), @class = "form-control QARevised ControlHeight" })
                                         <div class="input-group-append ControlHeight" style="@Show">
                                             <span class="input-group-text AcceptRejectWidth AcceptRejectWidth_@tabIndex">
                                                 &nbsp;<i id="Feedback_@tabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
@@ -707,7 +709,15 @@
                                                                 Error Type
                                                             </label>
                                                             <div class="col-md-7">
-                                                                @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;", @id = string.Format("ErrorType_{0}", tabIndex), @onchange = "ErrorType('" + tabIndex + "')" })
+                                                                @if (Model.FirstOrDefault().QADTO.ErrorType != null)
+                                                                {
+                                                                    <input type="hidden" id="ErrorType_@tabIndex" value="@Model.FirstOrDefault().QADTO.ErrorType" />
+                                                                    @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), Model.FirstOrDefault().QAErrorTypeText.Split(',')[0], new { @class = "form-control ControlHeight CoderDetails", @readonly = "readonly", @style = "pointer-events: none;", @id = string.Format("ErrorTypes_{0}", tabIndex), @onchange = "ErrorType('" + tabIndex + "')" })
+                                                                }
+                                                                else
+                                                                {
+                                                                    @Html.DropDownListFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight CoderDetails", @readonly = "readonly", @style = "pointer-events: none;", @id = string.Format("ErrorType_{0}", tabIndex), @onchange = "ErrorType('" + tabIndex + "')" })
+                                                                }
                                                                 @Html.ValidationMessageFor(model => model.FirstOrDefault().QADTO.ErrorType, null, new { @class = "text-danger ErrorType", @id = string.Format("ErrorTypeError_{0}", tabIndex) })
                                                             </div>
                                                         </div>
