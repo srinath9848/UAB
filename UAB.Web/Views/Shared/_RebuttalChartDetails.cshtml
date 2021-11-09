@@ -433,7 +433,7 @@
                                                     <label class="col-md-3 m-t-15">
                                                         Error Type
                                                     </label>
-                                                    <div class="col-md-7">
+                                                    <div class="col-md-7 error_@tabIndex">
                                                         @Html.ListBoxFor(model => model.FirstOrDefault().QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), new { @class = "form-control ControlHeight", @id = string.Format("ErrorType_{0}", tabIndex), @onchange = "ErrorType('" + tabIndex + "')" })
                                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().QADTO.ErrorType, null, new { @class = "text-danger ErrorType", @id = string.Format("ErrorTypeError_{0}", tabIndex) })
                                                     </div>

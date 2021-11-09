@@ -2095,7 +2095,7 @@ namespace UAB.DAL
                     {
                         int index = Convert.ToInt32(item);
 
-                        if (dx.Split(",").Count() > (index - 1))
+                        if (dx.Split(",").Count() > (index - 1) && index > 0)
                             lstResult.Add(dx.Split(",")[index - 1]);
                     }
                 }

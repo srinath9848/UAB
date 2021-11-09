@@ -630,7 +630,7 @@
                             <label class="col-md-5 m-t-15">
                                 Error Type
                             </label>
-                            <div class="col-md-7">
+                            <div class="col-md-7" title="@Model.QAErrorTypeText">
                                 @if (Model.QADTO.ErrorType != null)
                                 {
                                     <input type="hidden" id="QAErrorType_@tabIndex" value="@Model.QADTO.ErrorType" />
@@ -661,7 +661,7 @@
                             <label class="col-md-3 m-t-15">
                                 Error Type
                             </label>
-                            <div class="col-md-7">
+                            <div class="col-md-7 error_@tabIndex">
                                 @Html.ListBoxFor(model => model.ShadowQADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), new { @class = "form-control ControlHeight", @id = string.Format("ShadowQAErrorType_{0}", tabIndex), @onchange = "ShadowQAErrorType('" + tabIndex + "')" })
                                 @Html.ValidationMessageFor(model => model.ShadowQADTO.ErrorType, null, new { @class = "text-danger ErrorType", @id = string.Format("ShadowQAErrorTypeError_{0}", tabIndex) })
                             </div>
