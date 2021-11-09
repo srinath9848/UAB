@@ -1240,7 +1240,7 @@ namespace UAB.DAL
                 context.SaveChanges();
             }
         }
-        public DataSet GetLevellingReport(int projectID, DateTime startDate, DateTime endDate, string dateType)
+        public DataSet GetLevellingReport(int projectID, DateTime startDate, DateTime endDate, string dateType, int? listId, int? providerId)
         {
             DataSet ds = new DataSet();
             using (var context = new UABContext())
@@ -1269,6 +1269,18 @@ namespace UAB.DAL
                             SqlDbType =  System.Data.SqlDbType.VarChar,
                             Direction = System.Data.ParameterDirection.Input,
                             Value = dateType
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@ListId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = listId
+                        },
+                        new SqlParameter() {
+                            ParameterName = "@ProviderId",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = providerId
                         }
                 };
 

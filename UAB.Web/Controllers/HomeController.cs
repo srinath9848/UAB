@@ -53,6 +53,8 @@ namespace UAB.Controllers
             _logger.LogInformation("Loading Started for LevellingSummaryReport for User: " + _mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(_mUserId);
             ViewBag.Projects = clinicalcaseOperations.GetProjects();
+            ViewBag.Providers = clinicalcaseOperations.GetProviders();
+            ViewBag.ListName = clinicalcaseOperations.GetLists();
             _logger.LogInformation("Loading Ended for LevellingSummaryReport for User: " + _mUserId);
             return View();
         }
@@ -123,24 +125,26 @@ namespace UAB.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetLevellingReport(int ProjectId, DateTime StartDate, DateTime EndDate, string dateType)
+        public IActionResult GetLevellingReport(int ProjectId, DateTime StartDate, DateTime EndDate, string dateType, int? ListId=null, int? ProviderId=null)
         {
             _logger.LogInformation("Loading Started for GetLevellingReport for User: " + _mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(_mUserId);
-            var lstLelvellingReportDTO = clinicalcaseOperations.GetLevellingReport(ProjectId, StartDate, EndDate, dateType);
+            var lstLelvellingReportDTO = clinicalcaseOperations.GetLevellingReport(ProjectId, StartDate, EndDate, dateType, ListId, ProviderId);
 
             ViewBag.ProjectId = ProjectId;
             ViewBag.StartDate = StartDate;
             ViewBag.EndDate = EndDate;
             ViewBag.DateType = dateType;
+            ViewBag.ListId = ListId;
+            ViewBag.ProviderId = ProviderId;
             _logger.LogInformation("Loading Ended for GetLevellingReport for User: " + _mUserId);
             return PartialView("_LevellingReport", lstLelvellingReportDTO);
         }
 
-        public IActionResult ExportLevellingReport(int ProjectId, DateTime StartDate, DateTime EndDate, string dateType)
+        public IActionResult ExportLevellingReport(int ProjectId, DateTime StartDate, DateTime EndDate, string dateType, int? ListId = null, int? ProviderId = null)
         {
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(_mUserId);
-            var lstLelvellingReportDTO = clinicalcaseOperations.GetLevellingReport(ProjectId, StartDate, EndDate, dateType);
+            var lstLelvellingReportDTO = clinicalcaseOperations.GetLevellingReport(ProjectId, StartDate, EndDate, dateType, ListId, ProviderId);
             int count = lstLelvellingReportDTO.Tables.Count;
             for (int i = 0; i < lstLelvellingReportDTO.Tables.Count; i++)
             {
@@ -166,7 +170,7 @@ namespace UAB.Controllers
             _logger.LogInformation("Loading Started for GetAgingReport for User: " + _mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(_mUserId);
             var lstagingtDTO = clinicalcaseOperations.GetAgingReport();
-            _logger.LogInformation("Loading Ended for GetAgingReport for User: " + _mUserId);
+                _logger.LogInformation("Loading Ended for GetAgingReport for User: " + _mUserId);
             return View("AgingReport", lstagingtDTO);
         }
 

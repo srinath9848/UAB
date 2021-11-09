@@ -61,7 +61,7 @@
                             <h5 class="card" style="margin-bottom: 10px;">Levelling Report</h5>
                         </div>
                         <div class="col-1 linkToButton">
-                            @Html.ActionLink("Export", "ExportLevellingReport", new { projectId = @ViewBag.ProjectId, StartDate = @ViewBag.StartDate, EndDate = @ViewBag.EndDate, dateType = @ViewBag.DateType }, new { @class = "whiteLink" })
+                            @Html.ActionLink("Export", "ExportLevellingReport", new { projectId = @ViewBag.ProjectId, StartDate = @ViewBag.StartDate, EndDate = @ViewBag.EndDate, dateType = @ViewBag.DateType, ListId = @ViewBag.ListId, ProviderId = @ViewBag.ProviderId }, new { @class = "whiteLink" })
                         </div>
                     </div>
                     <div id="modalContent"></div>
