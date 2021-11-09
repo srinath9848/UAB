@@ -52,7 +52,9 @@ namespace UAB.Controllers
         {
             _logger.LogInformation("Loading Started for LevellingSummaryReport for User: " + _mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(_mUserId);
-            ViewBag.Projects = clinicalcaseOperations.GetProjects();
+            var projects = clinicalcaseOperations.GetProjects();
+            ViewBag.Projects = projects;
+            ViewBag.IpProjects = string.Join(",", projects.Where(x => x.ProjectTypeName.ToUpper() == "IP").Select(x => x.ProjectId).ToList());
             ViewBag.Providers = clinicalcaseOperations.GetProviders();
             ViewBag.ListName = clinicalcaseOperations.GetLists();
             _logger.LogInformation("Loading Ended for LevellingSummaryReport for User: " + _mUserId);
@@ -125,7 +127,7 @@ namespace UAB.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetLevellingReport(int ProjectId, DateTime StartDate, DateTime EndDate, string dateType, int? ListId=null, int? ProviderId=null)
+        public IActionResult GetLevellingReport(int ProjectId, DateTime StartDate, DateTime EndDate, string dateType, int? ListId = null, int? ProviderId = null)
         {
             _logger.LogInformation("Loading Started for GetLevellingReport for User: " + _mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(_mUserId);
@@ -170,7 +172,7 @@ namespace UAB.Controllers
             _logger.LogInformation("Loading Started for GetAgingReport for User: " + _mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(_mUserId);
             var lstagingtDTO = clinicalcaseOperations.GetAgingReport();
-                _logger.LogInformation("Loading Ended for GetAgingReport for User: " + _mUserId);
+            _logger.LogInformation("Loading Ended for GetAgingReport for User: " + _mUserId);
             return View("AgingReport", lstagingtDTO);
         }
 
