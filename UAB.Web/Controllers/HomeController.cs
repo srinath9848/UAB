@@ -174,6 +174,17 @@ namespace UAB.Controllers
             return View("AgingReport", lstagingtDTO);
         }
 
+        [HttpPost]
+        public IActionResult GetAgingReportOnSelection(string ProjectType)
+        {
+            _logger.LogInformation("Loading Started for GetAgingReport for User: " + _mUserId);
+            ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(_mUserId);
+            var lstagingtDTO = clinicalcaseOperations.GetAgingReportOnSelection(ProjectType);
+            ViewBag.ProjectType = ProjectType;
+            _logger.LogInformation("Loading Ended for GetAgingReport for User: " + _mUserId);
+            return View("AgingReport", lstagingtDTO);
+        }
+
         /// <summary>
         /// Exports the given Data Table as Excel Report. Set the TableName parameter of the DataTable so that the output file will get it as well.
         /// </summary>

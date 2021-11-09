@@ -1012,6 +1012,27 @@ namespace UAB.DAL
             return ds;
         }
 
+        public DataSet GetAgingReportOnSelection(string projectType)
+        {
+            DataSet ds = new DataSet();
+            using (var context = new UABContext())
+            {
+                using var con = context.Database.GetDbConnection();
+                using SqlConnection conn = new SqlConnection(con.ConnectionString);
+                conn.Open();
+                using (SqlDataAdapter da = new SqlDataAdapter())
+                {
+                    da.SelectCommand = new SqlCommand("[dbo].[UspAgingDashboardOnSelection]", conn);
+                    da.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    da.SelectCommand.Parameters.AddWithValue("@ProjectType", projectType);
+                    da.Fill(ds);
+                    ds.Tables[0].TableName = "AgingBreakdownByProject";
+                    ds.Tables[1].TableName = "AgingBreakdownByStatus";
+                }
+            }
+            return ds;
+        }
+
         public List<ChartSummaryDTO> GetAgingReportDetails(string ColumnName, string projectTypeName, int projectID)
         {
             List<ChartSummaryDTO> lst = new List<ChartSummaryDTO>();
