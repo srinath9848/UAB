@@ -64,13 +64,14 @@
         var id = chkAll.split("_")[1];
         if (chk) {
             $(".txtdanger").hide();
+            $('.error_' + id + ' #mutildrop').attr("disabled", true);
             if (id == "1") {
                 $('.QARevised').css("display", "none");
                 $(".QARevised").val('');
                 $(".QADxRevised_" + id).css("display", "none");
                 $(".QACptRevised_" + id).css("display", "none");
             } else {
-                $(".QARevised_" + id).css("display", "none");
+                $(".QARevised_" + id).css("display", "none");                
             }
 
             $("[class*=AdjustReject_" + id + "]").removeClass('reject');
@@ -91,6 +92,7 @@
         else {
             $("[class*=AdjustAcceptReject_" + id +"]").removeClass('accept');
             $("#ErrorType_" + id).css("pointer-events", "auto");
+            $('.error_' + id + ' #mutildrop').attr("disabled", false);
         }
     }
 
@@ -114,6 +116,7 @@
                     var idclass = $(".newlyDxCpt_" + tabIndex).css("display") == "flex";
                     if (idclass == false) {
                         $("#chkAll_1").prop('checked', true);
+                        $('.error_' + tabIndex + ' #mutildrop').attr("disabled", true);
                         $("#ErrorTypeError_1").val('');
                         $("#ErrorType_1").css("pointer-events", "none");
                         $(".ErrorType").text('');
@@ -132,6 +135,7 @@
                     var accept = $(".AcceptRejectWidth_1").find(".accept").length;
                     if (total == accept) {
                         $("#chkAll_1").prop('checked', true);
+                        $('.error_' + tabIndex + ' #mutildrop').attr("disabled", true);
                         $("#ErrorTypeError_1").val('');
                         $("#ErrorType_1").css("pointer-events", "none");
                         $(".ErrorType").text('');
@@ -145,6 +149,7 @@
                     $("#" + id + "1").css("display", "flex");
                     $("#" + id + "2").css("display", "flex");
                     $("#chkAll_1").prop('checked', false);
+                    $('.error_' + tabIndex + ' #mutildrop').attr("disabled", false);
                     $("#ErrorType_1").css("pointer-events", "auto");
                     $(".QACorrectionsComments").show();
                 }
@@ -165,6 +170,7 @@
                     var idclass = $(".newlyDxCpt_" + tabIndex).css("display") == "flex";
                     if (idclass == false) {
                         $("#chkAll_" + iconid).prop('checked', true);
+                        $('.error_' + iconid + ' #mutildrop').attr("disabled", true);
                         $("#ErrorTypeError_" + iconid).val('');
                         $("#ErrorType_" + iconid).css("pointer-events", "none");
                         $(".ErrorType_" + iconid).text('');
@@ -183,6 +189,7 @@
                     var accept = $(".AcceptRejectWidth_" + iconid).find(".accept").length;
                     if (total == accept) {
                         $("#chkAll_" + iconid).prop('checked', true);
+                        $('.error_' + iconid + ' #mutildrop').attr("disabled", true);
                         $("#ErrorTypeError_" + iconid).val('');
                         $("#ErrorType_" + iconid).css("pointer-events", "none");
                         $(".ErrorType_" + iconid).text('');
@@ -195,6 +202,7 @@
                     $("#" + id + "1").css("display", "flex");
                     $("#" + id + "2").css("display", "flex");
                     $("#chkAll_" + iconid).prop('checked', false);
+                    $('.error_' + iconid + ' #mutildrop').attr("disabled", false);
                     $("#ErrorType_" + iconid).css("pointer-events", "auto");
                     $(".QACorrectionsComments_" + iconid).show();
                 }
