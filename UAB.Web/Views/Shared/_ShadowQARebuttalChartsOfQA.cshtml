@@ -711,7 +711,7 @@
                                                             <label class="col-md-3 m-t-15">
                                                                 Error Type
                                                             </label>
-                                                            <div class="col-md-7">
+                                                            <div class="col-md-7" title="@Model.FirstOrDefault().QAErrorTypeText">
                                                                 @if (Model.FirstOrDefault().QADTO.ErrorType != null)
                                                                 {
                                                                     <input type="hidden" id="QAErrorType_@tabIndex" value="@Model.FirstOrDefault().QADTO.ErrorType" />
