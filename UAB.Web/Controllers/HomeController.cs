@@ -241,7 +241,7 @@ namespace UAB.Controllers
                 for (int x = 3; x <= lastRow; x++)
                 {
                     total = 0;
-                    for (int y = 3; y <= colCount; y++)
+                    for (int y = 2; y <= colCount; y++)
                     {
                         total = total + Convert.ToDecimal(ws.Row(x).Cell(y).Value);
                         col = y;
@@ -286,12 +286,12 @@ namespace UAB.Controllers
                 for (int x = lastRow + 5; x <= lastRowForPercentage; x++)
                 {
                     total = 0;
-                    for (int y = 3; y <= colCountForPercentage; y++)
+                    for (int y = 2; y <= colCountForPercentage; y++)
                     {
                         total = total + Convert.ToDecimal(ws.Row(x).Cell(y).Value);
                         col = y;
                     }
-                    avg = total / (colCountForPercentage - 2);
+                    avg = total / (colCountForPercentage - 1);
                     ws.Row(x).Cell(col + 1).Value = avg.ToString("N", setPrecision);
                 }
 
