@@ -687,7 +687,14 @@
                                     <input type="hidden" id="QAFeedback_@tabIndex" value="@Model.FirstOrDefault().QAProviderFeedbackID" />
                                     @Html.DropDownListFor(model => Model.FirstOrDefault().QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails", @id = string.Format("QAFeedbacks_{0}", tabIndex), @style = "display:none;" })
                                     <div class="col-md-3 CPTWidth input-group" style="@Show">
-                                        @Html.DropDownListFor(model => model.FirstOrDefault().ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @id = string.Format("ShadowQAProviderFeedbacks_{0}", tabIndex), @class = "form-control QARevised ControlHeight" })
+                                        @if (Model.FirstOrDefault().ShadowQAProviderFeedbackText != null)
+                                        {
+                                            @Html.DropDownListFor(model => model.FirstOrDefault().ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), Model.FirstOrDefault().ShadowQAProviderFeedbackText.Split(',')[0], new { @id = string.Format("ShadowQAProviderFeedbacks_{0}", tabIndex), @class = "form-control QARevised ControlHeight" })
+                                        }
+                                        else
+                                        {
+                                            @Html.DropDownListFor(model => model.FirstOrDefault().ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @id = string.Format("ShadowQAProviderFeedbacks_{0}", tabIndex), @class = "form-control QARevised ControlHeight" })
+                                        }
                                         <input type="hidden" id="ShadowQAProviderFeedback_@tabIndex" value="@Model.FirstOrDefault().ShadowQAProviderFeedbackID" />
                                     </div>
                                     <div class="col-md-3 input-group" style="@Show">

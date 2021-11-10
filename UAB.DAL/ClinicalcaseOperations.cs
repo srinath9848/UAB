@@ -3397,7 +3397,6 @@ namespace UAB.DAL
                             TypeName = "utWorkItemAudit1",
                             Value = dtAudit
                         }
-
                 };
 
                 using (var con = context.Database.GetDbConnection())
