@@ -146,7 +146,7 @@
                     var idclass = $(".newlyDxCpt_" + tabIndex).css("display") == "flex";
                     if (idclass == false) {
                         $("#chkAll_" + iconid).prop('checked', true);
-                        $('.error_' + tabIndex + ' #mutildrop').attr("disabled", true);
+                        $('.error_' + iconid + ' #mutildrop').attr("disabled", true);
                         $("#ShadowQAErrorTypeError_" + iconid).val('');
                         $("#ShadowQAErrorType_" + iconid).css("pointer-events", "none");
                         $(".ErrorType_" + iconid).text('');
@@ -166,7 +166,7 @@
                     var accept = $(".AcceptRejectWidth_" + iconid).find(".accept").length;
                     if (total == accept) {
                         $("#chkAll_" + iconid).prop('checked', true);
-                        $('.error_' + tabIndex + ' #mutildrop').attr("disabled", true);
+                        $('.error_' + iconid + ' #mutildrop').attr("disabled", true);
                         $("#ShadowQAErrorTypeError_" + iconid).val('');
                         $("#ShadowQAErrorType_" + iconid).css("pointer-events", "none");
                         $(".ErrorType_" + iconid).text('');
@@ -180,7 +180,7 @@
                     $("#" + id + "1").css("display", "flex");
                     $("#" + id + "2").css("display", "flex");
                     $("#chkAll_" + iconid).prop('checked', false);
-                    $('.error_' + tabIndex + ' #mutildrop').attr("disabled", false);
+                    $('.error_' + iconid + ' #mutildrop').attr("disabled", false);
                     $("#ShadowQAErrorType_" + iconid).css("pointer-events", "auto");
                     $(".ShadowQACorrectionsComments_" + iconid).show();
                     $(".QAComments_" + iconid).show();

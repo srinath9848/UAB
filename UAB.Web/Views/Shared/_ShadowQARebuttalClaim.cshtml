@@ -600,7 +600,14 @@
     <input type="hidden" id="QAFeedback_@tabIndex" value="@Model.QAProviderFeedbackID" />
     @Html.DropDownListFor(model => Model.QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @class = "form-control CoderDetails", @id = string.Format("QAFeedbacks_{0}", tabIndex), @style = "display:none;" })
     <div class="col-md-3 CPTWidth input-group" style="@Show">
-        @Html.DropDownListFor(model => model.ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @id = string.Format("ShadowQAProviderFeedbacks_{0}", tabIndex), @class = "form-control QARevised ControlHeight" })
+        @if (Model.ShadowQAProviderFeedbackText != null)
+        {
+            @Html.DropDownListFor(model => model.ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), Model.ShadowQAProviderFeedbackText.Split(',')[0], new { @id = string.Format("ShadowQAProviderFeedbacks_{0}", tabIndex), @class = "form-control QARevised ControlHeight" })
+        }
+        else
+        {
+            @Html.DropDownListFor(model => model.ShadowQAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @id = string.Format("ShadowQAProviderFeedbacks_{0}", tabIndex), @class = "form-control QARevised ControlHeight" })
+        }
         <input type="hidden" id="ShadowQAProviderFeedback_@tabIndex" value="@Model.ShadowQAProviderFeedbackID" />
     </div>
     <div class="col-md-3 input-group" style="@Show">
@@ -624,8 +631,16 @@
                             <label class="col-md-3 m-t-15">
                                 Error Type
                             </label>
-                            <div class="col-md-7">
-                                @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;", @id = string.Format("QAErrorType_{0}", tabIndex) })
+                            <div class="col-md-7" title="@Model.QAErrorTypeText">
+                                @if (Model.QADTO.ErrorType != null)
+                                {
+                                    <input type="hidden" id="QAErrorType_@tabIndex" value="@Model.QADTO.ErrorType" />
+                                    @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), Model.QAErrorTypeText.Split(',')[0], new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;", @id = string.Format("QAErrorTypes_{0}", tabIndex), @onchange = "ErrorType('" + tabIndex + "')" })
+                                }
+                                else
+                                {
+                                    @Html.DropDownListFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), "--Select--", new { @class = "form-control ControlHeight", @readonly = "readonly", @style = "pointer-events: none;", @id = string.Format("QAErrorType_{0}", tabIndex) })
+                                }
                             </div>
                         </div>
                     </div>

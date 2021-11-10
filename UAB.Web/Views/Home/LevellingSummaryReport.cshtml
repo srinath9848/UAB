@@ -84,7 +84,15 @@
             var val = $(this).val();
             var IpProjects = "@ViewBag.IpProjects";
 
-            if (IpProjects.indexOf(val) != -1)
+            var array = IpProjects.split(',');
+            var show = false; 
+
+            for (var i = 0; i < array.length; i++) {
+                if (parseInt(array[i]) == parseInt(val))
+                    show = true;
+            }
+
+            if (show)
                 $(".divList").show();
             else {
                 $(".divList").hide();
