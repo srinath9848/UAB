@@ -370,8 +370,15 @@
                                     <div title="@title" class="col-md-3 input-group">
                                         @{ Accepted = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
                                         @{ Rejected = (string.IsNullOrEmpty(Model.FirstOrDefault().QAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
-                                        <input type="hidden" id="CoderFeedback_@tabIndex" value="@Model.FirstOrDefault().ProviderFeedbackID"/>
-                                        @Html.DropDownListFor(model => model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new {@class = "form-control CoderDetails ControlHeight", @id = string.Format("CoderFeedbacks_{0}", tabIndex) })
+                                        <input type="hidden" id="CoderFeedback_@tabIndex" value="@Model.FirstOrDefault().ProviderFeedbackID" />
+                                        @if (ProviderFeedbackText != null)
+                                        {
+                                            @Html.DropDownListFor(model => model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), Model.FirstOrDefault().ProviderFeedbackText.Split(',')[0], new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("CoderFeedbacks_{0}", tabIndex) })
+                                        }
+                                        else
+                                        {
+                                            @Html.DropDownListFor(model => model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("CoderFeedbacks_{0}", tabIndex) })
+                                        }
                                         <div class="input-group-append ControlHeight">
                                             <span class="input-group-text AcceptRejectWidth_@tabIndex QACorrections">
                                                 &nbsp;<i id="Feedback_@tabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>

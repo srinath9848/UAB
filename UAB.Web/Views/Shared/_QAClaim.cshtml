@@ -296,7 +296,14 @@
         @{ Accepted = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
         @{ Rejected = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
         <input type="hidden" id="CoderFeedback_@Model.TabIndex" value="@Model.ProviderFeedbackID" />
-        @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("CoderFeedbacks_{0}", Model.TabIndex) })
+        @if (ProviderFeedbackText != null)
+        {
+            @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), Model.ProviderFeedbackText.Split(',')[0], new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("CoderFeedbacks_{0}", Model.TabIndex) })
+        }
+        else
+        {
+            @Html.DropDownListFor(model => model.ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight", @id = string.Format("CoderFeedbacks_{0}", Model.TabIndex) })
+        }
         <div class="input-group-append ControlHeight">
             <span class="input-group-text AcceptRejectWidth_@tabIndex QACorrections">
                 &nbsp;<i id="Feedback_@Model.TabIndex" data="@tabIndex" class="@Accepted AdjustAcceptReject_@tabIndex" aria-hidden="true"></i>
