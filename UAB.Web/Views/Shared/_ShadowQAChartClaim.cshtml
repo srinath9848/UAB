@@ -688,33 +688,37 @@
 <script src="~/dashboardassets/libs/jquery/dist/jquery.min.js"></script>
 <script src="~/js/bootstrap-multiselect.js"></script>
 <script type="text/javascript">
-    $('#ShadowQAProviderFeedback_2').multiselect({
-        includeSelectAllOption: true,
-    });
+     var tabid = "@Model.TabIndex";
+    if (tabid == "2") {
+        $('#ShadowQAProviderFeedback_2').multiselect({
+            includeSelectAllOption: true,
+        });
 
-    $('#ShadowQAProviderFeedback_3').multiselect({
-        includeSelectAllOption: true,
-    });
+        $('#ShadowQAErrorType_2').multiselect({
+            includeSelectAllOption: true,
+            nonSelectedText: '--Select--'
+        });
+    }
 
-    $('#ShadowQAProviderFeedback_4').multiselect({
-        includeSelectAllOption: true,
-    });
+    if (tabid == "3") {
+        $('#ShadowQAProviderFeedback_3').multiselect({
+            includeSelectAllOption: true,
+        });
+        $('#ShadowQAErrorType_3').multiselect({
+            includeSelectAllOption: true,
+            nonSelectedText: '--Select--'
+        });
+    }
 
-    $('#ShadowQAErrorType_2').multiselect({
-        includeSelectAllOption: true,
-        nonSelectedText: '--Select--'
-    });
-
-    $('#ShadowQAErrorType_3').multiselect({
-        includeSelectAllOption: true,
-        nonSelectedText: '--Select--'
-    });
-
-    $('#ShadowQAErrorType_4').multiselect({
-        includeSelectAllOption: true,
-        nonSelectedText: '--Select--'
-    });
-
+    if (tabid == "4") {
+        $('#ShadowQAProviderFeedback_4').multiselect({
+            includeSelectAllOption: true,
+        });
+        $('#ShadowQAErrorType_4').multiselect({
+            includeSelectAllOption: true,
+            nonSelectedText: '--Select--'
+        });
+    }
     $(document).ready(function () {
         $('.cptQtyClaim,.cptLinksClaim').on('keyup keypress change', function (e) {
             this.value = this.value.replace(/[^0-9\.]/g, '');

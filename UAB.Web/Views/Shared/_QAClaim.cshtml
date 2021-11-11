@@ -360,6 +360,7 @@
                         <label class="col-md-3 m-t-15">
                             Error Type
                         </label>
+                        <input type="hidden" id="errortab_@tabIndex" />
                         <div class="col-md-7 error_@tabIndex">
                             @Html.ListBoxFor(model => model.QADTO.ErrorType, new SelectList(@ViewBag.ErrorTypes, "ID", "Name"), new { @class = "form-control ControlHeight", @id = string.Format("ErrorType_{0}", Model.TabIndex), @onchange = "ErrorType('" + tabIndex + "')" })
                             @Html.ValidationMessageFor(model => model.QADTO.ErrorType, null, new { @class = "text-danger ErrorType", @id = string.Format("ErrorTypeError_{0}", Model.TabIndex) })
@@ -392,31 +393,38 @@
             this.value = this.value.replace(/[^0-9\.]/g, '');
         });
     });
-    $('#QAProviderFeedback_2').multiselect({
-        includeSelectAllOption: true,
-    });
 
-    $('#QAProviderFeedback_3').multiselect({
-        includeSelectAllOption: true,
-    });
+    var tabid = "@tabIndex";
+    if (tabid == "2") {
+        $('#QAProviderFeedback_2').multiselect({
+            includeSelectAllOption: true,
+        });
 
-    $('#QAProviderFeedback_4').multiselect({
-        includeSelectAllOption: true,
-    });
+        $('#ErrorType_2').multiselect({
+            includeSelectAllOption: true,
+            nonSelectedText: '--Select--'
+        });
+    }
 
-    $('#ErrorType_2').multiselect({
-        includeSelectAllOption: true,
-        nonSelectedText: '--Select--'
-    });
+    if (tabid == "3") {
+        $('#QAProviderFeedback_3').multiselect({
+            includeSelectAllOption: true,
+        });
+        $('#ErrorType_3').multiselect({
+            includeSelectAllOption: true,
+            nonSelectedText: '--Select--'
+        });
+    }
 
-    $('#ErrorType_3').multiselect({
-        includeSelectAllOption: true,
-        nonSelectedText: '--Select--'
-    });
+    if (tabid == "4") {
+        $('#QAProviderFeedback_4').multiselect({
+            includeSelectAllOption: true,
+        });
 
-    $('#ErrorType_4').multiselect({
-        includeSelectAllOption: true,
-        nonSelectedText: '--Select--'
-    });
+        $('#ErrorType_4').multiselect({
+            includeSelectAllOption: true,
+            nonSelectedText: '--Select--'
+        });
+    }
 
 </script>
