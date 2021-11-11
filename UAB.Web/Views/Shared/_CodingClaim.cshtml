@@ -101,20 +101,25 @@
             this.value = this.value.replace(/[^0-9\.]/g, '');
         });
 
-        $('#ProviderFeedbacks_2').multiselect({
-            includeSelectAllOption: true,
-            nonSelectedText: 'Select Provider Feedbacks'
-        });
-
-        $('#ProviderFeedbacks_3').multiselect({
-            includeSelectAllOption: true,
-            nonSelectedText: 'Select Provider Feedbacks'
-        });
-
-        $('#ProviderFeedbacks_4').multiselect({
-            includeSelectAllOption: true,
-            nonSelectedText: 'Select Provider Feedbacks'
-        });
+          var tabid = "@claimID";
+        if (tabid == "2") {
+            $('#ProviderFeedbacks_2').multiselect({
+                includeSelectAllOption: true,
+                nonSelectedText: '--Select--'
+            });
+        }
+        if (tabid == "3") {
+            $('#ProviderFeedbacks_3').multiselect({
+                includeSelectAllOption: true,
+                nonSelectedText: '--Select--'
+            });
+        }
+        if (tabid == "4") {
+            $('#ProviderFeedbacks_4').multiselect({
+                includeSelectAllOption: true,
+                nonSelectedText: '--Select--'
+            });
+        }
 
         $(document).on('change', '#ProviderFeedbacks_2', function () {
             EnableButtonForClaim2();
