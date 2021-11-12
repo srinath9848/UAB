@@ -181,7 +181,7 @@ namespace UAB.Controllers
         {
             _logger.LogInformation("Loading Started for GetAgingReport for User: " + _mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(_mUserId);
-            var lstagingtDTO = clinicalcaseOperations.GetAgingReportOnSelection(ProjectType);
+            var lstagingtDTO = clinicalcaseOperations.GetAgingReport(ProjectType);
             ViewBag.ProjectType = ProjectType;
             _logger.LogInformation("Loading Ended for GetAgingReport for User: " + _mUserId);
             return View("AgingReport", lstagingtDTO);
@@ -333,20 +333,20 @@ namespace UAB.Controllers
             }
         }
 
-        public IActionResult ExportAgingReportByProject()
+        public IActionResult ExportAgingReportByProject(string projectType)
         {
             _logger.LogInformation("Loading Started for ExportAgingReportByProject for User: " + _mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(_mUserId);
-            var lstagingtDTO = clinicalcaseOperations.GetAgingReport();
+            var lstagingtDTO = clinicalcaseOperations.GetAgingReport(projectType);
             _logger.LogInformation("Loading Ended for ExportAgingReportByProject for User: " + _mUserId);
             return ExportToExcel(lstagingtDTO.Tables[0]);
         }
 
-        public IActionResult ExportAgingReportByStatus()
+        public IActionResult ExportAgingReportByStatus(string projectType)
         {
             _logger.LogInformation("Loading Started for ExportAgingReportByStatus for User: " + _mUserId);
             ClinicalcaseOperations clinicalcaseOperations = new ClinicalcaseOperations(_mUserId);
-            var lstagingtDTO = clinicalcaseOperations.GetAgingReport();
+            var lstagingtDTO = clinicalcaseOperations.GetAgingReport(projectType);
             _logger.LogInformation("Loading Ended for ExportAgingReportByStatus for User: " + _mUserId);
             return ExportToExcel(lstagingtDTO.Tables[1]);
         }
