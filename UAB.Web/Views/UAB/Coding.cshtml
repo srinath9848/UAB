@@ -765,6 +765,7 @@
                 EnableButton();
                 EnableButtonForClaim2();
                 EnableButtonForClaim3();
+                EnableButtonForClaim4();
             }
             if ($("#htxt4").text() != "+") {
                 $("#4").addClass('active show');
@@ -775,6 +776,7 @@
                 EnableButton();
                 EnableButtonForClaim2();
                 EnableButtonForClaim3();
+                EnableButtonForClaim4();
             }
         }
         if (tabid == 3) {
@@ -787,6 +789,7 @@
             EnableButton();
             EnableButtonForClaim2();
             EnableButtonForClaim3();
+            EnableButtonForClaim4();
         }
         if (tabid == 4) {
             $("#3").addClass('active show');
@@ -797,6 +800,7 @@
             EnableButton();
             EnableButtonForClaim2();
             EnableButtonForClaim3();
+            EnableButtonForClaim4();
         }
         if ($("#htxt2").text() == "+" && $("#htxt3").text() == "+" && $("#htxt4").text() == "+") {
             $("#1").addClass('active show');
@@ -808,6 +812,7 @@
             EnableButton();
             EnableButtonForClaim2();
             EnableButtonForClaim3();
+            EnableButtonForClaim4();
         }
     };
 
@@ -973,11 +978,13 @@
         EnableButtonForClaim3();
     });
     $(document).on('change', '#ProviderFeedbacks_3', function () {
-        EnableButtonForClaim3();
+        if ($('#ProviderFeedbacks_3 option:selected').val() !== undefined) {
+            EnableButtonForClaim3();
+        }
     });
 
     EnableButtonForClaim3 = function () {
-        if ($('#PayorID').val() !== "" && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== "" && $('#ProviderFeedbackId').val() != "" && $('#ProviderFeedbackId option:selected').val() !== undefined
+        if ($('#PayorID').val() !== "" && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== "" && $('#ProviderFeedbacks_3').val() != "" && $('#ProviderFeedbacks_3 option:selected').val() !== undefined
             && $('#Providers_2').val() !== "" && $('#BillingProviders_2').val() !== "" && $('#Payors_2').val() !== "" && $('#txtDx2Claim_1').val() !== "" && $('#txt2Cpt_1').val() !== ""
             && $('#Providers_3').val() !== "" && $('#BillingProviders_3').val() !== "" && $('#Payors_3').val() !== "" && $('.Dxclaim_3').val() !== "" && $('#txt3Cpt_1').val() !== ""
             && $('#Providers_4').val() === undefined && $('#BillingProviders_4').val() === undefined) {
@@ -993,26 +1000,29 @@
     }
 
     $(document).on('change', '#Providers_4', function () {
-        EnableButtonForClaim3();
+        EnableButtonForClaim4();
     });
     $(document).on('change', '#BillingProviders_4', function () {
-        EnableButtonForClaim3();
+        EnableButtonForClaim4();
     });
     $(document).on('change', '#Payors_4', function () {
-        EnableButtonForClaim3();
+        EnableButtonForClaim4();
     });
     $(document).on('change', '.Dxclaim_4', function () {
-        EnableButtonForClaim3();
+        EnableButtonForClaim4();
     });
     $(document).on('change', '#txt4Cpt_1', function () {
-        EnableButtonForClaim3();
+        EnableButtonForClaim4();
     });
+    
     $(document).on('change', '#ProviderFeedbacks_4', function () {
-        EnableButtonForClaim3();
+        if ($('#ProviderFeedbacks_4 option:selected').val() !== undefined) {
+            EnableButtonForClaim4();
+        }
     });
 
-    EnableButtonForClaim3 = function () {
-        if ($('#PayorID').val() !== "" && $('#ProviderID').val() !== "" && $('#BillingProviderID').val() !== "" && $('#ProviderFeedbackId').val() != "" && $('#ProviderFeedbackId option:selected').val() !== undefined && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== ""
+    EnableButtonForClaim4 = function () {
+        if ($('#PayorID').val() !== "" && $('#ProviderID').val() !== "" && $('#BillingProviderID').val() !== "" && $('#ProviderFeedbacks_4').val() != "" && $('#ProviderFeedbacks_4 option:selected').val() !== undefined && $('#txtDx_1').val() !== "" && $('#txtCpt_1').val() !== ""
             && $('#Providers_2').val() !== "" && $('#BillingProviders_2').val() !== "" && $('#Payors_2').val() !== "" && $('#txtDx2Claim_1').val() !== "" && $('#txt2Cpt_1').val() !== ""
             && $('#Providers_3').val() !== "" && $('#BillingProviders_3').val() !== "" && $('#Payors_3').val() !== "" && $('.Dxclaim_3').val() !== "" && $('#txt3Cpt_1').val() !== ""
             && $('#Providers_4').val() !== "" && $('#BillingProviders_4').val() !== "" && $('#Payors_4').val() !== "" && $('.Dxclaim_4').val() !== "" && $('#txt4Cpt_1').val() !== "") {
