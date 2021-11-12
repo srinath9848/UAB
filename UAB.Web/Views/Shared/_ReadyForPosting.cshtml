@@ -236,7 +236,7 @@
                                         <div title="@title" class="col-md-3">
                                             @if (ProviderFeedbackText != null)
                                             {
-                                                @Html.DropDownListFor(Model => Model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), new { @class = "form-control CoderDetails ControlHeight" })
+                                                @Html.DropDownListFor(Model => Model.FirstOrDefault().ProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), Model.FirstOrDefault().ProviderFeedbackText.Split(',')[0], new { @class = "form-control CoderDetails ControlHeight" })
                                             }
                                             else
                                             {
