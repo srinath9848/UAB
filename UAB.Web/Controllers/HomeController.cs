@@ -708,6 +708,7 @@ namespace UAB.Controllers
             {
                 CodingDTO data = new CodingDTO();
                 data = chartSummaryData.CodingDTO;
+                data.Provider = chartSummaryData.ProviderName;
                 chartSummaryList.Add(data);
             }
 
