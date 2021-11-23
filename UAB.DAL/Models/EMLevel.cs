@@ -12,7 +12,7 @@ namespace UAB.DAL.Models
 
         [Required(ErrorMessage = "EM Level is required.")]
         [RegularExpression(@"^[0-9]+$", ErrorMessage = "only numbers allowed")]
-        public int Level { get; set; }  
+        public string Level { get; set; }  
         public int ProjectId { get; set; }
 
     }

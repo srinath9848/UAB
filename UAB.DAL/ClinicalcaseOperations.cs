@@ -4023,16 +4023,25 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                var exsitingEMLevel = context.EMCodeLevel.Where(a => a.EMLevel == eMLevel).ToList();
+                var exsitingEMCodeLevel = context.EMCodeLevel.Where(a => a.EMCode == eMLevel.ToString()).ToList();
 
-                if (exsitingEMLevel.Count != 0)
+                if (exsitingEMCodeLevel.Count != 0)
                 {
-                    context.EMCodeLevel.RemoveRange(exsitingEMLevel);
+                    context.EMCodeLevel.RemoveRange(exsitingEMCodeLevel);
                     context.SaveChanges();
                 }
-                else
+                if(exsitingEMCodeLevel.Count == 0)
                 {
-                    throw new Exception("Unable To Delete EM Level : EM Level Not there in UAB");
+                    var existingEMLevel = context.EMLevel.Where(el => el.Level == eMLevel.ToString()).FirstOrDefault();
+                    if (existingEMLevel != null)
+                    {
+                        context.EMLevel.RemoveRange(existingEMLevel);
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        throw new Exception("Unable To Delete EM Level : EM Level Not there in UAB");
+                    }
                 }
 
             }
@@ -4041,11 +4050,11 @@ namespace UAB.DAL
         {
             using (var context = new UABContext())
             {
-                var isexisting = context.EMLevel.Where(x => x.Level == eMCodeLevel.EMLevel && x.ProjectId == eMCodeLevel.ProjectId).FirstOrDefault();
+                var isexisting = context.EMLevel.Where(x => x.Level == eMCodeLevel.EMLevel.ToString() && x.ProjectId == eMCodeLevel.ProjectId).FirstOrDefault();
 
                 EMLevel emc = new EMLevel()
                 {
-                    Level = eMCodeLevel.EMLevel,
+                    Level = eMCodeLevel.EMLevel.ToString(),
                     ProjectId = eMCodeLevel.ProjectId
                 };
                 if (isexisting == null)
@@ -4802,7 +4811,7 @@ namespace UAB.DAL
             using (var context = new UABContext())
             {
                 var existingProviderFeedback = context.ProviderFeedback.Where(a => a.ProviderFeedbackId == providerFeedback.ID).FirstOrDefault();
-                var existingProviderFeedbackfromWP = context.WorkItemProvider.Where(x => x.ProviderFeedbackId == providerFeedback.ID).FirstOrDefault();
+                var existingProviderFeedbackfromWP = context.WorkItemProvider.Where(x => x.ProviderFeedbackId == providerFeedback.ID.ToString()).FirstOrDefault();
                 if (existingProviderFeedback != null && existingProviderFeedbackfromWP == null)
                 {
                     context.ProviderFeedback.Remove(existingProviderFeedback);

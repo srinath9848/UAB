@@ -3109,7 +3109,7 @@ namespace UAB.Controllers
         {
             EMLevel eml = new EMLevel
             {
-                Level = emlevel
+                Level = emlevel.ToString()
             };
             return PartialView("_DeleteEMLevel", eml);
         }

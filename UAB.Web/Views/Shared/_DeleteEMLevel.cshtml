@@ -1,7 +1,7 @@
 ﻿@model UAB.DAL.Models.EMLevel
 
 <form asp-action="DeleteEMLevel" asp-controller="UAB" method="POST">
-    @Html.HiddenFor(m => m.Level)
+    <input type="hidden" value="@Model.Level" name="emlevel" />
     <div class="modal fade modal-mini modal-primary show" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
         <div class="modal-dialog">
             <div class="modal-content" style="width: 500px;">
