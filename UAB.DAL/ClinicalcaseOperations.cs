@@ -4812,7 +4812,10 @@ namespace UAB.DAL
             using (var context = new UABContext())
             {
                 var existingProviderFeedback = context.ProviderFeedback.Where(a => a.ProviderFeedbackId == providerFeedback.ID).FirstOrDefault();
-                var existingProviderFeedbackfromWP = context.WorkItemProvider.Where(x => x.ProviderFeedbackId == providerFeedback.ID.ToString()).FirstOrDefault();
+
+                var existingProviderFeedbackfromWP = context.WorkItemProvider
+                    .Where(s => s.ProviderFeedbackId.StartsWith(providerFeedback.ID.ToString() + ",") || s.ProviderFeedbackId.Contains("," + providerFeedback.ID.ToString() + ",") || s.ProviderFeedbackId.EndsWith("," + providerFeedback.ID.ToString()) || s.ProviderFeedbackId == providerFeedback.ID.ToString()).FirstOrDefault();
+
                 if (existingProviderFeedback != null && existingProviderFeedbackfromWP == null)
                 {
                     context.ProviderFeedback.Remove(existingProviderFeedback);
@@ -5071,7 +5074,9 @@ namespace UAB.DAL
             using (var context = new UABContext())
             {
                 var existingErrorType = context.ErrorType.Where(a => a.ErrorTypeId == errorType.ErrorTypeId).FirstOrDefault();
-                var existingErrorTypefromWA = context.WorkItemAudit.Where(x => x.ErrorTypeId == errorType.ErrorTypeId).FirstOrDefault();
+                var existingErrorTypefromWA = context.WorkItemAudit
+                   .Where(s => s.ErrorTypeId.StartsWith(errorType.ErrorTypeId.ToString() + ",") || s.ErrorTypeId.Contains("," + errorType.ErrorTypeId.ToString() + ",") || s.ErrorTypeId.EndsWith("," + errorType.ErrorTypeId.ToString()) || s.ErrorTypeId == errorType.ErrorTypeId.ToString()).FirstOrDefault();
+
 
                 if (existingErrorType != null && existingErrorTypefromWA == null)
                 {

@@ -10,6 +10,6 @@ namespace UAB.DAL.Models
         public int VersionId { get; set; }
         public int ProviderId { get; set; }
         public int PayorId { get; set; }
-        public int? ProviderFeedbackId { get; set; }
+        public string ProviderFeedbackId { get; set; }
     }
 }

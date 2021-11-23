@@ -11,6 +11,6 @@ namespace UAB.DAL.Models
         public string FieldName { get; set; }
         public string FieldValue { get; set; }
         public string Remark { get; set; }
-        public int? ErrorTypeId { get; set; }
+        public string ErrorTypeId { get; set; }
     }
 }
