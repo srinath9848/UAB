@@ -35,6 +35,7 @@
     .highlight {
         background-color: #a8cb17 !important;
     }
+
     .linkToButton {
         background-color: #2255a4;
         height: 32px;
@@ -43,15 +44,17 @@
         color: white;
         cursor: pointer;
     }
+
     .whiteLink {
         color: white !important
     }
+
         .whiteLink:hover {
             color: white !important
         }
 </style>
 <div class="container-fluid">
-    @using (Html.BeginForm("GetAgingReportOnSelection", "Home", FormMethod.Post, new { id = "demoForm", name = "demoForm" }))
+    @using (Html.BeginForm("GetAgingReportOnSelection", "Home", FormMethod.Post, new { id = "AgingReportForm", name = "AgingReportForm" }))
     {
 
         <input type="hidden" id="ProjectType" name="ProjectType" />
@@ -78,7 +81,7 @@
                                 <h5 class="card">Aging Break down Report</h5>
                             </div>
                             <div class="col-1 linkToButton">
-                                @Html.ActionLink("Export", "ExportAgingReportByProject", "Home", null, new { @class = "whiteLink" })
+                                @Html.ActionLink("Export", "ExportAgingReportByProject", "Home", new { projectType = ViewBag.ProjectType }, new { @class = "whiteLink", id = "ExportByProj" })
                                 @*<input class="btn btn-info" style="height:32px" type="button" onclick="ExportAgingReportByProject()" value="Export" />*@
                             </div>
                             <input type="hidden" id="ExportAgingReportByProject" value="@Model.Tables[0]" />
@@ -163,7 +166,7 @@
                                 <h5 class="card">Aging Break down by Status Report</h5>
                             </div>
                             <div class="col-1 linkToButton">
-                                @Html.ActionLink("Export", "ExportAgingReportByStatus", "Home", null, new { @class = "whiteLink" })
+                                @Html.ActionLink("Export", "ExportAgingReportByStatus", "Home", new { projectType = ViewBag.ProjectType }, new { @class = "whiteLink" })
                             </div>
                             <input type="hidden" id="ExportAgingReportByStatus" value="@Model.Tables[0]" />
                         </div>
@@ -385,7 +388,7 @@
 
     $("#ddlReports").change(function () {
         $("#ProjectType").val($("#ddlReports option:selected").text());
-        $("#demoForm").submit();
+        $("#AgingReportForm").submit();
     })
 </script>
 

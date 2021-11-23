@@ -795,6 +795,17 @@ namespace UAB.Controllers
                     dtAudit.Rows.Add(items[i].Split("|")[0], items[i].Split("|")[1], "", errorTypeID, claimId, true);
             }
         }
+        void PrepareAcceptShadowQAAvialableAudit(string rejectedFields, DataTable dtAudit, string errorTypeID)
+        {
+            string[] items = rejectedFields.Split("^");
+            int claimId = Convert.ToInt32(items[0].Split("|")[1]);
+            for (int i = 1; i < items.Count(); i++)
+            {
+                var dataRows = dtAudit.Select("FieldName='" + items[i].Split("|")[0] + "' AND ClaimId = '" + claimId + "' AND IsAccepted = false");
+                if (dataRows.Count() == 0)
+                    dtAudit.Rows.Add(items[i].Split("|")[0], items[i].Split("|")[1], items[i].Split("|")[2], errorTypeID, claimId, true);
+            }
+        }
 
         void PrepareAcceptAudit1(string rejectedFields, DataTable dtAudit, int errorTypeID)
         {
@@ -2364,16 +2375,16 @@ namespace UAB.Controllers
             // basic Accept Params for Claim 1 - Claim 2
 
             if (!string.IsNullOrEmpty(hdnAcceptClaim1) && !string.IsNullOrEmpty(hdnShadowQAErrorTypeID1))
-                PrepareAcceptQAAvialableAudit(hdnAcceptClaim1, dtAudit, hdnShadowQAErrorTypeID1);
+                PrepareAcceptShadowQAAvialableAudit(hdnAcceptClaim1, dtAudit, hdnShadowQAErrorTypeID1);
 
             if (!string.IsNullOrEmpty(hdnAcceptClaim2) && !string.IsNullOrEmpty(hdnShadowQAErrorTypeID2))
-                PrepareAcceptQAAvialableAudit(hdnAcceptClaim2, dtAudit, hdnShadowQAErrorTypeID2);
+                PrepareAcceptShadowQAAvialableAudit(hdnAcceptClaim2, dtAudit, hdnShadowQAErrorTypeID2);
 
             if (!string.IsNullOrEmpty(hdnAcceptClaim3) && !string.IsNullOrEmpty(hdnShadowQAErrorTypeID3))
-                PrepareAcceptQAAvialableAudit(hdnAcceptClaim3, dtAudit, hdnShadowQAErrorTypeID3);
+                PrepareAcceptShadowQAAvialableAudit(hdnAcceptClaim3, dtAudit, hdnShadowQAErrorTypeID3);
 
             if (!string.IsNullOrEmpty(hdnAcceptClaim4) && !string.IsNullOrEmpty(hdnShadowQAErrorTypeID4))
-                PrepareAcceptQAAvialableAudit(hdnAcceptClaim4, dtAudit, hdnShadowQAErrorTypeID4);
+                PrepareAcceptShadowQAAvialableAudit(hdnAcceptClaim4, dtAudit, hdnShadowQAErrorTypeID4);
 
             // basic Reject Params for Claim 1 - Claim 2
 
