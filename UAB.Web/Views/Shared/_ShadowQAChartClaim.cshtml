@@ -579,7 +579,7 @@
     <div title="@Model.QAProviderFeedbackRemarks" class="col-md-3 input-group" style="@Show">
         <input type="text" class="@QARemarks ControlHeight" disabled value="@Model.QAProviderFeedbackRemarks" id="@string.Format("QAProviderFeedbackRemarks_{0}", @tabIndex)" />
     </div>
-    <div class="col-md-3 input-group">
+    <div class="col-md-3 input-group Feedback_@tabIndex">
         <select id="ShadowQAProviderFeedback_@tabIndex" name="ShadowQAProviderFeedback_@tabIndex" multiple="multiple" class="form-control ControlHeight">
             @if (ViewBag.ProviderFeedbacks != null)
             {

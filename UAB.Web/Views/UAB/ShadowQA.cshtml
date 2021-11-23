@@ -19,6 +19,10 @@
 <script src="~/dashboardassets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
 <script type="text/javascript">
+    $(".Feedback_1 .btn-group").css("display", "none");
+    $(".Feedback_2 .btn-group").css("display", "none");
+    $(".Feedback_3 .btn-group").css("display", "none");
+    $(".Feedback_4 .btn-group").css("display", "none");
     $(".CoderDetails").css("pointer-events", "none");
     $(".CoderDetails").css("background-color", "#e9ecef");
 
@@ -85,6 +89,7 @@
                 $("#" + id + "1").val('');
                 $("." + id).val('');
                 $("#" + id + "2").val('');
+                $("." + id + " .btn-group").css("display", "none");
                 var total = $(".AcceptRejectWidth_1").find(".fa-check-circle").length;
                 var accept = $(".AcceptRejectWidth_1").find(".accept").length;
                 if (total == accept) {
@@ -128,6 +133,7 @@
                     $("#ShadowQAErrorType_1").css("pointer-events", "auto");
                     $(".ShadowQACorrectionsComments").show();
                     $(".QAComments").show();
+                    $("." + id + " .btn-group").css("display", "block");
                 }
             }
         } else {
@@ -137,6 +143,7 @@
                 $("." + id).css("display", "none");
                 $("#" + id + "1").css("display", "none");
                 $("#" + id + "2").css("display", "none");
+                $("." + id + " .btn-group").css("display", "block");
                 $("#" + id + "1").val('');
                 $("." + id).val('');
                 $("#" + id + "2").val('');
@@ -162,6 +169,7 @@
                 var idclass = $("#" + id).attr('class');
                 if (idclass == "fa fa-times-circle fa-lg ignore") {
                     $("." + id).css("display", "none");
+                    $("." + id + " .btn-group").css("display", "none");
                     var total = $(".AcceptRejectWidth_" + iconid).find(".fa-check-circle").length;
                     var accept = $(".AcceptRejectWidth_" + iconid).find(".accept").length;
                     if (total == accept) {
@@ -184,6 +192,7 @@
                     $("#ShadowQAErrorType_" + iconid).css("pointer-events", "auto");
                     $(".ShadowQACorrectionsComments_" + iconid).show();
                     $(".QAComments_" + iconid).show();
+                    $("." + id + " .btn-group").css("display", "block");
                 }
             }
         }

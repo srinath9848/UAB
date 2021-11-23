@@ -312,7 +312,7 @@
         </div>
     </div>
     @{Show = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "display:none" : "display:flex");}
-    <div class="col-md-3 input-group">
+    <div class="col-md-3 input-group Feedback_@Model.TabIndex">
         <select id="QAProviderFeedback_@Model.TabIndex" name="QAProviderFeedback_@Model.TabIndex" multiple="multiple" class="form-control ControlHeight">
             @if (ViewBag.ProviderFeedbacks != null)
             {
