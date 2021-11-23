@@ -760,6 +760,7 @@ namespace UAB.DAL
                             }
 
                             chartSummaryDTO.NoteTitle = Convert.ToString(reader["NoteTitle"]);
+                            chartSummaryDTO.IsCoderRebutted = Convert.ToBoolean(reader["IsCoderRebutted"]);
 
                         }
                         else if (Role == "QA" && ChartType == "ShadowQARejected")

@@ -50,11 +50,14 @@
 
         @{string Accepted = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
         @{string Rejected = (string.IsNullOrEmpty(Model.QAProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
-        @if (Model.ShadowQAProviderText.Equals(Model.QAProviderText))
+        @if (!Model.IsCoderRebutted)
         {
-            Accepted = "fa fa-check-circle fa-lg accept";
-            Rejected = "fa fa-times-circle fa-lg";
-            Show = "display:none";
+            @if (Model.ShadowQAProviderText.Equals(Model.QAProviderText))
+            {
+                Accepted = "fa fa-check-circle fa-lg accept";
+                Rejected = "fa fa-times-circle fa-lg";
+                Show = "display:none";
+            }
         }
         <div class="input-group-append ControlHeight" style="@Show">
             <span class="input-group-text AcceptRejectWidth">
@@ -104,11 +107,14 @@
 
             @{ Accepted = (string.IsNullOrEmpty(Model.QABillingProviderRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
             @{ Rejected = (string.IsNullOrEmpty(Model.QABillingProviderRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
-            @if (Model.ShadowQABillingProviderText.Equals(Model.QABillingProviderText))
+            @if (!Model.IsCoderRebutted)
             {
-                Accepted = "fa fa-check-circle fa-lg accept";
-                Rejected = "fa fa-times-circle fa-lg";
-                Show = "display:none";
+                @if (Model.ShadowQABillingProviderText.Equals(Model.QABillingProviderText))
+                {
+                    Accepted = "fa fa-check-circle fa-lg accept";
+                    Rejected = "fa fa-times-circle fa-lg";
+                    Show = "display:none";
+                }
             }
             <div class="input-group-append ControlHeight" style="@Show">
                 <span class="input-group-text AcceptRejectWidth">
@@ -156,11 +162,14 @@
 
         @{ Accepted = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
         @{ Rejected = (string.IsNullOrEmpty(Model.QAPayorRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
-        @if (Model.ShadowQAPayorText.Equals(Model.QAPayorText))
+        @if (!Model.IsCoderRebutted)
         {
-            Accepted = "fa fa-check-circle fa-lg accept";
-            Rejected = "fa fa-times-circle fa-lg";
-            Show = "display:none";
+            @if (Model.ShadowQAPayorText.Equals(Model.QAPayorText))
+            {
+                Accepted = "fa fa-check-circle fa-lg accept";
+                Rejected = "fa fa-times-circle fa-lg";
+                Show = "display:none";
+            }
         }
         <div class="input-group-append ControlHeight" style="@Show">
             <span class="input-group-text AcceptRejectWidth">
@@ -235,11 +244,14 @@
                 @{string QADx = (dictQADxCodes?.ElementAt(i).Value?.Length > len) ? "/" + dictQADxCodes?.ElementAt(i).Value.Substring(0, len) + ".." : "/" + dictQADxCodes?.ElementAt(i).Value;}
                 @{
                     string ShadowQaDxVal = !string.IsNullOrEmpty(dictShadowQADxCodes?.ElementAt(i).Value) ? dictShadowQADxCodes?.ElementAt(i).Value : !string.IsNullOrEmpty(dictQADxCodes?.ElementAt(i).Value) ? dictQADxCodes?.ElementAt(i).Value : dictDxCodes?.ElementAt(i).Value;
-                    if (QADx.Replace("/", "") == ShadowQaDxVal)
+                    @if (!Model.IsCoderRebutted)
                     {
-                        Accepted = "fa fa-check-circle fa-lg accept";
-                        Rejected = "fa fa-times-circle fa-lg";
-                        Show = "display:none";
+                        if (QADx.Replace("/", "") == ShadowQaDxVal)
+                        {
+                            Accepted = "fa fa-check-circle fa-lg accept";
+                            Rejected = "fa fa-times-circle fa-lg";
+                            Show = "display:none";
+                        }
                     }
                 }
                 <div class="col-md-3 CPTWidth input-group">
@@ -584,11 +596,14 @@
         @{Show = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "display:none" : "display:flex");}
         @{ Accepted = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-check-circle fa-lg accept" : "fa fa-check-circle fa-lg");}
         @{ Rejected = (string.IsNullOrEmpty(Model.QAProviderFeedbackRemarks) ? "fa fa-times-circle fa-lg" : "fa fa-times-circle fa-lg reject");}
-        @if (Model.ShadowQAProviderFeedbackText.Equals(Model.QAProviderFeedbackText))
+        @if (!Model.IsCoderRebutted)
         {
-            Accepted = "fa fa-check-circle fa-lg accept";
-            Rejected = "fa fa-times-circle fa-lg";
-            Show = "display:none";
+            @if (Model.ShadowQAProviderFeedbackText.Equals(Model.QAProviderFeedbackText))
+            {
+                Accepted = "fa fa-check-circle fa-lg accept";
+                Rejected = "fa fa-times-circle fa-lg";
+                Show = "display:none";
+            }
         }
         <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
             <span class="input-group-text AcceptRejectWidth">

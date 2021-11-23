@@ -39,6 +39,7 @@ namespace UAB.DTO
         public string Dx { get; set; }
 
         public string RejectedDx { get; set; }
+        public bool IsCoderRebutted { get; set; }
 
         //[Required(ErrorMessage = "Modifiers is required.")]
         public string Mod { get; set; }
