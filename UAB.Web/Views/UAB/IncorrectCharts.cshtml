@@ -248,7 +248,7 @@
                             $("#validFeedback_" + tabid).show();
                     }
                 } else {
-                    ProviderFeedbackID = 0;
+                    ProviderFeedbackID = $("#CoderFeedback_" + tabid).val();
                     if ($("#hdnAcceptedClaim" + tabid).val() == "") {
                         $("#hdnAcceptedClaim" + tabid).val("ClaimId" + "|" + claimId + "^" + "ProviderFeedbackID" + "|" + ProviderFeedbackID);
                     } else {
