@@ -572,7 +572,7 @@
                                         </select>
                                         @*@Html.DropDownListFor(model => model.FirstOrDefault().QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = Show, @class = "form-control QARevised ControlHeight", @id = string.Format("QAProviderFeedback_{0}", tabIndex) })*@
                                         @Html.ValidationMessageFor(model => model.FirstOrDefault().QAProviderFeedbackID, null, new { @class = "text-danger errMsg" })
-                                        <div class="input-group-append CoderCorrections" style="@Show">
+                                        <div class="input-group-append CoderCorrections" style="@Show ;z-index: 10;">
                                             <span class="input-group-text ControlHeight AcceptRejectWidth">
                                                 &nbsp;<i id="Feedback_@tabIndex" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
                                                 &nbsp;<i id="Feedback_@tabIndex" class="@Rejected" aria-hidden="true"></i>
@@ -712,6 +712,7 @@
     $('#QAProviderFeedback_1').multiselect({
         includeSelectAllOption: true
     });
+    $('#mutildrop').attr('style', 'width: 192px !important');
     $("#PayorID1").attr('title', $("#PayorID1 option:selected").text());
     $("#ProviderID").attr('title', $("#ProviderID option:selected").text());
     $("#BillingProviderID").attr('title', $("#BillingProviderID option:selected").text());

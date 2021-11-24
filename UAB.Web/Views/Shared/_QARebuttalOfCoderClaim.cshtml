@@ -472,7 +472,7 @@
         </select>
         @*@Html.DropDownListFor(model => model.QAProviderFeedbackID, new SelectList(@ViewBag.ProviderFeedbacks, "ID", "Name"), "--Select--", new { @style = Show, @class = "form-control QARevised ControlHeight", @id = string.Format("QAProviderFeedback_{0}", tabIndex) })*@
         @Html.ValidationMessageFor(model => model.QAProviderFeedbackID, null, new { @class = "text-danger errMsg" })
-        <div class="input-group-append CoderCorrections ControlHeight" style="@Show">
+        <div class="input-group-append CoderCorrections ControlHeight" style="@Show ;z-index: 10;">
             <span class="input-group-text ControlHeight AcceptRejectWidth">
                 &nbsp;<i id="Feedback_@tabIndex" class="@Accepted AdjustAcceptReject" aria-hidden="true"></i>
                 &nbsp;<i id="Feedback_@tabIndex" class="@Rejected" aria-hidden="true"></i>
@@ -543,4 +543,5 @@
     $('#QAProviderFeedback_4').multiselect({
         includeSelectAllOption: true
     });
+    $('#mutildrop').attr('style', 'width: 192px !important');
 </script>
