@@ -2636,7 +2636,7 @@ namespace UAB.DAL
                 new SqlParameter()
                 {
                     ParameterName = "@ProviderFeedbackID",
-                    SqlDbType = System.Data.SqlDbType.Int,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
                     Direction = System.Data.ParameterDirection.Input,
                     Value = chartSummaryDto.ProviderFeedbackID
                 } ,
